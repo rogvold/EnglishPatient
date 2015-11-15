@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+    <script src="../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script src="../home/js/custom/common.js" ></script>
+    <script src="js/TranslateManager.js" ></script>
+
+    <style>
+        .translatable{
+            cursor: pointer;
+        }
+        .translatable:hover{
+            background-color: lightgoldenrodyellow;
+            /*padding: 0px 5px;*/
+            border: 1px solid #f5f5f5;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="isTranslatable">
+    <p>
+        <b>Love</b> kills you from the start
+
+
+    </p>
+    <p>
+        <b>Love</b> drills you through your heart
+    </p>
+</div>
+
+
+<script>
+    $(function(){
+        TM = new TranslateManager();
+        TM.init();
+    });
+</script>
+
+</body>
+</html>

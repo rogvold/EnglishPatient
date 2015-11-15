@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css"/>
+
+    <script src="../home/js/parse-1.2.18.min.js"></script>
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+
+
+</head>
+<body>
+
+
+<div class="row">
+
+    <div class="col-xs-12 "  style="padding: 20px;" >
+        <div id="infoBlock">
+            <div>
+                <h3 id="name" ></h3>
+                <p id="description">
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+
+    var TeacherLectureManager = function(){
+        var self = this;
+        self.lecture = undefined;
+        self.customId = undefined;
+
+        this.initParse = function(){
+            var appId = 'W9uAbHPACzqbMMIWtE0arGMynffT13FQAWg6XoW3';
+            var jsKey = 'tfL7SsorwuEsmMxjzFToByGa9oN9WFy3K9QprqW6';
+            Parse.initialize(appId, jsKey);
+        }
+
+        this.init = function(){
+            self.initParse();
+            self.loadCurrentLecture(function(){
+                self.drawCurrentLecture();
+            });
+        }
+
+
+        this.loadCurrentLecture = function(callback){
+            self.customId = gup('customId');
+            var Lecture = Parse.Object.extend('Lecture');
+            var q = new Parse.Query(Lecture);
+            q.equalTo('customId', self.customId);
+            q.find(function(results){
+                if (results.length == 0){
+                    alert('Такого customId не существует');
+                    return;
+                }
+                self.lecture = results[0];
+                callback();
+            });
+        }
+
+
+        this.drawCurrentLecture = function(){
+            var l = self.lecture;
+            $('#name').html(l.get('name'));
+            $('#description').html(l.get('description'));
+        }
+
+    }
+
+
+    function gup( name )
+    {
+        name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+        var regexS = "[\\?&]"+name+"=([^&#]*)";
+        var regex = new RegExp( regexS );
+        var results = regex.exec( window.location.href );
+        if( results == null )
+            return null;
+        else
+            return results[1];
+    }
+
+
+    $(function(){
+        TLM = new TeacherLectureManager();
+        TLM.init();
+    });
+
+
+</script>
+
+
+
+</body>
+</html>

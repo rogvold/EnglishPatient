@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link type="text/css" href="bootstrap/css/bootstrap.min.css" />
+
+    <script src="plugins/jquery-1.11.1.min.js" ></script>
+
+    <script src="https://www.webrtc-experiment.com/RecordRTC.js"></script>
+
+    <script src="js/custom/RecordManager.js"></script>
+
+
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <audio controls="" autoplay="" id="audioId" />
+    </div>
+    <div class="row">
+        <progress id="progressId" style="display: none;"></progress>
+    </div>
+    <div class="row">
+        <button id="recordButtonId" class="btn btn-sm btn-danger" >Record</button>
+        <button id="stopButtonId" class="btn btn-sm btn-info" >Stop</button>
+        <button id="saveButtonId" class="btn btn-sm btn-success" >Save</button>
+
+    </div>
+
+</div>
+
+    <script>
+        $(function(){
+            RM = new RecordManager();
+            RM.init();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="Мониторинг пополнения базы">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>Sauron Eye</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../home/plugins/taggle/css/twilight.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/projects.min.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/taggle.min.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <!-- load modernizer -->
+    <script src="../home/plugins/modernizr.js"></script>
+
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../home/plugins/moment.js"></script>
+    <script src="../home/plugins/taggle/js/jquery-ui.js"></script>
+    <script src="../home/bootstrap/js/bootstrap.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+    <!-- /core scripts -->
+
+    <!-- page level scripts -->
+    <!-- /page level scripts -->
+
+    <!-- template scripts -->
+    <script src="../home/js/offscreen.js"></script>
+    <script src="../home/plugins/taggle/js/rainbow-custom.min.js"></script>
+    <script src="../home/plugins/toastr/toastr.js"></script>
+    <script src="../home/plugins/taggle/js/taggle.js"></script>
+    <script src="../home/js/custom/common.js"></script>
+    <script src="../home/js/parse-1.2.18.min.js"></script>
+
+    <script src="js/OnlineManager.js"></script>
+    <script src="../home/js/custom/CurrentUserManager.js"></script>
+    <script src="js/MaterialsSauronManager.js"></script>
+
+    <script src="../home/js/main.js"></script>
+    <!-- /template scripts -->
+
+</head>
+<body>
+
+    <div class="app">
+
+        <section class="layout">
+
+
+            <!-- main content -->
+            <section class="main-content">
+
+
+
+                <!-- content wrapper -->
+                <div class="content-wrap">
+                    <div>
+
+                        <div id="topPicsBlock" class="text-center"  style="margin-top: 20px; margin-bottom: 20px;" >
+
+                            <div id="picsPlaceholder">
+                                <!--<img src="img/bb.jpg" style="height: 210px;" />-->
+                                <img src="img/sauron.jpg" style="height: 180px;" />
+                                <img src="img/shura.gif" style="height: 180px;" />
+                                <img src="img/kim.jpg" style="height: 180px;" />
+                                <!--<img src="img/Lirmak_face.jpg" style="height: 210px;" />-->
+                            </div>
+                            <div class="text-center" style="margin-top: 20px; font-size: 20px;">
+                                <button class="btn btn-lg btn-danger" id="consultationButton" style="font-size: 18px; " > <i class="fa fa-info-circle"></i> При возникновении проблем рекомендуется обращаться за помощью к более опытным коллегам</button>
+                                <br/>
+                                <button class="btn btn-lg btn-danger" id="failButton"  style="font-size: 18px; margin-top: 10px;" > <i class="fa fa-info-circle"></i>  Рекомендуется проверять правописание слов.</button>
+                                <br/>
+                                <button class="btn btn-sm btn-facebook" id="helpButton"  style="font-size: 14px; position: fixed; top: 10px; right: 10px;" > <i class="fa fa-info-circle"></i> Помощь.</button>
+
+
+                            </div>
+
+
+                            <h3 style=" margin: 20px auto; width: 1000px; background-color: #EAECF6;">Так-так, а что же у нас сегодня сделано?
+                            <span id="whatBlock" ></span>
+                            </h3>
+
+
+                        </div>
+
+                        <ul id="materialsList" >
+                            <li>
+                                loading......
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+
+            </section>
+        </section>
+
+
+    </div>
+
+
+
+    <div class="modal fade" id="videoModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <div id="videoPlaceholder" class="text-center" >
+
+                    </div>
+
+                    <div id="transcriptPlaceholder" style="text-align: center; font-weight: bold; font-size: 18px;">
+
+                    </div>
+                    <div style="text-align: center; font-weight: bold; font-size: 18px; border-top: 1px solid lightgray;">
+
+                        <h5 style="font-size: 14px;">Теги</h5>
+                        <div id="tagsPlaceholder">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ЗАКРЫТЬ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="bbModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" style="width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Комментарий для правки</h4>
+                </div>
+                <div class="modal-body">
+
+                    <textarea class="form-control" id="bbComment" rows="7" placeholder="Что поправить?" style="font-size: 20px;" ></textarea>
+
+                    <br/>
+                    <button class="btn btn-lg btn-success" id="updateBBCommentButton" > <i class="fa fa-save" ></i> SAVE</button>
+
+                </div>
+
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">ЗАКРЫТЬ</button>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+<style>
+    #materialsList{
+        margin: 0 auto;
+        display: block;
+        width: 1000px;
+        background-color: white;
+        font-size: 20px;
+
+    }
+
+    .materialItem{
+        padding: 10px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid lightgray;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .materialItem .materialDate{
+        margin-left: 60px;
+        font-style: italic;
+        font-size: 14px;
+    }
+
+    .materialItem .namePlaceholder{
+        position: absolute;
+        left: 10px;
+        top: 60px;
+        font-size: 12px;
+        font-weight: bold;
+        width: 50px;
+        text-align: center;
+    }
+
+    .materialItem .materialTranscriptBlock:hover{
+        opacity: 0.8;
+        background: linen;
+    }
+
+    .materialItem .materialTranscriptBlock{
+        padding: 3px;
+        font-weight: bold;
+        font-size: 24px;
+        cursor: pointer;
+        line-height: 30px;
+        /*position: absolute;*/
+        margin-left: 60px;
+        left: 50px;
+        top: 30px;
+        width: 800px;
+        min-height: 35px;
+        /*background-color: lightcyan;*/
+    }
+
+    .materialItem .avatarPlaceholder{
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+    .materialItem img{
+        width: 50px;
+        height: 50px;
+        border: 2px solid steelblue;
+        border-radius: 100px;
+    }
+
+    .materialItem img:hover{
+        border-color: goldenrod;
+    }
+
+    .materialItem a{
+        font-weight: bold;
+
+    }
+
+    .controlButton{
+        position: absolute;
+        top: 5px;
+        right: 5px;
+    }
+    
+    .bbCommentButton{
+        position: absolute;
+        top: 38px;
+        right: 15px;
+    }
+
+    #usersTable{
+        width: 100px;
+        position: fixed;
+        top: 120px;
+        left: 0px;
+        background-color: whitesmoke;
+        /*border-top-right-radius: 5px;*/
+        /*border-bottom-right-radius: 5px;*/
+        border-right: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
+        border-top: 1px solid lightgray !important;
+    }
+
+    #usersTable tr{
+        cursor: pointer;
+    }
+
+    .cuteCard{
+        position: relative;
+        width: 51px;
+        height: 70px;
+        cursor: pointer;
+    }
+
+    .cuteCard:hover{
+        opacity: 0.8;
+    }
+    
+    #usersTable tr:hover img{
+        border-color: goldenrod;
+        border-width: 5px;
+    }
+
+    .cuteImgPlaceholder{
+        position: absolute;
+        width: 50px;
+        border-radius: 100px;
+        top: 2px;
+    }
+
+    .cuteImgPlaceholder img{
+        border-radius: 100px;
+        border: 2px solid #59595a;
+    }
+
+    .cuteImgText{
+        position: absolute;
+        top: 60px;
+        font-size: 12px;
+        font-weight: bold;
+        width: 50px;
+        text-align: center;
+    }
+
+    .materialsNumber{
+        font-weight: bold;
+        padding-top: 11px !important;
+        font-size: 32px;
+        text-align: center;
+    }
+
+</style>
+
+    <table id="usersTable" class="table">
+
+    </table>
+
+    <div class="gallery-loader hide">
+        <div class="loader"></div>
+    </div>
+
+
+<script>
+    $(function(){
+        MSM = new MaterialsSauronManager();
+        MSM.init();
+    });
+</script>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>
+        Materials Library
+    </title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../home/bootstrap/js/bootstrap.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+    <!-- /core scripts -->
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/moment.js" ></script>
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="plugins/modernizr.js"></script>
+
+    <style>
+        img.patientCategory{
+            cursor: pointer;
+            -webkit-transition: 1s;
+            -moz-transition: 1s;
+            -o-transition: 1s;
+            transition: 1s;
+        }
+        img.patientCategory:hover{
+            opacity: 0.6;
+            margin-top: 0px;
+        }
+
+    </style>
+
+
+</head>
+
+<!-- body -->
+
+<body>
+
+
+<div class="cover" style="background-image: url(../home/img/cover1.jpg)"></div>
+<div class="overlay bg-color"></div>
+
+<div class="app horizontal-layout">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient <sup>Teacher</sup>
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li class="hidden-xs">
+                <!-- toggle small menu -->
+                <!--<a href="javascript:;" class="toggle-sidebar">-->
+                <!--<i class="ti-menu"></i>-->
+                <!--</a>-->
+                <!-- /toggle small menu -->
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="hidden-xs">
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#createModal" >
+                    <i class="ti-plus"></i>
+
+                </a>
+            </li>
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/profile.png" class="header-avatar img-circle avatar avatar-sm img-circle userAvatar">
+                    <span class="hidden-xs ml10 username"  >UserName</span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <li>
+                        <a href="profile.html" >Profile</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="logoutLink" >logout</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout">
+
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <div class="nameBlock text-center" style=" background-image: url('../img/space.jpg'); display: block; height: 100px; width: 100%;" >
+                <h3 class="className mt0 pt15 mb0 pb5" style="color: #ffffff;" >Библиотека материалов</h3>
+                <p class="classDescription">Здесь собраны материалы для уроков</p>
+
+            </div>
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper ">
+
+                    <h5 class="text-center"  >
+                        <a href="youtubeSearch.html" target="_blank" >
+                            <i class="fa fa-youtube" ></i>
+                            Youtube Search
+                        </a>
+                    </h5>
+
+                    <div class=" col-xs-8 col-xs-offset-2" id="groupsPlaceholder" >
+
+                        <div class="col-xs-4 groupItem" >
+                            <section class="panel position-relative" style="background-color: antiquewhite; cursor: pointer;" onclick="window.location.href='materials.html'" >
+                                <div class="panel-body">
+                                    <div class="overflow-hidden bb">
+                                    <p class="no-m">
+                                        <b>Все материалы</b>
+                                    </p>
+                                  </div>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- /inner content wrapper -->
+
+            </div>
+            <!-- /content wrapper -->
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+    </section>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Create New Materials Group</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control mb10" id="createName" placeholder="Name" />
+                <textarea id="createDescription" class="form-control mb10" placeholder="Description" ></textarea>
+                <input class="form-control mb10" id="createTags" placeholder="Tags" />
+                <div class="text-right">
+                    <button class="btn btn-primary" id="createButton" >CREATE</button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+                <!--<button type="button" class="btn btn-primary" id="createClassButton" >CREATE</button>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Edit group</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control mb10" id="editName" placeholder="Name" />
+                <textarea id="editDescription" class="form-control mb10" placeholder="Description" ></textarea>
+                <input class="form-control mb10" id="editTags" placeholder="Tags" />
+                <div class="text-right">
+                    <button class="btn btn-primary" id="editButton" >UPDATE</button>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+                <!--<button type="button" class="btn btn-primary" id="createClassButton" >CREATE</button>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="demoModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 515px;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="demoGroupName" ></h4>
+            </div>
+            <div class="modal-body">
+                <div id="demoContent">
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+                <!--<button type="button" class="btn btn-primary" id="createClassButton" >CREATE</button>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/plugins/toastr/toastr.min.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="js/MaterialsGroupManager.js"></script>
+<!-- /template scripts -->
+
+<!-- page script -->
+<!-- /page script -->
+
+<script>
+    $(function(){
+        MGM = new MaterialsGroupManager();
+        MGM.init();
+    });
+</script>
+
+</body>
+<!-- /body -->
+
+</html>

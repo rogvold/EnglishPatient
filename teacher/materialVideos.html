@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" style="background: #F1F1F1;">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../home/plugins/taggle/css/twilight.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/projects.min.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/taggle.min.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../css/sweetalert.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../vergels/mvp/plugins/semantic/semantic.min.js"></script>
+
+    <script src="../js/remarkable.min.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+
+    <script src="../home/bootstrap/js/bootstrap.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+    <!-- /core scripts -->
+
+    <!-- load modernizer -->
+    <script src="../home/plugins/modernizr.js"></script>
+
+</head>
+<body style="background: #F1F1F1;">
+
+<div class="app" style="background: #F1F1F1;">
+
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav navbar-left">
+            <li>
+                <div class="input-group" style="display: inline-block; margin-left: 40px; width: 500px; height: 48px; padding-top: 8px; ">
+                    <input autofocus="1" type="text" class="form-control" id="searchInput" style="display: inline-block; width: 410px; font-size: 20px; " placeholder="Search for...">
+                      <span class="input-group-btn" style="text-align: left;">
+                        <button class="btn btn-facebook" type="button" id="searchButton" style=" margin-left: 0px;">
+                            <i class="glyphicon glyphicon-search"></i> GO!
+                        </button>
+                      </span>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <!--<img src="img/faceless.jpg" class="header-avatar img-circle" alt="user" title="user">-->
+                    <span class="hidden-xs ml10 username"  ></span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+
+                    <li class="">
+                        <a href="javascript: void(0);" class="logoutLink" >Выход</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+
+
+    </header>
+
+
+    <div id="videoBlock" style="display: none; position: relative;">
+        <div id="iframePlaceholder">
+
+        </div>
+
+        <div id="closeLink" style="">
+            <i class="glyphicon glyphicon-remove" ></i> Close
+        </div>
+
+        <div id="shareButton" style="">
+            <i class="glyphicon glyphicon-share" ></i> Share
+        </div>
+
+    </div>
+
+
+    <div id="videoInfoBlock" style="display:  none;">
+        <div id="transcript">
+
+        </div>
+        <div id="comment">
+
+        </div>
+        <div id="tags">
+
+        </div>
+    </div>
+
+    <section class="layout" style="background: #F1F1F1; margin: 0 auto; width: 1000px; padding-top: 50px; ">
+
+
+        <!-- main content -->
+
+            <!-- content wrapper -->
+
+                <!-- inner content wrapper -->
+                <!--<div class="content-wrap " style="width: 1000px; margin: 0 auto; background-color: white; padding: 0px; margin-top: 15px; border: 1px solid lightgray;" >-->
+
+
+
+
+                    <div class="pl0 pr0" id="searchResults" >
+
+                        <div class="col-md-12" >
+                            <h3 style="color: #59595a;">
+                                <i data-toggle="modal" data-target="#infoModal" class="glyphicon glyphicon-info-sign pull-right"></i>
+                               Поиск по базе материалов
+                            </h3>
+                            <h5 style="color: #59595a; margin-bottom: 10px;">
+                                Введите запрос в поисковую строку...
+                                <br/>
+                                <a href="javascript: void(0);" id="allMaterialsLink" > Показать все материалы</a>
+                                <br/>
+                                <a style="float: right;" href="http://beta.englishpatient.org/teacher/materialVideos.html?q=tag:%20recommended" id="reco" > Показать Recommended Videos</a>
+
+                                <br/>
+                                <a style="float: right;" href="http://beta.englishpatient.org/teacher/materialVideos.html?q=tag:%20sv" id="sim" > Показать Simple Videos</a>
+
+                            </h5>
+                        </div>
+
+                    </div>
+
+
+
+
+                <!--</div>-->
+                <!-- /inner content wrapper -->
+
+            <!-- /content wrapper -->
+        <!-- /main content -->
+
+
+    </section>
+
+</div>
+
+
+
+
+
+<div class="modal fade" id="infoModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 840px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Как пользоваться поиском?</h4>
+            </div>
+            <div class="modal-body">
+                <iframe src="https://player.vimeo.com/video/133278822?title=0&byline=0&portrait=0" width="800" height="430" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ЗАКРЫТЬ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--translate block-->
+<div class="modal fade" id="translateModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="width: 840px;">
+        <div class="modal-content">
+            <div class="ui message translateWidget" style="margin: 3px; padding: 3px;" >
+                <div class="ui form" style="margin: 0 auto; text-align: center;">
+                    <div class="field ui">
+                        <!--<label>Last Name</label>-->
+                        <input id="translateInput" type="text" name="last-name" style="width: 60%;" placeholder="Перевод...">
+                        <button class="ui button primary" style="max-width: 37%; line-height: 20px; font-size: 12px;" id="translateButton"><i class="icon search"></i> translate</button>
+
+                    </div>
+                </div>
+                <div class="ui">
+                    <div id="translatePlaceholder" style="max-height: 300px; overflow-y: auto;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+<style>
+
+
+</style>
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/moment.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="../common/js/TranslateManager.js"></script>
+
+
+<script src="../home/js/custom/VideoMaterial.js"></script>
+<script src="../home/js/custom/TextMaterial.js"></script>
+<script src="../home/js/custom/ImageMaterial.js"></script>
+<script src="../home/js/custom/AudioMaterial.js"></script>
+
+
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="../student/js/TranslateWidgetManager.js"></script>
+<script src="js/MaterialsSearchManager.js"></script>
+
+
+<script>
+
+        $(function(){
+            MSM = new MaterialsSearchManager();
+            MSM.init();
+        });
+
+
+</script>
+
+
+
+</body>
+</html>

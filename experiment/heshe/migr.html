@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="../../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="../../home/js/parse-1.2.18.min.js" ></script>
+    <script type="text/javascript" src="../../home/js/custom/common.js" ></script>
+    <script type="text/javascript" src="js/jquery.cookie.js" ></script>
+    <script type="text/javascript" src="js/PhrasesManager.js" ></script>
+
+
+<style>
+
+    #materialsList{
+        list-style: none;
+        margin-top: 20px;
+        margin-left: 0px;
+        padding-left: 0px;
+    }
+
+    img.materialImage{
+        max-height: 100px;
+    }
+
+    .materialText{
+        margin-right: 30px;
+        margin-left: 20px;
+        font-weight: bold;
+    }
+
+    .materialControls{
+
+    }
+
+    li.materialLi{
+        border-bottom: 1px solid black;
+    }
+
+    .deleteLink{
+        cursor: pointer;
+        color: firebrick;
+    }
+
+
+</style>
+
+</head>
+<body>
+<div class="container" >
+
+    <ul id="materialsList">
+        <li>
+            loading
+        </li>
+    </ul>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="controlsBlock">
+
+                <div class="col-md-12" style="margin-bottom: 10px;" >
+                    <div class="col-md-10">
+                        <input class="form-control" id="imageUrl" placeholder="image url" >
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-info" id="previewButton" >preview</button>
+                    </div>
+
+                </div>
+
+                <br/>
+                <select id="mark" class="form-control">
+                    <option value="he" >HE</option>
+                    <option value="she" >SHE</option>
+                    <option value="they" >THEY</option>
+                </select>
+                <br/>
+                <button class="btn btn-primary" id="saveButton" >save</button>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <img id="previewImage" style="width: 100%;" />
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+<script>
+
+    var HeSheMigrationManager = function(){
+        var self = this;
+        this.materials = [];
+
+        this.init = function(){
+            initParse();
+            self.initSaveButton();
+            self.initDeleteButton();
+            self.initPreviewButton();
+            self.loadMaterials(function(){
+                self.drawMaterials();
+                self.prepareEditBlock();
+            });
+        }
+
+        this.loadMaterials = function(callback){
+            var q = new Parse.Query(Parse.Object.extend('HeSheMaterial'));
+            q.limit(1000);
+            q.addDescending('createdAt');
+            q.find(function(results){
+                self.materials = results;
+                callback();
+            });
+        }
+
+        this.getMaterialHtml = function(m){
+            var s = '';
+            s+= '<li class="materialLi" >' +
+            '<img class="materialImage"  src="' + m.get('imageUrl') + '" />' +
+            '<span class="materialText" >' + m.get('mark') + '</span>' +
+            '<span class="materialLink" >' + m.get('imageUrl') + '</span>' +
+            '<span class="materialControls" ><i class="deleteLink pull-right" data-id="' + m.id + '"  >delete</i></span>' +
+            '</li>';
+            return s;
+        }
+
+        this.drawMaterials = function(){
+            var list = self.materials;
+            var s = '';
+            for (var i in list){
+                s+=self.getMaterialHtml(list[i]);
+            }
+            $('#materialsList').html(s);
+        }
+
+        this.initSaveButton = function(){
+            $('#saveButton').bind('click', function(){
+                console.log('save button clicked');
+                var src = $('#imageUrl').val().trim();
+                if (validateUrl(src) == false){
+                    alert('invalid src');
+                    return;
+                }
+                var mark = $('#mark').val();
+                var HeSheMaterial = Parse.Object.extend('HeSheMaterial');
+                var m = new HeSheMaterial();
+                m.set('mark', mark);
+                m.set('imageUrl', src);
+                m.save().then(function(){
+                    self.loadMaterials(function(){
+                        self.drawMaterials();
+                        self.prepareEditBlock();
+                    });
+                });
+            });
+        }
+
+        this.initPreviewButton = function(){
+            $('#previewButton').bind('click', function(){
+                $('#previewImage').attr('src', $('#imageUrl').val());
+            });
+        }
+
+        this.initDeleteButton = function(){
+            $('body').on('click', '.deleteLink', function(){
+                var id = $(this).attr('data-id');
+                var m = self.getMaterialById(id);
+                m.destroy({
+                    success: function(){
+                        self.loadMaterials(function(){
+                            self.drawMaterials();
+                            self.prepareEditBlock();
+                        });
+                    }
+                });
+            });
+        }
+
+        this.getMaterialById = function(id){
+            var list = self.materials;
+            for (var i in list){
+                if (list[i].id == id){
+                    return list[i];
+                }
+            }
+        }
+
+        this.prepareEditBlock = function(){
+            var n = self.materials.length + 1;
+            $('#imageUrl').val(self.getLink(n));
+            $('#previewButton').click();
+        }
+
+        this.getLink = function(n){
+            return 'http://beta.englishpatient.org/experiment/heshe/img/' + n +'.png';
+
+        }
+
+    }
+
+    $(function(){
+        var MM = new HeSheMigrationManager();
+        MM.init();
+    })
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,442 @@
+.textBlock{
+    font-size: 32px;
+}
+
+.cardNumber.answered a{
+    background-color: #1582dc;
+    color: white;
+}
+
+ul.taggle_list{
+    margin-left: 0px !important;
+    padding-left: 0px;
+    /*padding: 10px;*/
+    /*border: 1px dashed lightblue;*/
+}
+
+.materialItem.selected section, .userItem.selected section{
+    background-color: lightgreen;
+}
+
+.materialItem, .userItem{
+    cursor: pointer;
+}
+
+.materialItem section, .userItem section{
+    margin-bottom: 0px !important;
+}
+
+a:hover, .header li a:active {
+     /*background: darkblue !important;*/
+}
+
+#materialsList{
+    list-style: none;
+}
+
+#widgetMaterialsList, #widgetUsersList{
+    list-style: none;
+}
+
+#tagsWidgetBlock .materialTag{
+    background-color: lightblue;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    border: darkblue;
+    font-weight: bold;
+}
+
+#widgetMaterialsList, #widgetUsersList{
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#questionaryList, #answersList{
+    margin-left: 0px;
+    list-style: none;
+    padding-left: 0px;
+}
+
+#questionaryList li, #answersList li{
+    border-bottom: 1px solid lightgray;
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#questionaryList li:hover, #answersList li:hover{
+    /*opacity: 0.7;*/
+    background-color: lightgoldenrodyellow;
+}
+
+li.question.selected, li.answer.selected{
+    background-color: lightcoral;
+}
+
+#questionAnswers{
+    list-style: none;
+    padding-left: 0px;
+}
+
+.dropdown-menu li a.logoutLink, .dropdown-menu li a.profileLink{
+    padding: 12px;
+}
+
+#transcriptText{
+    font-size: 18px;
+}
+
+.exercisePanel.answered section.panel{
+    background-color: lightgreen;
+}
+
+.exercisePanel section.panel div.thumb{
+    width: 70px;
+}
+
+#exerciseModal li{
+    list-style: none;
+    padding: 10px;
+    border-bottom: 2px solid lightgray;
+}
+
+#exerciseModal .videoMaterial{
+    display: block;
+    margin-bottom: 15px;
+}
+
+#exerciseModal .audioPlaceholder{
+    margin-top: 15px;
+}
+
+#exerciseModal .audioPlaceholder audio{
+    display: block;
+}
+
+#exerciseModal .videoLink{
+    font-size: 14px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+
+#teacherFeedbackBlock, #exerciseIsFinishedBlock{
+    border-top: 1px solid lightgrey;
+}
+
+.modal:nth-of-type(even) {
+    z-index: 1042 !important;
+}
+.modal-backdrop.in:nth-of-type(even) {
+    z-index: 1041 !important;
+}
+
+#exerciseAnswersList{
+    max-height: 450px;
+    overflow-y: auto;
+    padding-left: 0px;
+}
+
+.playerBlock iframe{
+    width: 100%;
+    height: 600px;
+}
+
+i.showItem, i.edit, i.delete{
+    cursor: pointer !important;
+}
+
+
+#createGroupsList, #updateGroupsList{
+    margin-left: 0px;
+    list-style: none;
+}
+
+li.createGroupsListItem, li.updateGroupsListItem{
+    border: 1px solid #808080;
+    padding: 10px;
+}
+
+#createGroupsList{
+    margin-left: 0px;
+    list-style: none;
+}
+
+li.createGroupsListItem i, li i.deleteUpdateGroup{
+    cursor: pointer;
+    border: 1px solid lightgrey;
+}
+
+
+.materialItem.active section{
+    background-color: #1582dc;
+}
+
+.patientArticle.production p img{
+    display: block;
+    margin: 0 auto;
+}
+
+.unselectable {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+.userAnswerText{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid lightgrey;
+    padding-bottom: 10px;
+}
+
+.exerciseAnswerAudio{
+    display: block !important;
+}
+
+.sidebar-350{
+    width: 350px !important;
+}
+
+.sidebar-320{
+    width: 320px !important;
+}
+
+.translatable{
+    cursor: pointer;
+}
+.translatable:hover{
+    background-color: lightgoldenrodyellow;
+    /*padding: 0px 5px;*/
+    /*border: 1px solid #f5f5f5;*/
+}
+
+#translateModal .modal-dialog{
+    width: 400px !important;
+}
+
+#translateModal .modal-dialog ul.exList{
+    list-style-type: circle;
+}
+
+
+#translateModal .modal-dialog ul.translation li.def{
+    list-style-type: upper-roman;
+}
+
+#textPlaceholder .textBlock{
+    width: 60%;
+    margin: 0 auto;
+}
+
+.roleBlock{
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.roleBlock .roleImg:hover{
+    border-width: 10px;
+    opacity: 0.6;
+}
+
+.roleImg{
+    display: block;
+    /*width: 200px;*/
+    width: 100px;
+    border: 2px solid #1582DC;
+    border-radius: 200px;
+}
+
+.roleName{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.sidebar-300{
+    border-left: 1px solid lightgray;
+}
+
+
+#searchResults h3 i{
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#searchResults h3 i:hover{
+    color: #1582dc;
+}
+
+#searchResults h3, #searchResults h5{
+    color: #59595a;
+    padding-left: 10px;
+}
+
+#videoBlock{
+    padding-top: 51px;
+    width: 100%;
+    height: 613px;
+    background-color: black;
+    text-align: center;
+}
+
+#searchResults{
+    background-color: white;
+    border: 1px solid lightgray;
+    display: block;
+    margin: 0 auto;
+    width: 1000px;
+    display: inline-block;
+    margin-top: 15px;
+}
+
+#allMaterialsLink{
+    color: #1582dc;
+    float: right;
+    font-size: 16px;
+}
+
+#allMaterialsLink:hover{
+    text-decoration: underline;
+}
+
+.searchItem{
+    height: 200px;
+    border-bottom: 1px solid lightgray;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.searchItem:hover{
+    opacity: 0.8;
+}
+
+.searchItem:hover .searchItemName{
+    color: #1582DC;
+    text-decoration: underline;
+}
+
+.searchItemName{
+    text-align: justify;
+    font-weight: bold;
+    /*font-size: 14px;*/
+    font-size: 13px;
+}
+
+.searchItemAvatarPlaceholder{
+    height: 150px;
+    overflow: hidden;
+}
+
+.searchItemAvatarPlaceholder img{
+    height: 100%;
+    width: 100%;
+
+}
+
+.searchItem.selected{
+    background-color: linen;
+}
+
+.searchItemDuration{
+    position: absolute;
+    top: 0px;
+    left: 15px;
+    padding: 2px;
+    padding-bottom: 0px;
+    background-color: white;
+    border-right: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    border-bottom-right-radius: 2px;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+#closeLink, #shareButton{
+    position: absolute;
+    font-size: 24px;
+    padding: 5px;
+    text-align: center;
+    top: 55px;
+    cursor: pointer;
+    font-weight: bold;
+    right: 5px;
+    height: 45px;
+    width: 110px;
+    opacity: 0.7;
+    background-color: white;
+}
+
+#shareButton{
+    left: 5px;
+}
+
+#closeLink:hover{
+    opacity: 0.6;
+}
+
+#videoInfoBlock{
+    display: block;
+    margin: 0 auto;
+    width: 1000px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+#transcript{
+    text-align: center;
+    font-weight: bold;
+}
+
+#comment{
+    padding: 10px;
+}
+
+#comment ul {
+    padding-left: 20px;
+}
+
+#comment a{
+    color: #1582dc;
+}
+
+#comment h3{
+    font-size: 28px;
+}
+
+#tags .tag{
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#tags .tag:hover{
+    opacity: 0.6;
+}
+
+#tags{
+    padding-top: 6px;
+    border-top: 1px solid #e3e6f3;
+}
+
+#materialsList {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.selectedName{
+    margin-top: 32px;
+}

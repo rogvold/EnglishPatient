@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script type="text/javascript">
+    function transcribe(words) {
+        document.getElementById("speech").value = words;
+        document.getElementById("mic").value = "";
+        document.getElementById("speech").focus();
+    }
+</script>
+
+<textarea cols="50" id="speech"></textarea>
+<input id="mic"  onwebkitspeechchange="transcribe(this.value)" x-webkit-speech="1">
+
+</body>
+</html>

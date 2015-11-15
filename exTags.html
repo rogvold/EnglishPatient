@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="vergels/mvp/plugins/semantic/semantic.min.css" />
+
+    <script src="home/plugins/jquery-1.11.1.min.js" ></script>
+    <script src="vergels/mvp/plugins/semantic/semantic.min.js" ></script>
+    <script src="home/js/parse-1.2.18.min.js" ></script>
+    <script src="home/js/custom/common.js" ></script>
+    <script src="js/ExTagsManager.js" ></script>
+
+
+
+
+</head>
+<body>
+
+<h3>
+    Existing tags
+</h3>
+<ul id="tagsList">
+
+</ul>
+
+<div class="container text">
+
+    <div id="categories" style=" width: 1000px; margin: 0 auto; margin-bottom: 20px;" class="row ">
+
+    </div>
+
+
+
+    <div class="ui form" id="createNewBlock" style="margin-bottom: 20px;" >
+
+        <div class="field">
+            <input id="name" type="text" placeholder="Name" /> <br/>
+        </div>
+        <div class="field">
+            <input id="tag" type="text" placeholder="Tag" /> <br/>
+        </div>
+
+        <div class="field">
+            <input id="avatar" placeholder="Avatar URL" /> <br/>
+        </div>
+
+        <div class="field">
+            <textarea placeholder="Description" id="description"></textarea>
+        </div>
+
+        <hr/>
+
+        <button class="button primary ui" id="createButton" >Create!</button>
+
+
+    </div>
+
+
+</div>
+
+<div class="ui modal basic" id="editModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Edit
+    </div>
+    <div class="content">
+
+        <div class="ui form" >
+
+            <div class="field">
+                <input id="editName" type="text" placeholder="Name" /> <br/>
+            </div>
+            <div class="field">
+                <input id="editTag" type="text" placeholder="Tag" /> <br/>
+            </div>
+
+            <div class="field">
+                <input id="editAvatar" placeholder="Avatar URL" /> <br/>
+            </div>
+
+            <div class="field">
+                <textarea placeholder="Description" id="editDescription"></textarea>
+            </div>
+
+            <hr/>
+
+
+
+        </div>
+
+    </div>
+    <div class="actions">
+        <div class="ui positive right labeled icon button" id="updateButton">
+            Update
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        ETM = new ExTagsManager();
+        ETM.init();
+    });
+</script>
+
+</body>
+</html>

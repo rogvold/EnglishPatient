@@ -1,0 +1,9 @@
+.leftSidebarClassLink:hover{
+    background-color: #179DBA !important;
+    color: white !important;
+}
+
+.leftSidebarClassLink div:hover{
+    background-color: #179DBA !important;
+    color: white !important;
+}

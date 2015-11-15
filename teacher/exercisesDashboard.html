@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css" />
+
+    <script src="../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script src="../vergels/mvp/plugins/semantic/semantic.min.js" ></script>
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/custom/common.js" ></script>
+    <script src="js/ExercisesDashboardManager.js" ></script>
+    
+</head>
+<body>
+
+
+
+<!-- Page Contents -->
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment" style="padding-top: 0px;">
+
+        <div class="ui container" style="width: 100%; ">
+            <div class="ui large secondary inverted pointing menu" style=" background-color: #1582dc; padding-left: 50px;">
+
+                <a class="active item" href="/index.html">English Patient</a>
+                <!--<a class="item">Work</a>-->
+                <!--<a class="item">Company</a>-->
+                <!--<a class="item">Careers</a>-->
+                <!--<div class="right item">-->
+                <!--<a class="ui inverted button">Log in</a>-->
+                <!--<a class="ui inverted button">Sign Up</a>-->
+                <!--</div>-->
+            </div>
+        </div>
+
+        <!--<div class="ui text container">-->
+    </div>
+
+
+    <div class="ui vertical stripe segment" style="width: 1100px; margin: 0 auto;">
+
+        <div class="ui text container" id="categories" style="margin: 0 auto; width: 100%; max-width: 100% !important; text-align: center;">
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+<div class="ui flowing popup top left transition visible animating scale out" id="categoriesPopup" >
+    <div class="ui  one column divided center aligned grid" style="width: 300px; overflow-x: hidden; overflow-y: auto; min-height: 200px; max-height: 400px;">
+        <h3 id="exercisesNumber"></h3>
+        <div id="exercisesPlaceholder" class="ui cards">
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    #categories .ui.card{
+        width: 250px;
+    }
+
+    #categories .ui.card .description{
+        text-align: justify;
+        font-size: 14px;
+    }
+
+    #categories .ui.card .header{
+        /*text-align: justify;*/
+        font-size: 1em;
+    }
+
+</style>
+
+<script>
+    $(function(){
+        EDM = new ExercisesDashboardManager();
+        EDM.init();
+    });
+</script>
+
+
+</body>
+</html>

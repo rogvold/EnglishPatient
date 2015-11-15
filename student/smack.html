@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" type="text/css" href="../vergels/mvp/plugins/semantic/semantic.min.css">
+
+    
+    <link rel="stylesheet" type="text/css" href="css/smack.css">
+
+
+
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../vergels/mvp/plugins/semantic/semantic.min.js"></script>
+    <script src="../home/js/custom/common.js"></script>
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/moment.js" ></script>
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <script src="../teacher/js/OnlineManager.js"></script>
+    <script src="../home/js/custom/CurrentUserManager.js"></script>
+    <script src="js/StudentSmackManager.js"></script>
+
+
+</head>
+<body>
+
+<div class="ui fixed menu" style="background-color: #1582dc; ">
+    <div class="ui container" style="" >
+        <a href="index.html" class="header item" style=" color: white; font-size: 17px; padding-bottom: 10px; padding-top: 24px;" >
+            <img class="logo" src="../home/img/logo_mini.png">
+            English Patient
+        </a>
+        <a href="#"  id="backLink" style="display: none;" class="item"><i class="arrow left icon"></i> Назад</a>
+    </div>
+
+</div>
+
+<div class="ui grid container">
+
+
+    <div class="row">
+        <div class="column">
+
+            <div id="tasksPlaceholder" style="display: block; width: 350px; margin: 0 auto; margin-top: 100px;">
+
+                <div class="ui tiny progress teal" data-percent="0" id="progress" style="display: none;">
+                    <div class="bar" style="min-width: 0px;"></div>
+                    <div class="label" id="progressLabel"></div>
+                </div>
+
+
+
+            <div class="ui people shape" style="">
+
+                <div class="sides" id="materialsPlaceholder">
+
+
+
+
+                    <div class="side active" >
+                        <div class="card ui">
+                            <div class="image" style="height: 250px; text-align: center; padding-top: 90px; background-image: url('../vergels/mvp/img/enigma.jpg');">
+                                <button class="ui massive positive button" id="startButton" >
+                                    <i class="clock icon" style="margin-right: 0px;" ></i>
+                                    <span style="margin-right: 20px;" id="countdown">
+                                    9
+                                    </span>
+                                    СТАРТ
+                                </button>
+                            </div>
+                            <div class="content">
+                                    <div class="description" style="text-align: center;">
+                                        Вставьте пропущенное
+                                        <br/>
+                                        <span class="gap" data-content="Вставьте пропуск">слово</span>
+                                        <br/>
+                                        и нажмите <b>Enter</b>
+                                    </div>
+                            </div>
+                            <div class="extra content">
+                                <div class="ui large transparent left icon input">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+            <!--<div style="margin-top: 10px;">-->
+                <!--<button id="nextButton" >next button</button>-->
+            <!--</div>-->
+
+
+        </div>
+    </div>
+</div>
+
+<div id="hiddenFinishPlaceholder" style="display: none;">
+    <div class="side questionItem " id="finishCard" >
+        <div class="card ui">
+            <!--<div class="image" style="height: 250px; text-align: center;  background-image: url('img/finishSun.jpg');">-->
+            <div class="image" style="height: 250px; text-align: center;  background-color: white;">
+                <div class="column one white" style="background-color: white; border-top-right-radius: 4px; border-top-left-radius: 4px; opacity: 0.96; height: 48px; padding-top: 10px;;">
+                    <h3>Результат</h3>
+                </div>
+                <div class=" divided stackable white center aligned ui grid" style=" opacity: 0.96; background-color: white; margin-left: 0px !important; margin-top: 10px; width: 100%;;" >
+                    <div class="" style="margin-right: 40px;">
+                        <div class="ui icon header">
+                            <i class="check green circular icon"></i>
+                            <span id="rightNumber" class="green" >0</span> <br/>
+                            верно
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="ui icon header">
+                            <i class="remove circular icon red"></i>
+                            <span id="wrongNumber">0</span> <br/>
+                            <span class="red">неверно</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="content">
+                <div class="description" id="resultText" style="font-weight: bold; text-align: center; padding-top: 30px;">
+
+                </div>
+            </div>
+            <div class="extra content" style="padding: 0px;">
+                <table class="ui celled table" id="resultsTable">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<div class="ui card ">-->
+    <!--<div class="image inverted segment" style="height: 250px; ">-->
+        <!--<div class="ui statistics inverted segment" style="display: block;" >-->
+            <!--<div class="green statistic">-->
+                <!--<div class="value">-->
+                    <!--14-->
+                <!--</div>-->
+                <!--<div class="label">-->
+                    <!--Right-->
+                <!--</div>-->
+            <!--</div>-->
+            <!-- -->
+
+            <!--<div class="red statistic" style="display: block;">-->
+                <!--<div class="value">-->
+                    <!--3-->
+                <!--</div>-->
+                <!--<div class="label">-->
+                    <!--Wrong-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--&lt;!&ndash;<img src="http://i.vimeocdn.com/video/500092426_640.jpg">&ndash;&gt;-->
+    <!--</div>-->
+    <!--<div class="content">-->
+        <!--<a class="header">Kristy</a>-->
+        <!--<div class="meta">-->
+            <!--<span class="date">Joined in 2013</span>-->
+        <!--</div>-->
+        <!--<div class="description">-->
+            <!--Kristy is an art director living in New York.-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="extra content">-->
+        <!--<a>-->
+            <!--<i class="user icon"></i>-->
+            <!--22 Friends-->
+        <!--</a>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="background" data-b="1">
+    <div class="background__content background__content_blur" style="background-color: #3779bc"></div>
+</div>
+
+<style>
+
+    #backLink{
+        font-size: 17px;
+        color: white;
+        padding-top: 30px;
+    }
+
+
+</style>
+
+<script>
+
+    $(function(){
+        SSM = new StudentSmackManager();
+        SSM.init();
+    });
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>
+        Teacher Dashboard
+    </title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+    <script src="../home/bootstrap/js/bootstrap.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <!-- /core scripts -->
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/sweetalert.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/moment.js" ></script>
+
+
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="plugins/modernizr.js"></script>
+
+    <style>
+
+        #assignmentsList{
+            margin-bottom: 200px;
+        }
+
+        .selectedPhrase, .selectedPhrase, .selecrtedArticle{
+            padding: 5px;
+            border: 1px solid #000000;
+        }
+
+        i.deleteAssignmentButton{
+            cursor: pointer !important;
+            color: firebrick;
+        }
+
+        .notMyExercise{
+            background-color: #f5f5f5;
+        }
+
+    </style>
+
+
+</head>
+
+<!-- body -->
+
+<body>
+
+
+<div class="cover" style="background-image: url(../home/img/cover1.jpg)"></div>
+<div class="overlay bg-color"></div>
+
+<div class="app horizontal-layout">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient <sup>Teacher</sup>
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li class="hidden-xs">
+                <!-- toggle small menu -->
+                <!--<a href="javascript:;" class="toggle-sidebar">-->
+                <!--<i class="ti-menu"></i>-->
+                <!--</a>-->
+                <!-- /toggle small menu -->
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <!--search widget-->
+
+            <li class="notifications dropdown ">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-search"></i>
+                    искать фрагмент
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Search</b>
+                        </div>
+
+                        <div style="display: block; width: 400px; border: 1px solid #e3e6f3;  background-color: white;">
+
+                            <div style="display: block; padding: 5px; padding-bottom: 0px; border-bottom: 1px solid #e3e6f3;">
+                                <!--<input class="form-control" placeholder="Search for..." id="searchInput" />-->
+                                <div class="input-group" style="display: inline-block; width: 400px; ">
+                                    <input autofocus="1" type="text" class="form-control" id="searchInput" style="display: inline-block; width: 348px; font-size: 20px; padding-bottom: 0px; " placeholder="Search for...">
+                                <span class="input-group-btn" style="text-align: left;">
+                                    <button class="btn btn-facebook" type="button" id="searchButton" style=" margin-left: 0px;">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                                </div>
+                            </div>
+
+                            <div style="height: 250px; overflow-y: auto;">
+                                <ul id="materialsList">
+
+                                </ul>
+                            </div>
+
+                            <div id="searchPlayBlock" class="text-center" style="padding: 3px; background-color: lightgray;">
+                                <iframe src="https://player.vimeo.com/video/133278822?title=0&byline=0&portrait=0" width="380" height="204" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </li>
+
+
+            <!--end of search widget-->
+
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/profile.png" class="header-avatar img-circle avatar avatar-sm img-circle userAvatar">
+                    <span class="hidden-xs ml10 username"  >UserName</span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <li>
+                        <a href="profile.html" >Profile</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="logoutLink" >logout</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout">
+
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper" style="position: relative;" >
+
+
+
+
+                </div>
+                <!-- /inner content wrapper -->
+
+            </div>
+            <!-- /content wrapper -->
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+    </section>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+<!--<div class="modal fade" id="searchPlayDialog" tabindex="-1" role="dialog"  aria-hidden="true">-->
+    <!--<div class="modal-dialog" style="width: 470px;" >-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>-->
+                <!--<h4 class="modal-title" >Ви</h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+
+            <!--</div>-->
+
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>-->
+            <!--</div>-->
+
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/plugins/toastr/toastr.min.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<!--<script src="js/TeacherAssignmentManager.js"></script>-->
+<script src="js/MaterialSearchWidget.js"></script>
+<!-- /template scripts -->
+
+<!-- page script -->
+<!-- /page script -->
+
+<script>
+    $(function(){
+        MSW = new MaterialSearchWidget();
+        MSW.init();
+//        TCM = new TeacherClassManager();
+//        TCM.init();
+    });
+</script>
+
+</body>
+<!-- /body -->
+
+</html>

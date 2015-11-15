@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css" />
+    <script src="../home/plugins/jquery-1.11.1.min.js" type="text/javascript" ></script>
+    <script src="../vergels/mvp/plugins/semantic/semantic.min.js" type="text/javascript" ></script>
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../js/remarkable.min.js" ></script>
+    <script src="js/JSXTransformer.js" ></script>
+    <script src="js/react.js" ></script>
+
+
+    <script type="text/jsx" src="components/patientMenu/PanelItem.js" ></script>
+    <script type="text/jsx" src="components/patientMenu/PanelsBunch.js" ></script>
+    <script type="text/jsx" src="components/patientMenu/PatientMenu.js" ></script>
+
+    <style>
+
+        .panelsBunch .childPanelsPlaceholder{
+            padding-left: 30px;
+            width: 100%;
+            padding-bottom: 20px;
+        }
+
+        .mainPanelPlaceholder{
+            margin-bottom: 10px;
+        }
+
+        .mainPanelPlaceholder .patientPanel{
+            background-color: floralwhite;
+        }
+
+        #modalVimeoPlaceholder{
+            text-align: center;
+        }
+
+        #modalTextPlaceholder{
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        .displaynone{
+            display: none !important;
+        }
+
+        .patientPanel{
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .vimeoPlayerPlaceholder{
+            text-align: center;
+        }
+
+        .imagePlaceholder img{
+            border-radius: 5px !important;
+            border: 3px solid lightgrey !important;
+        }
+
+        .mainPanelPlaceholder .rightBlockPlaceholder{
+            font-size: 25px !important;
+            line-height: 75px;
+            color: rgb(20, 24, 35) !important;
+            padding-top: 3px;
+        }
+        
+        .ui.items.segment{
+            padding: 5px !important;
+        }
+
+
+    </style>
+
+</head>
+<body style="background-color: whitesmoke;
+    background-color: #F3F3F3;
+    background-image: url('http://the-english-patient.com/SportPatient-war/faces/images/pattern.jpg');
+
+">
+
+<div class="ui fixed inverted  menu" style="background-color: #1582dc; height: 40px;" >
+    <div class="ui container">
+        <a href="/index.html" class="header item">
+            <img class="logo"   src="../home/img/logo_mini.png" />
+            English Patient
+        </a>
+    </div>
+</div>
+
+<div class="ui main text container" style="margin-top: 6em;">
+    <h3 class="center" style="text-align: center; font-size: 32px;">
+        Материалы и инструменты образовательного комплекса
+        <br/>
+        "Английский Пациент"
+    </h3>
+    <div id="div" class="ui items row" style="padding: 20px;">
+
+    </div>
+</div>
+
+<div class="ui modal" >
+    <i class="close icon"></i>
+    <div class="header">
+
+    </div>
+    <div class="content">
+        <div id="modalVimeoPlaceholder">
+
+        </div>
+        <div id="modalTextPlaceholder">
+
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    function showPanelModal(vimeoId, text){
+        console.log('showPanelModal, vimeoId = ' + vimeoId + ' text = ' + text);
+        if (vimeoId == ''){
+            return;
+        }
+        $('#modalVimeoPlaceholder').hide();
+        $('#modalTextPlaceholder').hide();
+        if (vimeoId != undefined && vimeoId != ''){
+            $('#modalVimeoPlaceholder').show();
+            $('#modalVimeoPlaceholder').html('<iframe src="https://player.vimeo.com/video/' + vimeoId + '?title=0&byline=0&portrait=0" width="800" height="600" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>');
+        }
+        if (text != undefined){
+            $('#modalTextPlaceholder').show();
+            $('#modalTextPlaceholder').html(text);
+        }
+        $('.ui.modal').modal('show');
+    }
+
+    function replaceVimeoLinks(text){
+        console.log('replaceVimeoLinks: text= ' + text);
+        var re = /\[vimeo_([0-9]*)\]/g;
+        text = text.replace(re, function(a, b){
+            var vimeoId = b;
+            return '<div class="vimeoPlayerPlaceholder" >' +
+                    '<iframe src="https://player.vimeo.com/video/' + vimeoId + '?title=0&byline=0&portrait=0" width="500" height="350" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>' +
+                    '</div>';
+        });
+        return text;
+    }
+
+    $('.ui.modal').modal({
+        onHidden: function(){
+            $('#modalVimeoPlaceholder').html('');
+        }
+    });
+
+
+</script>
+
+
+
+
+<script type="text/jsx">
+
+    React.render(<PatientMenu  />, document.getElementById('div'));
+
+</script>
+
+</body>
+</html>

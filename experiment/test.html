@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css"/>
+
+    <script src="../home/js/parse-1.2.18.min.js"></script>
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+
+
+    <style>
+        #list{
+            list-style: none;
+            padding-left: 5px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="row">
+
+    <div class="col-xs-12 "  style="padding: 20px;" >
+        lectures list
+        <ul id="list">
+
+        </ul>
+
+        <hr/>
+
+        <input type="text" class="form-control" id="name" placeholder="Name" />
+        <br/>
+        <textarea id="description" class="form-control" placeholder="Description" ></textarea>
+        <br/>
+
+        <button class="btn btn-info" id="createButton" >create new</button>
+
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+
+    var LectureManager = function(){
+        var self = this;
+        self.lectures = [];
+        this.maxCustomIdLength = 3;
+
+        this.initParse = function(){
+            var appId = 'W9uAbHPACzqbMMIWtE0arGMynffT13FQAWg6XoW3';
+            var jsKey = 'tfL7SsorwuEsmMxjzFToByGa9oN9WFy3K9QprqW6';
+            Parse.initialize(appId, jsKey);
+        }
+
+        this.init = function(){
+            self.initParse();
+            self.loadAllLectures(function(){
+                self.drawAllLectures();
+            });
+            self.initCreateButton();
+        }
+
+        this.loadAllLectures = function(callback){
+            var Lecture = Parse.Object.extend('Lecture');
+            var q = new Parse.Query(Lecture);
+            q.limit(1000);
+            q.descending('createdAt');
+            q.find(function(results){
+                self.lectures = results;
+//                console.log();
+                callback();
+            });
+
+        }
+
+        this.drawAllLectures = function(){
+            var list = self.lectures;
+            var s = '';
+            for (var i in list){
+                var l = list[i];
+                s+='<li> <a href="teacherLecture.html?customId=' + l.get('customId') + '" ><b>' + l.id + '</b> - ' + l.get('customId') + ' - ' + l.get('name') + ' </a></li>';
+            }
+            $('#list').html(s);
+        }
+
+        this.initCreateButton = function(){
+            $('body').on('click', '#createButton', function(){
+                var name = $('#name').val().trim();
+                if (name == undefined || name == ''){
+                    alert('empty name!');
+                    return;
+                }
+                var description = $('#description').val().trim();
+                var customId = self.getUniqueCustomId();
+                var Lecture = Parse.Object.extend('Lecture');
+                var l = new Lecture();
+                l.set('name', name);
+                l.set('description', description);
+                l.set('customId', customId);
+                l.save().then(function(){
+                    window.location.href = window.location.href;
+                });
+            });
+        }
+
+        this.getUniqueCustomId = function(){
+            var f = false;
+            var list = self.lectures;
+            var res = '';
+            while (f == false){
+                var s = getRandomString(self.maxCustomIdLength);
+                f = true;
+                for (var i in list){
+                    if (list[i].get('customId') == s){
+                        f = false;
+                    }
+                }
+                if (f == true){
+                    return s;
+                }
+            }
+            return undefined;
+        }
+
+
+    }
+
+    function getRandomString(len)
+    {
+        var text = "";
+        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for( var i=0; i < len; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+        return text;
+    }
+
+    $(function(){
+        LM = new LectureManager();
+        LM.init();
+    })
+
+</script>
+
+
+</body>
+</html>

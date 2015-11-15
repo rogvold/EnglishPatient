@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="vergels/mvp/plugins/semantic/semantic.min.css" />
+    <link rel="stylesheet" href="plugins/pplayer/assets/pplayer.css" />
+
+    <script src="home/plugins/taggle/js/jquery-1.10.1.js"></script>
+    <script src="vergels/mvp/plugins/semantic/semantic.min.js"></script>
+    <script src="plugins/pplayer/js/jquery.pplayer.js"></script>
+
+    <style>
+        #player{
+            width: 500px;
+            /*height: 400px;*/
+            background-color: black;
+            margin: 0 auto;
+            margin-top: 40px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<div id="player">
+
+</div>
+
+
+<script>
+
+    TIME = 0;
+
+    function initInterval(){
+        setInterval(function(){
+            console.log(PLAYER.getCurrentTime());
+        }, 1000);
+    }
+
+    $(function(){
+        PLAYER = $("#player").pPlayer({
+            youtubeVideoId: "YE7VzlLtp-4" // Youtube fallback
+        });
+//        initInterval();
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>Exercise</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <!-- load modernizer -->
+    <script src="../home/plugins/modernizr.js"></script>
+
+
+    <style>
+        #transcriptText{
+            font-size: 30px !important;
+        }
+
+        #teacherFeedback{
+            font-size: 16px;
+        }
+
+
+        #typingManagerTextarea{
+            font-size: 22px;
+        }
+
+        #textPlaceholder .textBlock{
+            font-size: 24px;
+            line-height: 28px;
+            margin-bottom: 15px;
+        }
+
+
+        #teacherFeedbackBlock{
+            padding-bottom: 70px;
+        }
+
+        #teacherFeedbackBlock p a{
+            text-decoration: underline;
+            color: #006298;
+        }
+
+        #mosesLinkPlaceholder a{
+            font-size: 20px;
+        }
+
+        /*.translateWidget{*/
+            /*margin-bottom: 3px;*/
+            /*padding: 3px;*/
+            /*position: fixed !important;*/
+            /*bottom: 0px;*/
+        /*}*/
+
+        /*.videoBlock.proContraVideoBlock{*/
+            /*/!*width: 500px;*!/*/
+        /*}*/
+
+
+
+    </style>
+
+</head>
+
+<!-- body -->
+
+<body>
+<div class="app">
+<!-- top header -->
+<header class="header header-fixed navbar">
+
+    <div class="brand">
+        <!-- toggle offscreen menu -->
+        <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+        <!-- /toggle offscreen menu -->
+
+        <!-- logo -->
+        <a href="index.html" class="navbar-brand">
+            <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient
+                    </span>
+        </a>
+        <!-- /logo -->
+    </div>
+
+    <ul class="nav navbar-nav navbar-left">
+        <li>
+            <a href="javascript: void();" id="backLink" >
+                <i class="fa fa-arrow-left"></i> Назад
+            </a>
+        </li>
+    </ul>
+
+
+    <ul class="nav navbar-nav navbar-right">
+
+
+        <!--<li class="hidden-xs">-->
+
+            <!--<a href="index.html" class="">-->
+                <!--<i class="ti-menu"></i>-->
+            <!--</a>-->
+
+        <!--</li>-->
+
+        <li class="visible-xs">
+            <a href="javascript:;" data-toggle="offscreen" data-move="rtl">
+                <i class="ti-comment-alt"></i>
+                <div class="badge badge-top bg-danger animated flash">
+                    <span>9</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="off-right">
+            <a href="javascript:;" data-toggle="dropdown">
+                <!--<img src="img/faceless.jpg" class="header-avatar img-circle" alt="user" title="user">-->
+                <span class="hidden-xs ml10 username"  >UserName</span>
+                <i class="ti-angle-down ti-caret hidden-xs"></i>
+            </a>
+            <ul class="dropdown-menu animated fadeInRight">
+
+                <li class="">
+                    <a href="javascript: void(0);" class="logoutLink" >Выход</a>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+</header>
+<!-- /top header -->
+
+<section class="layout">
+<!-- sidebar menu -->
+<!-- /sidebar menu -->
+
+<!-- main content -->
+    <aside class="sidebar-320 offscreen-left bg-white hide" id="mosesSidebar" >
+
+        <div class="sidebar-head">
+            <h4 class="text-center mt5">Помощь</h4>
+        </div>
+
+        <div class="sidebar-body">
+
+        </div>
+
+        <div class="text-center">
+            <button class="btn btn-default close-button mr10" >ЗАКРЫТЬ</button>
+        </div>
+
+    </aside>
+
+<section class="main-content">
+
+    <!-- content wrapper -->
+    <div class="content-wrap">
+
+        <!-- inner content wrapper -->
+        <div class="wrapper">
+
+            <h3 class="pt0 mt0 mb15 exerciseName text-center" id="exerciseName" >
+
+            </h3>
+
+            <div id="warmUpLinkPlaceholder" style="" class="text-right" >
+                <a href="javascript:void(0)" class="btn btn-primary" id="warmUpLink" style="display: none; font-size: 20px;" >Подсказка</a>
+            </div>
+
+            <div class="text-center mt0 mb10" id="warmUpBlock" style="display: none;">
+                <h5 id="warmUpText" >Видео для разогрева</h5>
+
+                <iframe id="warmUpFrame"
+                        src=""
+                        width="520" height="293" frameborder="0" webkitallowfullscreen=""
+                        mozallowfullscreen="" allowfullscreen="" style="width: 520px; height: 293px;"></iframe>
+            </div>
+
+            <div class="text-center">
+                <button id="goButton" style="display: none;" class="btn btn-primary" >GO</button>
+            </div>
+
+            <div class="text-center mt0 exercisable" >
+                <ul class="pagination pagination-sm mt0 mb0" id="exercisesNumbersBlock"  >
+                    загрузка...
+                </ul>
+            </div>
+
+            <div class="taskPlaceholder exercisable" style="position: relative;" >
+                <div id="videoPlaceholder" class="text-center col-md-12 mediaMaterial mb20" style="position: relative;">
+                </div>
+
+                <div id="imagePlaceholder" style="margin-bottom: 15px;" class="text-center col-md-12 mediaMaterial">
+                </div>
+
+                <div id="audioPlaceholder" class="text-center col-md-12 mt5 mediaMaterial">
+                </div>
+
+                <div id="textPlaceholder" style="line-height: 26px; " class="text-center col-md-12 mediaMaterial">
+                </div>
+
+                <div id="proContraBlock" style="position: absolute; top: 2px; width: 100%;" >
+                    <div id="proBlock" class="list-group" style="position: absolute; width: 180px; top: 0px; left: 0px; height: 450px; overflow-y: auto;" > </div>
+                    <div id="contraBlock" class="list-group" style="position: absolute; width: 180px; top: 0px; right: 0px; height: 450px; overflow-y: auto;" > </div>
+
+                </div>
+
+            </div>
+
+
+            <div id="userAnsweringPlaceholder" class="exercisable" style="display: block; width: 510px; margin: 0 auto;" >
+
+                <div id="placeholderOfTypingPlaceholderDiv" style="display: none; width: 520px; margin: 0 auto; margin-top: 30px;" >
+                    <div id="typingPlaceholderDiv"></div>
+                </div>
+
+                <div class="p10" id="recorderPlaceholder" style=" display: none; width: 520px; margin: 0 auto; margin-top: 30px;" >
+                    <div class="btn-group pull-left" role="group" aria-label="..." id="recordButtonsBlock" >
+                        <span style="display: none;">
+                            <button type="button" class="btn btn-danger btn-sm" id="recordButtonId" ><i class="ti-control-record"></i> record</button>
+                            <button type="button" class="btn btn-instagram btn-sm " id="stopButtonId" > <i class="ti-control-stop"></i> stop</button>
+                        </span>
+
+                        <button class="btn btn-lg btn-danger" id="recordAndStopButtonId">record</button>
+
+                        <button type="button" class="btn btn-success btn-lg ml25" style="margin-left: 25px;"  id="saveButtonId"><i class="ti-save"></i> save</button>
+                        <progress id="progressId" class="p20 m10" style="display: none;" ></progress>
+                        <span class="hide btn btn-default btn-lg" id="recordingTime" ></span>
+                    </div>
+                    <div class="pull-right">
+                        <audio style="width: 200px;" controls="" autoplay="" id="audioId" />
+                    </div>
+                </div>
+
+
+                <div id="textAnswerPlaceholder" class="text-center pt10" >
+                </div>
+
+            </div>
+
+            <!--<div class="text-center" style="padding-top: 320px;" >-->
+            <div class="text-center exercisable" style="padding-top: 320px;" id="bottomTextsPlaceholder" >
+                <p id="transcriptText" class="isTranslatable">
+
+                </p>
+                <p id="commentText" class="isTranslatable">
+
+                </p>
+            </div>
+
+            <div class="text-right exercisable" id="mosesLinkPlaceholder" style="display: block; width: 520px; margin: 0 auto;"  >
+            </div>
+
+            <!--<div id="goButtonPlaceholder" class="text-center mt10">-->
+                <!--<button class="btn btn-primary" id="goButton" >Начать выполнение упражнения</button>-->
+            <!--</div>-->
+
+
+
+        </div>
+        <!-- /inner content wrapper -->
+
+    </div>
+    <!-- /content wrapper -->
+
+    <!--<footer class="bt">-->
+
+
+
+    <!--</footer>-->
+
+    <a class="exit-offscreen"></a>
+</section>
+<!-- /main content -->
+
+<!-- chat panel -->
+<aside class="sidebar-300 offscreen-right bg-white" id="rightSidebar">
+    <div class="content-wrap">
+        <div class="wrapper">
+            <div class="slimscroll" data-height="auto" data-size="6px" data-distance="0">
+                <div class="pt15 pl15 pr15 pb0 clearfix text-center" id="taskBlock" >
+                    <h3 class="mt0">
+                        <span class="small">
+                            Задание
+                        </span>
+                    </h3>
+                    <div class="p5 text-center exerciseTask "></div>
+                </div>
+
+                <div class="p15 text-center" id="finishBlock" style="display: none;">
+                    <button class="btn btn-dropbox" id="finishButton" >FINISH</button>
+                </div>
+                <div class="p15 text-center" id="exerciseIsFinishedBlock" style="display: none;" >
+                    <h4>Exercise is finished</h4>
+                </div>
+                <div class="p15 text-center" id="teacherFeedbackBlock" style="display: none;" >
+                    <h4>Teacher Feedback</h4>
+                    <p id="teacherFeedback">
+
+                    </p>
+                </div>
+
+                <div class="ui message translateWidget" style="margin: 3px; padding: 3px;" >
+                    <div class="ui form" style="margin: 0 auto; text-align: center;">
+                        <div class="field ui">
+                            <!--<label>Last Name</label>-->
+                            <input id="translateInput" type="text" name="last-name" style="width: 60%;" placeholder="Перевод...">
+                            <button class="ui button primary" style="max-width: 37%; line-height: 20px; font-size: 12px;" id="translateButton"><i class="icon search"></i> translate</button>
+
+                        </div>
+                    </div>
+                    <div class="ui">
+                        <div id="translatePlaceholder" style="max-height: 300px; overflow-y: auto;">
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <!--<div class="pt15 pl15 pr15 pb0">-->
+                    <!--<div class="h6 text-muted text-center"><b>Подсказки</b>-->
+                    <!--</div>-->
+                    <!--<div class="h5 text-center cardHint">-->
+
+                    <!--</div>-->
+                </div>
+
+                <!--<div class="pt15 pl15 pr15 pb0">-->
+                    <!--<div class="h6 text-muted text-center"><b>Чат с преподавателем</b>-->
+                    <!--</div>-->
+                    <!--<div class="h5 text-center">-->
+                        <!--Блок с подсказками-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            </div>
+        </div>
+    </div>
+</aside>
+<!-- /chat panel -->
+
+</section>
+
+</div>
+
+
+
+<div class="modal fade" id="translateModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ЗАКРЫТЬ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="mosesModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" style="width: 353px;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title mosesName" >Preview</h4>
+            </div>
+            <div class="modal-body">
+                <div id="heSheVewDiv">
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader">
+
+    </div>
+</div>
+
+<!-- core scripts -->
+<script src="../home/plugins/jquery-1.11.1.min.js"></script>
+<script src="../js/remarkable.min.js"></script>
+<script src="../vergels/mvp/plugins/semantic/semantic.min.js"></script>
+<script src="../js/remarkable.min.js"></script>
+<script src="../home/bootstrap/js/bootstrap.js"></script>
+<script src="../home/plugins/jquery.slimscroll.min.js"></script>
+<script src="../home/plugins/jquery.easing.min.js"></script>
+<script src="../home/plugins/appear/jquery.appear.js"></script>
+<script src="../home/plugins/jquery.placeholder.js"></script>
+<script src="../home/plugins/fastclick.js"></script>
+<script src="../home/plugins/toastr/toastr.min.js"></script>
+
+<script src="../common/js/TranslateManager.js"></script>
+<script src="js/TranslateWidgetManager.js"></script>
+
+<!--<script src="https://www.webrtc-experiment.com/RecordRTC.js?t=2"></script>-->
+<!--<script src="js/RecordRTC.min.js"></script>-->
+<script src="js/RecordRTC3.js"></script>
+<!--<script src="https://raw.githubusercontent.com/muaz-khan/RecordRTC/3fbf92e94be5487a3d29fa66f4d4accccaabb927/dev/RecordRTC.js"></script>-->
+
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="../home/js/custom/howler.js"></script>
+<script src="../teacher/js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+
+
+<script src="../home/js/custom/AudioMaterial.js"></script>
+<script src="../home/js/custom/VideoMaterial.js"></script>
+<script src="../home/js/custom/TextMaterial.js"></script>
+<script src="../home/js/custom/ImageMaterial.js"></script>
+
+<script src="../tools/js/MosesPlayingModalManager.js"></script>
+<script src="../home/js/custom/TypingManager.js"></script>
+<script src="../home/js/custom/RecordManager2.js"></script>
+
+<script src="../home/js/custom/QuizManager.js"></script>
+
+
+<!-- /core scripts -->
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/js/main.js"></script>
+<!-- /template scripts -->
+
+
+
+<script type="text/javascript">
+    $(function(){
+        QM = new QuizManager();
+        QM.init();
+
+//        TM = new TranslateManager();
+//        TM.init();
+
+        TWM = new TranslateWidgetManager();
+        TWM.init();
+
+    });
+</script>
+
+<!-- page script -->
+<!-- /page script -->
+
+</body>
+<!-- /body -->
+
+</html>

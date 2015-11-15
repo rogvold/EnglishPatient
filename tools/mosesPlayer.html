@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+</head>
+
+<style>
+
+    ul.mosesLabelsList{
+        list-style: none;
+        margin-left: 0px;
+        padding-left: 0px;
+    }
+
+    .mosesLabelItem{
+        list-style: none;
+        padding: 5px;
+        background-color: lightgoldenrodyellow;
+        cursor: pointer;
+        color: black;
+        max-width: 250px;
+        border: 1px solid lightgrey;
+        border-radius: 5px;
+        margin-bottom: 5px;
+    }
+
+    .mosesLabelItem:hover{
+        color: firebrick;
+        opacity: 0.6;
+    }
+
+    .mosesLabelItem.second{
+        margin-left: 20px;
+        background-color: lightblue !important;
+    }
+
+    .mosesLabelItem.active{
+        font-weight: bold;
+        color: green;
+        border: 3px solid #000000;
+    }
+
+    #seekToLabel{
+        cursor: pointer;
+    }
+
+    #seekToLabel:hover{
+        color: blue;
+    }
+
+    #firstPlayButton.active{
+        background-color: lightsalmon;
+    }
+
+    #labelsList{
+        margin-left: 0px;
+        padding-left: 0px;
+    }
+
+</style>
+
+
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/plugins/jquery-1.11.1.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<!--<script src="../home/js/custom/froogaloop.min.js"></script>-->
+<script src="js/froogaloop2.min.js"></script>
+<script src="js/MosesPlayingManager.js"></script>
+
+<body>
+
+<div class="text-center playerBlock" id="videoBlock" >
+    <iframe id="player" src="//player.vimeo.com/video/115569512?api=1&player_id=player" width="300" height="240" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+</div>
+
+<ul id="labelsList">
+
+</ul>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+<script>
+    $(function(){
+        MPM = new MosesPlayingManager();
+        MPM.init();
+    });
+</script>
+
+
+</body>
+</html>

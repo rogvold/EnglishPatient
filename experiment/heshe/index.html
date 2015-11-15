@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>THEY HE SHE</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+
+    <script type="text/javascript" src="../../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script type="text/javascript" src="../../js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="js/jquery.cookie.js" ></script>
+    <script type="text/javascript" src="js/PhrasesManager.js" ></script>
+
+
+
+    <style>
+
+        img.patientImg{
+            /*width: 100%;*/
+           height: 200px;
+            /*max-width: 80%;*/
+            vertical-align: top;
+            padding: 10px;
+            -webkit-box-shadow: 7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+            -moz-box-shadow:    7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+            box-shadow:         7px 7px 5px 0px rgba(50, 50, 50, 0.75);
+
+        }
+
+        img.additionalPhoto{
+            width: 300px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        #additionalList{
+            list-style: none;
+        }
+
+    </style>
+
+</head>
+<body style="background-image: url('images/restaurant.png')" >
+
+
+<div class="container" style="margin-top: 100px;" >
+
+    <div id="topTextBlock" class="row text-center">
+        <h3 class="text-center" id="topText" >
+
+        </h3>
+    </div>
+
+    <div class="row text-center" id="imagesContainer" >
+
+    </div>
+    <div class="row text-center" style="margin-top: 20px;" >
+        <button class="btn btn-lg btn-info" id="nextButton" >START</button>
+    </div>
+
+    <div class="row text-center" style="margin-top: 100px; " id="photosNumBlock" >
+       количество фотографий: <input class="" id="numInput" value="1" style="width: 20px;" />
+    </div>
+
+
+    <div class="row text-center" style="margin-top: 20px;" id="progressBarBlock" >
+        <div class="progress" style="width: 220px; margin: 0 auto; margin-bottom: 20px;">
+            <div class="progress-bar progress-bar-striped active" role="progressbar"  style="width: 100%">
+                <span class="" id="countDownVal" ></span>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="row text-center " style="margin-bottom: 20px;" id="timerBlock" >
+        <!--или <br/>-->
+        ---- <br/>
+        режим <b>"Белка в колесе"</b> <br/><br/>
+        время на ответ:
+        <input id="defaultCountdown" class="" style="display: inline-block; width: 30px;" /> сек.
+        <button class="btn btn-sm btn-success" id="playButton" >PLAY</button>
+    </div>
+
+    <div id="photosBlock" class="row text-center" style="margin-top: 30px;" >
+
+        --- <br/><br/>
+        Top text: <br/>
+        <textarea style="width: 400px; height: 250px;" id="topTextInput"></textarea>
+        <br/>
+        <button class="btn btn-info btn-xs" id="changeTopTextButton" >UPDATE</button>
+        <br/><br/>
+
+        ------
+        <br/><br/>
+
+        additional photos
+
+        <br/>
+
+        <br/>
+        add new photo:
+        <div class="row text-center" id="iframeBlock">
+
+            <!--<iframe id="uploadIframe" src="" style="width: 300px; height: 60px;" />-->
+        </div>
+        <input id="newPhotoInput"  placeholder="image url" />
+        <button id="newPhotoButton" style="margin-left: 10px;" class="btn btn-sm btn-info" >add</button>
+        <br/><br/>
+        <ul id="additionalList">
+
+        </ul>
+    </div>
+
+
+
+    <div class="row text-center" style="margin-top: 50px;" >
+        <a href="javascript: window.location.href=window.location.href;" >restart</a>
+    </div>
+
+</div>
+
+
+<script>
+
+    onUploadFunction = function(){
+
+    }
+
+    var ExManager = function(){
+        var self = this;
+        this.maxN = 201;
+//        this.maxN = 9;
+        this.currentNumbers = [];
+        this.photosAmountDefault = 1;
+        this.countDownDefault = 6;
+        this.time = 0;
+        this.countDownMax = 10;
+        this.timerMode = false;
+        this.additionalPhotos = [];
+        this.topText = '[He]  thinks  [they]’ll  never pay  [them]';
+        this.additionalWeight = 4;
+        this.phrasesManager = new PhrasesManager();
+        this.phrasesStarted = false;
+
+
+        this.init = function(){
+//            self.generateNextBlock();
+            self.phrasesManager.init();
+            self.initNextButton();
+            self.initOnUpload();
+            self.initAdditionalPhotos();
+//            self.initTopText();
+            $('#numInput').val(self.photosAmountDefault);
+            $('#defaultCountdown').val(self.countDownDefault);
+        }
+
+
+        this.initAdditionalPhotos = function(){
+            var list = $.cookie('additionalPhotos');
+            if (list == undefined || list == ""){
+                $.cookie('additionalPhotos', []);
+            }
+            list = ($.cookie('additionalPhotos') == '') ? [] : $.cookie('additionalPhotos').split(',');
+            self.additionalPhotos = list;
+            var s = '';
+            for (var i in list){
+                s+= '<li><img class="additionalPhoto" src="'+ list[i] +'" /> <a href="javascript: void(0);" data-url="' + list[i] + '"  class="deleteAdditional btn-danger" >delete</a></li>'
+            }
+            $('#additionalList').html(s);
+            $('body').on('click', '.deleteAdditional', function(){
+                var u = $(this).attr('data-url');
+                var list = self.additionalPhotos;
+                var arr = [];
+                for (var i in list){
+                    if (list[i] == u){
+                        continue;
+                    }
+                    arr.push(list[i]);
+                }
+                $.cookie('additionalPhotos', arr);
+                window.location.href = window.location.href;
+            });
+        }
+
+        this.generatePhotoBlock = function(i){
+            var s = '';
+            var imgUrl = '';
+            if (i < self.maxN){
+                imgUrl = 'img/' + i + '.png';
+            }else{
+                var j = i -self.maxN;
+                imgUrl = self.additionalPhotos[Math.floor(j / self.additionalWeight)];
+            }
+            s+='<div class="" style="display: inline-block; margin: 10px; border: 1px solid #f5f5f5; border-radius: 10px; background-color: #f5f5f5;" >' +
+                    '<img class="patientImg" src="' + imgUrl + '" />' +
+                    '</div>';
+            return s;
+        }
+
+        this.generateNextBlock = function(){
+            var s = '';
+            var n = self.maxN;
+            self.currentNumbers = [];
+            var pN = Math.min(self.maxN, parseInt($('#numInput').val()));
+            for (var i = 0; i < pN; i++){
+                self.currentNumbers.push(getRandExceptForSome(self.maxN + self.additionalPhotos.length*self.additionalWeight, self.currentNumbers));
+            }
+            for (var i in self.currentNumbers){
+                s+=self.generatePhotoBlock(self.currentNumbers[i]);
+            }
+            $('#imagesContainer').fadeOut(300);
+            setTimeout(function(){
+                $('#imagesContainer').html(s);
+                $('#imagesContainer').fadeIn(300);
+            }, 300);
+
+
+        }
+
+        this.initNextButton = function(){
+            $('#nextButton').bind('click', function(){
+                $('#photosBlock').hide();
+                self.time = 0;
+                self.generateNextBlock();
+                $('#photosNumBlock').hide();
+                $('#timerBlock').hide();
+                if (self.timerMode == false){
+                    $('#progressBarBlock').hide();
+                }
+                $(this).html('NEXT');
+                $(this).fadeOut(100);
+                $(this).fadeIn(100);
+                if (self.phrasesStarted == false){
+                    self.phrasesStarted = true;
+                    self.phrasesManager.startShowing();
+                }
+            });
+            $('#playButton').bind('click', function(){
+                self.timerMode = true;
+                $(this).hide();
+                $('#timerBlock').hide();
+                $('#defaultCountdown').hide();
+                self.startTimer();
+                $('#nextButton').click();
+            });
+        }
+
+        this.startTimer = function(){
+            setInterval(function(){
+                self.countDownMax = parseInt($('#defaultCountdown').val());
+                self.time+= 0.1;
+                $('#countDownVal').html((Math.floor((self.countDownMax - self.time) * 10) / 10.0) + ' s');
+                $('.progress-bar').css('width', ((self.countDownMax - self.time) * 100.0 / self.countDownMax) + '%');
+                if (self.time > self.countDownMax){
+                    $('#nextButton').click();
+                }
+            }, 100);
+        }
+
+
+        this.initOnUpload = function(){
+//            onUploadFunction = function(u){
+//                self.onNewPhotoUploaded(u);
+//            }
+            $('#newPhotoButton').bind('click', function(){
+                var u = $('#newPhotoInput').val().trim();
+                self.onNewPhotoUploaded(u);
+
+            });
+            $('#iframeBlock').html('<iframe src="http://disk.englishpatient.org/u.html" style="width: 300px; height: 80px;" />');
+        }
+
+        this.onNewPhotoUploaded = function(u){
+            console.log(self.additionalPhotos , 'pushing there', u);
+            self.additionalPhotos.push(u);
+            $.cookie('additionalPhotos', self.additionalPhotos);
+            window.location.href = window.location.href;
+        }
+
+
+        this.initTopText = function(){
+            if ($.cookie('topText') == undefined){
+                $.cookie('topText', self.topText);
+                window.location.href = window.location.href;
+            }
+            var s = $.cookie('topText');
+            if (s == undefined || s == ""){
+                $('#topTextBlock').hide();
+            }else{
+                self.topText = s;
+            }
+
+            $('#topText').html(self.topText);
+            $('#topTextInput').val(self.topText);
+            $('#changeTopTextButton').bind('click', function(){
+                self.topText = $('#topTextInput').val().trim();
+                $.cookie('topText', self.topText);
+                window.location.href = window.location.href;
+            });
+
+            if (s == ''){
+                $('#topTextBlock').hide();
+            }
+
+        }
+
+    }
+
+    function getRandExceptForSome(maxN, arr){
+        var f = false;
+        while (f == false){
+            f = true;
+            var d = Math.floor(Math.random() * (maxN - 1)) + 1;
+            for (var i in arr){
+                if (arr[i] == d){
+                    f = false;
+                }
+            }
+        }
+        return d;
+    }
+
+    $(function(){
+        M = new ExManager();
+        M.init();
+    });
+
+</script>
+
+</body>
+</html>

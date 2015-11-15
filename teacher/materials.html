@@ -1,0 +1,397 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>Materials</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../home/plugins/taggle/css/twilight.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/projects.min.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/taggle.min.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <!-- load modernizer -->
+    <!--<script src="../home/plugins/modernizr.js"></script>-->
+</head>
+
+<!-- body -->
+
+<body>
+<div class="app">
+
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+
+
+
+
+
+            <!--<li class="hidden-xs">-->
+
+                <!--<a href="userManagement.html" class="">-->
+                    <!--<i class="ti-user"></i>-->
+                <!--</a>-->
+
+            <!--</li>-->
+
+
+            <li class="visible-xs">
+                <a href="javascript:;" data-toggle="offscreen" data-move="rtl">
+                    <i class="ti-comment-alt"></i>
+                    <div class="badge badge-top bg-danger animated flash">
+                        <span>9</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="notifications dropdown hide">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-upload"></i>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Загрузка файла</b>
+                        </div>
+                        <div>
+                            <iframe style="width: 100%; height: 70px;" src="http://disk.englishpatient.org/u.html" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="notifications dropdown">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-upload"></i>
+                    <i class="ti-vimeo"></i>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Загрузка видео на vimeo</b>
+                        </div>
+                        <div>
+                            <iframe style="width: 100%; height: 70px;" src="http://disk.englishpatient.org/vimeo.html" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/profile.png" class="header-avatar img-circle avatar avatar-sm img-circle userAvatar userAvatar">
+                    <span class="hidden-xs ml10 username"  >UserName</span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <li>
+                        <a href="profile.html" >Profile</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="logoutLink" >logout</a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <div class="nameBlock text-center" style=" background-image: url('../img/space.jpg');
+    display: block; height: 100px; width: 100%; padding-top: 40px;">
+        <h3 class="groupName mt0 pt15 mb0 pb5" style="color: #ffffff;"></h3>
+    </div>
+
+    <section class="layout">
+
+        <!-- sidebar menu -->
+        <!-- /sidebar menu -->
+
+        <aside class="sidebar-400 offscreen-left bg-white">
+            <div class="content-wrap">
+                <div class="wrapper">
+                    <div class="slimscroll" data-height="auto" data-size="6px" data-distance="0">
+                        <div class="pt0 pl15 pr15 pb0 clearfix text-center">
+                            <h3 class="mt0">
+                        <span class="small">
+                            Materials
+                            <span class="text-right"><a class="playerButton" href="player.html"><i class="ti-control-play"></i></a></span>
+                        </span>
+                            </h3>
+                        </div>
+
+                        <div class="p10">
+                            <input class="form-control" placeholder="Search" id="search" />
+                            <ul id="materialsList">
+                                <li class="p20">no materials</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- main content -->
+        <section class="main-content">
+
+
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper">
+
+
+                    <div class="view-list" >
+
+                        <div class="row p20">
+
+                            <h4 class="selectedName text-center" >Select exercise from the left list</h4>
+
+                           <div class="text-center" id="videoBlock" style="padding-top: 0px; background-color: transparent; height: auto;" >
+                               <!--<iframe src="//player.vimeo.com/video/112521534?title=0&byline=0&portrait=0"-->
+                                       <!--width="480" height="270" frameborder="0"-->
+                                       <!--webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+
+                           </div>
+                            <hr/>
+                           <div id="editInfoBlock">
+                               Name:  <input id="editName" class="form-control" placeholder="name" /><br/>
+                               Vimeo ID: <input id="editVimeoId" placeholder="vimeo id" class="form-control" /><br/>
+                               <hr/>
+                               Transcript:
+                               <textarea placeholder="transcript" class="form-control" id="editTranscript" ></textarea> <br/>
+                               Comment:
+                               <textarea placeholder="comment" class="form-control" id="editComment" ></textarea>
+
+                               <br/>
+
+                               Tags:
+                               <div id="editTaggle" style="display: block;" ></div>
+                               <br/>
+                               <hr/>
+                               <div>
+                                   <b>Groups:</b>
+                                   <ul id="updateGroupsList">
+
+                                   </ul>
+                               </div>
+                               <div class="mb10">
+                                   <select id="updateGroupSelect">
+                                       <option value="none">Выберите группу для добавления</option>
+                                       <option value="1" >1</option>
+                                       <option value="3" >2</option>
+                                   </select>
+                                   <button class="btn btn-xs btn-primary" id="updateAddGroupButton" >add</button>
+                               </div>
+                               <hr/>
+                               <button class="btn btn-xs btn-info mosesEditorLink" id="mosesEditorButton" >Редактор удобного просмотра видео</button>
+                               <hr/>
+
+                               <button class="btn btn-danger pull-right ml10" id="deleteSelectedMaterialButton" >DELETE</button>
+                               <button class="btn btn-success pull-right" id="updateButton" >UPDATE</button>
+
+                           </div>
+
+                        </div>
+
+                    </div>
+
+
+
+
+                </div>
+                <!-- /inner content wrapper -->
+
+            </div>
+            <!-- /content wrapper -->
+
+
+
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+
+        <!-- chat panel -->
+        <aside class="sidebar-300 offscreen-right bg-white">
+            <div class="content-wrap">
+                <div class="wrapper">
+                    <div class="slimscroll" data-height="auto" data-size="6px" data-distance="0">
+                        <div class="pt0 pl15 pr15 pb0 clearfix text-center">
+                            <h3 class="mt0">
+                        <span class="small">
+                            New material
+                        </span>
+                            </h3>
+                        </div>
+
+                        <div class="p10">
+                            <input class="form-control" type="text" id="name" placeholder="Name"  />
+                            <br/>
+                            <input class="form-control" type="text" id="vimeoId" placeholder="Vimeo ID"  />
+                            <br/>
+                            <textarea class="form-control" id="transcript" placeholder="Transcript" ></textarea>
+                            <br/>
+                            <textarea class="form-control" id="comment" placeholder="Comment" ></textarea>
+                            <div class="text-right">
+                                <i><a href="http://beta.englishpatient.org/remarkable.html" target="_blank" >форматированный текст</a></i>
+                            </div>
+
+
+                            <hr/>
+                            Tags:
+                            <div style="" id="tags" ></div>
+                            <br/>
+                            <hr/>
+                            <div style="display: block; min-height: 50px; " >
+                                <b>Groups:</b> <br/>
+                                <ul id="createGroupsList">
+
+                                </ul>
+                            </div>
+
+                            <div class="mb10">
+                                <select id="createGroupSelect">
+                                    <option value="none">Выберите группу для добавления</option>
+                                    <option value="1" >1</option>
+                                    <option value="3" >2</option>
+                                </select>
+                                <button class="btn btn-xs btn-primary" id="createAddGroupButton" >add</button>
+                            </div>
+
+                            <button class="btn pull-right btn-dropbox" id="createButton">Create</button>
+                            <br/>
+                            <br/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- /chat panel -->
+
+
+
+
+    </section>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+
+
+<div class="modal fade" id="mosesEditorModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" style="width: 470px;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" style="font-size: 15px;" >Редактор удобного просмотра видео</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+                <!--<button type="button" class="btn btn-primary" id="createClassButton" >CREATE</button>-->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- core scripts -->
+<script src="../home/plugins/jquery-1.11.1.min.js"></script>
+<script src="../home/plugins/taggle/js/jquery-ui.js"></script>
+<script src="../home/bootstrap/js/bootstrap.js"></script>
+<script src="../home/plugins/jquery.slimscroll.min.js"></script>
+<script src="../home/plugins/jquery.easing.min.js"></script>
+<script src="../home/plugins/appear/jquery.appear.js"></script>
+<script src="../home/plugins/jquery.placeholder.js"></script>
+<script src="../home/plugins/fastclick.js"></script>
+<!-- /core scripts -->
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/plugins/taggle/js/rainbow-custom.min.js"></script>
+<script src="../home/plugins/toastr/toastr.js"></script>
+<script src="../home/plugins/taggle/js/taggle.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="../tools/js/MosesModalEditorManager.js"></script>
+<script src="js/TeacherMaterialsManager.js"></script>
+
+<script src="../home/js/main.js"></script>
+<!-- /template scripts -->
+
+<script>
+    $(function(){
+        M = new TeacherMaterialsManager();
+        M.init();
+    });
+
+</script>
+
+
+</body>
+<!-- /body -->
+
+</html>

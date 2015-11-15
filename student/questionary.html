@@ -1,0 +1,383 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>
+        Questionnaire
+    </title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../home/bootstrap/js/bootstrap.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+    <!-- /core scripts -->
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- /core styles -->
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/moment.js" ></script>
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="css/custom.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="plugins/modernizr.js"></script>
+
+    <style>
+        img.patientCategory{
+            cursor: pointer;
+            -webkit-transition: 1s;
+            -moz-transition: 1s;
+            -o-transition: 1s;
+            transition: 1s;
+        }
+        img.patientCategory:hover{
+            opacity: 0.6;
+            margin-top: 0px;
+        }
+
+
+        #phase1Table tr {
+            /*position: absolute;*/
+            padding-top: 10px;
+            font-size: 15px;
+        }
+
+
+        
+        #phase1Table tr td {
+            /*position: absolute;*/
+            padding-top: 20px;
+        }
+
+
+
+
+        #phase1Table tr td.qNumber{
+            font-weight: bold;
+        }
+
+        #phase1Table ul.answersList li{
+            list-style: decimal;
+            padding: 10px;
+            border-bottom: 1px solid lightgray;
+            position: relative;
+        }
+
+        #phase1Table ul.answersList li .answerTranscriptBlock{
+            width: calc(100% - 80px);
+            /*display: inline-block;*/
+            display: block;
+        }
+
+
+        #phase1Table ul.answersList li .answerTranscriptBlock .answerRuTranscript{
+            display: inline-block;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        #phase1Table ul.answersList li .answerTranscriptBlock .answerTranscript{
+            font-weight: bold;
+        }
+
+
+        #phase1Table ul.answersList li .answerControls{
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+
+        #phase1Table ul.answersList{
+            padding-left: 15px;
+        }
+        
+        .questionRuTranscript{
+            font-style: italic;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .questionTranscript{
+            font-weight: bold;
+            /*color: #3b5998;*/
+            color: #1087dd;
+            /*font-size: 16px;*/
+        }
+
+        /*#phase1Table tr td:nth-of-type(2), #phase1Table tr td:nth-of-type(4){*/
+        #phase1Table tr td{
+            /*border-top: 2px solid #3b5998;*/
+            border-top: 2px solid #1582dc;
+        }
+
+        #phase1Table tr:last-of-type td{
+            /*border-bottom: 2px solid #3b5998;*/
+            border-bottom: 2px solid #1582dc;
+        }
+
+        #phase1Table tr:last-of-type td{
+            /*border-bottom: 2px solid #3b5998;*/
+            border-bottom: 2px solid #1582dc;
+        }
+
+        #phase1Table tr td:nth-of-type(3) ul li:last-of-type{
+            border-bottom: none !important;
+        }
+
+        #phase1Table tr.answered td{
+            background-color: lightgoldenrodyellow;
+        }
+
+        #phase2Table tr td .ruTranscript{
+            display: inline-block;
+            margin-top: 10px;font-style: italic;
+            font-size: 11px;
+        }
+
+        #phase2Table tr td:nth-of-type(1) .transcriptsBlock .transcript{
+            font-weight: bold;
+        }
+
+        .iframePlaceholder iframe{
+            margin: 0 auto;
+            display: block;
+            width: 280px;
+            height: 210px;
+        }
+
+        .questionTranscriptsBlock .transcript{
+            font-weight: bold;
+            text-align: center;
+            font-size: 15px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        .questionTranscriptsBlock .ruTranscript{
+            font-style: italic;
+            text-align: center;
+            margin-top: 10px;
+            display: block;
+            font-size: 15px;
+        }
+
+        #phase3Block .transcript{
+            font-size: 14px;
+            margin-top: 10px;
+            display: block;
+        }
+
+        #phase3Block .ruTranscript{
+            font-size: 14px;
+            margin-top: 10px;
+            display: block;
+        }
+
+    </style>
+
+
+</head>
+
+<!-- body -->
+
+<body>
+
+
+<div class="cover" style="background-image: url(../home/img/cover1.jpg)"></div>
+<div class="overlay bg-color"></div>
+
+<div class="app horizontal-layout">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient <sup>Student</sup>
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li class="hidden-xs">
+                <!-- toggle small menu -->
+                <!--<a href="javascript:;" class="toggle-sidebar">-->
+                <!--<i class="ti-menu"></i>-->
+                <!--</a>-->
+                <!-- /toggle small menu -->
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/profile.png" class="header-avatar img-circle userAvatar">
+                    <span class="hidden-xs ml10 username"  >UserName</span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <li>
+                        <a href="profile.html" class="profileLink" >Профиль</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="logoutLink" >Выход</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout">
+
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper ">
+
+                    <div class=" col-xs-8 col-xs-offset-2" >
+
+                        <h3 id="commandBlock">
+                            Выберите подходящие Вам ответы на вопросы  и нажмите на кнопку "<b>перейти к подготовке</b>"
+                        </h3>
+
+                        <table class="table table-bordered   " id="phase1Table" >
+
+                        </table>
+
+                        <table class="table table-bordered" id="phase2Table" >
+
+                        </table>
+
+                        <div id="phase3Block" style="display: none;">
+
+
+
+                        </div>
+
+                        <div class="p10" id="recorderPlaceholder" style=" display: none; width: 520px; margin: 0 auto; margin-top: 30px;" >
+                            <div class="btn-group pull-left" role="group" aria-label="..." id="recordButtonsBlock" >
+                                <button type="button" class="btn btn-danger btn-sm" id="recordButtonId" ><i class="ti-control-record"></i> record</button>
+                                <button type="button" class="btn btn-instagram btn-sm " id="stopButtonId" > <i class="ti-control-stop"></i> stop</button>
+                                <button type="button" class="btn btn-success btn-sm ml25" style="margin-left: 25px;"  id="saveButtonId"><i class="ti-save"></i> save</button>
+                                <progress id="progressId" class="p10 m10" style="display: none;" ></progress>
+                                <span class="hide btn btn-default btn-sm" id="recordingTime" ></span>
+                            </div>
+                            <div class="pull-right">
+                                <audio style="width: 200px;" controls="" autoplay="" id="audioId" />
+                            </div>
+                            <div class="" >
+                                <button class="btn btn-sm mt10 btn-dropbox" id="skipButton" style="display: block; width: 80px; margin-top: 10px;" >next</button>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="col-xs-2" >
+                        <button id="switchToPhase2Button" class="btn btn-dropbox" >перейти к подготовке</button>
+                        <button id="switchToPhase3Button" style="display: none;" class="btn btn-dropbox" >перейти к тесту</button>
+                    </div>
+
+                </div>
+                <!-- /inner content wrapper -->
+
+            </div>
+
+
+            <!-- /content wrapper -->
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+    </section>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<!--<script src="https://www.webrtc-experiment.com/RecordRTC.js"></script>-->
+<script src="js/RecordRTC3.js"></script>
+<script src="../home/plugins/toastr/toastr.min.js"></script>
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="../home/js/custom/howler.js"></script>
+<script src="../teacher/js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="../home/js/custom/RecordManager.js"></script>
+<script src="js/StudentQuestionaryManager.js"></script>
+<!-- /template scripts -->
+
+<!-- page script -->
+<!-- /page script -->
+
+<script>
+    $(function(){
+        SQM = new StudentQuestionaryManager();
+        SQM.init();
+    });
+</script>
+
+</body>
+<!-- /body -->
+
+</html>

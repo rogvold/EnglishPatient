@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <script type="text/javascript" src="../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js" ></script>
+
+    <link rel="stylesheet" href="../css/bootstrap.min.css"/>
+
+</head>
+<body>
+
+<div class="row">
+    <p>
+        this is test <span class="videoLink" data-vimeoId="93732917" >text</span>
+    </p>
+</div>
+
+<script>
+
+    var VideoModalManager = function(){
+        var self = this;
+        this.videoLinkSelector = '.videoLink';
+        this.videoLinkAttrName = 'data-vimeoId';
+        this.modalSelector = '#vimeoModal';
+
+
+        this.init = function(){
+            self.initVideoLinks();
+        }
+
+        this.initVideoLinks = function(){
+            $('body').on('click', self.videoLinkSelector, function(){
+                var vimeoId = $(this).attr(self.videoLinkAttrName);
+                var vimeoSrc = 'http://player.vimeo.com/video/' + vimeoId + '?title=0&byline=0&portrait=0';
+                $(self.modalSelector + ' iframe').attr('src', vimeoSrc);
+                $(self.modalSelector).modal();
+            });
+        }
+    }
+
+    VMM = new VideoModalManager();
+    VMM.init();
+
+</script>
+
+<div class="modal fade" id="vimeoModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!--<div class="modal-header">-->
+                <!--<h1 class="modal-title" id="myModalLabel">Друзья!</h1>-->
+            <!--</div>-->
+            <div class="modal-body">
+                <div class="lead" style="text-align: center;">
+                    <iframe
+                            width="460"
+                            height="336"
+                            frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div class="modal-footer"><button class="btn btn-default" type="button" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

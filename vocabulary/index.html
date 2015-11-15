@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css" />
+
+    <script src="../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script src="../vergels/mvp/plugins/semantic/semantic.min.js" ></script>
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/custom/common.js" ></script>
+    <script src="js/VocManager.js" ></script>
+
+
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <style>
+        .vocItem{
+            border-bottom: 2px dotted linen;
+            padding: 5px !important;
+            display: block;
+            min-height: 45px;
+            /*background-color: linen;*/
+            font-size: 18px;
+            padding: 20px;
+
+        }
+
+        .vocItem.danger{
+            background-color: lightcoral;
+        }
+
+        .vocItem:hover .wordPlaceholder{
+            opacity: 0.9;
+            background-color: linen;
+            padding: 5px;
+            border-bottom: 1px dashed lightblue;
+        }
+
+        .vocItem .wordPlaceholder{
+            cursor: pointer;
+            float: left;
+            /*font-weight: bold;*/
+            font-size: 24px;
+            margin-top: 6px;
+            /*position: absolute;*/
+        }
+
+        .vocItem .amountPlaceholder{
+            float: right;
+            margin-top: 6px;
+            display: inline-block;
+            /*position: absolute;*/
+        }
+
+        .vocItem .infoPlaceholder{
+            margin-left: 20px;
+            margin-top: 40px;
+            border-top: 1px dashed lightgray;
+            /*margin-bottom: 10px;*/
+            padding-top: 10px;
+            padding-left: 10px;
+            padding-bottom: 10px;
+            /*background-color: lightblue;*/
+        }
+
+        .infoPlaceholder ul{
+            /*list-style: none;*/
+        }
+
+        .infoPlaceholder ul li{
+            margin-bottom: 10px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .infoPlaceholder ul li:hover{
+            opacity: 0.8;
+            background-color: linen;
+        }
+
+        #videoPlaceholder{
+            text-align: center;
+        }
+        
+        #modal{
+            /*width: 650px;*/
+        }
+
+
+    </style>
+
+</head>
+<body style="" >
+
+<div class="ui inverted menu" style="margin-bottom: 0px; background-color: #43609C; border-radius: 0px;">
+    <div class="ui container" style="width: 900px;" >
+        <a href="#" class="header item">
+            <!--<img class="logo" src="">-->
+            English Patient
+        </a>
+        <a href="javascript: void(0);" class="header item" >
+            Словарь
+        </a>
+    </div>
+</div>
+
+
+
+<div class="ui text container">
+
+    <h1 style="margin-top: 15px;">
+        Топ 2000 слов
+    </h1>
+
+    <div class="ui list" id="words">
+
+        <div class="item vocItem"  >
+            <div class="wordPlaceholder">
+                loading...
+            </div>
+            <div class="amountPlaceholder">
+
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+<div class="ui modal" id="modal">
+    <div class="header" id="modalName" style="text-align: center;" ></div>
+    <div class="content">
+        <div id="videoPlaceholder">
+
+        </div>
+        <div id="transcript" style="text-align: center;" >
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        VM = new VocManager();
+        VM.init();
+    });
+</script>
+
+
+</body>
+</html>

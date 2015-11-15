@@ -1,0 +1,1120 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>
+        Teacher Dashboard
+    </title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../home/bootstrap/js/bootstrap.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+    <!-- /core scripts -->
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/moment.js" ></script>
+
+
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <!--<script src="plugins/modernizr.js"></script>-->
+
+    <style>
+        img.patientCategory{
+            cursor: pointer;
+            -webkit-transition: 1s;
+            -moz-transition: 1s;
+            -o-transition: 1s;
+            transition: 1s;
+        }
+        img.patientCategory:hover{
+            opacity: 0.6;
+            margin-top: 0px;
+        }
+
+        .updateClassItem{
+            cursor: pointer;
+            color: #1582dc;
+        }
+
+        #demoExerciseIframe{
+            width: 100%;
+            height: 600px;
+        }
+
+        #demoExerciseModal .modal-dialog{
+            width: 800px;
+        }
+
+        #auditorExercisesList{
+            text-align: center;
+        }
+
+        #auditorExercisesList figure.auditorExerciseItem {
+            position: relative;
+            width: 240px;
+            padding: 5px;
+            background-color: #ffffff;
+            border: 1px solid lightgrey;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            text-align: center;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        #auditorExercisesList figure.auditorExerciseItem:hover{
+            opacity: 0.9;
+        }
+
+        #auditorExercisesList{
+            max-height: 460px;
+            overflow-y: auto;
+        }
+
+
+        #auditorExercisesList figure.auditorExerciseItem img {
+            max-height: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        #auditorExercisesList figure.auditorExerciseItem .auditorExerciseTitle {
+            display: inline-block;
+        }
+
+        #articlesList{
+            text-align: center;
+        }
+
+        .articlesItem{
+            position: relative;
+            width: 240px;
+            padding: 5px;
+            background-color: #ffffff;
+            border: 1px solid lightgrey;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            text-align: center;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .articlesItem img{
+            max-height: 200px;
+            display: block;
+            margin: 0 auto;
+        }
+
+    </style>
+
+
+</head>
+
+<!-- body -->
+
+<body>
+
+
+<div class="cover" style="background-image: url(../home/img/cover1.jpg)"></div>
+<div class="overlay bg-color"></div>
+
+<div class="app horizontal-layout">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient <sup>Teacher</sup>
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav">
+
+            <li class="hidden-xs hide">
+                <a href="oldToolsList.html" >
+                    <i class="ti-hummer"></i>
+                    Инструменты
+                </a>
+            </li>
+
+            <li class="hidden-xs hide">
+                <a href="articles.html" >
+                    <i class="ti-book"></i>
+                    Заметки
+                </a>
+            </li>
+
+            <li class="hidden-xs hide">
+                <a href="materialsLibrary.html" >
+                    <i class="ti-server"></i>
+                    Материалы
+                </a>
+            </li>
+
+            <li class="hidden-xs hide">
+                <a href="exercises.html" >
+                    <i class="ti-face-smile"></i>
+                    Exercises
+                </a>
+            </li>
+
+            <li class="hidden-xs hide">
+                <a href="questionaryManagement.html" >
+                    <i class="ti-archive"></i>
+                    Опросник
+                </a>
+            </li>
+
+            <li class="hidden-xs hide">
+                <a href="chat.html" >
+                    <i class="ti-envelope"></i>
+                    Сообщения
+                </a>
+            </li>
+            <!--<li class="hidden-xs">-->
+            <!--<a href="exercises.html" >-->
+            <!--<i class="ti-server"></i>-->
+            <!--Materials-->
+            <!--</a>-->
+            <!--</li>-->
+
+            <li class="hidden-xs">
+                <!-- toggle small menu -->
+                <!--<a href="javascript:;" class="toggle-sidebar">-->
+                <!--<i class="ti-menu"></i>-->
+                <!--</a>-->
+                <!-- /toggle small menu -->
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="hidden-xs hide">
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#newClassModal" >
+                    <i class="ti-plus"></i>
+                </a>
+            </li>
+
+            <li class="hidden-xs hide">
+                <a href="javascript:void(0);" data-toggle="modal" data-target="#onlineModal" >
+                    <i class="ti-user"></i>
+                    <i class="ti-bolt"></i>
+                </a>
+            </li>
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/profile.png" class="header-avatar img-circle avatar avatar-sm img-circle userAvatar userAvatar">
+                    <span class="hidden-xs ml10 username"  >UserName</span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <li>
+                        <a href="profile.html" >Profile</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="logoutLink" >logout</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <style>
+        .widget-body em{
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .widget-body{
+            text-align: center;
+        }
+
+    </style>
+
+    <section class="layout">
+
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper ">
+
+                    <div class=" col-xs-8 col-xs-offset-2">
+
+                        <!--<h3 class="text-center mb20">Инструменты</h3>-->
+
+
+
+                        <section >
+                            <div class="row equal-blocks no-m">
+                                <div class="col-xs-3 block">
+
+                                </div>
+                                <div class="col-xs-9 block  brtr brbr p25">
+                                    <!--<h3 class="text-center">-->
+                                    <h3 class="text-justify">
+                                        Материалы и инструменты для развития навыков всех видов речевой деятельности
+                                    </h3>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="widget parentWidget" data-name="listening" data-level="0"  >
+                            <div class="row equal-blocks no-m">
+                                <div class="col-xs-3 block">
+                                    <div class="text-center">
+                                        <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                        <img src="img/listening.png" style=" border-radius: 100px; width: 75px;">
+
+                                        <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                    </div>
+                                </div>
+                                <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                    <div class="arrow left"></div>
+                                    <div class="widget-body">
+                                        <em>
+                                            <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                            LISTENING
+                                        </em>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div style="padding-left: 30px; display: none;" class="childWidget"   data-parent="listening" data-type="typing" data-media="video,audio"   >
+                            <section class="widget auditorExercisePanel" data-type="typing" data-media="video,audio" >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/moses.jpg" style=" border-radius: 100px; width: 75px;">
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;">
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Материалы для транскрибирования:
+                                                специальная автоматическая  разбивка
+                                                предложений на части в целях удобства записи на слух.
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget" onclick="window.location.href='../student/karaoke.html'">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <!--<img src="img/listening.png" style=" border-radius: 100px; width: 75px;">-->
+                                            <img src="img/subtitle.png" style=" border-radius: 100px; width: 75px;">
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body" style="">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                видео с динамической формой представления субтитров
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget" onclick="window.location.href = 'http://the-english-patient.com/SportPatient-war/faces/ex/list.xhtml' " >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/smacks.jpg" style=" border-radius: 100px; width: 75px;">
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Упражнения на основе видео: в транскрипте пропущены слова, которые необходимо вставить.
+
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/grammar.jpg" style=" border-radius: 100px; width: 75px;">
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                набор коротких видеосюжетов, иллюстрирующих грамматические конструкции
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/pronounce.jpg" style=" border-radius: 100px; width: 75px;">
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Прослушивание коротких видео с фиксацией внимания на различные звуки (подготовка к выработке правильного произношения).
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+
+                        <section class="widget parentWidget" data-name="reading" >
+                            <div class="row equal-blocks no-m">
+                                <div class="col-xs-3 block">
+                                    <div class="text-center">
+                                        <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                        <img src="img/reading.jpg" style=" border-radius: 100px; width: 75px;">
+                                        <!--<h6 class="text-uppercase">READING</h6>-->
+                                    </div>
+                                </div>
+                                <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                    <div class="arrow left"></div>
+                                    <div class="widget-body">
+                                        <em>
+                                            <!--Инструмент позволяет облегчить восприятие на слух с помощью разделения фраз на фрагменты. Полезен для генерации заданий по написанию транскриптов к видео Удобен для составления авторских пособий.-->
+                                            READING
+                                        </em>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <div style="padding-left: 30px; display: none;" class="childWidget"  data-parent="reading"  >
+                            <section class="widget articlesPanelItem">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/moses.jpg" style=" border-radius: 100px; width: 75px;">
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;">
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Тексты для чтения
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget articlesPanelItem">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <!--<img src="img/listening.png" style=" border-radius: 100px; width: 75px;">-->
+                                            <img src="img/subtitle.png" style=" border-radius: 100px; width: 75px;">
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body" style="">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Тексты для чтения, снабженные аудио
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                        </div>
+
+
+                        <section class="widget parentWidget" data-name="speaking">
+                            <div class="row equal-blocks no-m">
+                                <div class="col-xs-3 block">
+                                    <div class="text-center">
+                                        <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                        <img src="img/speaking.png" style=" border-radius: 100px; width: 75px;">
+                                        <!--<h6 class="text-uppercase">SPEAKING</h6>-->
+                                    </div>
+                                </div>
+                                <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                    <div class="arrow left"></div>
+                                    <div class="widget-body">
+                                        <em>
+                                            <!--Тренажер для отработки навыков чтения вслух на основе коротких видеофрагментов, снабженных транскриптами. Произносимые фразы записываются и проверяются в онлайн-режиме. Тренажер полезен и для запоминания фраз.-->
+                                            SPEAKING
+                                        </em>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <div style="padding-left: 30px; display: none;" class="childWidget" data-type="speaking" data-media="text,video"  data-parent="speaking"  >
+                            <section class="widget auditorExercisePanel"  data-media="text,video"  data-parent="speaking"   >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="../img/bastard.jpg" style=" border-radius: 100px; width: 75px;">
+                                            <h6 class="text-uppercase">Перевод коротких фраз</h6>
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;">
+                                                Перед учеником проходит ряд коротких фраз на русском языке для перевода за очень короткий промежуток времени. Фразы - в виде текста или видео. Ведется запись для проверки преподавателем.
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget auditorExercisePanel" data-type="speaking" data-media="image, video" >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <img src="../img/comment.jpg" style=" border-radius: 100px; width: 75px;">
+                                            <h6 class="text-uppercase">Комментатор</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body" style="">
+                                            <em style="font-size: 16px;" >
+
+                                                Развите навыков описания картинки или короткого видео. База образов снабжена образцами комментариев, сделанными носителями языка. Однако, главное - импровизация. Ведется запись.
+                                                <!--Цель  – развить навыки описания картинки или очень короткого видео. База образов снабжена образцами комментариев, сделанными носителями языка (5-10 с). Однако, полагаться нужно на способность к импровизации. Ведется запись.-->
+                                                <!--Цель  – развить навыки описания картинки или очень короткого видео. База образов снабжена образцами комментариев, сделанными носителями языка (5-10 с). Однако, полагаться нужно на способность к импровизации. Ведется запись.-->
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <img src="../img/interrogation.jpg" style=" border-radius: 100px; width: 75px;" />
+                                            <h6 class="text-uppercase">
+                                                Интервью
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Для формирования навыков говорения на основе собственных мнений (через предварительное анкетирование). Ученик получает перевод своих мыслей на английский язык, учит их. После этого отвечает на вопросы в режиме записи.-->
+                                                Формирование навыков говорения на основе собственных мнений (с предварительным анкетированием). Ученик заранее получает перевод своих мыслей на английский язык.   Отвечает на вопросы в режиме записи. Импровизация приветствуется.
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <img src="../img/heshe.jpg" style=" border-radius: 100px; width: 75px;" />
+                                            <h6 class="text-uppercase">Предложения с местоимениями на основе заданных образов</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                Цель  – произнесение предложений с местоимениями на основе заданной конструкции и сменяющихся на экране стационарных образов (I,we, he, she,they).
+                                                Предусмотрена запись.
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget auditorExercisePanel" data-type="speaking" data-media="image,audio" >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <img src="../img/sounds.jpg" style=" border-radius: 100px; width: 75px;" />
+                                            <h6 class="text-uppercase">Звуки и образы</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Цель – сформировать образы в сознании ученика без использования слов родного языка и проверить скорость реакции после тренинга. Пример: нужно произнести фразу типа “thunder”, услышав гром. Ведется запись.-->
+                                                Формирование образов без использования слов родного языка. Проверка скорости реакции и запоминания после тренинга. Пример: нужно произнести “thunder”, услышав гром (или "lightning"). Ведется запись.
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/mix.jpg" style=" border-radius: 100px; width: 75px;">
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                набор разнообразных упражнений, в основе которых - модификация имеющихся конструкций на базе коротких видео или картинок.
+
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+
+
+
+                        <section class="widget parentWidget" data-name="writing">
+                            <div class="row equal-blocks no-m">
+                                <div class="col-xs-3 block">
+                                    <div class="text-center">
+                                        <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                        <img src="img/writing.png" style=" border-radius: 100px; width: 75px;">
+                                        <!--<h6 class="text-uppercase">WRITING</h6>-->
+                                    </div>
+                                </div>
+                                <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                    <div class="arrow left"></div>
+                                    <div class="widget-body">
+                                        <em>
+                                            <!--Комбинация из текстов, картинок и видео. В случае выбора преподавателем по ним ведутся уроки. При этом тестовая информация во время урока может отключаться (кроме субтитров видео).-->
+                                                WRITING
+                                        </em>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <div style="padding-left: 30px; display: none;" class="childWidget"  data-parent="writing"  >
+                            <section class="widget auditorExercisePanel" data-type="typing" data-media="text" >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/moses.jpg" style=" border-radius: 100px; width: 75px;">
+                                            НАБОР ТЕКСТА
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;">
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Развитие навыка набора текста на английском языке.
+                                                Для образовательных учреждений, в которых предусмотрена аттестация по результатам выполненных заданий ( программа делает копирование текста невозможным).
+
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget auditorExercisePanel" data-type="typing" data-media="text" >
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <!--<img src="img/listening.png" style=" border-radius: 100px; width: 75px;">-->
+                                            <img src="img/transcribe.png" style=" border-radius: 100px; width: 75px;">
+                                            ДИКТАНТ
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body" style="">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                Тренажер для выработки навыка записи на слух. В отличие от аналогичных упражнений этого ресурса акцент делается на способности печатать без ошибок.
+                                                Используются только аутентичные аудиоматериалы, но произносятся предложения достаточно медленно для того, чтобы обучаемый сосредоточился на печати.
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                        </div>
+
+
+
+                        <section class="widget parentWidget" data-name="etc">
+                            <div class="row equal-blocks no-m">
+                                <div class="col-xs-3 block">
+                                    <div class="text-center">
+                                        <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                        <img src="img/etc2.png" style=" border-radius: 100px; width: 75px;">
+                                        <!--<h6 class="text-uppercase">ДОПОЛНИТЕЛЬНЫЕ РЕСУРСИ И ИНСТРУМЕНТЫ</h6>-->
+                                    </div>
+                                </div>
+                                <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                    <div class="arrow left"></div>
+                                    <div class="widget-body">
+                                        <em>
+                                            <!--Перед учеником проходит ряд коротких фраз на русском языке для перевода за очень короткий промежуток времени. Фразы - в виде текста или видео. Ведется запись для проверки преподавателем.-->
+                                            ДОПОЛНИТЕЛЬНЫЕ РЕСУРСЫ И ИНСТРУМЕНТЫ
+                                        </em>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+
+                        <div style="padding-left: 30px; display: none;" class="childWidget"  data-parent="etc"  >
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/moses.jpg" style=" border-radius: 100px; width: 75px;">
+                                            idiophrases.com
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;">
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                todo
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget" onclick="window.location.href='articles.html'">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <!--<img src="img/listening.png" style=" border-radius: 100px; width: 75px;">-->
+                                            <img src="img/subtitle.png" style=" border-radius: 100px; width: 75px;">
+                                            ARTICLES
+
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body" style="">
+                                            <em style="font-size: 16px;" onclick="window.location.href='http://the-english-patient.com/SportPatient-war/faces/personal/categories.xhtml'" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                               TODO
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/smacks.jpg" style=" border-radius: 100px; width: 75px;">
+                                            ножницы
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                todo (Sabir)
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/smacks.jpg" style=" border-radius: 100px; width: 75px;">
+                                            коллекция > 30 s
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                todo (Yury)
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <section class="widget">
+                                <div class="row equal-blocks no-m">
+                                    <div class="col-xs-3 block">
+                                        <div class="text-center">
+                                            <!--<i class="fa fa-twitter fa-5x text-info"></i>-->
+                                            <img src="img/smacks.jpg" style=" border-radius: 100px; width: 75px;">
+                                             OLGA
+                                            <!--<h6 class="text-uppercase">LISTENING</h6>-->
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-9 block bg-primary brtr brbr p15">
+                                        <div class="arrow left"></div>
+                                        <div class="widget-body">
+                                            <em style="font-size: 16px;" >
+                                                <!--Управление видеофайлом ученика преподавателем на расстоянии. Одинаково отчетливо слышен, как голос преподавателя, так и используемые им видеоматериалы. Идеальный инструмент для тренировки аудирования через скайп.-->
+                                                todo (Yury)
+                                            </em>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+
+
+
+                    </div>
+
+                </div>
+                <!-- /inner content wrapper -->
+
+            </div>
+            <!-- /content wrapper -->
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+    </section>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+
+<div class="modal fade" id="newClassModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Create a class</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input class="form-control" id="className" placeholder="Class name..." />
+                    <textarea class="form-control mt10" id="classDescription" placeholder="Description" ></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-primary" id="createClassButton" >CREATE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="updateClassModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Update class info</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <input class="form-control" id="updateClassName" placeholder="Class name..." />
+                    <textarea class="form-control mt10" id="updateClassDescription" placeholder="Description" ></textarea>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" id="updateClassButton" >UPDATE</button>
+                <button type="button" class="btn btn-danger" id="deleteClassButton" >DELETE</button>
+
+                <button type="button" class="btn btn-default ml25" data-dismiss="modal">CANCEL</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="onlineModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Online Users</h4>
+            </div>
+            <div class="modal-body">
+                <ul id="onlineUsersList">
+
+                </ul>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exerciseInfoModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Информация об упражнении</h4>
+            </div>
+            <div class="modal-body">
+
+                <h3 class="text-center" id="auditorNameBlock" ></h3>
+
+                <div id="auditorDescriptionBlock">
+                    <p>
+
+                    </p>
+                </div>
+
+                <div id="explainerVideoBlock" style="display: none; margin-bottom: 20px;">
+                    <h3 class="text-center" >
+                       Как это работает?
+                    </h3>
+                    <div id="explainerVideoPlaceholder" class="text-center">
+
+                    </div>
+
+                </div>
+
+                <h3 class="text-center" >Упражнения</h3>
+
+                <div id="auditorExercisesList">
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="demoExerciseModal" tabindex="1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Exercise Demo</h4>
+            </div>
+            <div class="modal-body">
+                <div id="demoExerciseIframePlaceholder">
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="articlesModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" >Заметки</h4>
+            </div>
+            <div class="modal-body">
+                <div id="articlesList">
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/plugins/toastr/toastr.min.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/custom/howler.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="js/TeacherExercisesDemoManager.js"></script>
+
+<script src="js/TeacherHomePageManager.js"></script>
+<script src="js/MainMenuManager.js"></script>
+<!-- /template scripts -->
+
+<!-- page script -->
+<!-- /page script -->
+
+<script>
+    $(function(){
+        console.log('page loaded');
+        MMM = new MainMenuManager();
+        MMM.init();
+//        THPM = new TeacherHomePageManager();
+//        THPM.init();
+    });
+
+</script>
+
+</body>
+<!-- /body -->
+
+</html>

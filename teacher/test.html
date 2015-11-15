@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <script src="../home/plugins/jquery-1.11.1.min.js" ></script>
+
+</head>
+<body>
+
+<select id="select">
+    <option selected="">opt 1</option>
+    <option>opt 2</option>
+    <option>opt 3</option>
+    <option>opt 4</option>
+</select>
+
+<script>
+    function initSelect(){
+        $('#select').on('change', function(){
+            var val = $(this).val();
+            alert(val);
+        });
+    }
+
+    $(function(){
+        initSelect();
+    });
+</script>
+
+</body>
+</html>

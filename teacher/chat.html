@@ -1,0 +1,370 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>
+        He/She Exercises
+    </title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- core scripts -->
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../home/plugins/jquery.slimscroll.min.js"></script>
+    <script src="../home/plugins/jquery.easing.min.js"></script>
+    <script src="../home/plugins/appear/jquery.appear.js"></script>
+    <script src="../home/plugins/jquery.placeholder.js"></script>
+    <script src="../home/plugins/fastclick.js"></script>
+    <!-- /core scripts -->
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <script src="../home/js/parse-1.2.18.min.js" ></script>
+    <script src="../home/js/moment.js" ></script>
+
+
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="plugins/modernizr.js"></script>
+
+    <style>
+
+        #phrasesList{
+            list-style: none;
+            margin-left: 0px;
+            padding-left: 0px;
+        }
+        #phrasesList li{
+            margin-bottom: 10px;
+            font-size: 16px;
+            background-color: #ffffff;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #1582dc;
+        }
+
+        i.playLink{
+            cursor: pointer;
+            color: #1582dc;
+        }
+
+        .chatUserItem.active{
+            background-color: #1582dc;
+        }
+
+        .chatUserItem img{
+            margin-top: -7px;
+        }
+
+        .chat-time{
+            padding-right: 10px;
+        }
+
+    </style>
+
+
+</head>
+
+<!-- body -->
+
+<body>
+
+
+<div class="cover" style="background-image: url(../home/img/cover1.jpg)"></div>
+<div class="overlay bg-color"></div>
+
+<div class="app horizontal-layout">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient <sup></sup>
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav">
+
+            <li class="hidden-xs">
+                <a href="index.html" >
+                    <i class="ti-home"></i>
+                    Главная
+                </a>
+            </li>
+
+            <!--<li class="hidden-xs">-->
+            <!--<a href="materialsLibrary.html" >-->
+            <!--<i class="ti-server"></i>-->
+            <!--Materials-->
+            <!--</a>-->
+            <!--</li>-->
+
+            <!--<li class="hidden-xs">-->
+            <!--<a href="exercises.html" >-->
+            <!--<i class="ti-face-smile"></i>-->
+            <!--Exercises-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li class="hidden-xs">-->
+            <!--<a href="exercises.html" >-->
+            <!--<i class="ti-server"></i>-->
+            <!--Materials-->
+            <!--</a>-->
+            <!--</li>-->
+
+            <li class="hidden-xs">
+                <!-- toggle small menu -->
+                <!--<a href="javascript:;" class="toggle-sidebar">-->
+                <!--<i class="ti-menu"></i>-->
+                <!--</a>-->
+                <!-- /toggle small menu -->
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <!--<li class="hidden-xs">-->
+            <!--<a href="javascript:void(0);" data-toggle="modal" data-target="#newClassModal" >-->
+            <!--<i class="ti-plus"></i>-->
+            <!--</a>-->
+            <!--</li>-->
+
+            <li class="notifications dropdown">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-bell"></i>
+                    <div class="badge badge-top bg-danger animated flash">
+                        <span>3</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Notifications</b>
+                        </div>
+                        <ul class="list-group">
+
+                            <li class="list-group-item">
+                                you have no notifications
+                            </li>
+
+                            <li class="list-group-item">
+                                <a href="javascript:;">
+                                    <div class="pull-left mt5 mr15">
+                                        <div class="circle-icon bg-danger">
+                                            <i class="ti-download"></i>
+                                        </div>
+                                    </div>
+                                    <div class="m-body">
+                                        <span>Upload Progress</span>
+                                        <div class="progress progress-xs mt5 mb5">
+                                            <div class="progress-bar" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                            </div>
+                                        </div>
+                                        <span class="time small">Submited 23 mins ago</span>
+                                    </div>
+                                </a>
+                            </li>
+
+                        </ul>
+
+                        <div class="panel-footer">
+                            <a href="javascript:;">See all notifications</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/profile.png" class="header-avatar img-circle avatar avatar-sm img-circle userAvatar userAvatar">
+                    <span class="hidden-xs ml10 username"  >UserName</span>
+                    <i class="ti-angle-down ti-caret hidden-xs"></i>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <li>
+                        <a href="profile.html" >Profile</a>
+                    </li>
+                    <li>
+                        <a href="javascript: void(0);" class="logoutLink" >logout</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout">
+
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper" style="bottom: 51px;">
+                    <div class="chat-box" id="messagesPlaceholder" >
+
+                    </div>
+                </div>
+                <!-- /inner content wrapper -->
+            </div>
+            <!-- /content wrapper -->
+
+            <footer class="bt">
+                <div class="form-input clearfix mt10 mb10">
+                    <div class="input-group">
+                        <input type="text" class="form-control input-sm" id="messageInput" placeholder="Введите Ваше сообщение...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default btn-sm" id="submitButton" type="button"><i class="ti-arrow-right"></i></button>
+                            </span>
+                    </div>
+                </div>
+            </footer>
+
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /content wrapper -->
+
+        <aside class="sidebar-300 offscreen-right bg-white">
+            <div class="content-wrap">
+                <div class="wrapper">
+                    <div class="">
+
+
+
+                        <div class="pt15 pl15 pr15 pb0">
+                            <div class="h6 text-muted"><b>Студенты</b>
+                            </div>
+                        </div>
+
+
+
+                        <div id="usersList">
+
+                        </div>
+
+                        <!--<div class="chat-user">-->
+                        <!--<div href="javascript:;" class="user-avatar">-->
+                        <!--<img src="img/faceless.jpg" class="img-circle" alt="">-->
+                        <!--<div class="status bg-success"></div>-->
+                        <!--</div>-->
+                        <!--<div class="user-details">-->
+                        <!--<p>Robert McCoy</p>-->
+                        <!--<small class="user-department">Human Resources</small>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+
+                        <!--<div class="chat-user">-->
+                        <!--<a href="javascript:;" class="user-avatar">-->
+                        <!--<img src="img/faceless.jpg" class="avatar avatar-sm img-circle" alt="">-->
+                        <!--<div class="status bg-color"></div>-->
+                        <!--</a>-->
+                        <!--<div class="user-details">-->
+                        <!--<p>Jason Henderson</p>-->
+                        <!--<small class="user-department">Human Resources</small>-->
+                        <!--</div>-->
+                        <!--</div>-->
+
+                    </div><div class="slimScrollBar" style="width: 6px; position: absolute; top: -309px; opacity: 0.4; display: none; border-radius: 7px; z-index: 99; right: 0px; height: 67.2852983988355px; background: rgb(0, 0, 0);"></div><div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; opacity: 0.2; z-index: 90; right: 0px; background: rgb(51, 51, 51);"></div></div>
+            </div>
+</div>
+</aside>
+
+
+
+<!--<a class="exit-offscreen"></a>-->
+
+</section>
+<!-- /main content -->
+
+
+
+
+</section>
+
+</div>
+
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/plugins/toastr/toastr.min.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../home/js/custom/common.js"></script>
+
+<script src="../home/js/custom/howler.js"></script>
+<script src="../teacher/js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+
+
+<script src="../common/js/UserChatManager.js"></script>
+<script src="js/TeacherChatManager.js"></script>
+<!-- /template scripts -->
+
+<!-- page script -->
+<!-- /page script -->
+
+<script>
+    $(function(){
+        TCM = new TeacherChatManager();
+        TCM.init();
+    });
+</script>
+
+</body>
+<!-- /body -->
+
+</html>

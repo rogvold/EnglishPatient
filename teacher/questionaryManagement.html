@@ -1,0 +1,422 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>Questionary</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../home/plugins/taggle/css/twilight.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/projects.min.css">
+    <link rel="stylesheet" href="../home/plugins/taggle/css/taggle.min.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="../home/plugins/modernizr.js"></script>
+</head>
+
+<!-- body -->
+
+<body>
+<div class="app">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+
+
+            <li class="visible-xs">
+                <a href="javascript:;" data-toggle="offscreen" data-move="rtl">
+                    <i class="ti-comment-alt"></i>
+                    <div class="badge badge-top bg-danger animated flash">
+                        <span>9</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="notifications dropdown">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-upload"></i>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Загрузка файла</b>
+                        </div>
+                        <div>
+                            <iframe style="width: 100%; height: 70px;" src="http://disk.englishpatient.org/u.html" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="notifications dropdown">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-upload"></i>
+                    <i class="ti-vimeo"></i>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Загрузка видео на vimeo</b>
+                        </div>
+                        <div>
+                            <iframe style="width: 100%; height: 70px;" src="http://disk.englishpatient.org/vimeo.html" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout">
+        <!-- sidebar menu -->
+        <!-- /sidebar menu -->
+
+        <!--<aside class="sidebar-250 offscreen-left bg-white">-->
+            <!--<div class="content-wrap">-->
+                <!--<div class="wrapper">-->
+                    <!--<div class="slimscroll" data-height="auto" data-size="6px" data-distance="0">-->
+                        <!--<div class="pt0 pl15 pr15 pb0 clearfix text-center">-->
+                            <!--<h3 class="mt0">-->
+                        <!--<span class="small">-->
+                            <!--Questionary-->
+                        <!--</span>-->
+                            <!--</h3>-->
+                        <!--</div>-->
+
+                        <!--<div class="p10">-->
+                            <!--<ul id="questionaryList">-->
+                                <!--<li class="p20">loading...</li>-->
+                                <!--<li class="p20">loading...</li>-->
+                                <!--<li class="p20">loading...</li>-->
+                                <!--<li class="p20">loading...</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</aside>-->
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper p5">
+                    <div class="col-xs-2 br p0 ml0 pl0" style="height: 100%;">
+                        <div class="h5 mt0">
+                            Questionary
+                        </div>
+                        <div>
+                            <ul id="questionaryList">
+
+                            </ul>
+                        </div>
+                        <div class="mt10 text-center" >
+                            <button class="btn btn-lg" id="" onclick="clearInputs();" data-toggle="modal" data-target="#createQuestionModal" >create question</button>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-4 br" style="height: 100%;">
+                        <div id="questionBlock">
+                            <div class="text-center">
+                                <iframe id="vimeoIframe" src="//player.vimeo.com/video/112521534?title=0&byline=0&portrait=0"
+                                        width="320" height="180" frameborder="0"
+                                        webkitallowfullscreen mozallowfullscreen allowfullscreen>
+                                </iframe>
+                            </div>
+                            <div class="mt10">
+                                <input class="form-control" id="questionVimeoId" placeholder="Vimeo ID" />
+                            </div>
+                            <div class="mt10">
+                                <input placeholder="Name" class="form-control" id="questionName" />
+                            </div>
+                            <div class="mt10">
+                                <textarea placeholder="Transcript" class="form-control" id="questionTranscript" ></textarea>
+                            </div>
+                            <div class="mt10">
+                                <textarea placeholder="Транскрипт по-русски" class="form-control" id="questionRuTranscript" ></textarea>
+                            </div>
+
+                            <div>
+                                <button class="pull-right btn btn-danger block mt10 mr10 ml10 hide" id="deleteQuestionButton" >delete</button>
+                            </div>
+
+                            <div>
+                                <button  class="btn btn-info pull-right mt10" id="questionUpdateButton" >update</button>
+                            </div>
+
+
+                        </div>
+
+
+             </div>
+
+             <div class="col-xs-2 br" style="height: 100%;" >
+                 <ul id="answersList" >
+                     <li>dlksjfhlsdkfjhasld fjhasld fjhasldf kjadsfjkad sf</li>
+                     <li>loading</li>
+                     <li>loading</li>
+                     <li>loading</li>
+                 </ul>
+                 <div class="mt10 text-center" >
+                     <button onclick="clearInputs();" class="btn btn-lg" data-toggle="modal" data-target="#createAnswerModal" >create answer</button>
+                 </div>
+
+             </div>
+
+             <div class="col-xs-4" style="height: 100%;">
+
+                 <div class="" id="answerBlock" >
+                    <audio controls="" id="answerAudio" style="width: 100%;" ></audio>
+                     <br/> <br/>
+
+                     <input class="form-control" id="answerAudioUrl" placeholder="audioUrl" />
+                     <br/>
+                     <input class="form-control" id="answerName" placeholder="Name" />
+                     <br/>
+                     <textarea class="form-control" style="height: 100px;" id="answerTranscript" placeholder="Transcript"  ></textarea>
+
+                     <br/>
+                     <textarea class="form-control" style="height: 100px;" id="answerRuTranscript" placeholder="Транскрипт по-русски"  ></textarea>
+                     <br/>
+                     <textarea class="form-control" id="answerHints" placeholder="Ключевые слова для подсказки (по-английски через запятую)"  ></textarea>
+
+                     <div>
+                         <button class="pull-right btn btn-danger block mt10 mr10 ml10 hide" id="deleteAnswerButton" >delete</button>
+                     </div>
+
+                     <div>
+                         <button class="btn btn-info pull-right mt10 block" id="answerUpdateButton" >update</button>
+                     </div>
+
+
+
+
+
+
+
+                 </div>
+
+
+             </div>
+
+             <!--<div class="view-list" >-->
+                        <!--<div class="row p20">-->
+
+                            <!--<h4 class="selectedName text-center" >Question</h4>-->
+
+                            <!--<div class="text-center" id="videoBlock" >-->
+                                <!--<!--<iframe src="//player.vimeo.com/video/112521534?title=0&byline=0&portrait=0"-->
+                                <!--<!--width="480" height="270" frameborder="0"-->
+                                <!--<!--webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+
+                            <!--</div>-->
+                            <!--<hr/>-->
+                            <!--<div id="editInfoBlock">-->
+                                <!--Name:  <input id="editName" class="form-control" placeholder="name" /><br/>-->
+                                <!--Vimeo ID: <input id="editVimeoId" placeholder="vimeo id" class="form-control" /><br/>-->
+                                <!--<hr/>-->
+                                <!--Transcript:-->
+                                <!--<textarea placeholder="transcript" class="form-control" id="editTranscript" ></textarea> <br/>-->
+                                <!--Comment:-->
+                                <!--<textarea placeholder="comment" class="form-control" id="editComment" ></textarea> <br/>-->
+                                <!--Tags:-->
+                                <!--<div id="editTaggle" style="display: block;" ></div>-->
+                                <!--<br/>-->
+                                <!--<hr/>-->
+
+                                <!--<button class="btn btn-success pull-right" id="updateButton" >UPDATE</button>-->
+
+                            <!--</div>-->
+
+                        <!--</div>-->
+                    <!--</div>-->
+
+                </div>
+                <!-- /inner content wrapper -->
+
+            </div>
+            <!-- /content wrapper -->
+
+
+
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+
+
+
+
+
+
+    </section>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+
+<div class="modal fade bs-modal-sm" id="createQuestionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title nameWidget">Create New Question</h4>
+            </div>
+            <div class="modal-body">
+
+                <input class="form-control modalInput" id="createQuestionVimeoId" placeholder="vimeo ID" />
+                <br/>
+                <input class="form-control modalInput" id="createQuestionName" placeholder="Name" />
+                <br/>
+                <textarea class="form-control modalInput" id="createQuestionTranscript" placeholder="Транскрипт того, что говорит диктор" ></textarea>
+
+                <br/>
+
+                <textarea class="form-control modalInput" id="createQuestionRussianTranscript" placeholder="Вопрос по-русски (перевод транскрипта) " ></textarea>
+
+                <br/>
+
+                <button class="btn btn-success" id="createQuestionButton" >create</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="createAnswerModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title nameWidget">Create New Answer</h4>
+            </div>
+            <div class="modal-body">
+
+                <input class="form-control modalInput" id="createAnswerAudioUrl" placeholder="audio url" />
+                <br/>
+                <input class="form-control modalInput" id="createAnswerName" placeholder="Name" />
+                <br/>
+                <textarea class="form-control modalInput" id="createAnswerTranscript" placeholder="Transcript" ></textarea>
+                <br/>
+                <textarea class="form-control modalInput" id="createAnswerRuTranscript" placeholder="Перевод транскрипта (ответ по-русски)" ></textarea>
+                <br/>
+                <textarea class="form-control modalInput" id="createAnswerHints" placeholder="Ключевые слова для ответа (по-английски через запятую)" ></textarea>
+
+
+                <br/>
+                <button class="btn btn-success" id="createAnswerButton" >create</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- core scripts -->
+<script src="../home/plugins/jquery-1.11.1.min.js"></script>
+<script src="../home/plugins/taggle/js/jquery-ui.js"></script>
+<script src="../home/bootstrap/js/bootstrap.js"></script>
+<script src="../home/plugins/jquery.slimscroll.min.js"></script>
+<script src="../home/plugins/jquery.easing.min.js"></script>
+<script src="../home/plugins/appear/jquery.appear.js"></script>
+<script src="../home/plugins/jquery.placeholder.js"></script>
+<script src="../home/plugins/fastclick.js"></script>
+<!-- /core scripts -->
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/plugins/taggle/js/rainbow-custom.min.js"></script>
+<script src="../home/plugins/toastr/toastr.js"></script>
+<script src="../home/plugins/taggle/js/taggle.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<!--<script src="../home/admin/js/MaterialsManager.js"></script>-->
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="js/TeacherQuestionaryManager.js"></script>
+
+<script src="../home/js/main.js"></script>
+<!-- /template scripts -->
+
+<script>
+    $(function(){
+        TQM = new TeacherQuestionaryManager();
+        TQM.init();
+    });
+
+    function clearInputs(className){
+        if (className == undefined){
+            className = 'modalInput';
+        }
+        $('.' + className).val('');
+    }
+
+</script>
+
+
+</body>
+<!-- /body -->
+
+</html>

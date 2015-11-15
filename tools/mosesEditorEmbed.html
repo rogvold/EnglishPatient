@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Moses Editor</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <link rel="stylesheet" href="../home/css/custom.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../home/plugins/toastr/toastr.min.js"></script>
+    <script src="../home/js/parse-1.2.18.min.js"></script>
+    <script src="../home/js/custom/common.js"></script>
+    <script src="js/froogaloop2.min.js"></script>
+    <script src="js/MosesEditor.js"></script>
+
+    <style>
+
+        ul.mosesLabelsList{
+            list-style: none;
+            margin-left: 0px;
+            padding-left: 0px;
+        }
+
+        .mosesLabelItem{
+            list-style: none;
+            padding: 5px;
+            background-color: lightgoldenrodyellow;
+            cursor: pointer;
+            color: black;
+            max-width: 550px;
+            border: 1px solid lightgrey;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .mosesLabelItem:hover{
+            color: firebrick;
+            opacity: 0.6;
+        }
+
+        .mosesLabelItem.second{
+            margin-left: 20px;
+            background-color: lightblue !important;
+        }
+
+        .mosesLabelItem.active{
+            font-weight: bold;
+            color: green;
+            border: 3px solid #000000;
+        }
+
+        #seekToLabel{
+            cursor: pointer;
+        }
+
+        #seekToLabel:hover{
+            color: blue;
+        }
+
+        #firstPlayButton.active{
+            background-color: lightsalmon;
+        }
+
+    </style>
+
+
+</head>
+
+<body>
+
+<div style="display: block; width: 420px; margin-top:10px;">
+
+    <h3 ><a href="javascript:void(0);" target="_blank"  id="vimeoLink" ></a></h3>
+
+    <div class="text-center playerBlock" style="height: auto !important; background-color: transparent;
+    padding-top: 0px; " id="videoBlock" >
+
+        <!--<script src="//f.vimeocdn.com/js/froogaloop2.min.js"></script>-->
+        <iframe id="player" style="width: 400px; height: 300px;" src="//player.vimeo.com/video/115569512?api=1&player_id=player" width="400" height="300" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+    </div>
+    <div class="text-center" >
+                                <span class="text-center">
+                                    <span id="seekToLabel">current time:</span> <input value="0" id="currentTime" class="currentTime" style="width: 50px; text-align: center; " onclick="this.select();" />
+                                </span>
+    </div>
+
+    <hr/>
+
+    <div class="mosesControlsBlock" style="margin: 10px;" >
+
+        <div class="mosesFirstLabelControls" >
+
+            <ul id="firstComments" class="mosesLabelsList" >
+
+            </ul>
+
+            <div class="addNewMosesLabelBlock">
+                New Moses label:
+                <button style="padding: 0px;" id="fromBackwardButton" ><i class="ti-control-backward"></i></button>
+                <input id="firstFrom" class="fromInput" style="width: 60px;" placeholder="from" />
+                <button style="padding: 0px;" id="fromForwardButton" ><i class="ti-control-forward"></i></button> -
+
+                <button style="padding: 0px;" id="toBackwardButton" ><i class="ti-control-backward"></i></button>
+                <input id="firstTo" class="toInput" style="width: 60px;" placeholder="to" />
+                <button style="padding: 0px;" id="toForwardButton" ><i class="ti-control-forward"></i></button>
+
+                <input id="firstComment" style="width: 250px; margin-top:10px; " placeholder="comment" />
+                <button id="firstPlayButton" class="playButton" ><i class="ti-control-play" ></i></button>
+                <button id="addNewFirstMosesLabelButton" ><i class="ti-plus" ></i> add</button>
+                <br/>
+                <hr/>
+                <button id="saveButton" class="btn-sm btn btn-success mt10 pull-right" >save</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+<script src="js/MosesEditor.js" ></script>
+
+
+<script>
+    $(function(){
+        ME = new MosesEditor();
+        ME.init();
+    });
+</script>
+
+</body>
+</html>

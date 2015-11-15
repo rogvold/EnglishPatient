@@ -1,0 +1,329 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>Exercise</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- /core scripts -->
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <!-- /core styles -->
+
+    <script src="../home/js/moment.js" ></script>
+
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../home/css/skins/palette.css">
+    <link rel="stylesheet" href="../home/css/fonts/font.css">
+    <link rel="stylesheet" href="../home/css/main.css">
+
+    <link rel="stylesheet" href="../css/custom.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="plugins/modernizr.js"></script>
+
+    <script src="../home/plugins/toastr/toastr.min.js"></script>
+
+
+    <script src="https://cdn.pubnub.com/pubnub.min.js"></script>
+
+</head>
+
+<!-- body -->
+
+<body>
+<div class="app">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../home/img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient <sup>Admin</sup>
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+
+        <ul class="nav navbar-nav">
+            <li class="hidden-xs">
+                <!-- toggle small menu -->
+                <a href="dialogs.html">
+                    <i class="ti-menu"></i>
+                </a>
+                <!-- /toggle small menu -->
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+
+            <li class="visible-xs">
+                <a href="javascript:;" data-toggle="offscreen" data-move="rtl">
+                    <i class="ti-comment-alt"></i>
+                </a>
+            </li>
+
+
+
+            <li class="notifications dropdown">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-upload"></i>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Загрузка файла</b>
+                        </div>
+                        <div>
+                            <iframe style="width: 100%; height: 70px;" src="http://disk.englishpatient.org/u.html" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="notifications dropdown">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <i class="ti-upload"></i>
+                    <i class="ti-vimeo"></i>
+                </a>
+                <div class="dropdown-menu animated fadeInLeft">
+                    <div class="panel panel-default no-m">
+                        <div class="panel-heading small"><b>Загрузка видео на vimeo</b>
+                        </div>
+                        <div>
+                            <iframe style="width: 100%; height: 70px;" src="http://disk.englishpatient.org/vimeo.html" ></iframe>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout">
+        <!-- sidebar menu -->
+        <!-- /sidebar menu -->
+
+        <!-- main content -->
+        <section class="main-content">
+
+            <!-- content wrapper -->
+            <div class="content-wrap">
+
+
+
+                <!-- inner content wrapper -->
+                <div class="wrapper">
+
+                    <h3 class="pt0 mt0 mb5 exerciseName text-center" id="exerciseName" >
+
+                    </h3>
+
+                    <div class="text-center mt0" >
+                        <ul class="pagination pagination-sm mt0 mb0" id="exercisesNumbersBlock"  >
+                            пока еще нет заданий. создайте
+                        </ul>
+                    </div>
+
+                    <div class="taskPlaceholder">
+
+
+                        <div id="videoPlaceholder" class="text-center col-md-12 mediaMaterial">
+
+                            <!--<iframe src="http://player.vimeo.com/video/110862736?title=0&byline=0&portrait=0" width="400" height="225" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>-->
+                        </div>
+
+                        <div id="imagePlaceholder" class="text-center col-md-12 mediaMaterial">
+
+                            <!--<img src="http://photos.wikimapia.org/p/00/01/50/61/48_big.jpg" style="height: 260px;" />-->
+                        </div>
+
+                        <div id="audioPlaceholder" class="text-center col-md-12 mt5 mediaMaterial">
+
+                            <!--<audio src="http://www.freeinfosociety.com/media/sounds/4948.mp3" controls=""  ></audio>-->
+                        </div>
+
+                        <div id="textPlaceholder" class="text-center col-md-12 mediaMaterial">
+                            <!--<h3>this is text</h3>-->
+                        </div>
+
+                        <div class="deleteButtonBlock text-center">
+                            <button class="btn btn-danger hide" id="deleteButton" >Delete</button>
+                        </div>
+
+                        <div class="text-center">
+                            <button class="btn btn-default" id="editButton" data-toggle="modal" data-target="#editModal"  > edit </button>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <!-- /inner content wrapper -->
+
+
+
+            </div>
+            <!-- /content wrapper -->
+
+
+
+
+            <a class="exit-offscreen"></a>
+
+
+        </section>
+        <!-- /main content -->
+
+        <!-- chat panel -->
+        <aside class="sidebar-300 offscreen-right bg-white">
+            <div class="content-wrap">
+                <div class="wrapper">
+                    <div class="slimscroll" data-height="auto" data-size="6px" data-distance="0">
+                        <div class="pt15 pl15 pr15 pb0 clearfix text-center">
+                            <h3 class="mt0">
+                        <span class="small">
+                            Новая реплика
+                        </span>
+                            </h3>
+                        </div>
+
+                        <div class="p5">
+                            <input class="form-control" type="text" id="imageUrl" placeholder="ссылка на картинку (если пусто, то не будет)"  />
+                            <br/>
+                            <input class="form-control" id="audioUrl" placeholder="Ссылка на аудио (если пусто, то не будет)" />
+                            <br/>
+
+                            <textarea class="form-control" id="transcript" placeholder="Транскрипт" ></textarea>
+                            <br/>
+                            <textarea class="form-control" id="hint" placeholder="Подсказка" ></textarea>
+                            <br/>
+
+                            <button class="btn pull-right btn-dropbox" id="createButton">Create</button>
+                            <br/>
+                            <br/>
+                        </div>
+                        <hr/>
+
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!-- /chat panel -->
+
+
+
+    </section>
+
+</div>
+
+
+
+
+<div class="modal fade" id="editModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" style="">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Edit</h4>
+            </div>
+            <div class="modal-body">
+
+                <input class="form-control"  id="editImg" placeholder="ссылка на картинку" />
+                <br/>
+                <input class="form-control" id="editAudioUrl" placeholder="ссылка на аудио" />
+
+                <br/>
+                <textarea class="form-control" placeholder="Транскрипт" id="editTranscript" ></textarea>
+                <br/>
+                <input class="form-control" placeholder="Подсказка" id="editHint" />
+
+
+                <hr/>
+
+                <button class="btn btn-primaryt" id="updateButton" >Update</button>
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ЗАКРЫТЬ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="gallery-loader hide">
+    <div class="loader"></div>
+</div>
+
+<!-- core scripts -->
+<script src="../home/plugins/jquery-1.11.1.min.js"></script>
+<script src="../home/bootstrap/js/bootstrap.min.js"></script>
+<script src="../home/plugins/jquery.slimscroll.min.js"></script>
+<script src="../home/plugins/jquery.easing.min.js"></script>
+<script src="../home/plugins/appear/jquery.appear.js"></script>
+<script src="../home/plugins/jquery.placeholder.js"></script>
+<script src="../home/plugins/fastclick.js"></script>
+<!-- /core scripts -->
+
+<!-- page level scripts -->
+<!-- /page level scripts -->
+<!-- template scripts -->
+<script src="../home/js/offscreen.js"></script>
+<script src="../home/js/main.js"></script>
+<script src="../home/js/custom/common.js"></script>
+<script src="../home/js/parse-1.2.18.min.js"></script>
+<script src="../common/js/TranslateManager.js"></script>
+<script src="../home/js/custom/VideoMaterial.js"></script>
+<script src="../home/js/custom/AudioMaterial.js"></script>
+<script src="../home/js/custom/TextMaterial.js"></script>
+<script src="../home/js/custom/ImageMaterial.js"></script>
+
+
+<script src="js/OnlineManager.js"></script>
+<script src="../home/js/custom/CurrentUserManager.js"></script>
+<script src="js/TeacherDialogManager.js"></script>
+<!-- /template scripts -->
+
+<script>
+    $(function(){
+        TDM = new TeacherDialogManager();
+        TDM.init();
+    });
+</script>
+
+</body>
+<!-- /body -->
+
+</html>

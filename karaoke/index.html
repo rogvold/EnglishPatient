@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../plugins/pplayer/assets/pplayer.css" >
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css" >
+    <link rel="stylesheet" href="../plugins/pplayer/assets/pplayer.css" >
+
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../home/js/parse-1.2.18.min.js"></script>
+    <script src="../home/js/custom/common.js"></script>
+    <script src="../plugins/pplayer/js/jquery.pplayer.js"></script>
+    <script src="../common/js/TranslateManager.js"></script>
+    <script src="js/PatientKaraokeManager.js"></script>
+
+    <style type="text/css">
+
+        .hidden.menu {
+            display: none;
+        }
+
+        .masthead.segment {
+            min-height: 700px;
+            padding: 1em 0em;
+        }
+        .masthead .logo.item img {
+            margin-right: 1em;
+        }
+        .masthead .ui.menu .ui.button {
+            margin-left: 0.5em;
+        }
+        .masthead h1.ui.header {
+            margin-top: 3em;
+            margin-bottom: 0em;
+            font-size: 4em;
+            font-weight: normal;
+        }
+        .masthead h2 {
+            font-size: 1.7em;
+            font-weight: normal;
+        }
+
+        .ui.vertical.stripe {
+            padding: 8em 0em;
+        }
+        .ui.vertical.stripe h3 {
+            font-size: 2em;
+        }
+        .ui.vertical.stripe .button + h3,
+        .ui.vertical.stripe p + h3 {
+            margin-top: 3em;
+        }
+        .ui.vertical.stripe .floated.image {
+            clear: both;
+        }
+        .ui.vertical.stripe p {
+            font-size: 1.33em;
+        }
+        .ui.vertical.stripe .horizontal.divider {
+            margin: 3em 0em;
+        }
+
+        .quote.stripe.segment {
+            padding: 0em;
+        }
+        .quote.stripe.segment .grid .column {
+            padding-top: 5em;
+            padding-bottom: 5em;
+        }
+
+        .footer.segment {
+            padding: 5em 0em;
+        }
+
+        .secondary.pointing.menu .toc.item {
+            display: none;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+<!-- Page Contents -->
+<div class="pusher">
+    <div class="ui inverted vertical masthead center aligned segment" style="padding-top: 0px;">
+
+        <div class="ui container" style="width: 100%; ">
+            <div class="ui large secondary inverted pointing menu" style=" background-color: #1582dc; padding-left: 50px;">
+                <a class="toc item">
+                    <i class="sidebar icon"></i>
+                </a>
+                <a class="active item" href="/index.html">English Patient</a>
+                <!--<a class="item">Work</a>-->
+                <!--<a class="item">Company</a>-->
+                <!--<a class="item">Careers</a>-->
+                <!--<div class="right item">-->
+                    <!--<a class="ui inverted button">Log in</a>-->
+                    <!--<a class="ui inverted button">Sign Up</a>-->
+                <!--</div>-->
+            </div>
+        </div>
+
+        <!--<div class="ui text container">-->
+        <div class="ui container" style="position: relative;">
+            <!--<h1 class="ui inverted header">-->
+                <!--Imagine-a-Company-->
+            <!--</h1>-->
+            <!--<h2>Do whatever you want when you want to.</p>-->
+                <!--<div class="ui huge primary button">Get Started <i class="right arrow icon"></i></div>-->
+
+            <a href="" id="youtubeLink" target="_blank" ><i class="icon youtube"></i> YouTube</a>
+
+
+            <div id="playerPlaceholder" style="" >
+                <div id="player" style="width: 100%;;">
+
+                </div>
+            </div>
+
+
+            <div id="mainSubtitle" >
+                Выберите видео из списка внизу
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="ui vertical stripe segment">
+
+        <div class="ui text container" id="materialsPlaceholder">
+            
+            
+            <div class="ui card materialItem" style="">
+                <div class="image">
+                    <img src="http://s01.yapfiles.ru/files/1142891/loadingx.gif">
+                </div>
+                <div class="content">
+                    <a class="header">Загрузка...</a>
+                </div>
+                <div class="extra content">
+                    <a>
+                        <i class="grid layout icon"></i>
+                        это может занять с десяток секунд
+                    </a>
+                </div>
+            </div>
+
+            
+            
+            
+            
+
+        </div>
+
+
+
+
+
+        <!--<div class="ui text container">-->
+            <!--<h3 class="ui header">Breaking The Grid, Grabs Your Attention</h3>-->
+            <!--<p>Instead of focusing on content creation and hard work, we have learned how to master the art of doing nothing by providing massive amounts of whitespace and generic content that can seem massive, monolithic and worth your attention.</p>-->
+            <!--<a class="ui large button">Read More</a>-->
+            <!--<h4 class="ui horizontal header divider">-->
+                <!--<a href="#">Case Studies</a>-->
+            <!--</h4>-->
+            <!--<h3 class="ui header">Did We Tell You About Our Bananas?</h3>-->
+            <!--<p>Yes I know you probably disregarded the earlier boasts as non-sequitor filler content, but its really true. It took years of gene splicing and combinatory DNA research, but our bananas can really dance.</p>-->
+            <!--<a class="ui large button">I'm Still Quite Interested</a>-->
+        <!--</div>-->
+
+    </div>
+
+
+    <!--<div class="ui inverted vertical footer segment hide">-->
+        <!--<div class="ui container">-->
+            <!--<div class="ui stackable inverted divided equal height stackable grid">-->
+                <!--<div class="three wide column">-->
+                    <!--<h4 class="ui inverted header">About</h4>-->
+                    <!--<div class="ui inverted link list">-->
+                        <!--<a href="#" class="item">Sitemap</a>-->
+                        <!--<a href="#" class="item">Contact Us</a>-->
+                        <!--<a href="#" class="item">Religious Ceremonies</a>-->
+                        <!--<a href="#" class="item">Gazebo Plans</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="three wide column">-->
+                    <!--<h4 class="ui inverted header">Services</h4>-->
+                    <!--<div class="ui inverted link list">-->
+                        <!--<a href="#" class="item">Banana Pre-Order</a>-->
+                        <!--<a href="#" class="item">DNA FAQ</a>-->
+                        <!--<a href="#" class="item">How To Access</a>-->
+                        <!--<a href="#" class="item">Favorite X-Men</a>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="seven wide column">-->
+                    <!--<h4 class="ui inverted header">Footer Header</h4>-->
+                    <!--<p>Extra space for a call to action inside the footer that could help re-engage users.</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>
+
+<!--<div class="modal fade" id="translateModal" style="z-index: 100000000;" tabindex="1000" role="dialog" aria-hidden="true">-->
+    <!--<div class="modal-dialog" style="">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>-->
+                <!--<h4 class="modal-title"></h4>-->
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+
+            <!--</div>-->
+
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">ЗАКРЫТЬ</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<style>
+
+    #youtubeLink{
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.2em;
+        color: white;
+    }
+
+    #playerPlaceholder{
+        display: block;
+        width: 800px;
+        margin:  0 auto;
+    }
+
+    #mainSubtitle{
+        margin-top: 2px;
+        line-height: 1.5em;
+        font-size: 3em;
+    }
+
+    #materialsPlaceholder{
+        text-align: center;
+        max-width: 1100px !important;
+    }
+
+    #materialsPlaceholder .materialItem{
+        cursor: pointer;
+        width: 250px;
+        text-align: justify;
+        margin-left: 20px;
+        display: inline-block;
+    }
+
+    #materialsPlaceholder .materialItem:hover{
+        opacity: 0.8;
+    }
+
+    #materialsPlaceholder .materialItem.active{
+        border: 5px solid linen;
+    }
+
+    .materialItem:nth-child(3n + 1){
+        /*margin-left: 0px;*/
+    }
+
+    #materialsPlaceholder .materialItem .content .header{
+        font-size: 0.87em !important;
+    }
+
+    #materialsPlaceholder .materialItem .extra.content a{
+        font-size: 0.8em !important;
+    }
+</style>
+
+<script>
+    $(function(){
+        PKM = new PatientKaraokeManager();
+        PKM.init();
+    });
+</script>
+
+</body>
+</html>

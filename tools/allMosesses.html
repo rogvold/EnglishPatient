@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../home/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../home/css/font-awesome.css">
+    <link rel="stylesheet" href="../home/css/themify-icons.css">
+    <link rel="stylesheet" href="../home/css/animate.min.css">
+    <link rel="stylesheet" href="../home/plugins/toastr/toastr.min.css">
+
+    <script src="../home/js/parse-1.2.18.min.js"></script>
+    <script src="../home/plugins/jquery-1.11.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../home/js/custom/common.js"></script>
+    <script src="../home/js/custom/froogaloop.min.js"></script>
+    <script src="js/MosesPlayingModalManager.js"></script>
+    <script src="js/AllMosessesManager.js"></script>
+
+    <style>
+        #mosesList{
+            list-style: none;
+            margin-left: 0px;
+            padding-left: 0px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div style="display: block; margin-top: 100px; margin: 0 auto; width: 250px; text-align: center;" >
+    <h3 style="text-align: center;" >Moses God Mode</h3>
+    <ul id="mosesList">
+
+    </ul>
+    <input id="newMosesInput" placeholder="vimeo id" />
+    <a href="javascript: void(0);" id="addNewButton"><i class="ti-plus"></i></a>
+</div>
+
+<div class="modal fade" id="mosesModal" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" style="width: 353px;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title mosesName" >Preview</h4>
+            </div>
+            <div class="modal-body">
+                <div id="heSheVewDiv">
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">CLOSE</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        AMM = new AllMosessesManager();
+        AMM.init();
+    });
+</script>
+
+</body>
+</html>

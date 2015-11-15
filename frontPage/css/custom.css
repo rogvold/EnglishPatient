@@ -1,0 +1,362 @@
+.question{
+
+}
+
+.question.image-question{
+
+}
+
+.image-question .image-question-header{
+
+}
+
+.image-question .image-question-content{
+
+}
+
+.image-question .image-question-footer{
+
+}
+
+#signupModal .tab-content{
+    border-bottom: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}
+
+#signupModal .modal-dialog, #signinModal .modal-dialog{
+    width: 350px;
+}
+
+#signupModal .tabpanel{
+    /*max-width: 300px;*/
+    width: 100%;
+    margin: 0 auto;
+}
+
+#signupModal .form-group{
+    margin-bottom: 0px;
+}
+
+.mt10{
+    margin-top: 10px;
+}
+
+#newClassModal .modal-dialog{
+    width: 300px;
+}
+
+.classItem{
+    cursor: pointer;
+}
+
+#studentsList{
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#studentsList li img{
+    margin-right: 10px;
+}
+
+#studentsModal .modal-dialog{
+    width: 400px;
+}
+
+.classDescription{
+    color: white;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.classCodePlaceholder{
+    color: #ffffff;
+}
+
+.classCodePlaceholder .classCode{
+    font-weight: bold;
+}
+
+.patientArticle{
+    display: block !important;
+    margin: 0 auto;
+    width: 650px !important;
+    /*border: 1px solid lightgrey;*/
+}
+
+#articlesList{
+    margin-left: 0px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#previewModal .modal-dialog{
+    width: 700px;
+}
+
+#editorBlock{
+    width: 610px;
+}
+
+.modal-dialog ul{
+    list-style: none !important;
+}
+
+.articleItem, .exerciseItem, .phraseItem, .dialogItem, .smackExerciseItem{
+    cursor: pointer;
+    margin-left: 0px;
+    padding-left: 0px;
+    padding: 10px;
+    border: 1px solid lightgrey;
+    margin-bottom: 5px;
+}
+
+.articleItem.selected{
+    background-color: antiquewhite;
+}
+
+.articleItem.active , .exerciseItem.active, .phraseItem.active, .dialogItem.active, .smackExerciseItem.active{
+    background-color: lightgreen;
+}
+
+#demoTags, #creationDate{
+    font-style: italic;
+    border-top: 1px solid #f5f5f5;
+}
+.nameBlock{
+    border-top: 3px solid white;
+    border-bottom: 3px solid white;
+}
+
+#editEditorBlock{
+    max-width: 602px;
+}
+
+.showItem, .delete, .edit, .playItem{
+    cursor: pointer;
+}
+
+img.patientCategory{
+    cursor: pointer;
+    -webkit-transition: 1s;
+    -moz-transition: 1s;
+    -o-transition: 1s;
+    transition: 1s;
+}
+img.patientCategory:hover{
+    opacity: 0.6;
+    margin-top: 0px;
+}
+
+
+#classLinksBlock{
+    display: block;
+    height: 50px;
+    border-bottom: 3px solid white;
+    background-color: #1582dc;
+    color: white;
+}
+
+.classLinkPlaceholder{
+    width: 33%;
+    border-left: 1px solid lightblue;
+    border-right: 1px solid lightblue;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 16px;
+    position: absolute;
+    height: 100%;
+    /*top: 33%;*/
+}
+
+.classLinkPlaceholder a{
+    color: white;
+}
+
+#studentsList{
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+#studentsList .userItem{
+    padding: 10px;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+}
+
+#studentsList .userItem.active{
+    background-color: #1582dc;
+    color: white;
+}
+
+#auditorBlock{
+
+}
+
+#heSheBlock{
+
+}
+
+#questionaryBlock{
+
+}
+
+#exercisesList li.exerciseItem{
+    padding: 10px;
+    cursor: pointer;
+    /*border-bottom: 1px solid #808080;*/
+}
+
+#heShePhrasesList li.heSheItem{
+    padding: 10px;
+    cursor: pointer;
+    /*border-bottom: 1px solid #808080;*/
+}
+
+#onlineUsersList{
+    margin-left: 0px;
+    padding-left: 0px;
+    list-style: none;
+}
+
+#onlineUsersList .phoneItem{
+    cursor: pointer;
+}
+
+
+
+.patientArticle.production p img{
+    display: block;
+    margin: 0 auto;
+}
+
+.patientArticle.production{
+    color: black;
+    font-size: 14px;
+}
+
+.patientArticle.production p, .patientArticle.production{
+    color: black;
+    font-size: 16px !important;
+    text-align: justify;
+}
+
+.patientArticle.production pre{
+    font-size: 16px !important;
+    white-space: normal !important;
+    word-break: normal !important;
+}
+
+.patientArticle.production p a{
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.unselectable {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+}
+
+
+.userAnswerText{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border-bottom: 2px solid lightgrey;
+    padding-bottom: 10px;
+}
+
+.exerciseAnswerAudio{
+    display: block;
+}
+
+
+
+.childWidget .widget .col-xs-3 {
+    background-color: lightgoldenrodyellow;
+    border-left: 5px solid #1582dc;
+}
+
+.childWidget .widget .col-xs-9{
+    background-color: #1582de;
+}
+
+.widget{
+    cursor: pointer;
+}
+
+#articlesGroupsPlaceholder{
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: center;
+}
+
+.articlesAlbumItem{
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid lightgrey;
+    border-radius: 5px;
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+    cursor: pointer;
+}
+
+.articlesAlbumItem:hover{
+    opacity: 0.8;
+}
+
+.articlesGroupItem img{
+    width: 100%;
+}
+
+.articlesAlbumItem .articlesAlbumName{
+    font-size: 12px;
+}
+
+.articlesAlbumItem.selected{
+    border: 2px solid darkblue;
+}
+
+#recordBlock{
+    margin: 0 auto;
+    display: none;
+    margin-top:30px;
+    width: 520px;
+}
+
+#materialsList{
+    list-style: none;
+    padding-left: 0px;
+}
+
+.materialItem .widget{
+    margin-bottom: 5px;
+}
+
+#materialsList h3{
+    padding-left: 10px;
+}
+
+#materialsList .materialItem{
+    position: relative;
+}
+
+#materialsList .materialItem .selectButton{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+
+#materialsList .materialItem .playButton{
+    position: absolute;
+    /*top: 21px;*/
+    bottom: 21px;
+    right: 10px;
+}

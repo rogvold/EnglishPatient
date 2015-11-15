@@ -1,0 +1,326 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta name="description" content="English Patient">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+    <!-- /meta -->
+
+    <title>User</title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <!-- page level plugin styles -->
+    <!-- /page level plugin styles -->
+
+    <!-- core styles -->
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.css">
+    <link rel="stylesheet" href="../css/themify-icons.css">
+    <link rel="stylesheet" href="../css/animate.min.css">
+
+    <link rel="stylesheet" href="../css/custom.css">
+    <!-- /core styles -->
+
+    <!-- template styles -->
+    <link rel="stylesheet" href="../css/skins/palette.css">
+    <link rel="stylesheet" href="../css/fonts/font.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../plugins/toastr/toastr.css">
+    <!-- template styles -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- load modernizer -->
+    <script src="../plugins/modernizr.js"></script>
+
+    <script src="../js/parse-1.2.18.min.js"></script>
+    <script src="../js/custom/common.js"></script>
+
+    <script src="../plugins/jquery-1.11.1.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.js"></script>
+    <script src="../plugins/jquery.slimscroll.min.js"></script>
+    <script src="../plugins/jquery.easing.min.js"></script>
+    <script src="../plugins/jquery.placeholder.js"></script>
+
+    <script src="../plugins/toastr/toastr.js"></script>
+
+
+    <script src="../js/custom/AudioMaterial.js"></script>
+    <script src="../js/custom/VideoMaterial.js"></script>
+    <script src="../js/custom/TextMaterial.js"></script>
+    <script src="../js/custom/ImageMaterial.js"></script>
+    <script src="../js/custom/ExerciseCard.js"></script>
+
+    <script src="js/AdminUserReport.js"></script>
+
+
+
+
+    <script type="text/javascript">
+        $(function(){
+            AUR = new AdminUserReport();
+            AUR.init();
+        });
+    </script>
+
+</head>
+
+<!-- body -->
+
+<body>
+<div class="app  horizontal-layout boxed">
+    <!-- top header -->
+    <header class="header header-fixed navbar">
+
+        <div class="brand">
+            <!-- toggle offscreen menu -->
+            <a href="javascript:;" class="ti-menu off-left visible-xs" data-toggle="offscreen" data-move="ltr"></a>
+            <!-- /toggle offscreen menu -->
+
+            <!-- logo -->
+            <a href="index.html" class="navbar-brand">
+                <img src="../img/logo_mini.png" alt="">
+                    <span class="heading-font">
+                        English Patient
+                    </span>
+            </a>
+            <!-- /logo -->
+        </div>
+
+
+
+        <ul class="nav navbar-nav navbar-right">
+
+
+
+            <li class="off-right">
+                <a href="javascript:;" data-toggle="dropdown">
+                    <img src="../img/faceless.jpg" class="header-avatar img-circle" alt="user" title="user">
+                    <span class="hidden-xs ml10 username">Admin</span>
+                </a>
+
+            </li>
+        </ul>
+    </header>
+    <!-- /top header -->
+
+    <section class="layout ">
+
+
+        <!-- mail sidebar navigation -->
+        <aside class="sidebar-250 canvas-right bg-default ">
+            <header class="header navbar clearfix bb bg-default pl0 pr0">
+                <p class="navbar-text">
+                    <a href="../index.html">
+                        <i class="ti-menu-alt mr5"></i>
+                    </a>
+                    <span class="username" id="userName">
+
+                    </span>
+                </p>
+
+            </header>
+
+            <div class="content-wrap no-p">
+
+                <div class="wrapper">
+
+
+
+                    <nav role="navigation">
+                        <div class="no-padding">
+                            <ul class="nav nav-stacked">
+                                <li class="disabled text-uppercase">
+                                    <a href="javascript:;">
+                                        <b>Categories</b>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#questionsList" id="allFilterButton" >
+                                        <span class="badge pull-right bg-warning" id="allNumber" ></span>
+                                        <i class="ti-menu-alt mr5"></i>
+                                        Questionnaire
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="#auditorBlock" id="doneFilterButton"  >
+                                        <span class="badge pull-right bg-success" id="doneNumber" ></span>
+                                        <i class="ti-check mr5"></i>
+                                        Auditor
+                                    </a>
+                                </li>
+
+                            </ul>
+
+
+                        </div>
+                    </nav>
+
+                </div>
+            </div>
+        </aside>
+        <!-- /mail sidebar navigation -->
+
+        <!-- main content -->
+        <section class="main-content bg-white ">
+
+            <header class="header navbar clearfix bb bg-default pl0">
+                <!--<p class="navbar-text">-->
+                    <!--<span id="selectedExerciseName">-->
+                        <!--this is selected exercise name-->
+                    <!--</span>-->
+                <!--</p>-->
+                <div class="pull-right hide">
+                    <button type="button" class="btn btn-sm btn-color navbar-btn">
+                        <i class="ti-settings"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- content wrapper -->
+            <div class="content-wrap bl">
+
+                <!-- inner content wrapper -->
+                <div class="wrapper no-p">
+                    <h4 class="ml10">Questionnaire</h4>
+
+                    <ul class="list-group mail-list" id="questionsList" >
+                        user hasn't answered on any question...
+                    </ul>
+
+                    <hr/>
+
+                    <h4 class="ml10">Auditor</h4>
+                    <ul class="list-group mail-list" id="auditorList" style="margin-bottom: 40px;" >
+
+
+
+                    </ul>
+
+                </div>
+
+
+
+                <!-- /inner content wrapper -->
+
+            </div>
+            <!-- /content wrapper -->
+
+            <footer class="bg-white bl bt">
+                <p>&copy; English Patient 2014</p>
+                <p class="pull-right">All rights reserved
+                </p>
+            </footer>
+
+            <a class="exit-offscreen"></a>
+        </section>
+        <!-- /main content -->
+    </section>
+</div>
+
+<div class="modal fade bs-modal-sm" id="questionModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title nameWidget" id="questionName" >.</h4>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="text-center">
+                    <iframe id="vimeoIframe" src="" style="width: 320px; height: 240px;" ></iframe>
+                </div>
+
+                <div>
+                    <p id="questionTranscript">
+
+                    </p>
+
+
+                    <div>
+                        <table class="table table-bordered" id="questionAnswersTable" >
+
+                        </table>
+                    </div>
+
+                </div>
+
+
+                <br/>
+                <button class="btn btn-success pull-right" id="answerQuestionButton" >Submit</button>
+                <br/>
+                <br/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="vimeoModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title nameWidget"  >video-question</h4>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <iframe id="vimeoModalIframe" src="" style="width: 320px; height: 240px;" ></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-modal-sm" id="exerciseModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title nameWidget exerciseName "  ></h4>
+            </div>
+            <div class="modal-body">
+                <ul id="exerciseAnswersList">
+
+                </ul>
+                <h5>Teacher feedback</h5>
+                <div class="feedbackBlock">
+                    <textarea class="form-control mb10" placeholder="leave feedback here" id="teacherFeedback" ></textarea>
+                </div>
+                <div>
+                    <button class="btn btn-success" id="submitFeedbackButton" >Submit</button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- core scripts -->
+
+<div class="gallery-loader hide">
+    <div class="loader">
+
+    </div>
+</div>
+
+
+</body>
+<!-- /body -->
+
+</html>

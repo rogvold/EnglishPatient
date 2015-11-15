@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title><link rel="icon" href="http://beta.englishpatient.org/home/img/logo_mini.png" />
+
+    <link rel="stylesheet" href="../vergels/mvp/plugins/semantic/semantic.min.css" />
+    <link rel="stylesheet" href="css/translate.css" />
+    <script src="../home/plugins/jquery-1.11.1.min.js" ></script>
+    <script src="../vergels/mvp/plugins/semantic/semantic.min.js" ></script>
+    <script src="../home/js/custom/common.js" ></script>
+    <script src="js/TranslateWidgetManager.js" ></script>
+
+
+</head>
+<body>
+
+<div class="ui message translateWidget" >
+    <div class="ui form" style="margin: 0 auto; text-align: center;">
+        <div class="field ui">
+            <!--<label>Last Name</label>-->
+            <input id="translateInput" type="text" name="last-name" style="width: 60%;" placeholder="Search...">
+            <button class="ui button primary" style="max-width: 35%;" id="translateButton"><i class="icon search"></i> translate</button>
+
+        </div>
+    </div>
+    <div class="ui">
+        <div id="translatePlaceholder">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+
+    TWM = new TranslateWidgetManager();
+    TWM.init();
+
+
+</script>
+
+</body>
+</html>

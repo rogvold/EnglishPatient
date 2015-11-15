@@ -1,0 +1,339 @@
+.displaynone{
+    display: none !important;
+}
+
+.avatarPlaceholder{
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    position: absolute;
+    left: 20px;
+    bottom: 8px;
+    z-index: 1000;
+    overflow: hidden;
+    border-radius: 5px;
+    border: 5px solid white;
+}
+
+.userNamePlaceholder{
+    position: absolute;
+    bottom: 57px;
+    left: 190px;
+    /*font-weight: bold;*/
+    color: white;
+    font-size: 24px;
+    font-family: helvetica, arial, sans-serif;
+}
+
+.coverImagePlaceholder{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background-color: whitesmoke;
+    overflow: hidden;
+}
+
+.coverImagePlaceholder .coverImage{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.avatarPlaceholder .avatar{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+    width: 100%;
+}
+
+.mainContainer{
+    width: 851px !important;
+}
+
+.topBlock{
+    position: relative;
+    height: 325px;
+    background-color: wheat;
+    border: 1px solid #d3d6db;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+}
+
+.bottomPanel{
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 43px;
+    background-color: white;
+    padding-left: 190px;
+
+}
+
+.bottomPanelItem{
+    border-right: 1px solid lightgray;
+    display: inline-block;
+    height: 100%;
+    line-height: 43px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 16px;
+    min-width: 100px;
+    text-align: center;
+}
+
+.bottomPanelItem:first-of-type{
+    border-left: 1px solid lightgray;
+}
+
+.bottomContainer{
+    margin-top: 10px !important;
+    max-width: 851px !important;
+}
+
+.bottomContainer .six.wide{
+    padding-left: 0px !important;
+}
+
+.bottomContainer .ten.wide{
+    padding-left: 1rem !important;
+    padding-right: 0px !important;
+}
+
+.bottomContainer .ten.wide .stacked.segments{
+    margin-top: 0px !important;
+}
+
+.photoBlockItemPlaceholder{
+    width: 87px;
+    height: 87px;
+    margin-left: 3px;
+    overflow: hidden;
+    background-color: whitesmoke;
+    border: 3px solid whitesmoke;
+    border-radius: 3px;
+    display: inline-block;
+    text-align: center;
+}
+
+.photoBlockItemPlaceholder img{
+    /*display: flex;*/
+    align-items: center;
+    vertical-align: middle;
+    justify-content: center;
+    background-color: whitesmoke;
+    height: 100%;
+}
+
+.photoBlock{
+    margin-top: 7px;
+    max-height: 190px;
+    overflow-y: auto;
+}
+
+
+.flytrackTopMenu{
+    margin-bottom: 0px !important;
+    background-color: #43609C !important;
+    border-radius: 0px !important;
+}
+
+.flytrackTopMenu .ui.container{
+    width: 851px;
+}
+
+.dropdownSearch{
+    position: absolute;
+    width: 300px;
+    top: 8px;
+}
+
+.dropdownSearch .inputPlaceholder{
+    height: 25px;
+}
+
+.dropdownSearch .button{
+    height: 25px;
+    width: 25px;
+    padding: 6px;
+    padding-left: 9px;
+    font-size: 16px;
+    line-height: 20px;
+    padding-top: 2px !important;
+}
+
+.dropdownSearch .resultsBlockPlaceholder{
+    position: absolute;
+    max-height: 200px;
+    width: 294px;
+    overflow-y: auto;
+    margin-top: 2px !important;
+    border-radius: 0px;
+    padding: 0px;
+}
+
+.searchItemName{
+    font-weight: normal !important;
+    font-size: 14px !important;
+}
+
+.searchItem{
+    padding: 3px;
+    cursor: pointer;
+}
+
+.searchItem:hover{
+    background-color: lightgoldenrodyellow !important;
+    opacity: 0.8 !important;
+}
+.searchItems{
+    padding-bottom: 4px;
+    padding-top: 4px;
+    /*background-color: #E9EAED;*/
+}
+
+.dropdownPlaceholder{
+    width: 327px;
+}
+
+.dropdownSearch{
+    z-index: 10000000;
+}
+
+.loginSuggestionPanel{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #DEDFE1;
+    opacity: 0.97;
+    padding: 10px;
+}
+
+.loginSuggestionHeader{
+    font-size: 16px !important;
+}
+
+.airfieldMiddleBlockPlaceholder{
+    margin-top: 20px;
+}
+
+.airfieldHeader .ui.container{
+    width: 851px !important;
+}
+
+.airfieldHeader{
+    background-color: #43609C !important;
+    height: 42px !important;
+}
+
+.airfieldHeader img{
+    width: 2em !important;
+}
+
+.photoSliderPlaceholder{
+    position: fixed;
+    top: 0px;bottom: 0px;
+    left: 0px; right: 0px;
+    z-index: 10000000000;
+    background: whitesmoke;
+    overflow-y: auto;
+}
+
+.photoSlider{
+    width: 100%;
+}
+
+.photoSlider .positionBlock{
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.photoSliderPlaceholder .closeButtonPlaceholder{
+    padding: 10px;
+    padding-top: 15px;
+    text-align: right;
+    font-size: 30px;
+}
+
+.descriptionPlaceholder{
+    margin-top: 10px;margin-bottom: 10px;
+    text-align: center;
+}
+
+.descriptionPlaceholder .description{
+    width: 600px;
+    text-align: justify;
+    font-size: 16px;
+}
+
+.photoSliderPlaceholder .closeButtonPlaceholder .closeButton{
+    cursor: pointer;
+}
+
+.photoSliderPlaceholder .closeButtonPlaceholder .closeButton:hover{
+    opacity: 0.8;
+    color: darkblue;
+}
+
+.currentPhotoPlaceholder{
+    max-height: 450px;
+    height: 450px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.currentPhotoPlaceholder .currentPhoto{
+    height: 100%
+}
+
+.controlsPlaceholder{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.photoBlockItemPlaceholder{
+    cursor: pointer;
+}
+.photoBlockItemPlaceholder:hover{
+    opacity: 0.7;
+}
+
+body{
+    /*background-color: #E9EAED !important;*/
+    /*background-color: #F4F5F6 !important;*/
+}
+
+.currentUserDropdownItem{
+    cursor: pointer;
+}
+
+.currentUserDropdownItem:hover{
+    background-color: lightgoldenrodyellow !important;
+    font-weight: bold;
+}
+
+.dropdownSearch{
+    top: 12px
+}
+
+.inputsBunch .fieldsPlaceholder{
+    max-height: 470px;
+    border-bottom: 1px solid lightgray;
+    border-top: 1px solid lightgray;
+    overflow-y: auto;
+}
+
+.adminExerciseItem:hover{
+    opacity: 0.9;
+    background-color: lightgoldenrodyellow;
+}
+
+.adminExerciseItem.active{
+    background-color: lightgreen;
+}

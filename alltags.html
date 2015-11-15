@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="home/js/parse-1.2.18.min.js" ></script>
+    <script src="react/js/JSXTransformer.js" ></script>
+    <script src="react/js/react.min.js" ></script>
+
+    <script src="home/js/custom/common.js" ></script>
+
+    <link  href="vergels/mvp/plugins/semantic/semantic.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+<div id="main"></div>
+
+<script type="text/jsx">
+
+    function loadMaterials(callback){
+        initParse();
+        var q = new Parse.Query(Parse.Object.extend('PatientMaterial'));
+        q.limit(1000);
+        q.find(function(results){
+            callback(results);
+        });
+    }
+
+    function extractAllTags(list){
+        var map = {};
+        for (var i in list){
+            var tags = list[i].get('tags');
+            for (var j in tags){
+                map[tags[j]] = tags[j];
+            }
+        }
+        var arr = [];
+        for (var key in map){
+            arr.push(key);
+        }
+        return arr;
+    }
+
+    function loadTags(callback){
+        loadMaterials(function(list){
+            var tags = extractAllTags(list);
+            tags = tags.sort();
+            callback(tags);
+        });
+    }
+    
+    var TagsList = React.createClass({
+        getDefaultProps: function () {
+            return {}
+        },
+
+        getInitialState: function () {
+            return {
+                tags: []
+            }
+        },
+
+        componentWillReceiveProps: function (nextProps) {
+
+        },
+
+        loadTags: function(){
+            var self = this;
+            loadTags(function(tags){
+                self.setState({
+                    tags: tags
+                });
+            });
+        },
+
+        componentDidMount: function () {
+            this.loadTags();
+        },
+
+        componentStyle: {
+            placeholder: {
+
+            },
+            itemStyle: {
+                fontSize: 20,
+                padding: 10
+            }
+        },
+
+        render: function () {
+
+            return (
+                    <div style={this.componentStyle.placeholder}>
+                        {this.state.tags.map(function(tag, i){
+                            var key = i;
+                            return (<div key={key} style={this.componentStyle.itemStyle}>
+                                {tag}
+                            </div>);
+                        }, this)}
+                    </div>
+            );
+        }
+
+    });
+
+    React.render(<TagsList />, document.getElementById('main'));
+
+</script>
+
+</body>
+</html>
