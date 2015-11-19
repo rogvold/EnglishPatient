@@ -20,6 +20,7 @@ var LoginApp = require('./LoginApp');
 
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
+var Sausage = require('../../components/sausage/Sausage');
 
 var IndexApp = React.createClass({
     getDefaultProps: function () {
@@ -102,18 +103,10 @@ var IndexApp = React.createClass({
 
     getContent: function(){
 
-        var options = [
-            { value: 'one', label: 'One' },
-            { value: 'two', label: 'Two' }
-        ];
-
-
         return (
-            <div style={{padding: 10}}>
-                <h3>
+            <div>
 
-
-                </h3>
+                <Sausage />
 
             </div>
 

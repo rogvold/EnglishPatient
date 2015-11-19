@@ -160,6 +160,7 @@ var TaskPanel = React.createClass({
                 {items == undefined || items.length == 0 ? null :
                     <PagedFeedItemsList userId={this.props.teacherId} teacherId={this.props.teacherId}
                                         items={items}
+                                        classId={this.props.classId}
                                         teacherMode={false} editMode={true} onFeedItemDeleted={this.onFeedItemDeleted}
                                         onFeedItemUpdated={this.onFeedItemUpdated} />
                 }

@@ -92,6 +92,7 @@ var SelfLoadingClassFeed = React.createClass({
                     <PagedFeedItemsList userId={this.props.userId} teacherId={this.props.teacherId}
                         items={this.state.feedItems} editMode={this.props.editMode}
                         teacherMode={this.props.teacherMode}
+                        classId={this.props.classId}
                         onFeedItemUpdated={this.onFeedItemUpdated} />
                 }
 

@@ -14,6 +14,8 @@ var FeedItemsList = React.createClass({
             teacherId: undefined,
             userId: undefined,
 
+            classId: undefined,
+
             editMode: false,
             teacherMode: true,
 
@@ -58,6 +60,7 @@ var FeedItemsList = React.createClass({
     },
 
     render: function () {
+        console.log('rendering FeedItemsList: classId = ', this.props.classId);
         var list = this.props.items;
         return (
             <div style={this.componentStyle.placeholder}>
@@ -72,8 +75,10 @@ var FeedItemsList = React.createClass({
                             <FeedItem key={key} exerciseId={item.exerciseId} information={item.information}
                                       onFeedItemUpdated={this.onFeedItemUpdated} onFeedItemDeleted={this.onFeedItemDeleted}
                                       teacherMode={this.props.teacherMode} timestamp={item.timestamp}
+                                      classId={this.props.classId}
                                       materialIds={item.materialIds} noteId={item.materialId} feedItemId={item.id}
-                                      userId={this.props.userId} teacherId={this.props.teacherId} editMode={this.props.editMode}
+                                      userId={this.props.userId} teacherId={this.props.teacherId}
+                                      editMode={this.props.editMode}
                                 />
                         );
 

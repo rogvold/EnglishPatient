@@ -16,6 +16,8 @@ var SelfLoadingUserExercise = require('../exercise/SelfLoadingUserExercise');
 var EditFeedItemButton = require('./button/EditFeedItemButton');
 var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
 
+var NotificationMixin = require('../../mixins/NotificationMixin');
+
 var FeedItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -32,9 +34,12 @@ var FeedItem = React.createClass({
             //information: '<div><span style="font-family: sans-serif;">Все приведенные ниже цитаты имеют отношение к образованию в целом и к изучению языка, в частности.&nbsp;</span></div><div><br></div><div><span style="font-family: sans-serif; background-color: inherit;">“</span><b><span style="font-family: sans-serif;">It is a miracle that curiosity survives formal education.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">A.Einstein</span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“The whole art of teaching is only the art of awakening the natural curiosity of the young mind for the purpose of satisfying it afterwards.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Anatole France</span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“Curiosity is as much the parent of attention, as attention is of memory.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Richard Whately </span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“The cure for boredom is curiosity. There is no cure for curiosity.”&nbsp;</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Ellen Parr </span></span></div><div><br></div><div><span style="font-family: sans-serif;">Первая цитата противоречат высказыванию Э.Парра, прямо указывая на наличие инструмента для умерщвления любопытства. Скорее всего, вы уже испытали его на себе, если учили английский в школе или вузе.</span></div>'
             information: undefined,
 
+
             userId: undefined,
             teacherId: undefined,
             feedItemId: undefined,
+
+            classId: undefined,
 
             teacherMode: false,
             editMode: false,
@@ -135,6 +140,18 @@ var FeedItem = React.createClass({
         this.props.onFeedItemDeleted(itemId);
     },
 
+    onExerciseFinished: function(exerciseId, userId){
+        var classId = this.props.classId;
+        console.log('onExerciseFinished occured: classId, exerciseId, userId = ', classId, exerciseId, userId);
+        if (classId == undefined || userId == undefined || exerciseId == undefined){
+            return;
+        }
+
+        NotificationMixin.createStudentFinishedExerciseNotification(userId, exerciseId, classId, function(no){
+            console.log('Notification sent: ', no);
+        });
+    },
+
     render: function () {
         var teacherMode = (this.props.teacherMode == true) && (this.props.teacherId != undefined);
         var dateString = moment(this.props.timestamp).format('DD.MM.YYYY');
@@ -186,8 +203,10 @@ var FeedItem = React.createClass({
 
                 {this.props.exerciseId == undefined ? null :
                     <div style={this.componentStyle.exercisePlaceholder} >
-                        <SelfLoadingUserExercise userId={this.props.userId} teacherMode={teacherMode}
-                              teacherId={this.props.teacherId} exerciseId={this.props.exerciseId} />
+                        <SelfLoadingUserExercise
+                            onExerciseFinished={this.onExerciseFinished}
+                            userId={this.props.userId} teacherMode={teacherMode}
+                            teacherId={this.props.teacherId} exerciseId={this.props.exerciseId} />
                     </div>
                 }
 

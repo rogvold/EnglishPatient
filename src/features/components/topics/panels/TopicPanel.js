@@ -111,7 +111,6 @@ var TopicPanel = React.createClass({
     render: function () {
         var topPanelStyle = assign({}, this.componentStyle.topPanel, {backgroundImage: 'url("' + this.props.avatar + '")'});
 
-
         return (
             <div style={this.componentStyle.placeholder}>
 
@@ -130,14 +129,10 @@ var TopicPanel = React.createClass({
                     <SelfLoadingMaterialsList
                         teacherId={this.props.teacherId}
                         topicId={this.props.topicId}
+                        showUnsorted={false}
                         />
 
-
                 </div>
-
-
-
-
 
             </div>
         );

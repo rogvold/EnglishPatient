@@ -2,7 +2,7 @@
  * Created by sabir on 12.10.15.
  */
 
-var React = require('react');
+var React = require('react/addons');
 var assign = require('object-assign');
 
 var LoginMixin = require('../../mixins/LoginMixin');
@@ -63,6 +63,20 @@ var RightTextAnswerDiff = require('../../components/exercise/diff/RightTextAnswe
 
 var MaterialsMixin = require('../../mixins/MaterialsMixin');
 
+var UserMixin = require('../../mixins/UserMixin');
+
+var SelfLoadingNotificationsList = require('../../components/notification/SelfLoadingNotificationsList');
+
+var YoutubeEmbedPlayer = require('../../components/video/youtube/YoutubeEmbedPlayer');
+
+var FirstLevelPanelsList = require('../../components/sausage/FirstLevelPanelsList');
+
+var ReactPlayer = require('react-player');
+
+var Speech = require('react-speech');
+
+var TranslateMixin = require('../../mixins/TranslateMixin');
+
 var DevApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -72,7 +86,11 @@ var DevApp = React.createClass({
 
     getInitialState: function () {
         return {
-
+            text: 'color',
+            start: 0,
+            end: 0,
+            //url: 'http://www.youtube.com/watch?v=e-ORhEE9VVg',
+            url: 'http://www.youtube.com/watch?v=fOdOw_Dsf54',
             loading: false,
             users: [],
             selectedTabName: 'users',
@@ -145,14 +163,54 @@ var DevApp = React.createClass({
         alert('onExerciseSelect');
     },
 
+    onUrlChange: function(evt){
+        var val = evt.target.value;
+        this.setState({
+            url: val
+        });
+    },
+
+
+    onPlay: function(evt){
+        console.log('onPlay occured: ', evt);
+    },
+
+    onPause: function(evt){
+        console.log('onPause occured: ', evt);
+    },
+
+    onBuffer: function(evt){
+        console.log('onBuffer occured: ', evt);
+    },
+
+    onEnded: function(evt){
+        console.log('onEnded occured: ', evt);
+    },
+
+    onProgress: function(evt){
+        console.log('onProgress occured: ', evt);
+    },
+
+    onTextChange: function(evt){
+        var text = evt.target.value;
+        this.setState({
+            text: evt.target.value
+        });
+        TranslateMixin.translate(text, function(html){
+            console.log(html);
+        });
+    },
 
     getContent: function(){
+        var userId = this.state.user.id;
 
         return (
             <div>
 
+                <Speech text={this.state.text} displayText={'GB'} textAsButton={true} />
+                <Speech text={this.state.text} displayText={'US'} textAsButton={true} lang={'en-US'} />
 
-                
+                <input value={this.state.text} onChange={this.onTextChange} />
 
             </div>
 

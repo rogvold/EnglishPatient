@@ -11,6 +11,8 @@ var CurrentUserMenuItem = require('../../templates/CurrentUserMenuItem');
 var LoginMixin = require('../../../mixins/LoginMixin');
 var History = require('react-router').History;
 
+var NotificationsNumberSpan = require('../../notification/NotificationsNumberSpan');
+
 var TeacherHeader = React.createClass({
     mixins: [History],
 
@@ -70,7 +72,26 @@ var TeacherHeader = React.createClass({
     },
 
     componentStyle: {
-        placeholder: {}
+        placeholder: {
+
+        },
+
+        notificationsItemPlaceholder: {
+            height: '100%',
+            boxSizing: 'borderBox',
+            display: 'inline-block',
+            marginRight: 25,
+            color: '#A1A4AA',
+            paddingTop: 10,
+            cursor: 'pointer',
+            verticalAlign: 'top'
+        },
+
+        active: {
+            borderBottom: '3px solid #FC636B',
+            color: '#1B2432',
+            paddingBottom: 7
+        }
     },
 
 
@@ -93,32 +114,54 @@ var TeacherHeader = React.createClass({
             console.log('redirecting to ' + url);
             this.history.pushState(null, url);
         }
+    },
 
+    onNotificationsClick: function(){
+        this.history.pushState(null, '/notifications');
+    },
+
+
+    getRightBlock: function(){
+        var dropdownItems = [
+            {
+                name: 'Выход',
+                icon: 'icon sign out',
+                onClick: function(){
+                    this.onLogout();
+                }.bind(this)
+            }];
+        var user = (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser();
+        var st = assign({}, this.componentStyle.notificationsItemPlaceholder);
+        if (this.props.activeTab == 'notifications'){
+            st = assign(st, this.componentStyle.active);
+        }
+
+        return (
+
+            <div style={{display: 'inline-block'}} >
+                <div style={st} onClick={this.onNotificationsClick} >
+                    Уведомления
+                    {this.props.activeTab == 'notifications' ? null :
+                    <span>
+                        <NotificationsNumberSpan spanStyle={{padding: '3px 5px', color: 'white',
+                                                             backgroundColor: '#FC636B', marginLeft: 3}}
+                            spanClassName={' ui label'}
+                            userId={user.id} />
+                    </span>
+                    }
+                </div>
+
+                <CurrentUserMenuItem dropdownItems={dropdownItems}
+                                     userName={user.name} avatar={user.avatar} />
+            </div>
+        );
     },
 
     render: function () {
         var self = this;
-        var dropdownItems = [
-        //    {
-        //    name: 'Настройки',
-        //    icon: 'icon settings',
-        //    onClick: function(){
-        //        this.onSettings();
-        //    }.bind(this)
-        //}
-
-            {
-            name: 'Выход',
-            icon: 'icon sign out',
-            onClick: function(){
-                this.onLogout();
-            }.bind(this)
-        }];
-
-        var user = (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser();
-
-        var rightBlock = <CurrentUserMenuItem dropdownItems={dropdownItems} userName={user.name} avatar={user.avatar} />;
-        var leftBlock = <HeaderLeftLinks onItemClicked={this.onItemClicked} activeTab={this.props.activeTab} items={this.props.items} />;
+        var rightBlock = this.getRightBlock();
+        var leftBlock = <HeaderLeftLinks onItemClicked={this.onItemClicked}
+                                         activeTab={this.props.activeTab} items={this.props.items} />;
 
         return (
             <HeaderTemplate leftBlock={leftBlock} rightBlock={rightBlock} />

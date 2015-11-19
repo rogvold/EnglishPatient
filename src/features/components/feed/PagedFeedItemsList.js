@@ -16,6 +16,8 @@ var PagedFeedItemsList = React.createClass({
             userId: undefined,
             teacherId: undefined,
 
+            classId: undefined,
+
             editMode: false,
             teacherMode: true,
 
@@ -79,6 +81,7 @@ var PagedFeedItemsList = React.createClass({
     },
 
     render: function () {
+        console.log('rendering PagedFeedItemsList: classId = ', this.props.classId);
 
         var loadMoreVisible = (this.state.loadedNumber < this.props.items.length);
 
@@ -94,6 +97,7 @@ var PagedFeedItemsList = React.createClass({
                     <FeedItemsList items={items} editMode={this.props.editMode}
                                    onFeedItemUpdated={this.onFeedItemUpdated} onFeedItemDeleted={this.onFeedItemDeleted}
                                    userId={this.props.userId}
+                                   classId={this.props.classId}
                                    teacherId={this.props.teacherId} teacherMode={this.props.teacherMode}
                         />
                 </div>

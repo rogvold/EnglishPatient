@@ -1952,3 +1952,15 @@ body{
 
 
 /*end of tags*/
+
+
+.sausageItem:hover {
+    border: 3px solid rgb(252, 99, 107) !important;
+}
+
+.disable-select {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

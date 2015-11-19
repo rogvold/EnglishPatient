@@ -9,6 +9,8 @@ var NotesApp = require('./NotesApp');
 var TopicsApp = require('./TopicsApp');
 var MaterialsApp = require('./MaterialsApp');
 var DevApp = require('./DevApp');
+var NotificationsApp = require('./NotificationsApp');
+var ToolsApp = require('./ToolsApp');
 
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -79,6 +81,14 @@ var App = React.createClass({
                 </Route>
                 <Route path="/topics" component={TopicsApp}>
                     <IndexRoute component={TopicsApp} />
+                </Route>
+
+                <Route path="/tools" component={ToolsApp}>
+                    <IndexRoute component={ToolsApp} />
+                </Route>
+
+                <Route path="/notifications" component={NotificationsApp}>
+                    <IndexRoute component={NotificationsApp} />
                 </Route>
                 <Route path="/materials" component={MaterialsApp}>
                     <IndexRoute component={MaterialsApp} />

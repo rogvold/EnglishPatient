@@ -24,6 +24,11 @@ var SelfLoadingUserExercise = React.createClass({
             onLoaded: function(){
                 console.log('onLoaded occured');
             },
+
+            onExerciseFinished: function(exerciseId, userId){
+
+            },
+
             teacherId: undefined,
             autoNext: true,
             noShadow: true
@@ -192,6 +197,7 @@ var SelfLoadingUserExercise = React.createClass({
                 score: sc,
                 loading: false
             });
+            this.props.onExerciseFinished(this.props.exerciseId, this.props.userId);
         }.bind(this));
     },
 

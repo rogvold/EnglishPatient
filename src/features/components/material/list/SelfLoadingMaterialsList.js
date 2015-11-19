@@ -16,11 +16,14 @@ var MaterialCreateButton = require('../buttons/MaterialCreateButton');
 var MaterialGroupCreateButton = require('../buttons/MaterialGroupCreateButton');
 
 var SelfLoadingMaterialsList = React.createClass({
-    getDefaultProps: function () {
+    getDefaultProps: function(){
         return {
             teacherId: undefined,
             topicId: undefined,
             editMode: true,
+
+            showUnsorted: true,
+
             onMaterialUpdated: function(data){
 
             }
@@ -126,6 +129,7 @@ var SelfLoadingMaterialsList = React.createClass({
 
     getBunchesContent: function(){
         var list = this.state.groupsFactoryList;
+        console.log('SelfLoadingMaterialsList: getBunchesContent occured: groupsFactoryList = ', list);
         var c = list.map(function(g, k){
             var key = 'bunch_' + k + '_' + g.group.id;
             var group = g.group;
@@ -133,6 +137,9 @@ var SelfLoadingMaterialsList = React.createClass({
             var onGroupUpdated = this.onGroupUpdated.bind(this);
             var onGroupDeleted = this.onGroupDeleted.bind(this, g.group.id);
             var allGroupsList = this.getAllGroupsList();
+            if ((this.props.showUnsorted == false) && (group.id == undefined)){
+                return null;
+            }
             return (
                 <MaterialsBunch allGroupsList={allGroupsList} key={key} onGroupUpdated={onGroupUpdated} onGroupDeleted={this.onGroupDeleted}
                                 onMaterialUpdated={onMaterialUpdated} onMaterialDeleted={this.onMaterialDeleted}

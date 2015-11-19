@@ -2,366 +2,353 @@
 1 verbose cli [ '/usr/local/Cellar/iojs/2.5.0/bin/iojs',
 1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'install',
-1 verbose cli   'react-diff' ]
+1 verbose cli   'react-addons' ]
 2 info using npm@2.12.1
 3 info using node@v2.5.0
-4 verbose install initial load of /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/package.json
-5 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/babelify/package.json
-6 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/browserify/package.json
-7 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/classnames/package.json
-8 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/flux/package.json
-9 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/fluxxor/package.json
-10 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/gulp/package.json
-11 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/gulp-browserify/package.json
-12 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/gulp-jsx/package.json
-13 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/gulp-uglify/package.json
-14 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/history/package.json
-15 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/jquery/package.json
-16 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/legit-image/package.json
-17 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/moment/package.json
-18 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/object-assign/package.json
-19 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/parse/package.json
-20 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/promise/package.json
-21 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/quill/package.json
-22 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react/package.json
-23 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-addons-linked-state-mixin/package.json
-24 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-card/package.json
-25 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-credit-card/package.json
-26 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-dom/package.json
-27 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-dropzone-component/package.json
-28 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-nested-router/package.json
-29 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-onclickoutside/package.json
-30 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-quill/package.json
-31 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-quill-editor/package.json
-32 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-router/package.json
-33 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-router-component/package.json
-34 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-select/package.json
-35 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-select-box/package.json
-36 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-sound/package.json
-37 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-speech/package.json
-38 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-tabs/package.json
-39 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-tagsinput/package.json
-40 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-tooltip/package.json
-41 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-vimeo/package.json
-42 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/reactify/package.json
-43 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/recordrtc/package.json
-44 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/soundmanager2/package.json
-45 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/sweetalert-react/package.json
-46 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/tilting-image/package.json
-47 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/uglify-js/package.json
-48 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/vinyl-source-stream/package.json
-49 info package.json jquery@2.1.4 No license field.
-50 info package.json react-nested-router@0.3.6 No repository field.
-51 info package.json react-nested-router@0.3.6 No license field.
-52 info package.json react-sound@0.2.1 No repository field.
-53 info package.json uglify-js@2.4.24 license should be a valid SPDX license expression
-54 info package.json react-addons-linked-state-mixin@0.14.0 No repository field.
-55 info package.json react-speech@0.2.6 No license field.
-56 info package.json soundmanager2@2.97.20150601-a license should be a valid SPDX license expression
-57 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/package.json
-58 silly cache add args [ 'react-diff', null ]
-59 verbose cache add spec react-diff
-60 silly cache add parsed spec { raw: 'react-diff',
-60 silly cache add   scope: null,
-60 silly cache add   name: 'react-diff',
-60 silly cache add   rawSpec: '',
-60 silly cache add   spec: '*',
-60 silly cache add   type: 'range' }
-61 silly addNamed react-diff@*
-62 verbose addNamed "*" is a valid semver range for react-diff
-63 silly addNameRange { name: 'react-diff', range: '*', hasData: false }
-64 silly mapToRegistry name react-diff
-65 silly mapToRegistry using default registry
-66 silly mapToRegistry registry https://registry.npmjs.org/
-67 silly mapToRegistry uri https://registry.npmjs.org/react-diff
-68 verbose addNameRange registry:https://registry.npmjs.org/react-diff not in flight; fetching
-69 verbose request uri https://registry.npmjs.org/react-diff
-70 verbose request no auth needed
-71 info attempt registry request try #1 at 17:29:36
-72 verbose request id f78d23e4f4d7a6ad
-73 http request GET https://registry.npmjs.org/react-diff
-74 http 200 https://registry.npmjs.org/react-diff
-75 silly get cb [ 200,
-75 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-75 silly get     etag: '"IRUQSV4KHOEJ22FXKW4NNFO3"',
-75 silly get     'content-type': 'application/json',
-75 silly get     'cache-control': 'max-age=60',
-75 silly get     'content-length': '7006',
-75 silly get     'accept-ranges': 'bytes',
-75 silly get     date: 'Mon, 09 Nov 2015 14:29:32 GMT',
-75 silly get     via: '1.1 varnish',
-75 silly get     age: '0',
-75 silly get     connection: 'keep-alive',
-75 silly get     'x-served-by': 'cache-fra1230-FRA',
-75 silly get     'x-cache': 'MISS',
-75 silly get     'x-cache-hits': '0',
-75 silly get     'x-timer': 'S1447079372.098745,VS0,VE113',
-75 silly get     vary: 'Accept' } ]
-76 verbose get saving react-diff to /Users/sabir/.npm/registry.npmjs.org/react-diff/.cache.json
-77 silly addNameRange number 2 { name: 'react-diff', range: '*', hasData: true }
-78 silly addNameRange versions [ 'react-diff',
-78 silly addNameRange   [ '0.0.1', '0.0.2', '0.0.4', '0.0.5', '0.0.6' ] ]
-79 silly addNamed react-diff@0.0.6
-80 verbose addNamed "0.0.6" is a plain semver version for react-diff
-81 silly mapToRegistry name react-diff
-82 silly mapToRegistry using default registry
-83 silly mapToRegistry registry https://registry.npmjs.org/
-84 silly mapToRegistry uri https://registry.npmjs.org/react-diff
-85 verbose addRemoteTarball https://registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz not in flight; adding
-86 verbose addRemoteTarball [ 'https://registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz',
-86 verbose addRemoteTarball   'dcdeab9a6bf7f467e0406cc6341394dbceb3a2b1' ]
-87 info retry fetch attempt 1 at 17:29:37
-88 info attempt registry request try #1 at 17:29:37
-89 http fetch GET https://registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz
-90 http fetch 200 https://registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz
-91 silly fetchAndShaCheck shasum dcdeab9a6bf7f467e0406cc6341394dbceb3a2b1
-92 verbose addTmpTarball /var/folders/3v/93wn03ms0y71dm9k729zhxl80000gn/T/npm-11073-8972be1b/registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz not in flight; adding
-93 verbose addTmpTarball already have metadata; skipping unpack for react-diff@0.0.6
-94 silly cache afterAdd react-diff@0.0.6
-95 verbose afterAdd /Users/sabir/.npm/react-diff/0.0.6/package/package.json not in flight; writing
-96 verbose afterAdd /Users/sabir/.npm/react-diff/0.0.6/package/package.json written
-97 silly install resolved [ { name: 'react-diff',
-97 silly install resolved     version: '0.0.6',
-97 silly install resolved     description: 'Highlight differences between inputs',
-97 silly install resolved     main: 'dist/react-diff.js',
-97 silly install resolved     scripts: { build: 'babel lib/react-diff.js > dist/react-diff.js' },
-97 silly install resolved     repository:
-97 silly install resolved      { type: 'git',
-97 silly install resolved        url: 'git+https://github.com/cezary/react-diff.git' },
-97 silly install resolved     keywords: [ 'react', 'diff' ],
-97 silly install resolved     author: { name: 'Cezary Wojtkowski', email: 'cezary@gmail.com' },
-97 silly install resolved     license: 'MIT',
-97 silly install resolved     bugs: { url: 'https://github.com/cezary/react-diff/issues' },
-97 silly install resolved     homepage: 'https://github.com/cezary/react-diff',
-97 silly install resolved     peerDependencies: { react: '>=0.12.0' },
-97 silly install resolved     dependencies: { diff: '^1.2.0' },
-97 silly install resolved     devDependencies: { babel: '^5.1.10' },
-97 silly install resolved     gitHead: '770ebfd6c3e8900e25875d4afa44abc790be63a7',
-97 silly install resolved     _id: 'react-diff@0.0.6',
-97 silly install resolved     _shasum: 'dcdeab9a6bf7f467e0406cc6341394dbceb3a2b1',
-97 silly install resolved     _from: 'react-diff@*',
-97 silly install resolved     _npmVersion: '2.14.2',
-97 silly install resolved     _nodeVersion: '4.0.0',
-97 silly install resolved     _npmUser: { name: 'cezary', email: 'cezary@gmail.com' },
-97 silly install resolved     maintainers: [ [Object] ],
-97 silly install resolved     dist:
-97 silly install resolved      { shasum: 'dcdeab9a6bf7f467e0406cc6341394dbceb3a2b1',
-97 silly install resolved        tarball: 'http://registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz' },
-97 silly install resolved     directories: {},
-97 silly install resolved     _resolved: 'https://registry.npmjs.org/react-diff/-/react-diff-0.0.6.tgz' } ]
-98 info install react-diff@0.0.6 into /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools
-99 info installOne react-diff@0.0.6
-100 verbose installOne of react-diff to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools not in flight; installing
-101 verbose lock using /Users/sabir/.npm/_locks/react-diff-f886740b21a25165.lock for /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-102 silly install write writing react-diff 0.0.6 to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-103 verbose unbuild node_modules/react-diff
-104 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff is being purged from base /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools
-105 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-106 verbose tar unpack /Users/sabir/.npm/react-diff/0.0.6/package.tgz
-107 verbose tar unpacking to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-108 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff is being purged
-109 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-110 silly gunzTarPerm modes [ '755', '644' ]
-111 silly gunzTarPerm extractEntry package.json
-112 silly gunzTarPerm extractEntry README.md
-113 silly gunzTarPerm extractEntry dist/react-diff.js
-114 silly gunzTarPerm extractEntry lib/react-diff.js
-115 verbose write writing to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/package.json
-116 info preinstall react-diff@0.0.6
-117 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/package.json
-118 silly prepareForInstallMany adding diff@^1.2.0 from react-diff dependencies
-119 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/package.json
-120 silly cache add args [ 'diff@^1.2.0', null ]
-121 verbose cache add spec diff@^1.2.0
-122 silly cache add parsed spec { raw: 'diff@^1.2.0',
-122 silly cache add   scope: null,
-122 silly cache add   name: 'diff',
-122 silly cache add   rawSpec: '^1.2.0',
-122 silly cache add   spec: '>=1.2.0 <2.0.0',
-122 silly cache add   type: 'range' }
-123 silly addNamed diff@>=1.2.0 <2.0.0
-124 verbose addNamed ">=1.2.0 <2.0.0" is a valid semver range for diff
-125 silly addNameRange { name: 'diff', range: '>=1.2.0 <2.0.0', hasData: false }
-126 silly mapToRegistry name diff
-127 silly mapToRegistry using default registry
-128 silly mapToRegistry registry https://registry.npmjs.org/
-129 silly mapToRegistry uri https://registry.npmjs.org/diff
-130 verbose addNameRange registry:https://registry.npmjs.org/diff not in flight; fetching
-131 verbose request uri https://registry.npmjs.org/diff
-132 verbose request no auth needed
-133 info attempt registry request try #1 at 17:29:37
-134 verbose etag "7B8592JF1JO22LQ5FAW3KPBM"
-135 http request GET https://registry.npmjs.org/diff
-136 http 200 https://registry.npmjs.org/diff
-137 silly get cb [ 200,
-137 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
-137 silly get     etag: '"5DYUWYA05RTHP04F3ZTPBU9EC"',
-137 silly get     'content-type': 'application/json',
-137 silly get     'cache-control': 'max-age=60',
-137 silly get     'content-length': '39739',
-137 silly get     'accept-ranges': 'bytes',
-137 silly get     date: 'Mon, 09 Nov 2015 14:29:32 GMT',
-137 silly get     via: '1.1 varnish',
-137 silly get     age: '57',
-137 silly get     connection: 'keep-alive',
-137 silly get     'x-served-by': 'cache-fra1237-FRA',
-137 silly get     'x-cache': 'HIT',
-137 silly get     'x-cache-hits': '3',
-137 silly get     'x-timer': 'S1447079372.633729,VS0,VE0',
-137 silly get     vary: 'Accept' } ]
-138 verbose get saving diff to /Users/sabir/.npm/registry.npmjs.org/diff/.cache.json
-139 silly addNameRange number 2 { name: 'diff', range: '>=1.2.0 <2.0.0', hasData: true }
-140 silly addNameRange versions [ 'diff',
-140 silly addNameRange   [ '1.0.0',
-140 silly addNameRange     '1.0.1',
-140 silly addNameRange     '1.0.2',
-140 silly addNameRange     '1.0.3',
-140 silly addNameRange     '1.0.4',
-140 silly addNameRange     '1.0.5',
-140 silly addNameRange     '1.0.6',
-140 silly addNameRange     '1.0.7',
-140 silly addNameRange     '1.0.8',
-140 silly addNameRange     '1.1.0',
-140 silly addNameRange     '1.2.0',
-140 silly addNameRange     '1.2.1',
-140 silly addNameRange     '1.2.2',
-140 silly addNameRange     '1.3.0',
-140 silly addNameRange     '1.3.1',
-140 silly addNameRange     '1.3.2',
-140 silly addNameRange     '1.4.0',
-140 silly addNameRange     '2.0.1',
-140 silly addNameRange     '2.0.2',
-140 silly addNameRange     '2.1.0',
-140 silly addNameRange     '2.1.1',
-140 silly addNameRange     '2.1.2',
-140 silly addNameRange     '2.1.3',
-140 silly addNameRange     '2.2.0' ] ]
-141 silly addNamed diff@1.4.0
-142 verbose addNamed "1.4.0" is a plain semver version for diff
-143 silly mapToRegistry name diff
-144 silly mapToRegistry using default registry
-145 silly mapToRegistry registry https://registry.npmjs.org/
-146 silly mapToRegistry uri https://registry.npmjs.org/diff
-147 verbose addRemoteTarball https://registry.npmjs.org/diff/-/diff-1.4.0.tgz not in flight; adding
-148 verbose addRemoteTarball [ 'https://registry.npmjs.org/diff/-/diff-1.4.0.tgz',
-148 verbose addRemoteTarball   '7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf' ]
-149 info retry fetch attempt 1 at 17:29:37
-150 info attempt registry request try #1 at 17:29:37
-151 http fetch GET https://registry.npmjs.org/diff/-/diff-1.4.0.tgz
-152 http fetch 200 https://registry.npmjs.org/diff/-/diff-1.4.0.tgz
-153 silly fetchAndShaCheck shasum 7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf
-154 verbose addTmpTarball /var/folders/3v/93wn03ms0y71dm9k729zhxl80000gn/T/npm-11073-8972be1b/registry.npmjs.org/diff/-/diff-1.4.0.tgz not in flight; adding
-155 verbose addTmpTarball already have metadata; skipping unpack for diff@1.4.0
-156 silly cache afterAdd diff@1.4.0
-157 verbose afterAdd /Users/sabir/.npm/diff/1.4.0/package/package.json not in flight; writing
-158 verbose afterAdd /Users/sabir/.npm/diff/1.4.0/package/package.json written
-159 silly install resolved [ { name: 'diff',
-159 silly install resolved     version: '1.4.0',
-159 silly install resolved     description: 'A javascript text diff implementation.',
-159 silly install resolved     keywords: [ 'diff', 'javascript' ],
-159 silly install resolved     maintainers: [ [Object] ],
-159 silly install resolved     bugs:
-159 silly install resolved      { url: 'http://github.com/kpdecker/jsdiff/issues',
-159 silly install resolved        email: 'kpdecker@gmail.com' },
-159 silly install resolved     licenses: [ [Object] ],
-159 silly install resolved     repository: { type: 'git', url: 'git://github.com/kpdecker/jsdiff.git' },
-159 silly install resolved     engines: { node: '>=0.3.1' },
-159 silly install resolved     main: './diff',
-159 silly install resolved     scripts: { test: 'istanbul cover node_modules/.bin/_mocha test/*.js && istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100 coverage/coverage.json' },
-159 silly install resolved     dependencies: {},
-159 silly install resolved     devDependencies:
-159 silly install resolved      { colors: '^1.1.0',
-159 silly install resolved        istanbul: '^0.3.2',
-159 silly install resolved        mocha: '^2.2.4',
-159 silly install resolved        should: '^6.0.1' },
-159 silly install resolved     optionalDependencies: {},
-159 silly install resolved     files: [ 'diff.js' ],
-159 silly install resolved     gitHead: '27a750e9116e6ade6303bc24a9be72f6845e00ed',
-159 silly install resolved     homepage: 'https://github.com/kpdecker/jsdiff',
-159 silly install resolved     _id: 'diff@1.4.0',
-159 silly install resolved     _shasum: '7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf',
-159 silly install resolved     _from: 'diff@>=1.2.0 <2.0.0',
-159 silly install resolved     _npmVersion: '1.4.28',
-159 silly install resolved     _npmUser: { name: 'kpdecker', email: 'kpdecker@gmail.com' },
-159 silly install resolved     dist:
-159 silly install resolved      { shasum: '7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf',
-159 silly install resolved        tarball: 'http://registry.npmjs.org/diff/-/diff-1.4.0.tgz' },
-159 silly install resolved     directories: {},
-159 silly install resolved     _resolved: 'https://registry.npmjs.org/diff/-/diff-1.4.0.tgz' } ]
-160 info install diff@1.4.0 into /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-161 info installOne diff@1.4.0
-162 verbose installOne of diff to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff not in flight; installing
-163 verbose lock using /Users/sabir/.npm/_locks/diff-80fa3dd51d6cc47f.lock for /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-164 silly install write writing diff 1.4.0 to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-165 verbose unbuild node_modules/react-diff/node_modules/diff
-166 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff is being purged from base /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools
-167 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-168 verbose tar unpack /Users/sabir/.npm/diff/1.4.0/package.tgz
-169 verbose tar unpacking to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-170 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff is being purged
-171 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-172 silly gunzTarPerm modes [ '755', '644' ]
-173 silly gunzTarPerm extractEntry package.json
-174 silly gunzTarPerm extractEntry README.md
-175 silly gunzTarPerm extractEntry diff.js
-176 verbose write writing to /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff/package.json
-177 info preinstall diff@1.4.0
-178 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff/package.json
-179 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff/package.json
-180 silly install resolved []
-181 verbose about to build /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-182 info build /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-183 info linkStuff diff@1.4.0
-184 silly linkStuff diff@1.4.0 has /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules as its parent node_modules
-185 verbose linkBins diff@1.4.0
-186 verbose linkMans diff@1.4.0
-187 verbose rebuildBundles diff@1.4.0
-188 info install diff@1.4.0
-189 info postinstall diff@1.4.0
-190 verbose unlock done using /Users/sabir/.npm/_locks/diff-80fa3dd51d6cc47f.lock for /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff/node_modules/diff
-191 verbose about to build /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-192 info build /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-193 info linkStuff react-diff@0.0.6
-194 silly linkStuff react-diff@0.0.6 has /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules as its parent node_modules
-195 verbose linkBins react-diff@0.0.6
-196 verbose linkMans react-diff@0.0.6
-197 verbose rebuildBundles react-diff@0.0.6
-198 verbose rebuildBundles [ 'diff' ]
-199 info install react-diff@0.0.6
-200 info postinstall react-diff@0.0.6
-201 verbose unlock done using /Users/sabir/.npm/_locks/react-diff-f886740b21a25165.lock for /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-diff
-202 verbose validateInstall loading /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/package.json for validation
-203 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/legit-image requires react@'^0.13.3' but will load
-203 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react,
-203 warn unmet dependency which is version 0.14.0
-204 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-quill-editor requires quill@'^0.19.10' but will load
-204 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/quill,
-204 warn unmet dependency which is version 0.20.0
-205 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-quill-editor requires classnames@'^1.2.0' but will load
-205 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/classnames,
-205 warn unmet dependency which is version 2.2.0
-206 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react-quill-editor requires react@'^0.13.0' but will load
-206 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react,
-206 warn unmet dependency which is version 0.14.0
-207 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/tilting-image requires react@'^0.13.3' but will load
-207 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools/node_modules/react,
-207 warn unmet dependency which is version 0.14.0
-208 verbose stack Error: The package react does not satisfy its siblings' peerDependencies requirements!
-208 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
-208 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:267:7
-208 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
-208 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-208 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-208 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-208 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-208 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-208 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-208 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-209 verbose cwd /Users/sabir/Documents/GitHub/EnglishPatientSchoolTools
-210 error Darwin 15.0.0
-211 error argv "/usr/local/Cellar/iojs/2.5.0/bin/iojs" "/usr/local/bin/npm" "install" "react-diff"
-212 error node v2.5.0
-213 error npm  v2.12.1
-214 error code EPEERINVALID
-215 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
-216 verbose exit [ 1, true ]
+4 verbose install initial load of /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json
+5 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/babelify/package.json
+6 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/browserify/package.json
+7 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/classnames/package.json
+8 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/flux/package.json
+9 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/fluxxor/package.json
+10 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp/package.json
+11 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-browserify/package.json
+12 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-jsx/package.json
+13 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-uglify/package.json
+14 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/history/package.json
+15 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/jquery/package.json
+16 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/legit-image/package.json
+17 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/moment/package.json
+18 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/object-assign/package.json
+19 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/parse/package.json
+20 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/promise/package.json
+21 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/quill/package.json
+22 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react/package.json
+23 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons/package.json
+24 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons-linked-state-mixin/package.json
+25 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons-pure-render-mixin/package.json
+26 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-card/package.json
+27 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-credit-card/package.json
+28 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-diff/package.json
+29 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-dom/package.json
+30 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-dropzone-component/package.json
+31 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-nested-router/package.json
+32 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-onclickoutside/package.json
+33 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-player/package.json
+34 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-popover/package.json
+35 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill/package.json
+36 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor/package.json
+37 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-router/package.json
+38 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-router-component/package.json
+39 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-select/package.json
+40 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-select-box/package.json
+41 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-sound/package.json
+42 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-speech/package.json
+43 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tabs/package.json
+44 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tagsinput/package.json
+45 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tooltip/package.json
+46 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-vimeo/package.json
+47 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/reactify/package.json
+48 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/recordrtc/package.json
+49 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/soundmanager2/package.json
+50 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/sweetalert-react/package.json
+51 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/tilting-image/package.json
+52 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/uglify-js/package.json
+53 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/vinyl-source-stream/package.json
+54 info package.json jquery@2.1.4 No license field.
+55 info package.json react-nested-router@0.3.6 No repository field.
+56 info package.json react-nested-router@0.3.6 No license field.
+57 info package.json react-sound@0.2.1 No repository field.
+58 info package.json uglify-js@2.4.24 license should be a valid SPDX license expression
+59 info package.json react-addons@0.9.0 No license field.
+60 info package.json react-addons-linked-state-mixin@0.14.0 No repository field.
+61 info package.json react-speech@0.2.11 No license field.
+62 info package.json soundmanager2@2.97.20150601-a license should be a valid SPDX license expression
+63 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json
+64 verbose install react-addons is installed as 0.9.0
+65 silly cache add args [ 'react-addons', null ]
+66 verbose cache add spec react-addons
+67 silly cache add parsed spec { raw: 'react-addons',
+67 silly cache add   scope: null,
+67 silly cache add   name: 'react-addons',
+67 silly cache add   rawSpec: '',
+67 silly cache add   spec: '*',
+67 silly cache add   type: 'range' }
+68 silly addNamed react-addons@*
+69 verbose addNamed "*" is a valid semver range for react-addons
+70 silly addNameRange { name: 'react-addons', range: '*', hasData: false }
+71 silly mapToRegistry name react-addons
+72 silly mapToRegistry using default registry
+73 silly mapToRegistry registry https://registry.npmjs.org/
+74 silly mapToRegistry uri https://registry.npmjs.org/react-addons
+75 verbose addNameRange registry:https://registry.npmjs.org/react-addons not in flight; fetching
+76 verbose request uri https://registry.npmjs.org/react-addons
+77 verbose request no auth needed
+78 info attempt registry request try #1 at 09:56:03
+79 verbose request id 2cda481ba42b0119
+80 verbose etag "5EQ1N5H6VJFMTHWF61DS24QMX"
+81 http request GET https://registry.npmjs.org/react-addons
+82 http 304 https://registry.npmjs.org/react-addons
+83 silly get cb [ 304,
+83 silly get   { date: 'Thu, 19 Nov 2015 06:56:03 GMT',
+83 silly get     via: '1.1 varnish',
+83 silly get     'cache-control': 'max-age=60',
+83 silly get     etag: '"5EQ1N5H6VJFMTHWF61DS24QMX"',
+83 silly get     age: '21',
+83 silly get     connection: 'keep-alive',
+83 silly get     'x-served-by': 'cache-fra1233-FRA',
+83 silly get     'x-cache': 'HIT',
+83 silly get     'x-cache-hits': '1',
+83 silly get     'x-timer': 'S1447916163.229061,VS0,VE0',
+83 silly get     vary: 'Accept' } ]
+84 verbose etag https://registry.npmjs.org/react-addons from cache
+85 verbose get saving react-addons to /Users/sabir/.npm/registry.npmjs.org/react-addons/.cache.json
+86 silly addNameRange number 2 { name: 'react-addons', range: '*', hasData: true }
+87 silly addNameRange versions [ 'react-addons', [ '0.8.0', '0.9.0', '0.9.1-deprecated' ] ]
+88 silly addNamed react-addons@0.9.0
+89 verbose addNamed "0.9.0" is a plain semver version for react-addons
+90 warn deprecated react-addons@0.9.0: Deprecated: The Browserify bug this package works around is now fixed; use require('react/addons') instead.
+91 silly cache afterAdd react-addons@0.9.0
+92 verbose afterAdd /Users/sabir/.npm/react-addons/0.9.0/package/package.json not in flight; writing
+93 verbose afterAdd /Users/sabir/.npm/react-addons/0.9.0/package/package.json written
+94 silly install resolved [ { name: 'react-addons',
+94 silly install resolved     version: '0.9.0',
+94 silly install resolved     description: 'Simple packaging of react addons to avoid fiddly \'react/addons\' npm module.',
+94 silly install resolved     main: 'index.js',
+94 silly install resolved     repository: { type: 'git', url: 'git://github.com/STRML/react-addons.git' },
+94 silly install resolved     keywords: [ 'react', 'react-addons', 'npm', 'browserify' ],
+94 silly install resolved     author:
+94 silly install resolved      { name: 'Samuel Reed',
+94 silly install resolved        email: 'sam@tixelated.com',
+94 silly install resolved        url: 'http://strml.net/' },
+94 silly install resolved     licenses: [ [Object] ],
+94 silly install resolved     bugs: { url: 'https://github.com/STRML/react-addons/issues' },
+94 silly install resolved     homepage: 'https://github.com/STRML/react-addons',
+94 silly install resolved     peerDependencies: { react: '>= 0.9.0' },
+94 silly install resolved     _id: 'react-addons@0.9.0',
+94 silly install resolved     dist:
+94 silly install resolved      { shasum: '423ad12b586a161fdacb2691d787cf8c264b3e9a',
+94 silly install resolved        tarball: 'http://registry.npmjs.org/react-addons/-/react-addons-0.9.0.tgz' },
+94 silly install resolved     _from: 'react-addons@*',
+94 silly install resolved     _npmVersion: '1.4.3',
+94 silly install resolved     _npmUser: { name: 'strml', email: 'samuel.trace.reed@gmail.com' },
+94 silly install resolved     maintainers: [ [Object] ],
+94 silly install resolved     deprecated: 'Deprecated: The Browserify bug this package works around is now fixed; use require(\'react/addons\') instead.',
+94 silly install resolved     directories: {},
+94 silly install resolved     _shasum: '423ad12b586a161fdacb2691d787cf8c264b3e9a',
+94 silly install resolved     _resolved: 'https://registry.npmjs.org/react-addons/-/react-addons-0.9.0.tgz',
+94 silly install resolved     readme: 'ERROR: No README data found!' } ]
+95 info install react-addons@0.9.0 into /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+96 info installOne react-addons@0.9.0
+97 verbose installOne of react-addons to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient not in flight; installing
+98 verbose lock using /Users/sabir/.npm/_locks/react-addons-d25ee707bc545605.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+99 silly install write writing react-addons 0.9.0 to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+100 verbose unbuild node_modules/react-addons
+101 info preuninstall react-addons@0.9.0
+102 info uninstall react-addons@0.9.0
+103 verbose unbuild rmStuff react-addons@0.9.0 from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules
+104 info postuninstall react-addons@0.9.0
+105 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons is being purged from base /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+106 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+107 silly vacuum-fs purging /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+108 silly vacuum-fs quitting because other entries in /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules
+109 verbose tar unpack /Users/sabir/.npm/react-addons/0.9.0/package.tgz
+110 verbose tar unpacking to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+111 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons is being purged
+112 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+113 silly gunzTarPerm modes [ '755', '644' ]
+114 silly gunzTarPerm extractEntry package.json
+115 silly gunzTarPerm extractEntry .npmignore
+116 silly gunzTarPerm extractEntry README.md
+117 silly gunzTarPerm extractEntry index.js
+118 silly gunzTarPerm extractEntry lib/AutoFocusMixin.js
+119 silly gunzTarPerm extractEntry lib/ReactPropTypes.js
+120 silly gunzTarPerm extractEntry lib/ReactPutListenerQueue.js
+121 silly gunzTarPerm extractEntry lib/ReactReconcileTransaction.js
+122 silly gunzTarPerm extractEntry lib/ReactPropTypeLocations.js
+123 silly gunzTarPerm extractEntry lib/ReactServerRendering.js
+124 silly gunzTarPerm extractEntry lib/ReactStateSetters.js
+125 silly gunzTarPerm extractEntry lib/ReactTestUtils.js
+126 silly gunzTarPerm extractEntry lib/ReactTextComponent.js
+127 silly gunzTarPerm extractEntry lib/ReactTransitionChildMapping.js
+128 silly gunzTarPerm extractEntry lib/ReactPropTypeLocationNames.js
+129 silly gunzTarPerm extractEntry lib/ReactTransitionEvents.js
+130 silly gunzTarPerm extractEntry lib/ReactPropTransferer.js
+131 silly gunzTarPerm extractEntry lib/ReactTransitionGroup.js
+132 silly gunzTarPerm extractEntry lib/ReactPerf.js
+133 silly gunzTarPerm extractEntry lib/ReactUpdates.js
+134 silly gunzTarPerm extractEntry lib/ReactOwner.js
+135 silly gunzTarPerm extractEntry lib/ReactWithAddons.js
+136 silly gunzTarPerm extractEntry lib/ReactMultiChildUpdateTypes.js
+137 silly gunzTarPerm extractEntry lib/SelectEventPlugin.js
+138 silly gunzTarPerm extractEntry lib/ReactMultiChild.js
+139 silly gunzTarPerm extractEntry lib/ServerReactRootIndex.js
+140 silly gunzTarPerm extractEntry lib/ReactMountReady.js
+141 silly gunzTarPerm extractEntry lib/SimpleEventPlugin.js
+142 silly gunzTarPerm extractEntry lib/ReactMount.js
+143 silly gunzTarPerm extractEntry lib/SyntheticClipboardEvent.js
+144 silly gunzTarPerm extractEntry lib/ReactMarkupChecksum.js
+145 silly gunzTarPerm extractEntry lib/SyntheticCompositionEvent.js
+146 silly gunzTarPerm extractEntry lib/ReactLink.js
+147 silly gunzTarPerm extractEntry lib/SyntheticDragEvent.js
+148 silly gunzTarPerm extractEntry lib/ReactInstanceHandles.js
+149 silly gunzTarPerm extractEntry lib/SyntheticEvent.js
+150 silly gunzTarPerm extractEntry lib/ReactInputSelection.js
+151 silly gunzTarPerm extractEntry lib/SyntheticFocusEvent.js
+152 silly gunzTarPerm extractEntry lib/ReactInjection.js
+153 silly gunzTarPerm extractEntry lib/SyntheticKeyboardEvent.js
+154 silly gunzTarPerm extractEntry lib/ReactEventTopLevelCallback.js
+155 silly gunzTarPerm extractEntry lib/SyntheticMouseEvent.js
+156 silly gunzTarPerm extractEntry lib/ReactEventEmitterMixin.js
+157 silly gunzTarPerm extractEntry lib/SyntheticTouchEvent.js
+158 silly gunzTarPerm extractEntry lib/ReactEventEmitter.js
+159 silly gunzTarPerm extractEntry lib/SyntheticUIEvent.js
+160 silly gunzTarPerm extractEntry lib/ReactErrorUtils.js
+161 silly gunzTarPerm extractEntry lib/SyntheticWheelEvent.js
+162 silly gunzTarPerm extractEntry lib/ReactDefaultPerfAnalysis.js
+163 silly gunzTarPerm extractEntry lib/Transaction.js
+164 silly gunzTarPerm extractEntry lib/ReactDefaultPerf.js
+165 silly gunzTarPerm extractEntry lib/ViewportMetrics.js
+166 silly gunzTarPerm extractEntry lib/ReactDefaultInjection.js
+167 silly gunzTarPerm extractEntry lib/accumulate.js
+168 silly gunzTarPerm extractEntry lib/ReactDefaultBatchingStrategy.js
+169 silly gunzTarPerm extractEntry lib/adler32.js
+170 silly gunzTarPerm extractEntry lib/ReactDOMTextarea.js
+171 silly gunzTarPerm extractEntry lib/cloneWithProps.js
+172 silly gunzTarPerm extractEntry lib/ReactDOMSelection.js
+173 silly gunzTarPerm extractEntry lib/containsNode.js
+174 silly gunzTarPerm extractEntry lib/ReactDOMSelect.js
+175 silly gunzTarPerm extractEntry lib/copyProperties.js
+176 silly gunzTarPerm extractEntry lib/ReactDOMOption.js
+177 silly gunzTarPerm extractEntry lib/createArrayFrom.js
+178 silly gunzTarPerm extractEntry lib/ReactDOMInput.js
+179 silly gunzTarPerm extractEntry lib/createFullPageComponent.js
+180 silly gunzTarPerm extractEntry lib/ReactDOMImg.js
+181 silly gunzTarPerm extractEntry lib/createNodesFromMarkup.js
+182 silly gunzTarPerm extractEntry lib/ReactDOMIDOperations.js
+183 silly gunzTarPerm extractEntry lib/createObjectFrom.js
+184 silly gunzTarPerm extractEntry lib/ReactDOMForm.js
+185 silly gunzTarPerm extractEntry lib/cx.js
+186 silly gunzTarPerm extractEntry lib/ReactDOMComponent.js
+187 silly gunzTarPerm extractEntry lib/dangerousStyleValue.js
+188 silly gunzTarPerm extractEntry lib/ReactDOMButton.js
+189 silly gunzTarPerm extractEntry lib/emptyFunction.js
+190 silly gunzTarPerm extractEntry lib/ReactDOM.js
+191 silly gunzTarPerm extractEntry lib/escapeTextForBrowser.js
+192 silly gunzTarPerm extractEntry lib/ReactCurrentOwner.js
+193 silly gunzTarPerm extractEntry lib/flattenChildren.js
+194 silly gunzTarPerm extractEntry lib/ReactContext.js
+195 silly gunzTarPerm extractEntry lib/forEachAccumulated.js
+196 silly gunzTarPerm extractEntry lib/ReactCompositeComponent.js
+197 silly gunzTarPerm extractEntry lib/getActiveElement.js
+198 silly gunzTarPerm extractEntry lib/ReactComponentEnvironment.js
+199 silly gunzTarPerm extractEntry lib/getEventKey.js
+200 silly gunzTarPerm extractEntry lib/ReactComponentBrowserEnvironment.js
+201 silly gunzTarPerm extractEntry lib/getEventTarget.js
+202 silly gunzTarPerm extractEntry lib/ReactComponent.js
+203 silly gunzTarPerm extractEntry lib/getMarkupWrap.js
+204 silly gunzTarPerm extractEntry lib/ReactChildren.js
+205 silly gunzTarPerm extractEntry lib/getNodeForCharacterOffset.js
+206 silly gunzTarPerm extractEntry lib/ReactCSSTransitionGroupChild.js
+207 silly gunzTarPerm extractEntry lib/getReactRootElementInContainer.js
+208 silly gunzTarPerm extractEntry lib/ReactCSSTransitionGroup.js
+209 silly gunzTarPerm extractEntry lib/getTextContentAccessor.js
+210 silly gunzTarPerm extractEntry lib/PooledClass.js
+211 silly gunzTarPerm extractEntry lib/getUnboundedScrollPosition.js
+212 silly gunzTarPerm extractEntry lib/MobileSafariClickEventPlugin.js
+213 silly gunzTarPerm extractEntry lib/hyphenate.js
+214 silly gunzTarPerm extractEntry lib/LinkedValueUtils.js
+215 silly gunzTarPerm extractEntry lib/invariant.js
+216 silly gunzTarPerm extractEntry lib/LinkedStateMixin.js
+217 silly gunzTarPerm extractEntry lib/isEventSupported.js
+218 silly gunzTarPerm extractEntry lib/ExecutionEnvironment.js
+219 silly gunzTarPerm extractEntry lib/isNode.js
+220 silly gunzTarPerm extractEntry lib/EventPropagators.js
+221 silly gunzTarPerm extractEntry lib/isTextInputElement.js
+222 silly gunzTarPerm extractEntry lib/EventPluginUtils.js
+223 silly gunzTarPerm extractEntry lib/isTextNode.js
+224 silly gunzTarPerm extractEntry lib/EventPluginRegistry.js
+225 silly gunzTarPerm extractEntry lib/joinClasses.js
+226 silly gunzTarPerm extractEntry lib/EventPluginHub.js
+227 silly gunzTarPerm extractEntry lib/keyMirror.js
+228 silly gunzTarPerm extractEntry lib/EventListener.js
+229 silly gunzTarPerm extractEntry lib/keyOf.js
+230 silly gunzTarPerm extractEntry lib/EventConstants.js
+231 silly gunzTarPerm extractEntry lib/memoizeStringOnly.js
+232 silly gunzTarPerm extractEntry lib/EnterLeaveEventPlugin.js
+233 silly gunzTarPerm extractEntry lib/merge.js
+234 silly gunzTarPerm extractEntry lib/DefaultEventPluginOrder.js
+235 silly gunzTarPerm extractEntry lib/mergeHelpers.js
+236 silly gunzTarPerm extractEntry lib/DefaultDOMPropertyConfig.js
+237 silly gunzTarPerm extractEntry lib/mergeInto.js
+238 silly gunzTarPerm extractEntry lib/Danger.js
+239 silly gunzTarPerm extractEntry lib/mixInto.js
+240 silly gunzTarPerm extractEntry lib/DOMPropertyOperations.js
+241 silly gunzTarPerm extractEntry lib/objMap.js
+242 silly gunzTarPerm extractEntry lib/DOMProperty.js
+243 silly gunzTarPerm extractEntry lib/objMapKeyVal.js
+244 silly gunzTarPerm extractEntry lib/DOMChildrenOperations.js
+245 silly gunzTarPerm extractEntry lib/onlyChild.js
+246 silly gunzTarPerm extractEntry lib/CompositionEventPlugin.js
+247 silly gunzTarPerm extractEntry lib/performanceNow.js
+248 silly gunzTarPerm extractEntry lib/ClientReactRootIndex.js
+249 silly gunzTarPerm extractEntry lib/shallowEqual.js
+250 silly gunzTarPerm extractEntry lib/ChangeEventPlugin.js
+251 silly gunzTarPerm extractEntry lib/shouldUpdateReactComponent.js
+252 silly gunzTarPerm extractEntry lib/CSSPropertyOperations.js
+253 silly gunzTarPerm extractEntry lib/toArray.js
+254 silly gunzTarPerm extractEntry lib/CSSProperty.js
+255 silly gunzTarPerm extractEntry lib/traverseAllChildren.js
+256 silly gunzTarPerm extractEntry lib/CSSCore.js
+257 silly gunzTarPerm extractEntry lib/warning.js
+258 silly gunzTarPerm extractEntry lib/ReactRootIndex.js
+259 verbose write writing to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons/package.json
+260 info preinstall react-addons@0.9.0
+261 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons/package.json
+262 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons/package.json
+263 silly install resolved []
+264 verbose about to build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+265 info build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+266 info linkStuff react-addons@0.9.0
+267 silly linkStuff react-addons@0.9.0 has /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules as its parent node_modules
+268 verbose linkBins react-addons@0.9.0
+269 verbose linkMans react-addons@0.9.0
+270 verbose rebuildBundles react-addons@0.9.0
+271 info install react-addons@0.9.0
+272 info postinstall react-addons@0.9.0
+273 verbose unlock done using /Users/sabir/.npm/_locks/react-addons-d25ee707bc545605.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons
+274 verbose validateInstall loading /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json for validation
+275 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/legit-image requires react@'^0.13.3' but will load
+275 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
+275 warn unmet dependency which is version 0.14.0
+276 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires quill@'^0.19.10' but will load
+276 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/quill,
+276 warn unmet dependency which is version 0.20.0
+277 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires classnames@'^1.2.0' but will load
+277 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/classnames,
+277 warn unmet dependency which is version 2.2.0
+278 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires react@'^0.13.0' but will load
+278 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
+278 warn unmet dependency which is version 0.14.0
+279 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/tilting-image requires react@'^0.13.3' but will load
+279 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
+279 warn unmet dependency which is version 0.14.0
+280 verbose stack Error: The package react does not satisfy its siblings' peerDependencies requirements!
+280 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+280 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:267:7
+280 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+280 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+280 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+280 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+280 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+280 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+280 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+280 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+281 verbose cwd /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+282 error Darwin 15.0.0
+283 error argv "/usr/local/Cellar/iojs/2.5.0/bin/iojs" "/usr/local/bin/npm" "install" "react-addons"
+284 error node v2.5.0
+285 error npm  v2.12.1
+286 error code EPEERINVALID
+287 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
+288 verbose exit [ 1, true ]

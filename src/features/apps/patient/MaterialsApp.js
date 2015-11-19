@@ -119,7 +119,9 @@ var IndexApp = React.createClass({
         var teacherId = this.state.user.id;
         return (
             <div>
-                <SelfLoadingMaterialsList teacherId={teacherId} />
+                <SelfLoadingMaterialsList
+                    searchMode={true}
+                    teacherId={teacherId} />
             </div>
         );
     },

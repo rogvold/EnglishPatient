@@ -17,7 +17,9 @@ var ClassMixin = {
             status: p.get('status'),
             description: p.get('description'),
             code: p.get('invitationCode'),
+            invitationCode: p.get('invitationCode'),
             id: p.id,
+            ownerId: p.get('ownerId'),
             classId: p.classId
         }
     },
@@ -34,19 +36,13 @@ var ClassMixin = {
 
     loadClass: function(classId, callback){
         console.log('loadClass occured: classId = ', classId);
+        var self = this;
         this.loadClassById(classId, function(p){
             if (p == undefined){
                 callback(undefined);
                 return;
             }
-           callback({
-               name: p.get('name'),
-               status: p.get('status'),
-               description: p.get('description'),
-               code: p.get('invitationCode'),
-               id: p.id,
-               classId: p.classId
-           });
+           callback(self.transformClass(p));
         });
     },
 
@@ -54,6 +50,7 @@ var ClassMixin = {
         if (teacherId == undefined){
             callback([]);
         }
+        var self = this;
         var q = new Parse.Query('PatientClass');
         q.equalTo('ownerId', teacherId);
         q.limit(1000);
@@ -61,14 +58,7 @@ var ClassMixin = {
         q.addDescending('createdAt');
         q.find(function(results){
             var list = results.map(function(c){
-                return {
-                    id: c.id,
-                    classId: c.id,
-                    status: c.get('status'),
-                    code: c.get('invitationCode'),
-                    name: c.get('name'),
-                    description: c.get('description')
-                }
+                return self.transformClass(c)
             });
             callback(list);
         });
@@ -79,6 +69,7 @@ var ClassMixin = {
         var q = new Parse.Query('StudentClassLink');
         q.limit(1000);
         q.equalTo('studentId', userId);
+        var self = this;
         q.find(function(links){
             console.log('links loaded: ', links);
             var ids = links.map(function(l){return l.get('classId')});
@@ -88,14 +79,7 @@ var ClassMixin = {
             q2.limit(1000);
             q2.find(function(classes){
                 var list = classes.map(function(cl){
-                    return {
-                        id: cl.id,
-                        status: cl.get('status'),
-                        classId: cl.id,
-                        code: cl.get('invitationCode'),
-                        name: cl.get('name'),
-                        description: cl.get('description')
-                    }
+                    return self.transformClass(cl);
                 });
                 console.log('classes loaded: ', list);
                 callback(list);
@@ -106,15 +90,10 @@ var ClassMixin = {
     loadAllSystemClasses: function(callback){
         var q = new Parse.Query('PatientClass');
         q.limit(1000);
+        var self = this;
         ParseMixin.loadAllDataFromParse(q, function(list){
             var arr = list.map(function(cl){
-                return {
-                    id: cl.id,
-                    classId: cl.id,
-                    status: cl.get('status'),
-                    code: cl.get('invitationCode'),
-                    description: cl.get('description')
-                };
+                return self.transformClass(cl);
             });
             callback(arr);
         });
