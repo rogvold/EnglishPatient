@@ -13,12 +13,15 @@ var History = require('react-router').History;
 
 var NotificationsNumberSpan = require('../../notification/NotificationsNumberSpan');
 
+var UserProfileButton = require('../../profile/UserProfileButton');
+
 var TeacherHeader = React.createClass({
     mixins: [History],
 
     getDefaultProps: function () {
         return {
             userName: 'No User',
+            userId: undefined,
             items: [{
                 name: 'exercises',
                 displayName: 'Упражнения',
@@ -48,6 +51,13 @@ var TeacherHeader = React.createClass({
                 onClick: function(){
                 },
                 url: '/topics'
+            },{
+                displayName: 'Словарь',
+                name: 'dictionary',
+                icon: '',
+                onClick: function(){
+                },
+                url: '/dictionary'
             }],
             activeTab: undefined,
             onLogout: function(){
@@ -123,6 +133,14 @@ var TeacherHeader = React.createClass({
 
     getRightBlock: function(){
         var dropdownItems = [
+            {
+                name: '',
+                icon: 'icon user',
+                onClick: function(){
+
+                }.bind(this),
+                content: <UserProfileButton userId={this.props.userId} />
+            },
             {
                 name: 'Выход',
                 icon: 'icon sign out',

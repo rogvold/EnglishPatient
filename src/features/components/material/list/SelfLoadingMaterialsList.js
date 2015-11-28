@@ -22,6 +22,8 @@ var SelfLoadingMaterialsList = React.createClass({
             topicId: undefined,
             editMode: true,
 
+            searchMode: false,
+
             showUnsorted: true,
 
             onMaterialUpdated: function(data){
@@ -34,7 +36,9 @@ var SelfLoadingMaterialsList = React.createClass({
         return {
             loading: false,
             materials: [],
-            groupsFactoryList: []
+            groupsFactoryList: [],
+            query: '',
+            searchGroupsFactoryList: []
         }
     },
 
@@ -65,17 +69,53 @@ var SelfLoadingMaterialsList = React.createClass({
         MaterialsMixin.loadGroupsAndMaterials(teacherId, topicId, function(arr){
             self.setState({
                 loading: false,
-                groupsFactoryList: arr
+                query: '',
+                groupsFactoryList: arr,
+                searchGroupsFactoryList: arr,
             });
             callback(arr);
         });
     },
 
+    getSearchNumber: function(){
+        var map = {};
+        var gList = this.state.searchGroupsFactoryList;
+        for (var i in gList){
+            var materials = gList[i].materials;
+            for (var j in materials){
+                map[materials[j].id] = 1;
+            }
+        }
+        var k = 0;
+        for (var key in map){
+            k++;
+        }
+        return k;
+    },
+
+    search: function(q){
+        if (q == undefined || q.trim() == ''){
+            this.setState({
+                searchGroupsFactoryList: this.state.groupsFactoryList,
+                query: q
+            });
+            return;
+        }
+
+        var qq = q.trim().toLowerCase();
+        var l = MaterialsMixin.searchInGroupsFactoryList(this.state.groupsFactoryList, qq);
+        this.setState({
+            searchGroupsFactoryList: l,
+            query: q
+        });
+    },
 
     onMaterialUpdated: function(data){
         var arr = MaterialsMixin.updateGroupsFactoryListWithMaterial(this.state.groupsFactoryList, data);
+        var l = MaterialsMixin.searchInGroupsFactoryList(arr, this.state.query);
         this.setState({
-            groupsFactoryList: arr
+            groupsFactoryList: arr,
+            searchGroupsFactoryList: l
         });
     },
 
@@ -91,7 +131,8 @@ var SelfLoadingMaterialsList = React.createClass({
 
     onGroupUpdated: function(data){
         console.log('SelfLoadingMaterialsList: onGroupUpdated: data = ', data);
-        var list = this.state.groupsFactoryList;
+        //var list = this.state.groupsFactoryList;
+        var list = this.state.searchGroupsFactoryList;
         var arr = [];
         for (var i in list){
             var group = list[i].group;
@@ -127,8 +168,15 @@ var SelfLoadingMaterialsList = React.createClass({
         return arr;
     },
 
+    onQueryChange: function(evt){
+        var val = evt.target.value;
+        console.log('searching: ', val);
+        this.search(val);
+    },
+
     getBunchesContent: function(){
-        var list = this.state.groupsFactoryList;
+        //var list = this.state.groupsFactoryList;
+        var list = this.state.searchGroupsFactoryList;
         console.log('SelfLoadingMaterialsList: getBunchesContent occured: groupsFactoryList = ', list);
         var c = list.map(function(g, k){
             var key = 'bunch_' + k + '_' + g.group.id;
@@ -140,6 +188,11 @@ var SelfLoadingMaterialsList = React.createClass({
             if ((this.props.showUnsorted == false) && (group.id == undefined)){
                 return null;
             }
+
+            if (g.materials == undefined || g.materials.length == 0){
+                return null;
+            }
+
             return (
                 <MaterialsBunch allGroupsList={allGroupsList} key={key} onGroupUpdated={onGroupUpdated} onGroupDeleted={this.onGroupDeleted}
                                 onMaterialUpdated={onMaterialUpdated} onMaterialDeleted={this.onMaterialDeleted}
@@ -153,7 +206,7 @@ var SelfLoadingMaterialsList = React.createClass({
             <div>{c}</div>
         );
     },
-
+//1 3 5 7 - Maxim ()
     componentStyle: {
         placeholder: {
             //width: 865,
@@ -178,6 +231,10 @@ var SelfLoadingMaterialsList = React.createClass({
             position: 'absolute',
             right: 0,
             top: 5
+        },
+
+        searchPlaceholder: {
+
         }
     },
 
@@ -204,6 +261,18 @@ var SelfLoadingMaterialsList = React.createClass({
                             />
 
                     </div>
+
+                    {this.props.searchMode == false ? null :
+                        <div style={this.componentStyle.searchPlaceholder}>
+                            <div className={'ui form'} style={{width: 350}} >
+                                <div className="ui left icon input">
+                                    <i className="search icon"></i>
+                                    <input type="text" value={this.state.query}
+                                           onChange={this.onQueryChange} placeholder="Введите поисковый запрос..." />
+                                </div>
+                            </div>
+                        </div>
+                    }
 
                 </div>
 

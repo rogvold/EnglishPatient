@@ -155,8 +155,9 @@ var ExercisesApp = React.createClass({
     },
 
     getHeader: function(){
+        var userId = this.state.user.id;
         return (
-            <TeacherHeader activeTab={'exercises'} onLogout={this.onLogout}  />
+            <TeacherHeader userId={userId} activeTab={'exercises'} onLogout={this.onLogout}  />
         );
     },
 

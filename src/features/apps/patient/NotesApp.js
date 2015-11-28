@@ -261,8 +261,9 @@ var NotesApp = React.createClass({
     },
 
     getHeader: function(){
+        var userId = this.state.user.id;
         return (
-            <TeacherHeader activeTab={'notes'} onLogout={this.updateAuth}  />
+            <TeacherHeader userId={userId} activeTab={'notes'} onLogout={this.updateAuth}  />
         );
     },
 

@@ -47,7 +47,7 @@ var TopicsList = React.createClass({
 
     componentStyle: {
         placeholder: {
-
+            textAlign: 'center'
         }
     },
 

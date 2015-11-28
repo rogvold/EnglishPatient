@@ -11,6 +11,8 @@ var CurrentUserMenuItem = require('../../templates/CurrentUserMenuItem');
 var LoginMixin = require('../../../mixins/LoginMixin');
 var History = require('react-router').History;
 
+var UserProfileButton = require('../../profile/UserProfileButton');
+
 var StudentHeader = React.createClass({
     mixins: [History],
 
@@ -46,7 +48,6 @@ var StudentHeader = React.createClass({
             //    },
             //    url: '/notes'
             //}
-
             ],
             activeTab: undefined,
             onLogout: function(){
@@ -99,7 +100,16 @@ var StudentHeader = React.createClass({
 
     render: function () {
         var self = this;
-        var dropdownItems = [{
+        var dropdownItems = [
+            {
+                name: '',
+                icon: 'icon user',
+                onClick: function(){
+
+                }.bind(this),
+                content: <UserProfileButton userId={this.props.userId} />
+            },
+            {
                 name: 'Выход',
                 icon: 'icon sign out',
                 onClick: function(){

@@ -104,8 +104,9 @@ var StudentIndexApp = React.createClass({
     },
 
     getHeader: function(){
+        var userId = this.state.user.id;
         return (
-            <StudentHeader activeTab={'index'} onLogout={this.onLogout}  />
+            <StudentHeader userId={userId} activeTab={'index'} onLogout={this.onLogout}  />
         );
     },
 

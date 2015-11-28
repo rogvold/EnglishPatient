@@ -26,7 +26,8 @@ var CurrentUserMenuItem = React.createClass({
                 icon: 'icon sign out',
                 onClick: function(){
                     console.log('LogOut clicked');
-                }
+                },
+                content: undefined
             }]
         }
     },

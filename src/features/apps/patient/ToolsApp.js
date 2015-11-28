@@ -78,6 +78,10 @@ var ReactPlayer = require('react-player');
 
 var Speech = require('react-speech');
 
+var TranslateButton = require('../../components/translate/TranslateButton');
+
+var TranslatableText = require('../../components/text/translatable/TranslatableText');
+
 var ToolsApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -201,14 +205,13 @@ var ToolsApp = React.createClass({
     getContent: function(){
         var userId = this.state.user.id;
 
+        var text = "The Second Amendment was based partially on the right to keep and bear arms in English common-law and was influenced by the English Bill of Rights of 1689. Sir William Blackstone described this right as an auxiliary right, supporting the natural rights of self-defense, resistance to oppression, and the civic duty to act in concert in defense of the state";
+
+        text = text + ' Поскольку хорошо организованное ополчение необходимо для безопасности свободного государства, право народа хранить и носить оружие не должно нарушаться';
+
         return (
             <div>
-
-                <Speech text={this.state.text} displayText={'GB'} textAsButton={true} />
-                <Speech text={this.state.text} displayText={'US'} textAsButton={true} lang={'en-US'} />
-
-                <input value={this.state.text} onChange={this.onTextChange} />
-
+                <TranslatableText text={text} />
             </div>
 
         );

@@ -71,6 +71,13 @@ var EditableCardBlock = React.createClass({
         return this.getMaterialByType(items, 'text');
     },
 
+    getSafeString: function(s){
+        if (s == undefined){
+            return '';
+        }
+        return s;
+    },
+
     getInitialState: function () {
         var items = this.props.items;
         var imageUrl = (this.getImage(items) == undefined) ? undefined : this.getImage(items).url;
@@ -79,13 +86,13 @@ var EditableCardBlock = React.createClass({
         var vimeoUrl = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).vimeoId;
         return {
             imageUrl: imageUrl,
-            comment: this.props.comment,
-            hint: this.props.hint,
+            comment: this.getSafeString(this.props.comment),
+            hint: this.getSafeString(this.props.hint),
             audioUrl: audioUrl,
             vimeoUrl: vimeoUrl,
             text: text,
-            transcript: this.props.transcript,
-            correctAnswer: this.props.correctAnswer,
+            transcript: this.getSafeString(this.props.transcript),
+            correctAnswer: this.getSafeString(this.props.correctAnswer),
             answerTypeName: this.props.answerTypeName,
             needToSave: false,
             loading: false
@@ -106,10 +113,10 @@ var EditableCardBlock = React.createClass({
 
         this.setState({
             imageUrl: imageUrl,
-            comment: np.comment,
-            transcript: np.transcript,
-            correctAnswer: np.correctAnswer,
-            hint: np.hint,
+            comment: (np.comment == undefined) ? '' : np.comment,
+            transcript: (np.transcript == undefined) ? '' : np.transcript,
+            correctAnswer: (np.correctAnswer == undefined) ? '' : np.correctAnswer,
+            hint: (np.hint == undefined) ? '' : np.hint,
             audioUrl: audioUrl,
             vimeoUrl: vimeoUrl,
             text: text,

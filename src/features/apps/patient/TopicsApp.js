@@ -102,8 +102,9 @@ var TopicsApp = React.createClass({
     },
 
     getHeader: function(){
+        var userId = this.state.user.id;
         return (
-            <TeacherHeader activeTab={'topics'} onLogout={this.onLogout}  />
+            <TeacherHeader userId={userId} activeTab={'topics'} onLogout={this.onLogout}  />
         );
     },
 

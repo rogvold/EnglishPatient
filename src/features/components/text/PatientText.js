@@ -4,6 +4,8 @@
 var React = require('react');
 var assign = require('object-assign');
 
+var TranslatableText = require('../text/translatable/TranslatableText');
+
 var PatientText = React.createClass({
     getDefaultProps: function () {
         return {
@@ -44,10 +46,14 @@ var PatientText = React.createClass({
             style = assign(style, {fontSize: this.props.fontSize});
         }
 
+
         return (
             <div style={this.componentStyle.placeholder}>
-                <div style={style}>
-                    {this.props.text}
+                <div style={style} className={'disable-select'} >
+
+                    <TranslatableText fontSize={this.props.fontSize} text={this.props.text} />
+
+
                 </div>
             </div>
         );

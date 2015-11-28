@@ -198,7 +198,6 @@ var SoundsPanel = React.createClass({
                 {textareaVisible == false ? null :
                     <div style={this.componentStyle.bottomPlaceholder}>
                         <div style={this.componentStyle.editorPlaceholder}>
-
                             <PatientEditor value={phrase} />
                         </div>
                     </div>

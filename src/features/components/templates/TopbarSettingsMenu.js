@@ -60,7 +60,8 @@ var TopbarSettingsMenu = React.createClass({
             //width: 240,
             minWidth: '160px',
             position: 'fixed',
-            zIndex: 1,
+            //zIndex: 1,
+            zIndex: 100,
             top: 40,
             right: 0,
             padding: 2,
@@ -71,8 +72,10 @@ var TopbarSettingsMenu = React.createClass({
             fontSize: '14px',
             cursor: 'pointer',
             paddingLeft: 20,
+            color: '#5C5C5C',
             borderTop: '1px solid #EFF0F1',
-            opacity: 0.8
+            //opacity: 0.8
+            opacity: 1
         }
     },
 
@@ -86,6 +89,7 @@ var TopbarSettingsMenu = React.createClass({
                     var onClick = this.onItemClick.bind(this, n);
                     var name = item.name;
                     var st = assign({}, this.componentStyle.itemPlaceholder);
+                    var content = item.content;
                     var icon = item.icon;
                     if (n == 0){
                         st = assign({}, st, {borderTop: 'none'});
@@ -96,6 +100,8 @@ var TopbarSettingsMenu = React.createClass({
                                 <i className={icon} ></i>
                             }
                             {name}
+
+                            {content == undefined ? null : content}
                         </div>
                     );
                 }, this)}

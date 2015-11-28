@@ -178,8 +178,9 @@ var StudentClassApp = React.createClass({
     },
 
     getHeader: function(){
+        var userId = this.state.user.id;
         return (
-            <StudentHeader activeTab={'class'} onLogout={this.onLogout}  />
+            <StudentHeader userId={userId} activeTab={'class'} onLogout={this.onLogout}  />
         );
     },
 

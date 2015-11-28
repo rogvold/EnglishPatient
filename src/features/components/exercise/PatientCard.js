@@ -7,6 +7,8 @@ var PatientTask = require('../task/PatientTask');
 var UserExerciseInput = require('./UserExerciseInput');
 var ToggledText = require('../text/ToggledText');
 
+var TranslatableText = require('../../components/text/translatable/TranslatableText');
+
 var PatientCard = React.createClass({
     getDefaultProps: function () {
         return {
@@ -86,8 +88,11 @@ var PatientCard = React.createClass({
                 </div>
 
                 {showTranscript == false ? null :
-                    <div style={this.componentStyle.transcriptPlaceholder}>
-                        {this.props.transcript}
+                    <div style={this.componentStyle.transcriptPlaceholder} className={'disable-select'} >
+
+
+                        <TranslatableText text={this.props.transcript} />
+
                     </div>
                 }
 

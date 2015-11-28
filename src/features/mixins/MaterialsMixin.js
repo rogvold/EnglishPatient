@@ -5,6 +5,9 @@ var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var Parse = require('parse').Parse;
 var $ = require('jquery');
 
+var TopicsMixin = require('./TopicsMixin');
+var UserMixin = require('./UserMixin');
+
 var MaterialsMixin = {
 
     transformMaterialFromParseObject: function(m){
@@ -206,6 +209,18 @@ var MaterialsMixin = {
     },
 
 
+    loadMaterialsInGroupsList: function(groups, callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.limit(1000);
+        q.containedIn('groups', groups);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformMaterialFromParseObject(m);
+            });
+            callback(arr);
+        });
+    },
 
 
     //material groups
@@ -217,6 +232,7 @@ var MaterialsMixin = {
             id: g.id,
             topicId: g.get('topicId'),
             ownerId: g.get('ownerId'),
+            creatorId: g.get('ownerId'),
             materialId: g.id
         }
     },
@@ -254,6 +270,23 @@ var MaterialsMixin = {
         q.find(function(results){
             var arr = results.map(function(g){
                 return self.transformGroup(g);
+            });
+            callback(arr);
+        });
+    },
+
+    loadGroupsByTopicsList: function(topicsList, callback){
+        if (topicsList == undefined || topicsList.length == 0){
+            callback([]);
+            return;
+        }
+        var q = new Parse.Query('MaterialGroup');
+        q.containedIn('topicId', topicsList.map(function(t){return t.id}));
+        q.limit(1000);
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(t){
+                return self.transformGroup(t);
             });
             callback(arr);
         });
@@ -333,15 +366,18 @@ var MaterialsMixin = {
     },
 
 
-    getGroupsFactoryList: function(groups, materials){
+    getGroupsFactoryList: function(groups, materials, makeUnsorted){
         var arr = [];
+        if (makeUnsorted == undefined){
+            makeUnsorted = true;
+        }
         var hasUnsortedGroup = false;
         for (var i in groups){
             if (groups[i].id == undefined){
                 hasUnsortedGroup = true;
             }
         }
-        if (hasUnsortedGroup == false){
+        if ((hasUnsortedGroup == false) && (makeUnsorted == true)){
             groups.push({
                 name: 'Unsorted',
                 description: 'Материалы вне категорий',
@@ -407,7 +443,13 @@ var MaterialsMixin = {
         this.loadTeacherGroups(teacherId, topicId, function(groups){
             self.loadTeacherMaterials(teacherId, function(materials){
                 var arr = self.getGroupsFactoryList(groups, materials);
-                callback(arr);
+                console.log('loading not mine groups factory list');
+                self.loadNotMineGroupsFactoryList(teacherId, function(notMineArr){
+                    arr = arr.concat(notMineArr);
+                    console.log('notMineArr loaded: ', notMineArr);
+                    callback(arr);
+                });
+                //callback(arr);
             });
         });
     },
@@ -509,7 +551,52 @@ var MaterialsMixin = {
                 }
             }
         });
+    },
+
+    loadNotMineTopics: function(userId, callback){
+        if (userId == undefined){
+            callback([]);
+            return;
+        }
+        var q = new Parse.Query('PatientTopic');
+        q.limit(1000);
+        var self = this;
+        q.notEqualTo('creatorId', userId);
+        q.find(function(results){
+            var arr = results.map(function(t){
+                return TopicsMixin.transformTopic(t);
+            });
+            var usersIds = arr.map(function(a){return a.creatorId});
+            UserMixin.loadUsersByIdsList(usersIds, function(users){
+                console.log('users: ', users);
+                var map = {};
+                for (var i in users){
+                    map[users[i].id] = users[i];
+                }
+                arr = arr.map(function(a){ a.user = map[a.creatorId]; return a; });
+                callback(arr);
+            });
+        });
+    },
+
+    loadNotMineGroupsFactoryList: function(userId, callback){
+        console.log('loadNotMineGroupsFactoryList occured: userId = ', userId);
+        var self = this;
+        this.loadNotMineTopics(userId, function(topics){
+            topics = (topics == undefined) ? [] : topics;
+            self.loadGroupsByTopicsList(topics.map(function(top){return top.id}), function(groups){
+                console.log('groups loaded: ', groups);
+                var groupsIds = groups.map(function(gr){return gr.id});
+                self.loadMaterialsInGroupsList(groupsIds, function(materials){
+                    console.log('materials loaded: materials = ', materials);
+                    var groupsFactoryList = self.getGroupsFactoryList(groups, materials, false);
+                    callback(groupsFactoryList);
+                });
+            });
+        });
     }
+
+    //loadMaterialsInGroupsList
 
 
 }

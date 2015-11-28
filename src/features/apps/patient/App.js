@@ -9,8 +9,10 @@ var NotesApp = require('./NotesApp');
 var TopicsApp = require('./TopicsApp');
 var MaterialsApp = require('./MaterialsApp');
 var DevApp = require('./DevApp');
+var SimpleDev = require('./SimpleDev');
 var NotificationsApp = require('./NotificationsApp');
 var ToolsApp = require('./ToolsApp');
+var DictionaryApp = require('./DictionaryApp');
 
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -93,9 +95,18 @@ var App = React.createClass({
                 <Route path="/materials" component={MaterialsApp}>
                     <IndexRoute component={MaterialsApp} />
                 </Route>
+                <Route path="/dictionary" component={DictionaryApp}>
+                    <IndexRoute component={DictionaryApp} />
+                </Route>
+
                 <Route path="/dev" component={DevApp}>
                     <IndexRoute component={DevApp} />
                 </Route>
+
+                <Route path="/dev2" component={SimpleDev}>
+                    <IndexRoute component={SimpleDev} />
+                </Route>
+
             </Router>
         )
     },

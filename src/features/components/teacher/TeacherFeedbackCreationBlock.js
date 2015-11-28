@@ -120,7 +120,7 @@ var TeacherFeedbackCreationBlock = React.createClass({
             <div style={this.componentStyle.placeholder} className={'ui form'} >
 
                 <div style={this.componentStyle.textareaPlaceholder} className={'field'}>
-                    <label>Feedback {this.state.needToSave == false ? null : <span style={{float: 'right', color: '#FBBD08'}} > <i className={'ui warning sign icon'} ></i>   not saved... </span>}</label>
+                    <label>Комментарий преподавателя {this.state.needToSave == false ? null : <span style={{float: 'right', color: '#FBBD08'}} > <i className={'ui warning sign icon'} ></i>   not saved... </span>}</label>
 
                     <div style={this.componentStyle.correctorButtonPlaceholder}>
                         <CorrectorHelpButton buttonStyle={{padding: '6px', marginRight: 0}} buttonClassName={'ui basic grey mini button'} />

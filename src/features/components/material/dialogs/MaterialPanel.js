@@ -7,6 +7,8 @@ var assign = require('object-assign');
 
 var VimeoPlayer = require('../../player/VimeoPlayer');
 
+var TranslatableText = require('../../text/translatable/TranslatableText');
+
 var MaterialPanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -93,7 +95,9 @@ var MaterialPanel = React.createClass({
 
                 {(this.props.transcript == undefined || this.props.transcript.trim() == '') ? null :
                     <div style={this.componentStyle.transcriptPlaceholder}>
-                        {this.props.transcript}
+
+                        <TranslatableText text={this.props.transcript} fontSize={this.componentStyle.transcriptPlaceholder.fontSize} />
+
                     </div>
                 }
 

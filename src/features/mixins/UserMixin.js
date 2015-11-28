@@ -21,6 +21,8 @@ var UserMixin = {
 
         return {
             name: name,
+            firstName: firstName,
+            lastName: lastName,
             role: u.get('userRole'),
             email: u.get('email'),
             avatar: u.get('avatar'),
@@ -43,6 +45,24 @@ var UserMixin = {
             var tU = self.transformUser(u);
             console.log('user loaded: ', tU);
             callback(tU);
+        });
+    },
+
+    updateUser: function(userId, firstName, lastName, avatar, callback){
+        console.log('updateUser occured: ', userId, firstName, lastName, avatar);
+        if (userId == undefined){
+            callback();
+            return;
+        }
+        var self = this;
+        this.loadUserById(userId, function(u){
+            u = ParseMixin.safeSet(u, [{name: 'firstName', value: firstName}, {name: 'lastName', value: lastName},
+                {name: 'avatar', value: avatar}
+            ]);
+            u.save().then(function(user){
+                console.log('user updated: ', user);
+                callback(self.transformUser(user));
+            });
         });
     },
 

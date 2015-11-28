@@ -91,8 +91,9 @@ var NotificationsApp = React.createClass({
     },
 
     getHeader: function(){
+        var userId = this.state.user.id;
         return (
-            <TeacherHeader activeTab={'notifications'} onLogout={this.onLogout}  />
+            <TeacherHeader userId={userId} activeTab={'notifications'} onLogout={this.onLogout}  />
         );
     },
 

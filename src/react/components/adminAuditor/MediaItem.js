@@ -5,6 +5,7 @@
 var React = require('react');
 
 
+
 var MediaItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -66,7 +67,10 @@ var MediaItem = React.createClass({
 
                 {this.props.text != undefined ? (
                     <div style={this.componentStyle.textPlaceholder}>
+
                         {this.props.text}
+
+
                     </div>
                 ) : (
                     <div></div>

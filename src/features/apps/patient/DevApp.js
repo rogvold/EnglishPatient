@@ -77,6 +77,16 @@ var Speech = require('react-speech');
 
 var TranslateMixin = require('../../mixins/TranslateMixin');
 
+//var TranslatePanel = require('../../components/translate/panel/TranslatePanel');
+var TranslateButton = require('../../components/translate/TranslateButton');
+
+var WordItem = require('../../components/text/translatable/WordItem');
+
+var UserProfilePanel = require('../../components/profile/UserProfilePanel');
+
+var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
+
+
 var DevApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -136,17 +146,34 @@ var DevApp = React.createClass({
 
 
     getSidebar: function(){
+        var f = false;
         return (
             <div>
-                <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
-                    selectedClassId={this.props.params.classId} />
+                {f == false ? null :
+                    <div>
+                        <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
+                                                            selectedClassId={this.props.params.classId} />
+                    </div>
+                }
+
+
             </div>
         );
     },
 
     getHeader: function(){
+        var f = false;
         return (
-            <TeacherHeader activeTab={'index'} onLogout={this.updateAuth}  />
+            <div>
+                {f == false ? null :
+                    <div>
+                        <TeacherHeader activeTab={'index'} onLogout={this.updateAuth}  />
+                    </div>
+                }
+
+
+            </div>
+
         );
     },
 
@@ -196,9 +223,6 @@ var DevApp = React.createClass({
         this.setState({
             text: evt.target.value
         });
-        TranslateMixin.translate(text, function(html){
-            console.log(html);
-        });
     },
 
     getContent: function(){
@@ -207,10 +231,7 @@ var DevApp = React.createClass({
         return (
             <div>
 
-                <Speech text={this.state.text} displayText={'GB'} textAsButton={true} />
-                <Speech text={this.state.text} displayText={'US'} textAsButton={true} lang={'en-US'} />
-
-                <input value={this.state.text} onChange={this.onTextChange} />
+                <VocabularyPanel />
 
             </div>
 

@@ -8,6 +8,8 @@ var PatientImg = require('../image/PatientImg');
 var PatientText = require('../text/PatientText');
 var PatientAudio = require('../audio/PatientAudio');
 
+var TranslatableText = require('../text/translatable/TranslatableText');
+
 var PatientTask = React.createClass({
     getDefaultProps: function () {
         return {
@@ -123,6 +125,9 @@ var PatientTask = React.createClass({
                 {((text == undefined) || (text.text == undefined)) ? null :
                     <div style={this.componentStyle.textPlaceholder}>
                         <PatientText fontSize={20} text={text.text} />
+
+
+
                     </div>
                 }
 

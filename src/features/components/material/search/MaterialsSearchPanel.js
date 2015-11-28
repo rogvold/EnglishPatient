@@ -152,9 +152,7 @@ var MaterialsSearchPanel = React.createClass({
     },
 
     search: function(q){
-        //if (q == undefined || q.trim() == ''){
-        //    return;
-        //}
+
         var qq = q.trim().toLowerCase();
         var l = MaterialsMixin.searchInGroupsFactoryList(this.state.groupsFactoryList, qq);
         this.setState({
@@ -253,6 +251,7 @@ var MaterialsSearchPanel = React.createClass({
         var c = list.map(function(g, k){
             var key = 'search_bunch_' + k + '_' + g.group.id;
             var group = g.group;
+
 
             return (
                 <MaterialsBunch key={key} showDialogOnMaterialClick={false} hoverMode={true}
