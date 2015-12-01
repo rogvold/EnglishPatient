@@ -76923,6 +76923,12 @@ var NotificationsApp = require('./NotificationsApp');
 var ToolsApp = require('./ToolsApp');
 var DictionaryApp = require('./DictionaryApp');
 
+var IdiomsApp = require('./IdiomsApp');
+var GrammarApp = require('./GrammarApp');
+
+
+
+
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -77008,6 +77014,14 @@ var App = React.createClass({displayName: "App",
                     React.createElement(IndexRoute, {component: DictionaryApp})
                 ), 
 
+                React.createElement(Route, {path: "/grammar", component: GrammarApp}, 
+                    React.createElement(IndexRoute, {component: GrammarApp})
+                ), 
+
+                React.createElement(Route, {path: "/idioms", component: IdiomsApp}, 
+                    React.createElement(IndexRoute, {component: IdiomsApp})
+                ), 
+
                 React.createElement(Route, {path: "/dev", component: DevApp}, 
                     React.createElement(IndexRoute, {component: DevApp})
                 ), 
@@ -77077,7 +77091,7 @@ React.render((React.createElement(App, null)
 
 ), document.getElementById('main'));
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../mixins/LoginMixin":720,"./ClassApp":522,"./DevApp":523,"./DictionaryApp":524,"./ExercisesApp":525,"./IndexApp":526,"./LoginApp":527,"./MaterialsApp":528,"./NotesApp":529,"./NotificationsApp":530,"./SimpleDev":531,"./ToolsApp":532,"./TopicsApp":533,"./student/StudentClassApp":534,"./student/StudentIndexApp":535,"history":16,"object-assign":33,"react":518,"react-router":298}],522:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../mixins/LoginMixin":742,"./ClassApp":522,"./DevApp":523,"./DictionaryApp":524,"./ExercisesApp":525,"./GrammarApp":526,"./IdiomsApp":527,"./IndexApp":528,"./LoginApp":529,"./MaterialsApp":530,"./NotesApp":531,"./NotificationsApp":532,"./SimpleDev":533,"./ToolsApp":534,"./TopicsApp":535,"./student/StudentClassApp":536,"./student/StudentIndexApp":537,"history":16,"object-assign":33,"react":518,"react-router":298}],522:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -77482,7 +77496,7 @@ var ClassApp = React.createClass({displayName: "ClassApp",
 
 module.exports = ClassApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/card/UsersCardsList":547,"../../components/class/buttons/EditClassButton":550,"../../components/class/check/CheckUsersListDashboard":554,"../../components/class/header/ClassHeader":557,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/class/tabs/ClassTab":561,"../../components/class/tabs/ClassTabsNamePanel":562,"../../components/class/tasks/TaskPanel":564,"../../components/dialog/exercise/ExerciseDialogClickableArea":576,"../../components/dialog/exercise/ExerciseDialogViewer":578,"../../components/feed/SelfLoadingClassFeed":605,"../../components/header/teacher/TeacherHeader":613,"../../components/help/GifInstruction":614,"../../components/help/IconMessage":615,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"./LoginApp":527,"object-assign":33,"react":518,"react-router":298}],523:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/card/UsersCardsList":549,"../../components/class/buttons/EditClassButton":552,"../../components/class/check/CheckUsersListDashboard":556,"../../components/class/header/ClassHeader":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/class/tabs/ClassTab":563,"../../components/class/tabs/ClassTabsNamePanel":564,"../../components/class/tasks/TaskPanel":566,"../../components/dialog/exercise/ExerciseDialogClickableArea":578,"../../components/dialog/exercise/ExerciseDialogViewer":580,"../../components/feed/SelfLoadingClassFeed":607,"../../components/header/teacher/TeacherHeader":615,"../../components/help/GifInstruction":616,"../../components/help/IconMessage":617,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518,"react-router":298}],523:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -77571,6 +77585,16 @@ var UserProfilePanel = require('../../components/profile/UserProfilePanel');
 
 var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
 
+var MaterialGroupCard = require('../../components/material/groups/MaterialGroupCard');
+
+var CategoryCheckboxesList = require('../../components/search/youtube/checkbox/CategoryCheckboxesList');
+
+var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchPanel');
+
+var SelfLoadingKaraokePlayerPanel = require('../../components/karaoke/SelfLoadingKaraokePlayerPanel');
+
+
+var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
 
 var DevApp = React.createClass({displayName: "DevApp",
     getDefaultProps: function () {
@@ -77580,7 +77604,15 @@ var DevApp = React.createClass({displayName: "DevApp",
     },
 
     getInitialState: function () {
+        var checkboxes = [{
+            name: 'sabir',
+            active: false
+        }, {
+            name: 'anton',
+            active: true
+        }];
         return {
+            checkboxes: checkboxes,
             text: 'color',
             start: 0,
             end: 0,
@@ -77710,13 +77742,20 @@ var DevApp = React.createClass({displayName: "DevApp",
         });
     },
 
+    onChange: function(newList){
+        console.log('newList = ', newList);
+        this.setState({
+            checkboxes: newList
+        });
+    },
+
     getContent: function(){
         var userId = this.state.user.id;
 
         return (
             React.createElement("div", null, 
 
-                React.createElement(VocabularyPanel, null)
+                React.createElement(KaraokeGroupsPanel, null)
 
             )
 
@@ -77745,7 +77784,7 @@ var DevApp = React.createClass({displayName: "DevApp",
 
 module.exports = DevApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/buttons/student/AddClassPlusButton":552,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/corrector/CorrectorHelpButton":565,"../../components/corrector/CorrectorPanel":566,"../../components/corrector/sounds/SoundsList":568,"../../components/corrector/sounds/SoundsPanel":569,"../../components/corrector/words/WordsPanel":570,"../../components/exercise/diff/RightTextAnswerDiff":594,"../../components/exercise/search/ExercisesSearchButton":600,"../../components/exercise/search/ExercisesSearchPanel":601,"../../components/feed/FeedItem":602,"../../components/feed/SelfLoadingClassFeed":605,"../../components/feed/SelfLoadingFeedItem":606,"../../components/feed/SelfLoadingUpdateFeedItem":607,"../../components/feed/button/EditFeedItemButton":609,"../../components/feed/video/SelfLoadingVideosList":610,"../../components/header/teacher/TeacherHeader":613,"../../components/material/MaterialTags":618,"../../components/material/buttons/MaterialCreateButton":619,"../../components/material/dialogs/MaterialDialog":621,"../../components/material/search/MaterialSearchButton":636,"../../components/material/search/MaterialsSearchPanel":637,"../../components/notification/SelfLoadingNotificationsList":654,"../../components/player/VimeoPlayer":658,"../../components/profile/UserProfilePanel":664,"../../components/sausage/FirstLevelPanelsList":668,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../components/text/translatable/WordItem":686,"../../components/translate/TranslateButton":699,"../../components/user/RoleSelector":706,"../../components/video/youtube/YoutubeEmbedPlayer":710,"../../components/vocabulary/VocabularyPanel":714,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"../../mixins/MaterialsMixin":721,"../../mixins/MigrationMixin":722,"../../mixins/TranslateMixin":727,"../../mixins/UserMixin":728,"./LoginApp":527,"object-assign":33,"react-diff":110,"react-player":261,"react-speech":332,"react/addons":345}],524:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/buttons/student/AddClassPlusButton":554,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/corrector/CorrectorHelpButton":567,"../../components/corrector/CorrectorPanel":568,"../../components/corrector/sounds/SoundsList":570,"../../components/corrector/sounds/SoundsPanel":571,"../../components/corrector/words/WordsPanel":572,"../../components/exercise/diff/RightTextAnswerDiff":596,"../../components/exercise/search/ExercisesSearchButton":602,"../../components/exercise/search/ExercisesSearchPanel":603,"../../components/feed/FeedItem":604,"../../components/feed/SelfLoadingClassFeed":607,"../../components/feed/SelfLoadingFeedItem":608,"../../components/feed/SelfLoadingUpdateFeedItem":609,"../../components/feed/button/EditFeedItemButton":611,"../../components/feed/video/SelfLoadingVideosList":612,"../../components/header/teacher/TeacherHeader":615,"../../components/karaoke/KaraokeGroupsPanel":624,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":627,"../../components/material/MaterialTags":632,"../../components/material/buttons/MaterialCreateButton":633,"../../components/material/dialogs/MaterialDialog":635,"../../components/material/groups/MaterialGroupCard":641,"../../components/material/search/MaterialSearchButton":651,"../../components/material/search/MaterialsSearchPanel":652,"../../components/notification/SelfLoadingNotificationsList":669,"../../components/player/VimeoPlayer":673,"../../components/profile/UserProfilePanel":679,"../../components/sausage/FirstLevelPanelsList":683,"../../components/search/youtube/YoutubeSearchPanel":689,"../../components/search/youtube/checkbox/CategoryCheckboxesList":691,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/text/translatable/WordItem":706,"../../components/translate/TranslateButton":719,"../../components/user/RoleSelector":726,"../../components/video/youtube/YoutubeEmbedPlayer":730,"../../components/vocabulary/VocabularyPanel":734,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"../../mixins/MaterialsMixin":743,"../../mixins/MigrationMixin":744,"../../mixins/TranslateMixin":749,"../../mixins/UserMixin":750,"./LoginApp":529,"object-assign":33,"react-diff":110,"react-player":261,"react-speech":332,"react/addons":345}],524:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -77783,7 +77822,6 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
             users: [],
             selectedTabName: 'users',
             loggedIn: false,
-            user: undefined,
             user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser()
         }
     },
@@ -77884,7 +77922,7 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
 
 module.exports = DictionaryApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/header/teacher/TeacherHeader":613,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../components/vocabulary/VocabularyPanel":714,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"./LoginApp":527,"object-assign":33,"react":518}],525:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/vocabulary/VocabularyPanel":734,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],525:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78129,7 +78167,279 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
 module.exports = ExercisesApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/bunch/exercise/CreateNewExerciseGroupButton":538,"../../components/bunch/exercise/ExercisesBunch":539,"../../components/bunch/exercise/ExercisesGroupsList":540,"../../components/card/ExerciseCard":543,"../../components/card/ExercisesPagedCardsList":545,"../../components/card/UsersCardsList":547,"../../components/class/check/CheckUsersListDashboard":554,"../../components/class/header/ClassHeader":557,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/class/tabs/ClassTab":561,"../../components/class/tabs/ClassTabsNamePanel":562,"../../components/dialog/exercise/ExerciseDialogClickableArea":576,"../../components/dialog/exercise/ExerciseDialogViewer":578,"../../components/exercise/create/button/CreateNewExerciseButton":593,"../../components/header/teacher/TeacherHeader":613,"../../components/help/GifInstruction":614,"../../components/help/IconMessage":615,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../mixins/ClassMixin":716,"../../mixins/ExerciseMixin":717,"../../mixins/LoginMixin":720,"./LoginApp":527,"object-assign":33,"react":518}],526:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/bunch/exercise/CreateNewExerciseGroupButton":540,"../../components/bunch/exercise/ExercisesBunch":541,"../../components/bunch/exercise/ExercisesGroupsList":542,"../../components/card/ExerciseCard":545,"../../components/card/ExercisesPagedCardsList":547,"../../components/card/UsersCardsList":549,"../../components/class/check/CheckUsersListDashboard":556,"../../components/class/header/ClassHeader":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/class/tabs/ClassTab":563,"../../components/class/tabs/ClassTabsNamePanel":564,"../../components/dialog/exercise/ExerciseDialogClickableArea":578,"../../components/dialog/exercise/ExerciseDialogViewer":580,"../../components/exercise/create/button/CreateNewExerciseButton":595,"../../components/header/teacher/TeacherHeader":615,"../../components/help/GifInstruction":616,"../../components/help/IconMessage":617,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/ExerciseMixin":737,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],526:[function(require,module,exports){
+/**
+ * Created by sabir on 12.10.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var LoginMixin = require('../../mixins/LoginMixin');
+
+var ParseMixin = require('../../../react/mixins/commonMixins/ParseMixin');
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
+
+var ClassMixin = require('../../mixins/ClassMixin');
+
+var LeftSidebarTemplate = require('../../components/templates/LeftSidebarTemplate');
+var SelfLoadingLeftSidebarClassesList = require('../../components/class/list/SelfLoadingLeftSidebarClassesList');
+var LoadingSegment = require('../../components/segment/LoadingSegment');
+
+var LoginApp = require('./LoginApp');
+
+var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
+
+var GrammarApp = React.createClass({displayName: "GrammarApp",
+    getDefaultProps: function () {
+        return {
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            users: [],
+            selectedTabName: 'users',
+            loggedIn: false,
+            user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser()
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        ParseMixin.initParse();
+        if (LoginMixin.isLoggedIn() == false){
+            return false;
+        }else{
+            this.setState({
+                loggedIn: true
+            });
+        }
+        console.log('Exercises App mounted');
+        console.log(this.props.params);
+
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    updateAuth: function(){
+        ParseMixin.initParse();
+        if (LoginMixin.isLoggedIn() == false){
+            this.setState({
+                loggedIn: false
+            });
+        }else{
+            this.setState({
+                loggedIn: true
+            });
+        }
+    },
+
+
+    getSidebar: function(){
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
+                                                    addClassMode: true, selectedClassId: this.props.params.classId})
+            )
+        );
+    },
+
+    onLogout: function(){
+        CommonMixin.forceTransitionTo('/#/');
+    },
+
+    getHeader: function(){
+        var userId = this.state.user.id;
+        return (
+            React.createElement(TeacherHeader, {userId: userId, activeTab: 'grammar', onLogout: this.onLogout})
+        );
+    },
+
+    logChange: function(val, b){
+        console.log(val, b);
+        console.log(typeof val);
+    },
+
+    getContent: function(){
+
+        return (
+            React.createElement("div", null, 
+
+                "Under construction"
+
+            )
+
+        );
+    },
+
+    getFooter: function(){
+
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                this.state.loggedIn == false ?
+                    React.createElement("div", null, 
+                        React.createElement(LoginApp, null)
+                    ) :
+                    React.createElement(LeftSidebarTemplate, {sidebar: this.getSidebar(), header: this.getHeader(), footer: this.getFooter(), content: this.getContent()})
+                
+            )
+        );
+    }
+
+});
+
+module.exports = GrammarApp;
+
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],527:[function(require,module,exports){
+/**
+ * Created by sabir on 12.10.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var LoginMixin = require('../../mixins/LoginMixin');
+
+var ParseMixin = require('../../../react/mixins/commonMixins/ParseMixin');
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
+
+var ClassMixin = require('../../mixins/ClassMixin');
+
+var LeftSidebarTemplate = require('../../components/templates/LeftSidebarTemplate');
+var SelfLoadingLeftSidebarClassesList = require('../../components/class/list/SelfLoadingLeftSidebarClassesList');
+var LoadingSegment = require('../../components/segment/LoadingSegment');
+
+var LoginApp = require('./LoginApp');
+
+var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
+
+var IdiomsPanel = require('../../components/idioms/IdiomsPanel');
+
+var IdiomsApp = React.createClass({displayName: "IdiomsApp",
+    getDefaultProps: function () {
+        return {
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            users: [],
+            selectedTabName: 'users',
+            loggedIn: false,
+            user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser()
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        ParseMixin.initParse();
+        if (LoginMixin.isLoggedIn() == false){
+            return false;
+        }else{
+            this.setState({
+                loggedIn: true
+            });
+        }
+        console.log('Exercises App mounted');
+        console.log(this.props.params);
+
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    updateAuth: function(){
+        ParseMixin.initParse();
+        if (LoginMixin.isLoggedIn() == false){
+            this.setState({
+                loggedIn: false
+            });
+        }else{
+            this.setState({
+                loggedIn: true
+            });
+        }
+    },
+
+
+    getSidebar: function(){
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
+                                                    addClassMode: true, selectedClassId: this.props.params.classId})
+            )
+        );
+    },
+
+    onLogout: function(){
+        CommonMixin.forceTransitionTo('/#/');
+    },
+
+    getHeader: function(){
+        var userId = this.state.user.id;
+        return (
+            React.createElement(TeacherHeader, {userId: userId, activeTab: 'idioms', onLogout: this.onLogout})
+        );
+    },
+
+    logChange: function(val, b){
+        console.log(val, b);
+        console.log(typeof val);
+    },
+
+    getContent: function(){
+
+        return (
+            React.createElement("div", null, 
+
+                React.createElement(IdiomsPanel, null)
+
+            )
+
+        );
+    },
+
+    getFooter: function(){
+
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                this.state.loggedIn == false ?
+                    React.createElement("div", null, 
+                        React.createElement(LoginApp, null)
+                    ) :
+                    React.createElement(LeftSidebarTemplate, {sidebar: this.getSidebar(), header: this.getHeader(), footer: this.getFooter(), content: this.getContent()})
+                
+            )
+        );
+    }
+
+});
+
+module.exports = IdiomsApp;
+
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/idioms/IdiomsPanel":618,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],528:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78268,7 +78578,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/header/teacher/TeacherHeader":613,"../../components/sausage/Sausage":669,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"./LoginApp":527,"object-assign":33,"react":518}],527:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/sausage/Sausage":684,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],529:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78345,7 +78655,7 @@ var LoginApp = React.createClass({displayName: "LoginApp",
 
 module.exports = LoginApp;
 
-},{"../../components/user/AuthForm":703,"../../mixins/LoginMixin":720,"object-assign":33,"react":518}],528:[function(require,module,exports){
+},{"../../components/user/AuthForm":723,"../../mixins/LoginMixin":742,"object-assign":33,"react":518}],530:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78497,7 +78807,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/header/teacher/TeacherHeader":613,"../../components/material/list/MaterialCard":631,"../../components/material/list/PagedCardsList":634,"../../components/material/list/SelfLoadingMaterialsList":635,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../mixins/LoginMixin":720,"../../mixins/MaterialsMixin":721,"./LoginApp":527,"object-assign":33,"react":518}],529:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/material/list/MaterialCard":646,"../../components/material/list/PagedCardsList":649,"../../components/material/list/SelfLoadingMaterialsList":650,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/LoginMixin":742,"../../mixins/MaterialsMixin":743,"./LoginApp":529,"object-assign":33,"react":518}],531:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78998,7 +79308,7 @@ var NotesApp = React.createClass({displayName: "NotesApp",
 
 module.exports = NotesApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/buttons/DeleteButton":541,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/header/teacher/TeacherHeader":613,"../../components/help/GifInstruction":614,"../../components/note/CreateNewNoteButton":638,"../../components/note/CreateNewNotesGroupButton":639,"../../components/note/SelfLoadingUpdatableNote":642,"../../components/note/SelfLoadingUpdateNotePanel":643,"../../components/note/UpdateGroupButton":644,"../../components/note/list/NotesGroupsList":647,"../../components/note/list/NotesList":648,"../../components/note/select/NotesGroupSelect":649,"../../components/templates/LeftSidebarTemplate":681,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"../../mixins/NotesMixin":723,"./LoginApp":527,"object-assign":33,"react":518}],530:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/buttons/DeleteButton":543,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/help/GifInstruction":616,"../../components/note/CreateNewNoteButton":653,"../../components/note/CreateNewNotesGroupButton":654,"../../components/note/SelfLoadingUpdatableNote":657,"../../components/note/SelfLoadingUpdateNotePanel":658,"../../components/note/UpdateGroupButton":659,"../../components/note/list/NotesGroupsList":662,"../../components/note/list/NotesList":663,"../../components/note/select/NotesGroupSelect":664,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"../../mixins/NotesMixin":745,"./LoginApp":529,"object-assign":33,"react":518}],532:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -79134,7 +79444,7 @@ var NotificationsApp = React.createClass({displayName: "NotificationsApp",
 
 module.exports = NotificationsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/header/teacher/TeacherHeader":613,"../../components/notification/SelfLoadingNotificationsList":654,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"./LoginApp":527,"object-assign":33,"react":518}],531:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/notification/SelfLoadingNotificationsList":669,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],533:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -79160,6 +79470,9 @@ var PatientPlayer = require('../../components/player/PatientPlayer');
 var ReactTooltip = require('react-tooltip');
 
 var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
+
+var MigrationMixin = require('../../mixins/MigrationMixin');
+
 
 var SimpleDev = React.createClass({displayName: "SimpleDev",
     getDefaultProps: function () {
@@ -79223,23 +79536,33 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
         });
     },
 
-    render: function () {
+    loadMaterials: function(){
+        var self = this;
+        MigrationMixin.loadDirtyMaterials(function(materials){
+            console.log('laded materials: ', materials);
+            console.log('not processed number: ', materials.length);
+            if (materials.length == 0){
+                alert('finish!');
+                return;
+            }
 
-        var text = "The Second Amendment was based partially on the right to keep and bear arms in English common-law and was influenced by the English Bill of Rights of 1689. Sir William Blackstone described this right as an auxiliary right, supporting the natural rights of self-defense, resistance to oppression, and the civic duty to act in concert in defense of the state";
+            var mId = materials[0].id;
+
+            MigrationMixin.processOneDirtyMaterial(mId, function(m){
+               console.log('processed: ', m);
+                self.loadMaterials();
+            });
+
+
+        });
+    },
+
+    render: function () {
 
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
 
-
-                React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
-                    React.createElement(PatientPlayer, {youtubeId: '8SbUC-UaAxE', start: 420, end: 503})
-                ), 
-
-                React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
-                    React.createElement(PatientPlayer, {vimeoId: '70260646', start: 420, end: 503})
-                ), 
-
-               React.createElement(VocabularyPanel, null)
+                React.createElement("button", {onClick: this.loadMaterials}, " load ")
 
 
             )
@@ -79250,7 +79573,7 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
 
 module.exports = SimpleDev;
 
-},{"../../components/background/video/VideoBackground":537,"../../components/player/PatientPlayer":657,"../../components/templates/LeftSidebarTemplate":681,"../../components/text/translatable/TranslatableText":685,"../../components/text/translatable/WordItem":686,"../../components/vocabulary/VocabularyPanel":714,"../../mixins/LoginMixin":720,"object-assign":33,"react-tooltip":334,"react/addons":345}],532:[function(require,module,exports){
+},{"../../components/background/video/VideoBackground":539,"../../components/player/PatientPlayer":672,"../../components/templates/LeftSidebarTemplate":701,"../../components/text/translatable/TranslatableText":705,"../../components/text/translatable/WordItem":706,"../../components/vocabulary/VocabularyPanel":734,"../../mixins/LoginMixin":742,"../../mixins/MigrationMixin":744,"object-assign":33,"react-tooltip":334,"react/addons":345}],534:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -79492,7 +79815,7 @@ var ToolsApp = React.createClass({displayName: "ToolsApp",
 
 module.exports = ToolsApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/buttons/student/AddClassPlusButton":552,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/corrector/CorrectorHelpButton":565,"../../components/corrector/CorrectorPanel":566,"../../components/corrector/sounds/SoundsList":568,"../../components/corrector/sounds/SoundsPanel":569,"../../components/corrector/words/WordsPanel":570,"../../components/exercise/diff/RightTextAnswerDiff":594,"../../components/exercise/search/ExercisesSearchButton":600,"../../components/exercise/search/ExercisesSearchPanel":601,"../../components/feed/FeedItem":602,"../../components/feed/SelfLoadingClassFeed":605,"../../components/feed/SelfLoadingFeedItem":606,"../../components/feed/SelfLoadingUpdateFeedItem":607,"../../components/feed/button/EditFeedItemButton":609,"../../components/feed/video/SelfLoadingVideosList":610,"../../components/header/teacher/TeacherHeader":613,"../../components/material/MaterialTags":618,"../../components/material/buttons/MaterialCreateButton":619,"../../components/material/dialogs/MaterialDialog":621,"../../components/material/search/MaterialSearchButton":636,"../../components/material/search/MaterialsSearchPanel":637,"../../components/notification/SelfLoadingNotificationsList":654,"../../components/player/VimeoPlayer":658,"../../components/sausage/FirstLevelPanelsList":668,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../components/text/translatable/TranslatableText":685,"../../components/translate/TranslateButton":699,"../../components/user/RoleSelector":706,"../../components/video/youtube/YoutubeEmbedPlayer":710,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"../../mixins/MaterialsMixin":721,"../../mixins/MigrationMixin":722,"../../mixins/UserMixin":728,"./LoginApp":527,"object-assign":33,"react-diff":110,"react-player":261,"react-speech":332,"react/addons":345}],533:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/buttons/student/AddClassPlusButton":554,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/corrector/CorrectorHelpButton":567,"../../components/corrector/CorrectorPanel":568,"../../components/corrector/sounds/SoundsList":570,"../../components/corrector/sounds/SoundsPanel":571,"../../components/corrector/words/WordsPanel":572,"../../components/exercise/diff/RightTextAnswerDiff":596,"../../components/exercise/search/ExercisesSearchButton":602,"../../components/exercise/search/ExercisesSearchPanel":603,"../../components/feed/FeedItem":604,"../../components/feed/SelfLoadingClassFeed":607,"../../components/feed/SelfLoadingFeedItem":608,"../../components/feed/SelfLoadingUpdateFeedItem":609,"../../components/feed/button/EditFeedItemButton":611,"../../components/feed/video/SelfLoadingVideosList":612,"../../components/header/teacher/TeacherHeader":615,"../../components/material/MaterialTags":632,"../../components/material/buttons/MaterialCreateButton":633,"../../components/material/dialogs/MaterialDialog":635,"../../components/material/search/MaterialSearchButton":651,"../../components/material/search/MaterialsSearchPanel":652,"../../components/notification/SelfLoadingNotificationsList":669,"../../components/player/VimeoPlayer":673,"../../components/sausage/FirstLevelPanelsList":683,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/text/translatable/TranslatableText":705,"../../components/translate/TranslateButton":719,"../../components/user/RoleSelector":726,"../../components/video/youtube/YoutubeEmbedPlayer":730,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"../../mixins/MaterialsMixin":743,"../../mixins/MigrationMixin":744,"../../mixins/UserMixin":750,"./LoginApp":529,"object-assign":33,"react-diff":110,"react-player":261,"react-speech":332,"react/addons":345}],535:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -79525,6 +79848,7 @@ var SelfLoadingTopicDialog = require('../../components/topics/dialog/SelfLoading
 
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
 
+var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
 
 
 var TopicsApp = React.createClass({displayName: "TopicsApp",
@@ -79542,7 +79866,8 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
             loggedIn: false,
             user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser(),
             topicDialogVisible: true,
-            selectedTopicId: undefined
+            selectedTopicId: undefined,
+            mode: 'topics'
         }
     },
 
@@ -79565,7 +79890,30 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
     },
 
     componentStyle: {
-        placeholder: {}
+        placeholder: {
+
+        },
+
+        modesPanel: {
+            textAlign: 'center',
+            marginBottom: 10,
+            backgroundColor: 'white',
+            borderBottom: '1px solid #EFF0F1',
+        },
+
+        modesItem: {
+            display: 'inline-block',
+            margin: 10,
+            marginBottom: 0,
+            cursor: 'pointer',
+            color: '#2E3C54',
+            marginTop: 0,
+            padding: 5
+        },
+
+        active: {
+            borderBottom: '3px solid #FC636B'
+        }
     },
 
     updateAuth: function(){
@@ -79622,11 +79970,38 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
         });
     },
 
-    getContent: function(){
+    getModesPanel: function(){
+        var tFun = this.switchMode.bind(this, 'topics');
+        var kFun = this.switchMode.bind(this, 'karaoke');
+        var mode = this.state.mode;
+
+        var karSt = assign({}, this.componentStyle.modesItem, (mode == 'karaoke' ? this.componentStyle.active : {}));
+        var topicsSt = assign({}, this.componentStyle.modesItem, (mode == 'topics' ? this.componentStyle.active : {}));
 
         return (
-            React.createElement("div", {style: {padding: 10}}, 
-                React.createElement(SelfLoadingTopicsList, {teacherId: this.state.user.id})
+            React.createElement("div", {style: this.componentStyle.modesPanel}, 
+                React.createElement("div", {style: this.componentStyle.modesItem, style: topicsSt, onClick: tFun}, "без титров"), 
+                React.createElement("div", {style: this.componentStyle.modesItem, style: karSt, onClick: kFun}, " с титрами")
+            )
+        );
+    },
+
+    getContent: function(){
+        var mode = this.state.mode;
+        return (
+            React.createElement("div", {style: {padding: 0}}, 
+
+                this.getModesPanel(), 
+
+                mode == 'topics' ?
+                    React.createElement(SelfLoadingTopicsList, {teacherId: this.state.user.id})
+                    :
+                    React.createElement(KaraokeGroupsPanel, null)
+                
+
+
+
+
             )
 
 
@@ -79635,6 +80010,12 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
 
     getFooter: function(){
 
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
+        });
     },
 
     render: function () {
@@ -79655,7 +80036,7 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
 
 module.exports = TopicsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../components/header/teacher/TeacherHeader":613,"../../components/material/list/SelfLoadingMaterialsList":635,"../../components/segment/LoadingSegment":672,"../../components/templates/LeftSidebarTemplate":681,"../../components/topics/SelfLoadingTopicsList":690,"../../components/topics/TopicsList":692,"../../components/topics/dialog/SelfLoadingTopicDialog":693,"../../components/topics/dialog/TopicDialog":694,"../../components/topics/panels/TopicPanel":698,"../../mixins/ClassMixin":716,"../../mixins/LoginMixin":720,"./LoginApp":527,"object-assign":33,"react":518}],534:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/karaoke/KaraokeGroupsPanel":624,"../../components/material/list/SelfLoadingMaterialsList":650,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/topics/SelfLoadingTopicsList":710,"../../components/topics/TopicsList":712,"../../components/topics/dialog/SelfLoadingTopicDialog":713,"../../components/topics/dialog/TopicDialog":714,"../../components/topics/panels/TopicPanel":718,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],536:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -79893,7 +80274,7 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
 
 module.exports = StudentClassApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../components/card/UsersCardsList":547,"../../../components/class/buttons/student/LeaveClassButton":553,"../../../components/class/check/CheckUsersListDashboard":554,"../../../components/class/header/ClassHeader":557,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":559,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":560,"../../../components/class/tabs/ClassTab":561,"../../../components/class/tabs/ClassTabsNamePanel":562,"../../../components/class/tasks/TaskPanel":564,"../../../components/dialog/exercise/ExerciseDialogClickableArea":576,"../../../components/dialog/exercise/ExerciseDialogViewer":578,"../../../components/feed/SelfLoadingClassFeed":605,"../../../components/header/student/StudentHeader":612,"../../../components/help/GifInstruction":614,"../../../components/help/IconMessage":615,"../../../components/segment/LoadingSegment":672,"../../../components/templates/LeftSidebarTemplate":681,"../../../mixins/ClassMixin":716,"../../../mixins/LoginMixin":720,"../LoginApp":527,"object-assign":33,"react":518,"react-router":298}],535:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../components/card/UsersCardsList":549,"../../../components/class/buttons/student/LeaveClassButton":555,"../../../components/class/check/CheckUsersListDashboard":556,"../../../components/class/header/ClassHeader":559,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":562,"../../../components/class/tabs/ClassTab":563,"../../../components/class/tabs/ClassTabsNamePanel":564,"../../../components/class/tasks/TaskPanel":566,"../../../components/dialog/exercise/ExerciseDialogClickableArea":578,"../../../components/dialog/exercise/ExerciseDialogViewer":580,"../../../components/feed/SelfLoadingClassFeed":607,"../../../components/header/student/StudentHeader":614,"../../../components/help/GifInstruction":616,"../../../components/help/IconMessage":617,"../../../components/segment/LoadingSegment":692,"../../../components/templates/LeftSidebarTemplate":701,"../../../mixins/ClassMixin":736,"../../../mixins/LoginMixin":742,"../LoginApp":529,"object-assign":33,"react":518,"react-router":298}],537:[function(require,module,exports){
 
 var React = require('react');
 var assign = require('object-assign');
@@ -80079,7 +80460,7 @@ var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
 
 module.exports = StudentIndexApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../components/class/buttons/student/AddClassButton":551,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":560,"../../../components/header/student/StudentHeader":612,"../../../components/segment/LoadingSegment":672,"../../../components/templates/LeftSidebarTemplate":681,"../../../mixins/ClassMixin":716,"../../../mixins/LoginMixin":720,"object-assign":33,"react":518}],536:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../components/class/buttons/student/AddClassButton":553,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":562,"../../../components/header/student/StudentHeader":614,"../../../components/segment/LoadingSegment":692,"../../../components/templates/LeftSidebarTemplate":701,"../../../mixins/ClassMixin":736,"../../../mixins/LoginMixin":742,"object-assign":33,"react":518}],538:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -80147,7 +80528,7 @@ var PatientAudio = React.createClass({displayName: "PatientAudio",
 
 module.exports = PatientAudio;
 
-},{"object-assign":33,"react":518,"react-sound":331}],537:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-sound":331}],539:[function(require,module,exports){
 /**
  * Created by sabir on 24.11.15.
  */
@@ -80339,7 +80720,7 @@ var VideoBackground = React.createClass({displayName: "VideoBackground",
 
 module.exports = VideoBackground;
 
-},{"object-assign":33,"react":518}],538:[function(require,module,exports){
+},{"object-assign":33,"react":518}],540:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -80433,7 +80814,7 @@ var CreateNewExerciseGroupButton = React.createClass({displayName: "CreateNewExe
 
 module.exports = CreateNewExerciseGroupButton;
 
-},{"../../dialog/bunch/EditBunchDialog":575,"object-assign":33,"react":518}],539:[function(require,module,exports){
+},{"../../dialog/bunch/EditBunchDialog":577,"object-assign":33,"react":518}],541:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -80626,7 +81007,7 @@ var ExercisesBunch = React.createClass({displayName: "ExercisesBunch",
 
 module.exports = ExercisesBunch;
 
-},{"../../card/ExercisesPagedCardsList":545,"../../dialog/bunch/EditBunchDialog":575,"object-assign":33,"react":518}],540:[function(require,module,exports){
+},{"../../card/ExercisesPagedCardsList":547,"../../dialog/bunch/EditBunchDialog":577,"object-assign":33,"react":518}],542:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -80721,7 +81102,7 @@ var ExercisesGroupsList = React.createClass({displayName: "ExercisesGroupsList",
 
 module.exports = ExercisesGroupsList;
 
-},{"./ExercisesBunch":539,"object-assign":33,"react":518}],541:[function(require,module,exports){
+},{"./ExercisesBunch":541,"object-assign":33,"react":518}],543:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -80833,7 +81214,7 @@ var DeleteButton = React.createClass({displayName: "DeleteButton",
 
 module.exports = DeleteButton;
 
-},{"object-assign":33,"react":518}],542:[function(require,module,exports){
+},{"object-assign":33,"react":518}],544:[function(require,module,exports){
 /**
  * Created by sabir on 17.09.15.
  */
@@ -80940,7 +81321,7 @@ var RecordStopButton = React.createClass({displayName: "RecordStopButton",
 
 module.exports = RecordStopButton;
 
-},{"object-assign":33,"react":518}],543:[function(require,module,exports){
+},{"object-assign":33,"react":518}],545:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -81202,7 +81583,7 @@ var ExerciseCard = React.createClass({displayName: "ExerciseCard",
 
 module.exports = ExerciseCard;
 
-},{"../dialog/exercise/ExerciseDialogViewer":578,"object-assign":33,"react":518}],544:[function(require,module,exports){
+},{"../dialog/exercise/ExerciseDialogViewer":580,"object-assign":33,"react":518}],546:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -81290,7 +81671,7 @@ var ExercisesCardsList = React.createClass({displayName: "ExercisesCardsList",
 
 module.exports = ExercisesCardsList;
 
-},{"./ExerciseCard":543,"object-assign":33,"react":518}],545:[function(require,module,exports){
+},{"./ExerciseCard":545,"object-assign":33,"react":518}],547:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -81452,7 +81833,7 @@ var ExercisesPagedCardsList = React.createClass({displayName: "ExercisesPagedCar
 
 module.exports = ExercisesPagedCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"./ExercisesCardsList":544,"object-assign":33,"react":518}],546:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"./ExercisesCardsList":546,"object-assign":33,"react":518}],548:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -81566,7 +81947,7 @@ var UserCard = React.createClass({displayName: "UserCard",
 
 module.exports = UserCard;
 
-},{"../profile/ProfileUpdateButton":661,"moment":32,"object-assign":33,"react":518}],547:[function(require,module,exports){
+},{"../profile/ProfileUpdateButton":676,"moment":32,"object-assign":33,"react":518}],549:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -81645,7 +82026,7 @@ var UsersCardsList = React.createClass({displayName: "UsersCardsList",
 
 module.exports = UsersCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"./UserCard":546,"object-assign":33,"react":518}],548:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"./UserCard":548,"object-assign":33,"react":518}],550:[function(require,module,exports){
 /**
  * Created by sabir on 02.11.15.
  */
@@ -81840,7 +82221,7 @@ var AddNewClassButton = React.createClass({displayName: "AddNewClassButton",
 
 module.exports = AddNewClassButton;
 
-},{"../../../mixins/ClassMixin":716,"../../dialog/Dialog":571,"object-assign":33,"react":518}],549:[function(require,module,exports){
+},{"../../../mixins/ClassMixin":736,"../../dialog/Dialog":573,"object-assign":33,"react":518}],551:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -81933,7 +82314,7 @@ var ArchiveClassButton = React.createClass({displayName: "ArchiveClassButton",
 
 module.exports = ArchiveClassButton;
 
-},{"object-assign":33,"react":518}],550:[function(require,module,exports){
+},{"object-assign":33,"react":518}],552:[function(require,module,exports){
 /**
  * Created by sabir on 02.11.15.
  */
@@ -82229,7 +82610,7 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
 
 module.exports = EditClassButton;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../mixins/ClassMixin":716,"../../buttons/DeleteButton":541,"../../dialog/Dialog":571,"./ArchiveClassButton":549,"object-assign":33,"react":518}],551:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/ClassMixin":736,"../../buttons/DeleteButton":543,"../../dialog/Dialog":573,"./ArchiveClassButton":551,"object-assign":33,"react":518}],553:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -82440,7 +82821,7 @@ var AddClassButton = React.createClass({displayName: "AddClassButton",
 
 module.exports = AddClassButton;
 
-},{"../../../../../react/mixins/commonMixins/CommonMixin":732,"../../../../mixins/ClassMixin":716,"../../../dialog/Dialog":571,"object-assign":33,"react":518}],552:[function(require,module,exports){
+},{"../../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../mixins/ClassMixin":736,"../../../dialog/Dialog":573,"object-assign":33,"react":518}],554:[function(require,module,exports){
 /**
  * Created by sabir on 07.11.15.
  */
@@ -82512,7 +82893,7 @@ var AddClassPlusButton = React.createClass({displayName: "AddClassPlusButton",
 
 module.exports = AddClassPlusButton;
 
-},{"./AddClassButton":551,"object-assign":33,"react":518}],553:[function(require,module,exports){
+},{"./AddClassButton":553,"object-assign":33,"react":518}],555:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -82659,7 +83040,7 @@ var LeaveClassButton = React.createClass({displayName: "LeaveClassButton",
 
 module.exports = LeaveClassButton;
 
-},{"../../../../mixins/ClassMixin":716,"../../../buttons/DeleteButton":541,"../../../dialog/Dialog":571,"object-assign":33,"react":518}],554:[function(require,module,exports){
+},{"../../../../mixins/ClassMixin":736,"../../../buttons/DeleteButton":543,"../../../dialog/Dialog":573,"object-assign":33,"react":518}],556:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -82819,7 +83200,7 @@ var CheckUsersListDashboard = React.createClass({displayName: "CheckUsersListDas
 
 module.exports = CheckUsersListDashboard;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../mixins/ExerciseMixin":717,"../../exercise/ListOfSelfLoadingUserExercises":580,"../../feed/SelfLoadingClassFeed":605,"../../help/GifInstruction":614,"./VerticalUsersList":555,"object-assign":33,"react":518}],555:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/ExerciseMixin":737,"../../exercise/ListOfSelfLoadingUserExercises":582,"../../feed/SelfLoadingClassFeed":607,"../../help/GifInstruction":616,"./VerticalUsersList":557,"object-assign":33,"react":518}],557:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -82884,7 +83265,7 @@ var VerticalUsersList = React.createClass({displayName: "VerticalUsersList",
 
 module.exports = VerticalUsersList;
 
-},{"./VerticalUsersListItem":556,"object-assign":33,"react":518}],556:[function(require,module,exports){
+},{"./VerticalUsersListItem":558,"object-assign":33,"react":518}],558:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -82989,7 +83370,7 @@ var VerticalUsersListItem = React.createClass({displayName: "VerticalUsersListIt
 
 module.exports = VerticalUsersListItem;
 
-},{"object-assign":33,"react":518}],557:[function(require,module,exports){
+},{"object-assign":33,"react":518}],559:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83053,7 +83434,7 @@ var ClassHeader = React.createClass({displayName: "ClassHeader",
 
 module.exports = ClassHeader;
 
-},{"react":518}],558:[function(require,module,exports){
+},{"react":518}],560:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83167,7 +83548,7 @@ var LeftSidebarClassesList = React.createClass({displayName: "LeftSidebarClasses
 
 module.exports = LeftSidebarClassesList;
 
-},{"object-assign":33,"react":518,"react-router":298}],559:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-router":298}],561:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83418,7 +83799,7 @@ var SelfLoadingLeftSidebarClassesList = React.createClass({displayName: "SelfLoa
 
 module.exports = SelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ClassMixin":716,"../../class/buttons/AddNewClassButton":548,"./LeftSidebarClassesList":558,"react":518}],560:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ClassMixin":736,"../../class/buttons/AddNewClassButton":550,"./LeftSidebarClassesList":560,"react":518}],562:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -83577,7 +83958,7 @@ var StudentSelfLoadingLeftSidebarClassesList = React.createClass({displayName: "
 
 module.exports = StudentSelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ClassMixin":716,"../../class/buttons/AddNewClassButton":548,"../../class/buttons/student/AddClassPlusButton":552,"./LeftSidebarClassesList":558,"react":518}],561:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ClassMixin":736,"../../class/buttons/AddNewClassButton":550,"../../class/buttons/student/AddClassPlusButton":554,"./LeftSidebarClassesList":560,"react":518}],563:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83635,7 +84016,7 @@ var ClassTab = React.createClass({displayName: "ClassTab",
 
 module.exports = ClassTab;
 
-},{"object-assign":33,"react":518}],562:[function(require,module,exports){
+},{"object-assign":33,"react":518}],564:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83761,7 +84142,7 @@ var ClassTabsNamePanel = React.createClass({displayName: "ClassTabsNamePanel",
 
 module.exports = ClassTabsNamePanel;
 
-},{"object-assign":33,"react":518}],563:[function(require,module,exports){
+},{"object-assign":33,"react":518}],565:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -83969,7 +84350,7 @@ var CreateNewFeedItemPanel = React.createClass({displayName: "CreateNewFeedItemP
 
 module.exports = CreateNewFeedItemPanel;
 
-},{"../../editor/PatientEditor":579,"../../feed/FeedItem":602,"object-assign":33,"react":518}],564:[function(require,module,exports){
+},{"../../editor/PatientEditor":581,"../../feed/FeedItem":604,"object-assign":33,"react":518}],566:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -84149,7 +84530,7 @@ var TaskPanel = React.createClass({displayName: "TaskPanel",
 
 module.exports = TaskPanel;
 
-},{"../../../mixins/FeedMixin":718,"../../editor/PatientEditor":579,"../../feed/PagedFeedItemsList":604,"../../feed/SelfLoadingClassFeed":605,"../../feed/button/CreateFeedItemButton":608,"./CreateNewFeedItemPanel":563,"object-assign":33,"react":518}],565:[function(require,module,exports){
+},{"../../../mixins/FeedMixin":738,"../../editor/PatientEditor":581,"../../feed/PagedFeedItemsList":606,"../../feed/SelfLoadingClassFeed":607,"../../feed/button/CreateFeedItemButton":610,"./CreateNewFeedItemPanel":565,"object-assign":33,"react":518}],567:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84246,7 +84627,7 @@ var CorrectorHelpButton = React.createClass({displayName: "CorrectorHelpButton",
 
 module.exports = CorrectorHelpButton;
 
-},{"../../components/dialog/Dialog":571,"./CorrectorPanel":566,"object-assign":33,"react":518}],566:[function(require,module,exports){
+},{"../../components/dialog/Dialog":573,"./CorrectorPanel":568,"object-assign":33,"react":518}],568:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84378,7 +84759,7 @@ var CorrectorPanel = React.createClass({displayName: "CorrectorPanel",
 
 module.exports = CorrectorPanel;
 
-},{"./sounds/SoundsPanel":569,"./words/WordsPanel":570,"object-assign":33,"react":518}],567:[function(require,module,exports){
+},{"./sounds/SoundsPanel":571,"./words/WordsPanel":572,"object-assign":33,"react":518}],569:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84494,7 +84875,7 @@ var SoundItem = React.createClass({displayName: "SoundItem",
 
 module.exports = SoundItem;
 
-},{"object-assign":33,"react":518}],568:[function(require,module,exports){
+},{"object-assign":33,"react":518}],570:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84558,7 +84939,7 @@ var SoundsList = React.createClass({displayName: "SoundsList",
 
 module.exports = SoundsList;
 
-},{"./SoundItem":567,"object-assign":33,"react":518}],569:[function(require,module,exports){
+},{"./SoundItem":569,"object-assign":33,"react":518}],571:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84773,7 +85154,7 @@ var SoundsPanel = React.createClass({displayName: "SoundsPanel",
 
 module.exports = SoundsPanel;
 
-},{"../../editor/PatientEditor":579,"./SoundsList":568,"object-assign":33,"react":518}],570:[function(require,module,exports){
+},{"../../editor/PatientEditor":581,"./SoundsList":570,"object-assign":33,"react":518}],572:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84887,7 +85268,7 @@ var WordsPanel = React.createClass({displayName: "WordsPanel",
 
 module.exports = WordsPanel;
 
-},{"../../editor/PatientEditor":579,"object-assign":33,"react":518}],571:[function(require,module,exports){
+},{"../../editor/PatientEditor":581,"object-assign":33,"react":518}],573:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -84976,7 +85357,7 @@ var Dialog = React.createClass({displayName: "Dialog",
 
 module.exports = Dialog;
 
-},{"./DialogOverlay":573,"./DialogPanel":574,"object-assign":33,"react":518}],572:[function(require,module,exports){
+},{"./DialogOverlay":575,"./DialogPanel":576,"object-assign":33,"react":518}],574:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85061,7 +85442,7 @@ var DialogClickableArea = React.createClass({displayName: "DialogClickableArea",
 
 module.exports = DialogClickableArea;
 
-},{"../dialog/Dialog":571,"object-assign":33,"react":518}],573:[function(require,module,exports){
+},{"../dialog/Dialog":573,"object-assign":33,"react":518}],575:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85163,7 +85544,7 @@ var DialogOverlay = React.createClass({displayName: "DialogOverlay",
 });
 module.exports = DialogOverlay;
 
-},{"object-assign":33,"react":518}],574:[function(require,module,exports){
+},{"object-assign":33,"react":518}],576:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85377,7 +85758,7 @@ var DialogPanel = React.createClass({displayName: "DialogPanel",
 
 module.exports = DialogPanel;
 
-},{"object-assign":33,"react":518}],575:[function(require,module,exports){
+},{"object-assign":33,"react":518}],577:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -85593,7 +85974,7 @@ var EditBunchDialog = React.createClass({displayName: "EditBunchDialog",
 
 module.exports = EditBunchDialog;
 
-},{"../../../mixins/ExerciseMixin":717,"../../buttons/DeleteButton":541,"../../dialog/Dialog":571,"object-assign":33,"react":518}],576:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":737,"../../buttons/DeleteButton":543,"../../dialog/Dialog":573,"object-assign":33,"react":518}],578:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -85670,7 +86051,7 @@ var ExerciseDialogClickableArea = React.createClass({displayName: "ExerciseDialo
 
 module.exports = ExerciseDialogClickableArea;
 
-},{"../../exercise/SelfLoadingUserExercise":584,"../DialogClickableArea":572,"object-assign":33,"react":518}],577:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":586,"../DialogClickableArea":574,"object-assign":33,"react":518}],579:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -85762,7 +86143,7 @@ var ExerciseDialogInfoBlock = React.createClass({displayName: "ExerciseDialogInf
 
 module.exports = ExerciseDialogInfoBlock;
 
-},{"../../exercise/SelfLoadingUserExercise":584,"../../exercise/info/SelfLoadingExerciseInfoCard":597,"object-assign":33,"react":518}],578:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":586,"../../exercise/info/SelfLoadingExerciseInfoCard":599,"object-assign":33,"react":518}],580:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -85947,7 +86328,7 @@ var ExerciseDialogViewer = React.createClass({displayName: "ExerciseDialogViewer
 
 module.exports = ExerciseDialogViewer;
 
-},{"../../../mixins/ExerciseMixin":717,"../../dialog/Dialog":571,"../../exercise/SelfLoadingUserExercise":584,"../../exercise/create/ExerciseUpdateTabs":589,"../../exercise/info/ExerciseInfoCard":596,"./ExerciseDialogInfoBlock":577,"object-assign":33,"react":518}],579:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":737,"../../dialog/Dialog":573,"../../exercise/SelfLoadingUserExercise":586,"../../exercise/create/ExerciseUpdateTabs":591,"../../exercise/info/ExerciseInfoCard":598,"./ExerciseDialogInfoBlock":579,"object-assign":33,"react":518}],581:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -86175,7 +86556,7 @@ var PatientEditor = React.createClass({displayName: "PatientEditor",
 
 module.exports = PatientEditor;
 
-},{"../file/FileUploader":611,"object-assign":33,"react":518,"react-quill":276}],580:[function(require,module,exports){
+},{"../file/FileUploader":613,"object-assign":33,"react":518,"react-quill":276}],582:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -86282,7 +86663,7 @@ var ListOfSelfLoadingUserExercises = React.createClass({displayName: "ListOfSelf
 
 module.exports = ListOfSelfLoadingUserExercises;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"./SelfLoadingUserExercise":584,"react":518}],581:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"./SelfLoadingUserExercise":586,"react":518}],583:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -86416,7 +86797,7 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
 module.exports = PatientCard;
 
-},{"../../components/text/translatable/TranslatableText":685,"../task/PatientTask":675,"../text/ToggledText":684,"./UserExerciseInput":585,"object-assign":33,"react":518}],582:[function(require,module,exports){
+},{"../../components/text/translatable/TranslatableText":705,"../task/PatientTask":695,"../text/ToggledText":704,"./UserExerciseInput":587,"object-assign":33,"react":518}],584:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -86684,7 +87065,7 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
 
 module.exports = PatientExercise;
 
-},{"../numbers/NumbersBlock":656,"./PatientCard":581,"react":518}],583:[function(require,module,exports){
+},{"../numbers/NumbersBlock":671,"./PatientCard":583,"react":518}],585:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -86740,7 +87121,7 @@ var SelfLoadingCurrentUserExercise = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingCurrentUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":733,"./SelfLoadingUserExercise":584,"parse":34,"react":518}],584:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":756,"./SelfLoadingUserExercise":586,"parse":34,"react":518}],586:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -87037,7 +87418,7 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
 
 module.exports = SelfLoadingUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":733,"../../mixins/ExerciseMixin":717,"../exercise/PatientExercise":582,"../preloader/PatientPreloader":659,"../teacher/TeacherExerciseBlock":676,"../user/AuthButton":702,"object-assign":33,"react":518}],585:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../mixins/ExerciseMixin":737,"../exercise/PatientExercise":584,"../preloader/PatientPreloader":674,"../teacher/TeacherExerciseBlock":696,"../user/AuthButton":722,"object-assign":33,"react":518}],587:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -87164,7 +87545,7 @@ var UserExerciseInput = React.createClass({displayName: "UserExerciseInput",
 
 module.exports = UserExerciseInput;
 
-},{"../input/PatientExerciseInput":617,"../recognition/SpeechRecognitionArea":665,"../record/PatientRecordComponent":666,"./diff/RightTextAnswerDiff":594,"react":518}],586:[function(require,module,exports){
+},{"../input/PatientExerciseInput":620,"../recognition/SpeechRecognitionArea":680,"../record/PatientRecordComponent":681,"./diff/RightTextAnswerDiff":596,"react":518}],588:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -87246,7 +87627,7 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
 
 module.exports = CardTypeSelectButton;
 
-},{"object-assign":33,"react":518}],587:[function(require,module,exports){
+},{"object-assign":33,"react":518}],589:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -87812,7 +88193,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
 
 module.exports = EditableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../mixins/MaterialsMixin":721,"../../audio/PatientAudio":536,"../../file/FileUploader":611,"../../material/search/MaterialSearchButton":636,"../../player/VimeoPlayer":658,"../../task/PatientTask":675,"../../text/ToggledText":684,"./CardTypeSelectButton":586,"./UserAnswerTypeDemo":592,"object-assign":33,"react":518}],588:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/MaterialsMixin":743,"../../audio/PatientAudio":538,"../../file/FileUploader":613,"../../material/search/MaterialSearchButton":651,"../../player/VimeoPlayer":673,"../../task/PatientTask":695,"../../text/ToggledText":704,"./CardTypeSelectButton":588,"./UserAnswerTypeDemo":594,"object-assign":33,"react":518}],590:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -88073,7 +88454,7 @@ var ExerciseUpdatableCards = React.createClass({displayName: "ExerciseUpdatableC
 
 module.exports = ExerciseUpdatableCards;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../mixins/ExerciseMixin":717,"../../numbers/NumbersBlock":656,"./UpdatableCardBlock":591,"object-assign":33,"react":518}],589:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/ExerciseMixin":737,"../../numbers/NumbersBlock":671,"./UpdatableCardBlock":593,"object-assign":33,"react":518}],591:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -88217,7 +88598,7 @@ var ExerciseUpdateTabs = React.createClass({displayName: "ExerciseUpdateTabs",
 
 module.exports = ExerciseUpdateTabs;
 
-},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":590,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":598,"../../exercise/info/UpdateExerciseInfoTab":599,"object-assign":33,"react":518}],590:[function(require,module,exports){
+},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":592,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":600,"../../exercise/info/UpdateExerciseInfoTab":601,"object-assign":33,"react":518}],592:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -88330,7 +88711,7 @@ var SelfLoadingExerciseUpdatableCardsList = React.createClass({displayName: "Sel
 
 module.exports = SelfLoadingExerciseUpdatableCardsList;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ExerciseMixin":717,"./ExerciseUpdatableCards":588,"object-assign":33,"react":518}],591:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./ExerciseUpdatableCards":590,"object-assign":33,"react":518}],593:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -88452,7 +88833,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
 
 module.exports = UpdatableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ExerciseMixin":717,"./EditableCardBlock":587,"object-assign":33,"react":518}],592:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./EditableCardBlock":589,"object-assign":33,"react":518}],594:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -88508,7 +88889,7 @@ var UserAnswerTypeDemo = React.createClass({displayName: "UserAnswerTypeDemo",
 
 module.exports = UserAnswerTypeDemo;
 
-},{"object-assign":33,"react":518}],593:[function(require,module,exports){
+},{"object-assign":33,"react":518}],595:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -88600,7 +88981,7 @@ var CreateNewExerciseButton = React.createClass({displayName: "CreateNewExercise
 
 module.exports = CreateNewExerciseButton;
 
-},{"../../../dialog/exercise/ExerciseDialogViewer":578,"object-assign":33,"react":518}],594:[function(require,module,exports){
+},{"../../../dialog/exercise/ExerciseDialogViewer":580,"object-assign":33,"react":518}],596:[function(require,module,exports){
 /**
  * Created by sabir on 09.11.15.
  */
@@ -88700,7 +89081,7 @@ var RightTextAnswerDiff = React.createClass({displayName: "RightTextAnswerDiff",
 
 module.exports = RightTextAnswerDiff;
 
-},{"object-assign":33,"react":518,"react-diff":110}],595:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-diff":110}],597:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -88802,7 +89183,7 @@ var AccessSwitcher = React.createClass({displayName: "AccessSwitcher",
 
 module.exports = AccessSwitcher;
 
-},{"object-assign":33,"react":518}],596:[function(require,module,exports){
+},{"object-assign":33,"react":518}],598:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -88980,7 +89361,7 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
 
 module.exports = ExerciseInfoCard;
 
-},{"object-assign":33,"react":518}],597:[function(require,module,exports){
+},{"object-assign":33,"react":518}],599:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -89065,7 +89446,7 @@ var SelfLoadingExerciseInfoCard = React.createClass({displayName: "SelfLoadingEx
 
 module.exports = SelfLoadingExerciseInfoCard;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ExerciseMixin":717,"./ExerciseInfoCard":596,"object-assign":33,"react":518}],598:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./ExerciseInfoCard":598,"object-assign":33,"react":518}],600:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -89194,7 +89575,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({displayName: "SelfLoad
 
 module.exports = SelfLoadingUpdateExerciseInfoTab;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ExerciseMixin":717,"../info/UpdateExerciseInfoTab":599,"object-assign":33,"react":518}],599:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"../info/UpdateExerciseInfoTab":601,"object-assign":33,"react":518}],601:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -89509,7 +89890,7 @@ var UpdateExerciseInfoTab = React.createClass({displayName: "UpdateExerciseInfoT
 
 module.exports = UpdateExerciseInfoTab;
 
-},{"../../buttons/DeleteButton":541,"../../file/FileUploader":611,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":674,"../info/ExerciseInfoCard":596,"./AccessSwitcher":595,"object-assign":33,"react":518}],600:[function(require,module,exports){
+},{"../../buttons/DeleteButton":543,"../../file/FileUploader":613,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":694,"../info/ExerciseInfoCard":598,"./AccessSwitcher":597,"object-assign":33,"react":518}],602:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -89612,7 +89993,7 @@ var ExercisesSearchButton = React.createClass({displayName: "ExercisesSearchButt
 
 module.exports = ExercisesSearchButton;
 
-},{"../../dialog/Dialog":571,"./ExercisesSearchPanel":601,"object-assign":33,"react":518}],601:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"./ExercisesSearchPanel":603,"object-assign":33,"react":518}],603:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -89782,7 +90163,7 @@ var ExercisesSearchPanel = React.createClass({displayName: "ExercisesSearchPanel
 
 module.exports = ExercisesSearchPanel;
 
-},{"../../../mixins/ExerciseMixin":717,"../../bunch/exercise/ExercisesGroupsList":540,"object-assign":33,"react":518}],602:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":737,"../../bunch/exercise/ExercisesGroupsList":542,"object-assign":33,"react":518}],604:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90004,7 +90385,7 @@ var FeedItem = React.createClass({displayName: "FeedItem",
 
 module.exports = FeedItem;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":732,"../../mixins/NotificationMixin":724,"../exercise/SelfLoadingCurrentUserExercise":583,"../exercise/SelfLoadingUserExercise":584,"../note/SelfLoadingNote":641,"./button/EditFeedItemButton":609,"./video/SelfLoadingVideosList":610,"moment":32,"object-assign":33,"react":518}],603:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../mixins/NotificationMixin":746,"../exercise/SelfLoadingCurrentUserExercise":585,"../exercise/SelfLoadingUserExercise":586,"../note/SelfLoadingNote":656,"./button/EditFeedItemButton":611,"./video/SelfLoadingVideosList":612,"moment":32,"object-assign":33,"react":518}],605:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90102,7 +90483,7 @@ var FeedItemsList = React.createClass({displayName: "FeedItemsList",
 
 module.exports = FeedItemsList;
 
-},{"./FeedItem":602,"object-assign":33,"react":518}],604:[function(require,module,exports){
+},{"./FeedItem":604,"object-assign":33,"react":518}],606:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90224,7 +90605,7 @@ var PagedFeedItemsList = React.createClass({displayName: "PagedFeedItemsList",
 
 module.exports = PagedFeedItemsList;
 
-},{"./FeedItemsList":603,"object-assign":33,"react":518}],605:[function(require,module,exports){
+},{"./FeedItemsList":605,"object-assign":33,"react":518}],607:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90335,7 +90716,7 @@ var SelfLoadingClassFeed = React.createClass({displayName: "SelfLoadingClassFeed
 
 module.exports = SelfLoadingClassFeed;
 
-},{"../../mixins/FeedMixin":718,"./PagedFeedItemsList":604,"object-assign":33,"react":518}],606:[function(require,module,exports){
+},{"../../mixins/FeedMixin":738,"./PagedFeedItemsList":606,"object-assign":33,"react":518}],608:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -90429,7 +90810,7 @@ var SelfLoadingFeedItem = React.createClass({displayName: "SelfLoadingFeedItem",
 
 module.exports = SelfLoadingFeedItem;
 
-},{"../../mixins/FeedMixin":718,"./FeedItem":602,"object-assign":33,"react":518}],607:[function(require,module,exports){
+},{"../../mixins/FeedMixin":738,"./FeedItem":604,"object-assign":33,"react":518}],609:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -90852,7 +91233,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
 
 module.exports = SelfLoadingUpdateFeedItem;
 
-},{"../../mixins/FeedMixin":718,"../buttons/DeleteButton":541,"../editor/PatientEditor":579,"../exercise/SelfLoadingCurrentUserExercise":583,"../exercise/SelfLoadingUserExercise":584,"../exercise/search/ExercisesSearchButton":600,"../feed/FeedItem":602,"../material/search/MaterialSearchButton":636,"../note/SelfLoadingNote":641,"./video/SelfLoadingVideosList":610,"moment":32,"object-assign":33,"react":518}],608:[function(require,module,exports){
+},{"../../mixins/FeedMixin":738,"../buttons/DeleteButton":543,"../editor/PatientEditor":581,"../exercise/SelfLoadingCurrentUserExercise":585,"../exercise/SelfLoadingUserExercise":586,"../exercise/search/ExercisesSearchButton":602,"../feed/FeedItem":604,"../material/search/MaterialSearchButton":651,"../note/SelfLoadingNote":656,"./video/SelfLoadingVideosList":612,"moment":32,"object-assign":33,"react":518}],610:[function(require,module,exports){
 /**
  * Created by sabir on 01.11.15.
  */
@@ -90958,7 +91339,7 @@ var CreateFeedItemButton = React.createClass({displayName: "CreateFeedItemButton
 
 module.exports = CreateFeedItemButton;
 
-},{"../../dialog/Dialog":571,"../SelfLoadingUpdateFeedItem":607,"object-assign":33,"react":518}],609:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"../SelfLoadingUpdateFeedItem":609,"object-assign":33,"react":518}],611:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -91080,7 +91461,7 @@ var EditFeedItemButton = React.createClass({displayName: "EditFeedItemButton",
 
 module.exports = EditFeedItemButton;
 
-},{"../../dialog/Dialog":571,"../SelfLoadingUpdateFeedItem":607,"object-assign":33,"react":518}],610:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"../SelfLoadingUpdateFeedItem":609,"object-assign":33,"react":518}],612:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -91207,7 +91588,7 @@ var SelfLoadingVideosList = React.createClass({displayName: "SelfLoadingVideosLi
 
 module.exports = SelfLoadingVideosList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":732,"../../../mixins/MaterialsMixin":721,"../../material/list/CardsList":630,"object-assign":33,"react":518}],611:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/MaterialsMixin":743,"../../material/list/CardsList":645,"object-assign":33,"react":518}],613:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -91467,7 +91848,7 @@ var FileUploader = React.createClass({displayName: "FileUploader",
 
 module.exports = FileUploader;
 
-},{"object-assign":33,"react":518,"react-dropzone-component":256}],612:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-dropzone-component":256}],614:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -91601,7 +91982,7 @@ var StudentHeader = React.createClass({displayName: "StudentHeader",
 
 module.exports = StudentHeader;
 
-},{"../../../mixins/LoginMixin":720,"../../profile/UserProfileButton":663,"../../templates/CurrentUserMenuItem":678,"../../templates/HeaderLeftLinks":679,"../../templates/HeaderTemplate":680,"object-assign":33,"react":518,"react-router":298}],613:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":742,"../../profile/UserProfileButton":678,"../../templates/CurrentUserMenuItem":698,"../../templates/HeaderLeftLinks":699,"../../templates/HeaderTemplate":700,"object-assign":33,"react":518,"react-router":298}],615:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -91633,21 +92014,6 @@ var TeacherHeader = React.createClass({displayName: "TeacherHeader",
                 onClick: function(){
                 },
                 url: '/exercises'
-            },{
-                displayName: 'Видео',
-                name: 'materials',
-                icon: '',
-                onClick: function(){
-                },
-                url: '/materials'
-            }, {
-                displayName: 'Тексты',
-                name: 'notes',
-                icon: '',
-                onClick: function(){
-
-                },
-                url: '/notes'
             }, {
                 displayName: 'Топики',
                 name: 'topics',
@@ -91655,14 +92021,49 @@ var TeacherHeader = React.createClass({displayName: "TeacherHeader",
                 onClick: function(){
                 },
                 url: '/topics'
-            },{
+            },
+                {
+                    displayName: 'Грамматика',
+                    name: 'grammar',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/grammar'
+                },
+                {
                 displayName: 'Словарь',
                 name: 'dictionary',
                 icon: '',
                 onClick: function(){
                 },
                 url: '/dictionary'
-            }],
+            },
+                {
+                    displayName: 'Идиомы и пословицы',
+                    name: 'idioms',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/idioms'
+                },
+                {
+                    displayName: 'Тексты',
+                    name: 'notes',
+                    icon: '',
+                    onClick: function(){
+
+                    },
+                    url: '/notes'
+                },
+                {
+                    displayName: 'Микс',
+                    name: 'materials',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/materials'
+                }
+            ],
             activeTab: undefined,
             onLogout: function(){
                 alert('logout occured');
@@ -91794,7 +92195,7 @@ var TeacherHeader = React.createClass({displayName: "TeacherHeader",
 
 module.exports = TeacherHeader;
 
-},{"../../../mixins/LoginMixin":720,"../../notification/NotificationsNumberSpan":652,"../../profile/UserProfileButton":663,"../../templates/CurrentUserMenuItem":678,"../../templates/HeaderLeftLinks":679,"../../templates/HeaderTemplate":680,"object-assign":33,"react":518,"react-router":298}],614:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":742,"../../notification/NotificationsNumberSpan":667,"../../profile/UserProfileButton":678,"../../templates/CurrentUserMenuItem":698,"../../templates/HeaderLeftLinks":699,"../../templates/HeaderTemplate":700,"object-assign":33,"react":518,"react-router":298}],616:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -91873,7 +92274,7 @@ var GifInstruction = React.createClass({displayName: "GifInstruction",
 
 module.exports = GifInstruction;
 
-},{"object-assign":33,"react":518}],615:[function(require,module,exports){
+},{"object-assign":33,"react":518}],617:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -91934,7 +92335,249 @@ var IconMessage = React.createClass({displayName: "IconMessage",
 
 module.exports = IconMessage;
 
-},{"object-assign":33,"react":518}],616:[function(require,module,exports){
+},{"object-assign":33,"react":518}],618:[function(require,module,exports){
+/**
+ * Created by sabir on 28.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var IdiomsMixin = require('../../mixins/IdiomsMixin');
+
+var CardsList = require('../material/list/CardsList');
+
+var IdiomsPanel = React.createClass({displayName: "IdiomsPanel",
+    getDefaultProps: function () {
+        return {
+            searchInputVisible: true
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            idioms: [],
+            searchIdioms: [],
+            loading: false,
+            text: ''
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load(function(idioms){
+            console.log('idioms loaded');
+        });
+    },
+
+    load: function(callback){
+        this.setState({
+            loading: true
+        });
+        IdiomsMixin.loadIdioms(function(idioms){
+            this.setState({
+                loading: false,
+                idioms: idioms,
+                searchIdioms: idioms
+            });
+            callback(idioms);
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            margin: '0 auto',
+            width: 782,
+            marginTop: 10,
+            paddingTop: 5,
+            borderRadius: 4
+        },
+
+        idiomsPlaceholder: {
+
+        },
+
+        idiom: {
+            padding: 5,
+            paddingRight: 0,
+            borderTop: '1px solid #EFF0F1'
+        },
+
+        idiomName: {
+            fontWeight: 'bold',
+            fontSize: 18,
+            color: '#2E3C54'
+        },
+
+        idiomDescription: {
+            marginTop: 15
+        },
+
+        idiomContent: {
+
+        },
+
+        left: {
+            width: 535,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        right: {
+            //width: 240,
+            width: 230,
+            marginLeft: 10,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        materialItemStyle: {
+            width: 110,
+            height: 80,
+            marginLefT: 5,
+            marginRight: 5,
+            fontSize: 13
+        },
+
+        inputBlock: {
+            paddingLeft: 5,
+            paddingRight: 5,
+            marginBottom: 10
+        },
+
+        topText: {
+            padding: 10,
+            marginBottom: 15
+        }
+    },
+
+    search: function(text){
+        if (text == undefined || text.trim() == ''){
+            this.setState({
+                searchIdioms: this.state.idioms,
+                text: text
+            });
+            return;
+        }
+        var arr = [];
+        var list = this.state.idioms;
+        text = text.toLowerCase();
+        for (var i in list){
+            var w = list[i];
+            if (w.name.toLowerCase().indexOf(text) > -1){
+                arr.push(w);
+            }
+        }
+        this.setState({
+            searchIdioms: arr,
+            text: text
+        });
+    },
+
+    onTextChange: function(evt){
+        var text = evt.target.value;
+        if (text == undefined){
+            text = '';
+        }
+        this.search(text);
+    },
+
+    render: function () {
+
+        var list = this.state.searchIdioms;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.topText}, 
+                    "Не удивляйтесь, встретив здесь фразовые глаголы,коллоквиализмы и т.д." + ' ' +
+                    "Мы решили не выделять их в отдельные категории. Материал доступен также по ссылке idiophrases.com и в Appstore (idiophrases)." + ' ' +
+                    "Вы можете включать любые видео в упражнения для своих учеников."
+
+                ), 
+
+
+                this.props.searchInputVisible == false ? null :
+                    React.createElement("div", {style: this.componentStyle.inputBlock}, 
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("div", {className: "ui input"}, 
+                                React.createElement("input", {type: "text", placeholder: 'Поиск ...', 
+                                       value: this.state.text, onChange: this.onTextChange})
+                            )
+                        )
+                    ), 
+                
+
+
+                list.length == 0 ?
+                    React.createElement("div", {style: {padding: 10}}, 
+                        "По запросу \"", React.createElement("b", null, this.state.text), "\" ничего не найдено"
+                    )
+                    :
+                    React.createElement("div", {style: this.componentStyle.idiomsPlaceholder}, 
+                        list.map(function(idiom, k){
+                            var key = 'idiom_' + k + '_' + idiom.name;
+                            var st = assign({}, this.componentStyle.idiom);
+                            if (k == 0){
+                                st = assign(st, {border: 'none'});
+                            }
+                            var materials = idiom.materials;
+
+                            return (
+                                React.createElement("div", {style: st, key: key}, 
+
+                                    React.createElement("div", {style: this.componentStyle.idiomName}, 
+                                        idiom.name
+                                    ), 
+
+                                    React.createElement("div", {style: this.componentStyle.idiomContent}, 
+
+                                        React.createElement("div", {style: this.componentStyle.left}, 
+
+                                            React.createElement("div", {style: this.componentStyle.idiomDescription}, 
+                                                React.createElement("div", {dangerouslySetInnerHTML: {__html: idiom.description}})
+                                            )
+
+                                        ), 
+
+                                        React.createElement("div", {style: this.componentStyle.right}, 
+
+                                            React.createElement(CardsList, {itemStyle: this.componentStyle.materialItemStyle, cards: materials})
+
+                                        )
+
+                                    )
+
+                                )
+                            );
+
+                        }, this)
+                    ), 
+                
+
+
+
+
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = IdiomsPanel;
+
+},{"../../mixins/IdiomsMixin":740,"../material/list/CardsList":645,"object-assign":33,"react":518}],619:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -91989,7 +92632,7 @@ var PatientImg = React.createClass({displayName: "PatientImg",
 
 module.exports = PatientImg;
 
-},{"legit-image":31,"object-assign":33,"react":518}],617:[function(require,module,exports){
+},{"legit-image":31,"object-assign":33,"react":518}],620:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -92111,7 +92754,1100 @@ var PatientExerciseInput = React.createClass({displayName: "PatientExerciseInput
 
 module.exports = PatientExerciseInput;
 
-},{"react":518}],618:[function(require,module,exports){
+},{"react":518}],621:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var GroupsListItem = React.createClass({displayName: "GroupsListItem",
+    getDefaultProps: function () {
+        return {
+            name: undefined,
+            avatar: undefined,
+            style: {
+
+            },
+
+            onItemClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            padding: 10,
+            cursor: 'pointer',
+            borderRadius: 5,
+            textAlign: 'center',
+            verticalAlign: 'top',
+            display: 'inline-block',
+            border: '1px solid #EFF0F1',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            width: 160,
+            height: 160,
+            margin: 5,
+            paddingTop: 70
+        },
+
+        namePlaceholder: {
+            color: 'white',
+            fontSize: 20,
+            padding: 5,
+            background: 'background:rgba(255,255,255,0.5)'
+        }
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style , {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+        return (
+            React.createElement("div", {style: st, onClick: this.props.onItemClick}, 
+                React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                    this.props.name
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = GroupsListItem;
+
+},{"object-assign":33,"react":518}],622:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var KaraokeCard = React.createClass({displayName: "KaraokeCard",
+    getDefaultProps: function () {
+        return {
+            name: undefined,
+            avatar: undefined,
+            materialId: undefined,
+
+            onItemClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            margin: 5,
+            backgroundColor: 'white'
+        },
+
+        headBlock: {
+            padding: 5,
+            cursor: 'pointer'
+        },
+
+        avatarPlaceholder: {
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            display: 'inline-block',
+            verticalAlign: 'top',
+            height: 80,
+            width: 120,
+            borderRadius: 4
+        },
+
+        infoPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 265,
+            padding: 5
+        },
+
+        infoTitle: {
+            fontWeight: 'bold'
+        }
+    },
+
+    onItemClick: function(){
+        this.props.onItemClick();
+    },
+
+    render: function () {
+        var avatarStyle = assign({}, this.componentStyle.avatarPlaceholder, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, onClick: this.onItemClick}, 
+
+                React.createElement("div", {style: this.componentStyle.headBlock}, 
+                    React.createElement("div", {style: avatarStyle}), 
+                    React.createElement("div", {style: this.componentStyle.infoPlaceholder}, 
+                        React.createElement("div", {style: this.componentStyle.infoTitle}, this.props.name)
+                    )
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = KaraokeCard;
+
+},{"object-assign":33,"react":518}],623:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var KaraokeCard = require('./KaraokeCard');
+
+var Dialog = require('../dialog/Dialog');
+
+var SelfLoadingKaraokePlayerPanel = require('./SelfLoadingKaraokePlayerPanel');
+
+var KaraokeCardsList = React.createClass({displayName: "KaraokeCardsList",
+    getDefaultProps: function () {
+        return {
+
+            materials: [],
+
+            onItemClick: function(material){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 810,
+            margin: '0 auto',
+            marginTop: 10
+        }
+    },
+
+    onItemClick: function(material){
+        this.props.onItemClick(material);
+        this.setState({
+            dialogVisible: true,
+            selectedMaterial: material
+        });
+    },
+
+    getDialogContent: function(){
+        var m = this.state.selectedMaterial;
+        if (m == undefined){
+            return null;
+        }
+
+        return (
+            React.createElement(SelfLoadingKaraokePlayerPanel, {materialId: m.materialId})
+        );
+
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    render: function () {
+
+        var list = this.props.materials;
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(item, k){
+                    var key = 'karaoke_' + k + '_' + item.materialId;
+                    var onClick = this.onItemClick.bind(this, item)
+                    return (
+                        React.createElement(KaraokeCard, {materialId: item.materialId, 
+                                     onItemClick: onClick, 
+                                     avatar: item.avatar, 
+
+                                     name: item.name, key: key})
+                    );
+
+                }, this), 
+
+
+                this.state.dialogVisible == false ? null :
+
+                    React.createElement(Dialog, {dialogPanelStyle: {width: 960, paddingTop: 30, background: 'transparent'}, 
+                            visible: true, onClose: this.onClose, content: this.getDialogContent()})
+
+                
+
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = KaraokeCardsList;
+
+},{"../dialog/Dialog":573,"./KaraokeCard":622,"./SelfLoadingKaraokePlayerPanel":627,"object-assign":33,"react":518}],624:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var GroupsListItem = require('./GroupsListItem');
+
+var KaraokeMixin = require('../../mixins/KaraokeMixin');
+
+var TopicDialog = require('../topics/dialog/TopicDialog');
+
+var SelfLoadingCategoryKaraokeCardsList = require('./SelfLoadingCategoryKaraokeCardsList');
+
+var KaraokeGroupsPanel = React.createClass({displayName: "KaraokeGroupsPanel",
+    getDefaultProps: function () {
+        return {
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            groups: KaraokeMixin.getAllCategories(),
+            selectedGroup: {},
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white',
+            padding: 5,
+            width: 860,
+            margin: '0 auto'
+        },
+
+        groupsPlaceholder: {
+
+        },
+
+        cardsPlaceholder: {
+
+        },
+
+        dialogTopPlaceholder: {
+            paddingTop: 40,
+            height: 100,
+            color: 'white',
+            fontSize: 24,
+            border: '1px solid #EFF0F1',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            textAlign: 'center',
+            backgroundImage: 'url(\'http://app.englishpatient.org/assets/img/avatars/_1.jpg\')'
+        }
+    },
+
+
+    onGroupClick: function(group){
+        console.log('selectedCategory = ', group.category);
+        this.setState({
+            selectedGroup: group,
+            dialogVisible: true
+        });
+    },
+
+    getDialogContent: function(){
+
+        var categoryName = this.state.selectedGroup.category;
+
+        return (
+
+            React.createElement("div", null, 
+
+                React.createElement("div", {style: this.componentStyle.dialogTopPlaceholder}, 
+                    categoryName
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.cardsPlaceholder}, 
+                    React.createElement(SelfLoadingCategoryKaraokeCardsList, {categoryName: categoryName})
+                )
+
+
+            )
+
+        );
+
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    render: function () {
+        var list = this.state.groups;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.groupsPlaceholder}, 
+                    list.map(function(g, k){
+                        var key = 'group_' + k + '_' + g.category;
+                        var cl = this.onGroupClick.bind(this, g);
+                        return (
+                            React.createElement(GroupsListItem, {avatar: g.avatar, name: g.category, onItemClick: cl, key: key})
+                        );
+                    }, this)
+
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(TopicDialog, {onClose: this.onClose, content: this.getDialogContent()})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = KaraokeGroupsPanel;
+
+},{"../../mixins/KaraokeMixin":741,"../topics/dialog/TopicDialog":714,"./GroupsListItem":621,"./SelfLoadingCategoryKaraokeCardsList":626,"object-assign":33,"react":518}],625:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var PatientPlayer = require('../player/PatientPlayer');
+
+var MainSubtitlesBlock = require('./subtitles/MainSubtitlesBlock');
+
+var SubtitlesList = require('./subtitles/SubtitlesList');
+
+var KaraokeMixin = require('../../mixins/KaraokeMixin');
+
+var KaraokePlayerPanel = React.createClass({displayName: "KaraokePlayerPanel",
+    getDefaultProps: function () {
+        return {
+            subtitles: [],
+            youtubeId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            time: 0,
+            seekToValue: 0,
+            paused: false,
+            hover: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            width: 900,
+            margin: '0 auto'
+        },
+
+        topBlock: {
+            height: 350
+        },
+
+        bottomBlock: {
+            borderTop: '1px solid #EFF0F1'
+
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 490
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 408,
+            height: '100%'
+
+        },
+
+        playerPlaceholder: {
+            height: 350
+        }
+
+    },
+
+    onItemClick: function(item){
+        if (item == undefined){
+            return;
+        }
+        this.setState({
+            time: item.start,
+            seekToValue: item.start
+        });
+    },
+
+    onProgress: function(t){
+        this.setState({
+            time: t
+        });
+    },
+
+    onBottomPanelMouseOver: function(){
+        console.log('MOUSE OVER!!!');
+        if (this.state.hover == true){
+            return;
+        }
+
+        this.setState({
+            hover: true,
+            paused: true
+        });
+    },
+
+    onBottomPanelMouseLeave: function(){
+        console.log('MOUSE OUT')
+        this.setState({
+            hover: false,
+            paused: false
+        });
+    },
+
+    render: function () {
+
+        //console.log('rendering KaraokePlayerPanel: youtubeId = ', this.props.youtubeId);
+
+        var currentSubtitle = KaraokeMixin.getCurrentSubtitles(this.props.subtitles, this.state.time);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.topBlock}, 
+
+
+                    this.props.youtubeId == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.left}, 
+                            React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                                React.createElement(PatientPlayer, {seekToValue: this.state.seekToValue, paused: this.state.paused, 
+                                               youtubeId: this.props.youtubeId, onProgress: this.onProgress})
+                            )
+                        ), 
+                    
+
+
+                    React.createElement("div", {style: this.componentStyle.right}, 
+                        React.createElement(SubtitlesList, {onItemClick: this.onItemClick, subtitles: this.props.subtitles, 
+                                       time: this.state.time})
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.bottomBlock, 
+                     onMouseOver: this.onBottomPanelMouseOver, 
+                     onMouseLeave: this.onBottomPanelMouseLeave}, 
+
+                    React.createElement(MainSubtitlesBlock, {currentSubtitle: currentSubtitle})
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = KaraokePlayerPanel;
+
+},{"../../mixins/KaraokeMixin":741,"../player/PatientPlayer":672,"./subtitles/MainSubtitlesBlock":629,"./subtitles/SubtitlesList":630,"object-assign":33,"react":518}],626:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var KaraokeMixin = require('../../mixins/KaraokeMixin');
+
+var KaraokeCardsList = require('./KaraokeCardsList');
+
+var SelfLoadingCategoryKaraokeCardsList = React.createClass({displayName: "SelfLoadingCategoryKaraokeCardsList",
+    getDefaultProps: function () {
+        return {
+            categoryName: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            materials: [],
+            loading: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var name = nextProps.categoryName;
+        if (name == undefined){
+            return;
+        }
+        this.load(name, function(data){
+            console.log('data loaded: ', data);
+        });
+    },
+
+    componentDidMount: function () {
+        var name = this.props.categoryName;
+        if (name == undefined){
+            return;
+        }
+        this.load(name, function(data){
+            console.log('data loaded: ', data);
+        });
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        contentPlaceholder: {
+
+        }
+    },
+
+    load: function(catName){
+        this.setState({
+            loading: true
+        });
+        KaraokeMixin.loadGrouppedKaraokesByCategoryName(catName, function(data){
+            this.setState({
+                loading: false,
+                materials: data
+            });
+        }.bind(this))
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
+                    React.createElement(KaraokeCardsList, {materials: this.state.materials})
+                ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingCategoryKaraokeCardsList;
+
+},{"../../mixins/KaraokeMixin":741,"./KaraokeCardsList":623,"object-assign":33,"react":518}],627:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var KaraokePlayerPanel = require('./KaraokePlayerPanel');
+
+var KaraokeMixin = require('../../mixins/KaraokeMixin');
+
+var SelfLoadingKaraokePlayerPanel = React.createClass({displayName: "SelfLoadingKaraokePlayerPanel",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            youtubeId: undefined,
+            subtitles: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var materialId = nextProps.materialId;
+        if (materialId == this.props.materialId){
+            return;
+        }
+        this.load(materialId, function(data){
+            console.log('data loaded: ', data);
+        });
+    },
+
+    componentDidMount: function () {
+        var materialId = this.props.materialId;
+        this.load(materialId, function(data){
+            console.log('material loaded: ', data);
+        });
+
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    load: function(materialId, callback){
+        if (materialId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        KaraokeMixin.loadKaraoke(materialId, function(data){
+            this.setState({
+                loading: false,
+                youtubeId: data.youtubeId,
+                subtitles: data.subtitles
+            });
+            callback(data);
+        }.bind(this));
+
+
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement(KaraokePlayerPanel, {youtubeId: this.state.youtubeId, subtitles: this.state.subtitles}), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingKaraokePlayerPanel;
+
+},{"../../mixins/KaraokeMixin":741,"./KaraokePlayerPanel":625,"object-assign":33,"react":518}],628:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var TranslatableText = require('../../text/translatable/TranslatableText');
+
+var MainSubtitle = React.createClass({displayName: "MainSubtitle",
+    getDefaultProps: function () {
+        return {
+            text: undefined,
+
+            style: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            fontSize: 20
+        }
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
+        return (
+            React.createElement("div", {style: st}, 
+
+                React.createElement(TranslatableText, {style: st, text: this.props.text})
+
+            )
+        );
+    }
+
+});
+
+module.exports = MainSubtitle;
+
+},{"../../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],629:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MainSubtitle = require('./MainSubtitle');
+
+var MainSubtitlesBlock = React.createClass({displayName: "MainSubtitlesBlock",
+    getDefaultProps: function () {
+        return {
+            currentSubtitle: {
+                current: undefined,
+                prev: undefined,
+                next: undefined
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            textAlign: 'center',
+            padding: 10
+        },
+
+        subBlock: {
+            marginTop: 17,
+            color: '#A1A4AA'
+        },
+
+        supBlock: {
+            color: '#A1A4AA',
+            marginTop: 15
+        },
+
+        mainBlock: {
+            marginTop: 17
+        }
+    },
+
+    render: function () {
+        var current = this.props.currentSubtitle.current;
+        var next = this.props.currentSubtitle.next;
+        var prev = this.props.currentSubtitle.prev;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, className: 'mainSubtitlesBlock'}, 
+
+                prev == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.supBlock}, 
+                        React.createElement(MainSubtitle, {style: {fontSize: 24, lineHeight: '24px'}, text: prev.text})
+                    ), 
+                
+
+                current == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.mainBlock}, 
+                        React.createElement(MainSubtitle, {style: {fontSize: 40, lineHeight: '40px'}, text: current.text})
+                    ), 
+                
+
+                next == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.subBlock}, 
+                        React.createElement(MainSubtitle, {style: {fontSize: 24, lineHeight: '24px'}, text: next.text})
+                    )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = MainSubtitlesBlock;
+
+},{"./MainSubtitle":628,"object-assign":33,"react":518}],630:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SubtitlesListItem = require('./SubtitlesListItem');
+
+var KaraokeMixin = require('../../../mixins/KaraokeMixin');
+
+var SubtitlesList = React.createClass({displayName: "SubtitlesList",
+    getDefaultProps: function () {
+        return {
+            subtitles: [],
+            time: 0,
+            onItemClick: function(item){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            height: '100%',
+            overflowY: 'auto'
+        }
+    },
+
+    onItemClick: function(item){
+        this.props.onItemClick(item);
+    },
+
+    getActiveId: function(){
+        var p = 'kar_item_';
+        var list = this.props.subtitles;
+        var currentStart = 0;
+        var time = this.props.time;
+        var currentSubtitle = KaraokeMixin.getCurrentSubtitles(this.props.subtitles, time);
+        if (currentSubtitle != undefined && currentSubtitle.current != undefined){
+            currentStart = currentSubtitle.current.start;
+        }
+        for (var i in list){
+            var item = list[i];
+            var isActive = (Math.abs(+item.start - +currentStart) <= 0.01);
+            if (isActive == true){
+                return (p + i);
+            }
+        }
+        return undefined;
+    },
+
+    scrollToActive: function(){
+        var id = this.getActiveId();
+        if (id == undefined){
+            return;
+        }
+        var parentId = 'karaoke_subtitles_list';
+        var element = document.getElementById(id);
+        var parent = document.getElementById(parentId);
+        if (element != undefined && parent != undefined){
+            var topPos = element.offsetTop;
+            parent.scrollTop = topPos - 250 - 10;
+        }
+    },
+
+    componentDidUpdate: function(){
+        this.scrollToActive();
+    },
+
+    render: function () {
+        var list = this.props.subtitles;
+        var time = this.props.time;
+        var subtitles = this.props.subtitles;
+        var currentSubtitle = KaraokeMixin.getCurrentSubtitles(this.props.subtitles, time);
+        var currentStart = 0;
+        if (currentSubtitle != undefined && currentSubtitle.current != undefined){
+            currentStart = currentSubtitle.current.start;
+        }
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, id: "karaoke_subtitles_list"}, 
+                list.map(function(item, k){
+                    var key = 'kar_item_' + k;
+                    var id = key;
+                    var isActive = (Math.abs(+item.start - +currentStart) <= 0.01);
+                    var onItemClick = this.onItemClick.bind(this, item);
+                    return (
+                        React.createElement("div", {id: id, key: key}, 
+                            React.createElement(SubtitlesListItem, {active: isActive, text: item.text, 
+                                               onItemClick: onItemClick})
+                        )
+
+                    );
+                }, this)
+            )
+        );
+    }
+
+});
+
+module.exports = SubtitlesList;
+
+},{"../../../mixins/KaraokeMixin":741,"./SubtitlesListItem":631,"object-assign":33,"react":518}],631:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var TranslatableText = require('../../text/translatable/TranslatableText');
+
+var SubtitlesListItem = React.createClass({displayName: "SubtitlesListItem",
+    getDefaultProps: function () {
+        return {
+            active: false,
+            text: undefined,
+
+            onItemClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            padding: 5,
+            fontSize: 16,
+            width: '100%',
+            borderBottom: '1px solid #EFF0F1',
+            overflowY: 'auto',
+            cursor: 'pointer',
+            paddingLeft: 20
+        },
+
+        active: {
+            //color: 'white',
+            //color: '#8897A3',
+            color: 'whitesmoke',
+            backgroundColor: '#2E3C54',
+            fontWeight: 'bold'
+        }
+    },
+
+    onClick: function(){
+        this.props.onItemClick();
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder);
+        if (this.props.active == true){
+            assign(st, this.componentStyle.active);
+            //console.log('ACTIVE: ' + this.props.text);
+        }
+        return (
+            React.createElement("div", {className: 'subtitlesListItem', style: st, onClick: this.onClick}, 
+                this.props.text
+            )
+        );
+    }
+
+});
+
+module.exports = SubtitlesListItem;
+
+},{"../../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],632:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -92180,7 +93916,7 @@ var MaterialTags = React.createClass({displayName: "MaterialTags",
 
 module.exports = MaterialTags;
 
-},{"object-assign":33,"react":518,"react-addons-linked-state-mixin":109,"react-tagsinput":333}],619:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-addons-linked-state-mixin":109,"react-tagsinput":333}],633:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -92281,7 +94017,7 @@ var MaterialCreateButton = React.createClass({displayName: "MaterialCreateButton
 
 module.exports = MaterialCreateButton;
 
-},{"../../dialog/Dialog":571,"../dialogs/SelfLoadingMaterialUpdatePanel":625,"object-assign":33,"react":518}],620:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"../dialogs/SelfLoadingMaterialUpdatePanel":639,"object-assign":33,"react":518}],634:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -92423,7 +94159,7 @@ var MaterialGroupCreateButton = React.createClass({displayName: "MaterialGroupCr
 
 module.exports = MaterialGroupCreateButton;
 
-},{"../../dialog/Dialog":571,"../groups/SelfLoadingUpdateMaterialGroupPanel":627,"object-assign":33,"react":518}],621:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"../groups/SelfLoadingUpdateMaterialGroupPanel":642,"object-assign":33,"react":518}],635:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -92581,7 +94317,7 @@ var MaterialDialog = React.createClass({displayName: "MaterialDialog",
 
 module.exports = MaterialDialog;
 
-},{"../../dialog/Dialog":571,"./SelfLoadingMaterialPanel":624,"./SelfLoadingMaterialUpdatePanel":625,"object-assign":33,"react":518}],622:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"./SelfLoadingMaterialPanel":638,"./SelfLoadingMaterialUpdatePanel":639,"object-assign":33,"react":518}],636:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -92654,8 +94390,33 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
             width: '100%',
             height: 450
         }
+    },
 
+    getTranscriptComponent: function(){
+        var tr = this.props.transcript;
+        if (tr == undefined || tr.trim() == ''){
+            return null;
+        }
+        var list = tr.split('\n');
 
+        return (
+            React.createElement("div", null, 
+                list.map(function(t, k){
+                    var key = 'tr_' + k;
+                    var isLast = (k == list.length - 1);
+                    return (
+                        React.createElement("div", {key: key}, 
+                            React.createElement(TranslatableText, {text: t, 
+                                 fontSize: this.componentStyle.transcriptPlaceholder.fontSize}), 
+                            isLast == false ? React.createElement("br", null) : null
+                        )
+                    );
+
+                }, this)
+
+            )
+
+        );
 
     },
 
@@ -92680,7 +94441,7 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
                 (this.props.transcript == undefined || this.props.transcript.trim() == '') ? null :
                     React.createElement("div", {style: this.componentStyle.transcriptPlaceholder}, 
 
-                        React.createElement(TranslatableText, {text: this.props.transcript, fontSize: this.componentStyle.transcriptPlaceholder.fontSize})
+                        this.getTranscriptComponent()
 
                     ), 
                 
@@ -92703,7 +94464,7 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
 
 module.exports = MaterialPanel;
 
-},{"../../player/VimeoPlayer":658,"../../text/translatable/TranslatableText":685,"object-assign":33,"react":518}],623:[function(require,module,exports){
+},{"../../player/VimeoPlayer":673,"../../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],637:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -93057,7 +94818,7 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
 
 module.exports = MaterialUpdatePanel;
 
-},{"../../../mixins/MaterialsMixin":721,"../../buttons/DeleteButton":541,"../../editor/PatientEditor":579,"../../material/MaterialTags":618,"../../player/VimeoPlayer":658,"../groups/GroupsSelect":626,"object-assign":33,"react":518}],624:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":743,"../../buttons/DeleteButton":543,"../../editor/PatientEditor":581,"../../material/MaterialTags":632,"../../player/VimeoPlayer":673,"../groups/GroupsSelect":640,"object-assign":33,"react":518}],638:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -93155,7 +94916,7 @@ var SelfLoadingMaterialPanel = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialPanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/MaterialsMixin":721,"./MaterialPanel":622,"object-assign":33,"react":518}],625:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/MaterialsMixin":743,"./MaterialPanel":636,"object-assign":33,"react":518}],639:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -93303,7 +95064,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingMaterialUpdatePanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/MaterialsMixin":721,"./MaterialUpdatePanel":623,"object-assign":33,"react":518}],626:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/MaterialsMixin":743,"./MaterialUpdatePanel":637,"object-assign":33,"react":518}],640:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -93417,7 +95178,84 @@ var GroupsSelect = React.createClass({displayName: "GroupsSelect",
 
 module.exports = GroupsSelect;
 
-},{"object-assign":33,"react":518,"react-select":326}],627:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-select":326}],641:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MaterialGroupCard = React.createClass({displayName: "MaterialGroupCard",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            name: undefined,
+            description: undefined,
+            avatar: 'https://d13yacurqjgara.cloudfront.net/users/31348/screenshots/2376060/explorer_series_1-01.jpg',
+            materials: [],
+            user: []
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            width: 250,
+            height: 300,
+            margin: 10
+        },
+
+        imagePlaceholder: {
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center'
+        },
+
+        contentPlaceholder: {
+            padding: 5
+        }
+
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
+        var imageSt = assign({}, this.componentStyle.imagePlaceholder,  {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+
+
+        return (
+            React.createElement("div", {style: st}, 
+
+
+                React.createElement("div", {style: imageSt}), 
+
+                React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
+
+                    "this is test"
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = MaterialGroupCard;
+
+},{"object-assign":33,"react":518}],642:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -93537,7 +95375,7 @@ var SelfLoadingUpdateMaterialGroupPanel = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingUpdateMaterialGroupPanel;
 
-},{"../../../mixins/MaterialsMixin":721,"./UpdateMaterialGroupPanel":629,"object-assign":33,"react":518}],628:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":743,"./UpdateMaterialGroupPanel":644,"object-assign":33,"react":518}],643:[function(require,module,exports){
 /**
  * Created by sabir on 21.07.15.
  */
@@ -93668,7 +95506,7 @@ var UpdateMaterialGroupButton = React.createClass({displayName: "UpdateMaterialG
 
 module.exports = UpdateMaterialGroupButton;
 
-},{"../../dialog/Dialog":571,"./SelfLoadingUpdateMaterialGroupPanel":627,"object-assign":33,"react":518}],629:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"./SelfLoadingUpdateMaterialGroupPanel":642,"object-assign":33,"react":518}],644:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -93800,7 +95638,7 @@ var UpdateMaterialGroupPanel = React.createClass({displayName: "UpdateMaterialGr
 
 module.exports = UpdateMaterialGroupPanel;
 
-},{"../../buttons/DeleteButton":541,"object-assign":33,"react":518}],630:[function(require,module,exports){
+},{"../../buttons/DeleteButton":543,"object-assign":33,"react":518}],645:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -93915,7 +95753,7 @@ var CardsList = React.createClass({displayName: "CardsList",
 
 module.exports = CardsList;
 
-},{"./MaterialCard":631,"object-assign":33,"react":518}],631:[function(require,module,exports){
+},{"./MaterialCard":646,"object-assign":33,"react":518}],646:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -94174,7 +96012,7 @@ var MaterialCard = React.createClass({displayName: "MaterialCard",
 
 module.exports = MaterialCard;
 
-},{"../dialogs/MaterialDialog":621,"./MaterialHoverPanel":632,"object-assign":33,"react":518}],632:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":635,"./MaterialHoverPanel":647,"object-assign":33,"react":518}],647:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -94306,7 +96144,7 @@ var MaterialHoverPanel = React.createClass({displayName: "MaterialHoverPanel",
 
 module.exports = MaterialHoverPanel;
 
-},{"../dialogs/MaterialDialog":621,"object-assign":33,"react":518}],633:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":635,"object-assign":33,"react":518}],648:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -94503,7 +96341,7 @@ var MaterialsBunch = React.createClass({displayName: "MaterialsBunch",
 
 module.exports = MaterialsBunch;
 
-},{"../groups/UpdateMaterialGroupButton":628,"../list/PagedCardsList":634,"object-assign":33,"react":518}],634:[function(require,module,exports){
+},{"../groups/UpdateMaterialGroupButton":643,"../list/PagedCardsList":649,"object-assign":33,"react":518}],649:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -94683,7 +96521,7 @@ var PagedCardsList = React.createClass({displayName: "PagedCardsList",
 
 module.exports = PagedCardsList;
 
-},{"./CardsList":630,"object-assign":33,"react":518}],635:[function(require,module,exports){
+},{"./CardsList":645,"object-assign":33,"react":518}],650:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -94978,7 +96816,7 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialsList;
 
-},{"../../../mixins/MaterialsMixin":721,"../buttons/MaterialCreateButton":619,"../buttons/MaterialGroupCreateButton":620,"./MaterialsBunch":633,"./PagedCardsList":634,"object-assign":33,"react":518}],636:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":743,"../buttons/MaterialCreateButton":633,"../buttons/MaterialGroupCreateButton":634,"./MaterialsBunch":648,"./PagedCardsList":649,"object-assign":33,"react":518}],651:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -95098,7 +96936,7 @@ var MaterialSearchButton = React.createClass({displayName: "MaterialSearchButton
 
 module.exports = MaterialSearchButton;
 
-},{"../../dialog/Dialog":571,"./MaterialsSearchPanel":637,"object-assign":33,"react":518}],637:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"./MaterialsSearchPanel":652,"object-assign":33,"react":518}],652:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -95527,7 +97365,7 @@ var MaterialsSearchPanel = React.createClass({displayName: "MaterialsSearchPanel
 
 module.exports = MaterialsSearchPanel;
 
-},{"../../../mixins/MaterialsMixin":721,"../../material/list/MaterialCard":631,"../../material/list/MaterialsBunch":633,"object-assign":33,"react":518}],638:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":743,"../../material/list/MaterialCard":646,"../../material/list/MaterialsBunch":648,"object-assign":33,"react":518}],653:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -95632,7 +97470,7 @@ var CreateNewNoteButton = React.createClass({displayName: "CreateNewNoteButton",
 
 module.exports = CreateNewNoteButton;
 
-},{"../dialog/Dialog":571,"./SelfLoadingUpdateNotePanel":643,"object-assign":33,"react":518}],639:[function(require,module,exports){
+},{"../dialog/Dialog":573,"./SelfLoadingUpdateNotePanel":658,"object-assign":33,"react":518}],654:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -95736,7 +97574,7 @@ var CreateNewNotesGroupButton = React.createClass({displayName: "CreateNewNotesG
 
 module.exports = CreateNewNotesGroupButton;
 
-},{"../dialog/Dialog":571,"./SelfLoadingGroupPanel":640,"object-assign":33,"react":518}],640:[function(require,module,exports){
+},{"../dialog/Dialog":573,"./SelfLoadingGroupPanel":655,"object-assign":33,"react":518}],655:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -95893,7 +97731,7 @@ var SelfLoadingGroupPanel = React.createClass({displayName: "SelfLoadingGroupPan
 
 module.exports = SelfLoadingGroupPanel;
 
-},{"../../components/buttons/DeleteButton":541,"../../mixins/NotesMixin":723,"object-assign":33,"react":518}],641:[function(require,module,exports){
+},{"../../components/buttons/DeleteButton":543,"../../mixins/NotesMixin":745,"object-assign":33,"react":518}],656:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -96004,7 +97842,7 @@ var SelfLoadingNote = React.createClass({displayName: "SelfLoadingNote",
 
 module.exports = SelfLoadingNote;
 
-},{"../../mixins/NotesMixin":723,"object-assign":33,"react":518}],642:[function(require,module,exports){
+},{"../../mixins/NotesMixin":745,"object-assign":33,"react":518}],657:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -96213,7 +98051,7 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
 
 module.exports = SelfLoadingUpdatableNote;
 
-},{"../../components/dialog/Dialog":571,"../../mixins/NotesMixin":723,"./SelfLoadingUpdateNotePanel":643,"object-assign":33,"react":518}],643:[function(require,module,exports){
+},{"../../components/dialog/Dialog":573,"../../mixins/NotesMixin":745,"./SelfLoadingUpdateNotePanel":658,"object-assign":33,"react":518}],658:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -96452,7 +98290,7 @@ var SelfLoadingUpdateNotePanel = React.createClass({displayName: "SelfLoadingUpd
 
 module.exports = SelfLoadingUpdateNotePanel;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":733,"../../components/buttons/DeleteButton":541,"../../components/note/select/NotesGroupSelect":649,"../../mixins/NotesMixin":723,"../editor/PatientEditor":579,"object-assign":33,"react":518}],644:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/buttons/DeleteButton":543,"../../components/note/select/NotesGroupSelect":664,"../../mixins/NotesMixin":745,"../editor/PatientEditor":581,"object-assign":33,"react":518}],659:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -96572,7 +98410,7 @@ var UpdateGroupButton = React.createClass({displayName: "UpdateGroupButton",
 
 module.exports = UpdateGroupButton;
 
-},{"../dialog/Dialog":571,"./SelfLoadingGroupPanel":640,"object-assign":33,"react":518}],645:[function(require,module,exports){
+},{"../dialog/Dialog":573,"./SelfLoadingGroupPanel":655,"object-assign":33,"react":518}],660:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -96673,7 +98511,7 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
 
 module.exports = NoteListItem;
 
-},{"moment":32,"object-assign":33,"react":518}],646:[function(require,module,exports){
+},{"moment":32,"object-assign":33,"react":518}],661:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -96756,7 +98594,7 @@ var NotesGroupListItem = React.createClass({displayName: "NotesGroupListItem",
 
 module.exports = NotesGroupListItem;
 
-},{"object-assign":33,"react":518}],647:[function(require,module,exports){
+},{"object-assign":33,"react":518}],662:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -96823,7 +98661,7 @@ var NotesGroupsList = React.createClass({displayName: "NotesGroupsList",
 
 module.exports = NotesGroupsList;
 
-},{"./NotesGroupListItem":646,"object-assign":33,"react":518}],648:[function(require,module,exports){
+},{"./NotesGroupListItem":661,"object-assign":33,"react":518}],663:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -96893,7 +98731,7 @@ var NotesList = React.createClass({displayName: "NotesList",
 
 module.exports = NotesList;
 
-},{"./NoteListItem":645,"object-assign":33,"react":518}],649:[function(require,module,exports){
+},{"./NoteListItem":660,"object-assign":33,"react":518}],664:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -97019,7 +98857,7 @@ var NotesGroupSelect = React.createClass({displayName: "NotesGroupSelect",
 
 module.exports = NotesGroupSelect;
 
-},{"object-assign":33,"react":518,"react-select":326}],650:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-select":326}],665:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -97182,7 +99020,7 @@ var NotificationItem = React.createClass({displayName: "NotificationItem",
 
 module.exports = NotificationItem;
 
-},{"../../mixins/NotificationMixin":724,"../exercise/SelfLoadingUserExercise":584,"moment":32,"object-assign":33,"react":518}],651:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":746,"../exercise/SelfLoadingUserExercise":586,"moment":32,"object-assign":33,"react":518}],666:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -97269,7 +99107,7 @@ var NotificationsList = React.createClass({displayName: "NotificationsList",
 
 module.exports = NotificationsList;
 
-},{"./NotificationItem":650,"object-assign":33,"react":518}],652:[function(require,module,exports){
+},{"./NotificationItem":665,"object-assign":33,"react":518}],667:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -97347,7 +99185,7 @@ var NotificationsNumberSpan = React.createClass({displayName: "NotificationsNumb
 
 module.exports = NotificationsNumberSpan;
 
-},{"../../mixins/NotificationMixin":724,"object-assign":33,"react":518}],653:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":746,"object-assign":33,"react":518}],668:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -97442,7 +99280,7 @@ var PagedNotificationsList = React.createClass({displayName: "PagedNotifications
 
 module.exports = PagedNotificationsList;
 
-},{"./NotificationsList":651,"object-assign":33,"react":518}],654:[function(require,module,exports){
+},{"./NotificationsList":666,"object-assign":33,"react":518}],669:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -97577,7 +99415,7 @@ var SelfLoadingNotificationsList = React.createClass({displayName: "SelfLoadingN
 
 module.exports = SelfLoadingNotificationsList;
 
-},{"../../mixins/NotificationMixin":724,"./NotificationsList":651,"./PagedNotificationsList":653,"object-assign":33,"react":518}],655:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":746,"./NotificationsList":666,"./PagedNotificationsList":668,"object-assign":33,"react":518}],670:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -97657,7 +99495,7 @@ var NumberItem = React.createClass({displayName: "NumberItem",
 
 module.exports = NumberItem;
 
-},{"object-assign":33,"react":518}],656:[function(require,module,exports){
+},{"object-assign":33,"react":518}],671:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -97748,7 +99586,7 @@ var NumbersBlock = React.createClass({displayName: "NumbersBlock",
 
 module.exports = NumbersBlock;
 
-},{"./NumberItem":655,"object-assign":33,"react":518}],657:[function(require,module,exports){
+},{"./NumberItem":670,"object-assign":33,"react":518}],672:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -97767,8 +99605,15 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
             //youtubeId: '8SbUC-UaAxE',
             //vimeoId: '70260646',
             vimeoId: undefined,
-            start: undefined,
-            end: undefined
+            start: 0,
+            end: 1000 * 100000,
+
+            seekToValue: 0,
+            paused: false,
+
+            onProgress: function(seconds){
+
+            }
 
 
         }
@@ -97779,7 +99624,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
             loading: false,
             loaded: 0,
             played: 0,
-            //playing: true,
+            playing: true,
             duration: 0,
             name: undefined,
             imgSrc: undefined
@@ -97787,11 +99632,35 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
     },
 
     componentWillReceiveProps: function (nextProps) {
+        var vimeoId = nextProps.vimeoId;
+        var youtubeId = nextProps.youtubeId;
 
+        var seekToValue = nextProps.seekToValue;
+        var paused = nextProps.paused;
+
+        if (seekToValue != this.props.seekToValue){
+            this.seekTo(seekToValue * 1000.0 / this.state.duration);
+            //return;
+        }
+
+        if (paused != this.props.paused){
+            console.log('paused changed');
+            this.setState({
+                playing: !paused
+            });
+        }
+
+        if (vimeoId == this.props.vimeoId && youtubeId == this.props.youtubeId){
+            return;
+        }
+
+        this.load(youtubeId, vimeoId, function(data){
+            console.log(data);
+        });
     },
 
     componentDidMount: function () {
-        this.load(function(data){
+        this.load(this.props.youtubeId, this.props.vimeoId, function(data){
             console.log('video loaded', data);
         });
     },
@@ -97840,43 +99709,44 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
         this.refs.player.seekTo(fraction);
     },
 
-    load: function(callback){
+    load: function(youtubeId, vimeoId, callback){
         if (callback == undefined) callback = function(){};
-        if (this.props.vimeoId != undefined){
+        if (vimeoId != undefined){
             this.setState({
                 loading: true
             });
-            VideoMixin.loadVimeoInfo(this.props.vimeoId, function(data){
+            VideoMixin.loadVimeoInfo(vimeoId, function(data){
                 console.log(data);
                 this.setState({
                     duration: data.duration * 1000,
                     imgSrc: data.imgSrc,
                     loading: false
                 });
+                this.checkBounds(0);
                 callback(data);
             }.bind(this));
             return;
         }
-        if (this.props.youtubeId != undefined){
+        if (youtubeId != undefined){
             this.setState({
                 loading: true
             });
-            VideoMixin.loadYoutubeInfo(this.props.youtubeId, function(data){
+            VideoMixin.loadYoutubeInfo(youtubeId, function(data){
                 console.log(data);
                 this.setState({
                     duration: data.duration,
                     imgSrc: data.imgSrc,
                     loading: false
                 });
-                VideoMixin.loadCaptions(this.props.youtubeId);
+                //VideoMixin.loadCaptions(youtubeId);
+                //this.refs.player.unloadModule("captions");
+                //this.refs.player.unloadModule("cc");
+                this.checkBounds(0);
                 callback(data);
             }.bind(this));
             return;
         }
 
-        VideoMixin.loadYoutubeInfo(this.props.youtubeId, function(data){
-
-        }.bind(this));
     },
 
     checkBounds: function(playedFraction){
@@ -97888,6 +99758,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
         if (pos < start || pos > end ){
             this.seekTo( 1.0 * start / duration);
         }
+        this.props.onProgress(pos / 1000.0);
 
     },
 
@@ -97901,7 +99772,10 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
         var end = (this.props.end == undefined) ? 0 : this.props.end;
         var youtubeConfig = {
             start: start,
-            end: end
+            end: end,
+            captions: {
+
+            }
         };
         var vimeoConfig = {
             badge: 0,
@@ -97919,6 +99793,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
                                      height: "100%", 
                                      onProgress: this.onProgress, 
                                      onPlay: this.onPlay, 
+                                     playing: this.state.playing, 
                                      onPause: this.onPause, 
                                      youtubeConfig: youtubeConfig, 
                                      vimeoConfig: vimeoConfig}
@@ -97935,7 +99810,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
 module.exports = PatientPlayer;
 
-},{"../../mixins/VideoMixin":729,"object-assign":33,"react-player":261,"react/addons":345}],658:[function(require,module,exports){
+},{"../../mixins/VideoMixin":751,"object-assign":33,"react-player":261,"react/addons":345}],673:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -98030,7 +99905,7 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
 
 module.exports = VimeoPlayer;
 
-},{"object-assign":33,"react":518,"react-vimeo":339}],659:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-vimeo":339}],674:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -98091,7 +99966,7 @@ var PatientPreloader = React.createClass({displayName: "PatientPreloader",
 
 module.exports = PatientPreloader;
 
-},{"object-assign":33,"react":518}],660:[function(require,module,exports){
+},{"object-assign":33,"react":518}],675:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -98255,7 +100130,7 @@ var ProfilePanel = React.createClass({displayName: "ProfilePanel",
 
 module.exports = ProfilePanel;
 
-},{"../editor/PatientEditor":579,"object-assign":33,"react":518}],661:[function(require,module,exports){
+},{"../editor/PatientEditor":581,"object-assign":33,"react":518}],676:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -98421,7 +100296,7 @@ var ProfileUpdateButton = React.createClass({displayName: "ProfileUpdateButton",
 
 module.exports = ProfileUpdateButton;
 
-},{"../buttons/DeleteButton":541,"../dialog/Dialog":571,"./SelfLoadingProfilePanel":662,"moment":32,"object-assign":33,"react":518}],662:[function(require,module,exports){
+},{"../buttons/DeleteButton":543,"../dialog/Dialog":573,"./SelfLoadingProfilePanel":677,"moment":32,"object-assign":33,"react":518}],677:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -98547,7 +100422,7 @@ var SelfLoadingProfilePanel = React.createClass({displayName: "SelfLoadingProfil
 
 module.exports = SelfLoadingProfilePanel;
 
-},{"../../mixins/ProfileMixin":725,"./ProfilePanel":660,"object-assign":33,"react":518}],663:[function(require,module,exports){
+},{"../../mixins/ProfileMixin":747,"./ProfilePanel":675,"object-assign":33,"react":518}],678:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -98645,7 +100520,7 @@ var UserProfileButton = React.createClass({displayName: "UserProfileButton",
 
 module.exports = UserProfileButton;
 
-},{"../dialog/Dialog":571,"./UserProfilePanel":664,"object-assign":33,"react":518}],664:[function(require,module,exports){
+},{"../dialog/Dialog":573,"./UserProfilePanel":679,"object-assign":33,"react":518}],679:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -98878,7 +100753,7 @@ var UserProfilePanel = React.createClass({displayName: "UserProfilePanel",
 
 module.exports = UserProfilePanel;
 
-},{"../../mixins/UserMixin":728,"../file/FileUploader":611,"object-assign":33,"react":518}],665:[function(require,module,exports){
+},{"../../mixins/UserMixin":750,"../file/FileUploader":613,"object-assign":33,"react":518}],680:[function(require,module,exports){
 /**
  * Created by sabir on 16.09.15.
  */
@@ -99149,7 +101024,7 @@ var SpeechRecognitionArea = React.createClass({displayName: "SpeechRecognitionAr
 
 module.exports = SpeechRecognitionArea;
 
-},{"react":518}],666:[function(require,module,exports){
+},{"react":518}],681:[function(require,module,exports){
 /**
  * Created by sabir on 17.09.15.
  */
@@ -99520,7 +101395,7 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
 module.exports = PatientRecordComponent;
 
-},{"../../mixins/FileUploadMixin":719,"../buttons/RecordStopButton":542,"object-assign":33,"react":518,"recordrtc":519}],667:[function(require,module,exports){
+},{"../../mixins/FileUploadMixin":739,"../buttons/RecordStopButton":544,"object-assign":33,"react":518,"recordrtc":519}],682:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -99592,7 +101467,7 @@ var FirstLevelPanelItem = React.createClass({displayName: "FirstLevelPanelItem",
 
 module.exports = FirstLevelPanelItem;
 
-},{"object-assign":33,"react":518}],668:[function(require,module,exports){
+},{"object-assign":33,"react":518}],683:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -99663,7 +101538,7 @@ var FirstLevelPanelsList = React.createClass({displayName: "FirstLevelPanelsList
 
 module.exports = FirstLevelPanelsList;
 
-},{"../../data/DataFactory":715,"./FirstLevelPanelItem":667,"object-assign":33,"react":518}],669:[function(require,module,exports){
+},{"../../data/DataFactory":735,"./FirstLevelPanelItem":682,"object-assign":33,"react":518}],684:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -99781,7 +101656,7 @@ var Sausage = React.createClass({displayName: "Sausage",
 
 module.exports = Sausage;
 
-},{"./FirstLevelPanelsList":668,"./dialog/SausageDialog":671,"object-assign":33,"react":518}],670:[function(require,module,exports){
+},{"./FirstLevelPanelsList":683,"./dialog/SausageDialog":686,"object-assign":33,"react":518}],685:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -99920,7 +101795,7 @@ var SecondLevelPanelItem = React.createClass({displayName: "SecondLevelPanelItem
 
 module.exports = SecondLevelPanelItem;
 
-},{"../video/dialog/VideoDialog":708,"object-assign":33,"react":518}],671:[function(require,module,exports){
+},{"../video/dialog/VideoDialog":728,"object-assign":33,"react":518}],686:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -100061,7 +101936,738 @@ var SausageDialog = React.createClass({displayName: "SausageDialog",
 
 module.exports = SausageDialog;
 
-},{"../../topics/dialog/TopicDialog":694,"../SecondLevelPanelItem":670,"object-assign":33,"react":518}],672:[function(require,module,exports){
+},{"../../topics/dialog/TopicDialog":714,"../SecondLevelPanelItem":685,"object-assign":33,"react":518}],687:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ResultsItemPanel = React.createClass({displayName: "ResultsItemPanel",
+    getDefaultProps: function () {
+        return {
+            youtubeId: undefined,
+            name: undefined,
+            category: undefined,
+            avatar: undefined,
+            viewCount: undefined,
+            items: [],
+            activeInfo: {
+
+            },
+            onItemClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            itemsVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var activeInfo = nextProps.activeInfo;
+        var items = nextProps.items;
+        var youtubeId = nextProps.youtubeId;
+        var active = this.isActive(activeInfo, youtubeId, items);
+        if (active == false){
+            this.setState({
+                itemsVisible: false
+            });
+        }
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    isActive: function(activeInfo, youtubeId, items){
+        if (activeInfo.youtubeId != youtubeId){
+            return false;
+        }
+        if (items == undefined){
+            items = [];
+        }
+        var f = false;
+        for (var i in items){
+            var item = items[i];
+            if (item.start == activeInfo.start && item.duration == activeInfo.duration){
+                f = true;
+            }
+        }
+        return f;
+    },
+
+    componentStyle: {
+        placeholder: {
+            marginBottom: 10,
+            backgroundColor: 'white',
+            borderBottom: '1px solid #EFF0F1'
+        },
+
+        headBlock: {
+            padding: 5,
+            cursor: 'pointer'
+        },
+
+        contentBlock: {
+
+        },
+
+        itemPanel: {
+            borderTop: '1px solid #EFF0F1',
+            padding: 7,
+            //lineHeight: '24px',
+            cursor: 'pointer'
+        },
+
+        active: {
+            backgroundColor: '#2E3C54',
+            color: 'white'
+        },
+
+        avatarPlaceholder: {
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            display: 'inline-block',
+            verticalAlign: 'top',
+            height: 80,
+            width: 120,
+            borderRadius: 4
+        },
+
+        infoPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 265,
+            padding: 5
+        },
+
+        infoTitle: {
+            fontWeight: 'bold'
+        }
+    },
+
+    onHeadClick: function(){
+        var newVisible = !this.state.visible;
+        this.setState({
+            itemsVisible: newVisible
+        });
+        setTimeout(function(){
+            if (newVisible == true){
+                this.onItemClick(this.props.items[0]);
+            }
+        }.bind(this), 100);
+
+    },
+
+    onItemClick: function(item){
+        this.props.onItemClick(this.props.youtubeId, item);
+    },
+
+    render: function () {
+
+        var avatar = assign({}, this.componentStyle.avatarPlaceholder, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+
+        var items = this.props.items;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.headBlock, onClick: this.onHeadClick}, 
+                    React.createElement("div", {style: avatar}), 
+                    React.createElement("div", {style: this.componentStyle.infoPlaceholder}, 
+                        React.createElement("div", {style: this.componentStyle.infoTitle}, this.props.name)
+                    )
+                ), 
+
+                this.state.itemsVisible == false ? null :
+                    React.createElement("div", {style: this.componentStyle.contentBlock}, 
+                        items.map(function(item, k){
+                            var key = 'item_' + this.props.youtubeId + '_' + item.duration + '_' + item.start;
+                            var info = this.props.activeInfo;
+                            var isActive = (info.duration == item.duration && info.start == item.start && info.youtubeId == this.props.youtubeId);
+                            var st = assign({}, this.componentStyle.itemPanel);
+                            if (isActive){
+                                st = assign(st, this.componentStyle.active);
+                            }
+                            var onClick = this.onItemClick.bind(this, item);
+                            return (
+                                React.createElement("div", {key: key, style: st, onClick: onClick}, 
+                                    item.text
+                                )
+                            );
+                        }, this)
+                    )
+                
+
+
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = ResultsItemPanel;
+
+},{"object-assign":33,"react":518}],688:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ResultsItemPanel = require('./ResultsItemPanel');
+
+var SearchResultsPanel = React.createClass({displayName: "SearchResultsPanel",
+    getDefaultProps: function () {
+        return {
+            results: [],
+            activeYoutubeId: undefined,
+            activeStart: undefined,
+            activeDuration: undefined,
+            onItemClick: function(youtubeId, item){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            marginBottom: 10,
+            borderRight: '1px solid #EFF0F1'
+        }
+    },
+
+    onItemClick: function(youtubeId, item){
+        this.props.onItemClick(youtubeId, item);
+    },
+
+    render: function () {
+        var list = this.props.results;
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                list.map(function(r, k){
+                    var key = 'res_' + '_' + r.videoInfo.youtubeId + '_' + k + '_';
+                    var info = r.videoInfo;
+                    var activeInfo = {start: this.props.activeStart,
+                                      duration: this.props.activeDuration,
+                                      youtubeId: this.props.activeYoutubeId};
+                    return (
+                        React.createElement(ResultsItemPanel, {
+                            category: info.videoCategory, 
+                            youtubeId: info.youtubeId, 
+                            items: r.items, 
+                            activeInfo: activeInfo, 
+                            onItemClick: this.onItemClick, 
+                            name: info.videoTitle, 
+                            avatar: info.imgSrc, key: key})
+                    );
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = SearchResultsPanel;
+
+},{"./ResultsItemPanel":687,"object-assign":33,"react":518}],689:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CategoryCheckboxesList = require('./checkbox/CategoryCheckboxesList');
+
+var YoutubeSearchMixin = require('../../../mixins/YoutubeSearchMixin');
+
+var SearchResultsPanel = require('./SearchResultsPanel');
+
+var PatientPlayer = require('../../player/PatientPlayer');
+
+var TranslatableText = require('../../text/translatable/TranslatableText');
+
+var YoutubeSearchPanel = React.createClass({displayName: "YoutubeSearchPanel",
+    getDefaultProps: function () {
+        return {
+            intervalSpan: 0.25
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            activeCategories: [],
+            allCategories: [],
+            searchResult: [],
+            filteredSearchResult: [],
+            selectedItem: undefined,
+            activeYoutubeId: undefined,
+            activeStart: undefined,
+            activeDuration: undefined,
+            text: '',
+            query: ''
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            width: 850,
+            position: 'relative',
+            margin: '0 auto',
+            marginTop: 10,
+            borderRadius: 4
+        },
+
+        searchInputPlaceholder: {
+            padding: 5
+        },
+
+        contentPlaceholder: {
+
+        },
+
+        varCheckboxItemStyle: {
+            minWidth: 190
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 400,
+            maxHeight: 400,
+            overflowY: 'auto'
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 430,
+            marginLeft: 10
+        },
+
+        checkboxesPlaceholder: {
+            width: 772,
+            padding: 5,
+            margin: '0 auto',
+            borderBottom: '1px solid #EFF0F1'
+        },
+
+        playerPlaceholder: {
+            widht: '100%',
+            height: 250
+        },
+
+        transcriptPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+        resultInfoPanel: {
+            padding: 5
+        }
+    },
+
+    onTextChange: function(evt){
+        var text = evt.target.value;
+        if (text == undefined){
+            text = '';
+        }
+        this.setState({
+            text: text,
+            query: '',
+            selectedItem: undefined
+        });
+    },
+
+    search: function(text, callback){
+        this.setState({
+            loading: true,
+            searchFinished: false
+        });
+        YoutubeSearchMixin.search(text, function(data){
+            this.setState({
+                loading: false,
+                query: text,
+                searchResult: data,
+                filteredSearchResult: data,
+                activeCategories: this.getCategoriesListFromSearchResult(data),
+                allCategories: this.getCategoriesListFromSearchResult(data),
+                searchFinished: true,
+                selectedItem: undefined
+            });
+            if (callback != undefined){
+                callback(data);
+            }
+        }.bind(this));
+
+    },
+
+    onSearchClick: function(){
+        var text = this.state.text;
+        this.search(text, function(data){
+            console.log('search result: ', data);
+        });
+    },
+
+    getCategoriesListFromSearchResult: function(result){
+        var map = {};
+        var list = result;
+        for (var i in list){
+            var r = list[i];
+            map[r.videoInfo.videoCategory] = 1;
+        }
+        var arr = [];
+        for (var key in map){
+            arr.push(key);
+        }
+        return arr;
+    },
+
+    getCheckboxesForRendering: function(){
+        var activeList = this.state.activeCategories;
+        var map = {};
+        for (var i in activeList){
+            map[activeList[i]] = 1;
+        }
+        var list = this.state.allCategories;
+        var arr = [];
+        for (var i in list){
+            var isActive = (map[list[i]] != undefined);
+            arr.push({
+                name: list[i],
+                active: isActive
+            });
+        }
+        return arr;
+    },
+
+    onChange: function(newList){
+        var activeList = [];
+        var map = {};
+        for (var i in newList){
+            if (newList[i].active == true){
+                activeList.push(newList[i].name);
+                map[newList[i].name] = 1;
+            }
+        }
+        var arr = [];
+
+        var sList = this.state.searchResult;
+        for (var i in sList){
+            var r = sList[i];
+            if (map[r.videoInfo.videoCategory] != undefined){
+                arr.push(r);
+            }
+        }
+
+        this.setState({
+            activeCategories: activeList,
+            selectedItem: undefined,
+            filteredSearchResult: arr
+        });
+    },
+
+    onItemClick: function(youtubeId, item){
+        this.setState({
+            activeYoutubeId: youtubeId,
+            activeStart: item.start,
+            activeDuration: item.duration,
+            selectedItem: item
+        });
+    },
+
+    render: function () {
+        var checkboxes = this.getCheckboxesForRendering();
+        var materialSelected = (this.state.selectedItem != undefined);
+        var start = 0, end = 0;
+        if (this.state.selectedItem != undefined){
+            start = this.state.selectedItem.start;
+            end = +start + +this.state.activeDuration + this.props.intervalSpan;
+            start-= this.props.intervalSpan;
+            console.log('rendering youtube search panel: start, end = ', start, end);
+            console.log(this.state.selectedItem);
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.searchInputPlaceholder}, 
+                    React.createElement("div", {className: 'ui form'}, 
+                        React.createElement("div", {className: "ui action input"}, 
+                            React.createElement("input", {type: "text", placeholder: 'Поиск ...', 
+                                   value: this.state.text, onChange: this.onTextChange}), 
+                            React.createElement("button", {className: 'ui basic button', onClick: this.onSearchClick}, 
+                                React.createElement("i", {className: 'icon search'}), " Поиск"
+                            )
+                        )
+                    )
+                ), 
+
+                this.state.query.trim() == '' ? null :
+                React.createElement("div", null, 
+                    (this.state.searchResult.length == 0) ?
+                        React.createElement("div", null, 
+                                React.createElement("div", {style: this.componentStyle.resultInfoPanel}, 
+                                    "По запросу \"", React.createElement("b", null, this.state.query), "\" ничего не найдено"
+                                )
+                        )
+                        :
+                        React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
+
+                            React.createElement("div", {style: this.componentStyle.resultInfoPanel}, 
+                                "Результатов по запросу", 
+                                React.createElement(TranslatableText, {text: this.state.text, style: {fontSize: '14px', marginLeft: 0, display: 'inline-block', fontWeight: 'bold'}}), ":", 
+                                 React.createElement("b", null, this.state.filteredSearchResult.length)
+                            ), 
+
+                            checkboxes.length == 0 ? null :
+                                React.createElement("div", {style: this.componentStyle.checkboxesPlaceholder}, 
+                                    React.createElement(CategoryCheckboxesList, {itemStyle: this.componentStyle.varCheckboxItemStyle, 
+                                                            onChange: this.onChange, checkboxes: checkboxes})
+                                ), 
+                            
+
+                            React.createElement("div", {style: this.componentStyle.left}, 
+                                React.createElement(SearchResultsPanel, {
+                                    activeYoutubeId: this.state.activeYoutubeId, 
+                                    activeStart: this.state.activeStart, 
+                                    activeDuration: this.state.activeDuration, 
+                                    onItemClick: this.onItemClick, results: this.state.filteredSearchResult})
+                            ), 
+
+                            React.createElement("div", {style: this.componentStyle.right}, 
+                                materialSelected == false ? null :
+                                    React.createElement("div", null, 
+                                        React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                                            React.createElement(PatientPlayer, {youtubeId: this.state.activeYoutubeId, start: start, end: end})
+                                        ), 
+
+                                        React.createElement("div", {style: this.componentStyle.transcriptPlaceholder}, 
+                                            this.state.selectedItem.text
+                                        )
+
+
+                                    )
+                                
+                            )
+
+                        )
+                    
+
+                ), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = YoutubeSearchPanel;
+
+},{"../../../mixins/YoutubeSearchMixin":753,"../../player/PatientPlayer":672,"../../text/translatable/TranslatableText":705,"./SearchResultsPanel":688,"./checkbox/CategoryCheckboxesList":691,"object-assign":33,"react":518}],690:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CategoryCheckbox = React.createClass({displayName: "CategoryCheckbox",
+    getDefaultProps: function () {
+        return {
+            active: false,
+            onChange: function(status){
+
+            },
+
+            name: undefined,
+
+            style: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            active: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var active = nextProps.active;
+        if (active == undefined){
+            return;
+        }
+        this.setState({
+            active: active
+        });
+    },
+
+    componentDidMount: function () {
+        this.setState({
+            active: this.props.active
+        });
+    },
+
+    onStatusChangeClick: function(){
+        var newStatus = !this.state.active;
+        this.setState({
+            active: newStatus
+        });
+        this.props.onChange(newStatus);
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            cursor: 'pointer'
+            //margin: 5
+        }
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
+        return (
+            React.createElement("div", {style: st, onClick: this.onStatusChangeClick}, 
+                this.state.active == true ?
+                    React.createElement("span", null, React.createElement("i", {className: 'icon checkmark box'}))
+                    :
+                    React.createElement("span", null, React.createElement("i", {className: 'icon square outline'})), 
+                
+                this.props.name
+            )
+        );
+    }
+
+});
+
+module.exports = CategoryCheckbox;
+
+},{"object-assign":33,"react":518}],691:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CategoryCheckbox = require('./CategoryCheckbox');
+
+var CategoryCheckboxesList = React.createClass({displayName: "CategoryCheckboxesList",
+    getDefaultProps: function () {
+        return {
+            checkboxes: [],
+            onChange: function(newCheckboxesList){
+
+            },
+            itemStyle: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            checkboxes: this.props.checkboxes
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var checkboxes = nextProps.checkboxes;
+        if (checkboxes == undefined){
+            checkboxes = [];
+        }
+        this.setState({
+            checkboxes: checkboxes
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    onChange: function(number, status){
+        console.log('ch list: onChange occured: n, st = ', number, status);
+        var arr = [];
+        var list = this.state.checkboxes;
+        list[number].active = status;
+        this.setState({
+            checkboxes: list
+        });
+        this.props.onChange(list);
+    },
+
+    render: function () {
+        var list = this.state.checkboxes;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(c, k){
+                    var key = 'youtube_checkbox_' + k;
+                    var name = c.name;
+                    var onChange = this.onChange.bind(this, k);
+                    return (
+                        React.createElement(CategoryCheckbox, {style: this.props.itemStyle, onChange: onChange, 
+                                          key: key, name: name, active: c.active})
+                    );
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = CategoryCheckboxesList;
+
+},{"./CategoryCheckbox":690,"object-assign":33,"react":518}],692:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -100127,7 +102733,7 @@ var LoadingSegment = React.createClass({displayName: "LoadingSegment",
 
 module.exports = LoadingSegment;
 
-},{"object-assign":33,"react":518}],673:[function(require,module,exports){
+},{"object-assign":33,"react":518}],693:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -100240,7 +102846,7 @@ var ExerciseGroupSelect = React.createClass({displayName: "ExerciseGroupSelect",
 
 module.exports = ExerciseGroupSelect;
 
-},{"object-assign":33,"react":518,"react-select":326}],674:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-select":326}],694:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -100332,7 +102938,7 @@ var SelfLoadingExerciseGroupsSelect = React.createClass({displayName: "SelfLoadi
 
 module.exports = SelfLoadingExerciseGroupsSelect;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":733,"../../../mixins/ExerciseMixin":717,"./ExerciseGroupSelect":673,"object-assign":33,"react":518}],675:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./ExerciseGroupSelect":693,"object-assign":33,"react":518}],695:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -100474,7 +103080,7 @@ var PatientTask = React.createClass({displayName: "PatientTask",
 
 module.exports = PatientTask;
 
-},{"../audio/PatientAudio":536,"../image/PatientImg":616,"../player/VimeoPlayer":658,"../text/PatientText":683,"../text/translatable/TranslatableText":685,"react":518}],676:[function(require,module,exports){
+},{"../audio/PatientAudio":538,"../image/PatientImg":619,"../player/VimeoPlayer":673,"../text/PatientText":703,"../text/translatable/TranslatableText":705,"react":518}],696:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -100550,7 +103156,7 @@ var TeacherExerciseBlock = React.createClass({displayName: "TeacherExerciseBlock
 
 module.exports = TeacherExerciseBlock;
 
-},{"./TeacherFeedbackCreationBlock":677,"react":518}],677:[function(require,module,exports){
+},{"./TeacherFeedbackCreationBlock":697,"react":518}],697:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -100700,7 +103306,7 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
 
 module.exports = TeacherFeedbackCreationBlock;
 
-},{"../../components/editor/PatientEditor":579,"../../mixins/ExerciseMixin":717,"../corrector/CorrectorHelpButton":565,"react":518}],678:[function(require,module,exports){
+},{"../../components/editor/PatientEditor":581,"../../mixins/ExerciseMixin":737,"../corrector/CorrectorHelpButton":567,"react":518}],698:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -100824,7 +103430,7 @@ var CurrentUserMenuItem = React.createClass({displayName: "CurrentUserMenuItem",
 
 module.exports = CurrentUserMenuItem;
 
-},{"./TopbarSettingsMenu":682,"object-assign":33,"react":518}],679:[function(require,module,exports){
+},{"./TopbarSettingsMenu":702,"object-assign":33,"react":518}],699:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -100886,7 +103492,9 @@ var HeaderLeftLinks = React.createClass({displayName: "HeaderLeftLinks",
             boxSizing: 'borderBox',
             display: 'inline-block',
             marginRight: 25,
-            color: '#A1A4AA',
+            //color: '#A1A4AA',
+            color: '#2E3C54',
+            //fontWeight: 'bold',
             paddingTop: 10,
             cursor: 'pointer'
         },
@@ -100933,7 +103541,7 @@ var HeaderLeftLinks = React.createClass({displayName: "HeaderLeftLinks",
 
 module.exports = HeaderLeftLinks;
 
-},{"object-assign":33,"react":518,"react-router":298}],680:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-router":298}],700:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -101007,7 +103615,7 @@ var HeaderTemplate = React.createClass({displayName: "HeaderTemplate",
 
 module.exports = HeaderTemplate;
 
-},{"react":518}],681:[function(require,module,exports){
+},{"react":518}],701:[function(require,module,exports){
 /**
  * Created by sabir on 09.10.15.
  */
@@ -101291,7 +103899,7 @@ var LeftSidebarTemplate = React.createClass({displayName: "LeftSidebarTemplate",
 
 module.exports = LeftSidebarTemplate;
 
-},{"object-assign":33,"react":518,"react-router":298}],682:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-router":298}],702:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -101407,7 +104015,7 @@ var TopbarSettingsMenu = React.createClass({displayName: "TopbarSettingsMenu",
 
 module.exports = TopbarSettingsMenu;
 
-},{"object-assign":33,"react":518,"react-onclickoutside":260}],683:[function(require,module,exports){
+},{"object-assign":33,"react":518,"react-onclickoutside":260}],703:[function(require,module,exports){
 /**
  * Created by sabir on 28.09.15.
  */
@@ -101473,7 +104081,7 @@ var PatientText = React.createClass({displayName: "PatientText",
 
 module.exports = PatientText;
 
-},{"../text/translatable/TranslatableText":685,"object-assign":33,"react":518}],684:[function(require,module,exports){
+},{"../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],704:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -101592,7 +104200,7 @@ var ToggledText = React.createClass({displayName: "ToggledText",
 
 module.exports = ToggledText;
 
-},{"object-assign":33,"react":518}],685:[function(require,module,exports){
+},{"object-assign":33,"react":518}],705:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -101610,7 +104218,10 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
     getDefaultProps: function () {
         return {
             text: '',
-            fontSize: '18px'
+            fontSize: '18px',
+            style: {
+
+            }
         }
     },
 
@@ -101656,8 +104267,8 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
 
     render: function () {
         var words = this.extractWords();
-        console.log('extracted words: ', words);
-        var st = assign({}, this.componentStyle.placeholder, {fontSize: this.props.fontSize});
+        //console.log('extracted words: ', words);
+        var st = assign({}, this.componentStyle.placeholder, {fontSize: this.props.fontSize}, this.props.style);
 
         return (
             React.createElement("div", {style: st}, 
@@ -101676,7 +104287,7 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
 
 module.exports = TranslatableText;
 
-},{"../../../mixins/TranslateMixin":727,"../../translate/TranslateDialog":700,"./WordsList":687,"object-assign":33,"react":518}],686:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":749,"../../translate/TranslateDialog":720,"./WordsList":707,"object-assign":33,"react":518}],706:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -101804,7 +104415,7 @@ var WordItem = React.createClass({displayName: "WordItem",
 
 module.exports = WordItem;
 
-},{"../../../mixins/TranslateMixin":727,"object-assign":33,"react":518}],687:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":749,"object-assign":33,"react":518}],707:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -101850,9 +104461,8 @@ var WordsList = React.createClass({displayName: "WordsList",
                 list.map(function(item, k){
                     var key = 'word_' + k + 'item';
                     var word = item;
-                    var onClick = this.onWordClick.bind(this);
                     return (
-                        React.createElement(WordItem, {key: key, onWordClick: onClick, word: word})
+                        React.createElement(WordItem, {key: key, onWordClick: this.onWordClick, word: word})
                     );
                 }, this)
             )
@@ -101863,7 +104473,7 @@ var WordsList = React.createClass({displayName: "WordsList",
 
 module.exports = WordsList;
 
-},{"./WordItem":686,"object-assign":33,"react":518}],688:[function(require,module,exports){
+},{"./WordItem":706,"object-assign":33,"react":518}],708:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -101979,7 +104589,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
 
 module.exports = AddTopicButton;
 
-},{"./dialog/UpdateTopicDialog":695,"object-assign":33,"react":518}],689:[function(require,module,exports){
+},{"./dialog/UpdateTopicDialog":715,"object-assign":33,"react":518}],709:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -102087,7 +104697,7 @@ var EditTopicButton = React.createClass({displayName: "EditTopicButton",
 
 module.exports = EditTopicButton;
 
-},{"../buttons/DeleteButton":541,"./dialog/UpdateTopicDialog":695,"object-assign":33,"react":518}],690:[function(require,module,exports){
+},{"../buttons/DeleteButton":543,"./dialog/UpdateTopicDialog":715,"object-assign":33,"react":518}],710:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -102248,7 +104858,7 @@ var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsLi
 
 module.exports = SelfLoadingTopicsList;
 
-},{"../../mixins/TopicsMixin":726,"./AddTopicButton":688,"./TopicsList":692,"./dialog/SelfLoadingTopicDialog":693,"object-assign":33,"react":518}],691:[function(require,module,exports){
+},{"../../mixins/TopicsMixin":748,"./AddTopicButton":708,"./TopicsList":712,"./dialog/SelfLoadingTopicDialog":713,"object-assign":33,"react":518}],711:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -102360,7 +104970,7 @@ var TopicItem = React.createClass({displayName: "TopicItem",
 
 module.exports = TopicItem;
 
-},{"object-assign":33,"react":518}],692:[function(require,module,exports){
+},{"object-assign":33,"react":518}],712:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -102445,7 +105055,7 @@ var TopicsList = React.createClass({displayName: "TopicsList",
 
 module.exports = TopicsList;
 
-},{"./TopicItem":691,"object-assign":33,"react":518}],693:[function(require,module,exports){
+},{"./TopicItem":711,"object-assign":33,"react":518}],713:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -102560,7 +105170,7 @@ var SelfLoadingTopicDialog = React.createClass({displayName: "SelfLoadingTopicDi
 
 module.exports = SelfLoadingTopicDialog;
 
-},{"../panels/TopicPanel":698,"./TopicDialog":694,"object-assign":33,"react":518}],694:[function(require,module,exports){
+},{"../panels/TopicPanel":718,"./TopicDialog":714,"object-assign":33,"react":518}],714:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -102705,7 +105315,7 @@ var TopicDialog = React.createClass({displayName: "TopicDialog",
 
 module.exports = TopicDialog;
 
-},{"object-assign":33,"react":518}],695:[function(require,module,exports){
+},{"object-assign":33,"react":518}],715:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -103042,7 +105652,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
 
 module.exports = UpdateTopicDialog;
 
-},{"../../../mixins/TopicsMixin":726,"../../buttons/DeleteButton":541,"../../exercise/info/AccessSwitcher":595,"../../file/FileUploader":611,"../TopicItem":691,"../panels/SimpleTopicHeaderPanel":696,"../panels/TopicHeaderPanel":697,"./TopicDialog":694,"object-assign":33,"react":518}],696:[function(require,module,exports){
+},{"../../../mixins/TopicsMixin":748,"../../buttons/DeleteButton":543,"../../exercise/info/AccessSwitcher":597,"../../file/FileUploader":613,"../TopicItem":711,"../panels/SimpleTopicHeaderPanel":716,"../panels/TopicHeaderPanel":717,"./TopicDialog":714,"object-assign":33,"react":518}],716:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -103162,7 +105772,7 @@ var SimpleTopicHeaderPanel = React.createClass({displayName: "SimpleTopicHeaderP
 
 module.exports = SimpleTopicHeaderPanel;
 
-},{"../EditTopicButton":689,"object-assign":33,"react":518}],697:[function(require,module,exports){
+},{"../EditTopicButton":709,"object-assign":33,"react":518}],717:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -103313,7 +105923,7 @@ var TopicHeaderPanel = React.createClass({displayName: "TopicHeaderPanel",
 
 module.exports = TopicHeaderPanel;
 
-},{"../EditTopicButton":689,"object-assign":33,"react":518}],698:[function(require,module,exports){
+},{"../EditTopicButton":709,"object-assign":33,"react":518}],718:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -103458,7 +106068,7 @@ var TopicPanel = React.createClass({displayName: "TopicPanel",
 
 module.exports = TopicPanel;
 
-},{"../../material/list/SelfLoadingMaterialsList":635,"./TopicHeaderPanel":697,"object-assign":33,"react":518}],699:[function(require,module,exports){
+},{"../../material/list/SelfLoadingMaterialsList":650,"./TopicHeaderPanel":717,"object-assign":33,"react":518}],719:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -103530,7 +106140,7 @@ var TranslateButton = React.createClass({displayName: "TranslateButton",
 
 module.exports = TranslateButton;
 
-},{"./TranslateDialog":700,"object-assign":33,"react":518}],700:[function(require,module,exports){
+},{"./TranslateDialog":720,"object-assign":33,"react":518}],720:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -103604,7 +106214,7 @@ var TranslateDialog = React.createClass({displayName: "TranslateDialog",
 
 module.exports = TranslateDialog;
 
-},{"../dialog/Dialog":571,"./panel/TranslatePanel":701,"object-assign":33,"react":518}],701:[function(require,module,exports){
+},{"../dialog/Dialog":573,"./panel/TranslatePanel":721,"object-assign":33,"react":518}],721:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -103696,10 +106306,13 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
     componentStyle: {
         placeholder: {
             position: 'relative',
+            fontWeight: 'normal',
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
             padding: 7,
             borderRadius: 4,
+
+            lineHeight: '20px',
 
             minWidth: 300,
             minHeight: 400,
@@ -103772,7 +106385,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
 
 module.exports = TranslatePanel;
 
-},{"../../../mixins/TranslateMixin":727,"object-assign":33,"react-speech":332,"react/addons":345}],702:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":749,"object-assign":33,"react-speech":332,"react/addons":345}],722:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -103843,7 +106456,7 @@ var AuthButton = React.createClass({displayName: "AuthButton",
 
 module.exports = AuthButton;
 
-},{"./AuthOverlay":704,"react":518}],703:[function(require,module,exports){
+},{"./AuthOverlay":724,"react":518}],723:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -103985,7 +106598,7 @@ var AuthForm = React.createClass({displayName: "AuthForm",
 
 module.exports = AuthForm;
 
-},{"./LoginForm":705,"./SignupForm":707,"react":518}],704:[function(require,module,exports){
+},{"./LoginForm":725,"./SignupForm":727,"react":518}],724:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -104084,7 +106697,7 @@ var AuthOverlay = React.createClass({displayName: "AuthOverlay",
 
 module.exports = AuthOverlay;
 
-},{"./AuthForm":703,"object-assign":33,"react":518}],705:[function(require,module,exports){
+},{"./AuthForm":723,"object-assign":33,"react":518}],725:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -104246,7 +106859,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../../mixins/LoginMixin":720,"react":518}],706:[function(require,module,exports){
+},{"../../mixins/LoginMixin":742,"react":518}],726:[function(require,module,exports){
 /**
  * Created by sabir on 05.11.15.
  */
@@ -104322,7 +106935,7 @@ var RoleSelector = React.createClass({displayName: "RoleSelector",
 
 module.exports = RoleSelector;
 
-},{"object-assign":33,"react":518}],707:[function(require,module,exports){
+},{"object-assign":33,"react":518}],727:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -104572,7 +107185,7 @@ var SignupForm = React.createClass({displayName: "SignupForm",
 
 module.exports = SignupForm;
 
-},{"../../mixins/LoginMixin":720,"../user/RoleSelector":706,"react":518}],708:[function(require,module,exports){
+},{"../../mixins/LoginMixin":742,"../user/RoleSelector":726,"react":518}],728:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -104659,7 +107272,7 @@ var VideoDialog = React.createClass({displayName: "VideoDialog",
 
 module.exports = VideoDialog;
 
-},{"../../dialog/Dialog":571,"./VideoPanel":709,"object-assign":33,"react":518}],709:[function(require,module,exports){
+},{"../../dialog/Dialog":573,"./VideoPanel":729,"object-assign":33,"react":518}],729:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -104756,7 +107369,7 @@ var VideoPanel = React.createClass({displayName: "VideoPanel",
 
 module.exports = VideoPanel;
 
-},{"../../player/VimeoPlayer":658,"object-assign":33,"react":518}],710:[function(require,module,exports){
+},{"../../player/VimeoPlayer":673,"object-assign":33,"react":518}],730:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -104820,7 +107433,7 @@ var YoutubeEmbedPlayer = React.createClass({displayName: "YoutubeEmbedPlayer",
 
 module.exports = YoutubeEmbedPlayer;
 
-},{"object-assign":33,"react":518}],711:[function(require,module,exports){
+},{"object-assign":33,"react":518}],731:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -104901,7 +107514,7 @@ var VocabularyItem = React.createClass({displayName: "VocabularyItem",
 
 module.exports = VocabularyItem;
 
-},{"object-assign":33,"react":518}],712:[function(require,module,exports){
+},{"object-assign":33,"react":518}],732:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -104969,7 +107582,7 @@ var VocabularyItemsList = React.createClass({displayName: "VocabularyItemsList",
 
 module.exports = VocabularyItemsList;
 
-},{"./VocabularyItem":711,"object-assign":33,"react":518}],713:[function(require,module,exports){
+},{"./VocabularyItem":731,"object-assign":33,"react":518}],733:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -105033,10 +107646,11 @@ var VocabularyNavigationPanel = React.createClass({displayName: "VocabularyNavig
 
                 list.map(function(a, k){
                     var id = this.props.idPattern + a;
+                    var key = 'l_e_' + id;
                     var letter = a.toUpperCase();
                     var onScrollClick = this.onScrollClick.bind(this, id);
                     return (
-                        React.createElement("div", {onClick: onScrollClick, style: this.componentStyle.letterPlaceholder}, 
+                        React.createElement("div", {key: key, onClick: onScrollClick, style: this.componentStyle.letterPlaceholder}, 
                             React.createElement("span", {style: {color: this.componentStyle.letterPlaceholder.color}}, letter)
                         )
                     );
@@ -105051,7 +107665,7 @@ var VocabularyNavigationPanel = React.createClass({displayName: "VocabularyNavig
 
 module.exports = VocabularyNavigationPanel;
 
-},{"object-assign":33,"react":518}],714:[function(require,module,exports){
+},{"object-assign":33,"react":518}],734:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -105102,12 +107716,9 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
 
     componentStyle: {
         placeholder: {
-            //padding: 5,
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
             margin: '0 auto',
-            //width: 850,
-            //width: 788,
             width: 782,
             marginTop: 10,
             paddingTop: 10,
@@ -105178,6 +107789,8 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
             loading: true
         });
         VocabularyMixin.loadWords(function(words){
+            //console.log('loaded words: ', words);
+            //console.log('words.length = ', words.length);
             this.setState({
                 loading: false,
                 words: words,
@@ -105222,9 +107835,10 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
         }
         var arr = [];
         var list = this.state.words;
+        text = text.toLowerCase();
         for (var i in list){
             var w = list[i];
-            if (w.name.indexOf(text) > -1){
+            if (w.name.toLowerCase().indexOf(text) > -1){
                 arr.push(w);
             }
         }
@@ -105280,7 +107894,6 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
 
-
                 this.props.searchInputVisible == false ? null :
                     React.createElement("div", {style: this.componentStyle.inputBlock}, 
                         React.createElement("div", {className: 'ui form'}, 
@@ -105334,7 +107947,6 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
 
                 ), 
 
-
                 this.state.dialogVisible == false ? null :
                     React.createElement("div", null, 
                         React.createElement(TopicDialog, {onClose: this.onClose, 
@@ -105358,7 +107970,7 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
 
 module.exports = VocabularyPanel;
 
-},{"../../mixins/VocabularyMixin":730,"../material/list/CardsList":630,"../topics/dialog/TopicDialog":694,"../translate/panel/TranslatePanel":701,"./VocabularyItemsList":712,"./VocabularyNavigationPanel":713,"object-assign":33,"react":518}],715:[function(require,module,exports){
+},{"../../mixins/VocabularyMixin":752,"../material/list/CardsList":645,"../topics/dialog/TopicDialog":714,"../translate/panel/TranslatePanel":721,"./VocabularyItemsList":732,"./VocabularyNavigationPanel":733,"object-assign":33,"react":518}],735:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -105677,7 +108289,7 @@ var DataFactory = {
 
 module.exports = DataFactory;
 
-},{}],716:[function(require,module,exports){
+},{}],736:[function(require,module,exports){
 /**
  * Created by sabir on 05.10.15.
  */
@@ -106081,7 +108693,7 @@ var ClassMixin = {
 
 module.exports = ClassMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":732,"../../react/mixins/commonMixins/ParseMixin":733,"./FeedMixin":718,"parse":34}],717:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":755,"../../react/mixins/commonMixins/ParseMixin":756,"./FeedMixin":738,"parse":34}],737:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -107014,7 +109626,7 @@ var ExerciseMixin = {
 
 module.exports = ExerciseMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"parse":34}],718:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],738:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -107239,7 +109851,7 @@ function migrateFeeds(){
     });
 }
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"parse":34}],719:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],739:[function(require,module,exports){
 /**
  * Created by sabir on 20.09.15.
  */
@@ -107278,7 +109890,290 @@ var FileUploadMixin = {
 
 module.exports = FileUploadMixin;
 
-},{}],720:[function(require,module,exports){
+},{}],740:[function(require,module,exports){
+/**
+ * Created by sabir on 28.11.15.
+ */
+
+var React = require('react');
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+var MaterialsMixin = require('./MaterialsMixin');
+var VocabularyMixin = require('./VocabularyMixin');
+
+var IdiomsMixin = {
+
+    prepareIdiomsList: function(materials){
+        var list = [];
+        var map = {};
+        for (var i in materials){
+            var m = materials[i];
+            if (map[m.name] == undefined){
+                map[m.name] = {
+                    name: m.name,
+                    description: m.comment.replace('<div><b>Значение</b></div><div><br></div>', ''),
+                    materials: []
+                }
+            }
+            map[m.name].materials.push(m);
+        }
+        for (var key in map){
+            list.push(map[key]);
+        }
+        return list;
+    },
+
+    getSortedIdioms: function(idioms){
+        var self = this;
+        console.log('getSortedIdioms occured: idioms = ', idioms);
+        idioms.sort(function(idiom1, idiom2){
+            var w1 = VocabularyMixin.getClearWord(idiom1.name).toLowerCase();
+            var w2 = VocabularyMixin.getClearWord(idiom2.name).toLowerCase();
+            if (w1 < w2){
+                return -1;
+            }
+            if (w1 > w2){
+                return 1;
+            }
+            return 0;
+        });
+        return idioms;
+    },
+
+    loadIdioms: function(callback){
+        var groupId = 'lN6Ow0ZOBY';
+        var q = new Parse.Query('PatientMaterial');
+        q.containedIn('groups', [groupId]);
+        q.limit(1000);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(materials){
+            materials = materials.map(function(m){
+                return MaterialsMixin.transformMaterialFromParseObject(m);
+            });
+            var idiomsList = self.prepareIdiomsList(materials);
+            callback(self.getSortedIdioms(idiomsList));
+        });
+    }
+
+}
+
+module.exports = IdiomsMixin;
+
+//
+//(function loadIdioms(){
+//    var q = new Parse.Query(Parse.Object.extend('Idiom'));
+//    q.equalTo('idiomType', 'idiom');
+//    q.limit(1000);
+//    q.ascending('title');
+//    q.find(function(results){
+//
+//        var arr = results.map(function(r){
+//            var comment = '';
+//            comment+= '<div><b>Значение</b></div><div><br></div>';
+//            comment+= '<div>' + r.get('description') + '</div>';
+//            comment+= '<div>' + r.get('ruDescription') + '</div>';
+//
+//            var transcript = r.get('transcript');
+//            transcript+= '\n';
+//            transcript+= r.get('ruTranscript');
+//
+//            return {
+//                title: r.get('title'),
+//                transcript: transcript,
+//                vimeoId: r.get('vimeoId'),
+//                comment: comment
+//            }
+//        });
+//        console.log(arr);
+//        console.log(JSON.stringify(arr));
+//    });
+//})();
+
+},{"../../react/mixins/commonMixins/ParseMixin":756,"./MaterialsMixin":743,"./VocabularyMixin":752,"parse":34,"react":518}],741:[function(require,module,exports){
+/**
+ * Created by sabir on 01.12.15.
+ */
+
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+var $ = require('jquery');
+
+var KaraokeMixin = {
+
+    prettifySubtitles: function(subtitles){
+        if (subtitles == undefined){
+            return [];
+        }
+        var pattern = "&quot;";
+        var re = new RegExp(pattern, "g");
+
+        var arr = [];
+        for (var i in subtitles){
+            var sub = subtitles[i];
+            sub.text = sub.text.replace(re, '"');
+            arr.push(sub)
+        }
+        arr.sort(function(sub1, sub2){
+            return sub1.start - sub2.start;
+        });
+        return arr;
+    },
+
+    transformMaterialToKaraoke: function(m){
+        return {
+            author: m.get('author'),
+            category: m.get('category'),
+            description: m.get('description'),
+            duration: m.get('duration'),
+            rating: m.get('rating'),
+            subtitles: this.prettifySubtitles(m.get('subtitles')),
+            avatar: m.get('thumbnail'),
+            name: m.get('title'),
+            viewCount: m.get('viewCount'),
+            words: m.get('words'),
+            youtubeId: m.get('youtubeId'),
+            id: m.id,
+            materialId: m.id
+        }
+    },
+
+    loadKaraokeById: function(id, callback){
+        var q = new Parse.Query('YoutubeVideoMaterial');
+        var self = this;
+        q.get(id, {
+            success: function(res){
+                callback(res);
+            }
+        })
+    },
+
+    loadGroupedKaraokes: function(callback){
+        var q = new Parse.Query('YoutubeVideoMaterial');
+        q.limit(1000);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformMaterialToKaraoke(m);
+            });
+
+            var res = self.getGroupedKaraokes(arr);
+
+            console.log('loaded: ', res);
+            console.log(JSON.stringify(res.map(function(r){return r.category})));
+
+            callback(res);
+        });
+    },
+
+    loadKaraoke: function(materialId, callback){
+        this.loadKaraokeById(materialId, function(m){
+            callback(this.transformMaterialToKaraoke(m));
+        }.bind(this));
+    },
+
+    getGroupedKaraokes: function(karaokes){
+        var list = karaokes;
+        var arr = [];
+        var map = {};
+        for (var i in list){
+            var kar =  list[i];
+            if (map[kar.category] == undefined){
+                map[kar.category] = {
+                    category: kar.category,
+                    materials: [],
+                    avatar: this.getAvatarByCategory(kar.category)
+                }
+            }
+            map[kar.category].materials.push(kar);
+        }
+        for (var key in map){
+            arr.push(map[key]);
+        }
+        return arr;
+    },
+
+    loadGrouppedKaraokesByCategoryName: function(categoryName, callback){
+        var q = new Parse.Query('YoutubeVideoMaterial');
+        q.limit(1000);
+        q.equalTo('category', categoryName);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformMaterialToKaraoke(m);
+            });
+            callback(arr);
+        });
+    },
+
+    getCurrentSubtitles: function(subtitles, time){
+        //console.log('getCurrentSubtitles occured: subtitles, time = ', subtitles, time);
+        var list = subtitles;
+        var res = {};
+        var num = 0;
+        for (var i in list){
+            var sub = list[i];
+            var start = sub.start;
+            var end = +sub.start + +sub.dur;
+            if (time >= start && time <= end){
+                num = i;
+                break;
+            }
+        }
+        res.current = list[+num];
+        if (num > 0){
+            res.prev = list[+num - 1];
+        }
+        if (num < list.length - 1){
+            res.next = list[+num + 1]
+        }
+        //console.log('current subtitles: ', res);
+        return res;
+    },
+
+    getAvatarByCategory: function(category){
+        return this.karaokeAvatarsMap[category];
+    },
+
+
+
+    karaokeAvatarsMap: {
+        'Howto & Style': 'http://app.englishpatient.org/assets/images/youtubeCategories/howtostyle.png',
+        'Nonprofits & Activism': 'http://app.englishpatient.org/assets/images/youtubeCategories/nonprofitsactivism.png',
+        'Education': 'http://app.englishpatient.org/assets/images/youtubeCategories/education.png',
+        'People & Blogs': 'http://app.englishpatient.org/assets/images/youtubeCategories/peopleblogs.png',
+        'Shows': 'http://app.englishpatient.org/assets/images/youtubeCategories/shows.png',
+        'News & Politics': 'http://app.englishpatient.org/assets/images/youtubeCategories/newspolitics.png',
+        'Comedy': 'http://app.englishpatient.org/assets/images/youtubeCategories/comedy.png',
+        'Gaming': 'http://app.englishpatient.org/assets/images/youtubeCategories/gaming.png',
+        'Sports': 'http://app.englishpatient.org/assets/images/youtubeCategories/sports.png',
+        'Film & Animation': 'http://app.englishpatient.org/assets/images/youtubeCategories/filmanimation.png',
+        'Science & Technology': 'http://app.englishpatient.org/assets/images/youtubeCategories/sciencetechnology.png',
+        'Entertainment': 'http://app.englishpatient.org/assets/images/youtubeCategories/entertainment.png',
+        'Travel & Events': 'http://app.englishpatient.org/assets/images/youtubeCategories/travelevents.png',
+        'Music': 'http://app.englishpatient.org/assets/images/youtubeCategories/music.png',
+        'Pets & Animals': 'http://app.englishpatient.org/assets/images/youtubeCategories/petsanimals.png'
+    },
+
+    getAllCategories: function(){
+        var arr = [];
+        var list = this.allCategories;
+        for (var i in list){
+            arr.push({
+                category: list[i],
+                avatar: this.getAvatarByCategory(list[i]),
+                materials: []
+            });
+        }
+        return arr;
+    },
+
+    allCategories: ["Howto & Style","Nonprofits & Activism","Education","People & Blogs","Shows","News & Politics","Comedy","Gaming","Sports","Film & Animation","Science & Technology","Entertainment","Travel & Events","Music","Pets & Animals"]
+
+}
+
+module.exports = KaraokeMixin;
+
+},{"../../react/mixins/commonMixins/ParseMixin":756,"jquery":30,"parse":34}],742:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -107397,7 +110292,7 @@ var LoginMixin = {
 
 module.exports = LoginMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":732,"../../react/mixins/commonMixins/ParseMixin":733,"parse":34,"react":518}],721:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":755,"../../react/mixins/commonMixins/ParseMixin":756,"parse":34,"react":518}],743:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -108004,12 +110899,16 @@ var MaterialsMixin = {
 
 module.exports = MaterialsMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"./TopicsMixin":726,"./UserMixin":728,"jquery":30,"parse":34}],722:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"./TopicsMixin":748,"./UserMixin":750,"jquery":30,"parse":34}],744:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
 var DataFactory = require('../data/DataFactory');
 var Parse = require('parse').Parse;
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var MaterialsMixin = require('./MaterialsMixin');
+
+var VideoMixin = require('./VideoMixin');
 
 var MigrationMixin = {
 
@@ -108051,13 +110950,44 @@ var MigrationMixin = {
             //    }
             //});
         });
+    },
+
+    loadDirtyMaterials: function(callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.limit(1000);
+        q.doesNotExist('vimeoImgSrc');
+        //q.equalTo('duration', 0);
+        ParseMixin.loadAllDataFromParse(q, function(materials){
+            materials = materials.map(function(m){
+                return MaterialsMixin.transformMaterialFromParseObject(m);
+            });
+            callback(materials);
+        });
+    },
+
+    processOneDirtyMaterial: function(materialId, callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.get(materialId, {
+            success: function(material){
+                var vimeoId = material.get('vimeoId');
+                VideoMixin.loadVimeoInfo(vimeoId, function(info){
+                   material.set('duration', info.duration);
+                   material.set('vimeoImgSrc', info.imgSrc);
+                   material.save().then(function(m){
+                      callback(m);
+                   });
+                });
+            }
+        });
     }
+
+
 
 }
 
 module.exports = MigrationMixin;
 
-},{"../data/DataFactory":715,"parse":34}],723:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"../data/DataFactory":735,"./MaterialsMixin":743,"./VideoMixin":751,"parse":34}],745:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -108348,7 +111278,7 @@ var NotesMixin = {
 
 module.exports = NotesMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"parse":34}],724:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],746:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -108488,7 +111418,7 @@ var NotificationMixin = {
 
 module.exports = NotificationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"./ClassMixin":716,"./UserMixin":728,"parse":34}],725:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"./ClassMixin":736,"./UserMixin":750,"parse":34}],747:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -108603,7 +111533,7 @@ var ProfileMixin = {
 
 module.exports = ProfileMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"parse":34}],726:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],748:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -108737,7 +111667,7 @@ var TopicsMixin = {
 
 module.exports = TopicsMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":732,"../../react/mixins/commonMixins/ParseMixin":733,"./FeedMixin":718,"parse":34}],727:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":755,"../../react/mixins/commonMixins/ParseMixin":756,"./FeedMixin":738,"parse":34}],749:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -108901,7 +111831,7 @@ var TranslateMixin = {
 
 module.exports = TranslateMixin;
 
-},{"./VocabularyMixin":730,"jquery":30}],728:[function(require,module,exports){
+},{"./VocabularyMixin":752,"jquery":30}],750:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -108993,7 +111923,7 @@ var UserMixin = {
 
 module.exports = UserMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"parse":34,"react":518}],729:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34,"react":518}],751:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -109065,7 +111995,7 @@ var VideoMixin = {
 
 module.exports = VideoMixin;
 
-},{"jquery":30,"moment":32}],730:[function(require,module,exports){
+},{"jquery":30,"moment":32}],752:[function(require,module,exports){
 
 var React = require('react');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
@@ -109105,6 +112035,12 @@ var VocabularyMixin = {
             w = w.substr(2).trim();
             return w;
         }
+
+        if (w.indexOf('an ') == 0){
+            w = w.substr(2).trim();
+            return w;
+        }
+
         return w.trim();
     },
 
@@ -109133,7 +112069,8 @@ var VocabularyMixin = {
 
     prepareWordsFromMaterials: function(materials){
         var words = [];
-        var map = [];
+        //var map = [];
+        var map = {};
         for (var i in materials){
             var m = materials[i];
             var name = (m.name == undefined) ? '' : m.name;
@@ -109161,7 +112098,6 @@ var VocabularyMixin = {
 
     loadWords: function(callback){
         var groupId = 'LmohVyRlIQ';
-
         var q = new Parse.Query('PatientMaterial');
         q.containedIn('groups', [groupId]);
         q.limit(1000);
@@ -109170,14 +112106,42 @@ var VocabularyMixin = {
             materials = materials.map(function(m){
                 return MaterialsMixin.transformMaterialFromParseObject(m);
             });
+            console.log('vocabulary materials length = ', materials.length);
             callback(self.prepareWordsFromMaterials(materials));
         });
     }
+
+
 }
 
 module.exports = VocabularyMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":733,"./MaterialsMixin":721,"parse":34,"react":518}],731:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":756,"./MaterialsMixin":743,"parse":34,"react":518}],753:[function(require,module,exports){
+/**
+ * Created by sabir on 29.11.15.
+ */
+
+var React = require('react');
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+var MaterialsMixin = require('./MaterialsMixin');
+
+
+var YoutubeSearchMixin = {
+
+    search: function(text, callback){
+        Parse.Cloud.run('searchPhrase', {query: text}, {
+            success: function(result){
+                callback(result);
+            }
+        });
+    }
+
+}
+
+module.exports = YoutubeSearchMixin;
+
+},{"../../react/mixins/commonMixins/ParseMixin":756,"./MaterialsMixin":743,"parse":34,"react":518}],754:[function(require,module,exports){
 /**
  * Created by sabir on 26.08.15.
  */
@@ -109199,7 +112163,7 @@ var constants = {
 
 module.exports = constants;
 
-},{}],732:[function(require,module,exports){
+},{}],755:[function(require,module,exports){
 /**
  * Created by sabir on 29.07.15.
  */
@@ -109353,7 +112317,7 @@ var CommonMixin = {
 
 module.exports = CommonMixin;
 
-},{}],733:[function(require,module,exports){
+},{}],756:[function(require,module,exports){
 /**
  * Created by sabir on 15.08.15.
  */
@@ -109515,4 +112479,4 @@ var ParseMixin = {
 
 module.exports = ParseMixin;
 
-},{"../../../js/Constants":731,"jquery":30,"parse":34}]},{},[521]);
+},{"../../../js/Constants":754,"jquery":30,"parse":34}]},{},[521]);

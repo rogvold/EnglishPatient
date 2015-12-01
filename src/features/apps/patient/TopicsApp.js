@@ -30,6 +30,7 @@ var SelfLoadingTopicDialog = require('../../components/topics/dialog/SelfLoading
 
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
 
+var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
 
 
 var TopicsApp = React.createClass({
@@ -47,7 +48,8 @@ var TopicsApp = React.createClass({
             loggedIn: false,
             user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser(),
             topicDialogVisible: true,
-            selectedTopicId: undefined
+            selectedTopicId: undefined,
+            mode: 'topics'
         }
     },
 
@@ -70,7 +72,30 @@ var TopicsApp = React.createClass({
     },
 
     componentStyle: {
-        placeholder: {}
+        placeholder: {
+
+        },
+
+        modesPanel: {
+            textAlign: 'center',
+            marginBottom: 10,
+            backgroundColor: 'white',
+            borderBottom: '1px solid #EFF0F1',
+        },
+
+        modesItem: {
+            display: 'inline-block',
+            margin: 10,
+            marginBottom: 0,
+            cursor: 'pointer',
+            color: '#2E3C54',
+            marginTop: 0,
+            padding: 5
+        },
+
+        active: {
+            borderBottom: '3px solid #FC636B'
+        }
     },
 
     updateAuth: function(){
@@ -127,11 +152,38 @@ var TopicsApp = React.createClass({
         });
     },
 
-    getContent: function(){
+    getModesPanel: function(){
+        var tFun = this.switchMode.bind(this, 'topics');
+        var kFun = this.switchMode.bind(this, 'karaoke');
+        var mode = this.state.mode;
+
+        var karSt = assign({}, this.componentStyle.modesItem, (mode == 'karaoke' ? this.componentStyle.active : {}));
+        var topicsSt = assign({}, this.componentStyle.modesItem, (mode == 'topics' ? this.componentStyle.active : {}));
 
         return (
-            <div style={{padding: 10}}>
-                <SelfLoadingTopicsList teacherId={this.state.user.id} />
+            <div style={this.componentStyle.modesPanel}>
+                <div style={this.componentStyle.modesItem} style={topicsSt}  onClick={tFun}  >без титров</div>
+                <div style={this.componentStyle.modesItem} style={karSt} onClick={kFun} > с титрами</div>
+            </div>
+        );
+    },
+
+    getContent: function(){
+        var mode = this.state.mode;
+        return (
+            <div style={{padding: 0}}>
+
+                {this.getModesPanel()}
+
+                {mode == 'topics' ?
+                    <SelfLoadingTopicsList teacherId={this.state.user.id} />
+                    :
+                    <KaraokeGroupsPanel />
+                }
+
+
+
+
             </div>
 
 
@@ -140,6 +192,12 @@ var TopicsApp = React.createClass({
 
     getFooter: function(){
 
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
+        });
     },
 
     render: function () {

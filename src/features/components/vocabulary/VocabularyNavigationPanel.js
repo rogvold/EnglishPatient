@@ -61,10 +61,11 @@ var VocabularyNavigationPanel = React.createClass({
 
                 {list.map(function(a, k){
                     var id = this.props.idPattern + a;
+                    var key = 'l_e_' + id;
                     var letter = a.toUpperCase();
                     var onScrollClick = this.onScrollClick.bind(this, id);
                     return (
-                        <div onClick={onScrollClick} style={this.componentStyle.letterPlaceholder}>
+                        <div key={key} onClick={onScrollClick} style={this.componentStyle.letterPlaceholder}>
                             <span  style={{color: this.componentStyle.letterPlaceholder.color}} >{letter}</span>
                         </div>
                     );

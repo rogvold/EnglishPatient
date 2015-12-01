@@ -43,9 +43,8 @@ var WordsList = React.createClass({
                 {list.map(function(item, k){
                     var key = 'word_' + k + 'item';
                     var word = item;
-                    var onClick = this.onWordClick.bind(this);
                     return (
-                        <WordItem key={key} onWordClick={onClick} word={word} />
+                        <WordItem key={key} onWordClick={this.onWordClick} word={word} />
                     );
                 }, this)}
             </div>

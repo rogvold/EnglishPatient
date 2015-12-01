@@ -24,6 +24,9 @@ var ReactTooltip = require('react-tooltip');
 
 var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
 
+var MigrationMixin = require('../../mixins/MigrationMixin');
+
+
 var SimpleDev = React.createClass({
     getDefaultProps: function () {
         return {
@@ -86,23 +89,33 @@ var SimpleDev = React.createClass({
         });
     },
 
-    render: function () {
+    loadMaterials: function(){
+        var self = this;
+        MigrationMixin.loadDirtyMaterials(function(materials){
+            console.log('laded materials: ', materials);
+            console.log('not processed number: ', materials.length);
+            if (materials.length == 0){
+                alert('finish!');
+                return;
+            }
 
-        var text = "The Second Amendment was based partially on the right to keep and bear arms in English common-law and was influenced by the English Bill of Rights of 1689. Sir William Blackstone described this right as an auxiliary right, supporting the natural rights of self-defense, resistance to oppression, and the civic duty to act in concert in defense of the state";
+            var mId = materials[0].id;
+
+            MigrationMixin.processOneDirtyMaterial(mId, function(m){
+               console.log('processed: ', m);
+                self.loadMaterials();
+            });
+
+
+        });
+    },
+
+    render: function () {
 
         return (
             <div style={this.componentStyle.placeholder}>
 
-
-                <div style={this.componentStyle.playerPlaceholder}>
-                    <PatientPlayer youtubeId={'8SbUC-UaAxE'} start={420} end={503} />
-                </div>
-
-                <div style={this.componentStyle.playerPlaceholder}>
-                    <PatientPlayer vimeoId={'70260646'} start={420} end={503} />
-                </div>
-
-               <VocabularyPanel />
+                <button onClick={this.loadMaterials} > load </button>
 
 
             </div>

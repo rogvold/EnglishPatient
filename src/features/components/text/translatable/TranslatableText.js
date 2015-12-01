@@ -15,7 +15,10 @@ var TranslatableText = React.createClass({
     getDefaultProps: function () {
         return {
             text: '',
-            fontSize: '18px'
+            fontSize: '18px',
+            style: {
+
+            }
         }
     },
 
@@ -61,8 +64,8 @@ var TranslatableText = React.createClass({
 
     render: function () {
         var words = this.extractWords();
-        console.log('extracted words: ', words);
-        var st = assign({}, this.componentStyle.placeholder, {fontSize: this.props.fontSize});
+        //console.log('extracted words: ', words);
+        var st = assign({}, this.componentStyle.placeholder, {fontSize: this.props.fontSize}, this.props.style);
 
         return (
             <div style={st}>

@@ -29,21 +29,6 @@ var TeacherHeader = React.createClass({
                 onClick: function(){
                 },
                 url: '/exercises'
-            },{
-                displayName: 'Видео',
-                name: 'materials',
-                icon: '',
-                onClick: function(){
-                },
-                url: '/materials'
-            }, {
-                displayName: 'Тексты',
-                name: 'notes',
-                icon: '',
-                onClick: function(){
-
-                },
-                url: '/notes'
             }, {
                 displayName: 'Топики',
                 name: 'topics',
@@ -51,14 +36,49 @@ var TeacherHeader = React.createClass({
                 onClick: function(){
                 },
                 url: '/topics'
-            },{
+            },
+                {
+                    displayName: 'Грамматика',
+                    name: 'grammar',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/grammar'
+                },
+                {
                 displayName: 'Словарь',
                 name: 'dictionary',
                 icon: '',
                 onClick: function(){
                 },
                 url: '/dictionary'
-            }],
+            },
+                {
+                    displayName: 'Идиомы и пословицы',
+                    name: 'idioms',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/idioms'
+                },
+                {
+                    displayName: 'Тексты',
+                    name: 'notes',
+                    icon: '',
+                    onClick: function(){
+
+                    },
+                    url: '/notes'
+                },
+                {
+                    displayName: 'Микс',
+                    name: 'materials',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/materials'
+                }
+            ],
             activeTab: undefined,
             onLogout: function(){
                 alert('logout occured');

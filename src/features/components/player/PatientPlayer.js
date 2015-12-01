@@ -16,8 +16,15 @@ var PatientPlayer = React.createClass({
             //youtubeId: '8SbUC-UaAxE',
             //vimeoId: '70260646',
             vimeoId: undefined,
-            start: undefined,
-            end: undefined
+            start: 0,
+            end: 1000 * 100000,
+
+            seekToValue: 0,
+            paused: false,
+
+            onProgress: function(seconds){
+
+            }
 
 
         }
@@ -28,7 +35,7 @@ var PatientPlayer = React.createClass({
             loading: false,
             loaded: 0,
             played: 0,
-            //playing: true,
+            playing: true,
             duration: 0,
             name: undefined,
             imgSrc: undefined
@@ -36,11 +43,35 @@ var PatientPlayer = React.createClass({
     },
 
     componentWillReceiveProps: function (nextProps) {
+        var vimeoId = nextProps.vimeoId;
+        var youtubeId = nextProps.youtubeId;
 
+        var seekToValue = nextProps.seekToValue;
+        var paused = nextProps.paused;
+
+        if (seekToValue != this.props.seekToValue){
+            this.seekTo(seekToValue * 1000.0 / this.state.duration);
+            //return;
+        }
+
+        if (paused != this.props.paused){
+            console.log('paused changed');
+            this.setState({
+                playing: !paused
+            });
+        }
+
+        if (vimeoId == this.props.vimeoId && youtubeId == this.props.youtubeId){
+            return;
+        }
+
+        this.load(youtubeId, vimeoId, function(data){
+            console.log(data);
+        });
     },
 
     componentDidMount: function () {
-        this.load(function(data){
+        this.load(this.props.youtubeId, this.props.vimeoId, function(data){
             console.log('video loaded', data);
         });
     },
@@ -89,43 +120,44 @@ var PatientPlayer = React.createClass({
         this.refs.player.seekTo(fraction);
     },
 
-    load: function(callback){
+    load: function(youtubeId, vimeoId, callback){
         if (callback == undefined) callback = function(){};
-        if (this.props.vimeoId != undefined){
+        if (vimeoId != undefined){
             this.setState({
                 loading: true
             });
-            VideoMixin.loadVimeoInfo(this.props.vimeoId, function(data){
+            VideoMixin.loadVimeoInfo(vimeoId, function(data){
                 console.log(data);
                 this.setState({
                     duration: data.duration * 1000,
                     imgSrc: data.imgSrc,
                     loading: false
                 });
+                this.checkBounds(0);
                 callback(data);
             }.bind(this));
             return;
         }
-        if (this.props.youtubeId != undefined){
+        if (youtubeId != undefined){
             this.setState({
                 loading: true
             });
-            VideoMixin.loadYoutubeInfo(this.props.youtubeId, function(data){
+            VideoMixin.loadYoutubeInfo(youtubeId, function(data){
                 console.log(data);
                 this.setState({
                     duration: data.duration,
                     imgSrc: data.imgSrc,
                     loading: false
                 });
-                VideoMixin.loadCaptions(this.props.youtubeId);
+                //VideoMixin.loadCaptions(youtubeId);
+                //this.refs.player.unloadModule("captions");
+                //this.refs.player.unloadModule("cc");
+                this.checkBounds(0);
                 callback(data);
             }.bind(this));
             return;
         }
 
-        VideoMixin.loadYoutubeInfo(this.props.youtubeId, function(data){
-
-        }.bind(this));
     },
 
     checkBounds: function(playedFraction){
@@ -137,6 +169,7 @@ var PatientPlayer = React.createClass({
         if (pos < start || pos > end ){
             this.seekTo( 1.0 * start / duration);
         }
+        this.props.onProgress(pos / 1000.0);
 
     },
 
@@ -150,7 +183,10 @@ var PatientPlayer = React.createClass({
         var end = (this.props.end == undefined) ? 0 : this.props.end;
         var youtubeConfig = {
             start: start,
-            end: end
+            end: end,
+            captions: {
+
+            }
         };
         var vimeoConfig = {
             badge: 0,
@@ -168,6 +204,7 @@ var PatientPlayer = React.createClass({
                                      height="100%"
                                      onProgress={this.onProgress}
                                      onPlay={this.onPlay}
+                                     playing={this.state.playing}
                                      onPause={this.onPause}
                                      youtubeConfig={youtubeConfig}
                                      vimeoConfig={vimeoConfig}

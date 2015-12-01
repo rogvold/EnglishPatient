@@ -59,7 +59,9 @@ var HeaderLeftLinks = React.createClass({
             boxSizing: 'borderBox',
             display: 'inline-block',
             marginRight: 25,
-            color: '#A1A4AA',
+            //color: '#A1A4AA',
+            color: '#2E3C54',
+            //fontWeight: 'bold',
             paddingTop: 10,
             cursor: 'pointer'
         },

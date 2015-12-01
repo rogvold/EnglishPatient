@@ -70,8 +70,33 @@ var MaterialPanel = React.createClass({
             width: '100%',
             height: 450
         }
+    },
 
+    getTranscriptComponent: function(){
+        var tr = this.props.transcript;
+        if (tr == undefined || tr.trim() == ''){
+            return null;
+        }
+        var list = tr.split('\n');
 
+        return (
+            <div>
+                {list.map(function(t, k){
+                    var key = 'tr_' + k;
+                    var isLast = (k == list.length - 1);
+                    return (
+                        <div key={key} >
+                            <TranslatableText text={t}
+                                 fontSize={this.componentStyle.transcriptPlaceholder.fontSize} />
+                            {isLast == false ? <br/> : null}
+                        </div>
+                    );
+
+                }, this)}
+
+            </div>
+
+        );
 
     },
 
@@ -96,7 +121,7 @@ var MaterialPanel = React.createClass({
                 {(this.props.transcript == undefined || this.props.transcript.trim() == '') ? null :
                     <div style={this.componentStyle.transcriptPlaceholder}>
 
-                        <TranslatableText text={this.props.transcript} fontSize={this.componentStyle.transcriptPlaceholder.fontSize} />
+                        {this.getTranscriptComponent()}
 
                     </div>
                 }

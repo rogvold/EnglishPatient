@@ -14,6 +14,12 @@ var NotificationsApp = require('./NotificationsApp');
 var ToolsApp = require('./ToolsApp');
 var DictionaryApp = require('./DictionaryApp');
 
+var IdiomsApp = require('./IdiomsApp');
+var GrammarApp = require('./GrammarApp');
+
+
+
+
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
@@ -97,6 +103,14 @@ var App = React.createClass({
                 </Route>
                 <Route path="/dictionary" component={DictionaryApp}>
                     <IndexRoute component={DictionaryApp} />
+                </Route>
+
+                <Route path="/grammar" component={GrammarApp}>
+                    <IndexRoute component={GrammarApp} />
+                </Route>
+
+                <Route path="/idioms" component={IdiomsApp}>
+                    <IndexRoute component={IdiomsApp} />
                 </Route>
 
                 <Route path="/dev" component={DevApp}>

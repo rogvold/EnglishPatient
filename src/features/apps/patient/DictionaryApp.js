@@ -35,7 +35,6 @@ var DictionaryApp = React.createClass({
             users: [],
             selectedTabName: 'users',
             loggedIn: false,
-            user: undefined,
             user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser()
         }
     },

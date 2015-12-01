@@ -3,6 +3,10 @@
  */
 var DataFactory = require('../data/DataFactory');
 var Parse = require('parse').Parse;
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var MaterialsMixin = require('./MaterialsMixin');
+
+var VideoMixin = require('./VideoMixin');
 
 var MigrationMixin = {
 
@@ -44,7 +48,38 @@ var MigrationMixin = {
             //    }
             //});
         });
+    },
+
+    loadDirtyMaterials: function(callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.limit(1000);
+        q.doesNotExist('vimeoImgSrc');
+        //q.equalTo('duration', 0);
+        ParseMixin.loadAllDataFromParse(q, function(materials){
+            materials = materials.map(function(m){
+                return MaterialsMixin.transformMaterialFromParseObject(m);
+            });
+            callback(materials);
+        });
+    },
+
+    processOneDirtyMaterial: function(materialId, callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.get(materialId, {
+            success: function(material){
+                var vimeoId = material.get('vimeoId');
+                VideoMixin.loadVimeoInfo(vimeoId, function(info){
+                   material.set('duration', info.duration);
+                   material.set('vimeoImgSrc', info.imgSrc);
+                   material.save().then(function(m){
+                      callback(m);
+                   });
+                });
+            }
+        });
     }
+
+
 
 }
 

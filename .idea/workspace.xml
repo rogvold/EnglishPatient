@@ -2,66 +2,65 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40dad2a3-a209-4109-bfc1-a42537237cac" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/apps/patient/DictionaryApp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/apps/patient/SimpleDev.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/text/translatable/TranslatableText.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/translate/TranslateButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/translate/TranslateDialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/profile/UserProfileButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/profile/UserProfilePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/background/video/VideoBackground.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/VideoMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyItemsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/VocabularyMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyNavigationPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/text/translatable/WordItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/text/translatable/WordsList.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/features/components/translate/TranslatableText.js" afterPath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/autosvehicles.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/comedy.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/education.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/entertainment.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/filmanimation.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/gaming.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/howtostyle.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/movies.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/music.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/newspolitics.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/nonprofitsactivism.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/peopleblogs.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/petsanimals.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/sciencetechnology.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/shows.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/sports.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/images/youtubeCategories/travelevents.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/checkbox/CategoryCheckbox.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/checkbox/CategoryCheckboxesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/apps/patient/GrammarApp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/GroupsListItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/apps/patient/IdiomsApp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/IdiomsMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/idioms/IdiomsPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/KaraokeCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/KaraokeCardsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/KaraokeGroupsPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/KaraokeMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/KaraokePlayerPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/subtitles/MainSubtitle.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/subtitles/MainSubtitlesBlock.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/material/groups/MaterialGroupCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/ResultsItemPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/SearchResultsPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/SelfLoadingCategoryKaraokeCardsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/SelfLoadingKaraokePlayerPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/subtitles/SubtitlesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/karaoke/subtitles/SubtitlesListItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/YoutubeSearchMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/YoutubeSearchPanel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/App.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/templates/CurrentUserMenuItem.js" afterPath="$PROJECT_DIR$/src/features/components/templates/CurrentUserMenuItem.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/DevApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/DevApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/create/EditableCardBlock.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/create/EditableCardBlock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/ExercisesApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/ExercisesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/HISTORY.md" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/HISTORY.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/IndexApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/IndexApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/DictionaryApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/DictionaryApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/templates/HeaderLeftLinks.js" afterPath="$PROJECT_DIR$/src/features/components/templates/HeaderLeftLinks.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialPanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/MaterialsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/MaterialsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/MaterialsMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/MaterialsMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/search/MaterialsSearchPanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/search/MaterialsSearchPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/react/components/adminAuditor/MediaItem.js" afterPath="$PROJECT_DIR$/src/react/components/adminAuditor/MediaItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/NotesApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/NotesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/NotificationsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/NotificationsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/PatientCard.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/PatientCard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/task/PatientTask.js" afterPath="$PROJECT_DIR$/src/features/components/task/PatientTask.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/text/PatientText.js" afterPath="$PROJECT_DIR$/src/features/components/text/PatientText.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/README.md" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js" afterPath="$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/corrector/sounds/SoundsPanel.js" afterPath="$PROJECT_DIR$/src/features/components/corrector/sounds/SoundsPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/student/StudentClassApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/student/StudentClassApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/header/student/StudentHeader.js" afterPath="$PROJECT_DIR$/src/features/components/header/student/StudentHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/student/StudentIndexApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/student/StudentIndexApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/teacher/TeacherFeedbackCreationBlock.js" afterPath="$PROJECT_DIR$/src/features/components/teacher/TeacherFeedbackCreationBlock.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/MigrationMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/MigrationMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" afterPath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/SimpleDev.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/SimpleDev.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/header/teacher/TeacherHeader.js" afterPath="$PROJECT_DIR$/src/features/components/header/teacher/TeacherHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/ToolsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/ToolsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/templates/TopbarSettingsMenu.js" afterPath="$PROJECT_DIR$/src/features/components/templates/TopbarSettingsMenu.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/TopicsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/TopicsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/TopicsList.js" afterPath="$PROJECT_DIR$/src/features/components/topics/TopicsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/UserMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/UserMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/text/translatable/TranslatableText.js" afterPath="$PROJECT_DIR$/src/features/components/text/translatable/TranslatableText.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" afterPath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/VocabularyMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/VocabularyMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyNavigationPanel.js" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyNavigationPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyPanel.js" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/text/translatable/WordsList.js" afterPath="$PROJECT_DIR$/src/features/components/text/translatable/WordsList.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/js/app.js" afterPath="$PROJECT_DIR$/features/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/src/index.js" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/src/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/src/index.scss" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/src/index.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="$PROJECT_DIR$/npm-debug.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/package.json" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/node_modules/classnames/package.json" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/node_modules/classnames/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/dist/react-tooltip.js" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/dist/react-tooltip.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/dist/react-tooltip.min.css" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/dist/react-tooltip.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/dist/react-tooltip.scss" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/dist/react-tooltip.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/dist/style.js" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/dist/style.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-tooltip/src/style.js" afterPath="$PROJECT_DIR$/node_modules/react-tooltip/src/style.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/assets/css/custom.css" afterPath="$PROJECT_DIR$/features/assets/css/custom.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/custom.css" afterPath="$PROJECT_DIR$/src/assets/css/custom.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/.idea/workspace.xml" afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" />
     </list>
@@ -84,11 +83,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DevApp.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DevApp.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/features/apps/patient/DevApp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.58196723">
-              <caret line="249" column="25" selection-start-line="249" selection-start-column="25" selection-end-line="249" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="240" column="0" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -131,6 +130,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="35" column="6" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gulpfile.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gulpfile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6409836">
+              <caret line="78" column="44" selection-start-line="78" selection-start-column="44" selection-end-line="78" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -190,6 +199,7 @@
         <option value="$PROJECT_DIR$/src/assets/css/custom.css" />
         <option value="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" />
         <option value="$PROJECT_DIR$/features/js/app.js" />
+        <option value="$PROJECT_DIR$/src/features/components/idioms/IdiomsPanel.js" />
       </list>
     </option>
   </component>
@@ -234,6 +244,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -299,111 +310,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mixins" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="patient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="patient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -470,36 +377,9 @@
               <option name="myItemId" value="assets" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="img" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EnglishPatient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -507,7 +387,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="SearchEverywhereHistoryKey" value="translatema&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/common/js/TranslateManager.js&#10;textme&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/front/TextMediaPanel.js" />
+    <property name="SearchEverywhereHistoryKey" value="idiom&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/idioms/IdiomsPanel.js&#10;translatema&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/common/js/TranslateManager.js&#10;textme&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/front/TextMediaPanel.js" />
     <property name="JavaScriptLanguageLevel" value="JSX" />
     <property name="recentsLimit" value="5" />
     <property name="js.buildTools.gulp.node_interpreter" value="/usr/local/bin/node" />
@@ -517,6 +397,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/features/assets" />
       <recent name="$PROJECT_DIR$/features/assets/img" />
       <recent name="$PROJECT_DIR$/img" />
       <recent name="$PROJECT_DIR$/features/assets/img/avatars" />
@@ -552,7 +433,7 @@
     <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
       <option name="cucumberJsArguments" value="" />
       <option name="executablePath" />
-      <option name="filePath" value="$PROJECT_DIR$/features/js" />
+      <option name="filePath" value="$PROJECT_DIR$/features/assets/images" />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.grunt" factoryName="Grunt.js">
@@ -587,7 +468,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="2" y="23" width="1271" height="728" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291536" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -596,20 +477,28 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.33930025" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25630593" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -619,26 +508,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#p#0;n#div#0;n#div#1;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#4;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#5;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gulpfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1161,14 +1030,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/mixins/TranslateMixin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="6" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/features/apps/patient/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1183,18 +1044,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+    <entry file="file://$PROJECT_DIR$/src/features/apps/patient/DevApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.115">
-          <caret line="55" column="42" selection-start-line="55" selection-start-column="42" selection-end-line="55" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="240" column="0" selection-start-line="240" selection-start-column="0" selection-end-line="240" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/apps/patient/DevApp.js">
+    <entry file="file://$PROJECT_DIR$/src/features/components/idioms/IdiomsPanel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.58196723">
-          <caret line="249" column="25" selection-start-line="249" selection-start-column="25" selection-end-line="249" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.12295082">
+          <caret line="200" column="0" selection-start-line="200" selection-start-column="0" selection-end-line="200" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mixins/TranslateMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="35" column="6" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gulpfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6409836">
+          <caret line="78" column="44" selection-start-line="78" selection-start-column="44" selection-end-line="78" selection-end-column="44" />
           <folding />
         </state>
       </provider>

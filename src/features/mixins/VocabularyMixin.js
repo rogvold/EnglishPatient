@@ -37,6 +37,12 @@ var VocabularyMixin = {
             w = w.substr(2).trim();
             return w;
         }
+
+        if (w.indexOf('an ') == 0){
+            w = w.substr(2).trim();
+            return w;
+        }
+
         return w.trim();
     },
 
@@ -65,7 +71,8 @@ var VocabularyMixin = {
 
     prepareWordsFromMaterials: function(materials){
         var words = [];
-        var map = [];
+        //var map = [];
+        var map = {};
         for (var i in materials){
             var m = materials[i];
             var name = (m.name == undefined) ? '' : m.name;
@@ -93,7 +100,6 @@ var VocabularyMixin = {
 
     loadWords: function(callback){
         var groupId = 'LmohVyRlIQ';
-
         var q = new Parse.Query('PatientMaterial');
         q.containedIn('groups', [groupId]);
         q.limit(1000);
@@ -102,9 +108,12 @@ var VocabularyMixin = {
             materials = materials.map(function(m){
                 return MaterialsMixin.transformMaterialFromParseObject(m);
             });
+            console.log('vocabulary materials length = ', materials.length);
             callback(self.prepareWordsFromMaterials(materials));
         });
     }
+
+
 }
 
 module.exports = VocabularyMixin;

@@ -48,12 +48,9 @@ var VocabularyPanel = React.createClass({
 
     componentStyle: {
         placeholder: {
-            //padding: 5,
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
             margin: '0 auto',
-            //width: 850,
-            //width: 788,
             width: 782,
             marginTop: 10,
             paddingTop: 10,
@@ -124,6 +121,8 @@ var VocabularyPanel = React.createClass({
             loading: true
         });
         VocabularyMixin.loadWords(function(words){
+            //console.log('loaded words: ', words);
+            //console.log('words.length = ', words.length);
             this.setState({
                 loading: false,
                 words: words,
@@ -168,9 +167,10 @@ var VocabularyPanel = React.createClass({
         }
         var arr = [];
         var list = this.state.words;
+        text = text.toLowerCase();
         for (var i in list){
             var w = list[i];
-            if (w.name.indexOf(text) > -1){
+            if (w.name.toLowerCase().indexOf(text) > -1){
                 arr.push(w);
             }
         }
@@ -225,7 +225,6 @@ var VocabularyPanel = React.createClass({
 
         return (
             <div style={this.componentStyle.placeholder}>
-
 
                 {this.props.searchInputVisible == false ? null :
                     <div style={this.componentStyle.inputBlock}>

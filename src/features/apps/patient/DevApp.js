@@ -86,6 +86,16 @@ var UserProfilePanel = require('../../components/profile/UserProfilePanel');
 
 var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
 
+var MaterialGroupCard = require('../../components/material/groups/MaterialGroupCard');
+
+var CategoryCheckboxesList = require('../../components/search/youtube/checkbox/CategoryCheckboxesList');
+
+var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchPanel');
+
+var SelfLoadingKaraokePlayerPanel = require('../../components/karaoke/SelfLoadingKaraokePlayerPanel');
+
+
+var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
 
 var DevApp = React.createClass({
     getDefaultProps: function () {
@@ -95,7 +105,15 @@ var DevApp = React.createClass({
     },
 
     getInitialState: function () {
+        var checkboxes = [{
+            name: 'sabir',
+            active: false
+        }, {
+            name: 'anton',
+            active: true
+        }];
         return {
+            checkboxes: checkboxes,
             text: 'color',
             start: 0,
             end: 0,
@@ -225,13 +243,20 @@ var DevApp = React.createClass({
         });
     },
 
+    onChange: function(newList){
+        console.log('newList = ', newList);
+        this.setState({
+            checkboxes: newList
+        });
+    },
+
     getContent: function(){
         var userId = this.state.user.id;
 
         return (
             <div>
 
-                <VocabularyPanel />
+                <KaraokeGroupsPanel />
 
             </div>
 

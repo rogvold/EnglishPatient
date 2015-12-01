@@ -89,10 +89,13 @@ var TranslatePanel = React.createClass({
     componentStyle: {
         placeholder: {
             position: 'relative',
+            fontWeight: 'normal',
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
             padding: 7,
             borderRadius: 4,
+
+            lineHeight: '20px',
 
             minWidth: 300,
             minHeight: 400,
