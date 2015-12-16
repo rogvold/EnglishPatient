@@ -22,6 +22,8 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var DictionaryApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -78,6 +80,9 @@ var DictionaryApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
 

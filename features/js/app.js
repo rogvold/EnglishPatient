@@ -92,6 +92,3484 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],2:[function(require,module,exports){
+/*!
+ * Chart.js
+ * http://chartjs.org/
+ * Version: 1.0.2
+ *
+ * Copyright 2015 Nick Downie
+ * Released under the MIT license
+ * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
+ */
+
+
+(function(){
+
+	"use strict";
+
+	//Declare root variable - window in the browser, global on the server
+	var root = this,
+		previous = root.Chart;
+
+	//Occupy the global variable of Chart, and create a simple base class
+	var Chart = function(context){
+		var chart = this;
+		this.canvas = context.canvas;
+
+		this.ctx = context;
+
+		//Variables global to the chart
+		var computeDimension = function(element,dimension)
+		{
+			if (element['offset'+dimension])
+			{
+				return element['offset'+dimension];
+			}
+			else
+			{
+				return document.defaultView.getComputedStyle(element).getPropertyValue(dimension);
+			}
+		}
+
+		var width = this.width = computeDimension(context.canvas,'Width');
+		var height = this.height = computeDimension(context.canvas,'Height');
+
+		// Firefox requires this to work correctly
+		context.canvas.width  = width;
+		context.canvas.height = height;
+
+		var width = this.width = context.canvas.width;
+		var height = this.height = context.canvas.height;
+		this.aspectRatio = this.width / this.height;
+		//High pixel density displays - multiply the size of the canvas height/width by the device pixel ratio, then scale.
+		helpers.retinaScale(this);
+
+		return this;
+	};
+	//Globally expose the defaults to allow for user updating/changing
+	Chart.defaults = {
+		global: {
+			// Boolean - Whether to animate the chart
+			animation: true,
+
+			// Number - Number of animation steps
+			animationSteps: 60,
+
+			// String - Animation easing effect
+			animationEasing: "easeOutQuart",
+
+			// Boolean - If we should show the scale at all
+			showScale: true,
+
+			// Boolean - If we want to override with a hard coded scale
+			scaleOverride: false,
+
+			// ** Required if scaleOverride is true **
+			// Number - The number of steps in a hard coded scale
+			scaleSteps: null,
+			// Number - The value jump in the hard coded scale
+			scaleStepWidth: null,
+			// Number - The scale starting value
+			scaleStartValue: null,
+
+			// String - Colour of the scale line
+			scaleLineColor: "rgba(0,0,0,.1)",
+
+			// Number - Pixel width of the scale line
+			scaleLineWidth: 1,
+
+			// Boolean - Whether to show labels on the scale
+			scaleShowLabels: true,
+
+			// Interpolated JS string - can access value
+			scaleLabel: "<%=value%>",
+
+			// Boolean - Whether the scale should stick to integers, and not show any floats even if drawing space is there
+			scaleIntegersOnly: true,
+
+			// Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+			scaleBeginAtZero: false,
+
+			// String - Scale label font declaration for the scale label
+			scaleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+
+			// Number - Scale label font size in pixels
+			scaleFontSize: 12,
+
+			// String - Scale label font weight style
+			scaleFontStyle: "normal",
+
+			// String - Scale label font colour
+			scaleFontColor: "#666",
+
+			// Boolean - whether or not the chart should be responsive and resize when the browser does.
+			responsive: false,
+
+			// Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+			maintainAspectRatio: true,
+
+			// Boolean - Determines whether to draw tooltips on the canvas or not - attaches events to touchmove & mousemove
+			showTooltips: true,
+
+			// Boolean - Determines whether to draw built-in tooltip or call custom tooltip function
+			customTooltips: false,
+
+			// Array - Array of string names to attach tooltip events
+			tooltipEvents: ["mousemove", "touchstart", "touchmove", "mouseout"],
+
+			// String - Tooltip background colour
+			tooltipFillColor: "rgba(0,0,0,0.8)",
+
+			// String - Tooltip label font declaration for the scale label
+			tooltipFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+
+			// Number - Tooltip label font size in pixels
+			tooltipFontSize: 14,
+
+			// String - Tooltip font weight style
+			tooltipFontStyle: "normal",
+
+			// String - Tooltip label font colour
+			tooltipFontColor: "#fff",
+
+			// String - Tooltip title font declaration for the scale label
+			tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+
+			// Number - Tooltip title font size in pixels
+			tooltipTitleFontSize: 14,
+
+			// String - Tooltip title font weight style
+			tooltipTitleFontStyle: "bold",
+
+			// String - Tooltip title font colour
+			tooltipTitleFontColor: "#fff",
+
+			// Number - pixel width of padding around tooltip text
+			tooltipYPadding: 6,
+
+			// Number - pixel width of padding around tooltip text
+			tooltipXPadding: 6,
+
+			// Number - Size of the caret on the tooltip
+			tooltipCaretSize: 8,
+
+			// Number - Pixel radius of the tooltip border
+			tooltipCornerRadius: 6,
+
+			// Number - Pixel offset from point x to tooltip edge
+			tooltipXOffset: 10,
+
+			// String - Template string for single tooltips
+			tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %>",
+
+			// String - Template string for single tooltips
+			multiTooltipTemplate: "<%= value %>",
+
+			// String - Colour behind the legend colour block
+			multiTooltipKeyBackground: '#fff',
+
+			// Function - Will fire on animation progression.
+			onAnimationProgress: function(){},
+
+			// Function - Will fire on animation completion.
+			onAnimationComplete: function(){}
+
+		}
+	};
+
+	//Create a dictionary of chart types, to allow for extension of existing types
+	Chart.types = {};
+
+	//Global Chart helpers object for utility methods and classes
+	var helpers = Chart.helpers = {};
+
+		//-- Basic js utility methods
+	var each = helpers.each = function(loopable,callback,self){
+			var additionalArgs = Array.prototype.slice.call(arguments, 3);
+			// Check to see if null or undefined firstly.
+			if (loopable){
+				if (loopable.length === +loopable.length){
+					var i;
+					for (i=0; i<loopable.length; i++){
+						callback.apply(self,[loopable[i], i].concat(additionalArgs));
+					}
+				}
+				else{
+					for (var item in loopable){
+						callback.apply(self,[loopable[item],item].concat(additionalArgs));
+					}
+				}
+			}
+		},
+		clone = helpers.clone = function(obj){
+			var objClone = {};
+			each(obj,function(value,key){
+				if (obj.hasOwnProperty(key)) objClone[key] = value;
+			});
+			return objClone;
+		},
+		extend = helpers.extend = function(base){
+			each(Array.prototype.slice.call(arguments,1), function(extensionObject) {
+				each(extensionObject,function(value,key){
+					if (extensionObject.hasOwnProperty(key)) base[key] = value;
+				});
+			});
+			return base;
+		},
+		merge = helpers.merge = function(base,master){
+			//Merge properties in left object over to a shallow clone of object right.
+			var args = Array.prototype.slice.call(arguments,0);
+			args.unshift({});
+			return extend.apply(null, args);
+		},
+		indexOf = helpers.indexOf = function(arrayToSearch, item){
+			if (Array.prototype.indexOf) {
+				return arrayToSearch.indexOf(item);
+			}
+			else{
+				for (var i = 0; i < arrayToSearch.length; i++) {
+					if (arrayToSearch[i] === item) return i;
+				}
+				return -1;
+			}
+		},
+		where = helpers.where = function(collection, filterCallback){
+			var filtered = [];
+
+			helpers.each(collection, function(item){
+				if (filterCallback(item)){
+					filtered.push(item);
+				}
+			});
+
+			return filtered;
+		},
+		findNextWhere = helpers.findNextWhere = function(arrayToSearch, filterCallback, startIndex){
+			// Default to start of the array
+			if (!startIndex){
+				startIndex = -1;
+			}
+			for (var i = startIndex + 1; i < arrayToSearch.length; i++) {
+				var currentItem = arrayToSearch[i];
+				if (filterCallback(currentItem)){
+					return currentItem;
+				}
+			}
+		},
+		findPreviousWhere = helpers.findPreviousWhere = function(arrayToSearch, filterCallback, startIndex){
+			// Default to end of the array
+			if (!startIndex){
+				startIndex = arrayToSearch.length;
+			}
+			for (var i = startIndex - 1; i >= 0; i--) {
+				var currentItem = arrayToSearch[i];
+				if (filterCallback(currentItem)){
+					return currentItem;
+				}
+			}
+		},
+		inherits = helpers.inherits = function(extensions){
+			//Basic javascript inheritance based on the model created in Backbone.js
+			var parent = this;
+			var ChartElement = (extensions && extensions.hasOwnProperty("constructor")) ? extensions.constructor : function(){ return parent.apply(this, arguments); };
+
+			var Surrogate = function(){ this.constructor = ChartElement;};
+			Surrogate.prototype = parent.prototype;
+			ChartElement.prototype = new Surrogate();
+
+			ChartElement.extend = inherits;
+
+			if (extensions) extend(ChartElement.prototype, extensions);
+
+			ChartElement.__super__ = parent.prototype;
+
+			return ChartElement;
+		},
+		noop = helpers.noop = function(){},
+		uid = helpers.uid = (function(){
+			var id=0;
+			return function(){
+				return "chart-" + id++;
+			};
+		})(),
+		warn = helpers.warn = function(str){
+			//Method for warning of errors
+			if (window.console && typeof window.console.warn == "function") console.warn(str);
+		},
+		amd = helpers.amd = (typeof define == 'function' && define.amd),
+		//-- Math methods
+		isNumber = helpers.isNumber = function(n){
+			return !isNaN(parseFloat(n)) && isFinite(n);
+		},
+		max = helpers.max = function(array){
+			return Math.max.apply( Math, array );
+		},
+		min = helpers.min = function(array){
+			return Math.min.apply( Math, array );
+		},
+		cap = helpers.cap = function(valueToCap,maxValue,minValue){
+			if(isNumber(maxValue)) {
+				if( valueToCap > maxValue ) {
+					return maxValue;
+				}
+			}
+			else if(isNumber(minValue)){
+				if ( valueToCap < minValue ){
+					return minValue;
+				}
+			}
+			return valueToCap;
+		},
+		getDecimalPlaces = helpers.getDecimalPlaces = function(num){
+			if (num%1!==0 && isNumber(num)){
+				return num.toString().split(".")[1].length;
+			}
+			else {
+				return 0;
+			}
+		},
+		toRadians = helpers.radians = function(degrees){
+			return degrees * (Math.PI/180);
+		},
+		// Gets the angle from vertical upright to the point about a centre.
+		getAngleFromPoint = helpers.getAngleFromPoint = function(centrePoint, anglePoint){
+			var distanceFromXCenter = anglePoint.x - centrePoint.x,
+				distanceFromYCenter = anglePoint.y - centrePoint.y,
+				radialDistanceFromCenter = Math.sqrt( distanceFromXCenter * distanceFromXCenter + distanceFromYCenter * distanceFromYCenter);
+
+
+			var angle = Math.PI * 2 + Math.atan2(distanceFromYCenter, distanceFromXCenter);
+
+			//If the segment is in the top left quadrant, we need to add another rotation to the angle
+			if (distanceFromXCenter < 0 && distanceFromYCenter < 0){
+				angle += Math.PI*2;
+			}
+
+			return {
+				angle: angle,
+				distance: radialDistanceFromCenter
+			};
+		},
+		aliasPixel = helpers.aliasPixel = function(pixelWidth){
+			return (pixelWidth % 2 === 0) ? 0 : 0.5;
+		},
+		splineCurve = helpers.splineCurve = function(FirstPoint,MiddlePoint,AfterPoint,t){
+			//Props to Rob Spencer at scaled innovation for his post on splining between points
+			//http://scaledinnovation.com/analytics/splines/aboutSplines.html
+			var d01=Math.sqrt(Math.pow(MiddlePoint.x-FirstPoint.x,2)+Math.pow(MiddlePoint.y-FirstPoint.y,2)),
+				d12=Math.sqrt(Math.pow(AfterPoint.x-MiddlePoint.x,2)+Math.pow(AfterPoint.y-MiddlePoint.y,2)),
+				fa=t*d01/(d01+d12),// scaling factor for triangle Ta
+				fb=t*d12/(d01+d12);
+			return {
+				inner : {
+					x : MiddlePoint.x-fa*(AfterPoint.x-FirstPoint.x),
+					y : MiddlePoint.y-fa*(AfterPoint.y-FirstPoint.y)
+				},
+				outer : {
+					x: MiddlePoint.x+fb*(AfterPoint.x-FirstPoint.x),
+					y : MiddlePoint.y+fb*(AfterPoint.y-FirstPoint.y)
+				}
+			};
+		},
+		calculateOrderOfMagnitude = helpers.calculateOrderOfMagnitude = function(val){
+			return Math.floor(Math.log(val) / Math.LN10);
+		},
+		calculateScaleRange = helpers.calculateScaleRange = function(valuesArray, drawingSize, textSize, startFromZero, integersOnly){
+
+			//Set a minimum step of two - a point at the top of the graph, and a point at the base
+			var minSteps = 2,
+				maxSteps = Math.floor(drawingSize/(textSize * 1.5)),
+				skipFitting = (minSteps >= maxSteps);
+
+			var maxValue = max(valuesArray),
+				minValue = min(valuesArray);
+
+			// We need some degree of seperation here to calculate the scales if all the values are the same
+			// Adding/minusing 0.5 will give us a range of 1.
+			if (maxValue === minValue){
+				maxValue += 0.5;
+				// So we don't end up with a graph with a negative start value if we've said always start from zero
+				if (minValue >= 0.5 && !startFromZero){
+					minValue -= 0.5;
+				}
+				else{
+					// Make up a whole number above the values
+					maxValue += 0.5;
+				}
+			}
+
+			var	valueRange = Math.abs(maxValue - minValue),
+				rangeOrderOfMagnitude = calculateOrderOfMagnitude(valueRange),
+				graphMax = Math.ceil(maxValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude),
+				graphMin = (startFromZero) ? 0 : Math.floor(minValue / (1 * Math.pow(10, rangeOrderOfMagnitude))) * Math.pow(10, rangeOrderOfMagnitude),
+				graphRange = graphMax - graphMin,
+				stepValue = Math.pow(10, rangeOrderOfMagnitude),
+				numberOfSteps = Math.round(graphRange / stepValue);
+
+			//If we have more space on the graph we'll use it to give more definition to the data
+			while((numberOfSteps > maxSteps || (numberOfSteps * 2) < maxSteps) && !skipFitting) {
+				if(numberOfSteps > maxSteps){
+					stepValue *=2;
+					numberOfSteps = Math.round(graphRange/stepValue);
+					// Don't ever deal with a decimal number of steps - cancel fitting and just use the minimum number of steps.
+					if (numberOfSteps % 1 !== 0){
+						skipFitting = true;
+					}
+				}
+				//We can fit in double the amount of scale points on the scale
+				else{
+					//If user has declared ints only, and the step value isn't a decimal
+					if (integersOnly && rangeOrderOfMagnitude >= 0){
+						//If the user has said integers only, we need to check that making the scale more granular wouldn't make it a float
+						if(stepValue/2 % 1 === 0){
+							stepValue /=2;
+							numberOfSteps = Math.round(graphRange/stepValue);
+						}
+						//If it would make it a float break out of the loop
+						else{
+							break;
+						}
+					}
+					//If the scale doesn't have to be an int, make the scale more granular anyway.
+					else{
+						stepValue /=2;
+						numberOfSteps = Math.round(graphRange/stepValue);
+					}
+
+				}
+			}
+
+			if (skipFitting){
+				numberOfSteps = minSteps;
+				stepValue = graphRange / numberOfSteps;
+			}
+
+			return {
+				steps : numberOfSteps,
+				stepValue : stepValue,
+				min : graphMin,
+				max	: graphMin + (numberOfSteps * stepValue)
+			};
+
+		},
+		/* jshint ignore:start */
+		// Blows up jshint errors based on the new Function constructor
+		//Templating methods
+		//Javascript micro templating by John Resig - source at http://ejohn.org/blog/javascript-micro-templating/
+		template = helpers.template = function(templateString, valuesObject){
+
+			// If templateString is function rather than string-template - call the function for valuesObject
+
+			if(templateString instanceof Function){
+			 	return templateString(valuesObject);
+		 	}
+
+			var cache = {};
+			function tmpl(str, data){
+				// Figure out if we're getting a template, or if we need to
+				// load the template - and be sure to cache the result.
+				var fn = !/\W/.test(str) ?
+				cache[str] = cache[str] :
+
+				// Generate a reusable function that will serve as a template
+				// generator (and which will be cached).
+				new Function("obj",
+					"var p=[],print=function(){p.push.apply(p,arguments);};" +
+
+					// Introduce the data as local variables using with(){}
+					"with(obj){p.push('" +
+
+					// Convert the template into pure JavaScript
+					str
+						.replace(/[\r\t\n]/g, " ")
+						.split("<%").join("\t")
+						.replace(/((^|%>)[^\t]*)'/g, "$1\r")
+						.replace(/\t=(.*?)%>/g, "',$1,'")
+						.split("\t").join("');")
+						.split("%>").join("p.push('")
+						.split("\r").join("\\'") +
+					"');}return p.join('');"
+				);
+
+				// Provide some basic currying to the user
+				return data ? fn( data ) : fn;
+			}
+			return tmpl(templateString,valuesObject);
+		},
+		/* jshint ignore:end */
+		generateLabels = helpers.generateLabels = function(templateString,numberOfSteps,graphMin,stepValue){
+			var labelsArray = new Array(numberOfSteps);
+			if (labelTemplateString){
+				each(labelsArray,function(val,index){
+					labelsArray[index] = template(templateString,{value: (graphMin + (stepValue*(index+1)))});
+				});
+			}
+			return labelsArray;
+		},
+		//--Animation methods
+		//Easing functions adapted from Robert Penner's easing equations
+		//http://www.robertpenner.com/easing/
+		easingEffects = helpers.easingEffects = {
+			linear: function (t) {
+				return t;
+			},
+			easeInQuad: function (t) {
+				return t * t;
+			},
+			easeOutQuad: function (t) {
+				return -1 * t * (t - 2);
+			},
+			easeInOutQuad: function (t) {
+				if ((t /= 1 / 2) < 1) return 1 / 2 * t * t;
+				return -1 / 2 * ((--t) * (t - 2) - 1);
+			},
+			easeInCubic: function (t) {
+				return t * t * t;
+			},
+			easeOutCubic: function (t) {
+				return 1 * ((t = t / 1 - 1) * t * t + 1);
+			},
+			easeInOutCubic: function (t) {
+				if ((t /= 1 / 2) < 1) return 1 / 2 * t * t * t;
+				return 1 / 2 * ((t -= 2) * t * t + 2);
+			},
+			easeInQuart: function (t) {
+				return t * t * t * t;
+			},
+			easeOutQuart: function (t) {
+				return -1 * ((t = t / 1 - 1) * t * t * t - 1);
+			},
+			easeInOutQuart: function (t) {
+				if ((t /= 1 / 2) < 1) return 1 / 2 * t * t * t * t;
+				return -1 / 2 * ((t -= 2) * t * t * t - 2);
+			},
+			easeInQuint: function (t) {
+				return 1 * (t /= 1) * t * t * t * t;
+			},
+			easeOutQuint: function (t) {
+				return 1 * ((t = t / 1 - 1) * t * t * t * t + 1);
+			},
+			easeInOutQuint: function (t) {
+				if ((t /= 1 / 2) < 1) return 1 / 2 * t * t * t * t * t;
+				return 1 / 2 * ((t -= 2) * t * t * t * t + 2);
+			},
+			easeInSine: function (t) {
+				return -1 * Math.cos(t / 1 * (Math.PI / 2)) + 1;
+			},
+			easeOutSine: function (t) {
+				return 1 * Math.sin(t / 1 * (Math.PI / 2));
+			},
+			easeInOutSine: function (t) {
+				return -1 / 2 * (Math.cos(Math.PI * t / 1) - 1);
+			},
+			easeInExpo: function (t) {
+				return (t === 0) ? 1 : 1 * Math.pow(2, 10 * (t / 1 - 1));
+			},
+			easeOutExpo: function (t) {
+				return (t === 1) ? 1 : 1 * (-Math.pow(2, -10 * t / 1) + 1);
+			},
+			easeInOutExpo: function (t) {
+				if (t === 0) return 0;
+				if (t === 1) return 1;
+				if ((t /= 1 / 2) < 1) return 1 / 2 * Math.pow(2, 10 * (t - 1));
+				return 1 / 2 * (-Math.pow(2, -10 * --t) + 2);
+			},
+			easeInCirc: function (t) {
+				if (t >= 1) return t;
+				return -1 * (Math.sqrt(1 - (t /= 1) * t) - 1);
+			},
+			easeOutCirc: function (t) {
+				return 1 * Math.sqrt(1 - (t = t / 1 - 1) * t);
+			},
+			easeInOutCirc: function (t) {
+				if ((t /= 1 / 2) < 1) return -1 / 2 * (Math.sqrt(1 - t * t) - 1);
+				return 1 / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1);
+			},
+			easeInElastic: function (t) {
+				var s = 1.70158;
+				var p = 0;
+				var a = 1;
+				if (t === 0) return 0;
+				if ((t /= 1) == 1) return 1;
+				if (!p) p = 1 * 0.3;
+				if (a < Math.abs(1)) {
+					a = 1;
+					s = p / 4;
+				} else s = p / (2 * Math.PI) * Math.asin(1 / a);
+				return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p));
+			},
+			easeOutElastic: function (t) {
+				var s = 1.70158;
+				var p = 0;
+				var a = 1;
+				if (t === 0) return 0;
+				if ((t /= 1) == 1) return 1;
+				if (!p) p = 1 * 0.3;
+				if (a < Math.abs(1)) {
+					a = 1;
+					s = p / 4;
+				} else s = p / (2 * Math.PI) * Math.asin(1 / a);
+				return a * Math.pow(2, -10 * t) * Math.sin((t * 1 - s) * (2 * Math.PI) / p) + 1;
+			},
+			easeInOutElastic: function (t) {
+				var s = 1.70158;
+				var p = 0;
+				var a = 1;
+				if (t === 0) return 0;
+				if ((t /= 1 / 2) == 2) return 1;
+				if (!p) p = 1 * (0.3 * 1.5);
+				if (a < Math.abs(1)) {
+					a = 1;
+					s = p / 4;
+				} else s = p / (2 * Math.PI) * Math.asin(1 / a);
+				if (t < 1) return -0.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p));
+				return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * 1 - s) * (2 * Math.PI) / p) * 0.5 + 1;
+			},
+			easeInBack: function (t) {
+				var s = 1.70158;
+				return 1 * (t /= 1) * t * ((s + 1) * t - s);
+			},
+			easeOutBack: function (t) {
+				var s = 1.70158;
+				return 1 * ((t = t / 1 - 1) * t * ((s + 1) * t + s) + 1);
+			},
+			easeInOutBack: function (t) {
+				var s = 1.70158;
+				if ((t /= 1 / 2) < 1) return 1 / 2 * (t * t * (((s *= (1.525)) + 1) * t - s));
+				return 1 / 2 * ((t -= 2) * t * (((s *= (1.525)) + 1) * t + s) + 2);
+			},
+			easeInBounce: function (t) {
+				return 1 - easingEffects.easeOutBounce(1 - t);
+			},
+			easeOutBounce: function (t) {
+				if ((t /= 1) < (1 / 2.75)) {
+					return 1 * (7.5625 * t * t);
+				} else if (t < (2 / 2.75)) {
+					return 1 * (7.5625 * (t -= (1.5 / 2.75)) * t + 0.75);
+				} else if (t < (2.5 / 2.75)) {
+					return 1 * (7.5625 * (t -= (2.25 / 2.75)) * t + 0.9375);
+				} else {
+					return 1 * (7.5625 * (t -= (2.625 / 2.75)) * t + 0.984375);
+				}
+			},
+			easeInOutBounce: function (t) {
+				if (t < 1 / 2) return easingEffects.easeInBounce(t * 2) * 0.5;
+				return easingEffects.easeOutBounce(t * 2 - 1) * 0.5 + 1 * 0.5;
+			}
+		},
+		//Request animation polyfill - http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
+		requestAnimFrame = helpers.requestAnimFrame = (function(){
+			return window.requestAnimationFrame ||
+				window.webkitRequestAnimationFrame ||
+				window.mozRequestAnimationFrame ||
+				window.oRequestAnimationFrame ||
+				window.msRequestAnimationFrame ||
+				function(callback) {
+					return window.setTimeout(callback, 1000 / 60);
+				};
+		})(),
+		cancelAnimFrame = helpers.cancelAnimFrame = (function(){
+			return window.cancelAnimationFrame ||
+				window.webkitCancelAnimationFrame ||
+				window.mozCancelAnimationFrame ||
+				window.oCancelAnimationFrame ||
+				window.msCancelAnimationFrame ||
+				function(callback) {
+					return window.clearTimeout(callback, 1000 / 60);
+				};
+		})(),
+		animationLoop = helpers.animationLoop = function(callback,totalSteps,easingString,onProgress,onComplete,chartInstance){
+
+			var currentStep = 0,
+				easingFunction = easingEffects[easingString] || easingEffects.linear;
+
+			var animationFrame = function(){
+				currentStep++;
+				var stepDecimal = currentStep/totalSteps;
+				var easeDecimal = easingFunction(stepDecimal);
+
+				callback.call(chartInstance,easeDecimal,stepDecimal, currentStep);
+				onProgress.call(chartInstance,easeDecimal,stepDecimal);
+				if (currentStep < totalSteps){
+					chartInstance.animationFrame = requestAnimFrame(animationFrame);
+				} else{
+					onComplete.apply(chartInstance);
+				}
+			};
+			requestAnimFrame(animationFrame);
+		},
+		//-- DOM methods
+		getRelativePosition = helpers.getRelativePosition = function(evt){
+			var mouseX, mouseY;
+			var e = evt.originalEvent || evt,
+				canvas = evt.currentTarget || evt.srcElement,
+				boundingRect = canvas.getBoundingClientRect();
+
+			if (e.touches){
+				mouseX = e.touches[0].clientX - boundingRect.left;
+				mouseY = e.touches[0].clientY - boundingRect.top;
+
+			}
+			else{
+				mouseX = e.clientX - boundingRect.left;
+				mouseY = e.clientY - boundingRect.top;
+			}
+
+			return {
+				x : mouseX,
+				y : mouseY
+			};
+
+		},
+		addEvent = helpers.addEvent = function(node,eventType,method){
+			if (node.addEventListener){
+				node.addEventListener(eventType,method);
+			} else if (node.attachEvent){
+				node.attachEvent("on"+eventType, method);
+			} else {
+				node["on"+eventType] = method;
+			}
+		},
+		removeEvent = helpers.removeEvent = function(node, eventType, handler){
+			if (node.removeEventListener){
+				node.removeEventListener(eventType, handler, false);
+			} else if (node.detachEvent){
+				node.detachEvent("on"+eventType,handler);
+			} else{
+				node["on" + eventType] = noop;
+			}
+		},
+		bindEvents = helpers.bindEvents = function(chartInstance, arrayOfEvents, handler){
+			// Create the events object if it's not already present
+			if (!chartInstance.events) chartInstance.events = {};
+
+			each(arrayOfEvents,function(eventName){
+				chartInstance.events[eventName] = function(){
+					handler.apply(chartInstance, arguments);
+				};
+				addEvent(chartInstance.chart.canvas,eventName,chartInstance.events[eventName]);
+			});
+		},
+		unbindEvents = helpers.unbindEvents = function (chartInstance, arrayOfEvents) {
+			each(arrayOfEvents, function(handler,eventName){
+				removeEvent(chartInstance.chart.canvas, eventName, handler);
+			});
+		},
+		getMaximumWidth = helpers.getMaximumWidth = function(domNode){
+			var container = domNode.parentNode;
+			// TODO = check cross browser stuff with this.
+			return container.clientWidth;
+		},
+		getMaximumHeight = helpers.getMaximumHeight = function(domNode){
+			var container = domNode.parentNode;
+			// TODO = check cross browser stuff with this.
+			return container.clientHeight;
+		},
+		getMaximumSize = helpers.getMaximumSize = helpers.getMaximumWidth, // legacy support
+		retinaScale = helpers.retinaScale = function(chart){
+			var ctx = chart.ctx,
+				width = chart.canvas.width,
+				height = chart.canvas.height;
+
+			if (window.devicePixelRatio) {
+				ctx.canvas.style.width = width + "px";
+				ctx.canvas.style.height = height + "px";
+				ctx.canvas.height = height * window.devicePixelRatio;
+				ctx.canvas.width = width * window.devicePixelRatio;
+				ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+			}
+		},
+		//-- Canvas methods
+		clear = helpers.clear = function(chart){
+			chart.ctx.clearRect(0,0,chart.width,chart.height);
+		},
+		fontString = helpers.fontString = function(pixelSize,fontStyle,fontFamily){
+			return fontStyle + " " + pixelSize+"px " + fontFamily;
+		},
+		longestText = helpers.longestText = function(ctx,font,arrayOfStrings){
+			ctx.font = font;
+			var longest = 0;
+			each(arrayOfStrings,function(string){
+				var textWidth = ctx.measureText(string).width;
+				longest = (textWidth > longest) ? textWidth : longest;
+			});
+			return longest;
+		},
+		drawRoundedRectangle = helpers.drawRoundedRectangle = function(ctx,x,y,width,height,radius){
+			ctx.beginPath();
+			ctx.moveTo(x + radius, y);
+			ctx.lineTo(x + width - radius, y);
+			ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+			ctx.lineTo(x + width, y + height - radius);
+			ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+			ctx.lineTo(x + radius, y + height);
+			ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+			ctx.lineTo(x, y + radius);
+			ctx.quadraticCurveTo(x, y, x + radius, y);
+			ctx.closePath();
+		};
+
+
+	//Store a reference to each instance - allowing us to globally resize chart instances on window resize.
+	//Destroy method on the chart will remove the instance of the chart from this reference.
+	Chart.instances = {};
+
+	Chart.Type = function(data,options,chart){
+		this.options = options;
+		this.chart = chart;
+		this.id = uid();
+		//Add the chart instance to the global namespace
+		Chart.instances[this.id] = this;
+
+		// Initialize is always called when a chart type is created
+		// By default it is a no op, but it should be extended
+		if (options.responsive){
+			this.resize();
+		}
+		this.initialize.call(this,data);
+	};
+
+	//Core methods that'll be a part of every chart type
+	extend(Chart.Type.prototype,{
+		initialize : function(){return this;},
+		clear : function(){
+			clear(this.chart);
+			return this;
+		},
+		stop : function(){
+			// Stops any current animation loop occuring
+			cancelAnimFrame(this.animationFrame);
+			return this;
+		},
+		resize : function(callback){
+			this.stop();
+			var canvas = this.chart.canvas,
+				newWidth = getMaximumWidth(this.chart.canvas),
+				newHeight = this.options.maintainAspectRatio ? newWidth / this.chart.aspectRatio : getMaximumHeight(this.chart.canvas);
+
+			canvas.width = this.chart.width = newWidth;
+			canvas.height = this.chart.height = newHeight;
+
+			retinaScale(this.chart);
+
+			if (typeof callback === "function"){
+				callback.apply(this, Array.prototype.slice.call(arguments, 1));
+			}
+			return this;
+		},
+		reflow : noop,
+		render : function(reflow){
+			if (reflow){
+				this.reflow();
+			}
+			if (this.options.animation && !reflow){
+				helpers.animationLoop(
+					this.draw,
+					this.options.animationSteps,
+					this.options.animationEasing,
+					this.options.onAnimationProgress,
+					this.options.onAnimationComplete,
+					this
+				);
+			}
+			else{
+				this.draw();
+				this.options.onAnimationComplete.call(this);
+			}
+			return this;
+		},
+		generateLegend : function(){
+			return template(this.options.legendTemplate,this);
+		},
+		destroy : function(){
+			this.clear();
+			unbindEvents(this, this.events);
+			var canvas = this.chart.canvas;
+
+			// Reset canvas height/width attributes starts a fresh with the canvas context
+			canvas.width = this.chart.width;
+			canvas.height = this.chart.height;
+
+			// < IE9 doesn't support removeProperty
+			if (canvas.style.removeProperty) {
+				canvas.style.removeProperty('width');
+				canvas.style.removeProperty('height');
+			} else {
+				canvas.style.removeAttribute('width');
+				canvas.style.removeAttribute('height');
+			}
+
+			delete Chart.instances[this.id];
+		},
+		showTooltip : function(ChartElements, forceRedraw){
+			// Only redraw the chart if we've actually changed what we're hovering on.
+			if (typeof this.activeElements === 'undefined') this.activeElements = [];
+
+			var isChanged = (function(Elements){
+				var changed = false;
+
+				if (Elements.length !== this.activeElements.length){
+					changed = true;
+					return changed;
+				}
+
+				each(Elements, function(element, index){
+					if (element !== this.activeElements[index]){
+						changed = true;
+					}
+				}, this);
+				return changed;
+			}).call(this, ChartElements);
+
+			if (!isChanged && !forceRedraw){
+				return;
+			}
+			else{
+				this.activeElements = ChartElements;
+			}
+			this.draw();
+			if(this.options.customTooltips){
+				this.options.customTooltips(false);
+			}
+			if (ChartElements.length > 0){
+				// If we have multiple datasets, show a MultiTooltip for all of the data points at that index
+				if (this.datasets && this.datasets.length > 1) {
+					var dataArray,
+						dataIndex;
+
+					for (var i = this.datasets.length - 1; i >= 0; i--) {
+						dataArray = this.datasets[i].points || this.datasets[i].bars || this.datasets[i].segments;
+						dataIndex = indexOf(dataArray, ChartElements[0]);
+						if (dataIndex !== -1){
+							break;
+						}
+					}
+					var tooltipLabels = [],
+						tooltipColors = [],
+						medianPosition = (function(index) {
+
+							// Get all the points at that particular index
+							var Elements = [],
+								dataCollection,
+								xPositions = [],
+								yPositions = [],
+								xMax,
+								yMax,
+								xMin,
+								yMin;
+							helpers.each(this.datasets, function(dataset){
+								dataCollection = dataset.points || dataset.bars || dataset.segments;
+								if (dataCollection[dataIndex] && dataCollection[dataIndex].hasValue()){
+									Elements.push(dataCollection[dataIndex]);
+								}
+							});
+
+							helpers.each(Elements, function(element) {
+								xPositions.push(element.x);
+								yPositions.push(element.y);
+
+
+								//Include any colour information about the element
+								tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, element));
+								tooltipColors.push({
+									fill: element._saved.fillColor || element.fillColor,
+									stroke: element._saved.strokeColor || element.strokeColor
+								});
+
+							}, this);
+
+							yMin = min(yPositions);
+							yMax = max(yPositions);
+
+							xMin = min(xPositions);
+							xMax = max(xPositions);
+
+							return {
+								x: (xMin > this.chart.width/2) ? xMin : xMax,
+								y: (yMin + yMax)/2
+							};
+						}).call(this, dataIndex);
+
+					new Chart.MultiTooltip({
+						x: medianPosition.x,
+						y: medianPosition.y,
+						xPadding: this.options.tooltipXPadding,
+						yPadding: this.options.tooltipYPadding,
+						xOffset: this.options.tooltipXOffset,
+						fillColor: this.options.tooltipFillColor,
+						textColor: this.options.tooltipFontColor,
+						fontFamily: this.options.tooltipFontFamily,
+						fontStyle: this.options.tooltipFontStyle,
+						fontSize: this.options.tooltipFontSize,
+						titleTextColor: this.options.tooltipTitleFontColor,
+						titleFontFamily: this.options.tooltipTitleFontFamily,
+						titleFontStyle: this.options.tooltipTitleFontStyle,
+						titleFontSize: this.options.tooltipTitleFontSize,
+						cornerRadius: this.options.tooltipCornerRadius,
+						labels: tooltipLabels,
+						legendColors: tooltipColors,
+						legendColorBackground : this.options.multiTooltipKeyBackground,
+						title: ChartElements[0].label,
+						chart: this.chart,
+						ctx: this.chart.ctx,
+						custom: this.options.customTooltips
+					}).draw();
+
+				} else {
+					each(ChartElements, function(Element) {
+						var tooltipPosition = Element.tooltipPosition();
+						new Chart.Tooltip({
+							x: Math.round(tooltipPosition.x),
+							y: Math.round(tooltipPosition.y),
+							xPadding: this.options.tooltipXPadding,
+							yPadding: this.options.tooltipYPadding,
+							fillColor: this.options.tooltipFillColor,
+							textColor: this.options.tooltipFontColor,
+							fontFamily: this.options.tooltipFontFamily,
+							fontStyle: this.options.tooltipFontStyle,
+							fontSize: this.options.tooltipFontSize,
+							caretHeight: this.options.tooltipCaretSize,
+							cornerRadius: this.options.tooltipCornerRadius,
+							text: template(this.options.tooltipTemplate, Element),
+							chart: this.chart,
+							custom: this.options.customTooltips
+						}).draw();
+					}, this);
+				}
+			}
+			return this;
+		},
+		toBase64Image : function(){
+			return this.chart.canvas.toDataURL.apply(this.chart.canvas, arguments);
+		}
+	});
+
+	Chart.Type.extend = function(extensions){
+
+		var parent = this;
+
+		var ChartType = function(){
+			return parent.apply(this,arguments);
+		};
+
+		//Copy the prototype object of the this class
+		ChartType.prototype = clone(parent.prototype);
+		//Now overwrite some of the properties in the base class with the new extensions
+		extend(ChartType.prototype, extensions);
+
+		ChartType.extend = Chart.Type.extend;
+
+		if (extensions.name || parent.prototype.name){
+
+			var chartName = extensions.name || parent.prototype.name;
+			//Assign any potential default values of the new chart type
+
+			//If none are defined, we'll use a clone of the chart type this is being extended from.
+			//I.e. if we extend a line chart, we'll use the defaults from the line chart if our new chart
+			//doesn't define some defaults of their own.
+
+			var baseDefaults = (Chart.defaults[parent.prototype.name]) ? clone(Chart.defaults[parent.prototype.name]) : {};
+
+			Chart.defaults[chartName] = extend(baseDefaults,extensions.defaults);
+
+			Chart.types[chartName] = ChartType;
+
+			//Register this new chart type in the Chart prototype
+			Chart.prototype[chartName] = function(data,options){
+				var config = merge(Chart.defaults.global, Chart.defaults[chartName], options || {});
+				return new ChartType(data,config,this);
+			};
+		} else{
+			warn("Name not provided for this chart, so it hasn't been registered");
+		}
+		return parent;
+	};
+
+	Chart.Element = function(configuration){
+		extend(this,configuration);
+		this.initialize.apply(this,arguments);
+		this.save();
+	};
+	extend(Chart.Element.prototype,{
+		initialize : function(){},
+		restore : function(props){
+			if (!props){
+				extend(this,this._saved);
+			} else {
+				each(props,function(key){
+					this[key] = this._saved[key];
+				},this);
+			}
+			return this;
+		},
+		save : function(){
+			this._saved = clone(this);
+			delete this._saved._saved;
+			return this;
+		},
+		update : function(newProps){
+			each(newProps,function(value,key){
+				this._saved[key] = this[key];
+				this[key] = value;
+			},this);
+			return this;
+		},
+		transition : function(props,ease){
+			each(props,function(value,key){
+				this[key] = ((value - this._saved[key]) * ease) + this._saved[key];
+			},this);
+			return this;
+		},
+		tooltipPosition : function(){
+			return {
+				x : this.x,
+				y : this.y
+			};
+		},
+		hasValue: function(){
+			return isNumber(this.value);
+		}
+	});
+
+	Chart.Element.extend = inherits;
+
+
+	Chart.Point = Chart.Element.extend({
+		display: true,
+		inRange: function(chartX,chartY){
+			var hitDetectionRange = this.hitDetectionRadius + this.radius;
+			return ((Math.pow(chartX-this.x, 2)+Math.pow(chartY-this.y, 2)) < Math.pow(hitDetectionRange,2));
+		},
+		draw : function(){
+			if (this.display){
+				var ctx = this.ctx;
+				ctx.beginPath();
+
+				ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+				ctx.closePath();
+
+				ctx.strokeStyle = this.strokeColor;
+				ctx.lineWidth = this.strokeWidth;
+
+				ctx.fillStyle = this.fillColor;
+
+				ctx.fill();
+				ctx.stroke();
+			}
+
+
+			//Quick debug for bezier curve splining
+			//Highlights control points and the line between them.
+			//Handy for dev - stripped in the min version.
+
+			// ctx.save();
+			// ctx.fillStyle = "black";
+			// ctx.strokeStyle = "black"
+			// ctx.beginPath();
+			// ctx.arc(this.controlPoints.inner.x,this.controlPoints.inner.y, 2, 0, Math.PI*2);
+			// ctx.fill();
+
+			// ctx.beginPath();
+			// ctx.arc(this.controlPoints.outer.x,this.controlPoints.outer.y, 2, 0, Math.PI*2);
+			// ctx.fill();
+
+			// ctx.moveTo(this.controlPoints.inner.x,this.controlPoints.inner.y);
+			// ctx.lineTo(this.x, this.y);
+			// ctx.lineTo(this.controlPoints.outer.x,this.controlPoints.outer.y);
+			// ctx.stroke();
+
+			// ctx.restore();
+
+
+
+		}
+	});
+
+	Chart.Arc = Chart.Element.extend({
+		inRange : function(chartX,chartY){
+
+			var pointRelativePosition = helpers.getAngleFromPoint(this, {
+				x: chartX,
+				y: chartY
+			});
+
+			//Check if within the range of the open/close angle
+			var betweenAngles = (pointRelativePosition.angle >= this.startAngle && pointRelativePosition.angle <= this.endAngle),
+				withinRadius = (pointRelativePosition.distance >= this.innerRadius && pointRelativePosition.distance <= this.outerRadius);
+
+			return (betweenAngles && withinRadius);
+			//Ensure within the outside of the arc centre, but inside arc outer
+		},
+		tooltipPosition : function(){
+			var centreAngle = this.startAngle + ((this.endAngle - this.startAngle) / 2),
+				rangeFromCentre = (this.outerRadius - this.innerRadius) / 2 + this.innerRadius;
+			return {
+				x : this.x + (Math.cos(centreAngle) * rangeFromCentre),
+				y : this.y + (Math.sin(centreAngle) * rangeFromCentre)
+			};
+		},
+		draw : function(animationPercent){
+
+			var easingDecimal = animationPercent || 1;
+
+			var ctx = this.ctx;
+
+			ctx.beginPath();
+
+			ctx.arc(this.x, this.y, this.outerRadius, this.startAngle, this.endAngle);
+
+			ctx.arc(this.x, this.y, this.innerRadius, this.endAngle, this.startAngle, true);
+
+			ctx.closePath();
+			ctx.strokeStyle = this.strokeColor;
+			ctx.lineWidth = this.strokeWidth;
+
+			ctx.fillStyle = this.fillColor;
+
+			ctx.fill();
+			ctx.lineJoin = 'bevel';
+
+			if (this.showStroke){
+				ctx.stroke();
+			}
+		}
+	});
+
+	Chart.Rectangle = Chart.Element.extend({
+		draw : function(){
+			var ctx = this.ctx,
+				halfWidth = this.width/2,
+				leftX = this.x - halfWidth,
+				rightX = this.x + halfWidth,
+				top = this.base - (this.base - this.y),
+				halfStroke = this.strokeWidth / 2;
+
+			// Canvas doesn't allow us to stroke inside the width so we can
+			// adjust the sizes to fit if we're setting a stroke on the line
+			if (this.showStroke){
+				leftX += halfStroke;
+				rightX -= halfStroke;
+				top += halfStroke;
+			}
+
+			ctx.beginPath();
+
+			ctx.fillStyle = this.fillColor;
+			ctx.strokeStyle = this.strokeColor;
+			ctx.lineWidth = this.strokeWidth;
+
+			// It'd be nice to keep this class totally generic to any rectangle
+			// and simply specify which border to miss out.
+			ctx.moveTo(leftX, this.base);
+			ctx.lineTo(leftX, top);
+			ctx.lineTo(rightX, top);
+			ctx.lineTo(rightX, this.base);
+			ctx.fill();
+			if (this.showStroke){
+				ctx.stroke();
+			}
+		},
+		height : function(){
+			return this.base - this.y;
+		},
+		inRange : function(chartX,chartY){
+			return (chartX >= this.x - this.width/2 && chartX <= this.x + this.width/2) && (chartY >= this.y && chartY <= this.base);
+		}
+	});
+
+	Chart.Tooltip = Chart.Element.extend({
+		draw : function(){
+
+			var ctx = this.chart.ctx;
+
+			ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
+
+			this.xAlign = "center";
+			this.yAlign = "above";
+
+			//Distance between the actual element.y position and the start of the tooltip caret
+			var caretPadding = this.caretPadding = 2;
+
+			var tooltipWidth = ctx.measureText(this.text).width + 2*this.xPadding,
+				tooltipRectHeight = this.fontSize + 2*this.yPadding,
+				tooltipHeight = tooltipRectHeight + this.caretHeight + caretPadding;
+
+			if (this.x + tooltipWidth/2 >this.chart.width){
+				this.xAlign = "left";
+			} else if (this.x - tooltipWidth/2 < 0){
+				this.xAlign = "right";
+			}
+
+			if (this.y - tooltipHeight < 0){
+				this.yAlign = "below";
+			}
+
+
+			var tooltipX = this.x - tooltipWidth/2,
+				tooltipY = this.y - tooltipHeight;
+
+			ctx.fillStyle = this.fillColor;
+
+			// Custom Tooltips
+			if(this.custom){
+				this.custom(this);
+			}
+			else{
+				switch(this.yAlign)
+				{
+				case "above":
+					//Draw a caret above the x/y
+					ctx.beginPath();
+					ctx.moveTo(this.x,this.y - caretPadding);
+					ctx.lineTo(this.x + this.caretHeight, this.y - (caretPadding + this.caretHeight));
+					ctx.lineTo(this.x - this.caretHeight, this.y - (caretPadding + this.caretHeight));
+					ctx.closePath();
+					ctx.fill();
+					break;
+				case "below":
+					tooltipY = this.y + caretPadding + this.caretHeight;
+					//Draw a caret below the x/y
+					ctx.beginPath();
+					ctx.moveTo(this.x, this.y + caretPadding);
+					ctx.lineTo(this.x + this.caretHeight, this.y + caretPadding + this.caretHeight);
+					ctx.lineTo(this.x - this.caretHeight, this.y + caretPadding + this.caretHeight);
+					ctx.closePath();
+					ctx.fill();
+					break;
+				}
+
+				switch(this.xAlign)
+				{
+				case "left":
+					tooltipX = this.x - tooltipWidth + (this.cornerRadius + this.caretHeight);
+					break;
+				case "right":
+					tooltipX = this.x - (this.cornerRadius + this.caretHeight);
+					break;
+				}
+
+				drawRoundedRectangle(ctx,tooltipX,tooltipY,tooltipWidth,tooltipRectHeight,this.cornerRadius);
+
+				ctx.fill();
+
+				ctx.fillStyle = this.textColor;
+				ctx.textAlign = "center";
+				ctx.textBaseline = "middle";
+				ctx.fillText(this.text, tooltipX + tooltipWidth/2, tooltipY + tooltipRectHeight/2);
+			}
+		}
+	});
+
+	Chart.MultiTooltip = Chart.Element.extend({
+		initialize : function(){
+			this.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
+
+			this.titleFont = fontString(this.titleFontSize,this.titleFontStyle,this.titleFontFamily);
+
+			this.height = (this.labels.length * this.fontSize) + ((this.labels.length-1) * (this.fontSize/2)) + (this.yPadding*2) + this.titleFontSize *1.5;
+
+			this.ctx.font = this.titleFont;
+
+			var titleWidth = this.ctx.measureText(this.title).width,
+				//Label has a legend square as well so account for this.
+				labelWidth = longestText(this.ctx,this.font,this.labels) + this.fontSize + 3,
+				longestTextWidth = max([labelWidth,titleWidth]);
+
+			this.width = longestTextWidth + (this.xPadding*2);
+
+
+			var halfHeight = this.height/2;
+
+			//Check to ensure the height will fit on the canvas
+			if (this.y - halfHeight < 0 ){
+				this.y = halfHeight;
+			} else if (this.y + halfHeight > this.chart.height){
+				this.y = this.chart.height - halfHeight;
+			}
+
+			//Decide whether to align left or right based on position on canvas
+			if (this.x > this.chart.width/2){
+				this.x -= this.xOffset + this.width;
+			} else {
+				this.x += this.xOffset;
+			}
+
+
+		},
+		getLineHeight : function(index){
+			var baseLineHeight = this.y - (this.height/2) + this.yPadding,
+				afterTitleIndex = index-1;
+
+			//If the index is zero, we're getting the title
+			if (index === 0){
+				return baseLineHeight + this.titleFontSize/2;
+			} else{
+				return baseLineHeight + ((this.fontSize*1.5*afterTitleIndex) + this.fontSize/2) + this.titleFontSize * 1.5;
+			}
+
+		},
+		draw : function(){
+			// Custom Tooltips
+			if(this.custom){
+				this.custom(this);
+			}
+			else{
+				drawRoundedRectangle(this.ctx,this.x,this.y - this.height/2,this.width,this.height,this.cornerRadius);
+				var ctx = this.ctx;
+				ctx.fillStyle = this.fillColor;
+				ctx.fill();
+				ctx.closePath();
+
+				ctx.textAlign = "left";
+				ctx.textBaseline = "middle";
+				ctx.fillStyle = this.titleTextColor;
+				ctx.font = this.titleFont;
+
+				ctx.fillText(this.title,this.x + this.xPadding, this.getLineHeight(0));
+
+				ctx.font = this.font;
+				helpers.each(this.labels,function(label,index){
+					ctx.fillStyle = this.textColor;
+					ctx.fillText(label,this.x + this.xPadding + this.fontSize + 3, this.getLineHeight(index + 1));
+
+					//A bit gnarly, but clearing this rectangle breaks when using explorercanvas (clears whole canvas)
+					//ctx.clearRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
+					//Instead we'll make a white filled block to put the legendColour palette over.
+
+					ctx.fillStyle = this.legendColorBackground;
+					ctx.fillRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
+
+					ctx.fillStyle = this.legendColors[index].fill;
+					ctx.fillRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
+
+
+				},this);
+			}
+		}
+	});
+
+	Chart.Scale = Chart.Element.extend({
+		initialize : function(){
+			this.fit();
+		},
+		buildYLabels : function(){
+			this.yLabels = [];
+
+			var stepDecimalPlaces = getDecimalPlaces(this.stepValue);
+
+			for (var i=0; i<=this.steps; i++){
+				this.yLabels.push(template(this.templateString,{value:(this.min + (i * this.stepValue)).toFixed(stepDecimalPlaces)}));
+			}
+			this.yLabelWidth = (this.display && this.showLabels) ? longestText(this.ctx,this.font,this.yLabels) : 0;
+		},
+		addXLabel : function(label){
+			this.xLabels.push(label);
+			this.valuesCount++;
+			this.fit();
+		},
+		removeXLabel : function(){
+			this.xLabels.shift();
+			this.valuesCount--;
+			this.fit();
+		},
+		// Fitting loop to rotate x Labels and figure out what fits there, and also calculate how many Y steps to use
+		fit: function(){
+			// First we need the width of the yLabels, assuming the xLabels aren't rotated
+
+			// To do that we need the base line at the top and base of the chart, assuming there is no x label rotation
+			this.startPoint = (this.display) ? this.fontSize : 0;
+			this.endPoint = (this.display) ? this.height - (this.fontSize * 1.5) - 5 : this.height; // -5 to pad labels
+
+			// Apply padding settings to the start and end point.
+			this.startPoint += this.padding;
+			this.endPoint -= this.padding;
+
+			// Cache the starting height, so can determine if we need to recalculate the scale yAxis
+			var cachedHeight = this.endPoint - this.startPoint,
+				cachedYLabelWidth;
+
+			// Build the current yLabels so we have an idea of what size they'll be to start
+			/*
+			 *	This sets what is returned from calculateScaleRange as static properties of this class:
+			 *
+				this.steps;
+				this.stepValue;
+				this.min;
+				this.max;
+			 *
+			 */
+			this.calculateYRange(cachedHeight);
+
+			// With these properties set we can now build the array of yLabels
+			// and also the width of the largest yLabel
+			this.buildYLabels();
+
+			this.calculateXLabelRotation();
+
+			while((cachedHeight > this.endPoint - this.startPoint)){
+				cachedHeight = this.endPoint - this.startPoint;
+				cachedYLabelWidth = this.yLabelWidth;
+
+				this.calculateYRange(cachedHeight);
+				this.buildYLabels();
+
+				// Only go through the xLabel loop again if the yLabel width has changed
+				if (cachedYLabelWidth < this.yLabelWidth){
+					this.calculateXLabelRotation();
+				}
+			}
+
+		},
+		calculateXLabelRotation : function(){
+			//Get the width of each grid by calculating the difference
+			//between x offsets between 0 and 1.
+
+			this.ctx.font = this.font;
+
+			var firstWidth = this.ctx.measureText(this.xLabels[0]).width,
+				lastWidth = this.ctx.measureText(this.xLabels[this.xLabels.length - 1]).width,
+				firstRotated,
+				lastRotated;
+
+
+			this.xScalePaddingRight = lastWidth/2 + 3;
+			this.xScalePaddingLeft = (firstWidth/2 > this.yLabelWidth + 10) ? firstWidth/2 : this.yLabelWidth + 10;
+
+			this.xLabelRotation = 0;
+			if (this.display){
+				var originalLabelWidth = longestText(this.ctx,this.font,this.xLabels),
+					cosRotation,
+					firstRotatedWidth;
+				this.xLabelWidth = originalLabelWidth;
+				//Allow 3 pixels x2 padding either side for label readability
+				var xGridWidth = Math.floor(this.calculateX(1) - this.calculateX(0)) - 6;
+
+				//Max label rotate should be 90 - also act as a loop counter
+				while ((this.xLabelWidth > xGridWidth && this.xLabelRotation === 0) || (this.xLabelWidth > xGridWidth && this.xLabelRotation <= 90 && this.xLabelRotation > 0)){
+					cosRotation = Math.cos(toRadians(this.xLabelRotation));
+
+					firstRotated = cosRotation * firstWidth;
+					lastRotated = cosRotation * lastWidth;
+
+					// We're right aligning the text now.
+					if (firstRotated + this.fontSize / 2 > this.yLabelWidth + 8){
+						this.xScalePaddingLeft = firstRotated + this.fontSize / 2;
+					}
+					this.xScalePaddingRight = this.fontSize/2;
+
+
+					this.xLabelRotation++;
+					this.xLabelWidth = cosRotation * originalLabelWidth;
+
+				}
+				if (this.xLabelRotation > 0){
+					this.endPoint -= Math.sin(toRadians(this.xLabelRotation))*originalLabelWidth + 3;
+				}
+			}
+			else{
+				this.xLabelWidth = 0;
+				this.xScalePaddingRight = this.padding;
+				this.xScalePaddingLeft = this.padding;
+			}
+
+		},
+		// Needs to be overidden in each Chart type
+		// Otherwise we need to pass all the data into the scale class
+		calculateYRange: noop,
+		drawingArea: function(){
+			return this.startPoint - this.endPoint;
+		},
+		calculateY : function(value){
+			var scalingFactor = this.drawingArea() / (this.min - this.max);
+			return this.endPoint - (scalingFactor * (value - this.min));
+		},
+		calculateX : function(index){
+			var isRotated = (this.xLabelRotation > 0),
+				// innerWidth = (this.offsetGridLines) ? this.width - offsetLeft - this.padding : this.width - (offsetLeft + halfLabelWidth * 2) - this.padding,
+				innerWidth = this.width - (this.xScalePaddingLeft + this.xScalePaddingRight),
+				valueWidth = innerWidth/Math.max((this.valuesCount - ((this.offsetGridLines) ? 0 : 1)), 1),
+				valueOffset = (valueWidth * index) + this.xScalePaddingLeft;
+
+			if (this.offsetGridLines){
+				valueOffset += (valueWidth/2);
+			}
+
+			return Math.round(valueOffset);
+		},
+		update : function(newProps){
+			helpers.extend(this, newProps);
+			this.fit();
+		},
+		draw : function(){
+			var ctx = this.ctx,
+				yLabelGap = (this.endPoint - this.startPoint) / this.steps,
+				xStart = Math.round(this.xScalePaddingLeft);
+			if (this.display){
+				ctx.fillStyle = this.textColor;
+				ctx.font = this.font;
+				each(this.yLabels,function(labelString,index){
+					var yLabelCenter = this.endPoint - (yLabelGap * index),
+						linePositionY = Math.round(yLabelCenter),
+						drawHorizontalLine = this.showHorizontalLines;
+
+					ctx.textAlign = "right";
+					ctx.textBaseline = "middle";
+					if (this.showLabels){
+						ctx.fillText(labelString,xStart - 10,yLabelCenter);
+					}
+
+					// This is X axis, so draw it
+					if (index === 0 && !drawHorizontalLine){
+						drawHorizontalLine = true;
+					}
+
+					if (drawHorizontalLine){
+						ctx.beginPath();
+					}
+
+					if (index > 0){
+						// This is a grid line in the centre, so drop that
+						ctx.lineWidth = this.gridLineWidth;
+						ctx.strokeStyle = this.gridLineColor;
+					} else {
+						// This is the first line on the scale
+						ctx.lineWidth = this.lineWidth;
+						ctx.strokeStyle = this.lineColor;
+					}
+
+					linePositionY += helpers.aliasPixel(ctx.lineWidth);
+
+					if(drawHorizontalLine){
+						ctx.moveTo(xStart, linePositionY);
+						ctx.lineTo(this.width, linePositionY);
+						ctx.stroke();
+						ctx.closePath();
+					}
+
+					ctx.lineWidth = this.lineWidth;
+					ctx.strokeStyle = this.lineColor;
+					ctx.beginPath();
+					ctx.moveTo(xStart - 5, linePositionY);
+					ctx.lineTo(xStart, linePositionY);
+					ctx.stroke();
+					ctx.closePath();
+
+				},this);
+
+				each(this.xLabels,function(label,index){
+					var xPos = this.calculateX(index) + aliasPixel(this.lineWidth),
+						// Check to see if line/bar here and decide where to place the line
+						linePos = this.calculateX(index - (this.offsetGridLines ? 0.5 : 0)) + aliasPixel(this.lineWidth),
+						isRotated = (this.xLabelRotation > 0),
+						drawVerticalLine = this.showVerticalLines;
+
+					// This is Y axis, so draw it
+					if (index === 0 && !drawVerticalLine){
+						drawVerticalLine = true;
+					}
+
+					if (drawVerticalLine){
+						ctx.beginPath();
+					}
+
+					if (index > 0){
+						// This is a grid line in the centre, so drop that
+						ctx.lineWidth = this.gridLineWidth;
+						ctx.strokeStyle = this.gridLineColor;
+					} else {
+						// This is the first line on the scale
+						ctx.lineWidth = this.lineWidth;
+						ctx.strokeStyle = this.lineColor;
+					}
+
+					if (drawVerticalLine){
+						ctx.moveTo(linePos,this.endPoint);
+						ctx.lineTo(linePos,this.startPoint - 3);
+						ctx.stroke();
+						ctx.closePath();
+					}
+
+
+					ctx.lineWidth = this.lineWidth;
+					ctx.strokeStyle = this.lineColor;
+
+
+					// Small lines at the bottom of the base grid line
+					ctx.beginPath();
+					ctx.moveTo(linePos,this.endPoint);
+					ctx.lineTo(linePos,this.endPoint + 5);
+					ctx.stroke();
+					ctx.closePath();
+
+					ctx.save();
+					ctx.translate(xPos,(isRotated) ? this.endPoint + 12 : this.endPoint + 8);
+					ctx.rotate(toRadians(this.xLabelRotation)*-1);
+					ctx.font = this.font;
+					ctx.textAlign = (isRotated) ? "right" : "center";
+					ctx.textBaseline = (isRotated) ? "middle" : "top";
+					ctx.fillText(label, 0, 0);
+					ctx.restore();
+				},this);
+
+			}
+		}
+
+	});
+
+	Chart.RadialScale = Chart.Element.extend({
+		initialize: function(){
+			this.size = min([this.height, this.width]);
+			this.drawingArea = (this.display) ? (this.size/2) - (this.fontSize/2 + this.backdropPaddingY) : (this.size/2);
+		},
+		calculateCenterOffset: function(value){
+			// Take into account half font size + the yPadding of the top value
+			var scalingFactor = this.drawingArea / (this.max - this.min);
+
+			return (value - this.min) * scalingFactor;
+		},
+		update : function(){
+			if (!this.lineArc){
+				this.setScaleSize();
+			} else {
+				this.drawingArea = (this.display) ? (this.size/2) - (this.fontSize/2 + this.backdropPaddingY) : (this.size/2);
+			}
+			this.buildYLabels();
+		},
+		buildYLabels: function(){
+			this.yLabels = [];
+
+			var stepDecimalPlaces = getDecimalPlaces(this.stepValue);
+
+			for (var i=0; i<=this.steps; i++){
+				this.yLabels.push(template(this.templateString,{value:(this.min + (i * this.stepValue)).toFixed(stepDecimalPlaces)}));
+			}
+		},
+		getCircumference : function(){
+			return ((Math.PI*2) / this.valuesCount);
+		},
+		setScaleSize: function(){
+			/*
+			 * Right, this is really confusing and there is a lot of maths going on here
+			 * The gist of the problem is here: https://gist.github.com/nnnick/696cc9c55f4b0beb8fe9
+			 *
+			 * Reaction: https://dl.dropboxusercontent.com/u/34601363/toomuchscience.gif
+			 *
+			 * Solution:
+			 *
+			 * We assume the radius of the polygon is half the size of the canvas at first
+			 * at each index we check if the text overlaps.
+			 *
+			 * Where it does, we store that angle and that index.
+			 *
+			 * After finding the largest index and angle we calculate how much we need to remove
+			 * from the shape radius to move the point inwards by that x.
+			 *
+			 * We average the left and right distances to get the maximum shape radius that can fit in the box
+			 * along with labels.
+			 *
+			 * Once we have that, we can find the centre point for the chart, by taking the x text protrusion
+			 * on each side, removing that from the size, halving it and adding the left x protrusion width.
+			 *
+			 * This will mean we have a shape fitted to the canvas, as large as it can be with the labels
+			 * and position it in the most space efficient manner
+			 *
+			 * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif
+			 */
+
+
+			// Get maximum radius of the polygon. Either half the height (minus the text width) or half the width.
+			// Use this to calculate the offset + change. - Make sure L/R protrusion is at least 0 to stop issues with centre points
+			var largestPossibleRadius = min([(this.height/2 - this.pointLabelFontSize - 5), this.width/2]),
+				pointPosition,
+				i,
+				textWidth,
+				halfTextWidth,
+				furthestRight = this.width,
+				furthestRightIndex,
+				furthestRightAngle,
+				furthestLeft = 0,
+				furthestLeftIndex,
+				furthestLeftAngle,
+				xProtrusionLeft,
+				xProtrusionRight,
+				radiusReductionRight,
+				radiusReductionLeft,
+				maxWidthRadius;
+			this.ctx.font = fontString(this.pointLabelFontSize,this.pointLabelFontStyle,this.pointLabelFontFamily);
+			for (i=0;i<this.valuesCount;i++){
+				// 5px to space the text slightly out - similar to what we do in the draw function.
+				pointPosition = this.getPointPosition(i, largestPossibleRadius);
+				textWidth = this.ctx.measureText(template(this.templateString, { value: this.labels[i] })).width + 5;
+				if (i === 0 || i === this.valuesCount/2){
+					// If we're at index zero, or exactly the middle, we're at exactly the top/bottom
+					// of the radar chart, so text will be aligned centrally, so we'll half it and compare
+					// w/left and right text sizes
+					halfTextWidth = textWidth/2;
+					if (pointPosition.x + halfTextWidth > furthestRight) {
+						furthestRight = pointPosition.x + halfTextWidth;
+						furthestRightIndex = i;
+					}
+					if (pointPosition.x - halfTextWidth < furthestLeft) {
+						furthestLeft = pointPosition.x - halfTextWidth;
+						furthestLeftIndex = i;
+					}
+				}
+				else if (i < this.valuesCount/2) {
+					// Less than half the values means we'll left align the text
+					if (pointPosition.x + textWidth > furthestRight) {
+						furthestRight = pointPosition.x + textWidth;
+						furthestRightIndex = i;
+					}
+				}
+				else if (i > this.valuesCount/2){
+					// More than half the values means we'll right align the text
+					if (pointPosition.x - textWidth < furthestLeft) {
+						furthestLeft = pointPosition.x - textWidth;
+						furthestLeftIndex = i;
+					}
+				}
+			}
+
+			xProtrusionLeft = furthestLeft;
+
+			xProtrusionRight = Math.ceil(furthestRight - this.width);
+
+			furthestRightAngle = this.getIndexAngle(furthestRightIndex);
+
+			furthestLeftAngle = this.getIndexAngle(furthestLeftIndex);
+
+			radiusReductionRight = xProtrusionRight / Math.sin(furthestRightAngle + Math.PI/2);
+
+			radiusReductionLeft = xProtrusionLeft / Math.sin(furthestLeftAngle + Math.PI/2);
+
+			// Ensure we actually need to reduce the size of the chart
+			radiusReductionRight = (isNumber(radiusReductionRight)) ? radiusReductionRight : 0;
+			radiusReductionLeft = (isNumber(radiusReductionLeft)) ? radiusReductionLeft : 0;
+
+			this.drawingArea = largestPossibleRadius - (radiusReductionLeft + radiusReductionRight)/2;
+
+			//this.drawingArea = min([maxWidthRadius, (this.height - (2 * (this.pointLabelFontSize + 5)))/2])
+			this.setCenterPoint(radiusReductionLeft, radiusReductionRight);
+
+		},
+		setCenterPoint: function(leftMovement, rightMovement){
+
+			var maxRight = this.width - rightMovement - this.drawingArea,
+				maxLeft = leftMovement + this.drawingArea;
+
+			this.xCenter = (maxLeft + maxRight)/2;
+			// Always vertically in the centre as the text height doesn't change
+			this.yCenter = (this.height/2);
+		},
+
+		getIndexAngle : function(index){
+			var angleMultiplier = (Math.PI * 2) / this.valuesCount;
+			// Start from the top instead of right, so remove a quarter of the circle
+
+			return index * angleMultiplier - (Math.PI/2);
+		},
+		getPointPosition : function(index, distanceFromCenter){
+			var thisAngle = this.getIndexAngle(index);
+			return {
+				x : (Math.cos(thisAngle) * distanceFromCenter) + this.xCenter,
+				y : (Math.sin(thisAngle) * distanceFromCenter) + this.yCenter
+			};
+		},
+		draw: function(){
+			if (this.display){
+				var ctx = this.ctx;
+				each(this.yLabels, function(label, index){
+					// Don't draw a centre value
+					if (index > 0){
+						var yCenterOffset = index * (this.drawingArea/this.steps),
+							yHeight = this.yCenter - yCenterOffset,
+							pointPosition;
+
+						// Draw circular lines around the scale
+						if (this.lineWidth > 0){
+							ctx.strokeStyle = this.lineColor;
+							ctx.lineWidth = this.lineWidth;
+
+							if(this.lineArc){
+								ctx.beginPath();
+								ctx.arc(this.xCenter, this.yCenter, yCenterOffset, 0, Math.PI*2);
+								ctx.closePath();
+								ctx.stroke();
+							} else{
+								ctx.beginPath();
+								for (var i=0;i<this.valuesCount;i++)
+								{
+									pointPosition = this.getPointPosition(i, this.calculateCenterOffset(this.min + (index * this.stepValue)));
+									if (i === 0){
+										ctx.moveTo(pointPosition.x, pointPosition.y);
+									} else {
+										ctx.lineTo(pointPosition.x, pointPosition.y);
+									}
+								}
+								ctx.closePath();
+								ctx.stroke();
+							}
+						}
+						if(this.showLabels){
+							ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
+							if (this.showLabelBackdrop){
+								var labelWidth = ctx.measureText(label).width;
+								ctx.fillStyle = this.backdropColor;
+								ctx.fillRect(
+									this.xCenter - labelWidth/2 - this.backdropPaddingX,
+									yHeight - this.fontSize/2 - this.backdropPaddingY,
+									labelWidth + this.backdropPaddingX*2,
+									this.fontSize + this.backdropPaddingY*2
+								);
+							}
+							ctx.textAlign = 'center';
+							ctx.textBaseline = "middle";
+							ctx.fillStyle = this.fontColor;
+							ctx.fillText(label, this.xCenter, yHeight);
+						}
+					}
+				}, this);
+
+				if (!this.lineArc){
+					ctx.lineWidth = this.angleLineWidth;
+					ctx.strokeStyle = this.angleLineColor;
+					for (var i = this.valuesCount - 1; i >= 0; i--) {
+						if (this.angleLineWidth > 0){
+							var outerPosition = this.getPointPosition(i, this.calculateCenterOffset(this.max));
+							ctx.beginPath();
+							ctx.moveTo(this.xCenter, this.yCenter);
+							ctx.lineTo(outerPosition.x, outerPosition.y);
+							ctx.stroke();
+							ctx.closePath();
+						}
+						// Extra 3px out for some label spacing
+						var pointLabelPosition = this.getPointPosition(i, this.calculateCenterOffset(this.max) + 5);
+						ctx.font = fontString(this.pointLabelFontSize,this.pointLabelFontStyle,this.pointLabelFontFamily);
+						ctx.fillStyle = this.pointLabelFontColor;
+
+						var labelsCount = this.labels.length,
+							halfLabelsCount = this.labels.length/2,
+							quarterLabelsCount = halfLabelsCount/2,
+							upperHalf = (i < quarterLabelsCount || i > labelsCount - quarterLabelsCount),
+							exactQuarter = (i === quarterLabelsCount || i === labelsCount - quarterLabelsCount);
+						if (i === 0){
+							ctx.textAlign = 'center';
+						} else if(i === halfLabelsCount){
+							ctx.textAlign = 'center';
+						} else if (i < halfLabelsCount){
+							ctx.textAlign = 'left';
+						} else {
+							ctx.textAlign = 'right';
+						}
+
+						// Set the correct text baseline based on outer positioning
+						if (exactQuarter){
+							ctx.textBaseline = 'middle';
+						} else if (upperHalf){
+							ctx.textBaseline = 'bottom';
+						} else {
+							ctx.textBaseline = 'top';
+						}
+
+						ctx.fillText(this.labels[i], pointLabelPosition.x, pointLabelPosition.y);
+					}
+				}
+			}
+		}
+	});
+
+	// Attach global event to resize each chart instance when the browser resizes
+	helpers.addEvent(window, "resize", (function(){
+		// Basic debounce of resize function so it doesn't hurt performance when resizing browser.
+		var timeout;
+		return function(){
+			clearTimeout(timeout);
+			timeout = setTimeout(function(){
+				each(Chart.instances,function(instance){
+					// If the responsive flag is set in the chart instance config
+					// Cascade the resize event down to the chart.
+					if (instance.options.responsive){
+						instance.resize(instance.render, true);
+					}
+				});
+			}, 50);
+		};
+	})());
+
+
+	if (amd) {
+		define(function(){
+			return Chart;
+		});
+	} else if (typeof module === 'object' && module.exports) {
+		module.exports = Chart;
+	}
+
+	root.Chart = Chart;
+
+	Chart.noConflict = function(){
+		root.Chart = previous;
+		return Chart;
+	};
+
+}).call(this);
+
+(function(){
+	"use strict";
+
+	var root = this,
+		Chart = root.Chart,
+		helpers = Chart.helpers;
+
+
+	var defaultConfig = {
+		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+		scaleBeginAtZero : true,
+
+		//Boolean - Whether grid lines are shown across the chart
+		scaleShowGridLines : true,
+
+		//String - Colour of the grid lines
+		scaleGridLineColor : "rgba(0,0,0,.05)",
+
+		//Number - Width of the grid lines
+		scaleGridLineWidth : 1,
+
+		//Boolean - Whether to show horizontal lines (except X axis)
+		scaleShowHorizontalLines: true,
+
+		//Boolean - Whether to show vertical lines (except Y axis)
+		scaleShowVerticalLines: true,
+
+		//Boolean - If there is a stroke on each bar
+		barShowStroke : true,
+
+		//Number - Pixel width of the bar stroke
+		barStrokeWidth : 2,
+
+		//Number - Spacing between each of the X value sets
+		barValueSpacing : 5,
+
+		//Number - Spacing between data sets within X values
+		barDatasetSpacing : 1,
+
+		//String - A legend template
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+	};
+
+
+	Chart.Type.extend({
+		name: "Bar",
+		defaults : defaultConfig,
+		initialize:  function(data){
+
+			//Expose options as a scope variable here so we can access it in the ScaleClass
+			var options = this.options;
+
+			this.ScaleClass = Chart.Scale.extend({
+				offsetGridLines : true,
+				calculateBarX : function(datasetCount, datasetIndex, barIndex){
+					//Reusable method for calculating the xPosition of a given bar based on datasetIndex & width of the bar
+					var xWidth = this.calculateBaseWidth(),
+						xAbsolute = this.calculateX(barIndex) - (xWidth/2),
+						barWidth = this.calculateBarWidth(datasetCount);
+
+					return xAbsolute + (barWidth * datasetIndex) + (datasetIndex * options.barDatasetSpacing) + barWidth/2;
+				},
+				calculateBaseWidth : function(){
+					return (this.calculateX(1) - this.calculateX(0)) - (2*options.barValueSpacing);
+				},
+				calculateBarWidth : function(datasetCount){
+					//The padding between datasets is to the right of each bar, providing that there are more than 1 dataset
+					var baseWidth = this.calculateBaseWidth() - ((datasetCount - 1) * options.barDatasetSpacing);
+
+					return (baseWidth / datasetCount);
+				}
+			});
+
+			this.datasets = [];
+
+			//Set up tooltip events on the chart
+			if (this.options.showTooltips){
+				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+					var activeBars = (evt.type !== 'mouseout') ? this.getBarsAtEvent(evt) : [];
+
+					this.eachBars(function(bar){
+						bar.restore(['fillColor', 'strokeColor']);
+					});
+					helpers.each(activeBars, function(activeBar){
+						activeBar.fillColor = activeBar.highlightFill;
+						activeBar.strokeColor = activeBar.highlightStroke;
+					});
+					this.showTooltip(activeBars);
+				});
+			}
+
+			//Declare the extension of the default point, to cater for the options passed in to the constructor
+			this.BarClass = Chart.Rectangle.extend({
+				strokeWidth : this.options.barStrokeWidth,
+				showStroke : this.options.barShowStroke,
+				ctx : this.chart.ctx
+			});
+
+			//Iterate through each of the datasets, and build this into a property of the chart
+			helpers.each(data.datasets,function(dataset,datasetIndex){
+
+				var datasetObject = {
+					label : dataset.label || null,
+					fillColor : dataset.fillColor,
+					strokeColor : dataset.strokeColor,
+					bars : []
+				};
+
+				this.datasets.push(datasetObject);
+
+				helpers.each(dataset.data,function(dataPoint,index){
+					//Add a new point for each piece of data, passing any required data to draw.
+					datasetObject.bars.push(new this.BarClass({
+						value : dataPoint,
+						label : data.labels[index],
+						datasetLabel: dataset.label,
+						strokeColor : dataset.strokeColor,
+						fillColor : dataset.fillColor,
+						highlightFill : dataset.highlightFill || dataset.fillColor,
+						highlightStroke : dataset.highlightStroke || dataset.strokeColor
+					}));
+				},this);
+
+			},this);
+
+			this.buildScale(data.labels);
+
+			this.BarClass.prototype.base = this.scale.endPoint;
+
+			this.eachBars(function(bar, index, datasetIndex){
+				helpers.extend(bar, {
+					width : this.scale.calculateBarWidth(this.datasets.length),
+					x: this.scale.calculateBarX(this.datasets.length, datasetIndex, index),
+					y: this.scale.endPoint
+				});
+				bar.save();
+			}, this);
+
+			this.render();
+		},
+		update : function(){
+			this.scale.update();
+			// Reset any highlight colours before updating.
+			helpers.each(this.activeElements, function(activeElement){
+				activeElement.restore(['fillColor', 'strokeColor']);
+			});
+
+			this.eachBars(function(bar){
+				bar.save();
+			});
+			this.render();
+		},
+		eachBars : function(callback){
+			helpers.each(this.datasets,function(dataset, datasetIndex){
+				helpers.each(dataset.bars, callback, this, datasetIndex);
+			},this);
+		},
+		getBarsAtEvent : function(e){
+			var barsArray = [],
+				eventPosition = helpers.getRelativePosition(e),
+				datasetIterator = function(dataset){
+					barsArray.push(dataset.bars[barIndex]);
+				},
+				barIndex;
+
+			for (var datasetIndex = 0; datasetIndex < this.datasets.length; datasetIndex++) {
+				for (barIndex = 0; barIndex < this.datasets[datasetIndex].bars.length; barIndex++) {
+					if (this.datasets[datasetIndex].bars[barIndex].inRange(eventPosition.x,eventPosition.y)){
+						helpers.each(this.datasets, datasetIterator);
+						return barsArray;
+					}
+				}
+			}
+
+			return barsArray;
+		},
+		buildScale : function(labels){
+			var self = this;
+
+			var dataTotal = function(){
+				var values = [];
+				self.eachBars(function(bar){
+					values.push(bar.value);
+				});
+				return values;
+			};
+
+			var scaleOptions = {
+				templateString : this.options.scaleLabel,
+				height : this.chart.height,
+				width : this.chart.width,
+				ctx : this.chart.ctx,
+				textColor : this.options.scaleFontColor,
+				fontSize : this.options.scaleFontSize,
+				fontStyle : this.options.scaleFontStyle,
+				fontFamily : this.options.scaleFontFamily,
+				valuesCount : labels.length,
+				beginAtZero : this.options.scaleBeginAtZero,
+				integersOnly : this.options.scaleIntegersOnly,
+				calculateYRange: function(currentHeight){
+					var updatedRanges = helpers.calculateScaleRange(
+						dataTotal(),
+						currentHeight,
+						this.fontSize,
+						this.beginAtZero,
+						this.integersOnly
+					);
+					helpers.extend(this, updatedRanges);
+				},
+				xLabels : labels,
+				font : helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
+				lineWidth : this.options.scaleLineWidth,
+				lineColor : this.options.scaleLineColor,
+				showHorizontalLines : this.options.scaleShowHorizontalLines,
+				showVerticalLines : this.options.scaleShowVerticalLines,
+				gridLineWidth : (this.options.scaleShowGridLines) ? this.options.scaleGridLineWidth : 0,
+				gridLineColor : (this.options.scaleShowGridLines) ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
+				padding : (this.options.showScale) ? 0 : (this.options.barShowStroke) ? this.options.barStrokeWidth : 0,
+				showLabels : this.options.scaleShowLabels,
+				display : this.options.showScale
+			};
+
+			if (this.options.scaleOverride){
+				helpers.extend(scaleOptions, {
+					calculateYRange: helpers.noop,
+					steps: this.options.scaleSteps,
+					stepValue: this.options.scaleStepWidth,
+					min: this.options.scaleStartValue,
+					max: this.options.scaleStartValue + (this.options.scaleSteps * this.options.scaleStepWidth)
+				});
+			}
+
+			this.scale = new this.ScaleClass(scaleOptions);
+		},
+		addData : function(valuesArray,label){
+			//Map the values array for each of the datasets
+			helpers.each(valuesArray,function(value,datasetIndex){
+				//Add a new point for each piece of data, passing any required data to draw.
+				this.datasets[datasetIndex].bars.push(new this.BarClass({
+					value : value,
+					label : label,
+					x: this.scale.calculateBarX(this.datasets.length, datasetIndex, this.scale.valuesCount+1),
+					y: this.scale.endPoint,
+					width : this.scale.calculateBarWidth(this.datasets.length),
+					base : this.scale.endPoint,
+					strokeColor : this.datasets[datasetIndex].strokeColor,
+					fillColor : this.datasets[datasetIndex].fillColor
+				}));
+			},this);
+
+			this.scale.addXLabel(label);
+			//Then re-render the chart.
+			this.update();
+		},
+		removeData : function(){
+			this.scale.removeXLabel();
+			//Then re-render the chart.
+			helpers.each(this.datasets,function(dataset){
+				dataset.bars.shift();
+			},this);
+			this.update();
+		},
+		reflow : function(){
+			helpers.extend(this.BarClass.prototype,{
+				y: this.scale.endPoint,
+				base : this.scale.endPoint
+			});
+			var newScaleProps = helpers.extend({
+				height : this.chart.height,
+				width : this.chart.width
+			});
+			this.scale.update(newScaleProps);
+		},
+		draw : function(ease){
+			var easingDecimal = ease || 1;
+			this.clear();
+
+			var ctx = this.chart.ctx;
+
+			this.scale.draw(easingDecimal);
+
+			//Draw all the bars for each dataset
+			helpers.each(this.datasets,function(dataset,datasetIndex){
+				helpers.each(dataset.bars,function(bar,index){
+					if (bar.hasValue()){
+						bar.base = this.scale.endPoint;
+						//Transition then draw
+						bar.transition({
+							x : this.scale.calculateBarX(this.datasets.length, datasetIndex, index),
+							y : this.scale.calculateY(bar.value),
+							width : this.scale.calculateBarWidth(this.datasets.length)
+						}, easingDecimal).draw();
+					}
+				},this);
+
+			},this);
+		}
+	});
+
+
+}).call(this);
+
+(function(){
+	"use strict";
+
+	var root = this,
+		Chart = root.Chart,
+		//Cache a local reference to Chart.helpers
+		helpers = Chart.helpers;
+
+	var defaultConfig = {
+		//Boolean - Whether we should show a stroke on each segment
+		segmentShowStroke : true,
+
+		//String - The colour of each segment stroke
+		segmentStrokeColor : "#fff",
+
+		//Number - The width of each segment stroke
+		segmentStrokeWidth : 2,
+
+		//The percentage of the chart that we cut out of the middle.
+		percentageInnerCutout : 50,
+
+		//Number - Amount of animation steps
+		animationSteps : 100,
+
+		//String - Animation easing effect
+		animationEasing : "easeOutBounce",
+
+		//Boolean - Whether we animate the rotation of the Doughnut
+		animateRotate : true,
+
+		//Boolean - Whether we animate scaling the Doughnut from the centre
+		animateScale : false,
+
+		//String - A legend template
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+
+	};
+
+
+	Chart.Type.extend({
+		//Passing in a name registers this chart in the Chart namespace
+		name: "Doughnut",
+		//Providing a defaults will also register the deafults in the chart namespace
+		defaults : defaultConfig,
+		//Initialize is fired when the chart is initialized - Data is passed in as a parameter
+		//Config is automatically merged by the core of Chart.js, and is available at this.options
+		initialize:  function(data){
+
+			//Declare segments as a static property to prevent inheriting across the Chart type prototype
+			this.segments = [];
+			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
+
+			this.SegmentArc = Chart.Arc.extend({
+				ctx : this.chart.ctx,
+				x : this.chart.width/2,
+				y : this.chart.height/2
+			});
+
+			//Set up tooltip events on the chart
+			if (this.options.showTooltips){
+				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+					var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
+
+					helpers.each(this.segments,function(segment){
+						segment.restore(["fillColor"]);
+					});
+					helpers.each(activeSegments,function(activeSegment){
+						activeSegment.fillColor = activeSegment.highlightColor;
+					});
+					this.showTooltip(activeSegments);
+				});
+			}
+			this.calculateTotal(data);
+
+			helpers.each(data,function(datapoint, index){
+				this.addData(datapoint, index, true);
+			},this);
+
+			this.render();
+		},
+		getSegmentsAtEvent : function(e){
+			var segmentsArray = [];
+
+			var location = helpers.getRelativePosition(e);
+
+			helpers.each(this.segments,function(segment){
+				if (segment.inRange(location.x,location.y)) segmentsArray.push(segment);
+			},this);
+			return segmentsArray;
+		},
+		addData : function(segment, atIndex, silent){
+			var index = atIndex || this.segments.length;
+			this.segments.splice(index, 0, new this.SegmentArc({
+				value : segment.value,
+				outerRadius : (this.options.animateScale) ? 0 : this.outerRadius,
+				innerRadius : (this.options.animateScale) ? 0 : (this.outerRadius/100) * this.options.percentageInnerCutout,
+				fillColor : segment.color,
+				highlightColor : segment.highlight || segment.color,
+				showStroke : this.options.segmentShowStroke,
+				strokeWidth : this.options.segmentStrokeWidth,
+				strokeColor : this.options.segmentStrokeColor,
+				startAngle : Math.PI * 1.5,
+				circumference : (this.options.animateRotate) ? 0 : this.calculateCircumference(segment.value),
+				label : segment.label
+			}));
+			if (!silent){
+				this.reflow();
+				this.update();
+			}
+		},
+		calculateCircumference : function(value){
+			return (Math.PI*2)*(Math.abs(value) / this.total);
+		},
+		calculateTotal : function(data){
+			this.total = 0;
+			helpers.each(data,function(segment){
+				this.total += Math.abs(segment.value);
+			},this);
+		},
+		update : function(){
+			this.calculateTotal(this.segments);
+
+			// Reset any highlight colours before updating.
+			helpers.each(this.activeElements, function(activeElement){
+				activeElement.restore(['fillColor']);
+			});
+
+			helpers.each(this.segments,function(segment){
+				segment.save();
+			});
+			this.render();
+		},
+
+		removeData: function(atIndex){
+			var indexToDelete = (helpers.isNumber(atIndex)) ? atIndex : this.segments.length-1;
+			this.segments.splice(indexToDelete, 1);
+			this.reflow();
+			this.update();
+		},
+
+		reflow : function(){
+			helpers.extend(this.SegmentArc.prototype,{
+				x : this.chart.width/2,
+				y : this.chart.height/2
+			});
+			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
+			helpers.each(this.segments, function(segment){
+				segment.update({
+					outerRadius : this.outerRadius,
+					innerRadius : (this.outerRadius/100) * this.options.percentageInnerCutout
+				});
+			}, this);
+		},
+		draw : function(easeDecimal){
+			var animDecimal = (easeDecimal) ? easeDecimal : 1;
+			this.clear();
+			helpers.each(this.segments,function(segment,index){
+				segment.transition({
+					circumference : this.calculateCircumference(segment.value),
+					outerRadius : this.outerRadius,
+					innerRadius : (this.outerRadius/100) * this.options.percentageInnerCutout
+				},animDecimal);
+
+				segment.endAngle = segment.startAngle + segment.circumference;
+
+				segment.draw();
+				if (index === 0){
+					segment.startAngle = Math.PI * 1.5;
+				}
+				//Check to see if it's the last segment, if not get the next and update the start angle
+				if (index < this.segments.length-1){
+					this.segments[index+1].startAngle = segment.endAngle;
+				}
+			},this);
+
+		}
+	});
+
+	Chart.types.Doughnut.extend({
+		name : "Pie",
+		defaults : helpers.merge(defaultConfig,{percentageInnerCutout : 0})
+	});
+
+}).call(this);
+(function(){
+	"use strict";
+
+	var root = this,
+		Chart = root.Chart,
+		helpers = Chart.helpers;
+
+	var defaultConfig = {
+
+		///Boolean - Whether grid lines are shown across the chart
+		scaleShowGridLines : true,
+
+		//String - Colour of the grid lines
+		scaleGridLineColor : "rgba(0,0,0,.05)",
+
+		//Number - Width of the grid lines
+		scaleGridLineWidth : 1,
+
+		//Boolean - Whether to show horizontal lines (except X axis)
+		scaleShowHorizontalLines: true,
+
+		//Boolean - Whether to show vertical lines (except Y axis)
+		scaleShowVerticalLines: true,
+
+		//Boolean - Whether the line is curved between points
+		bezierCurve : true,
+
+		//Number - Tension of the bezier curve between points
+		bezierCurveTension : 0.4,
+
+		//Boolean - Whether to show a dot for each point
+		pointDot : true,
+
+		//Number - Radius of each point dot in pixels
+		pointDotRadius : 4,
+
+		//Number - Pixel width of point dot stroke
+		pointDotStrokeWidth : 1,
+
+		//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+		pointHitDetectionRadius : 20,
+
+		//Boolean - Whether to show a stroke for datasets
+		datasetStroke : true,
+
+		//Number - Pixel width of dataset stroke
+		datasetStrokeWidth : 2,
+
+		//Boolean - Whether to fill the dataset with a colour
+		datasetFill : true,
+
+		//String - A legend template
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+	};
+
+
+	Chart.Type.extend({
+		name: "Line",
+		defaults : defaultConfig,
+		initialize:  function(data){
+			//Declare the extension of the default point, to cater for the options passed in to the constructor
+			this.PointClass = Chart.Point.extend({
+				strokeWidth : this.options.pointDotStrokeWidth,
+				radius : this.options.pointDotRadius,
+				display: this.options.pointDot,
+				hitDetectionRadius : this.options.pointHitDetectionRadius,
+				ctx : this.chart.ctx,
+				inRange : function(mouseX){
+					return (Math.pow(mouseX-this.x, 2) < Math.pow(this.radius + this.hitDetectionRadius,2));
+				}
+			});
+
+			this.datasets = [];
+
+			//Set up tooltip events on the chart
+			if (this.options.showTooltips){
+				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+					var activePoints = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
+					this.eachPoints(function(point){
+						point.restore(['fillColor', 'strokeColor']);
+					});
+					helpers.each(activePoints, function(activePoint){
+						activePoint.fillColor = activePoint.highlightFill;
+						activePoint.strokeColor = activePoint.highlightStroke;
+					});
+					this.showTooltip(activePoints);
+				});
+			}
+
+			//Iterate through each of the datasets, and build this into a property of the chart
+			helpers.each(data.datasets,function(dataset){
+
+				var datasetObject = {
+					label : dataset.label || null,
+					fillColor : dataset.fillColor,
+					strokeColor : dataset.strokeColor,
+					pointColor : dataset.pointColor,
+					pointStrokeColor : dataset.pointStrokeColor,
+					points : []
+				};
+
+				this.datasets.push(datasetObject);
+
+
+				helpers.each(dataset.data,function(dataPoint,index){
+					//Add a new point for each piece of data, passing any required data to draw.
+					datasetObject.points.push(new this.PointClass({
+						value : dataPoint,
+						label : data.labels[index],
+						datasetLabel: dataset.label,
+						strokeColor : dataset.pointStrokeColor,
+						fillColor : dataset.pointColor,
+						highlightFill : dataset.pointHighlightFill || dataset.pointColor,
+						highlightStroke : dataset.pointHighlightStroke || dataset.pointStrokeColor
+					}));
+				},this);
+
+				this.buildScale(data.labels);
+
+
+				this.eachPoints(function(point, index){
+					helpers.extend(point, {
+						x: this.scale.calculateX(index),
+						y: this.scale.endPoint
+					});
+					point.save();
+				}, this);
+
+			},this);
+
+
+			this.render();
+		},
+		update : function(){
+			this.scale.update();
+			// Reset any highlight colours before updating.
+			helpers.each(this.activeElements, function(activeElement){
+				activeElement.restore(['fillColor', 'strokeColor']);
+			});
+			this.eachPoints(function(point){
+				point.save();
+			});
+			this.render();
+		},
+		eachPoints : function(callback){
+			helpers.each(this.datasets,function(dataset){
+				helpers.each(dataset.points,callback,this);
+			},this);
+		},
+		getPointsAtEvent : function(e){
+			var pointsArray = [],
+				eventPosition = helpers.getRelativePosition(e);
+			helpers.each(this.datasets,function(dataset){
+				helpers.each(dataset.points,function(point){
+					if (point.inRange(eventPosition.x,eventPosition.y)) pointsArray.push(point);
+				});
+			},this);
+			return pointsArray;
+		},
+		buildScale : function(labels){
+			var self = this;
+
+			var dataTotal = function(){
+				var values = [];
+				self.eachPoints(function(point){
+					values.push(point.value);
+				});
+
+				return values;
+			};
+
+			var scaleOptions = {
+				templateString : this.options.scaleLabel,
+				height : this.chart.height,
+				width : this.chart.width,
+				ctx : this.chart.ctx,
+				textColor : this.options.scaleFontColor,
+				fontSize : this.options.scaleFontSize,
+				fontStyle : this.options.scaleFontStyle,
+				fontFamily : this.options.scaleFontFamily,
+				valuesCount : labels.length,
+				beginAtZero : this.options.scaleBeginAtZero,
+				integersOnly : this.options.scaleIntegersOnly,
+				calculateYRange : function(currentHeight){
+					var updatedRanges = helpers.calculateScaleRange(
+						dataTotal(),
+						currentHeight,
+						this.fontSize,
+						this.beginAtZero,
+						this.integersOnly
+					);
+					helpers.extend(this, updatedRanges);
+				},
+				xLabels : labels,
+				font : helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
+				lineWidth : this.options.scaleLineWidth,
+				lineColor : this.options.scaleLineColor,
+				showHorizontalLines : this.options.scaleShowHorizontalLines,
+				showVerticalLines : this.options.scaleShowVerticalLines,
+				gridLineWidth : (this.options.scaleShowGridLines) ? this.options.scaleGridLineWidth : 0,
+				gridLineColor : (this.options.scaleShowGridLines) ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
+				padding: (this.options.showScale) ? 0 : this.options.pointDotRadius + this.options.pointDotStrokeWidth,
+				showLabels : this.options.scaleShowLabels,
+				display : this.options.showScale
+			};
+
+			if (this.options.scaleOverride){
+				helpers.extend(scaleOptions, {
+					calculateYRange: helpers.noop,
+					steps: this.options.scaleSteps,
+					stepValue: this.options.scaleStepWidth,
+					min: this.options.scaleStartValue,
+					max: this.options.scaleStartValue + (this.options.scaleSteps * this.options.scaleStepWidth)
+				});
+			}
+
+
+			this.scale = new Chart.Scale(scaleOptions);
+		},
+		addData : function(valuesArray,label){
+			//Map the values array for each of the datasets
+
+			helpers.each(valuesArray,function(value,datasetIndex){
+				//Add a new point for each piece of data, passing any required data to draw.
+				this.datasets[datasetIndex].points.push(new this.PointClass({
+					value : value,
+					label : label,
+					x: this.scale.calculateX(this.scale.valuesCount+1),
+					y: this.scale.endPoint,
+					strokeColor : this.datasets[datasetIndex].pointStrokeColor,
+					fillColor : this.datasets[datasetIndex].pointColor
+				}));
+			},this);
+
+			this.scale.addXLabel(label);
+			//Then re-render the chart.
+			this.update();
+		},
+		removeData : function(){
+			this.scale.removeXLabel();
+			//Then re-render the chart.
+			helpers.each(this.datasets,function(dataset){
+				dataset.points.shift();
+			},this);
+			this.update();
+		},
+		reflow : function(){
+			var newScaleProps = helpers.extend({
+				height : this.chart.height,
+				width : this.chart.width
+			});
+			this.scale.update(newScaleProps);
+		},
+		draw : function(ease){
+			var easingDecimal = ease || 1;
+			this.clear();
+
+			var ctx = this.chart.ctx;
+
+			// Some helper methods for getting the next/prev points
+			var hasValue = function(item){
+				return item.value !== null;
+			},
+			nextPoint = function(point, collection, index){
+				return helpers.findNextWhere(collection, hasValue, index) || point;
+			},
+			previousPoint = function(point, collection, index){
+				return helpers.findPreviousWhere(collection, hasValue, index) || point;
+			};
+
+			this.scale.draw(easingDecimal);
+
+
+			helpers.each(this.datasets,function(dataset){
+				var pointsWithValues = helpers.where(dataset.points, hasValue);
+
+				//Transition each point first so that the line and point drawing isn't out of sync
+				//We can use this extra loop to calculate the control points of this dataset also in this loop
+
+				helpers.each(dataset.points, function(point, index){
+					if (point.hasValue()){
+						point.transition({
+							y : this.scale.calculateY(point.value),
+							x : this.scale.calculateX(index)
+						}, easingDecimal);
+					}
+				},this);
+
+
+				// Control points need to be calculated in a seperate loop, because we need to know the current x/y of the point
+				// This would cause issues when there is no animation, because the y of the next point would be 0, so beziers would be skewed
+				if (this.options.bezierCurve){
+					helpers.each(pointsWithValues, function(point, index){
+						var tension = (index > 0 && index < pointsWithValues.length - 1) ? this.options.bezierCurveTension : 0;
+						point.controlPoints = helpers.splineCurve(
+							previousPoint(point, pointsWithValues, index),
+							point,
+							nextPoint(point, pointsWithValues, index),
+							tension
+						);
+
+						// Prevent the bezier going outside of the bounds of the graph
+
+						// Cap puter bezier handles to the upper/lower scale bounds
+						if (point.controlPoints.outer.y > this.scale.endPoint){
+							point.controlPoints.outer.y = this.scale.endPoint;
+						}
+						else if (point.controlPoints.outer.y < this.scale.startPoint){
+							point.controlPoints.outer.y = this.scale.startPoint;
+						}
+
+						// Cap inner bezier handles to the upper/lower scale bounds
+						if (point.controlPoints.inner.y > this.scale.endPoint){
+							point.controlPoints.inner.y = this.scale.endPoint;
+						}
+						else if (point.controlPoints.inner.y < this.scale.startPoint){
+							point.controlPoints.inner.y = this.scale.startPoint;
+						}
+					},this);
+				}
+
+
+				//Draw the line between all the points
+				ctx.lineWidth = this.options.datasetStrokeWidth;
+				ctx.strokeStyle = dataset.strokeColor;
+				ctx.beginPath();
+
+				helpers.each(pointsWithValues, function(point, index){
+					if (index === 0){
+						ctx.moveTo(point.x, point.y);
+					}
+					else{
+						if(this.options.bezierCurve){
+							var previous = previousPoint(point, pointsWithValues, index);
+
+							ctx.bezierCurveTo(
+								previous.controlPoints.outer.x,
+								previous.controlPoints.outer.y,
+								point.controlPoints.inner.x,
+								point.controlPoints.inner.y,
+								point.x,
+								point.y
+							);
+						}
+						else{
+							ctx.lineTo(point.x,point.y);
+						}
+					}
+				}, this);
+
+				ctx.stroke();
+
+				if (this.options.datasetFill && pointsWithValues.length > 0){
+					//Round off the line by going to the base of the chart, back to the start, then fill.
+					ctx.lineTo(pointsWithValues[pointsWithValues.length - 1].x, this.scale.endPoint);
+					ctx.lineTo(pointsWithValues[0].x, this.scale.endPoint);
+					ctx.fillStyle = dataset.fillColor;
+					ctx.closePath();
+					ctx.fill();
+				}
+
+				//Now draw the points over the line
+				//A little inefficient double looping, but better than the line
+				//lagging behind the point positions
+				helpers.each(pointsWithValues,function(point){
+					point.draw();
+				});
+			},this);
+		}
+	});
+
+
+}).call(this);
+
+(function(){
+	"use strict";
+
+	var root = this,
+		Chart = root.Chart,
+		//Cache a local reference to Chart.helpers
+		helpers = Chart.helpers;
+
+	var defaultConfig = {
+		//Boolean - Show a backdrop to the scale label
+		scaleShowLabelBackdrop : true,
+
+		//String - The colour of the label backdrop
+		scaleBackdropColor : "rgba(255,255,255,0.75)",
+
+		// Boolean - Whether the scale should begin at zero
+		scaleBeginAtZero : true,
+
+		//Number - The backdrop padding above & below the label in pixels
+		scaleBackdropPaddingY : 2,
+
+		//Number - The backdrop padding to the side of the label in pixels
+		scaleBackdropPaddingX : 2,
+
+		//Boolean - Show line for each value in the scale
+		scaleShowLine : true,
+
+		//Boolean - Stroke a line around each segment in the chart
+		segmentShowStroke : true,
+
+		//String - The colour of the stroke on each segement.
+		segmentStrokeColor : "#fff",
+
+		//Number - The width of the stroke value in pixels
+		segmentStrokeWidth : 2,
+
+		//Number - Amount of animation steps
+		animationSteps : 100,
+
+		//String - Animation easing effect.
+		animationEasing : "easeOutBounce",
+
+		//Boolean - Whether to animate the rotation of the chart
+		animateRotate : true,
+
+		//Boolean - Whether to animate scaling the chart from the centre
+		animateScale : false,
+
+		//String - A legend template
+		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+	};
+
+
+	Chart.Type.extend({
+		//Passing in a name registers this chart in the Chart namespace
+		name: "PolarArea",
+		//Providing a defaults will also register the deafults in the chart namespace
+		defaults : defaultConfig,
+		//Initialize is fired when the chart is initialized - Data is passed in as a parameter
+		//Config is automatically merged by the core of Chart.js, and is available at this.options
+		initialize:  function(data){
+			this.segments = [];
+			//Declare segment class as a chart instance specific class, so it can share props for this instance
+			this.SegmentArc = Chart.Arc.extend({
+				showStroke : this.options.segmentShowStroke,
+				strokeWidth : this.options.segmentStrokeWidth,
+				strokeColor : this.options.segmentStrokeColor,
+				ctx : this.chart.ctx,
+				innerRadius : 0,
+				x : this.chart.width/2,
+				y : this.chart.height/2
+			});
+			this.scale = new Chart.RadialScale({
+				display: this.options.showScale,
+				fontStyle: this.options.scaleFontStyle,
+				fontSize: this.options.scaleFontSize,
+				fontFamily: this.options.scaleFontFamily,
+				fontColor: this.options.scaleFontColor,
+				showLabels: this.options.scaleShowLabels,
+				showLabelBackdrop: this.options.scaleShowLabelBackdrop,
+				backdropColor: this.options.scaleBackdropColor,
+				backdropPaddingY : this.options.scaleBackdropPaddingY,
+				backdropPaddingX: this.options.scaleBackdropPaddingX,
+				lineWidth: (this.options.scaleShowLine) ? this.options.scaleLineWidth : 0,
+				lineColor: this.options.scaleLineColor,
+				lineArc: true,
+				width: this.chart.width,
+				height: this.chart.height,
+				xCenter: this.chart.width/2,
+				yCenter: this.chart.height/2,
+				ctx : this.chart.ctx,
+				templateString: this.options.scaleLabel,
+				valuesCount: data.length
+			});
+
+			this.updateScaleRange(data);
+
+			this.scale.update();
+
+			helpers.each(data,function(segment,index){
+				this.addData(segment,index,true);
+			},this);
+
+			//Set up tooltip events on the chart
+			if (this.options.showTooltips){
+				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+					var activeSegments = (evt.type !== 'mouseout') ? this.getSegmentsAtEvent(evt) : [];
+					helpers.each(this.segments,function(segment){
+						segment.restore(["fillColor"]);
+					});
+					helpers.each(activeSegments,function(activeSegment){
+						activeSegment.fillColor = activeSegment.highlightColor;
+					});
+					this.showTooltip(activeSegments);
+				});
+			}
+
+			this.render();
+		},
+		getSegmentsAtEvent : function(e){
+			var segmentsArray = [];
+
+			var location = helpers.getRelativePosition(e);
+
+			helpers.each(this.segments,function(segment){
+				if (segment.inRange(location.x,location.y)) segmentsArray.push(segment);
+			},this);
+			return segmentsArray;
+		},
+		addData : function(segment, atIndex, silent){
+			var index = atIndex || this.segments.length;
+
+			this.segments.splice(index, 0, new this.SegmentArc({
+				fillColor: segment.color,
+				highlightColor: segment.highlight || segment.color,
+				label: segment.label,
+				value: segment.value,
+				outerRadius: (this.options.animateScale) ? 0 : this.scale.calculateCenterOffset(segment.value),
+				circumference: (this.options.animateRotate) ? 0 : this.scale.getCircumference(),
+				startAngle: Math.PI * 1.5
+			}));
+			if (!silent){
+				this.reflow();
+				this.update();
+			}
+		},
+		removeData: function(atIndex){
+			var indexToDelete = (helpers.isNumber(atIndex)) ? atIndex : this.segments.length-1;
+			this.segments.splice(indexToDelete, 1);
+			this.reflow();
+			this.update();
+		},
+		calculateTotal: function(data){
+			this.total = 0;
+			helpers.each(data,function(segment){
+				this.total += segment.value;
+			},this);
+			this.scale.valuesCount = this.segments.length;
+		},
+		updateScaleRange: function(datapoints){
+			var valuesArray = [];
+			helpers.each(datapoints,function(segment){
+				valuesArray.push(segment.value);
+			});
+
+			var scaleSizes = (this.options.scaleOverride) ?
+				{
+					steps: this.options.scaleSteps,
+					stepValue: this.options.scaleStepWidth,
+					min: this.options.scaleStartValue,
+					max: this.options.scaleStartValue + (this.options.scaleSteps * this.options.scaleStepWidth)
+				} :
+				helpers.calculateScaleRange(
+					valuesArray,
+					helpers.min([this.chart.width, this.chart.height])/2,
+					this.options.scaleFontSize,
+					this.options.scaleBeginAtZero,
+					this.options.scaleIntegersOnly
+				);
+
+			helpers.extend(
+				this.scale,
+				scaleSizes,
+				{
+					size: helpers.min([this.chart.width, this.chart.height]),
+					xCenter: this.chart.width/2,
+					yCenter: this.chart.height/2
+				}
+			);
+
+		},
+		update : function(){
+			this.calculateTotal(this.segments);
+
+			helpers.each(this.segments,function(segment){
+				segment.save();
+			});
+			
+			this.reflow();
+			this.render();
+		},
+		reflow : function(){
+			helpers.extend(this.SegmentArc.prototype,{
+				x : this.chart.width/2,
+				y : this.chart.height/2
+			});
+			this.updateScaleRange(this.segments);
+			this.scale.update();
+
+			helpers.extend(this.scale,{
+				xCenter: this.chart.width/2,
+				yCenter: this.chart.height/2
+			});
+
+			helpers.each(this.segments, function(segment){
+				segment.update({
+					outerRadius : this.scale.calculateCenterOffset(segment.value)
+				});
+			}, this);
+
+		},
+		draw : function(ease){
+			var easingDecimal = ease || 1;
+			//Clear & draw the canvas
+			this.clear();
+			helpers.each(this.segments,function(segment, index){
+				segment.transition({
+					circumference : this.scale.getCircumference(),
+					outerRadius : this.scale.calculateCenterOffset(segment.value)
+				},easingDecimal);
+
+				segment.endAngle = segment.startAngle + segment.circumference;
+
+				// If we've removed the first segment we need to set the first one to
+				// start at the top.
+				if (index === 0){
+					segment.startAngle = Math.PI * 1.5;
+				}
+
+				//Check to see if it's the last segment, if not get the next and update the start angle
+				if (index < this.segments.length - 1){
+					this.segments[index+1].startAngle = segment.endAngle;
+				}
+				segment.draw();
+			}, this);
+			this.scale.draw();
+		}
+	});
+
+}).call(this);
+(function(){
+	"use strict";
+
+	var root = this,
+		Chart = root.Chart,
+		helpers = Chart.helpers;
+
+
+
+	Chart.Type.extend({
+		name: "Radar",
+		defaults:{
+			//Boolean - Whether to show lines for each scale point
+			scaleShowLine : true,
+
+			//Boolean - Whether we show the angle lines out of the radar
+			angleShowLineOut : true,
+
+			//Boolean - Whether to show labels on the scale
+			scaleShowLabels : false,
+
+			// Boolean - Whether the scale should begin at zero
+			scaleBeginAtZero : true,
+
+			//String - Colour of the angle line
+			angleLineColor : "rgba(0,0,0,.1)",
+
+			//Number - Pixel width of the angle line
+			angleLineWidth : 1,
+
+			//String - Point label font declaration
+			pointLabelFontFamily : "'Arial'",
+
+			//String - Point label font weight
+			pointLabelFontStyle : "normal",
+
+			//Number - Point label font size in pixels
+			pointLabelFontSize : 10,
+
+			//String - Point label font colour
+			pointLabelFontColor : "#666",
+
+			//Boolean - Whether to show a dot for each point
+			pointDot : true,
+
+			//Number - Radius of each point dot in pixels
+			pointDotRadius : 3,
+
+			//Number - Pixel width of point dot stroke
+			pointDotStrokeWidth : 1,
+
+			//Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+			pointHitDetectionRadius : 20,
+
+			//Boolean - Whether to show a stroke for datasets
+			datasetStroke : true,
+
+			//Number - Pixel width of dataset stroke
+			datasetStrokeWidth : 2,
+
+			//Boolean - Whether to fill the dataset with a colour
+			datasetFill : true,
+
+			//String - A legend template
+			legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+
+		},
+
+		initialize: function(data){
+			this.PointClass = Chart.Point.extend({
+				strokeWidth : this.options.pointDotStrokeWidth,
+				radius : this.options.pointDotRadius,
+				display: this.options.pointDot,
+				hitDetectionRadius : this.options.pointHitDetectionRadius,
+				ctx : this.chart.ctx
+			});
+
+			this.datasets = [];
+
+			this.buildScale(data);
+
+			//Set up tooltip events on the chart
+			if (this.options.showTooltips){
+				helpers.bindEvents(this, this.options.tooltipEvents, function(evt){
+					var activePointsCollection = (evt.type !== 'mouseout') ? this.getPointsAtEvent(evt) : [];
+
+					this.eachPoints(function(point){
+						point.restore(['fillColor', 'strokeColor']);
+					});
+					helpers.each(activePointsCollection, function(activePoint){
+						activePoint.fillColor = activePoint.highlightFill;
+						activePoint.strokeColor = activePoint.highlightStroke;
+					});
+
+					this.showTooltip(activePointsCollection);
+				});
+			}
+
+			//Iterate through each of the datasets, and build this into a property of the chart
+			helpers.each(data.datasets,function(dataset){
+
+				var datasetObject = {
+					label: dataset.label || null,
+					fillColor : dataset.fillColor,
+					strokeColor : dataset.strokeColor,
+					pointColor : dataset.pointColor,
+					pointStrokeColor : dataset.pointStrokeColor,
+					points : []
+				};
+
+				this.datasets.push(datasetObject);
+
+				helpers.each(dataset.data,function(dataPoint,index){
+					//Add a new point for each piece of data, passing any required data to draw.
+					var pointPosition;
+					if (!this.scale.animation){
+						pointPosition = this.scale.getPointPosition(index, this.scale.calculateCenterOffset(dataPoint));
+					}
+					datasetObject.points.push(new this.PointClass({
+						value : dataPoint,
+						label : data.labels[index],
+						datasetLabel: dataset.label,
+						x: (this.options.animation) ? this.scale.xCenter : pointPosition.x,
+						y: (this.options.animation) ? this.scale.yCenter : pointPosition.y,
+						strokeColor : dataset.pointStrokeColor,
+						fillColor : dataset.pointColor,
+						highlightFill : dataset.pointHighlightFill || dataset.pointColor,
+						highlightStroke : dataset.pointHighlightStroke || dataset.pointStrokeColor
+					}));
+				},this);
+
+			},this);
+
+			this.render();
+		},
+		eachPoints : function(callback){
+			helpers.each(this.datasets,function(dataset){
+				helpers.each(dataset.points,callback,this);
+			},this);
+		},
+
+		getPointsAtEvent : function(evt){
+			var mousePosition = helpers.getRelativePosition(evt),
+				fromCenter = helpers.getAngleFromPoint({
+					x: this.scale.xCenter,
+					y: this.scale.yCenter
+				}, mousePosition);
+
+			var anglePerIndex = (Math.PI * 2) /this.scale.valuesCount,
+				pointIndex = Math.round((fromCenter.angle - Math.PI * 1.5) / anglePerIndex),
+				activePointsCollection = [];
+
+			// If we're at the top, make the pointIndex 0 to get the first of the array.
+			if (pointIndex >= this.scale.valuesCount || pointIndex < 0){
+				pointIndex = 0;
+			}
+
+			if (fromCenter.distance <= this.scale.drawingArea){
+				helpers.each(this.datasets, function(dataset){
+					activePointsCollection.push(dataset.points[pointIndex]);
+				});
+			}
+
+			return activePointsCollection;
+		},
+
+		buildScale : function(data){
+			this.scale = new Chart.RadialScale({
+				display: this.options.showScale,
+				fontStyle: this.options.scaleFontStyle,
+				fontSize: this.options.scaleFontSize,
+				fontFamily: this.options.scaleFontFamily,
+				fontColor: this.options.scaleFontColor,
+				showLabels: this.options.scaleShowLabels,
+				showLabelBackdrop: this.options.scaleShowLabelBackdrop,
+				backdropColor: this.options.scaleBackdropColor,
+				backdropPaddingY : this.options.scaleBackdropPaddingY,
+				backdropPaddingX: this.options.scaleBackdropPaddingX,
+				lineWidth: (this.options.scaleShowLine) ? this.options.scaleLineWidth : 0,
+				lineColor: this.options.scaleLineColor,
+				angleLineColor : this.options.angleLineColor,
+				angleLineWidth : (this.options.angleShowLineOut) ? this.options.angleLineWidth : 0,
+				// Point labels at the edge of each line
+				pointLabelFontColor : this.options.pointLabelFontColor,
+				pointLabelFontSize : this.options.pointLabelFontSize,
+				pointLabelFontFamily : this.options.pointLabelFontFamily,
+				pointLabelFontStyle : this.options.pointLabelFontStyle,
+				height : this.chart.height,
+				width: this.chart.width,
+				xCenter: this.chart.width/2,
+				yCenter: this.chart.height/2,
+				ctx : this.chart.ctx,
+				templateString: this.options.scaleLabel,
+				labels: data.labels,
+				valuesCount: data.datasets[0].data.length
+			});
+
+			this.scale.setScaleSize();
+			this.updateScaleRange(data.datasets);
+			this.scale.buildYLabels();
+		},
+		updateScaleRange: function(datasets){
+			var valuesArray = (function(){
+				var totalDataArray = [];
+				helpers.each(datasets,function(dataset){
+					if (dataset.data){
+						totalDataArray = totalDataArray.concat(dataset.data);
+					}
+					else {
+						helpers.each(dataset.points, function(point){
+							totalDataArray.push(point.value);
+						});
+					}
+				});
+				return totalDataArray;
+			})();
+
+
+			var scaleSizes = (this.options.scaleOverride) ?
+				{
+					steps: this.options.scaleSteps,
+					stepValue: this.options.scaleStepWidth,
+					min: this.options.scaleStartValue,
+					max: this.options.scaleStartValue + (this.options.scaleSteps * this.options.scaleStepWidth)
+				} :
+				helpers.calculateScaleRange(
+					valuesArray,
+					helpers.min([this.chart.width, this.chart.height])/2,
+					this.options.scaleFontSize,
+					this.options.scaleBeginAtZero,
+					this.options.scaleIntegersOnly
+				);
+
+			helpers.extend(
+				this.scale,
+				scaleSizes
+			);
+
+		},
+		addData : function(valuesArray,label){
+			//Map the values array for each of the datasets
+			this.scale.valuesCount++;
+			helpers.each(valuesArray,function(value,datasetIndex){
+				var pointPosition = this.scale.getPointPosition(this.scale.valuesCount, this.scale.calculateCenterOffset(value));
+				this.datasets[datasetIndex].points.push(new this.PointClass({
+					value : value,
+					label : label,
+					x: pointPosition.x,
+					y: pointPosition.y,
+					strokeColor : this.datasets[datasetIndex].pointStrokeColor,
+					fillColor : this.datasets[datasetIndex].pointColor
+				}));
+			},this);
+
+			this.scale.labels.push(label);
+
+			this.reflow();
+
+			this.update();
+		},
+		removeData : function(){
+			this.scale.valuesCount--;
+			this.scale.labels.shift();
+			helpers.each(this.datasets,function(dataset){
+				dataset.points.shift();
+			},this);
+			this.reflow();
+			this.update();
+		},
+		update : function(){
+			this.eachPoints(function(point){
+				point.save();
+			});
+			this.reflow();
+			this.render();
+		},
+		reflow: function(){
+			helpers.extend(this.scale, {
+				width : this.chart.width,
+				height: this.chart.height,
+				size : helpers.min([this.chart.width, this.chart.height]),
+				xCenter: this.chart.width/2,
+				yCenter: this.chart.height/2
+			});
+			this.updateScaleRange(this.datasets);
+			this.scale.setScaleSize();
+			this.scale.buildYLabels();
+		},
+		draw : function(ease){
+			var easeDecimal = ease || 1,
+				ctx = this.chart.ctx;
+			this.clear();
+			this.scale.draw();
+
+			helpers.each(this.datasets,function(dataset){
+
+				//Transition each point first so that the line and point drawing isn't out of sync
+				helpers.each(dataset.points,function(point,index){
+					if (point.hasValue()){
+						point.transition(this.scale.getPointPosition(index, this.scale.calculateCenterOffset(point.value)), easeDecimal);
+					}
+				},this);
+
+
+
+				//Draw the line between all the points
+				ctx.lineWidth = this.options.datasetStrokeWidth;
+				ctx.strokeStyle = dataset.strokeColor;
+				ctx.beginPath();
+				helpers.each(dataset.points,function(point,index){
+					if (index === 0){
+						ctx.moveTo(point.x,point.y);
+					}
+					else{
+						ctx.lineTo(point.x,point.y);
+					}
+				},this);
+				ctx.closePath();
+				ctx.stroke();
+
+				ctx.fillStyle = dataset.fillColor;
+				ctx.fill();
+
+				//Now draw the points over the line
+				//A little inefficient double looping, but better than the line
+				//lagging behind the point positions
+				helpers.each(dataset.points,function(point){
+					if (point.hasValue()){
+						point.draw();
+					}
+				});
+
+			},this);
+
+		}
+
+	});
+
+
+
+
+
+}).call(this);
+},{}],3:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -123,7 +3601,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -150,7 +3628,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*eslint-disable no-empty */
 'use strict';
 
@@ -199,7 +3677,7 @@ function readState(key) {
 
   return null;
 }
-},{"warning":29}],5:[function(require,module,exports){
+},{"warning":30}],6:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -275,13 +3753,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -449,7 +3927,7 @@ function createBrowserHistory(options) {
 
 exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
-},{"./Actions":2,"./DOMStateStorage":4,"./DOMUtils":5,"./ExecutionEnvironment":6,"./createDOMHistory":8,"invariant":24}],8:[function(require,module,exports){
+},{"./Actions":3,"./DOMStateStorage":5,"./DOMUtils":6,"./ExecutionEnvironment":7,"./createDOMHistory":9,"invariant":25}],9:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -490,7 +3968,7 @@ function createDOMHistory(options) {
 
 exports['default'] = createDOMHistory;
 module.exports = exports['default'];
-},{"./DOMUtils":5,"./ExecutionEnvironment":6,"./createHistory":10,"invariant":24}],9:[function(require,module,exports){
+},{"./DOMUtils":6,"./ExecutionEnvironment":7,"./createHistory":11,"invariant":25}],10:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -715,7 +4193,7 @@ function createHashHistory() {
 
 exports['default'] = createHashHistory;
 module.exports = exports['default'];
-},{"./Actions":2,"./DOMStateStorage":4,"./DOMUtils":5,"./ExecutionEnvironment":6,"./createDOMHistory":8,"invariant":24,"warning":29}],10:[function(require,module,exports){
+},{"./Actions":3,"./DOMStateStorage":5,"./DOMUtils":6,"./ExecutionEnvironment":7,"./createDOMHistory":9,"invariant":25,"warning":30}],11:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -990,7 +4468,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":2,"./AsyncUtils":3,"./deprecate":13,"./runTransitionHook":17,"deep-equal":21,"warning":29}],11:[function(require,module,exports){
+},{"./Actions":3,"./AsyncUtils":4,"./deprecate":14,"./runTransitionHook":18,"deep-equal":22,"warning":30}],12:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1055,7 +4533,7 @@ function createLocation() {
 
 exports['default'] = _deprecate2['default'](createLocation, 'Calling createLocation statically is deprecated; instead call the history.createLocation method - see docs/Location.md');
 module.exports = exports['default'];
-},{"./Actions":2,"./deprecate":13,"warning":29}],12:[function(require,module,exports){
+},{"./Actions":3,"./deprecate":14,"warning":30}],13:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1198,7 +4676,7 @@ function createMemoryHistory() {
 
 exports['default'] = createMemoryHistory;
 module.exports = exports['default'];
-},{"./Actions":2,"./createHistory":10,"invariant":24}],13:[function(require,module,exports){
+},{"./Actions":3,"./createHistory":11,"invariant":25}],14:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1218,7 +4696,7 @@ function deprecate(fn, message) {
 
 exports['default'] = deprecate;
 module.exports = exports['default'];
-},{"warning":29}],14:[function(require,module,exports){
+},{"warning":30}],15:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1235,7 +4713,7 @@ var _useBeforeUnload2 = _interopRequireDefault(_useBeforeUnload);
 
 exports['default'] = _deprecate2['default'](_useBeforeUnload2['default'], 'enableBeforeUnload is deprecated, use useBeforeUnload instead');
 module.exports = exports['default'];
-},{"./deprecate":13,"./useBeforeUnload":19}],15:[function(require,module,exports){
+},{"./deprecate":14,"./useBeforeUnload":20}],16:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1252,7 +4730,7 @@ var _useQueries2 = _interopRequireDefault(_useQueries);
 
 exports['default'] = _deprecate2['default'](_useQueries2['default'], 'enableQueries is deprecated, use useQueries instead');
 module.exports = exports['default'];
-},{"./deprecate":13,"./useQueries":20}],16:[function(require,module,exports){
+},{"./deprecate":14,"./useQueries":21}],17:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1320,7 +4798,7 @@ var _enableQueries2 = require('./enableQueries');
 var _enableQueries3 = _interopRequireDefault(_enableQueries2);
 
 exports.enableQueries = _enableQueries3['default'];
-},{"./Actions":2,"./createBrowserHistory":7,"./createHashHistory":9,"./createLocation":11,"./createMemoryHistory":12,"./enableBeforeUnload":14,"./enableQueries":15,"./useBasename":18,"./useBeforeUnload":19,"./useQueries":20}],17:[function(require,module,exports){
+},{"./Actions":3,"./createBrowserHistory":8,"./createHashHistory":10,"./createLocation":12,"./createMemoryHistory":13,"./enableBeforeUnload":15,"./enableQueries":16,"./useBasename":19,"./useBeforeUnload":20,"./useQueries":21}],18:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1345,7 +4823,7 @@ function runTransitionHook(hook, location, callback) {
 
 exports['default'] = runTransitionHook;
 module.exports = exports['default'];
-},{"warning":29}],18:[function(require,module,exports){
+},{"warning":30}],19:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1436,7 +4914,7 @@ function useBasename(createHistory) {
 
 exports['default'] = useBasename;
 module.exports = exports['default'];
-},{"./runTransitionHook":17}],19:[function(require,module,exports){
+},{"./runTransitionHook":18}],20:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1548,7 +5026,7 @@ function useBeforeUnload(createHistory) {
 
 exports['default'] = useBeforeUnload;
 module.exports = exports['default'];
-},{"./DOMUtils":5,"./ExecutionEnvironment":6,"./deprecate":13,"warning":29}],20:[function(require,module,exports){
+},{"./DOMUtils":6,"./ExecutionEnvironment":7,"./deprecate":14,"warning":30}],21:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -1654,7 +5132,7 @@ function useQueries(createHistory) {
 
 exports['default'] = useQueries;
 module.exports = exports['default'];
-},{"./runTransitionHook":17,"qs":25}],21:[function(require,module,exports){
+},{"./runTransitionHook":18,"qs":26}],22:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -1750,7 +5228,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":22,"./lib/keys.js":23}],22:[function(require,module,exports){
+},{"./lib/is_arguments.js":23,"./lib/keys.js":24}],23:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -1772,7 +5250,7 @@ function unsupported(object){
     false;
 };
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -1783,7 +5261,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1840,7 +5318,7 @@ var invariant = function(condition, format, a, b, c, d, e, f) {
 module.exports = invariant;
 
 }).call(this,require('_process'))
-},{"_process":1}],25:[function(require,module,exports){
+},{"_process":1}],26:[function(require,module,exports){
 // Load modules
 
 var Stringify = require('./stringify');
@@ -1857,7 +5335,7 @@ module.exports = {
     parse: Parse
 };
 
-},{"./parse":26,"./stringify":27}],26:[function(require,module,exports){
+},{"./parse":27,"./stringify":28}],27:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -2045,7 +5523,7 @@ module.exports = function (str, options) {
     return Utils.compact(obj);
 };
 
-},{"./utils":28}],27:[function(require,module,exports){
+},{"./utils":29}],28:[function(require,module,exports){
 // Load modules
 
 var Utils = require('./utils');
@@ -2168,7 +5646,7 @@ module.exports = function (obj, options) {
     return keys.join(delimiter);
 };
 
-},{"./utils":28}],28:[function(require,module,exports){
+},{"./utils":29}],29:[function(require,module,exports){
 // Load modules
 
 
@@ -2360,7 +5838,7 @@ exports.isBuffer = function (obj) {
               obj.constructor.isBuffer(obj));
 };
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -2424,7 +5902,7 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 
 }).call(this,require('_process'))
-},{"_process":1}],30:[function(require,module,exports){
+},{"_process":1}],31:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11636,7 +15114,7 @@ return jQuery;
 
 }));
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -11699,7 +15177,7 @@ var Image = (function (_React$Component) {
 
 exports['default'] = Image;
 module.exports = exports['default'];
-},{"react":518}],32:[function(require,module,exports){
+},{"react":527}],33:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -14895,7 +18373,7 @@ module.exports = exports['default'];
     return _moment;
 
 }));
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 'use strict';
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -14936,10 +18414,10 @@ module.exports = Object.assign || function (target, source) {
 	return to;
 };
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 module.exports = require('./lib/browser/Parse.js');
 
-},{"./lib/browser/Parse.js":41}],35:[function(require,module,exports){
+},{"./lib/browser/Parse.js":42}],36:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -15027,7 +18505,7 @@ _CoreManager2['default'].setAnalyticsController({
     return RESTController.request('POST', 'events/' + name, { dimensions: dimensions });
   }
 });
-},{"./CoreManager":37,"babel-runtime/helpers/interop-require-default":81}],36:[function(require,module,exports){
+},{"./CoreManager":38,"babel-runtime/helpers/interop-require-default":82}],37:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -15122,7 +18600,7 @@ _CoreManager2['default'].setCloudController({
     })._thenRunCallbacks(options);
   }
 });
-},{"./CoreManager":37,"./ParseError":44,"./ParsePromise":50,"./decode":63,"./encode":64,"babel-runtime/helpers/interop-require-default":81}],37:[function(require,module,exports){
+},{"./CoreManager":38,"./ParseError":45,"./ParsePromise":51,"./decode":64,"./encode":65,"babel-runtime/helpers/interop-require-default":82}],38:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
@@ -15358,7 +18836,7 @@ module.exports = {
   }
 };
 }).call(this,require('_process'))
-},{"_process":1}],38:[function(require,module,exports){
+},{"_process":1}],39:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -15599,7 +19077,7 @@ exports['default'] = {
   }
 };
 module.exports = exports['default'];
-},{"./ParseUser":55,"./parseDate":68,"babel-runtime/helpers/interop-require-default":81}],39:[function(require,module,exports){
+},{"./ParseUser":56,"./parseDate":69,"babel-runtime/helpers/interop-require-default":82}],40:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -15664,7 +19142,7 @@ module.exports = {
     iidCache = iid;
   }
 };
-},{"./CoreManager":37,"./ParsePromise":50,"./Storage":58,"babel-runtime/helpers/interop-require-default":81}],40:[function(require,module,exports){
+},{"./CoreManager":38,"./ParsePromise":51,"./Storage":59,"babel-runtime/helpers/interop-require-default":82}],41:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -15897,7 +19375,7 @@ function enqueueTask(className, id, task) {
 function _clearAllState() {
   objectState = {};
 }
-},{"./ParseFile":45,"./ParseObject":48,"./ParseOp":49,"./ParsePromise":50,"./ParseRelation":52,"./TaskQueue":60,"./encode":64,"babel-runtime/helpers/interop-require-default":81}],41:[function(require,module,exports){
+},{"./ParseFile":46,"./ParseObject":49,"./ParseOp":50,"./ParsePromise":51,"./ParseRelation":53,"./TaskQueue":61,"./encode":65,"babel-runtime/helpers/interop-require-default":82}],42:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -16063,7 +19541,7 @@ _CoreManager2['default'].setRESTController(_RESTController2['default']);
 Parse.Parse = Parse;
 
 module.exports = Parse;
-},{"./Analytics":35,"./Cloud":36,"./CoreManager":37,"./FacebookUtils":38,"./InstallationController":39,"./ParseACL":42,"./ParseConfig":43,"./ParseError":44,"./ParseFile":45,"./ParseGeoPoint":46,"./ParseInstallation":47,"./ParseObject":48,"./ParseOp":49,"./ParsePromise":50,"./ParseQuery":51,"./ParseRelation":52,"./ParseRole":53,"./ParseSession":54,"./ParseUser":55,"./Push":56,"./RESTController":57,"./Storage":58,"./decode":63,"./encode":64,"babel-runtime/helpers/interop-require-default":81,"babel-runtime/helpers/interop-require-wildcard":82}],42:[function(require,module,exports){
+},{"./Analytics":36,"./Cloud":37,"./CoreManager":38,"./FacebookUtils":39,"./InstallationController":40,"./ParseACL":43,"./ParseConfig":44,"./ParseError":45,"./ParseFile":46,"./ParseGeoPoint":47,"./ParseInstallation":48,"./ParseObject":49,"./ParseOp":50,"./ParsePromise":51,"./ParseQuery":52,"./ParseRelation":53,"./ParseRole":54,"./ParseSession":55,"./ParseUser":56,"./Push":57,"./RESTController":58,"./Storage":59,"./decode":64,"./encode":65,"babel-runtime/helpers/interop-require-default":82,"babel-runtime/helpers/interop-require-wildcard":83}],43:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -16436,7 +19914,7 @@ var ParseACL = (function () {
 
 exports['default'] = ParseACL;
 module.exports = exports['default'];
-},{"./ParseRole":53,"./ParseUser":55,"babel-runtime/core-js/object/keys":75,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],43:[function(require,module,exports){
+},{"./ParseRole":54,"./ParseUser":56,"babel-runtime/core-js/object/keys":76,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],44:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -16651,7 +20129,7 @@ _CoreManager2['default'].setConfigController({
   }
 });
 module.exports = exports['default'];
-},{"./CoreManager":37,"./ParseError":44,"./ParsePromise":50,"./Storage":58,"./decode":63,"./encode":64,"./escape":66,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],44:[function(require,module,exports){
+},{"./CoreManager":38,"./ParseError":45,"./ParsePromise":51,"./Storage":59,"./decode":64,"./encode":65,"./escape":67,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],45:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -17155,7 +20633,7 @@ ParseError.FILE_READ_ERROR = 601;
  */
 ParseError.X_DOMAIN_REQUEST = 602;
 module.exports = exports["default"];
-},{"babel-runtime/helpers/class-call-check":77}],45:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":78}],46:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -17419,7 +20897,7 @@ _CoreManager2['default'].setFileController({
   }
 });
 module.exports = exports['default'];
-},{"./CoreManager":37,"./ParsePromise":50,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],46:[function(require,module,exports){
+},{"./CoreManager":38,"./ParsePromise":51,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],47:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -17644,7 +21122,7 @@ var ParseGeoPoint = (function () {
 
 exports['default'] = ParseGeoPoint;
 module.exports = exports['default'];
-},{"./ParsePromise":50,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],47:[function(require,module,exports){
+},{"./ParsePromise":51,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],48:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -17695,7 +21173,7 @@ exports['default'] = Installation;
 
 _ParseObject3['default'].registerSubclass('_Installation', Installation);
 module.exports = exports['default'];
-},{"./ParseObject":48,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/get":79,"babel-runtime/helpers/inherits":80,"babel-runtime/helpers/interop-require-default":81}],48:[function(require,module,exports){
+},{"./ParseObject":49,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/get":80,"babel-runtime/helpers/inherits":81,"babel-runtime/helpers/interop-require-default":82}],49:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -19495,7 +22973,7 @@ module.exports = exports['default'];
  * @property id
  * @type String
  */
-},{"./CoreManager":37,"./ObjectState":40,"./ParseACL":42,"./ParseError":44,"./ParseFile":45,"./ParseOp":49,"./ParsePromise":50,"./ParseQuery":51,"./ParseRelation":52,"./canBeSerialized":62,"./decode":63,"./encode":64,"./equals":65,"./escape":66,"./parseDate":68,"./unique":69,"./unsavedChildren":70,"babel-runtime/core-js/object/create":71,"babel-runtime/core-js/object/define-property":72,"babel-runtime/core-js/object/freeze":73,"babel-runtime/core-js/object/keys":75,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81,"babel-runtime/helpers/interop-require-wildcard":82}],49:[function(require,module,exports){
+},{"./CoreManager":38,"./ObjectState":41,"./ParseACL":43,"./ParseError":45,"./ParseFile":46,"./ParseOp":50,"./ParsePromise":51,"./ParseQuery":52,"./ParseRelation":53,"./canBeSerialized":63,"./decode":64,"./encode":65,"./equals":66,"./escape":67,"./parseDate":69,"./unique":70,"./unsavedChildren":71,"babel-runtime/core-js/object/create":72,"babel-runtime/core-js/object/define-property":73,"babel-runtime/core-js/object/freeze":74,"babel-runtime/core-js/object/keys":76,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82,"babel-runtime/helpers/interop-require-wildcard":83}],50:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -20069,7 +23547,7 @@ var RelationOp = (function (_Op7) {
 })(Op);
 
 exports.RelationOp = RelationOp;
-},{"./ParseObject":48,"./ParseRelation":52,"./arrayContainsObject":61,"./decode":63,"./encode":64,"./unique":69,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/get":79,"babel-runtime/helpers/inherits":80,"babel-runtime/helpers/interop-require-default":81}],50:[function(require,module,exports){
+},{"./ParseObject":49,"./ParseRelation":53,"./arrayContainsObject":62,"./decode":64,"./encode":65,"./unique":70,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/get":80,"babel-runtime/helpers/inherits":81,"babel-runtime/helpers/interop-require-default":82}],51:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -20524,7 +24002,7 @@ var ParsePromise = (function () {
 
 exports['default'] = ParsePromise;
 module.exports = exports['default'];
-},{"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78}],51:[function(require,module,exports){
+},{"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79}],52:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -21666,7 +25144,7 @@ _CoreManager2['default'].setQueryController({
   }
 });
 module.exports = exports['default'];
-},{"./CoreManager":37,"./ParseError":44,"./ParseGeoPoint":46,"./ParseObject":48,"./ParsePromise":50,"./encode":64,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],52:[function(require,module,exports){
+},{"./CoreManager":38,"./ParseError":45,"./ParseGeoPoint":47,"./ParseObject":49,"./ParsePromise":51,"./encode":65,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],53:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -21833,7 +25311,7 @@ var ParseRelation = (function () {
 
 exports['default'] = ParseRelation;
 module.exports = exports['default'];
-},{"./ParseObject":48,"./ParseOp":49,"./ParseQuery":51,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],53:[function(require,module,exports){
+},{"./ParseObject":49,"./ParseOp":50,"./ParseQuery":52,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],54:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -22007,7 +25485,7 @@ exports['default'] = ParseRole;
 
 _ParseObject3['default'].registerSubclass('_Role', ParseRole);
 module.exports = exports['default'];
-},{"./ParseACL":42,"./ParseError":44,"./ParseObject":48,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/get":79,"babel-runtime/helpers/inherits":80,"babel-runtime/helpers/interop-require-default":81}],54:[function(require,module,exports){
+},{"./ParseACL":43,"./ParseError":45,"./ParseObject":49,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/get":80,"babel-runtime/helpers/inherits":81,"babel-runtime/helpers/interop-require-default":82}],55:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -22163,7 +25641,7 @@ _CoreManager2['default'].setSessionController({
   }
 });
 module.exports = exports['default'];
-},{"./CoreManager":37,"./ParseObject":48,"./ParsePromise":50,"./ParseUser":55,"./isRevocableSession":67,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/get":79,"babel-runtime/helpers/inherits":80,"babel-runtime/helpers/interop-require-default":81}],55:[function(require,module,exports){
+},{"./CoreManager":38,"./ParseObject":49,"./ParsePromise":51,"./ParseUser":56,"./isRevocableSession":68,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/get":80,"babel-runtime/helpers/inherits":81,"babel-runtime/helpers/interop-require-default":82}],56:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23148,7 +26626,7 @@ var DefaultController = {
 
 _CoreManager2['default'].setUserController(DefaultController);
 module.exports = exports['default'];
-},{"./CoreManager":37,"./ObjectState":40,"./ParseError":44,"./ParseObject":48,"./ParsePromise":50,"./ParseSession":54,"./Storage":58,"./isRevocableSession":67,"babel-runtime/core-js/object/define-property":72,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/get":79,"babel-runtime/helpers/inherits":80,"babel-runtime/helpers/interop-require-default":81,"babel-runtime/helpers/interop-require-wildcard":82}],56:[function(require,module,exports){
+},{"./CoreManager":38,"./ObjectState":41,"./ParseError":45,"./ParseObject":49,"./ParsePromise":51,"./ParseSession":55,"./Storage":59,"./isRevocableSession":68,"babel-runtime/core-js/object/define-property":73,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/get":80,"babel-runtime/helpers/inherits":81,"babel-runtime/helpers/interop-require-default":82,"babel-runtime/helpers/interop-require-wildcard":83}],57:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23239,7 +26717,7 @@ _CoreManager2['default'].setPushController({
     return request._thenRunCallbacks(options);
   }
 });
-},{"./CoreManager":37,"./ParseQuery":51,"babel-runtime/helpers/interop-require-default":81}],57:[function(require,module,exports){
+},{"./CoreManager":38,"./ParseQuery":52,"babel-runtime/helpers/interop-require-default":82}],58:[function(require,module,exports){
 (function (process){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
@@ -23465,7 +26943,7 @@ var RESTController = {
 
 module.exports = RESTController;
 }).call(this,require('_process'))
-},{"./CoreManager":37,"./ParseError":44,"./ParsePromise":50,"./Storage":58,"_process":1,"babel-runtime/helpers/interop-require-default":81}],58:[function(require,module,exports){
+},{"./CoreManager":38,"./ParseError":45,"./ParsePromise":51,"./Storage":59,"_process":1,"babel-runtime/helpers/interop-require-default":82}],59:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23565,7 +27043,7 @@ module.exports = {
 };
 
 _CoreManager2['default'].setStorageController(require('./StorageController.browser'));
-},{"./CoreManager":37,"./ParsePromise":50,"./StorageController.browser":59,"babel-runtime/helpers/interop-require-default":81}],59:[function(require,module,exports){
+},{"./CoreManager":38,"./ParsePromise":51,"./StorageController.browser":60,"babel-runtime/helpers/interop-require-default":82}],60:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23604,7 +27082,7 @@ module.exports = {
     localStorage.clear();
   }
 };
-},{"./ParsePromise":50,"babel-runtime/helpers/interop-require-default":81}],60:[function(require,module,exports){
+},{"./ParsePromise":51,"babel-runtime/helpers/interop-require-default":82}],61:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23677,7 +27155,7 @@ module.exports = (function () {
 
   return TaskQueue;
 })();
-},{"./ParsePromise":50,"babel-runtime/helpers/class-call-check":77,"babel-runtime/helpers/create-class":78,"babel-runtime/helpers/interop-require-default":81}],61:[function(require,module,exports){
+},{"./ParsePromise":51,"babel-runtime/helpers/class-call-check":78,"babel-runtime/helpers/create-class":79,"babel-runtime/helpers/interop-require-default":82}],62:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23715,7 +27193,7 @@ function arrayContainsObject(array, object) {
 }
 
 module.exports = exports['default'];
-},{"./ParseObject":48,"babel-runtime/helpers/interop-require-default":81}],62:[function(require,module,exports){
+},{"./ParseObject":49,"babel-runtime/helpers/interop-require-default":82}],63:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23794,7 +27272,7 @@ function canBeSerializedHelper(value) {
   return true;
 }
 module.exports = exports['default'];
-},{"./ParseFile":45,"./ParseObject":48,"./ParseRelation":52,"babel-runtime/helpers/interop-require-default":81}],63:[function(require,module,exports){
+},{"./ParseFile":46,"./ParseObject":49,"./ParseRelation":53,"babel-runtime/helpers/interop-require-default":82}],64:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23883,7 +27361,7 @@ function decode(value) {
 }
 
 module.exports = exports['default'];
-},{"./ParseACL":42,"./ParseFile":45,"./ParseGeoPoint":46,"./ParseObject":48,"./ParseOp":49,"./ParseRelation":52,"babel-runtime/helpers/interop-require-default":81}],64:[function(require,module,exports){
+},{"./ParseACL":43,"./ParseFile":46,"./ParseGeoPoint":47,"./ParseObject":49,"./ParseOp":50,"./ParseRelation":53,"babel-runtime/helpers/interop-require-default":82}],65:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -23998,7 +27476,7 @@ exports['default'] = function (value, disallowObjects, forcePointers) {
 };
 
 module.exports = exports['default'];
-},{"./ParseACL":42,"./ParseFile":45,"./ParseGeoPoint":46,"./ParseObject":48,"./ParseOp":49,"./ParseRelation":52,"babel-runtime/core-js/object/keys":75,"babel-runtime/helpers/interop-require-default":81}],65:[function(require,module,exports){
+},{"./ParseACL":43,"./ParseFile":46,"./ParseGeoPoint":47,"./ParseObject":49,"./ParseOp":50,"./ParseRelation":53,"babel-runtime/core-js/object/keys":76,"babel-runtime/helpers/interop-require-default":82}],66:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -24076,7 +27554,7 @@ function equals(a, b) {
 }
 
 module.exports = exports['default'];
-},{"./ParseACL":42,"./ParseFile":45,"./ParseGeoPoint":46,"./ParseObject":48,"babel-runtime/core-js/object/keys":75,"babel-runtime/helpers/interop-require-default":81}],66:[function(require,module,exports){
+},{"./ParseACL":43,"./ParseFile":46,"./ParseGeoPoint":47,"./ParseObject":49,"babel-runtime/core-js/object/keys":76,"babel-runtime/helpers/interop-require-default":82}],67:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -24109,7 +27587,7 @@ function escape(str) {
 }
 
 module.exports = exports['default'];
-},{}],67:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -24133,7 +27611,7 @@ function isRevocableSession(token) {
 }
 
 module.exports = exports['default'];
-},{}],68:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -24171,7 +27649,7 @@ function parseDate(iso8601) {
 }
 
 module.exports = exports['default'];
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -24217,7 +27695,7 @@ function unique(arr) {
 }
 
 module.exports = exports['default'];
-},{"./ParseObject":48,"./arrayContainsObject":61,"babel-runtime/helpers/interop-require-default":81}],70:[function(require,module,exports){
+},{"./ParseObject":49,"./arrayContainsObject":62,"babel-runtime/helpers/interop-require-default":82}],71:[function(require,module,exports){
 /**
  * Copyright (c) 2015-present, Parse, LLC.
  * All rights reserved.
@@ -24315,19 +27793,19 @@ function traverse(obj, encountered, shouldThrow, allowDeepUnsaved) {
   }
 }
 module.exports = exports['default'];
-},{"./ParseFile":45,"./ParseObject":48,"./ParseRelation":52,"babel-runtime/helpers/interop-require-default":81}],71:[function(require,module,exports){
+},{"./ParseFile":46,"./ParseObject":49,"./ParseRelation":53,"babel-runtime/helpers/interop-require-default":82}],72:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/create"), __esModule: true };
-},{"core-js/library/fn/object/create":83}],72:[function(require,module,exports){
+},{"core-js/library/fn/object/create":84}],73:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/define-property"), __esModule: true };
-},{"core-js/library/fn/object/define-property":84}],73:[function(require,module,exports){
+},{"core-js/library/fn/object/define-property":85}],74:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/freeze"), __esModule: true };
-},{"core-js/library/fn/object/freeze":85}],74:[function(require,module,exports){
+},{"core-js/library/fn/object/freeze":86}],75:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/get-own-property-descriptor"), __esModule: true };
-},{"core-js/library/fn/object/get-own-property-descriptor":86}],75:[function(require,module,exports){
+},{"core-js/library/fn/object/get-own-property-descriptor":87}],76:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/keys"), __esModule: true };
-},{"core-js/library/fn/object/keys":87}],76:[function(require,module,exports){
+},{"core-js/library/fn/object/keys":88}],77:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/set-prototype-of"), __esModule: true };
-},{"core-js/library/fn/object/set-prototype-of":88}],77:[function(require,module,exports){
+},{"core-js/library/fn/object/set-prototype-of":89}],78:[function(require,module,exports){
 "use strict";
 
 exports["default"] = function (instance, Constructor) {
@@ -24337,7 +27815,7 @@ exports["default"] = function (instance, Constructor) {
 };
 
 exports.__esModule = true;
-},{}],78:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 "use strict";
 
 var _Object$defineProperty = require("babel-runtime/core-js/object/define-property")["default"];
@@ -24362,7 +27840,7 @@ exports["default"] = (function () {
 })();
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/object/define-property":72}],79:[function(require,module,exports){
+},{"babel-runtime/core-js/object/define-property":73}],80:[function(require,module,exports){
 "use strict";
 
 var _Object$getOwnPropertyDescriptor = require("babel-runtime/core-js/object/get-own-property-descriptor")["default"];
@@ -24407,7 +27885,7 @@ exports["default"] = function get(_x, _x2, _x3) {
 };
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/object/get-own-property-descriptor":74}],80:[function(require,module,exports){
+},{"babel-runtime/core-js/object/get-own-property-descriptor":75}],81:[function(require,module,exports){
 "use strict";
 
 var _Object$create = require("babel-runtime/core-js/object/create")["default"];
@@ -24431,7 +27909,7 @@ exports["default"] = function (subClass, superClass) {
 };
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/object/create":71,"babel-runtime/core-js/object/set-prototype-of":76}],81:[function(require,module,exports){
+},{"babel-runtime/core-js/object/create":72,"babel-runtime/core-js/object/set-prototype-of":77}],82:[function(require,module,exports){
 "use strict";
 
 exports["default"] = function (obj) {
@@ -24441,7 +27919,7 @@ exports["default"] = function (obj) {
 };
 
 exports.__esModule = true;
-},{}],82:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 "use strict";
 
 exports["default"] = function (obj) {
@@ -24462,52 +27940,52 @@ exports["default"] = function (obj) {
 };
 
 exports.__esModule = true;
-},{}],83:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 var $ = require('../../modules/$');
 module.exports = function create(P, D){
   return $.create(P, D);
 };
-},{"../../modules/$":100}],84:[function(require,module,exports){
+},{"../../modules/$":101}],85:[function(require,module,exports){
 var $ = require('../../modules/$');
 module.exports = function defineProperty(it, key, desc){
   return $.setDesc(it, key, desc);
 };
-},{"../../modules/$":100}],85:[function(require,module,exports){
+},{"../../modules/$":101}],86:[function(require,module,exports){
 require('../../modules/es6.object.freeze');
 module.exports = require('../../modules/$.core').Object.freeze;
-},{"../../modules/$.core":92,"../../modules/es6.object.freeze":105}],86:[function(require,module,exports){
+},{"../../modules/$.core":93,"../../modules/es6.object.freeze":106}],87:[function(require,module,exports){
 var $ = require('../../modules/$');
 require('../../modules/es6.object.get-own-property-descriptor');
 module.exports = function getOwnPropertyDescriptor(it, key){
   return $.getDesc(it, key);
 };
-},{"../../modules/$":100,"../../modules/es6.object.get-own-property-descriptor":106}],87:[function(require,module,exports){
+},{"../../modules/$":101,"../../modules/es6.object.get-own-property-descriptor":107}],88:[function(require,module,exports){
 require('../../modules/es6.object.keys');
 module.exports = require('../../modules/$.core').Object.keys;
-},{"../../modules/$.core":92,"../../modules/es6.object.keys":107}],88:[function(require,module,exports){
+},{"../../modules/$.core":93,"../../modules/es6.object.keys":108}],89:[function(require,module,exports){
 require('../../modules/es6.object.set-prototype-of');
 module.exports = require('../../modules/$.core').Object.setPrototypeOf;
-},{"../../modules/$.core":92,"../../modules/es6.object.set-prototype-of":108}],89:[function(require,module,exports){
+},{"../../modules/$.core":93,"../../modules/es6.object.set-prototype-of":109}],90:[function(require,module,exports){
 module.exports = function(it){
   if(typeof it != 'function')throw TypeError(it + ' is not a function!');
   return it;
 };
-},{}],90:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 var isObject = require('./$.is-object');
 module.exports = function(it){
   if(!isObject(it))throw TypeError(it + ' is not an object!');
   return it;
 };
-},{"./$.is-object":99}],91:[function(require,module,exports){
+},{"./$.is-object":100}],92:[function(require,module,exports){
 var toString = {}.toString;
 
 module.exports = function(it){
   return toString.call(it).slice(8, -1);
 };
-},{}],92:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 var core = module.exports = {version: '1.2.1'};
 if(typeof __e == 'number')__e = core; // eslint-disable-line no-undef
-},{}],93:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 // optional / simple context binding
 var aFunction = require('./$.a-function');
 module.exports = function(fn, that, length){
@@ -24528,7 +28006,7 @@ module.exports = function(fn, that, length){
     return fn.apply(that, arguments);
   };
 };
-},{"./$.a-function":89}],94:[function(require,module,exports){
+},{"./$.a-function":90}],95:[function(require,module,exports){
 var global    = require('./$.global')
   , core      = require('./$.core')
   , PROTOTYPE = 'prototype';
@@ -24576,13 +28054,13 @@ $def.P = 8;  // proto
 $def.B = 16; // bind
 $def.W = 32; // wrap
 module.exports = $def;
-},{"./$.core":92,"./$.global":97}],95:[function(require,module,exports){
+},{"./$.core":93,"./$.global":98}],96:[function(require,module,exports){
 // 7.2.1 RequireObjectCoercible(argument)
 module.exports = function(it){
   if(it == undefined)throw TypeError("Can't call method on  " + it);
   return it;
 };
-},{}],96:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 module.exports = function(exec){
   try {
     return !!exec();
@@ -24590,23 +28068,23 @@ module.exports = function(exec){
     return true;
   }
 };
-},{}],97:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var UNDEFINED = 'undefined';
 var global = module.exports = typeof window != UNDEFINED && window.Math == Math
   ? window : typeof self != UNDEFINED && self.Math == Math ? self : Function('return this')();
 if(typeof __g == 'number')__g = global; // eslint-disable-line no-undef
-},{}],98:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 // indexed object, fallback for non-array-like ES3 strings
 var cof = require('./$.cof');
 module.exports = 0 in Object('z') ? Object : function(it){
   return cof(it) == 'String' ? it.split('') : Object(it);
 };
-},{"./$.cof":91}],99:[function(require,module,exports){
+},{"./$.cof":92}],100:[function(require,module,exports){
 module.exports = function(it){
   return typeof it === 'object' ? it !== null : typeof it === 'function';
 };
-},{}],100:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 var $Object = Object;
 module.exports = {
   create:     $Object.create,
@@ -24620,7 +28098,7 @@ module.exports = {
   getSymbols: $Object.getOwnPropertySymbols,
   each:       [].forEach
 };
-},{}],101:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 // most Object methods by ES6 should accept primitives
 module.exports = function(KEY, exec){
   var $def = require('./$.def')
@@ -24629,7 +28107,7 @@ module.exports = function(KEY, exec){
   exp[KEY] = exec(fn);
   $def($def.S + $def.F * require('./$.fails')(function(){ fn(1); }), 'Object', exp);
 };
-},{"./$.core":92,"./$.def":94,"./$.fails":96}],102:[function(require,module,exports){
+},{"./$.core":93,"./$.def":95,"./$.fails":97}],103:[function(require,module,exports){
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
 var getDesc  = require('./$').getDesc
@@ -24656,20 +28134,20 @@ module.exports = {
     }({}, false) : undefined),
   check: check
 };
-},{"./$":100,"./$.an-object":90,"./$.ctx":93,"./$.is-object":99}],103:[function(require,module,exports){
+},{"./$":101,"./$.an-object":91,"./$.ctx":94,"./$.is-object":100}],104:[function(require,module,exports){
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = require('./$.iobject')
   , defined = require('./$.defined');
 module.exports = function(it){
   return IObject(defined(it));
 };
-},{"./$.defined":95,"./$.iobject":98}],104:[function(require,module,exports){
+},{"./$.defined":96,"./$.iobject":99}],105:[function(require,module,exports){
 // 7.1.13 ToObject(argument)
 var defined = require('./$.defined');
 module.exports = function(it){
   return Object(defined(it));
 };
-},{"./$.defined":95}],105:[function(require,module,exports){
+},{"./$.defined":96}],106:[function(require,module,exports){
 // 19.1.2.5 Object.freeze(O)
 var isObject = require('./$.is-object');
 
@@ -24678,7 +28156,7 @@ require('./$.object-sap')('freeze', function($freeze){
     return $freeze && isObject(it) ? $freeze(it) : it;
   };
 });
-},{"./$.is-object":99,"./$.object-sap":101}],106:[function(require,module,exports){
+},{"./$.is-object":100,"./$.object-sap":102}],107:[function(require,module,exports){
 // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
 var toIObject = require('./$.to-iobject');
 
@@ -24687,7 +28165,7 @@ require('./$.object-sap')('getOwnPropertyDescriptor', function($getOwnPropertyDe
     return $getOwnPropertyDescriptor(toIObject(it), key);
   };
 });
-},{"./$.object-sap":101,"./$.to-iobject":103}],107:[function(require,module,exports){
+},{"./$.object-sap":102,"./$.to-iobject":104}],108:[function(require,module,exports){
 // 19.1.2.14 Object.keys(O)
 var toObject = require('./$.to-object');
 
@@ -24696,13 +28174,160 @@ require('./$.object-sap')('keys', function($keys){
     return $keys(toObject(it));
   };
 });
-},{"./$.object-sap":101,"./$.to-object":104}],108:[function(require,module,exports){
+},{"./$.object-sap":102,"./$.to-object":105}],109:[function(require,module,exports){
 // 19.1.3.19 Object.setPrototypeOf(O, proto)
 var $def = require('./$.def');
 $def($def.S, 'Object', {setPrototypeOf: require('./$.set-proto').set});
-},{"./$.def":94,"./$.set-proto":102}],109:[function(require,module,exports){
+},{"./$.def":95,"./$.set-proto":103}],110:[function(require,module,exports){
 module.exports = require('react/lib/LinkedStateMixin');
-},{"react/lib/LinkedStateMixin":366}],110:[function(require,module,exports){
+},{"react/lib/LinkedStateMixin":375}],111:[function(require,module,exports){
+module.exports = {
+  Bar: require('./lib/bar'),
+  Doughnut: require('./lib/doughnut'),
+  Line: require('./lib/line'),
+  Pie: require('./lib/pie'),
+  PolarArea: require('./lib/polar-area'),
+  Radar: require('./lib/radar'),
+  createClass: require('./lib/core').createClass
+};
+
+},{"./lib/bar":112,"./lib/core":113,"./lib/doughnut":114,"./lib/line":115,"./lib/pie":116,"./lib/polar-area":117,"./lib/radar":118}],112:[function(require,module,exports){
+var vars = require('./core');
+
+module.exports = vars.createClass('Bar', ['getBarsAtEvent']);
+
+},{"./core":113}],113:[function(require,module,exports){
+module.exports = {
+  createClass: function(chartType, methodNames, dataKey) {
+    var classData = {
+      displayName: chartType + 'Chart',
+      getInitialState: function() { return {}; },
+      render: function() {
+        var _props = {
+          ref: 'canvass'
+        };
+        for (var name in this.props) {
+          if (this.props.hasOwnProperty(name)) {
+            if (name !== 'data' && name !== 'options') {
+              _props[name] = this.props[name];
+            }
+          }
+        }
+        return React.createElement('canvas', _props);
+      }
+    };
+
+    var extras = ['clear', 'stop', 'resize', 'toBase64Image', 'generateLegend', 'update', 'addData', 'removeData'];
+    function extra(type) {
+      classData[type] = function() {
+        this.state.chart[name].apply(this.state.chart, arguments);
+      };
+    }
+
+    classData.componentDidMount = function() {
+      this.initializeChart(this.props);
+    };
+
+    classData.componentWillUnmount = function() {
+      var chart = this.state.chart;
+      chart.destroy();
+    };
+
+    classData.componentWillReceiveProps = function(nextProps) {
+      var chart = this.state.chart;
+      if (this.props.redraw) {
+        chart.destroy();
+        this.initializeChart(nextProps);
+      } else {
+        dataKey = dataKey || dataKeys[chart.name];
+        updatePoints(nextProps, chart, dataKey);
+        chart.update();
+      }
+    };
+
+    classData.initializeChart = function(nextProps) {
+      var Chart = require('chart.js');
+      var el = this.getDOMNode();
+      var ctx = el.getContext("2d");
+      var chart = new Chart(ctx)[chartType](nextProps.data, nextProps.options || {});
+      this.state.chart = chart;
+    };
+
+    // return the chartjs instance
+    classData.getChart = function() {
+      return this.state.chart;
+    };
+
+    // return the canvass element that contains the chart
+    classData.getCanvass = function() {
+      return this.refs.canvass.getDOMNode();
+    };
+
+    var i;
+    for (i=0; i<extras.length; i++) {
+      extra(extras[i]);
+    }
+    for (i=0; i<methodNames.length; i++) {
+      extra(methodNames[i]);
+    }
+
+    var React = require('react');
+    return React.createClass(classData);
+  }
+};
+
+var dataKeys = {
+  'Line': 'points',
+  'Radar': 'points',
+  'Bar': 'bars'
+};
+
+var updatePoints = function(nextProps, chart, dataKey) {
+  var name = chart.name;
+
+  if (name === 'PolarArea' || name === 'Pie' || name === 'Doughnut') {
+    nextProps.data.forEach(function(segment, segmentIndex) {
+      chart.segments[segmentIndex].value = segment.value;
+    });
+  } else {
+    nextProps.data.datasets.forEach(function(set, setIndex) {
+      set.data.forEach(function(val, pointIndex) {
+        chart.datasets[setIndex][dataKey][pointIndex].value = val;
+      });
+    });
+  }
+};
+
+
+
+
+
+},{"chart.js":2,"react":527}],114:[function(require,module,exports){
+var vars = require('./core');
+
+module.exports = vars.createClass('Doughnut', ['getSegmentsAtEvent']);
+
+},{"./core":113}],115:[function(require,module,exports){
+var vars = require('./core');
+
+module.exports = vars.createClass('Line', ['getPointsAtEvent']);
+
+},{"./core":113}],116:[function(require,module,exports){
+var vars = require('./core');
+
+module.exports = vars.createClass('Pie', ['getSegmentsAtEvent']);
+
+},{"./core":113}],117:[function(require,module,exports){
+var vars = require('./core');
+
+module.exports = vars.createClass('PolarArea', ['getSegmentsAtEvent']);
+
+},{"./core":113}],118:[function(require,module,exports){
+var vars = require('./core');
+
+module.exports = vars.createClass('Radar', ['getPointsAtEvent']);
+
+},{"./core":113}],119:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -24752,7 +28377,7 @@ module.exports = React.createClass({
   } });
 
 
-},{"diff":111,"react":518}],111:[function(require,module,exports){
+},{"diff":120,"react":527}],120:[function(require,module,exports){
 /* See LICENSE file for terms of use */
 
 /*
@@ -25373,12 +28998,12 @@ module.exports = React.createClass({
   }
 }(this));
 
-},{}],112:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 'use strict';
 
 module.exports = require('react/lib/ReactDOM');
 
-},{"react/lib/ReactDOM":146}],113:[function(require,module,exports){
+},{"react/lib/ReactDOM":155}],122:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25415,7 +29040,7 @@ var AutoFocusUtils = {
 };
 
 module.exports = AutoFocusUtils;
-},{"./ReactMount":172,"./findDOMNode":210,"fbjs/lib/focusNode":239}],114:[function(require,module,exports){
+},{"./ReactMount":181,"./findDOMNode":219,"fbjs/lib/focusNode":248}],123:[function(require,module,exports){
 /**
  * Copyright 2013-2015 Facebook, Inc.
  * All rights reserved.
@@ -25821,7 +29446,7 @@ var BeforeInputEventPlugin = {
 };
 
 module.exports = BeforeInputEventPlugin;
-},{"./EventConstants":126,"./EventPropagators":130,"./FallbackCompositionState":131,"./SyntheticCompositionEvent":194,"./SyntheticInputEvent":198,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/keyOf":249}],115:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPropagators":139,"./FallbackCompositionState":140,"./SyntheticCompositionEvent":203,"./SyntheticInputEvent":207,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/keyOf":258}],124:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -25961,7 +29586,7 @@ var CSSProperty = {
 };
 
 module.exports = CSSProperty;
-},{}],116:[function(require,module,exports){
+},{}],125:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26139,7 +29764,7 @@ ReactPerf.measureMethods(CSSPropertyOperations, 'CSSPropertyOperations', {
 
 module.exports = CSSPropertyOperations;
 }).call(this,require('_process'))
-},{"./CSSProperty":115,"./ReactPerf":178,"./dangerousStyleValue":208,"_process":1,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/camelizeStyleName":233,"fbjs/lib/hyphenateStyleName":244,"fbjs/lib/memoizeStringOnly":250,"fbjs/lib/warning":255}],117:[function(require,module,exports){
+},{"./CSSProperty":124,"./ReactPerf":187,"./dangerousStyleValue":217,"_process":1,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/camelizeStyleName":242,"fbjs/lib/hyphenateStyleName":253,"fbjs/lib/memoizeStringOnly":259,"fbjs/lib/warning":264}],126:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26235,7 +29860,7 @@ PooledClass.addPoolingTo(CallbackQueue);
 
 module.exports = CallbackQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./PooledClass":135,"_process":1,"fbjs/lib/invariant":245}],118:[function(require,module,exports){
+},{"./Object.assign":143,"./PooledClass":144,"_process":1,"fbjs/lib/invariant":254}],127:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26555,7 +30180,7 @@ var ChangeEventPlugin = {
 };
 
 module.exports = ChangeEventPlugin;
-},{"./EventConstants":126,"./EventPluginHub":127,"./EventPropagators":130,"./ReactUpdates":187,"./SyntheticEvent":196,"./getEventTarget":216,"./isEventSupported":221,"./isTextInputElement":222,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/keyOf":249}],119:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPluginHub":136,"./EventPropagators":139,"./ReactUpdates":196,"./SyntheticEvent":205,"./getEventTarget":225,"./isEventSupported":230,"./isTextInputElement":231,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/keyOf":258}],128:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -26579,7 +30204,7 @@ var ClientReactRootIndex = {
 };
 
 module.exports = ClientReactRootIndex;
-},{}],120:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26711,7 +30336,7 @@ ReactPerf.measureMethods(DOMChildrenOperations, 'DOMChildrenOperations', {
 
 module.exports = DOMChildrenOperations;
 }).call(this,require('_process'))
-},{"./Danger":123,"./ReactMultiChildUpdateTypes":174,"./ReactPerf":178,"./setInnerHTML":225,"./setTextContent":226,"_process":1,"fbjs/lib/invariant":245}],121:[function(require,module,exports){
+},{"./Danger":132,"./ReactMultiChildUpdateTypes":183,"./ReactPerf":187,"./setInnerHTML":234,"./setTextContent":235,"_process":1,"fbjs/lib/invariant":254}],130:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -26948,7 +30573,7 @@ var DOMProperty = {
 
 module.exports = DOMProperty;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],122:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],131:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27176,7 +30801,7 @@ ReactPerf.measureMethods(DOMPropertyOperations, 'DOMPropertyOperations', {
 
 module.exports = DOMPropertyOperations;
 }).call(this,require('_process'))
-},{"./DOMProperty":121,"./ReactPerf":178,"./quoteAttributeValueForBrowser":223,"_process":1,"fbjs/lib/warning":255}],123:[function(require,module,exports){
+},{"./DOMProperty":130,"./ReactPerf":187,"./quoteAttributeValueForBrowser":232,"_process":1,"fbjs/lib/warning":264}],132:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27324,7 +30949,7 @@ var Danger = {
 
 module.exports = Danger;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/createNodesFromMarkup":236,"fbjs/lib/emptyFunction":237,"fbjs/lib/getMarkupWrap":241,"fbjs/lib/invariant":245}],124:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/createNodesFromMarkup":245,"fbjs/lib/emptyFunction":246,"fbjs/lib/getMarkupWrap":250,"fbjs/lib/invariant":254}],133:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27352,7 +30977,7 @@ var keyOf = require('fbjs/lib/keyOf');
 var DefaultEventPluginOrder = [keyOf({ ResponderEventPlugin: null }), keyOf({ SimpleEventPlugin: null }), keyOf({ TapEventPlugin: null }), keyOf({ EnterLeaveEventPlugin: null }), keyOf({ ChangeEventPlugin: null }), keyOf({ SelectEventPlugin: null }), keyOf({ BeforeInputEventPlugin: null })];
 
 module.exports = DefaultEventPluginOrder;
-},{"fbjs/lib/keyOf":249}],125:[function(require,module,exports){
+},{"fbjs/lib/keyOf":258}],134:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27477,7 +31102,7 @@ var EnterLeaveEventPlugin = {
 };
 
 module.exports = EnterLeaveEventPlugin;
-},{"./EventConstants":126,"./EventPropagators":130,"./ReactMount":172,"./SyntheticMouseEvent":200,"fbjs/lib/keyOf":249}],126:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPropagators":139,"./ReactMount":181,"./SyntheticMouseEvent":209,"fbjs/lib/keyOf":258}],135:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -27570,7 +31195,7 @@ var EventConstants = {
 };
 
 module.exports = EventConstants;
-},{"fbjs/lib/keyMirror":248}],127:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":257}],136:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -27852,7 +31477,7 @@ var EventPluginHub = {
 
 module.exports = EventPluginHub;
 }).call(this,require('_process'))
-},{"./EventPluginRegistry":128,"./EventPluginUtils":129,"./ReactErrorUtils":164,"./accumulateInto":206,"./forEachAccumulated":212,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],128:[function(require,module,exports){
+},{"./EventPluginRegistry":137,"./EventPluginUtils":138,"./ReactErrorUtils":173,"./accumulateInto":215,"./forEachAccumulated":221,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],137:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28075,7 +31700,7 @@ var EventPluginRegistry = {
 
 module.exports = EventPluginRegistry;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],129:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],138:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28280,7 +31905,7 @@ var EventPluginUtils = {
 
 module.exports = EventPluginUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":126,"./ReactErrorUtils":164,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],130:[function(require,module,exports){
+},{"./EventConstants":135,"./ReactErrorUtils":173,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],139:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28418,7 +32043,7 @@ var EventPropagators = {
 
 module.exports = EventPropagators;
 }).call(this,require('_process'))
-},{"./EventConstants":126,"./EventPluginHub":127,"./accumulateInto":206,"./forEachAccumulated":212,"_process":1,"fbjs/lib/warning":255}],131:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPluginHub":136,"./accumulateInto":215,"./forEachAccumulated":221,"_process":1,"fbjs/lib/warning":264}],140:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28514,7 +32139,7 @@ assign(FallbackCompositionState.prototype, {
 PooledClass.addPoolingTo(FallbackCompositionState);
 
 module.exports = FallbackCompositionState;
-},{"./Object.assign":134,"./PooledClass":135,"./getTextContentAccessor":219}],132:[function(require,module,exports){
+},{"./Object.assign":143,"./PooledClass":144,"./getTextContentAccessor":228}],141:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -28739,7 +32364,7 @@ var HTMLDOMPropertyConfig = {
 };
 
 module.exports = HTMLDOMPropertyConfig;
-},{"./DOMProperty":121,"fbjs/lib/ExecutionEnvironment":231}],133:[function(require,module,exports){
+},{"./DOMProperty":130,"fbjs/lib/ExecutionEnvironment":240}],142:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -28876,7 +32501,7 @@ var LinkedValueUtils = {
 
 module.exports = LinkedValueUtils;
 }).call(this,require('_process'))
-},{"./ReactPropTypeLocations":180,"./ReactPropTypes":181,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],134:[function(require,module,exports){
+},{"./ReactPropTypeLocations":189,"./ReactPropTypes":190,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],143:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -28924,7 +32549,7 @@ function assign(target, sources) {
 }
 
 module.exports = assign;
-},{}],135:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -29046,7 +32671,7 @@ var PooledClass = {
 
 module.exports = PooledClass;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],136:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],145:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -29085,7 +32710,7 @@ var ReactBrowserComponentMixin = {
 
 module.exports = ReactBrowserComponentMixin;
 }).call(this,require('_process'))
-},{"./ReactInstanceMap":170,"./findDOMNode":210,"_process":1,"fbjs/lib/warning":255}],137:[function(require,module,exports){
+},{"./ReactInstanceMap":179,"./findDOMNode":219,"_process":1,"fbjs/lib/warning":264}],146:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29410,7 +33035,7 @@ ReactPerf.measureMethods(ReactBrowserEventEmitter, 'ReactBrowserEventEmitter', {
 });
 
 module.exports = ReactBrowserEventEmitter;
-},{"./EventConstants":126,"./EventPluginHub":127,"./EventPluginRegistry":128,"./Object.assign":134,"./ReactEventEmitterMixin":165,"./ReactPerf":178,"./ViewportMetrics":205,"./isEventSupported":221}],138:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPluginHub":136,"./EventPluginRegistry":137,"./Object.assign":143,"./ReactEventEmitterMixin":174,"./ReactPerf":187,"./ViewportMetrics":214,"./isEventSupported":230}],147:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -29535,7 +33160,7 @@ var ReactChildReconciler = {
 
 module.exports = ReactChildReconciler;
 }).call(this,require('_process'))
-},{"./ReactReconciler":183,"./instantiateReactComponent":220,"./shouldUpdateReactComponent":227,"./traverseAllChildren":228,"_process":1,"fbjs/lib/warning":255}],139:[function(require,module,exports){
+},{"./ReactReconciler":192,"./instantiateReactComponent":229,"./shouldUpdateReactComponent":236,"./traverseAllChildren":237,"_process":1,"fbjs/lib/warning":264}],148:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -29718,7 +33343,7 @@ var ReactChildren = {
 };
 
 module.exports = ReactChildren;
-},{"./PooledClass":135,"./ReactElement":161,"./traverseAllChildren":228,"fbjs/lib/emptyFunction":237}],140:[function(require,module,exports){
+},{"./PooledClass":144,"./ReactElement":170,"./traverseAllChildren":237,"fbjs/lib/emptyFunction":246}],149:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -30492,7 +34117,7 @@ var ReactClass = {
 
 module.exports = ReactClass;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./ReactComponent":141,"./ReactElement":161,"./ReactNoopUpdateQueue":176,"./ReactPropTypeLocationNames":179,"./ReactPropTypeLocations":180,"_process":1,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/keyMirror":248,"fbjs/lib/keyOf":249,"fbjs/lib/warning":255}],141:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactComponent":150,"./ReactElement":170,"./ReactNoopUpdateQueue":185,"./ReactPropTypeLocationNames":188,"./ReactPropTypeLocations":189,"_process":1,"fbjs/lib/emptyObject":247,"fbjs/lib/invariant":254,"fbjs/lib/keyMirror":257,"fbjs/lib/keyOf":258,"fbjs/lib/warning":264}],150:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -30618,7 +34243,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactComponent;
 }).call(this,require('_process'))
-},{"./ReactNoopUpdateQueue":176,"_process":1,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],142:[function(require,module,exports){
+},{"./ReactNoopUpdateQueue":185,"_process":1,"fbjs/lib/emptyObject":247,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],151:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -30660,7 +34285,7 @@ var ReactComponentBrowserEnvironment = {
 };
 
 module.exports = ReactComponentBrowserEnvironment;
-},{"./ReactDOMIDOperations":150,"./ReactMount":172}],143:[function(require,module,exports){
+},{"./ReactDOMIDOperations":159,"./ReactMount":181}],152:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -30714,7 +34339,7 @@ var ReactComponentEnvironment = {
 
 module.exports = ReactComponentEnvironment;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],144:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],153:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31411,7 +35036,7 @@ var ReactCompositeComponent = {
 
 module.exports = ReactCompositeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./ReactComponentEnvironment":143,"./ReactCurrentOwner":145,"./ReactElement":161,"./ReactInstanceMap":170,"./ReactPerf":178,"./ReactPropTypeLocationNames":179,"./ReactPropTypeLocations":180,"./ReactReconciler":183,"./ReactUpdateQueue":186,"./shouldUpdateReactComponent":227,"_process":1,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],145:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactComponentEnvironment":152,"./ReactCurrentOwner":154,"./ReactElement":170,"./ReactInstanceMap":179,"./ReactPerf":187,"./ReactPropTypeLocationNames":188,"./ReactPropTypeLocations":189,"./ReactReconciler":192,"./ReactUpdateQueue":195,"./shouldUpdateReactComponent":236,"_process":1,"fbjs/lib/emptyObject":247,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],154:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -31442,7 +35067,7 @@ var ReactCurrentOwner = {
 };
 
 module.exports = ReactCurrentOwner;
-},{}],146:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -31537,7 +35162,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":145,"./ReactDOMTextComponent":155,"./ReactDefaultInjection":158,"./ReactInstanceHandles":169,"./ReactMount":172,"./ReactPerf":178,"./ReactReconciler":183,"./ReactUpdates":187,"./ReactVersion":188,"./findDOMNode":210,"./renderSubtreeIntoContainer":224,"_process":1,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/warning":255}],147:[function(require,module,exports){
+},{"./ReactCurrentOwner":154,"./ReactDOMTextComponent":164,"./ReactDefaultInjection":167,"./ReactInstanceHandles":178,"./ReactMount":181,"./ReactPerf":187,"./ReactReconciler":192,"./ReactUpdates":196,"./ReactVersion":197,"./findDOMNode":219,"./renderSubtreeIntoContainer":233,"_process":1,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/warning":264}],156:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -31588,7 +35213,7 @@ var ReactDOMButton = {
 };
 
 module.exports = ReactDOMButton;
-},{}],148:[function(require,module,exports){
+},{}],157:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32551,7 +36176,7 @@ assign(ReactDOMComponent.prototype, ReactDOMComponent.Mixin, ReactMultiChild.Mix
 
 module.exports = ReactDOMComponent;
 }).call(this,require('_process'))
-},{"./AutoFocusUtils":113,"./CSSPropertyOperations":116,"./DOMProperty":121,"./DOMPropertyOperations":122,"./EventConstants":126,"./Object.assign":134,"./ReactBrowserEventEmitter":137,"./ReactComponentBrowserEnvironment":142,"./ReactDOMButton":147,"./ReactDOMInput":151,"./ReactDOMOption":152,"./ReactDOMSelect":153,"./ReactDOMTextarea":156,"./ReactMount":172,"./ReactMultiChild":173,"./ReactPerf":178,"./ReactUpdateQueue":186,"./escapeTextContentForBrowser":209,"./isEventSupported":221,"./setInnerHTML":225,"./setTextContent":226,"./validateDOMNesting":229,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/keyOf":249,"fbjs/lib/shallowEqual":253,"fbjs/lib/warning":255}],149:[function(require,module,exports){
+},{"./AutoFocusUtils":122,"./CSSPropertyOperations":125,"./DOMProperty":130,"./DOMPropertyOperations":131,"./EventConstants":135,"./Object.assign":143,"./ReactBrowserEventEmitter":146,"./ReactComponentBrowserEnvironment":151,"./ReactDOMButton":156,"./ReactDOMInput":160,"./ReactDOMOption":161,"./ReactDOMSelect":162,"./ReactDOMTextarea":165,"./ReactMount":181,"./ReactMultiChild":182,"./ReactPerf":187,"./ReactUpdateQueue":195,"./escapeTextContentForBrowser":218,"./isEventSupported":230,"./setInnerHTML":234,"./setTextContent":235,"./validateDOMNesting":238,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/keyOf":258,"fbjs/lib/shallowEqual":262,"fbjs/lib/warning":264}],158:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -32570,7 +36195,7 @@ var ReactDOMFeatureFlags = {
 };
 
 module.exports = ReactDOMFeatureFlags;
-},{}],150:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32667,7 +36292,7 @@ ReactPerf.measureMethods(ReactDOMIDOperations, 'ReactDOMIDOperations', {
 
 module.exports = ReactDOMIDOperations;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":120,"./DOMPropertyOperations":122,"./ReactMount":172,"./ReactPerf":178,"_process":1,"fbjs/lib/invariant":245}],151:[function(require,module,exports){
+},{"./DOMChildrenOperations":129,"./DOMPropertyOperations":131,"./ReactMount":181,"./ReactPerf":187,"_process":1,"fbjs/lib/invariant":254}],160:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32823,7 +36448,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMInput;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":133,"./Object.assign":134,"./ReactDOMIDOperations":150,"./ReactMount":172,"./ReactUpdates":187,"_process":1,"fbjs/lib/invariant":245}],152:[function(require,module,exports){
+},{"./LinkedValueUtils":142,"./Object.assign":143,"./ReactDOMIDOperations":159,"./ReactMount":181,"./ReactUpdates":196,"_process":1,"fbjs/lib/invariant":254}],161:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -32912,7 +36537,7 @@ var ReactDOMOption = {
 
 module.exports = ReactDOMOption;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./ReactChildren":139,"./ReactDOMSelect":153,"_process":1,"fbjs/lib/warning":255}],153:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactChildren":148,"./ReactDOMSelect":162,"_process":1,"fbjs/lib/warning":264}],162:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33103,7 +36728,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMSelect;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":133,"./Object.assign":134,"./ReactMount":172,"./ReactUpdates":187,"_process":1,"fbjs/lib/warning":255}],154:[function(require,module,exports){
+},{"./LinkedValueUtils":142,"./Object.assign":143,"./ReactMount":181,"./ReactUpdates":196,"_process":1,"fbjs/lib/warning":264}],163:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -33316,7 +36941,7 @@ var ReactDOMSelection = {
 };
 
 module.exports = ReactDOMSelection;
-},{"./getNodeForCharacterOffset":218,"./getTextContentAccessor":219,"fbjs/lib/ExecutionEnvironment":231}],155:[function(require,module,exports){
+},{"./getNodeForCharacterOffset":227,"./getTextContentAccessor":228,"fbjs/lib/ExecutionEnvironment":240}],164:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33446,7 +37071,7 @@ assign(ReactDOMTextComponent.prototype, {
 
 module.exports = ReactDOMTextComponent;
 }).call(this,require('_process'))
-},{"./DOMChildrenOperations":120,"./DOMPropertyOperations":122,"./Object.assign":134,"./ReactComponentBrowserEnvironment":142,"./ReactMount":172,"./escapeTextContentForBrowser":209,"./setTextContent":226,"./validateDOMNesting":229,"_process":1}],156:[function(require,module,exports){
+},{"./DOMChildrenOperations":129,"./DOMPropertyOperations":131,"./Object.assign":143,"./ReactComponentBrowserEnvironment":151,"./ReactMount":181,"./escapeTextContentForBrowser":218,"./setTextContent":235,"./validateDOMNesting":238,"_process":1}],165:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33562,7 +37187,7 @@ function _handleChange(event) {
 
 module.exports = ReactDOMTextarea;
 }).call(this,require('_process'))
-},{"./LinkedValueUtils":133,"./Object.assign":134,"./ReactDOMIDOperations":150,"./ReactUpdates":187,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],157:[function(require,module,exports){
+},{"./LinkedValueUtils":142,"./Object.assign":143,"./ReactDOMIDOperations":159,"./ReactUpdates":196,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],166:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -33630,7 +37255,7 @@ var ReactDefaultBatchingStrategy = {
 };
 
 module.exports = ReactDefaultBatchingStrategy;
-},{"./Object.assign":134,"./ReactUpdates":187,"./Transaction":204,"fbjs/lib/emptyFunction":237}],158:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactUpdates":196,"./Transaction":213,"fbjs/lib/emptyFunction":246}],167:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -33730,7 +37355,7 @@ module.exports = {
   inject: inject
 };
 }).call(this,require('_process'))
-},{"./BeforeInputEventPlugin":114,"./ChangeEventPlugin":118,"./ClientReactRootIndex":119,"./DefaultEventPluginOrder":124,"./EnterLeaveEventPlugin":125,"./HTMLDOMPropertyConfig":132,"./ReactBrowserComponentMixin":136,"./ReactComponentBrowserEnvironment":142,"./ReactDOMComponent":148,"./ReactDOMTextComponent":155,"./ReactDefaultBatchingStrategy":157,"./ReactDefaultPerf":159,"./ReactEventListener":166,"./ReactInjection":167,"./ReactInstanceHandles":169,"./ReactMount":172,"./ReactReconcileTransaction":182,"./SVGDOMPropertyConfig":189,"./SelectEventPlugin":190,"./ServerReactRootIndex":191,"./SimpleEventPlugin":192,"_process":1,"fbjs/lib/ExecutionEnvironment":231}],159:[function(require,module,exports){
+},{"./BeforeInputEventPlugin":123,"./ChangeEventPlugin":127,"./ClientReactRootIndex":128,"./DefaultEventPluginOrder":133,"./EnterLeaveEventPlugin":134,"./HTMLDOMPropertyConfig":141,"./ReactBrowserComponentMixin":145,"./ReactComponentBrowserEnvironment":151,"./ReactDOMComponent":157,"./ReactDOMTextComponent":164,"./ReactDefaultBatchingStrategy":166,"./ReactDefaultPerf":168,"./ReactEventListener":175,"./ReactInjection":176,"./ReactInstanceHandles":178,"./ReactMount":181,"./ReactReconcileTransaction":191,"./SVGDOMPropertyConfig":198,"./SelectEventPlugin":199,"./ServerReactRootIndex":200,"./SimpleEventPlugin":201,"_process":1,"fbjs/lib/ExecutionEnvironment":240}],168:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -33968,7 +37593,7 @@ var ReactDefaultPerf = {
 };
 
 module.exports = ReactDefaultPerf;
-},{"./DOMProperty":121,"./ReactDefaultPerfAnalysis":160,"./ReactMount":172,"./ReactPerf":178,"fbjs/lib/performanceNow":252}],160:[function(require,module,exports){
+},{"./DOMProperty":130,"./ReactDefaultPerfAnalysis":169,"./ReactMount":181,"./ReactPerf":187,"fbjs/lib/performanceNow":261}],169:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34168,7 +37793,7 @@ var ReactDefaultPerfAnalysis = {
 };
 
 module.exports = ReactDefaultPerfAnalysis;
-},{"./Object.assign":134}],161:[function(require,module,exports){
+},{"./Object.assign":143}],170:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -34427,7 +38052,7 @@ ReactElement.isValidElement = function (object) {
 
 module.exports = ReactElement;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./ReactCurrentOwner":145,"_process":1}],162:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactCurrentOwner":154,"_process":1}],171:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -34479,7 +38104,7 @@ assign(ReactEmptyComponent.prototype, {
 ReactEmptyComponent.injection = ReactEmptyComponentInjection;
 
 module.exports = ReactEmptyComponent;
-},{"./Object.assign":134,"./ReactElement":161,"./ReactEmptyComponentRegistry":163,"./ReactReconciler":183}],163:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactElement":170,"./ReactEmptyComponentRegistry":172,"./ReactReconciler":192}],172:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -34528,7 +38153,7 @@ var ReactEmptyComponentRegistry = {
 };
 
 module.exports = ReactEmptyComponentRegistry;
-},{}],164:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -34605,7 +38230,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactErrorUtils;
 }).call(this,require('_process'))
-},{"_process":1}],165:[function(require,module,exports){
+},{"_process":1}],174:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34644,7 +38269,7 @@ var ReactEventEmitterMixin = {
 };
 
 module.exports = ReactEventEmitterMixin;
-},{"./EventPluginHub":127}],166:[function(require,module,exports){
+},{"./EventPluginHub":136}],175:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34856,7 +38481,7 @@ var ReactEventListener = {
 };
 
 module.exports = ReactEventListener;
-},{"./Object.assign":134,"./PooledClass":135,"./ReactInstanceHandles":169,"./ReactMount":172,"./ReactUpdates":187,"./getEventTarget":216,"fbjs/lib/EventListener":230,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/getUnboundedScrollPosition":242}],167:[function(require,module,exports){
+},{"./Object.assign":143,"./PooledClass":144,"./ReactInstanceHandles":178,"./ReactMount":181,"./ReactUpdates":196,"./getEventTarget":225,"fbjs/lib/EventListener":239,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/getUnboundedScrollPosition":251}],176:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -34895,7 +38520,7 @@ var ReactInjection = {
 };
 
 module.exports = ReactInjection;
-},{"./DOMProperty":121,"./EventPluginHub":127,"./ReactBrowserEventEmitter":137,"./ReactClass":140,"./ReactComponentEnvironment":143,"./ReactEmptyComponent":162,"./ReactNativeComponent":175,"./ReactPerf":178,"./ReactRootIndex":185,"./ReactUpdates":187}],168:[function(require,module,exports){
+},{"./DOMProperty":130,"./EventPluginHub":136,"./ReactBrowserEventEmitter":146,"./ReactClass":149,"./ReactComponentEnvironment":152,"./ReactEmptyComponent":171,"./ReactNativeComponent":184,"./ReactPerf":187,"./ReactRootIndex":194,"./ReactUpdates":196}],177:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35020,7 +38645,7 @@ var ReactInputSelection = {
 };
 
 module.exports = ReactInputSelection;
-},{"./ReactDOMSelection":154,"fbjs/lib/containsNode":234,"fbjs/lib/focusNode":239,"fbjs/lib/getActiveElement":240}],169:[function(require,module,exports){
+},{"./ReactDOMSelection":163,"fbjs/lib/containsNode":243,"fbjs/lib/focusNode":248,"fbjs/lib/getActiveElement":249}],178:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -35325,7 +38950,7 @@ var ReactInstanceHandles = {
 
 module.exports = ReactInstanceHandles;
 }).call(this,require('_process'))
-},{"./ReactRootIndex":185,"_process":1,"fbjs/lib/invariant":245}],170:[function(require,module,exports){
+},{"./ReactRootIndex":194,"_process":1,"fbjs/lib/invariant":254}],179:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35373,7 +38998,7 @@ var ReactInstanceMap = {
 };
 
 module.exports = ReactInstanceMap;
-},{}],171:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -35419,7 +39044,7 @@ var ReactMarkupChecksum = {
 };
 
 module.exports = ReactMarkupChecksum;
-},{"./adler32":207}],172:[function(require,module,exports){
+},{"./adler32":216}],181:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -36267,7 +39892,7 @@ ReactPerf.measureMethods(ReactMount, 'ReactMount', {
 
 module.exports = ReactMount;
 }).call(this,require('_process'))
-},{"./DOMProperty":121,"./Object.assign":134,"./ReactBrowserEventEmitter":137,"./ReactCurrentOwner":145,"./ReactDOMFeatureFlags":149,"./ReactElement":161,"./ReactEmptyComponentRegistry":163,"./ReactInstanceHandles":169,"./ReactInstanceMap":170,"./ReactMarkupChecksum":171,"./ReactPerf":178,"./ReactReconciler":183,"./ReactUpdateQueue":186,"./ReactUpdates":187,"./instantiateReactComponent":220,"./setInnerHTML":225,"./shouldUpdateReactComponent":227,"./validateDOMNesting":229,"_process":1,"fbjs/lib/containsNode":234,"fbjs/lib/emptyObject":238,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],173:[function(require,module,exports){
+},{"./DOMProperty":130,"./Object.assign":143,"./ReactBrowserEventEmitter":146,"./ReactCurrentOwner":154,"./ReactDOMFeatureFlags":158,"./ReactElement":170,"./ReactEmptyComponentRegistry":172,"./ReactInstanceHandles":178,"./ReactInstanceMap":179,"./ReactMarkupChecksum":180,"./ReactPerf":187,"./ReactReconciler":192,"./ReactUpdateQueue":195,"./ReactUpdates":196,"./instantiateReactComponent":229,"./setInnerHTML":234,"./shouldUpdateReactComponent":236,"./validateDOMNesting":238,"_process":1,"fbjs/lib/containsNode":243,"fbjs/lib/emptyObject":247,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],182:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -36766,7 +40391,7 @@ var ReactMultiChild = {
 
 module.exports = ReactMultiChild;
 }).call(this,require('_process'))
-},{"./ReactChildReconciler":138,"./ReactComponentEnvironment":143,"./ReactCurrentOwner":145,"./ReactMultiChildUpdateTypes":174,"./ReactReconciler":183,"./flattenChildren":211,"_process":1}],174:[function(require,module,exports){
+},{"./ReactChildReconciler":147,"./ReactComponentEnvironment":152,"./ReactCurrentOwner":154,"./ReactMultiChildUpdateTypes":183,"./ReactReconciler":192,"./flattenChildren":220,"_process":1}],183:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -36799,7 +40424,7 @@ var ReactMultiChildUpdateTypes = keyMirror({
 });
 
 module.exports = ReactMultiChildUpdateTypes;
-},{"fbjs/lib/keyMirror":248}],175:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":257}],184:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -36896,7 +40521,7 @@ var ReactNativeComponent = {
 
 module.exports = ReactNativeComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"_process":1,"fbjs/lib/invariant":245}],176:[function(require,module,exports){
+},{"./Object.assign":143,"_process":1,"fbjs/lib/invariant":254}],185:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -37017,7 +40642,7 @@ var ReactNoopUpdateQueue = {
 
 module.exports = ReactNoopUpdateQueue;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/warning":255}],177:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/warning":264}],186:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -37111,7 +40736,7 @@ var ReactOwner = {
 
 module.exports = ReactOwner;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],178:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],187:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -37210,7 +40835,7 @@ function _noMeasure(objName, fnName, func) {
 
 module.exports = ReactPerf;
 }).call(this,require('_process'))
-},{"_process":1}],179:[function(require,module,exports){
+},{"_process":1}],188:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -37237,7 +40862,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = ReactPropTypeLocationNames;
 }).call(this,require('_process'))
-},{"_process":1}],180:[function(require,module,exports){
+},{"_process":1}],189:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37260,7 +40885,7 @@ var ReactPropTypeLocations = keyMirror({
 });
 
 module.exports = ReactPropTypeLocations;
-},{"fbjs/lib/keyMirror":248}],181:[function(require,module,exports){
+},{"fbjs/lib/keyMirror":257}],190:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37617,7 +41242,7 @@ function getClassName(propValue) {
 }
 
 module.exports = ReactPropTypes;
-},{"./ReactElement":161,"./ReactPropTypeLocationNames":179,"./getIteratorFn":217,"fbjs/lib/emptyFunction":237}],182:[function(require,module,exports){
+},{"./ReactElement":170,"./ReactPropTypeLocationNames":188,"./getIteratorFn":226,"fbjs/lib/emptyFunction":246}],191:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37769,7 +41394,7 @@ assign(ReactReconcileTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactReconcileTransaction);
 
 module.exports = ReactReconcileTransaction;
-},{"./CallbackQueue":117,"./Object.assign":134,"./PooledClass":135,"./ReactBrowserEventEmitter":137,"./ReactDOMFeatureFlags":149,"./ReactInputSelection":168,"./Transaction":204}],183:[function(require,module,exports){
+},{"./CallbackQueue":126,"./Object.assign":143,"./PooledClass":144,"./ReactBrowserEventEmitter":146,"./ReactDOMFeatureFlags":158,"./ReactInputSelection":177,"./Transaction":213}],192:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37877,7 +41502,7 @@ var ReactReconciler = {
 };
 
 module.exports = ReactReconciler;
-},{"./ReactRef":184}],184:[function(require,module,exports){
+},{"./ReactRef":193}],193:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37956,7 +41581,7 @@ ReactRef.detachRefs = function (instance, element) {
 };
 
 module.exports = ReactRef;
-},{"./ReactOwner":177}],185:[function(require,module,exports){
+},{"./ReactOwner":186}],194:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -37986,7 +41611,7 @@ var ReactRootIndex = {
 };
 
 module.exports = ReactRootIndex;
-},{}],186:[function(require,module,exports){
+},{}],195:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -38246,7 +41871,7 @@ var ReactUpdateQueue = {
 
 module.exports = ReactUpdateQueue;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./ReactCurrentOwner":145,"./ReactElement":161,"./ReactInstanceMap":170,"./ReactUpdates":187,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],187:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactCurrentOwner":154,"./ReactElement":170,"./ReactInstanceMap":179,"./ReactUpdates":196,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],196:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -38472,7 +42097,7 @@ var ReactUpdates = {
 
 module.exports = ReactUpdates;
 }).call(this,require('_process'))
-},{"./CallbackQueue":117,"./Object.assign":134,"./PooledClass":135,"./ReactPerf":178,"./ReactReconciler":183,"./Transaction":204,"_process":1,"fbjs/lib/invariant":245}],188:[function(require,module,exports){
+},{"./CallbackQueue":126,"./Object.assign":143,"./PooledClass":144,"./ReactPerf":187,"./ReactReconciler":192,"./Transaction":213,"_process":1,"fbjs/lib/invariant":254}],197:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -38487,7 +42112,7 @@ module.exports = ReactUpdates;
 'use strict';
 
 module.exports = '0.14.0';
-},{}],189:[function(require,module,exports){
+},{}],198:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -38615,7 +42240,7 @@ var SVGDOMPropertyConfig = {
 };
 
 module.exports = SVGDOMPropertyConfig;
-},{"./DOMProperty":121}],190:[function(require,module,exports){
+},{"./DOMProperty":130}],199:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -38817,7 +42442,7 @@ var SelectEventPlugin = {
 };
 
 module.exports = SelectEventPlugin;
-},{"./EventConstants":126,"./EventPropagators":130,"./ReactInputSelection":168,"./SyntheticEvent":196,"./isTextInputElement":222,"fbjs/lib/ExecutionEnvironment":231,"fbjs/lib/getActiveElement":240,"fbjs/lib/keyOf":249,"fbjs/lib/shallowEqual":253}],191:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPropagators":139,"./ReactInputSelection":177,"./SyntheticEvent":205,"./isTextInputElement":231,"fbjs/lib/ExecutionEnvironment":240,"fbjs/lib/getActiveElement":249,"fbjs/lib/keyOf":258,"fbjs/lib/shallowEqual":262}],200:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -38847,7 +42472,7 @@ var ServerReactRootIndex = {
 };
 
 module.exports = ServerReactRootIndex;
-},{}],192:[function(require,module,exports){
+},{}],201:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -39437,7 +43062,7 @@ var SimpleEventPlugin = {
 
 module.exports = SimpleEventPlugin;
 }).call(this,require('_process'))
-},{"./EventConstants":126,"./EventPropagators":130,"./ReactMount":172,"./SyntheticClipboardEvent":193,"./SyntheticDragEvent":195,"./SyntheticEvent":196,"./SyntheticFocusEvent":197,"./SyntheticKeyboardEvent":199,"./SyntheticMouseEvent":200,"./SyntheticTouchEvent":201,"./SyntheticUIEvent":202,"./SyntheticWheelEvent":203,"./getEventCharCode":213,"_process":1,"fbjs/lib/EventListener":230,"fbjs/lib/emptyFunction":237,"fbjs/lib/invariant":245,"fbjs/lib/keyOf":249}],193:[function(require,module,exports){
+},{"./EventConstants":135,"./EventPropagators":139,"./ReactMount":181,"./SyntheticClipboardEvent":202,"./SyntheticDragEvent":204,"./SyntheticEvent":205,"./SyntheticFocusEvent":206,"./SyntheticKeyboardEvent":208,"./SyntheticMouseEvent":209,"./SyntheticTouchEvent":210,"./SyntheticUIEvent":211,"./SyntheticWheelEvent":212,"./getEventCharCode":222,"_process":1,"fbjs/lib/EventListener":239,"fbjs/lib/emptyFunction":246,"fbjs/lib/invariant":254,"fbjs/lib/keyOf":258}],202:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39477,7 +43102,7 @@ function SyntheticClipboardEvent(dispatchConfig, dispatchMarker, nativeEvent, na
 SyntheticEvent.augmentClass(SyntheticClipboardEvent, ClipboardEventInterface);
 
 module.exports = SyntheticClipboardEvent;
-},{"./SyntheticEvent":196}],194:[function(require,module,exports){
+},{"./SyntheticEvent":205}],203:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39515,7 +43140,7 @@ function SyntheticCompositionEvent(dispatchConfig, dispatchMarker, nativeEvent, 
 SyntheticEvent.augmentClass(SyntheticCompositionEvent, CompositionEventInterface);
 
 module.exports = SyntheticCompositionEvent;
-},{"./SyntheticEvent":196}],195:[function(require,module,exports){
+},{"./SyntheticEvent":205}],204:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39553,7 +43178,7 @@ function SyntheticDragEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeE
 SyntheticMouseEvent.augmentClass(SyntheticDragEvent, DragEventInterface);
 
 module.exports = SyntheticDragEvent;
-},{"./SyntheticMouseEvent":200}],196:[function(require,module,exports){
+},{"./SyntheticMouseEvent":209}],205:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -39733,7 +43358,7 @@ PooledClass.addPoolingTo(SyntheticEvent, PooledClass.fourArgumentPooler);
 
 module.exports = SyntheticEvent;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./PooledClass":135,"_process":1,"fbjs/lib/emptyFunction":237,"fbjs/lib/warning":255}],197:[function(require,module,exports){
+},{"./Object.assign":143,"./PooledClass":144,"_process":1,"fbjs/lib/emptyFunction":246,"fbjs/lib/warning":264}],206:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39771,7 +43396,7 @@ function SyntheticFocusEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticFocusEvent, FocusEventInterface);
 
 module.exports = SyntheticFocusEvent;
-},{"./SyntheticUIEvent":202}],198:[function(require,module,exports){
+},{"./SyntheticUIEvent":211}],207:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39810,7 +43435,7 @@ function SyntheticInputEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticEvent.augmentClass(SyntheticInputEvent, InputEventInterface);
 
 module.exports = SyntheticInputEvent;
-},{"./SyntheticEvent":196}],199:[function(require,module,exports){
+},{"./SyntheticEvent":205}],208:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39896,7 +43521,7 @@ function SyntheticKeyboardEvent(dispatchConfig, dispatchMarker, nativeEvent, nat
 SyntheticUIEvent.augmentClass(SyntheticKeyboardEvent, KeyboardEventInterface);
 
 module.exports = SyntheticKeyboardEvent;
-},{"./SyntheticUIEvent":202,"./getEventCharCode":213,"./getEventKey":214,"./getEventModifierState":215}],200:[function(require,module,exports){
+},{"./SyntheticUIEvent":211,"./getEventCharCode":222,"./getEventKey":223,"./getEventModifierState":224}],209:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -39970,7 +43595,7 @@ function SyntheticMouseEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticMouseEvent, MouseEventInterface);
 
 module.exports = SyntheticMouseEvent;
-},{"./SyntheticUIEvent":202,"./ViewportMetrics":205,"./getEventModifierState":215}],201:[function(require,module,exports){
+},{"./SyntheticUIEvent":211,"./ViewportMetrics":214,"./getEventModifierState":224}],210:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40017,7 +43642,7 @@ function SyntheticTouchEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticUIEvent.augmentClass(SyntheticTouchEvent, TouchEventInterface);
 
 module.exports = SyntheticTouchEvent;
-},{"./SyntheticUIEvent":202,"./getEventModifierState":215}],202:[function(require,module,exports){
+},{"./SyntheticUIEvent":211,"./getEventModifierState":224}],211:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40078,7 +43703,7 @@ function SyntheticUIEvent(dispatchConfig, dispatchMarker, nativeEvent, nativeEve
 SyntheticEvent.augmentClass(SyntheticUIEvent, UIEventInterface);
 
 module.exports = SyntheticUIEvent;
-},{"./SyntheticEvent":196,"./getEventTarget":216}],203:[function(require,module,exports){
+},{"./SyntheticEvent":205,"./getEventTarget":225}],212:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40134,7 +43759,7 @@ function SyntheticWheelEvent(dispatchConfig, dispatchMarker, nativeEvent, native
 SyntheticMouseEvent.augmentClass(SyntheticWheelEvent, WheelEventInterface);
 
 module.exports = SyntheticWheelEvent;
-},{"./SyntheticMouseEvent":200}],204:[function(require,module,exports){
+},{"./SyntheticMouseEvent":209}],213:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -40368,7 +43993,7 @@ var Transaction = {
 
 module.exports = Transaction;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],205:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],214:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40396,7 +44021,7 @@ var ViewportMetrics = {
 };
 
 module.exports = ViewportMetrics;
-},{}],206:[function(require,module,exports){
+},{}],215:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -40458,7 +44083,7 @@ function accumulateInto(current, next) {
 
 module.exports = accumulateInto;
 }).call(this,require('_process'))
-},{"_process":1,"fbjs/lib/invariant":245}],207:[function(require,module,exports){
+},{"_process":1,"fbjs/lib/invariant":254}],216:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40501,7 +44126,7 @@ function adler32(data) {
 }
 
 module.exports = adler32;
-},{}],208:[function(require,module,exports){
+},{}],217:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40557,7 +44182,7 @@ function dangerousStyleValue(name, value) {
 }
 
 module.exports = dangerousStyleValue;
-},{"./CSSProperty":115}],209:[function(require,module,exports){
+},{"./CSSProperty":124}],218:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40596,7 +44221,7 @@ function escapeTextContentForBrowser(text) {
 }
 
 module.exports = escapeTextContentForBrowser;
-},{}],210:[function(require,module,exports){
+},{}],219:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -40648,7 +44273,7 @@ function findDOMNode(componentOrElement) {
 
 module.exports = findDOMNode;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":145,"./ReactInstanceMap":170,"./ReactMount":172,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],211:[function(require,module,exports){
+},{"./ReactCurrentOwner":154,"./ReactInstanceMap":179,"./ReactMount":181,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],220:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -40699,7 +44324,7 @@ function flattenChildren(children) {
 
 module.exports = flattenChildren;
 }).call(this,require('_process'))
-},{"./traverseAllChildren":228,"_process":1,"fbjs/lib/warning":255}],212:[function(require,module,exports){
+},{"./traverseAllChildren":237,"_process":1,"fbjs/lib/warning":264}],221:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40729,7 +44354,7 @@ var forEachAccumulated = function (arr, cb, scope) {
 };
 
 module.exports = forEachAccumulated;
-},{}],213:[function(require,module,exports){
+},{}],222:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40780,7 +44405,7 @@ function getEventCharCode(nativeEvent) {
 }
 
 module.exports = getEventCharCode;
-},{}],214:[function(require,module,exports){
+},{}],223:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40884,7 +44509,7 @@ function getEventKey(nativeEvent) {
 }
 
 module.exports = getEventKey;
-},{"./getEventCharCode":213}],215:[function(require,module,exports){
+},{"./getEventCharCode":222}],224:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40929,7 +44554,7 @@ function getEventModifierState(nativeEvent) {
 }
 
 module.exports = getEventModifierState;
-},{}],216:[function(require,module,exports){
+},{}],225:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -40959,7 +44584,7 @@ function getEventTarget(nativeEvent) {
 }
 
 module.exports = getEventTarget;
-},{}],217:[function(require,module,exports){
+},{}],226:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41000,7 +44625,7 @@ function getIteratorFn(maybeIterable) {
 }
 
 module.exports = getIteratorFn;
-},{}],218:[function(require,module,exports){
+},{}],227:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41074,7 +44699,7 @@ function getNodeForCharacterOffset(root, offset) {
 }
 
 module.exports = getNodeForCharacterOffset;
-},{}],219:[function(require,module,exports){
+},{}],228:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41108,7 +44733,7 @@ function getTextContentAccessor() {
 }
 
 module.exports = getTextContentAccessor;
-},{"fbjs/lib/ExecutionEnvironment":231}],220:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":240}],229:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -41223,7 +44848,7 @@ function instantiateReactComponent(node) {
 
 module.exports = instantiateReactComponent;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"./ReactCompositeComponent":144,"./ReactEmptyComponent":162,"./ReactNativeComponent":175,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],221:[function(require,module,exports){
+},{"./Object.assign":143,"./ReactCompositeComponent":153,"./ReactEmptyComponent":171,"./ReactNativeComponent":184,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],230:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41284,7 +44909,7 @@ function isEventSupported(eventNameSuffix, capture) {
 }
 
 module.exports = isEventSupported;
-},{"fbjs/lib/ExecutionEnvironment":231}],222:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":240}],231:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41325,7 +44950,7 @@ function isTextInputElement(elem) {
 }
 
 module.exports = isTextInputElement;
-},{}],223:[function(require,module,exports){
+},{}],232:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41352,7 +44977,7 @@ function quoteAttributeValueForBrowser(value) {
 }
 
 module.exports = quoteAttributeValueForBrowser;
-},{"./escapeTextContentForBrowser":209}],224:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":218}],233:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41369,7 +44994,7 @@ module.exports = quoteAttributeValueForBrowser;
 var ReactMount = require('./ReactMount');
 
 module.exports = ReactMount.renderSubtreeIntoContainer;
-},{"./ReactMount":172}],225:[function(require,module,exports){
+},{"./ReactMount":181}],234:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41460,7 +45085,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setInnerHTML;
-},{"fbjs/lib/ExecutionEnvironment":231}],226:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":240}],235:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41501,7 +45126,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = setTextContent;
-},{"./escapeTextContentForBrowser":209,"./setInnerHTML":225,"fbjs/lib/ExecutionEnvironment":231}],227:[function(require,module,exports){
+},{"./escapeTextContentForBrowser":218,"./setInnerHTML":234,"fbjs/lib/ExecutionEnvironment":240}],236:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -41545,7 +45170,7 @@ function shouldUpdateReactComponent(prevElement, nextElement) {
 }
 
 module.exports = shouldUpdateReactComponent;
-},{}],228:[function(require,module,exports){
+},{}],237:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -41737,7 +45362,7 @@ function traverseAllChildren(children, callback, traverseContext) {
 
 module.exports = traverseAllChildren;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":145,"./ReactElement":161,"./ReactInstanceHandles":169,"./getIteratorFn":217,"_process":1,"fbjs/lib/invariant":245,"fbjs/lib/warning":255}],229:[function(require,module,exports){
+},{"./ReactCurrentOwner":154,"./ReactElement":170,"./ReactInstanceHandles":178,"./getIteratorFn":226,"_process":1,"fbjs/lib/invariant":254,"fbjs/lib/warning":264}],238:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -42103,7 +45728,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = validateDOMNesting;
 }).call(this,require('_process'))
-},{"./Object.assign":134,"_process":1,"fbjs/lib/emptyFunction":237,"fbjs/lib/warning":255}],230:[function(require,module,exports){
+},{"./Object.assign":143,"_process":1,"fbjs/lib/emptyFunction":246,"fbjs/lib/warning":264}],239:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -42190,7 +45815,7 @@ var EventListener = {
 
 module.exports = EventListener;
 }).call(this,require('_process'))
-},{"./emptyFunction":237,"_process":1}],231:[function(require,module,exports){
+},{"./emptyFunction":246,"_process":1}],240:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42227,7 +45852,7 @@ var ExecutionEnvironment = {
 };
 
 module.exports = ExecutionEnvironment;
-},{}],232:[function(require,module,exports){
+},{}],241:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42260,7 +45885,7 @@ function camelize(string) {
 }
 
 module.exports = camelize;
-},{}],233:[function(require,module,exports){
+},{}],242:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42301,7 +45926,7 @@ function camelizeStyleName(string) {
 }
 
 module.exports = camelizeStyleName;
-},{"./camelize":232}],234:[function(require,module,exports){
+},{"./camelize":241}],243:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42357,7 +45982,7 @@ function containsNode(_x, _x2) {
 }
 
 module.exports = containsNode;
-},{"./isTextNode":247}],235:[function(require,module,exports){
+},{"./isTextNode":256}],244:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42443,7 +46068,7 @@ function createArrayFromMixed(obj) {
 }
 
 module.exports = createArrayFromMixed;
-},{"./toArray":254}],236:[function(require,module,exports){
+},{"./toArray":263}],245:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -42530,7 +46155,7 @@ function createNodesFromMarkup(markup, handleScript) {
 
 module.exports = createNodesFromMarkup;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":231,"./createArrayFromMixed":235,"./getMarkupWrap":241,"./invariant":245,"_process":1}],237:[function(require,module,exports){
+},{"./ExecutionEnvironment":240,"./createArrayFromMixed":244,"./getMarkupWrap":250,"./invariant":254,"_process":1}],246:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42569,7 +46194,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 };
 
 module.exports = emptyFunction;
-},{}],238:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -42592,7 +46217,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = emptyObject;
 }).call(this,require('_process'))
-},{"_process":1}],239:[function(require,module,exports){
+},{"_process":1}],248:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42619,7 +46244,7 @@ function focusNode(node) {
 }
 
 module.exports = focusNode;
-},{}],240:[function(require,module,exports){
+},{}],249:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42653,7 +46278,7 @@ function getActiveElement() /*?DOMElement*/{
 }
 
 module.exports = getActiveElement;
-},{}],241:[function(require,module,exports){
+},{}],250:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -42751,7 +46376,7 @@ function getMarkupWrap(nodeName) {
 
 module.exports = getMarkupWrap;
 }).call(this,require('_process'))
-},{"./ExecutionEnvironment":231,"./invariant":245,"_process":1}],242:[function(require,module,exports){
+},{"./ExecutionEnvironment":240,"./invariant":254,"_process":1}],251:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42790,7 +46415,7 @@ function getUnboundedScrollPosition(scrollable) {
 }
 
 module.exports = getUnboundedScrollPosition;
-},{}],243:[function(require,module,exports){
+},{}],252:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42824,7 +46449,7 @@ function hyphenate(string) {
 }
 
 module.exports = hyphenate;
-},{}],244:[function(require,module,exports){
+},{}],253:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42864,7 +46489,7 @@ function hyphenateStyleName(string) {
 }
 
 module.exports = hyphenateStyleName;
-},{"./hyphenate":243}],245:[function(require,module,exports){
+},{"./hyphenate":252}],254:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -42916,7 +46541,7 @@ var invariant = function (condition, format, a, b, c, d, e, f) {
 
 module.exports = invariant;
 }).call(this,require('_process'))
-},{"_process":1}],246:[function(require,module,exports){
+},{"_process":1}],255:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42940,7 +46565,7 @@ function isNode(object) {
 }
 
 module.exports = isNode;
-},{}],247:[function(require,module,exports){
+},{}],256:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -42966,7 +46591,7 @@ function isTextNode(object) {
 }
 
 module.exports = isTextNode;
-},{"./isNode":246}],248:[function(require,module,exports){
+},{"./isNode":255}],257:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -43017,7 +46642,7 @@ var keyMirror = function (obj) {
 
 module.exports = keyMirror;
 }).call(this,require('_process'))
-},{"./invariant":245,"_process":1}],249:[function(require,module,exports){
+},{"./invariant":254,"_process":1}],258:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43053,7 +46678,7 @@ var keyOf = function (oneKeyObj) {
 };
 
 module.exports = keyOf;
-},{}],250:[function(require,module,exports){
+},{}],259:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43085,7 +46710,7 @@ function memoizeStringOnly(callback) {
 }
 
 module.exports = memoizeStringOnly;
-},{}],251:[function(require,module,exports){
+},{}],260:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43109,7 +46734,7 @@ if (ExecutionEnvironment.canUseDOM) {
 }
 
 module.exports = performance || {};
-},{"./ExecutionEnvironment":231}],252:[function(require,module,exports){
+},{"./ExecutionEnvironment":240}],261:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43139,7 +46764,7 @@ if (!curPerformance || !curPerformance.now) {
 var performanceNow = curPerformance.now.bind(curPerformance);
 
 module.exports = performanceNow;
-},{"./performance":251}],253:[function(require,module,exports){
+},{"./performance":260}],262:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -43190,7 +46815,7 @@ function shallowEqual(objA, objB) {
 }
 
 module.exports = shallowEqual;
-},{}],254:[function(require,module,exports){
+},{}],263:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -43250,7 +46875,7 @@ function toArray(obj) {
 
 module.exports = toArray;
 }).call(this,require('_process'))
-},{"./invariant":245,"_process":1}],255:[function(require,module,exports){
+},{"./invariant":254,"_process":1}],264:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -43310,7 +46935,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = warning;
 }).call(this,require('_process'))
-},{"./emptyFunction":237,"_process":1}],256:[function(require,module,exports){
+},{"./emptyFunction":246,"_process":1}],265:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -43511,7 +47136,7 @@ DropzoneComponent = React.createClass({displayName: "DropzoneComponent",
 
 module.exports = DropzoneComponent;
 
-},{"./helpers":257,"./icon":258,"dropzone":259,"react":518}],257:[function(require,module,exports){
+},{"./helpers":266,"./icon":267,"dropzone":268,"react":527}],266:[function(require,module,exports){
 'use strict';
 
 var Helpers = {
@@ -43620,7 +47245,7 @@ var Helpers = {
 
 module.exports = Helpers;
 
-},{}],258:[function(require,module,exports){
+},{}],267:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -43635,7 +47260,7 @@ var Icon = React.createClass({displayName: "Icon",
 
 module.exports = Icon;
 
-},{"react":518}],259:[function(require,module,exports){
+},{"react":527}],268:[function(require,module,exports){
 
 /*
  *
@@ -45389,7 +49014,7 @@ module.exports = Icon;
 
 }).call(this);
 
-},{}],260:[function(require,module,exports){
+},{}],269:[function(require,module,exports){
 /**
  * A mixin for handling (effectively) onClickOutside for React components.
  * Note that we're not intercepting any events in this approach, and we're
@@ -45518,7 +49143,7 @@ module.exports = Icon;
 
 }));
 
-},{"react":518}],261:[function(require,module,exports){
+},{"react":527}],270:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45633,7 +49258,7 @@ var ReactPlayer = (function (_Component) {
 
 exports['default'] = ReactPlayer;
 module.exports = exports['default'];
-},{"./players":267,"./propTypes":268,"array.prototype.find":269,"react":518}],262:[function(require,module,exports){
+},{"./players":276,"./propTypes":277,"array.prototype.find":278,"react":527}],271:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45736,7 +49361,7 @@ var Base = (function (_Component) {
 
 exports['default'] = Base;
 module.exports = exports['default'];
-},{"../propTypes":268,"react":518}],263:[function(require,module,exports){
+},{"../propTypes":277,"react":527}],272:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -45857,7 +49482,7 @@ var FilePlayer = (function (_Base) {
 
 exports['default'] = FilePlayer;
 module.exports = exports['default'];
-},{"../propTypes":268,"./Base":262,"react":518}],264:[function(require,module,exports){
+},{"../propTypes":277,"./Base":271,"react":527}],273:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -46055,7 +49680,7 @@ var SoundCloud = (function (_Base) {
 
 exports['default'] = SoundCloud;
 module.exports = exports['default'];
-},{"../propTypes":268,"./Base":262,"load-script":270,"react":518}],265:[function(require,module,exports){
+},{"../propTypes":277,"./Base":271,"load-script":279,"react":527}],274:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -46227,7 +49852,7 @@ var Vimeo = (function (_Base) {
 
 exports['default'] = Vimeo;
 module.exports = exports['default'];
-},{"../propTypes":268,"./Base":262,"query-string":271,"react":518}],266:[function(require,module,exports){
+},{"../propTypes":277,"./Base":271,"query-string":280,"react":527}],275:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -46402,7 +50027,7 @@ var YouTube = (function (_Base) {
 
 exports['default'] = YouTube;
 module.exports = exports['default'];
-},{"../propTypes":268,"./Base":262,"load-script":270,"react":518}],267:[function(require,module,exports){
+},{"../propTypes":277,"./Base":271,"load-script":279,"react":527}],276:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -46429,7 +50054,7 @@ var _FilePlayer2 = _interopRequireDefault(_FilePlayer);
 
 exports['default'] = [_YouTube2['default'], _SoundCloud2['default'], _Vimeo2['default'], _FilePlayer2['default']];
 module.exports = exports['default'];
-},{"./FilePlayer":263,"./SoundCloud":264,"./Vimeo":265,"./YouTube":266}],268:[function(require,module,exports){
+},{"./FilePlayer":272,"./SoundCloud":273,"./Vimeo":274,"./YouTube":275}],277:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -46460,7 +50085,7 @@ exports['default'] = {
   onError: _react.PropTypes.func
 };
 module.exports = exports['default'];
-},{"react":518}],269:[function(require,module,exports){
+},{"react":527}],278:[function(require,module,exports){
 // Array.prototype.find - MIT License (c) 2013 Paul Miller <http://paulmillr.com>
 // For all details and docs: https://github.com/paulmillr/array.prototype.find
 // Fixes and tests supplied by Duncan Hall <http://duncanhall.net> 
@@ -46495,7 +50120,7 @@ module.exports = exports['default'];
   }
 })(this);
 
-},{}],270:[function(require,module,exports){
+},{}],279:[function(require,module,exports){
 
 module.exports = function load (src, opts, cb) {
   var head = document.head || document.getElementsByTagName('head')[0]
@@ -46562,7 +50187,7 @@ function ieOnEnd (script, cb) {
   }
 }
 
-},{}],271:[function(require,module,exports){
+},{}],280:[function(require,module,exports){
 'use strict';
 var strictUriEncode = require('strict-uri-encode');
 
@@ -46630,7 +50255,7 @@ exports.stringify = function (obj) {
 	}).join('&') : '';
 };
 
-},{"strict-uri-encode":272}],272:[function(require,module,exports){
+},{"strict-uri-encode":281}],281:[function(require,module,exports){
 'use strict';
 module.exports = function (str) {
 	return encodeURIComponent(str).replace(/[!'()*]/g, function (c) {
@@ -46638,7 +50263,7 @@ module.exports = function (str) {
 	});
 };
 
-},{}],273:[function(require,module,exports){
+},{}],282:[function(require,module,exports){
 (function (global){
 /*! Quill Editor v0.19.14
  *  https://quilljs.com/
@@ -57149,10 +60774,10 @@ module.exports = SnowTheme;
 },{"../../lib/color-picker":16,"../../lib/dom":17,"../../lib/picker":19,"../base":32,"lodash":1}]},{},[15])(15)
 });
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],274:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 module.exports = require('./dist/quill');
 
-},{"./dist/quill":273}],275:[function(require,module,exports){
+},{"./dist/quill":282}],284:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -57406,7 +61031,7 @@ var QuillComponent = React.createClass({
 
 module.exports = QuillComponent;
 
-},{"./mixin":277,"./toolbar":278,"react":518}],276:[function(require,module,exports){
+},{"./mixin":286,"./toolbar":287,"react":527}],285:[function(require,module,exports){
 /*
 React-Quill v0.2.2
 https://github.com/zenoamaro/react-quill
@@ -57415,7 +61040,7 @@ module.exports = require('./component');
 module.exports.Mixin = require('./mixin');
 module.exports.Toolbar = require('./toolbar');
 
-},{"./component":275,"./mixin":277,"./toolbar":278}],277:[function(require,module,exports){
+},{"./component":284,"./mixin":286,"./toolbar":287}],286:[function(require,module,exports){
 'use strict';
 
 var Quill = require('quill');
@@ -57479,7 +61104,7 @@ var QuillMixin = {
 };
 
 module.exports = QuillMixin;
-},{"quill":274}],278:[function(require,module,exports){
+},{"quill":283}],287:[function(require,module,exports){
 'use strict';
 
 var React = require('react'),
@@ -57632,7 +61257,7 @@ var QuillToolbar = React.createClass({
 module.exports = QuillToolbar;
 QuillToolbar.defaultItems = defaultItems;
 QuillToolbar.defaultColors = defaultColors;
-},{"react":518}],279:[function(require,module,exports){
+},{"react":527}],288:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -57691,7 +61316,7 @@ function mapAsync(array, work, callback) {
     });
   });
 }
-},{}],280:[function(require,module,exports){
+},{}],289:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -57710,7 +61335,7 @@ var History = {
 
 exports['default'] = History;
 module.exports = exports['default'];
-},{"./PropTypes":287}],281:[function(require,module,exports){
+},{"./PropTypes":296}],290:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -57753,7 +61378,7 @@ var IndexLink = (function (_React$Component) {
 
 exports['default'] = IndexLink;
 module.exports = exports['default'];
-},{"./Link":285,"react":518}],282:[function(require,module,exports){
+},{"./Link":294,"react":527}],291:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -57830,7 +61455,7 @@ var IndexRedirect = (function (_React$Component) {
 
 exports['default'] = IndexRedirect;
 module.exports = exports['default'];
-},{"./PropTypes":287,"./Redirect":288,"invariant":323,"react":518,"warning":324}],283:[function(require,module,exports){
+},{"./PropTypes":296,"./Redirect":297,"invariant":332,"react":527,"warning":333}],292:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -57906,7 +61531,7 @@ var IndexRoute = (function (_React$Component) {
 
 exports['default'] = IndexRoute;
 module.exports = exports['default'];
-},{"./PropTypes":287,"./RouteUtils":291,"invariant":323,"react":518,"warning":324}],284:[function(require,module,exports){
+},{"./PropTypes":296,"./RouteUtils":300,"invariant":332,"react":527,"warning":333}],293:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -57971,7 +61596,7 @@ var Lifecycle = {
 
 exports['default'] = Lifecycle;
 module.exports = exports['default'];
-},{"invariant":323,"react":518}],285:[function(require,module,exports){
+},{"invariant":332,"react":527}],294:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58128,7 +61753,7 @@ var Link = (function (_React$Component) {
 
 exports['default'] = Link;
 module.exports = exports['default'];
-},{"react":518}],286:[function(require,module,exports){
+},{"react":527}],295:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58326,7 +61951,7 @@ function formatPattern(pattern, params) {
 
   return pathname.replace(/\/+/g, '/');
 }
-},{"invariant":323}],287:[function(require,module,exports){
+},{"invariant":332}],296:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58380,7 +62005,7 @@ exports['default'] = {
   components: components,
   route: route
 };
-},{"react":518}],288:[function(require,module,exports){
+},{"react":527}],297:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58492,7 +62117,7 @@ var Redirect = (function (_React$Component) {
 
 exports['default'] = Redirect;
 module.exports = exports['default'];
-},{"./PatternUtils":286,"./PropTypes":287,"./RouteUtils":291,"invariant":323,"react":518}],289:[function(require,module,exports){
+},{"./PatternUtils":295,"./PropTypes":296,"./RouteUtils":300,"invariant":332,"react":527}],298:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58581,7 +62206,7 @@ var Route = (function (_React$Component) {
 
 exports['default'] = Route;
 module.exports = exports['default'];
-},{"./PropTypes":287,"./RouteUtils":291,"invariant":323,"react":518,"warning":324}],290:[function(require,module,exports){
+},{"./PropTypes":296,"./RouteUtils":300,"invariant":332,"react":527,"warning":333}],299:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58620,7 +62245,7 @@ var RouteContext = {
 
 exports['default'] = RouteContext;
 module.exports = exports['default'];
-},{"react":518}],291:[function(require,module,exports){
+},{"react":527}],300:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58734,7 +62359,7 @@ function createRoutes(routes) {
 
   return routes;
 }
-},{"react":518,"warning":324}],292:[function(require,module,exports){
+},{"react":527,"warning":333}],301:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -58883,7 +62508,7 @@ var Router = (function (_React$Component) {
 
 exports['default'] = Router;
 module.exports = exports['default'];
-},{"./PropTypes":287,"./RouteUtils":291,"./RoutingContext":293,"./useRoutes":302,"history/lib/createHashHistory":309,"react":518,"warning":324}],293:[function(require,module,exports){
+},{"./PropTypes":296,"./RouteUtils":300,"./RoutingContext":302,"./useRoutes":311,"history/lib/createHashHistory":318,"react":527,"warning":333}],302:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59015,7 +62640,7 @@ var RoutingContext = (function (_React$Component) {
 
 exports['default'] = RoutingContext;
 module.exports = exports['default'];
-},{"./getRouteParams":297,"invariant":323,"react":518}],294:[function(require,module,exports){
+},{"./getRouteParams":306,"invariant":332,"react":527}],303:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59088,7 +62713,7 @@ function runLeaveHooks(routes) {
     if (routes[i].onLeave) routes[i].onLeave.call(routes[i]);
   }
 }
-},{"./AsyncUtils":279}],295:[function(require,module,exports){
+},{"./AsyncUtils":288}],304:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59151,7 +62776,7 @@ function computeChangedRoutes(prevState, nextState) {
 
 exports['default'] = computeChangedRoutes;
 module.exports = exports['default'];
-},{"./PatternUtils":286}],296:[function(require,module,exports){
+},{"./PatternUtils":295}],305:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59185,7 +62810,7 @@ function getComponents(nextState, callback) {
 
 exports['default'] = getComponents;
 module.exports = exports['default'];
-},{"./AsyncUtils":279}],297:[function(require,module,exports){
+},{"./AsyncUtils":288}],306:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59210,7 +62835,7 @@ function getRouteParams(route, params) {
 
 exports['default'] = getRouteParams;
 module.exports = exports['default'];
-},{"./PatternUtils":286}],298:[function(require,module,exports){
+},{"./PatternUtils":295}],307:[function(require,module,exports){
 /* components */
 'use strict';
 
@@ -59315,7 +62940,7 @@ exports.match = _match3['default'];
 var _Router4 = _interopRequireDefault(_Router2);
 
 exports['default'] = _Router4['default'];
-},{"./History":280,"./IndexLink":281,"./IndexRedirect":282,"./IndexRoute":283,"./Lifecycle":284,"./Link":285,"./PropTypes":287,"./Redirect":288,"./Route":289,"./RouteContext":290,"./RouteUtils":291,"./Router":292,"./RoutingContext":293,"./match":300,"./useRoutes":302}],299:[function(require,module,exports){
+},{"./History":289,"./IndexLink":290,"./IndexRedirect":291,"./IndexRoute":292,"./Lifecycle":293,"./Link":294,"./PropTypes":296,"./Redirect":297,"./Route":298,"./RouteContext":299,"./RouteUtils":300,"./Router":301,"./RoutingContext":302,"./match":309,"./useRoutes":311}],308:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59412,7 +63037,7 @@ function isActive(pathname, query, indexOnly, location, routes, params) {
 
 exports['default'] = isActive;
 module.exports = exports['default'];
-},{"./PatternUtils":286}],300:[function(require,module,exports){
+},{"./PatternUtils":295}],309:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59476,7 +63101,7 @@ function match(_ref, callback) {
 
 exports['default'] = match;
 module.exports = exports['default'];
-},{"./RouteUtils":291,"./useRoutes":302,"history/lib/createMemoryHistory":311,"history/lib/useBasename":314,"invariant":323}],301:[function(require,module,exports){
+},{"./RouteUtils":300,"./useRoutes":311,"history/lib/createMemoryHistory":320,"history/lib/useBasename":323,"invariant":332}],310:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59617,7 +63242,7 @@ function matchRoutes(routes, location, callback) {
 
 exports['default'] = matchRoutes;
 module.exports = exports['default'];
-},{"./AsyncUtils":279,"./PatternUtils":286,"./RouteUtils":291}],302:[function(require,module,exports){
+},{"./AsyncUtils":288,"./PatternUtils":295,"./RouteUtils":300}],311:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59909,11 +63534,11 @@ function useRoutes(createHistory) {
 
 exports['default'] = useRoutes;
 module.exports = exports['default'];
-},{"./TransitionUtils":294,"./computeChangedRoutes":295,"./getComponents":296,"./isActive":299,"./matchRoutes":301,"history/lib/Actions":303,"history/lib/useQueries":315,"warning":324}],303:[function(require,module,exports){
-arguments[4][2][0].apply(exports,arguments)
-},{"dup":2}],304:[function(require,module,exports){
+},{"./TransitionUtils":303,"./computeChangedRoutes":304,"./getComponents":305,"./isActive":308,"./matchRoutes":310,"history/lib/Actions":312,"history/lib/useQueries":324,"warning":333}],312:[function(require,module,exports){
 arguments[4][3][0].apply(exports,arguments)
-},{"dup":3}],305:[function(require,module,exports){
+},{"dup":3}],313:[function(require,module,exports){
+arguments[4][4][0].apply(exports,arguments)
+},{"dup":4}],314:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -59962,45 +63587,45 @@ function readState(key) {
 
   return null;
 }
-},{"warning":324}],306:[function(require,module,exports){
-arguments[4][5][0].apply(exports,arguments)
-},{"dup":5}],307:[function(require,module,exports){
+},{"warning":333}],315:[function(require,module,exports){
 arguments[4][6][0].apply(exports,arguments)
-},{"dup":6}],308:[function(require,module,exports){
-arguments[4][8][0].apply(exports,arguments)
-},{"./DOMUtils":306,"./ExecutionEnvironment":307,"./createHistory":310,"dup":8,"invariant":323}],309:[function(require,module,exports){
+},{"dup":6}],316:[function(require,module,exports){
+arguments[4][7][0].apply(exports,arguments)
+},{"dup":7}],317:[function(require,module,exports){
 arguments[4][9][0].apply(exports,arguments)
-},{"./Actions":303,"./DOMStateStorage":305,"./DOMUtils":306,"./ExecutionEnvironment":307,"./createDOMHistory":308,"dup":9,"invariant":323,"warning":324}],310:[function(require,module,exports){
+},{"./DOMUtils":315,"./ExecutionEnvironment":316,"./createHistory":319,"dup":9,"invariant":332}],318:[function(require,module,exports){
 arguments[4][10][0].apply(exports,arguments)
-},{"./Actions":303,"./AsyncUtils":304,"./deprecate":312,"./runTransitionHook":313,"deep-equal":316,"dup":10,"warning":324}],311:[function(require,module,exports){
-arguments[4][12][0].apply(exports,arguments)
-},{"./Actions":303,"./createHistory":310,"dup":12,"invariant":323}],312:[function(require,module,exports){
+},{"./Actions":312,"./DOMStateStorage":314,"./DOMUtils":315,"./ExecutionEnvironment":316,"./createDOMHistory":317,"dup":10,"invariant":332,"warning":333}],319:[function(require,module,exports){
+arguments[4][11][0].apply(exports,arguments)
+},{"./Actions":312,"./AsyncUtils":313,"./deprecate":321,"./runTransitionHook":322,"deep-equal":325,"dup":11,"warning":333}],320:[function(require,module,exports){
 arguments[4][13][0].apply(exports,arguments)
-},{"dup":13,"warning":324}],313:[function(require,module,exports){
-arguments[4][17][0].apply(exports,arguments)
-},{"dup":17,"warning":324}],314:[function(require,module,exports){
+},{"./Actions":312,"./createHistory":319,"dup":13,"invariant":332}],321:[function(require,module,exports){
+arguments[4][14][0].apply(exports,arguments)
+},{"dup":14,"warning":333}],322:[function(require,module,exports){
 arguments[4][18][0].apply(exports,arguments)
-},{"./runTransitionHook":313,"dup":18}],315:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"./runTransitionHook":313,"dup":20,"qs":319}],316:[function(require,module,exports){
+},{"dup":18,"warning":333}],323:[function(require,module,exports){
+arguments[4][19][0].apply(exports,arguments)
+},{"./runTransitionHook":322,"dup":19}],324:[function(require,module,exports){
 arguments[4][21][0].apply(exports,arguments)
-},{"./lib/is_arguments.js":317,"./lib/keys.js":318,"dup":21}],317:[function(require,module,exports){
+},{"./runTransitionHook":322,"dup":21,"qs":328}],325:[function(require,module,exports){
 arguments[4][22][0].apply(exports,arguments)
-},{"dup":22}],318:[function(require,module,exports){
+},{"./lib/is_arguments.js":326,"./lib/keys.js":327,"dup":22}],326:[function(require,module,exports){
 arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],319:[function(require,module,exports){
-arguments[4][25][0].apply(exports,arguments)
-},{"./parse":320,"./stringify":321,"dup":25}],320:[function(require,module,exports){
-arguments[4][26][0].apply(exports,arguments)
-},{"./utils":322,"dup":26}],321:[function(require,module,exports){
-arguments[4][27][0].apply(exports,arguments)
-},{"./utils":322,"dup":27}],322:[function(require,module,exports){
-arguments[4][28][0].apply(exports,arguments)
-},{"dup":28}],323:[function(require,module,exports){
+},{"dup":23}],327:[function(require,module,exports){
 arguments[4][24][0].apply(exports,arguments)
-},{"_process":1,"dup":24}],324:[function(require,module,exports){
+},{"dup":24}],328:[function(require,module,exports){
+arguments[4][26][0].apply(exports,arguments)
+},{"./parse":329,"./stringify":330,"dup":26}],329:[function(require,module,exports){
+arguments[4][27][0].apply(exports,arguments)
+},{"./utils":331,"dup":27}],330:[function(require,module,exports){
+arguments[4][28][0].apply(exports,arguments)
+},{"./utils":331,"dup":28}],331:[function(require,module,exports){
 arguments[4][29][0].apply(exports,arguments)
-},{"_process":1,"dup":29}],325:[function(require,module,exports){
+},{"dup":29}],332:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"_process":1,"dup":25}],333:[function(require,module,exports){
+arguments[4][30][0].apply(exports,arguments)
+},{"_process":1,"dup":30}],334:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -60058,7 +63683,7 @@ var Option = React.createClass({
 });
 
 module.exports = Option;
-},{"classnames":329,"react":518}],326:[function(require,module,exports){
+},{"classnames":338,"react":527}],335:[function(require,module,exports){
 /* disable some rules until we refactor more completely; fixing them now would
    cause conflicts with some open PRs unnecessarily. */
 /* eslint react/jsx-sort-prop-types: 0, react/sort-comp: 0, react/prop-types: 0 */
@@ -60976,7 +64601,7 @@ var Select = React.createClass({
 });
 
 module.exports = Select;
-},{"./Option":325,"./SingleValue":327,"./Value":328,"classnames":329,"react":518,"react-dom":112,"react-input-autosize":330}],327:[function(require,module,exports){
+},{"./Option":334,"./SingleValue":336,"./Value":337,"classnames":338,"react":527,"react-dom":121,"react-input-autosize":339}],336:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -61004,7 +64629,7 @@ var SingleValue = React.createClass({
 });
 
 module.exports = SingleValue;
-},{"classnames":329,"react":518}],328:[function(require,module,exports){
+},{"classnames":338,"react":527}],337:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -61088,7 +64713,7 @@ var Value = React.createClass({
 });
 
 module.exports = Value;
-},{"classnames":329,"react":518}],329:[function(require,module,exports){
+},{"classnames":338,"react":527}],338:[function(require,module,exports){
 /*!
   Copyright (c) 2015 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -61138,7 +64763,7 @@ module.exports = Value;
 	}
 }());
 
-},{}],330:[function(require,module,exports){
+},{}],339:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -61245,7 +64870,7 @@ var AutosizeInput = React.createClass({
 });
 
 module.exports = AutosizeInput;
-},{"react":518}],331:[function(require,module,exports){
+},{"react":527}],340:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -61457,7 +65082,7 @@ var Sound = (function (_React$Component) {
 
 exports['default'] = Sound;
 module.exports = exports['default'];
-},{"react":518,"soundmanager2":520}],332:[function(require,module,exports){
+},{"react":527,"soundmanager2":529}],341:[function(require,module,exports){
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("react"));
@@ -61916,7 +65541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{"react":518}],333:[function(require,module,exports){
+},{"react":527}],342:[function(require,module,exports){
 ;(function (root, factory) {
   /* istanbul ignore next */
   if (typeof module !== "undefined" && module.exports) {
@@ -62277,7 +65902,7 @@ return /******/ (function(modules) { // webpackBootstrap
   return TagsInput;
 });
 
-},{"react":518,"react-dom":112}],334:[function(require,module,exports){
+},{"react":527,"react-dom":121}],343:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -62762,14 +66387,14 @@ ReactTooltip.propTypes = {
 };
 module.exports = exports['default'];
 
-},{"./style":335,"classnames":336,"react":518,"react-dom":112}],335:[function(require,module,exports){
+},{"./style":344,"classnames":345,"react":527,"react-dom":121}],344:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 exports['default'] = '.__react_component_tooltip{border-radius:3px;display:inline-block;font-size:13px;left:-999em;opacity:0;padding:8px 21px;position:fixed;pointer-events:none;transition:opacity 0.3s ease-out , margin-top 0.3s ease-out, margin-left 0.3s ease-out;top:-999em;visibility:hidden;z-index:999}.__react_component_tooltip:after{content:"";width:0;height:0;position:absolute}.__react_component_tooltip.show{opacity:0.9;margin-top:0px;margin-left:0px;visibility:visible}.__react_component_tooltip.type-dark{color:#fff;background-color:#222}.__react_component_tooltip.type-dark.place-top:after{border-top:8px solid #222}.__react_component_tooltip.type-dark.place-bottom:after{border-bottom:8px solid #222}.__react_component_tooltip.type-dark.place-left:after{border-left:6px solid #222}.__react_component_tooltip.type-dark.place-right:after{border-right:6px solid #222}.__react_component_tooltip.type-success{color:#fff;background-color:#8DC572}.__react_component_tooltip.type-success.place-top:after{border-top:8px solid #8DC572}.__react_component_tooltip.type-success.place-bottom:after{border-bottom:8px solid #8DC572}.__react_component_tooltip.type-success.place-left:after{border-left:6px solid #8DC572}.__react_component_tooltip.type-success.place-right:after{border-right:6px solid #8DC572}.__react_component_tooltip.type-warning{color:#fff;background-color:#F0AD4E}.__react_component_tooltip.type-warning.place-top:after{border-top:8px solid #F0AD4E}.__react_component_tooltip.type-warning.place-bottom:after{border-bottom:8px solid #F0AD4E}.__react_component_tooltip.type-warning.place-left:after{border-left:6px solid #F0AD4E}.__react_component_tooltip.type-warning.place-right:after{border-right:6px solid #F0AD4E}.__react_component_tooltip.type-error{color:#fff;background-color:#BE6464}.__react_component_tooltip.type-error.place-top:after{border-top:8px solid #BE6464}.__react_component_tooltip.type-error.place-bottom:after{border-bottom:8px solid #BE6464}.__react_component_tooltip.type-error.place-left:after{border-left:6px solid #BE6464}.__react_component_tooltip.type-error.place-right:after{border-right:6px solid #BE6464}.__react_component_tooltip.type-info{color:#fff;background-color:#337AB7}.__react_component_tooltip.type-info.place-top:after{border-top:8px solid #337AB7}.__react_component_tooltip.type-info.place-bottom:after{border-bottom:8px solid #337AB7}.__react_component_tooltip.type-info.place-left:after{border-left:6px solid #337AB7}.__react_component_tooltip.type-info.place-right:after{border-right:6px solid #337AB7}.__react_component_tooltip.type-light{color:#222;background-color:#fff}.__react_component_tooltip.type-light.place-top:after{border-top:8px solid #fff}.__react_component_tooltip.type-light.place-bottom:after{border-bottom:8px solid #fff}.__react_component_tooltip.type-light.place-left:after{border-left:6px solid #fff}.__react_component_tooltip.type-light.place-right:after{border-right:6px solid #fff}.__react_component_tooltip.place-top{margin-top:-10px}.__react_component_tooltip.place-top:after{border-left:10px solid transparent;border-right:10px solid transparent;bottom:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-bottom{margin-top:10px}.__react_component_tooltip.place-bottom:after{border-left:10px solid transparent;border-right:10px solid transparent;top:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-left{margin-left:-10px}.__react_component_tooltip.place-left:after{border-top:6px solid transparent;border-bottom:6px solid transparent;right:-6px;top:50%;margin-top:-5px}.__react_component_tooltip.place-right{margin-left:10px}.__react_component_tooltip.place-right:after{border-top:6px solid transparent;border-bottom:6px solid transparent;left:-6px;top:50%;margin-top:-5px}.__react_component_tooltip .multi-line{display:block;padding:2px 0px;text-align:center}';
 module.exports = exports['default'];
 
-},{}],336:[function(require,module,exports){
+},{}],345:[function(require,module,exports){
 /*!
   Copyright (c) 2015 Jed Watson.
   Licensed under the MIT License (MIT), see
@@ -62814,7 +66439,7 @@ if (typeof define !== 'undefined' && define.amd) {
 	});
 }
 
-},{}],337:[function(require,module,exports){
+},{}],346:[function(require,module,exports){
 /* eslint-disable max-len */
 'use strict';
 
@@ -62846,7 +66471,7 @@ exports['default'] = _react2['default'].createClass({
   }
 });
 module.exports = exports['default'];
-},{"react":518}],338:[function(require,module,exports){
+},{"react":527}],347:[function(require,module,exports){
 /* eslint-disable max-len */
 'use strict';
 
@@ -62883,7 +66508,7 @@ exports['default'] = _react2['default'].createClass({
   }
 });
 module.exports = exports['default'];
-},{"react":518}],339:[function(require,module,exports){
+},{"react":527}],348:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -62913,6 +66538,8 @@ var _Spinner = require('./Spinner');
 var _Spinner2 = _interopRequireDefault(_Spinner);
 
 var _ajax = require('./ajax');
+
+var $ = require('../../jquery/dist/jquery');
 
 var debug = (0, _debug2['default'])('vimeo:player');
 var noop = function noop() {};
@@ -62988,10 +66615,12 @@ exports['default'] = _react2['default'].createClass({
   },
 
   componentDidMount: function componentDidMount() {
+    console.log('VIMEO: componentDidMount occured');
     this.fetchVimeoData();
   },
 
   componentDidUpdate: function componentDidUpdate() {
+    console.log('VIMEO: componentDidUpdate occured');
     this.fetchVimeoData();
   },
 
@@ -63061,8 +66690,14 @@ exports['default'] = _react2['default'].createClass({
     }
     var id = this.props.videoId;
 
-    (0, _ajax.get)({
-      url: '//vimeo.com/api/v2/video/' + id + '.json',
+    //(0, _ajax.get)
+    console.log('loading info from video.com');
+    var t = (new Date()).getTime();
+    var url = 'https://vimeo.com/api/v2/video/' + id + '.json?t=' + t;
+
+
+     _ajax.get({
+      url: url,
       onSuccess: function onSuccess(res) {
         debug('ajax response', res);
         _this.setState({
@@ -63070,8 +66705,30 @@ exports['default'] = _react2['default'].createClass({
           imageLoaded: true
         });
       },
-      onError: this.props.onError || function () {}
+      onError: this.props.onError || function () {
+        console.log('onError occured: vimeoId = ', id);
+        //_this.setState({
+        //  showingVideo: true
+        //});
+
+      }
     });
+
+    //$.ajax({
+    //  url: url,
+    //  success: function(res){
+    //    debug('ajax response', res);
+    //        _this.setState({
+    //          thumb: res[0].thumbnail_large,
+    //          imageLoaded: true
+    //        });
+    //  },
+    //   error: this.props.onError || function(){
+    //     console.log('onError occured: vimeoId = ', id);
+    //  }
+    //});
+
+
   },
 
   renderImage: function renderImage() {
@@ -63147,7 +66804,7 @@ exports['default'] = _react2['default'].createClass({
   }
 });
 module.exports = exports['default'];
-},{"./Play-Button":337,"./Spinner":338,"./ajax":340,"debug":341,"keymirror":344,"react":518}],340:[function(require,module,exports){
+},{"../../jquery/dist/jquery":31,"./Play-Button":346,"./Spinner":347,"./ajax":349,"debug":350,"keymirror":353,"react":527}],349:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -63172,8 +66829,10 @@ function get(opts) {
 
   try {
     req = new XMLHttpRequest();
+    console.log('req is an instance of XMLHttpRequest');
   } catch (e) {
     req = new XDomainRequest();
+    console.log('req is an instance of XDomainRequest');
   }
 
   // XDomainRequest onload
@@ -63184,6 +66843,7 @@ function get(opts) {
 
   // XMLHttpRequest onload
   function onReadyStateChange() {
+    console.log('onReadyStateChange: req = ', req);
     if (req.readyState !== 4 || req.status !== 200) {
       return;
     }
@@ -63203,7 +66863,7 @@ function get(opts) {
 
   return req.abort.bind(req);
 }
-},{"debug":341}],341:[function(require,module,exports){
+},{"debug":350}],350:[function(require,module,exports){
 
 /**
  * This is the web browser implementation of `debug()`.
@@ -63373,7 +67033,7 @@ function localstorage(){
   } catch (e) {}
 }
 
-},{"./debug":342}],342:[function(require,module,exports){
+},{"./debug":351}],351:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -63572,7 +67232,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":343}],343:[function(require,module,exports){
+},{"ms":352}],352:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -63699,7 +67359,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],344:[function(require,module,exports){
+},{}],353:[function(require,module,exports){
 /**
  * Copyright 2013-2014 Facebook, Inc.
  *
@@ -63754,7 +67414,7 @@ var keyMirror = function(obj) {
 
 module.exports = keyMirror;
 
-},{}],345:[function(require,module,exports){
+},{}],354:[function(require,module,exports){
 'use strict';
 
 var warning = require('fbjs/lib/warning');
@@ -63769,47 +67429,47 @@ warning(
 
 module.exports = require('./lib/ReactWithAddons');
 
-},{"./lib/ReactWithAddons":442,"fbjs/lib/warning":517}],346:[function(require,module,exports){
-arguments[4][113][0].apply(exports,arguments)
-},{"./ReactMount":416,"./findDOMNode":466,"dup":113,"fbjs/lib/focusNode":499}],347:[function(require,module,exports){
-arguments[4][114][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPropagators":363,"./FallbackCompositionState":364,"./SyntheticCompositionEvent":448,"./SyntheticInputEvent":452,"dup":114,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/keyOf":510}],348:[function(require,module,exports){
-arguments[4][115][0].apply(exports,arguments)
-},{"dup":115}],349:[function(require,module,exports){
-arguments[4][116][0].apply(exports,arguments)
-},{"./CSSProperty":348,"./ReactPerf":422,"./dangerousStyleValue":463,"_process":1,"dup":116,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/camelizeStyleName":493,"fbjs/lib/hyphenateStyleName":504,"fbjs/lib/memoizeStringOnly":512,"fbjs/lib/warning":517}],350:[function(require,module,exports){
-arguments[4][117][0].apply(exports,arguments)
-},{"./Object.assign":368,"./PooledClass":369,"_process":1,"dup":117,"fbjs/lib/invariant":505}],351:[function(require,module,exports){
-arguments[4][118][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPluginHub":360,"./EventPropagators":363,"./ReactUpdates":440,"./SyntheticEvent":450,"./getEventTarget":472,"./isEventSupported":477,"./isTextInputElement":478,"dup":118,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/keyOf":510}],352:[function(require,module,exports){
-arguments[4][119][0].apply(exports,arguments)
-},{"dup":119}],353:[function(require,module,exports){
-arguments[4][120][0].apply(exports,arguments)
-},{"./Danger":356,"./ReactMultiChildUpdateTypes":418,"./ReactPerf":422,"./setInnerHTML":482,"./setTextContent":483,"_process":1,"dup":120,"fbjs/lib/invariant":505}],354:[function(require,module,exports){
-arguments[4][121][0].apply(exports,arguments)
-},{"_process":1,"dup":121,"fbjs/lib/invariant":505}],355:[function(require,module,exports){
+},{"./lib/ReactWithAddons":451,"fbjs/lib/warning":526}],355:[function(require,module,exports){
 arguments[4][122][0].apply(exports,arguments)
-},{"./DOMProperty":354,"./ReactPerf":422,"./quoteAttributeValueForBrowser":480,"_process":1,"dup":122,"fbjs/lib/warning":517}],356:[function(require,module,exports){
+},{"./ReactMount":425,"./findDOMNode":475,"dup":122,"fbjs/lib/focusNode":508}],356:[function(require,module,exports){
 arguments[4][123][0].apply(exports,arguments)
-},{"_process":1,"dup":123,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/createNodesFromMarkup":496,"fbjs/lib/emptyFunction":497,"fbjs/lib/getMarkupWrap":501,"fbjs/lib/invariant":505}],357:[function(require,module,exports){
+},{"./EventConstants":368,"./EventPropagators":372,"./FallbackCompositionState":373,"./SyntheticCompositionEvent":457,"./SyntheticInputEvent":461,"dup":123,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/keyOf":519}],357:[function(require,module,exports){
 arguments[4][124][0].apply(exports,arguments)
-},{"dup":124,"fbjs/lib/keyOf":510}],358:[function(require,module,exports){
+},{"dup":124}],358:[function(require,module,exports){
 arguments[4][125][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPropagators":363,"./ReactMount":416,"./SyntheticMouseEvent":454,"dup":125,"fbjs/lib/keyOf":510}],359:[function(require,module,exports){
+},{"./CSSProperty":357,"./ReactPerf":431,"./dangerousStyleValue":472,"_process":1,"dup":125,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/camelizeStyleName":502,"fbjs/lib/hyphenateStyleName":513,"fbjs/lib/memoizeStringOnly":521,"fbjs/lib/warning":526}],359:[function(require,module,exports){
 arguments[4][126][0].apply(exports,arguments)
-},{"dup":126,"fbjs/lib/keyMirror":509}],360:[function(require,module,exports){
+},{"./Object.assign":377,"./PooledClass":378,"_process":1,"dup":126,"fbjs/lib/invariant":514}],360:[function(require,module,exports){
 arguments[4][127][0].apply(exports,arguments)
-},{"./EventPluginRegistry":361,"./EventPluginUtils":362,"./ReactErrorUtils":405,"./accumulateInto":460,"./forEachAccumulated":468,"_process":1,"dup":127,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],361:[function(require,module,exports){
+},{"./EventConstants":368,"./EventPluginHub":369,"./EventPropagators":372,"./ReactUpdates":449,"./SyntheticEvent":459,"./getEventTarget":481,"./isEventSupported":486,"./isTextInputElement":487,"dup":127,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/keyOf":519}],361:[function(require,module,exports){
 arguments[4][128][0].apply(exports,arguments)
-},{"_process":1,"dup":128,"fbjs/lib/invariant":505}],362:[function(require,module,exports){
+},{"dup":128}],362:[function(require,module,exports){
 arguments[4][129][0].apply(exports,arguments)
-},{"./EventConstants":359,"./ReactErrorUtils":405,"_process":1,"dup":129,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],363:[function(require,module,exports){
+},{"./Danger":365,"./ReactMultiChildUpdateTypes":427,"./ReactPerf":431,"./setInnerHTML":491,"./setTextContent":492,"_process":1,"dup":129,"fbjs/lib/invariant":514}],363:[function(require,module,exports){
 arguments[4][130][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPluginHub":360,"./accumulateInto":460,"./forEachAccumulated":468,"_process":1,"dup":130,"fbjs/lib/warning":517}],364:[function(require,module,exports){
+},{"_process":1,"dup":130,"fbjs/lib/invariant":514}],364:[function(require,module,exports){
 arguments[4][131][0].apply(exports,arguments)
-},{"./Object.assign":368,"./PooledClass":369,"./getTextContentAccessor":475,"dup":131}],365:[function(require,module,exports){
+},{"./DOMProperty":363,"./ReactPerf":431,"./quoteAttributeValueForBrowser":489,"_process":1,"dup":131,"fbjs/lib/warning":526}],365:[function(require,module,exports){
 arguments[4][132][0].apply(exports,arguments)
-},{"./DOMProperty":354,"dup":132,"fbjs/lib/ExecutionEnvironment":491}],366:[function(require,module,exports){
+},{"_process":1,"dup":132,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/createNodesFromMarkup":505,"fbjs/lib/emptyFunction":506,"fbjs/lib/getMarkupWrap":510,"fbjs/lib/invariant":514}],366:[function(require,module,exports){
+arguments[4][133][0].apply(exports,arguments)
+},{"dup":133,"fbjs/lib/keyOf":519}],367:[function(require,module,exports){
+arguments[4][134][0].apply(exports,arguments)
+},{"./EventConstants":368,"./EventPropagators":372,"./ReactMount":425,"./SyntheticMouseEvent":463,"dup":134,"fbjs/lib/keyOf":519}],368:[function(require,module,exports){
+arguments[4][135][0].apply(exports,arguments)
+},{"dup":135,"fbjs/lib/keyMirror":518}],369:[function(require,module,exports){
+arguments[4][136][0].apply(exports,arguments)
+},{"./EventPluginRegistry":370,"./EventPluginUtils":371,"./ReactErrorUtils":414,"./accumulateInto":469,"./forEachAccumulated":477,"_process":1,"dup":136,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],370:[function(require,module,exports){
+arguments[4][137][0].apply(exports,arguments)
+},{"_process":1,"dup":137,"fbjs/lib/invariant":514}],371:[function(require,module,exports){
+arguments[4][138][0].apply(exports,arguments)
+},{"./EventConstants":368,"./ReactErrorUtils":414,"_process":1,"dup":138,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],372:[function(require,module,exports){
+arguments[4][139][0].apply(exports,arguments)
+},{"./EventConstants":368,"./EventPluginHub":369,"./accumulateInto":469,"./forEachAccumulated":477,"_process":1,"dup":139,"fbjs/lib/warning":526}],373:[function(require,module,exports){
+arguments[4][140][0].apply(exports,arguments)
+},{"./Object.assign":377,"./PooledClass":378,"./getTextContentAccessor":484,"dup":140}],374:[function(require,module,exports){
+arguments[4][141][0].apply(exports,arguments)
+},{"./DOMProperty":363,"dup":141,"fbjs/lib/ExecutionEnvironment":500}],375:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63846,13 +67506,13 @@ var LinkedStateMixin = {
 };
 
 module.exports = LinkedStateMixin;
-},{"./ReactLink":414,"./ReactStateSetters":434}],367:[function(require,module,exports){
-arguments[4][133][0].apply(exports,arguments)
-},{"./ReactPropTypeLocations":425,"./ReactPropTypes":426,"_process":1,"dup":133,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],368:[function(require,module,exports){
-arguments[4][134][0].apply(exports,arguments)
-},{"dup":134}],369:[function(require,module,exports){
-arguments[4][135][0].apply(exports,arguments)
-},{"_process":1,"dup":135,"fbjs/lib/invariant":505}],370:[function(require,module,exports){
+},{"./ReactLink":423,"./ReactStateSetters":443}],376:[function(require,module,exports){
+arguments[4][142][0].apply(exports,arguments)
+},{"./ReactPropTypeLocations":434,"./ReactPropTypes":435,"_process":1,"dup":142,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],377:[function(require,module,exports){
+arguments[4][143][0].apply(exports,arguments)
+},{"dup":143}],378:[function(require,module,exports){
+arguments[4][144][0].apply(exports,arguments)
+},{"_process":1,"dup":144,"fbjs/lib/invariant":514}],379:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63892,11 +67552,11 @@ assign(React, {
 React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
 
 module.exports = React;
-},{"./Object.assign":368,"./ReactDOM":384,"./ReactDOMServer":394,"./ReactIsomorphic":413,"./deprecated":464}],371:[function(require,module,exports){
-arguments[4][136][0].apply(exports,arguments)
-},{"./ReactInstanceMap":412,"./findDOMNode":466,"_process":1,"dup":136,"fbjs/lib/warning":517}],372:[function(require,module,exports){
-arguments[4][137][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPluginHub":360,"./EventPluginRegistry":361,"./Object.assign":368,"./ReactEventEmitterMixin":406,"./ReactPerf":422,"./ViewportMetrics":459,"./isEventSupported":477,"dup":137}],373:[function(require,module,exports){
+},{"./Object.assign":377,"./ReactDOM":393,"./ReactDOMServer":403,"./ReactIsomorphic":422,"./deprecated":473}],380:[function(require,module,exports){
+arguments[4][145][0].apply(exports,arguments)
+},{"./ReactInstanceMap":421,"./findDOMNode":475,"_process":1,"dup":145,"fbjs/lib/warning":526}],381:[function(require,module,exports){
+arguments[4][146][0].apply(exports,arguments)
+},{"./EventConstants":368,"./EventPluginHub":369,"./EventPluginRegistry":370,"./Object.assign":377,"./ReactEventEmitterMixin":415,"./ReactPerf":431,"./ViewportMetrics":468,"./isEventSupported":486,"dup":146}],382:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -63980,7 +67640,7 @@ var ReactCSSTransitionGroup = React.createClass({
 });
 
 module.exports = ReactCSSTransitionGroup;
-},{"./Object.assign":368,"./React":370,"./ReactCSSTransitionGroupChild":374,"./ReactTransitionGroup":438}],374:[function(require,module,exports){
+},{"./Object.assign":377,"./React":379,"./ReactCSSTransitionGroupChild":383,"./ReactTransitionGroup":447}],383:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64141,19 +67801,19 @@ var ReactCSSTransitionGroupChild = React.createClass({
 });
 
 module.exports = ReactCSSTransitionGroupChild;
-},{"./React":370,"./ReactDOM":384,"./ReactTransitionEvents":437,"./onlyChild":479,"fbjs/lib/CSSCore":489}],375:[function(require,module,exports){
-arguments[4][138][0].apply(exports,arguments)
-},{"./ReactReconciler":428,"./instantiateReactComponent":476,"./shouldUpdateReactComponent":485,"./traverseAllChildren":486,"_process":1,"dup":138,"fbjs/lib/warning":517}],376:[function(require,module,exports){
-arguments[4][139][0].apply(exports,arguments)
-},{"./PooledClass":369,"./ReactElement":401,"./traverseAllChildren":486,"dup":139,"fbjs/lib/emptyFunction":497}],377:[function(require,module,exports){
-arguments[4][140][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactComponent":378,"./ReactElement":401,"./ReactNoopUpdateQueue":420,"./ReactPropTypeLocationNames":424,"./ReactPropTypeLocations":425,"_process":1,"dup":140,"fbjs/lib/emptyObject":498,"fbjs/lib/invariant":505,"fbjs/lib/keyMirror":509,"fbjs/lib/keyOf":510,"fbjs/lib/warning":517}],378:[function(require,module,exports){
-arguments[4][141][0].apply(exports,arguments)
-},{"./ReactNoopUpdateQueue":420,"_process":1,"dup":141,"fbjs/lib/emptyObject":498,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],379:[function(require,module,exports){
-arguments[4][142][0].apply(exports,arguments)
-},{"./ReactDOMIDOperations":389,"./ReactMount":416,"dup":142}],380:[function(require,module,exports){
-arguments[4][143][0].apply(exports,arguments)
-},{"_process":1,"dup":143,"fbjs/lib/invariant":505}],381:[function(require,module,exports){
+},{"./React":379,"./ReactDOM":393,"./ReactTransitionEvents":446,"./onlyChild":488,"fbjs/lib/CSSCore":498}],384:[function(require,module,exports){
+arguments[4][147][0].apply(exports,arguments)
+},{"./ReactReconciler":437,"./instantiateReactComponent":485,"./shouldUpdateReactComponent":494,"./traverseAllChildren":495,"_process":1,"dup":147,"fbjs/lib/warning":526}],385:[function(require,module,exports){
+arguments[4][148][0].apply(exports,arguments)
+},{"./PooledClass":378,"./ReactElement":410,"./traverseAllChildren":495,"dup":148,"fbjs/lib/emptyFunction":506}],386:[function(require,module,exports){
+arguments[4][149][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactComponent":387,"./ReactElement":410,"./ReactNoopUpdateQueue":429,"./ReactPropTypeLocationNames":433,"./ReactPropTypeLocations":434,"_process":1,"dup":149,"fbjs/lib/emptyObject":507,"fbjs/lib/invariant":514,"fbjs/lib/keyMirror":518,"fbjs/lib/keyOf":519,"fbjs/lib/warning":526}],387:[function(require,module,exports){
+arguments[4][150][0].apply(exports,arguments)
+},{"./ReactNoopUpdateQueue":429,"_process":1,"dup":150,"fbjs/lib/emptyObject":507,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],388:[function(require,module,exports){
+arguments[4][151][0].apply(exports,arguments)
+},{"./ReactDOMIDOperations":398,"./ReactMount":425,"dup":151}],389:[function(require,module,exports){
+arguments[4][152][0].apply(exports,arguments)
+},{"_process":1,"dup":152,"fbjs/lib/invariant":514}],390:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64200,17 +67860,17 @@ var ReactComponentWithPureRenderMixin = {
 };
 
 module.exports = ReactComponentWithPureRenderMixin;
-},{"./shallowCompare":484}],382:[function(require,module,exports){
-arguments[4][144][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactComponentEnvironment":380,"./ReactCurrentOwner":383,"./ReactElement":401,"./ReactInstanceMap":412,"./ReactPerf":422,"./ReactPropTypeLocationNames":424,"./ReactPropTypeLocations":425,"./ReactReconciler":428,"./ReactUpdateQueue":439,"./shouldUpdateReactComponent":485,"_process":1,"dup":144,"fbjs/lib/emptyObject":498,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],383:[function(require,module,exports){
-arguments[4][145][0].apply(exports,arguments)
-},{"dup":145}],384:[function(require,module,exports){
-arguments[4][146][0].apply(exports,arguments)
-},{"./ReactCurrentOwner":383,"./ReactDOMTextComponent":395,"./ReactDefaultInjection":398,"./ReactInstanceHandles":411,"./ReactMount":416,"./ReactPerf":422,"./ReactReconciler":428,"./ReactUpdates":440,"./ReactVersion":441,"./findDOMNode":466,"./renderSubtreeIntoContainer":481,"_process":1,"dup":146,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/warning":517}],385:[function(require,module,exports){
-arguments[4][147][0].apply(exports,arguments)
-},{"dup":147}],386:[function(require,module,exports){
-arguments[4][148][0].apply(exports,arguments)
-},{"./AutoFocusUtils":346,"./CSSPropertyOperations":349,"./DOMProperty":354,"./DOMPropertyOperations":355,"./EventConstants":359,"./Object.assign":368,"./ReactBrowserEventEmitter":372,"./ReactComponentBrowserEnvironment":379,"./ReactDOMButton":385,"./ReactDOMInput":390,"./ReactDOMOption":391,"./ReactDOMSelect":392,"./ReactDOMTextarea":396,"./ReactMount":416,"./ReactMultiChild":417,"./ReactPerf":422,"./ReactUpdateQueue":439,"./escapeTextContentForBrowser":465,"./isEventSupported":477,"./setInnerHTML":482,"./setTextContent":483,"./validateDOMNesting":488,"_process":1,"dup":148,"fbjs/lib/invariant":505,"fbjs/lib/keyOf":510,"fbjs/lib/shallowEqual":515,"fbjs/lib/warning":517}],387:[function(require,module,exports){
+},{"./shallowCompare":493}],391:[function(require,module,exports){
+arguments[4][153][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactComponentEnvironment":389,"./ReactCurrentOwner":392,"./ReactElement":410,"./ReactInstanceMap":421,"./ReactPerf":431,"./ReactPropTypeLocationNames":433,"./ReactPropTypeLocations":434,"./ReactReconciler":437,"./ReactUpdateQueue":448,"./shouldUpdateReactComponent":494,"_process":1,"dup":153,"fbjs/lib/emptyObject":507,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],392:[function(require,module,exports){
+arguments[4][154][0].apply(exports,arguments)
+},{"dup":154}],393:[function(require,module,exports){
+arguments[4][155][0].apply(exports,arguments)
+},{"./ReactCurrentOwner":392,"./ReactDOMTextComponent":404,"./ReactDefaultInjection":407,"./ReactInstanceHandles":420,"./ReactMount":425,"./ReactPerf":431,"./ReactReconciler":437,"./ReactUpdates":449,"./ReactVersion":450,"./findDOMNode":475,"./renderSubtreeIntoContainer":490,"_process":1,"dup":155,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/warning":526}],394:[function(require,module,exports){
+arguments[4][156][0].apply(exports,arguments)
+},{"dup":156}],395:[function(require,module,exports){
+arguments[4][157][0].apply(exports,arguments)
+},{"./AutoFocusUtils":355,"./CSSPropertyOperations":358,"./DOMProperty":363,"./DOMPropertyOperations":364,"./EventConstants":368,"./Object.assign":377,"./ReactBrowserEventEmitter":381,"./ReactComponentBrowserEnvironment":388,"./ReactDOMButton":394,"./ReactDOMInput":399,"./ReactDOMOption":400,"./ReactDOMSelect":401,"./ReactDOMTextarea":405,"./ReactMount":425,"./ReactMultiChild":426,"./ReactPerf":431,"./ReactUpdateQueue":448,"./escapeTextContentForBrowser":474,"./isEventSupported":486,"./setInnerHTML":491,"./setTextContent":492,"./validateDOMNesting":497,"_process":1,"dup":157,"fbjs/lib/invariant":514,"fbjs/lib/keyOf":519,"fbjs/lib/shallowEqual":524,"fbjs/lib/warning":526}],396:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -64390,19 +68050,19 @@ var ReactDOMFactories = mapObject({
 
 module.exports = ReactDOMFactories;
 }).call(this,require('_process'))
-},{"./ReactElement":401,"./ReactElementValidator":402,"_process":1,"fbjs/lib/mapObject":511}],388:[function(require,module,exports){
-arguments[4][149][0].apply(exports,arguments)
-},{"dup":149}],389:[function(require,module,exports){
-arguments[4][150][0].apply(exports,arguments)
-},{"./DOMChildrenOperations":353,"./DOMPropertyOperations":355,"./ReactMount":416,"./ReactPerf":422,"_process":1,"dup":150,"fbjs/lib/invariant":505}],390:[function(require,module,exports){
-arguments[4][151][0].apply(exports,arguments)
-},{"./LinkedValueUtils":367,"./Object.assign":368,"./ReactDOMIDOperations":389,"./ReactMount":416,"./ReactUpdates":440,"_process":1,"dup":151,"fbjs/lib/invariant":505}],391:[function(require,module,exports){
-arguments[4][152][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactChildren":376,"./ReactDOMSelect":392,"_process":1,"dup":152,"fbjs/lib/warning":517}],392:[function(require,module,exports){
-arguments[4][153][0].apply(exports,arguments)
-},{"./LinkedValueUtils":367,"./Object.assign":368,"./ReactMount":416,"./ReactUpdates":440,"_process":1,"dup":153,"fbjs/lib/warning":517}],393:[function(require,module,exports){
-arguments[4][154][0].apply(exports,arguments)
-},{"./getNodeForCharacterOffset":474,"./getTextContentAccessor":475,"dup":154,"fbjs/lib/ExecutionEnvironment":491}],394:[function(require,module,exports){
+},{"./ReactElement":410,"./ReactElementValidator":411,"_process":1,"fbjs/lib/mapObject":520}],397:[function(require,module,exports){
+arguments[4][158][0].apply(exports,arguments)
+},{"dup":158}],398:[function(require,module,exports){
+arguments[4][159][0].apply(exports,arguments)
+},{"./DOMChildrenOperations":362,"./DOMPropertyOperations":364,"./ReactMount":425,"./ReactPerf":431,"_process":1,"dup":159,"fbjs/lib/invariant":514}],399:[function(require,module,exports){
+arguments[4][160][0].apply(exports,arguments)
+},{"./LinkedValueUtils":376,"./Object.assign":377,"./ReactDOMIDOperations":398,"./ReactMount":425,"./ReactUpdates":449,"_process":1,"dup":160,"fbjs/lib/invariant":514}],400:[function(require,module,exports){
+arguments[4][161][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactChildren":385,"./ReactDOMSelect":401,"_process":1,"dup":161,"fbjs/lib/warning":526}],401:[function(require,module,exports){
+arguments[4][162][0].apply(exports,arguments)
+},{"./LinkedValueUtils":376,"./Object.assign":377,"./ReactMount":425,"./ReactUpdates":449,"_process":1,"dup":162,"fbjs/lib/warning":526}],402:[function(require,module,exports){
+arguments[4][163][0].apply(exports,arguments)
+},{"./getNodeForCharacterOffset":483,"./getTextContentAccessor":484,"dup":163,"fbjs/lib/ExecutionEnvironment":500}],403:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64429,21 +68089,21 @@ var ReactDOMServer = {
 };
 
 module.exports = ReactDOMServer;
-},{"./ReactDefaultInjection":398,"./ReactServerRendering":432,"./ReactVersion":441}],395:[function(require,module,exports){
-arguments[4][155][0].apply(exports,arguments)
-},{"./DOMChildrenOperations":353,"./DOMPropertyOperations":355,"./Object.assign":368,"./ReactComponentBrowserEnvironment":379,"./ReactMount":416,"./escapeTextContentForBrowser":465,"./setTextContent":483,"./validateDOMNesting":488,"_process":1,"dup":155}],396:[function(require,module,exports){
-arguments[4][156][0].apply(exports,arguments)
-},{"./LinkedValueUtils":367,"./Object.assign":368,"./ReactDOMIDOperations":389,"./ReactUpdates":440,"_process":1,"dup":156,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],397:[function(require,module,exports){
-arguments[4][157][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactUpdates":440,"./Transaction":458,"dup":157,"fbjs/lib/emptyFunction":497}],398:[function(require,module,exports){
-arguments[4][158][0].apply(exports,arguments)
-},{"./BeforeInputEventPlugin":347,"./ChangeEventPlugin":351,"./ClientReactRootIndex":352,"./DefaultEventPluginOrder":357,"./EnterLeaveEventPlugin":358,"./HTMLDOMPropertyConfig":365,"./ReactBrowserComponentMixin":371,"./ReactComponentBrowserEnvironment":379,"./ReactDOMComponent":386,"./ReactDOMTextComponent":395,"./ReactDefaultBatchingStrategy":397,"./ReactDefaultPerf":399,"./ReactEventListener":407,"./ReactInjection":409,"./ReactInstanceHandles":411,"./ReactMount":416,"./ReactReconcileTransaction":427,"./SVGDOMPropertyConfig":443,"./SelectEventPlugin":444,"./ServerReactRootIndex":445,"./SimpleEventPlugin":446,"_process":1,"dup":158,"fbjs/lib/ExecutionEnvironment":491}],399:[function(require,module,exports){
-arguments[4][159][0].apply(exports,arguments)
-},{"./DOMProperty":354,"./ReactDefaultPerfAnalysis":400,"./ReactMount":416,"./ReactPerf":422,"dup":159,"fbjs/lib/performanceNow":514}],400:[function(require,module,exports){
-arguments[4][160][0].apply(exports,arguments)
-},{"./Object.assign":368,"dup":160}],401:[function(require,module,exports){
-arguments[4][161][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactCurrentOwner":383,"_process":1,"dup":161}],402:[function(require,module,exports){
+},{"./ReactDefaultInjection":407,"./ReactServerRendering":441,"./ReactVersion":450}],404:[function(require,module,exports){
+arguments[4][164][0].apply(exports,arguments)
+},{"./DOMChildrenOperations":362,"./DOMPropertyOperations":364,"./Object.assign":377,"./ReactComponentBrowserEnvironment":388,"./ReactMount":425,"./escapeTextContentForBrowser":474,"./setTextContent":492,"./validateDOMNesting":497,"_process":1,"dup":164}],405:[function(require,module,exports){
+arguments[4][165][0].apply(exports,arguments)
+},{"./LinkedValueUtils":376,"./Object.assign":377,"./ReactDOMIDOperations":398,"./ReactUpdates":449,"_process":1,"dup":165,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],406:[function(require,module,exports){
+arguments[4][166][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactUpdates":449,"./Transaction":467,"dup":166,"fbjs/lib/emptyFunction":506}],407:[function(require,module,exports){
+arguments[4][167][0].apply(exports,arguments)
+},{"./BeforeInputEventPlugin":356,"./ChangeEventPlugin":360,"./ClientReactRootIndex":361,"./DefaultEventPluginOrder":366,"./EnterLeaveEventPlugin":367,"./HTMLDOMPropertyConfig":374,"./ReactBrowserComponentMixin":380,"./ReactComponentBrowserEnvironment":388,"./ReactDOMComponent":395,"./ReactDOMTextComponent":404,"./ReactDefaultBatchingStrategy":406,"./ReactDefaultPerf":408,"./ReactEventListener":416,"./ReactInjection":418,"./ReactInstanceHandles":420,"./ReactMount":425,"./ReactReconcileTransaction":436,"./SVGDOMPropertyConfig":452,"./SelectEventPlugin":453,"./ServerReactRootIndex":454,"./SimpleEventPlugin":455,"_process":1,"dup":167,"fbjs/lib/ExecutionEnvironment":500}],408:[function(require,module,exports){
+arguments[4][168][0].apply(exports,arguments)
+},{"./DOMProperty":363,"./ReactDefaultPerfAnalysis":409,"./ReactMount":425,"./ReactPerf":431,"dup":168,"fbjs/lib/performanceNow":523}],409:[function(require,module,exports){
+arguments[4][169][0].apply(exports,arguments)
+},{"./Object.assign":377,"dup":169}],410:[function(require,module,exports){
+arguments[4][170][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactCurrentOwner":392,"_process":1,"dup":170}],411:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -64728,17 +68388,17 @@ var ReactElementValidator = {
 
 module.exports = ReactElementValidator;
 }).call(this,require('_process'))
-},{"./ReactCurrentOwner":383,"./ReactElement":401,"./ReactPropTypeLocationNames":424,"./ReactPropTypeLocations":425,"./getIteratorFn":473,"_process":1,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],403:[function(require,module,exports){
-arguments[4][162][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactElement":401,"./ReactEmptyComponentRegistry":404,"./ReactReconciler":428,"dup":162}],404:[function(require,module,exports){
-arguments[4][163][0].apply(exports,arguments)
-},{"dup":163}],405:[function(require,module,exports){
-arguments[4][164][0].apply(exports,arguments)
-},{"_process":1,"dup":164}],406:[function(require,module,exports){
-arguments[4][165][0].apply(exports,arguments)
-},{"./EventPluginHub":360,"dup":165}],407:[function(require,module,exports){
-arguments[4][166][0].apply(exports,arguments)
-},{"./Object.assign":368,"./PooledClass":369,"./ReactInstanceHandles":411,"./ReactMount":416,"./ReactUpdates":440,"./getEventTarget":472,"dup":166,"fbjs/lib/EventListener":490,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/getUnboundedScrollPosition":502}],408:[function(require,module,exports){
+},{"./ReactCurrentOwner":392,"./ReactElement":410,"./ReactPropTypeLocationNames":433,"./ReactPropTypeLocations":434,"./getIteratorFn":482,"_process":1,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],412:[function(require,module,exports){
+arguments[4][171][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactElement":410,"./ReactEmptyComponentRegistry":413,"./ReactReconciler":437,"dup":171}],413:[function(require,module,exports){
+arguments[4][172][0].apply(exports,arguments)
+},{"dup":172}],414:[function(require,module,exports){
+arguments[4][173][0].apply(exports,arguments)
+},{"_process":1,"dup":173}],415:[function(require,module,exports){
+arguments[4][174][0].apply(exports,arguments)
+},{"./EventPluginHub":369,"dup":174}],416:[function(require,module,exports){
+arguments[4][175][0].apply(exports,arguments)
+},{"./Object.assign":377,"./PooledClass":378,"./ReactInstanceHandles":420,"./ReactMount":425,"./ReactUpdates":449,"./getEventTarget":481,"dup":175,"fbjs/lib/EventListener":499,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/getUnboundedScrollPosition":511}],417:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2015, Facebook, Inc.
@@ -64805,15 +68465,15 @@ var ReactFragment = {
 
 module.exports = ReactFragment;
 }).call(this,require('_process'))
-},{"./ReactChildren":376,"./ReactElement":401,"_process":1,"fbjs/lib/emptyFunction":497,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],409:[function(require,module,exports){
-arguments[4][167][0].apply(exports,arguments)
-},{"./DOMProperty":354,"./EventPluginHub":360,"./ReactBrowserEventEmitter":372,"./ReactClass":377,"./ReactComponentEnvironment":380,"./ReactEmptyComponent":403,"./ReactNativeComponent":419,"./ReactPerf":422,"./ReactRootIndex":430,"./ReactUpdates":440,"dup":167}],410:[function(require,module,exports){
-arguments[4][168][0].apply(exports,arguments)
-},{"./ReactDOMSelection":393,"dup":168,"fbjs/lib/containsNode":494,"fbjs/lib/focusNode":499,"fbjs/lib/getActiveElement":500}],411:[function(require,module,exports){
-arguments[4][169][0].apply(exports,arguments)
-},{"./ReactRootIndex":430,"_process":1,"dup":169,"fbjs/lib/invariant":505}],412:[function(require,module,exports){
-arguments[4][170][0].apply(exports,arguments)
-},{"dup":170}],413:[function(require,module,exports){
+},{"./ReactChildren":385,"./ReactElement":410,"_process":1,"fbjs/lib/emptyFunction":506,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],418:[function(require,module,exports){
+arguments[4][176][0].apply(exports,arguments)
+},{"./DOMProperty":363,"./EventPluginHub":369,"./ReactBrowserEventEmitter":381,"./ReactClass":386,"./ReactComponentEnvironment":389,"./ReactEmptyComponent":412,"./ReactNativeComponent":428,"./ReactPerf":431,"./ReactRootIndex":439,"./ReactUpdates":449,"dup":176}],419:[function(require,module,exports){
+arguments[4][177][0].apply(exports,arguments)
+},{"./ReactDOMSelection":402,"dup":177,"fbjs/lib/containsNode":503,"fbjs/lib/focusNode":508,"fbjs/lib/getActiveElement":509}],420:[function(require,module,exports){
+arguments[4][178][0].apply(exports,arguments)
+},{"./ReactRootIndex":439,"_process":1,"dup":178,"fbjs/lib/invariant":514}],421:[function(require,module,exports){
+arguments[4][179][0].apply(exports,arguments)
+},{"dup":179}],422:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -64890,7 +68550,7 @@ var React = {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./Object.assign":368,"./ReactChildren":376,"./ReactClass":377,"./ReactComponent":378,"./ReactDOMFactories":387,"./ReactElement":401,"./ReactElementValidator":402,"./ReactPropTypes":426,"./ReactVersion":441,"./onlyChild":479,"_process":1}],414:[function(require,module,exports){
+},{"./Object.assign":377,"./ReactChildren":385,"./ReactClass":386,"./ReactComponent":387,"./ReactDOMFactories":396,"./ReactElement":410,"./ReactElementValidator":411,"./ReactPropTypes":435,"./ReactVersion":450,"./onlyChild":488,"_process":1}],423:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -64960,23 +68620,23 @@ ReactLink.PropTypes = {
 };
 
 module.exports = ReactLink;
-},{"./React":370}],415:[function(require,module,exports){
-arguments[4][171][0].apply(exports,arguments)
-},{"./adler32":461,"dup":171}],416:[function(require,module,exports){
-arguments[4][172][0].apply(exports,arguments)
-},{"./DOMProperty":354,"./Object.assign":368,"./ReactBrowserEventEmitter":372,"./ReactCurrentOwner":383,"./ReactDOMFeatureFlags":388,"./ReactElement":401,"./ReactEmptyComponentRegistry":404,"./ReactInstanceHandles":411,"./ReactInstanceMap":412,"./ReactMarkupChecksum":415,"./ReactPerf":422,"./ReactReconciler":428,"./ReactUpdateQueue":439,"./ReactUpdates":440,"./instantiateReactComponent":476,"./setInnerHTML":482,"./shouldUpdateReactComponent":485,"./validateDOMNesting":488,"_process":1,"dup":172,"fbjs/lib/containsNode":494,"fbjs/lib/emptyObject":498,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],417:[function(require,module,exports){
-arguments[4][173][0].apply(exports,arguments)
-},{"./ReactChildReconciler":375,"./ReactComponentEnvironment":380,"./ReactCurrentOwner":383,"./ReactMultiChildUpdateTypes":418,"./ReactReconciler":428,"./flattenChildren":467,"_process":1,"dup":173}],418:[function(require,module,exports){
-arguments[4][174][0].apply(exports,arguments)
-},{"dup":174,"fbjs/lib/keyMirror":509}],419:[function(require,module,exports){
-arguments[4][175][0].apply(exports,arguments)
-},{"./Object.assign":368,"_process":1,"dup":175,"fbjs/lib/invariant":505}],420:[function(require,module,exports){
-arguments[4][176][0].apply(exports,arguments)
-},{"_process":1,"dup":176,"fbjs/lib/warning":517}],421:[function(require,module,exports){
-arguments[4][177][0].apply(exports,arguments)
-},{"_process":1,"dup":177,"fbjs/lib/invariant":505}],422:[function(require,module,exports){
-arguments[4][178][0].apply(exports,arguments)
-},{"_process":1,"dup":178}],423:[function(require,module,exports){
+},{"./React":379}],424:[function(require,module,exports){
+arguments[4][180][0].apply(exports,arguments)
+},{"./adler32":470,"dup":180}],425:[function(require,module,exports){
+arguments[4][181][0].apply(exports,arguments)
+},{"./DOMProperty":363,"./Object.assign":377,"./ReactBrowserEventEmitter":381,"./ReactCurrentOwner":392,"./ReactDOMFeatureFlags":397,"./ReactElement":410,"./ReactEmptyComponentRegistry":413,"./ReactInstanceHandles":420,"./ReactInstanceMap":421,"./ReactMarkupChecksum":424,"./ReactPerf":431,"./ReactReconciler":437,"./ReactUpdateQueue":448,"./ReactUpdates":449,"./instantiateReactComponent":485,"./setInnerHTML":491,"./shouldUpdateReactComponent":494,"./validateDOMNesting":497,"_process":1,"dup":181,"fbjs/lib/containsNode":503,"fbjs/lib/emptyObject":507,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],426:[function(require,module,exports){
+arguments[4][182][0].apply(exports,arguments)
+},{"./ReactChildReconciler":384,"./ReactComponentEnvironment":389,"./ReactCurrentOwner":392,"./ReactMultiChildUpdateTypes":427,"./ReactReconciler":437,"./flattenChildren":476,"_process":1,"dup":182}],427:[function(require,module,exports){
+arguments[4][183][0].apply(exports,arguments)
+},{"dup":183,"fbjs/lib/keyMirror":518}],428:[function(require,module,exports){
+arguments[4][184][0].apply(exports,arguments)
+},{"./Object.assign":377,"_process":1,"dup":184,"fbjs/lib/invariant":514}],429:[function(require,module,exports){
+arguments[4][185][0].apply(exports,arguments)
+},{"_process":1,"dup":185,"fbjs/lib/warning":526}],430:[function(require,module,exports){
+arguments[4][186][0].apply(exports,arguments)
+},{"_process":1,"dup":186,"fbjs/lib/invariant":514}],431:[function(require,module,exports){
+arguments[4][187][0].apply(exports,arguments)
+},{"_process":1,"dup":187}],432:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -65085,21 +68745,21 @@ var ReactPropTransferer = {
 };
 
 module.exports = ReactPropTransferer;
-},{"./Object.assign":368,"fbjs/lib/emptyFunction":497,"fbjs/lib/joinClasses":508}],424:[function(require,module,exports){
-arguments[4][179][0].apply(exports,arguments)
-},{"_process":1,"dup":179}],425:[function(require,module,exports){
-arguments[4][180][0].apply(exports,arguments)
-},{"dup":180,"fbjs/lib/keyMirror":509}],426:[function(require,module,exports){
-arguments[4][181][0].apply(exports,arguments)
-},{"./ReactElement":401,"./ReactPropTypeLocationNames":424,"./getIteratorFn":473,"dup":181,"fbjs/lib/emptyFunction":497}],427:[function(require,module,exports){
-arguments[4][182][0].apply(exports,arguments)
-},{"./CallbackQueue":350,"./Object.assign":368,"./PooledClass":369,"./ReactBrowserEventEmitter":372,"./ReactDOMFeatureFlags":388,"./ReactInputSelection":410,"./Transaction":458,"dup":182}],428:[function(require,module,exports){
-arguments[4][183][0].apply(exports,arguments)
-},{"./ReactRef":429,"dup":183}],429:[function(require,module,exports){
-arguments[4][184][0].apply(exports,arguments)
-},{"./ReactOwner":421,"dup":184}],430:[function(require,module,exports){
-arguments[4][185][0].apply(exports,arguments)
-},{"dup":185}],431:[function(require,module,exports){
+},{"./Object.assign":377,"fbjs/lib/emptyFunction":506,"fbjs/lib/joinClasses":517}],433:[function(require,module,exports){
+arguments[4][188][0].apply(exports,arguments)
+},{"_process":1,"dup":188}],434:[function(require,module,exports){
+arguments[4][189][0].apply(exports,arguments)
+},{"dup":189,"fbjs/lib/keyMirror":518}],435:[function(require,module,exports){
+arguments[4][190][0].apply(exports,arguments)
+},{"./ReactElement":410,"./ReactPropTypeLocationNames":433,"./getIteratorFn":482,"dup":190,"fbjs/lib/emptyFunction":506}],436:[function(require,module,exports){
+arguments[4][191][0].apply(exports,arguments)
+},{"./CallbackQueue":359,"./Object.assign":377,"./PooledClass":378,"./ReactBrowserEventEmitter":381,"./ReactDOMFeatureFlags":397,"./ReactInputSelection":419,"./Transaction":467,"dup":191}],437:[function(require,module,exports){
+arguments[4][192][0].apply(exports,arguments)
+},{"./ReactRef":438,"dup":192}],438:[function(require,module,exports){
+arguments[4][193][0].apply(exports,arguments)
+},{"./ReactOwner":430,"dup":193}],439:[function(require,module,exports){
+arguments[4][194][0].apply(exports,arguments)
+},{"dup":194}],440:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -65123,7 +68783,7 @@ var ReactServerBatchingStrategy = {
 };
 
 module.exports = ReactServerBatchingStrategy;
-},{}],432:[function(require,module,exports){
+},{}],441:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -65209,7 +68869,7 @@ module.exports = {
   renderToStaticMarkup: renderToStaticMarkup
 };
 }).call(this,require('_process'))
-},{"./ReactDefaultBatchingStrategy":397,"./ReactElement":401,"./ReactInstanceHandles":411,"./ReactMarkupChecksum":415,"./ReactServerBatchingStrategy":431,"./ReactServerRenderingTransaction":433,"./ReactUpdates":440,"./instantiateReactComponent":476,"_process":1,"fbjs/lib/emptyObject":498,"fbjs/lib/invariant":505}],433:[function(require,module,exports){
+},{"./ReactDefaultBatchingStrategy":406,"./ReactElement":410,"./ReactInstanceHandles":420,"./ReactMarkupChecksum":424,"./ReactServerBatchingStrategy":440,"./ReactServerRenderingTransaction":442,"./ReactUpdates":449,"./instantiateReactComponent":485,"_process":1,"fbjs/lib/emptyObject":507,"fbjs/lib/invariant":514}],442:[function(require,module,exports){
 /**
  * Copyright 2014-2015, Facebook, Inc.
  * All rights reserved.
@@ -65297,7 +68957,7 @@ assign(ReactServerRenderingTransaction.prototype, Transaction.Mixin, Mixin);
 PooledClass.addPoolingTo(ReactServerRenderingTransaction);
 
 module.exports = ReactServerRenderingTransaction;
-},{"./CallbackQueue":350,"./Object.assign":368,"./PooledClass":369,"./Transaction":458,"fbjs/lib/emptyFunction":497}],434:[function(require,module,exports){
+},{"./CallbackQueue":359,"./Object.assign":377,"./PooledClass":378,"./Transaction":467,"fbjs/lib/emptyFunction":506}],443:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -65402,7 +69062,7 @@ ReactStateSetters.Mixin = {
 };
 
 module.exports = ReactStateSetters;
-},{}],435:[function(require,module,exports){
+},{}],444:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -65872,7 +69532,7 @@ Object.keys(topLevelTypes).forEach(function (eventType) {
 
 module.exports = ReactTestUtils;
 }).call(this,require('_process'))
-},{"./EventConstants":359,"./EventPluginHub":360,"./EventPropagators":363,"./Object.assign":368,"./React":370,"./ReactBrowserEventEmitter":372,"./ReactCompositeComponent":382,"./ReactDOM":384,"./ReactElement":401,"./ReactInstanceHandles":411,"./ReactInstanceMap":412,"./ReactMount":416,"./ReactUpdates":440,"./SyntheticEvent":450,"./findDOMNode":466,"_process":1,"fbjs/lib/emptyObject":498,"fbjs/lib/invariant":505}],436:[function(require,module,exports){
+},{"./EventConstants":368,"./EventPluginHub":369,"./EventPropagators":372,"./Object.assign":377,"./React":379,"./ReactBrowserEventEmitter":381,"./ReactCompositeComponent":391,"./ReactDOM":393,"./ReactElement":410,"./ReactInstanceHandles":420,"./ReactInstanceMap":421,"./ReactMount":425,"./ReactUpdates":449,"./SyntheticEvent":459,"./findDOMNode":475,"_process":1,"fbjs/lib/emptyObject":507,"fbjs/lib/invariant":514}],445:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -65971,7 +69631,7 @@ var ReactTransitionChildMapping = {
 };
 
 module.exports = ReactTransitionChildMapping;
-},{"./flattenChildren":467}],437:[function(require,module,exports){
+},{"./flattenChildren":476}],446:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66081,7 +69741,7 @@ var ReactTransitionEvents = {
 };
 
 module.exports = ReactTransitionEvents;
-},{"fbjs/lib/ExecutionEnvironment":491}],438:[function(require,module,exports){
+},{"fbjs/lib/ExecutionEnvironment":500}],447:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66287,13 +69947,13 @@ var ReactTransitionGroup = React.createClass({
 });
 
 module.exports = ReactTransitionGroup;
-},{"./Object.assign":368,"./React":370,"./ReactTransitionChildMapping":436,"fbjs/lib/emptyFunction":497}],439:[function(require,module,exports){
-arguments[4][186][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactCurrentOwner":383,"./ReactElement":401,"./ReactInstanceMap":412,"./ReactUpdates":440,"_process":1,"dup":186,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],440:[function(require,module,exports){
-arguments[4][187][0].apply(exports,arguments)
-},{"./CallbackQueue":350,"./Object.assign":368,"./PooledClass":369,"./ReactPerf":422,"./ReactReconciler":428,"./Transaction":458,"_process":1,"dup":187,"fbjs/lib/invariant":505}],441:[function(require,module,exports){
-arguments[4][188][0].apply(exports,arguments)
-},{"dup":188}],442:[function(require,module,exports){
+},{"./Object.assign":377,"./React":379,"./ReactTransitionChildMapping":445,"fbjs/lib/emptyFunction":506}],448:[function(require,module,exports){
+arguments[4][195][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactCurrentOwner":392,"./ReactElement":410,"./ReactInstanceMap":421,"./ReactUpdates":449,"_process":1,"dup":195,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],449:[function(require,module,exports){
+arguments[4][196][0].apply(exports,arguments)
+},{"./CallbackQueue":359,"./Object.assign":377,"./PooledClass":378,"./ReactPerf":431,"./ReactReconciler":437,"./Transaction":467,"_process":1,"dup":196,"fbjs/lib/invariant":514}],450:[function(require,module,exports){
+arguments[4][197][0].apply(exports,arguments)
+},{"dup":197}],451:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -66356,45 +70016,45 @@ if (process.env.NODE_ENV !== 'production') {
 
 module.exports = React;
 }).call(this,require('_process'))
-},{"./LinkedStateMixin":366,"./React":370,"./ReactCSSTransitionGroup":373,"./ReactComponentWithPureRenderMixin":381,"./ReactDefaultPerf":399,"./ReactFragment":408,"./ReactTestUtils":435,"./ReactTransitionGroup":438,"./ReactUpdates":440,"./cloneWithProps":462,"./shallowCompare":484,"./update":487,"_process":1,"fbjs/lib/warning":517}],443:[function(require,module,exports){
-arguments[4][189][0].apply(exports,arguments)
-},{"./DOMProperty":354,"dup":189}],444:[function(require,module,exports){
-arguments[4][190][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPropagators":363,"./ReactInputSelection":410,"./SyntheticEvent":450,"./isTextInputElement":478,"dup":190,"fbjs/lib/ExecutionEnvironment":491,"fbjs/lib/getActiveElement":500,"fbjs/lib/keyOf":510,"fbjs/lib/shallowEqual":515}],445:[function(require,module,exports){
-arguments[4][191][0].apply(exports,arguments)
-},{"dup":191}],446:[function(require,module,exports){
-arguments[4][192][0].apply(exports,arguments)
-},{"./EventConstants":359,"./EventPropagators":363,"./ReactMount":416,"./SyntheticClipboardEvent":447,"./SyntheticDragEvent":449,"./SyntheticEvent":450,"./SyntheticFocusEvent":451,"./SyntheticKeyboardEvent":453,"./SyntheticMouseEvent":454,"./SyntheticTouchEvent":455,"./SyntheticUIEvent":456,"./SyntheticWheelEvent":457,"./getEventCharCode":469,"_process":1,"dup":192,"fbjs/lib/EventListener":490,"fbjs/lib/emptyFunction":497,"fbjs/lib/invariant":505,"fbjs/lib/keyOf":510}],447:[function(require,module,exports){
-arguments[4][193][0].apply(exports,arguments)
-},{"./SyntheticEvent":450,"dup":193}],448:[function(require,module,exports){
-arguments[4][194][0].apply(exports,arguments)
-},{"./SyntheticEvent":450,"dup":194}],449:[function(require,module,exports){
-arguments[4][195][0].apply(exports,arguments)
-},{"./SyntheticMouseEvent":454,"dup":195}],450:[function(require,module,exports){
-arguments[4][196][0].apply(exports,arguments)
-},{"./Object.assign":368,"./PooledClass":369,"_process":1,"dup":196,"fbjs/lib/emptyFunction":497,"fbjs/lib/warning":517}],451:[function(require,module,exports){
-arguments[4][197][0].apply(exports,arguments)
-},{"./SyntheticUIEvent":456,"dup":197}],452:[function(require,module,exports){
+},{"./LinkedStateMixin":375,"./React":379,"./ReactCSSTransitionGroup":382,"./ReactComponentWithPureRenderMixin":390,"./ReactDefaultPerf":408,"./ReactFragment":417,"./ReactTestUtils":444,"./ReactTransitionGroup":447,"./ReactUpdates":449,"./cloneWithProps":471,"./shallowCompare":493,"./update":496,"_process":1,"fbjs/lib/warning":526}],452:[function(require,module,exports){
 arguments[4][198][0].apply(exports,arguments)
-},{"./SyntheticEvent":450,"dup":198}],453:[function(require,module,exports){
+},{"./DOMProperty":363,"dup":198}],453:[function(require,module,exports){
 arguments[4][199][0].apply(exports,arguments)
-},{"./SyntheticUIEvent":456,"./getEventCharCode":469,"./getEventKey":470,"./getEventModifierState":471,"dup":199}],454:[function(require,module,exports){
+},{"./EventConstants":368,"./EventPropagators":372,"./ReactInputSelection":419,"./SyntheticEvent":459,"./isTextInputElement":487,"dup":199,"fbjs/lib/ExecutionEnvironment":500,"fbjs/lib/getActiveElement":509,"fbjs/lib/keyOf":519,"fbjs/lib/shallowEqual":524}],454:[function(require,module,exports){
 arguments[4][200][0].apply(exports,arguments)
-},{"./SyntheticUIEvent":456,"./ViewportMetrics":459,"./getEventModifierState":471,"dup":200}],455:[function(require,module,exports){
+},{"dup":200}],455:[function(require,module,exports){
 arguments[4][201][0].apply(exports,arguments)
-},{"./SyntheticUIEvent":456,"./getEventModifierState":471,"dup":201}],456:[function(require,module,exports){
+},{"./EventConstants":368,"./EventPropagators":372,"./ReactMount":425,"./SyntheticClipboardEvent":456,"./SyntheticDragEvent":458,"./SyntheticEvent":459,"./SyntheticFocusEvent":460,"./SyntheticKeyboardEvent":462,"./SyntheticMouseEvent":463,"./SyntheticTouchEvent":464,"./SyntheticUIEvent":465,"./SyntheticWheelEvent":466,"./getEventCharCode":478,"_process":1,"dup":201,"fbjs/lib/EventListener":499,"fbjs/lib/emptyFunction":506,"fbjs/lib/invariant":514,"fbjs/lib/keyOf":519}],456:[function(require,module,exports){
 arguments[4][202][0].apply(exports,arguments)
-},{"./SyntheticEvent":450,"./getEventTarget":472,"dup":202}],457:[function(require,module,exports){
+},{"./SyntheticEvent":459,"dup":202}],457:[function(require,module,exports){
 arguments[4][203][0].apply(exports,arguments)
-},{"./SyntheticMouseEvent":454,"dup":203}],458:[function(require,module,exports){
+},{"./SyntheticEvent":459,"dup":203}],458:[function(require,module,exports){
 arguments[4][204][0].apply(exports,arguments)
-},{"_process":1,"dup":204,"fbjs/lib/invariant":505}],459:[function(require,module,exports){
+},{"./SyntheticMouseEvent":463,"dup":204}],459:[function(require,module,exports){
 arguments[4][205][0].apply(exports,arguments)
-},{"dup":205}],460:[function(require,module,exports){
+},{"./Object.assign":377,"./PooledClass":378,"_process":1,"dup":205,"fbjs/lib/emptyFunction":506,"fbjs/lib/warning":526}],460:[function(require,module,exports){
 arguments[4][206][0].apply(exports,arguments)
-},{"_process":1,"dup":206,"fbjs/lib/invariant":505}],461:[function(require,module,exports){
+},{"./SyntheticUIEvent":465,"dup":206}],461:[function(require,module,exports){
 arguments[4][207][0].apply(exports,arguments)
-},{"dup":207}],462:[function(require,module,exports){
+},{"./SyntheticEvent":459,"dup":207}],462:[function(require,module,exports){
+arguments[4][208][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":465,"./getEventCharCode":478,"./getEventKey":479,"./getEventModifierState":480,"dup":208}],463:[function(require,module,exports){
+arguments[4][209][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":465,"./ViewportMetrics":468,"./getEventModifierState":480,"dup":209}],464:[function(require,module,exports){
+arguments[4][210][0].apply(exports,arguments)
+},{"./SyntheticUIEvent":465,"./getEventModifierState":480,"dup":210}],465:[function(require,module,exports){
+arguments[4][211][0].apply(exports,arguments)
+},{"./SyntheticEvent":459,"./getEventTarget":481,"dup":211}],466:[function(require,module,exports){
+arguments[4][212][0].apply(exports,arguments)
+},{"./SyntheticMouseEvent":463,"dup":212}],467:[function(require,module,exports){
+arguments[4][213][0].apply(exports,arguments)
+},{"_process":1,"dup":213,"fbjs/lib/invariant":514}],468:[function(require,module,exports){
+arguments[4][214][0].apply(exports,arguments)
+},{"dup":214}],469:[function(require,module,exports){
+arguments[4][215][0].apply(exports,arguments)
+},{"_process":1,"dup":215,"fbjs/lib/invariant":514}],470:[function(require,module,exports){
+arguments[4][216][0].apply(exports,arguments)
+},{"dup":216}],471:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -66451,9 +70111,9 @@ function cloneWithProps(child, props) {
 
 module.exports = cloneWithProps;
 }).call(this,require('_process'))
-},{"./ReactElement":401,"./ReactPropTransferer":423,"_process":1,"fbjs/lib/keyOf":510,"fbjs/lib/warning":517}],463:[function(require,module,exports){
-arguments[4][208][0].apply(exports,arguments)
-},{"./CSSProperty":348,"dup":208}],464:[function(require,module,exports){
+},{"./ReactElement":410,"./ReactPropTransferer":432,"_process":1,"fbjs/lib/keyOf":519,"fbjs/lib/warning":526}],472:[function(require,module,exports){
+arguments[4][217][0].apply(exports,arguments)
+},{"./CSSProperty":357,"dup":217}],473:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -66504,35 +70164,35 @@ function deprecated(fnName, newModule, newPackage, ctx, fn) {
 
 module.exports = deprecated;
 }).call(this,require('_process'))
-},{"./Object.assign":368,"_process":1,"fbjs/lib/warning":517}],465:[function(require,module,exports){
-arguments[4][209][0].apply(exports,arguments)
-},{"dup":209}],466:[function(require,module,exports){
-arguments[4][210][0].apply(exports,arguments)
-},{"./ReactCurrentOwner":383,"./ReactInstanceMap":412,"./ReactMount":416,"_process":1,"dup":210,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],467:[function(require,module,exports){
-arguments[4][211][0].apply(exports,arguments)
-},{"./traverseAllChildren":486,"_process":1,"dup":211,"fbjs/lib/warning":517}],468:[function(require,module,exports){
-arguments[4][212][0].apply(exports,arguments)
-},{"dup":212}],469:[function(require,module,exports){
-arguments[4][213][0].apply(exports,arguments)
-},{"dup":213}],470:[function(require,module,exports){
-arguments[4][214][0].apply(exports,arguments)
-},{"./getEventCharCode":469,"dup":214}],471:[function(require,module,exports){
-arguments[4][215][0].apply(exports,arguments)
-},{"dup":215}],472:[function(require,module,exports){
-arguments[4][216][0].apply(exports,arguments)
-},{"dup":216}],473:[function(require,module,exports){
-arguments[4][217][0].apply(exports,arguments)
-},{"dup":217}],474:[function(require,module,exports){
+},{"./Object.assign":377,"_process":1,"fbjs/lib/warning":526}],474:[function(require,module,exports){
 arguments[4][218][0].apply(exports,arguments)
 },{"dup":218}],475:[function(require,module,exports){
 arguments[4][219][0].apply(exports,arguments)
-},{"dup":219,"fbjs/lib/ExecutionEnvironment":491}],476:[function(require,module,exports){
+},{"./ReactCurrentOwner":392,"./ReactInstanceMap":421,"./ReactMount":425,"_process":1,"dup":219,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],476:[function(require,module,exports){
 arguments[4][220][0].apply(exports,arguments)
-},{"./Object.assign":368,"./ReactCompositeComponent":382,"./ReactEmptyComponent":403,"./ReactNativeComponent":419,"_process":1,"dup":220,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],477:[function(require,module,exports){
+},{"./traverseAllChildren":495,"_process":1,"dup":220,"fbjs/lib/warning":526}],477:[function(require,module,exports){
 arguments[4][221][0].apply(exports,arguments)
-},{"dup":221,"fbjs/lib/ExecutionEnvironment":491}],478:[function(require,module,exports){
+},{"dup":221}],478:[function(require,module,exports){
 arguments[4][222][0].apply(exports,arguments)
 },{"dup":222}],479:[function(require,module,exports){
+arguments[4][223][0].apply(exports,arguments)
+},{"./getEventCharCode":478,"dup":223}],480:[function(require,module,exports){
+arguments[4][224][0].apply(exports,arguments)
+},{"dup":224}],481:[function(require,module,exports){
+arguments[4][225][0].apply(exports,arguments)
+},{"dup":225}],482:[function(require,module,exports){
+arguments[4][226][0].apply(exports,arguments)
+},{"dup":226}],483:[function(require,module,exports){
+arguments[4][227][0].apply(exports,arguments)
+},{"dup":227}],484:[function(require,module,exports){
+arguments[4][228][0].apply(exports,arguments)
+},{"dup":228,"fbjs/lib/ExecutionEnvironment":500}],485:[function(require,module,exports){
+arguments[4][229][0].apply(exports,arguments)
+},{"./Object.assign":377,"./ReactCompositeComponent":391,"./ReactEmptyComponent":412,"./ReactNativeComponent":428,"_process":1,"dup":229,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],486:[function(require,module,exports){
+arguments[4][230][0].apply(exports,arguments)
+},{"dup":230,"fbjs/lib/ExecutionEnvironment":500}],487:[function(require,module,exports){
+arguments[4][231][0].apply(exports,arguments)
+},{"dup":231}],488:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -66568,15 +70228,15 @@ function onlyChild(children) {
 
 module.exports = onlyChild;
 }).call(this,require('_process'))
-},{"./ReactElement":401,"_process":1,"fbjs/lib/invariant":505}],480:[function(require,module,exports){
-arguments[4][223][0].apply(exports,arguments)
-},{"./escapeTextContentForBrowser":465,"dup":223}],481:[function(require,module,exports){
-arguments[4][224][0].apply(exports,arguments)
-},{"./ReactMount":416,"dup":224}],482:[function(require,module,exports){
-arguments[4][225][0].apply(exports,arguments)
-},{"dup":225,"fbjs/lib/ExecutionEnvironment":491}],483:[function(require,module,exports){
-arguments[4][226][0].apply(exports,arguments)
-},{"./escapeTextContentForBrowser":465,"./setInnerHTML":482,"dup":226,"fbjs/lib/ExecutionEnvironment":491}],484:[function(require,module,exports){
+},{"./ReactElement":410,"_process":1,"fbjs/lib/invariant":514}],489:[function(require,module,exports){
+arguments[4][232][0].apply(exports,arguments)
+},{"./escapeTextContentForBrowser":474,"dup":232}],490:[function(require,module,exports){
+arguments[4][233][0].apply(exports,arguments)
+},{"./ReactMount":425,"dup":233}],491:[function(require,module,exports){
+arguments[4][234][0].apply(exports,arguments)
+},{"dup":234,"fbjs/lib/ExecutionEnvironment":500}],492:[function(require,module,exports){
+arguments[4][235][0].apply(exports,arguments)
+},{"./escapeTextContentForBrowser":474,"./setInnerHTML":491,"dup":235,"fbjs/lib/ExecutionEnvironment":500}],493:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66601,11 +70261,11 @@ function shallowCompare(instance, nextProps, nextState) {
 }
 
 module.exports = shallowCompare;
-},{"fbjs/lib/shallowEqual":515}],485:[function(require,module,exports){
-arguments[4][227][0].apply(exports,arguments)
-},{"dup":227}],486:[function(require,module,exports){
-arguments[4][228][0].apply(exports,arguments)
-},{"./ReactCurrentOwner":383,"./ReactElement":401,"./ReactInstanceHandles":411,"./getIteratorFn":473,"_process":1,"dup":228,"fbjs/lib/invariant":505,"fbjs/lib/warning":517}],487:[function(require,module,exports){
+},{"fbjs/lib/shallowEqual":524}],494:[function(require,module,exports){
+arguments[4][236][0].apply(exports,arguments)
+},{"dup":236}],495:[function(require,module,exports){
+arguments[4][237][0].apply(exports,arguments)
+},{"./ReactCurrentOwner":392,"./ReactElement":410,"./ReactInstanceHandles":420,"./getIteratorFn":482,"_process":1,"dup":237,"fbjs/lib/invariant":514,"fbjs/lib/warning":526}],496:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -66715,9 +70375,9 @@ function update(value, spec) {
 
 module.exports = update;
 }).call(this,require('_process'))
-},{"./Object.assign":368,"_process":1,"fbjs/lib/invariant":505,"fbjs/lib/keyOf":510}],488:[function(require,module,exports){
-arguments[4][229][0].apply(exports,arguments)
-},{"./Object.assign":368,"_process":1,"dup":229,"fbjs/lib/emptyFunction":497,"fbjs/lib/warning":517}],489:[function(require,module,exports){
+},{"./Object.assign":377,"_process":1,"fbjs/lib/invariant":514,"fbjs/lib/keyOf":519}],497:[function(require,module,exports){
+arguments[4][238][0].apply(exports,arguments)
+},{"./Object.assign":377,"_process":1,"dup":238,"fbjs/lib/emptyFunction":506,"fbjs/lib/warning":526}],498:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -66817,43 +70477,43 @@ var CSSCore = {
 
 module.exports = CSSCore;
 }).call(this,require('_process'))
-},{"./invariant":505,"_process":1}],490:[function(require,module,exports){
-arguments[4][230][0].apply(exports,arguments)
-},{"./emptyFunction":497,"_process":1,"dup":230}],491:[function(require,module,exports){
-arguments[4][231][0].apply(exports,arguments)
-},{"dup":231}],492:[function(require,module,exports){
-arguments[4][232][0].apply(exports,arguments)
-},{"dup":232}],493:[function(require,module,exports){
-arguments[4][233][0].apply(exports,arguments)
-},{"./camelize":492,"dup":233}],494:[function(require,module,exports){
-arguments[4][234][0].apply(exports,arguments)
-},{"./isTextNode":507,"dup":234}],495:[function(require,module,exports){
-arguments[4][235][0].apply(exports,arguments)
-},{"./toArray":516,"dup":235}],496:[function(require,module,exports){
-arguments[4][236][0].apply(exports,arguments)
-},{"./ExecutionEnvironment":491,"./createArrayFromMixed":495,"./getMarkupWrap":501,"./invariant":505,"_process":1,"dup":236}],497:[function(require,module,exports){
-arguments[4][237][0].apply(exports,arguments)
-},{"dup":237}],498:[function(require,module,exports){
-arguments[4][238][0].apply(exports,arguments)
-},{"_process":1,"dup":238}],499:[function(require,module,exports){
+},{"./invariant":514,"_process":1}],499:[function(require,module,exports){
 arguments[4][239][0].apply(exports,arguments)
-},{"dup":239}],500:[function(require,module,exports){
+},{"./emptyFunction":506,"_process":1,"dup":239}],500:[function(require,module,exports){
 arguments[4][240][0].apply(exports,arguments)
 },{"dup":240}],501:[function(require,module,exports){
 arguments[4][241][0].apply(exports,arguments)
-},{"./ExecutionEnvironment":491,"./invariant":505,"_process":1,"dup":241}],502:[function(require,module,exports){
+},{"dup":241}],502:[function(require,module,exports){
 arguments[4][242][0].apply(exports,arguments)
-},{"dup":242}],503:[function(require,module,exports){
+},{"./camelize":501,"dup":242}],503:[function(require,module,exports){
 arguments[4][243][0].apply(exports,arguments)
-},{"dup":243}],504:[function(require,module,exports){
+},{"./isTextNode":516,"dup":243}],504:[function(require,module,exports){
 arguments[4][244][0].apply(exports,arguments)
-},{"./hyphenate":503,"dup":244}],505:[function(require,module,exports){
+},{"./toArray":525,"dup":244}],505:[function(require,module,exports){
 arguments[4][245][0].apply(exports,arguments)
-},{"_process":1,"dup":245}],506:[function(require,module,exports){
+},{"./ExecutionEnvironment":500,"./createArrayFromMixed":504,"./getMarkupWrap":510,"./invariant":514,"_process":1,"dup":245}],506:[function(require,module,exports){
 arguments[4][246][0].apply(exports,arguments)
 },{"dup":246}],507:[function(require,module,exports){
 arguments[4][247][0].apply(exports,arguments)
-},{"./isNode":506,"dup":247}],508:[function(require,module,exports){
+},{"_process":1,"dup":247}],508:[function(require,module,exports){
+arguments[4][248][0].apply(exports,arguments)
+},{"dup":248}],509:[function(require,module,exports){
+arguments[4][249][0].apply(exports,arguments)
+},{"dup":249}],510:[function(require,module,exports){
+arguments[4][250][0].apply(exports,arguments)
+},{"./ExecutionEnvironment":500,"./invariant":514,"_process":1,"dup":250}],511:[function(require,module,exports){
+arguments[4][251][0].apply(exports,arguments)
+},{"dup":251}],512:[function(require,module,exports){
+arguments[4][252][0].apply(exports,arguments)
+},{"dup":252}],513:[function(require,module,exports){
+arguments[4][253][0].apply(exports,arguments)
+},{"./hyphenate":512,"dup":253}],514:[function(require,module,exports){
+arguments[4][254][0].apply(exports,arguments)
+},{"_process":1,"dup":254}],515:[function(require,module,exports){
+arguments[4][255][0].apply(exports,arguments)
+},{"dup":255}],516:[function(require,module,exports){
+arguments[4][256][0].apply(exports,arguments)
+},{"./isNode":515,"dup":256}],517:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66893,11 +70553,11 @@ function joinClasses(className /*, ... */) {
 }
 
 module.exports = joinClasses;
-},{}],509:[function(require,module,exports){
-arguments[4][248][0].apply(exports,arguments)
-},{"./invariant":505,"_process":1,"dup":248}],510:[function(require,module,exports){
-arguments[4][249][0].apply(exports,arguments)
-},{"dup":249}],511:[function(require,module,exports){
+},{}],518:[function(require,module,exports){
+arguments[4][257][0].apply(exports,arguments)
+},{"./invariant":514,"_process":1,"dup":257}],519:[function(require,module,exports){
+arguments[4][258][0].apply(exports,arguments)
+},{"dup":258}],520:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.
  * All rights reserved.
@@ -66949,24 +70609,24 @@ function mapObject(object, callback, context) {
 }
 
 module.exports = mapObject;
-},{}],512:[function(require,module,exports){
-arguments[4][250][0].apply(exports,arguments)
-},{"dup":250}],513:[function(require,module,exports){
-arguments[4][251][0].apply(exports,arguments)
-},{"./ExecutionEnvironment":491,"dup":251}],514:[function(require,module,exports){
-arguments[4][252][0].apply(exports,arguments)
-},{"./performance":513,"dup":252}],515:[function(require,module,exports){
-arguments[4][253][0].apply(exports,arguments)
-},{"dup":253}],516:[function(require,module,exports){
-arguments[4][254][0].apply(exports,arguments)
-},{"./invariant":505,"_process":1,"dup":254}],517:[function(require,module,exports){
-arguments[4][255][0].apply(exports,arguments)
-},{"./emptyFunction":497,"_process":1,"dup":255}],518:[function(require,module,exports){
+},{}],521:[function(require,module,exports){
+arguments[4][259][0].apply(exports,arguments)
+},{"dup":259}],522:[function(require,module,exports){
+arguments[4][260][0].apply(exports,arguments)
+},{"./ExecutionEnvironment":500,"dup":260}],523:[function(require,module,exports){
+arguments[4][261][0].apply(exports,arguments)
+},{"./performance":522,"dup":261}],524:[function(require,module,exports){
+arguments[4][262][0].apply(exports,arguments)
+},{"dup":262}],525:[function(require,module,exports){
+arguments[4][263][0].apply(exports,arguments)
+},{"./invariant":514,"_process":1,"dup":263}],526:[function(require,module,exports){
+arguments[4][264][0].apply(exports,arguments)
+},{"./emptyFunction":506,"_process":1,"dup":264}],527:[function(require,module,exports){
 'use strict';
 
 module.exports = require('./lib/React');
 
-},{"./lib/React":370}],519:[function(require,module,exports){
+},{"./lib/React":379}],528:[function(require,module,exports){
 // Last time updated at Thursday, October 8th, 2015, 11:21:03 PM 
 
 // links:
@@ -68187,17 +71847,51 @@ if (typeof MediaStream === 'undefined' && typeof webkitMediaStream !== 'undefine
 }
 
 /*global MediaStream:true */
-if (!('stop' in MediaStream.prototype)) {
-    MediaStream.prototype.stop = function() {
-        this.getAudioTracks().forEach(function(track) {
-            track.stop();
-        });
 
-        this.getVideoTracks().forEach(function(track) {
-            track.stop();
-        });
-    };
+//fix it!
+//Sabir fix
+//Muaz Khan, you are an ass hole
+if (typeof MediaStream == 'undefined'){
+    console.log('webRTC is not supported');
+    window.webRTCSupported = false;
 }
+
+//else {
+//    window.webRTCSupported = true;
+//    if (!('stop' in MediaStream.prototype)) {
+//        MediaStream.prototype.stop = function() {
+//            this.getAudioTracks().forEach(function(track) {
+//                track.stop();
+//            });
+//
+//            this.getVideoTracks().forEach(function(track) {
+//                track.stop();
+//            });
+//
+//        };
+//    }
+//}
+
+//spike (((
+try{
+    if (!('stop' in MediaStream.prototype)) {
+        window.webRTCSupported = true;
+        MediaStream.prototype.stop = function(){
+            this.getAudioTracks().forEach(function(track) {
+                track.stop();
+            });
+
+            this.getVideoTracks().forEach(function(track) {
+                track.stop();
+            });
+
+        };
+    }
+}catch (errer){
+
+}
+
+
 
 if (typeof location !== 'undefined') {
     if (location.href.indexOf('file:') === 0) {
@@ -70579,7 +74273,7 @@ function GifRecorder(mediaStream, config) {
     var gifEncoder;
 }
 
-},{}],520:[function(require,module,exports){
+},{}],529:[function(require,module,exports){
 /** @license
  *
  * SoundManager 2: JavaScript Sound for the Web
@@ -76906,7 +80600,498 @@ window.soundManager = soundManager;
 
 }(window));
 
-},{}],521:[function(require,module,exports){
+},{}],530:[function(require,module,exports){
+/**
+ * Created by sabir on 12.08.15.
+ */
+var React = require('react');
+
+var CurrentUserDropdownItem = React.createClass({displayName: "CurrentUserDropdownItem",
+    getDefaultProps: function () {
+        return {
+            name: 'N/A',
+            icon: ' icon plane ',
+            onClick: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    _onClick: function(){
+        this.props.onClick();
+    },
+
+    componentStyle: {
+        placeholder: {
+            padding: 10,
+            //backgroundColor: 'whitesmoke',
+            border: '1px solid lightgray',
+            borderBottom: 'none',
+            borderTop: 'none',
+            minWidth: 120
+        }
+    },
+
+    render: function () {
+        return (
+            React.createElement("div", {className: 'currentUserDropdownItem', style: this.componentStyle.placeholder, onClick: this._onClick}, 
+                React.createElement("i", {className: this.props.icon}), 
+                this.props.name
+            )
+        );
+    }
+
+});
+
+module.exports = CurrentUserDropdownItem;
+
+},{"react":527}],531:[function(require,module,exports){
+/**
+ * Created by sabir on 12.08.15.
+ */
+
+var React = require('react');
+var CurrentUserDropdownItem = require('./CurrentUserDropdownItem');
+var CurrentUserPanel = require('./CurrentUserPanel');
+var assign = require('object-assign');
+
+var CurrentUserHeaderDropdown = React.createClass({displayName: "CurrentUserHeaderDropdown",
+    getDefaultProps: function () {
+        return {
+            user: undefined,
+            links: [
+                {
+                    name: 'N/A',
+                    onClick: function(){
+                        alert('n/a clicked');
+                    }
+                }
+            ],
+            onLinkClick: function(num){
+                console.log('link[' + num + '] clicked');
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dropdownVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            //backgroundColor: 'red',
+
+        },
+        currentUserPanelPlaceholder:{
+            cursor: 'pointer',
+            zIndex: 10
+        },
+
+        dropdownPlaceholder: {
+            display: 'block',
+            borderBottom: '1px solid lightgray',
+            backgroundColor: 'whitesmoke'
+        }
+    },
+
+    itemClicked: function(a, b){
+        var num = +a;
+        //console.log(a, b);
+        //this.props.links[num].onClick();
+        this.props.onLinkClick(num);
+    },
+
+    currentUserClicked: function(){
+        this.setState({
+            dropdownVisible: !this.state.dropdownVisible
+        });
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                this.props.user == undefined ?
+                    (React.createElement("div", null
+
+                    ))
+                    :
+                    (React.createElement("div", {style: this.componentStyle.currentUserPanelPlaceholder}, 
+                        React.createElement(CurrentUserPanel, {onClick: this.currentUserClicked, name: this.props.user.name, avatar: this.props.user.avatar}), 
+
+                        React.createElement("div", {style: assign({}, this.componentStyle.dropdownPlaceholder, {display: (this.state.dropdownVisible == false ? ' none ' : this.componentStyle.dropdownPlaceholder.display) })}, 
+                            this.props.links.map(function(item, i){
+                                var key =  i;
+                                var boundClick = this.itemClicked.bind(this, key);
+                                return (
+                                    React.createElement(CurrentUserDropdownItem, {key: key, onClick: boundClick, name: item.name, icon: item.icon})
+                                );
+                            }, this)
+                        )
+
+                    ))
+
+                
+            )
+        );
+    }
+
+});
+
+module.exports = CurrentUserHeaderDropdown;
+
+},{"./CurrentUserDropdownItem":530,"./CurrentUserPanel":532,"object-assign":34,"react":527}],532:[function(require,module,exports){
+/**
+ * Created by sabir on 12.08.15.
+ */
+var React = require('react');
+
+var CurrentUserPanel = React.createClass({displayName: "CurrentUserPanel",
+    getDefaultProps: function () {
+        return {
+            isVisible: true,
+            avatar: 'http://2i.tusur.ru/media/images/Lirmak_1.jpg',
+            name: '',
+            onClick: function(){
+                console.log('user panel clicked');
+            }
+        }
+    },
+
+
+    componentStyle: {
+        avatar: {
+            verticalAlign: 'top',
+            marginTop: 10,
+            borderRadius: 100,
+            width: 32,
+            height: 32,
+            borderRadius: 100,
+            borderWidth: 2,
+            borderColor: 'white',
+            borderStyle: 'solid'
+        },
+        placeholder: {
+            display: 'inline-block',
+            cursor: 'pointer',
+            color: 'white',
+            fontSize: 16,
+            textAlign: 'right',
+            minWidth: 120,
+            marginBottom: 5
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {className: 'currentUserPanel', onClick: this.props.onClick, style: this.componentStyle.placeholder}, 
+                React.createElement("div", {style: {color: 'white', display: 'inline-block', fontSize: 16, marginRight: 10, paddingTop: 12}}, this.props.name), 
+                React.createElement("img", {style: this.componentStyle.avatar, src: this.props.avatar})
+            )
+        );
+    }
+
+});
+
+module.exports = CurrentUserPanel;
+
+},{"react":527}],533:[function(require,module,exports){
+/**
+ * Created by sabir on 11.08.15.
+ */
+var React = require('react');
+
+var HeaderLinkItem = React.createClass({displayName: "HeaderLinkItem",
+    getDefaultProps: function () {
+        return {
+            name: 'N/A',
+            url: '#',
+            icon: ' icon plane ',
+            active: false
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentStyle: {
+        item:{
+            display: 'inline-block',
+            marginLeft: 10,
+            fontSize: 16
+        },
+        link:{
+            color: 'white'
+        }
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.item}, 
+                React.createElement("a", {href: this.props.url, style: this.componentStyle.link}, 
+                    this.props.icon == undefined || this.props.icon == '' ?
+                        (React.createElement("i", null)) : (React.createElement("i", {className: this.props.icon})), 
+                    
+                    this.props.name
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = HeaderLinkItem;
+
+},{"react":527}],534:[function(require,module,exports){
+/**
+ * Created by sabir on 10.08.15.
+ */
+var React = require('react');
+var assign = require('object-assign');
+var HeaderLinkItem = require('./HeaderLinkItem');
+var CurrentUserPanel = require('./CurrentUserPanel');
+var CurrentUserHeaderDropdown = require('./CurrentUserHeaderDropdown');
+
+
+var HeaderPanel = React.createClass({displayName: "HeaderPanel",
+    getDefaultProps: function () {
+        return {
+            logo: 'http://beta.englishpatient.org/home/img/logo_mini.png',
+            logoText: 'English Patient',
+
+            extraLogo: undefined,
+            extraLogoText: undefined,
+
+            backgroundColor: '#45619D',
+            links: [{
+                name: 'defaultLink',
+                url: 'javascript: void(0);',
+                icon : ''
+            }],
+            dropdownLinks: [
+                {
+                    name: 'N/A',
+                    onClick: function(){
+                        alert('n/a clicked');
+                    }
+                }
+            ],
+            logoClicked: function(){
+                console.log('logo clicked');
+            },
+            isLoggedIn: false,
+            user: undefined,
+            //user: {
+            //    name: 'sabir',
+            //    avatar: 'http://2i.tusur.ru/media/images/Lirmak_1.jpg'
+            //},
+            customHeaderComponent: undefined,
+            loginLinkName: 'Вход',
+            loginLinkVisible: true,
+
+            onLoginClick: function(){
+                console.log('onLoginClick occured');
+            },
+            onDropdownLinkClick: function(num){
+                console.log('HeaderPanel: onDropdownLinkClick: num = ', num);
+            },
+            customLoginButtonComponent: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentStyle: {
+        headerPlaceholder: {
+            width: '100%',
+            top: 0,
+            height: 50
+        },
+
+        header: {
+            //width: 900,
+            maxWidth: 851,
+            paddingLeft: 5,
+            margin: '0 auto',
+            height: 50,
+            position: 'relative'
+        },
+
+        logoPlaceholder: {
+            //width: 180,
+            cursor: 'pointer',
+            display: 'inline-block'
+        },
+
+        logoTextPlaceholder: {
+            color: 'white',
+            display: 'inline-block',
+            marginLeft: 10,
+            fontSize: 18,
+            verticalAlign: 'top',
+            marginTop: 15
+
+        },
+
+        logoImg: {
+            height: 30,
+            verticalAlign: 'bottom',
+            marginTop: 10,
+            display: 'inline-block'
+        },
+
+        linksPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            marginTop: 15,
+            marginLeft: 30,
+            zIndex: 10
+        },
+
+        currentUserPlaceholder: {
+            display: 'inline-block',
+            position: 'absolute',
+            //top: 15,
+            right: 15,
+            zIndex: 10
+        },
+
+        customHeaderComponentPlaceholder: {
+            display: 'inline-block',
+            marginLeft: 15
+        },
+
+        customHeaderComponentPlaceholder: {
+            display: 'inline-block',
+            padding: 10
+        },
+
+        loginLink: {
+            marginTop: 10,
+            marginRight: -10
+        }
+
+    },
+
+    onLoginClick: function(){
+        this.props.onLoginClick();
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    onDropdownLinkClick: function(num){
+        console.log('onDropdownLinkClick occured');
+        this.props.onDropdownLinkClick(num);
+    },
+
+    logoClicked: function(){
+        this.props.logoClicked();
+    },
+
+    render: function () {
+        console.log('HeaderPanel render: this.props.user = ', this.props.user, 'isLoggedIn = ', this.props.isLoggedIn);
+        return (
+            React.createElement("div", {style: assign({}, this.componentStyle.headerPlaceholder, {backgroundColor: this.props.backgroundColor})}, 
+                React.createElement("div", {style: this.componentStyle.header}, 
+
+                    React.createElement("div", {style: this.componentStyle.logoPlaceholder, onClick: this.logoClicked}, 
+                        React.createElement("img", {src: this.props.logo, style: this.componentStyle.logoImg}), 
+                        React.createElement("div", {style: this.componentStyle.logoTextPlaceholder}, 
+                            this.props.logoText
+                        ), 
+
+                        this.props.extraLogo == undefined ? null :
+                            React.createElement("div", {style: {marginLeft: 20, display: 'inline-block'}}, 
+                                React.createElement("img", {src: this.props.extraLogo, style: this.componentStyle.logoImg}), 
+                                React.createElement("div", {style: this.componentStyle.logoTextPlaceholder}, 
+                                    this.props.extraLogoText == undefined ? null : this.props.extraLogoText
+                                )
+                            )
+                        
+
+
+
+                    ), 
+
+                    React.createElement("div", {style: assign({}, this.componentStyle.customHeaderComponentPlaceholder, {display: (this.props.customHeaderComponent == undefined ? ' none ' : this.componentStyle.customHeaderComponentPlaceholder.display ) })}, 
+                        this.props.customHeaderComponent
+                    ), 
+
+                    React.createElement("div", {style: assign({}, this.componentStyle.linksPlaceholder, {display: (this.props.links.length == 0 ? ' none ' : this.componentStyle.linksPlaceholder.display) })}, 
+                        this.props.links.map(function(link, i){
+                            var key = 'link_' + i;
+                            return React.createElement(HeaderLinkItem, {icon: link.icon, name: link.name, url: link.url})
+                        })
+                    ), 
+
+                    React.createElement("div", {style: assign({}, this.componentStyle.currentUserPlaceholder)}, 
+                        this.props.isLoggedIn == false ?
+                            (
+                                React.createElement("div", {style: this.componentStyle.loginLink}, 
+                                    this.props.customLoginButtonComponent == undefined ?
+                                        React.createElement("a", {className: 'ui inverted compact button', href: "javascript: void(0);", onClick: this.onLoginClick}, 
+                                            React.createElement("i", {className: 'ui sign in icon'}), " ", this.props.loginLinkName
+                                        )
+                                            :
+                                        this.props.customLoginButtonComponent
+                                    
+                                )
+                                ) :
+                            (React.createElement(CurrentUserHeaderDropdown, {onLinkClick: this.onDropdownLinkClick, links: this.props.dropdownLinks, user: this.props.user}))
+                        
+                    )
+
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = HeaderPanel;
+
+},{"./CurrentUserHeaderDropdown":531,"./CurrentUserPanel":532,"./HeaderLinkItem":533,"object-assign":34,"react":527}],535:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -76926,8 +81111,8 @@ var DictionaryApp = require('./DictionaryApp');
 var IdiomsApp = require('./IdiomsApp');
 var GrammarApp = require('./GrammarApp');
 
-
-
+var NoMatchApp = require('./NoMatchApp');
+var SharedClassApp = require('./shared/SharedClassApp');
 
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -77028,7 +81213,9 @@ var App = React.createClass({displayName: "App",
 
                 React.createElement(Route, {path: "/dev2", component: SimpleDev}, 
                     React.createElement(IndexRoute, {component: SimpleDev})
-                )
+                ), 
+
+                React.createElement(Route, {path: "*", component: NoMatchApp})
 
             )
         )
@@ -77040,19 +81227,30 @@ var App = React.createClass({displayName: "App",
                 React.createElement(Route, {useAutoKeys: false, path: "/", component: StudentIndexApp}, 
                     React.createElement(IndexRoute, {component: StudentIndexApp})
                 ), 
-
+                React.createElement(Route, {path: "/dev", component: DevApp}, 
+                    React.createElement(IndexRoute, {component: DevApp})
+                ), 
                 React.createElement(Route, {path: "/class/:classId", component: StudentClassApp})
-
             )
         );
     },
 
     getLoginContent: function(){
-
         return (
             React.createElement(LoginApp, null)
         );
+    },
 
+    getNotLoggedInContent: function(){
+        return (
+        React.createElement(Router, {history: createHashHistory({queryKey: false})}, 
+            React.createElement(Route, {useAutoKeys: false, path: "/", component: LoginApp}, 
+                React.createElement(IndexRoute, {component: LoginApp})
+            ), 
+            React.createElement(Route, {path: "/class/:classId", component: SharedClassApp}), 
+            React.createElement(Route, {path: "*", component: LoginApp})
+        )
+        );
     },
 
 
@@ -77064,9 +81262,7 @@ var App = React.createClass({displayName: "App",
         var content = null;
         var isLoggedIn = LoginMixin.isLoggedIn();
         if (isLoggedIn == false){
-            content = (
-                React.createElement(LoginApp, null)
-            );
+            content = this.getNotLoggedInContent();
         }else{
             if (role == 'student'){
                 content = this.getStudentRouter();
@@ -77091,7 +81287,7 @@ React.render((React.createElement(App, null)
 
 ), document.getElementById('main'));
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../mixins/LoginMixin":742,"./ClassApp":522,"./DevApp":523,"./DictionaryApp":524,"./ExercisesApp":525,"./GrammarApp":526,"./IdiomsApp":527,"./IndexApp":528,"./LoginApp":529,"./MaterialsApp":530,"./NotesApp":531,"./NotificationsApp":532,"./SimpleDev":533,"./ToolsApp":534,"./TopicsApp":535,"./student/StudentClassApp":536,"./student/StudentIndexApp":537,"history":16,"object-assign":33,"react":518,"react-router":298}],522:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../mixins/LoginMixin":780,"./ClassApp":536,"./DevApp":537,"./DictionaryApp":538,"./ExercisesApp":539,"./GrammarApp":540,"./IdiomsApp":541,"./IndexApp":542,"./LoginApp":543,"./MaterialsApp":544,"./NoMatchApp":545,"./NotesApp":546,"./NotificationsApp":547,"./SimpleDev":548,"./ToolsApp":549,"./TopicsApp":550,"./shared/SharedClassApp":551,"./student/StudentClassApp":552,"./student/StudentIndexApp":553,"history":17,"object-assign":34,"react":527,"react-router":307}],536:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -77135,6 +81331,8 @@ var EditClassButton = require('../../components/class/buttons/EditClassButton');
 
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var ClassApp = React.createClass({displayName: "ClassApp",
     mixins: [Router.Navigation],
@@ -77329,6 +81527,9 @@ var ClassApp = React.createClass({displayName: "ClassApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {addClassMode: true, teacherId: this.state.user.id, 
                                                    selectedClassId: this.props.params.classId, 
                                                    onClassCreated: this.onClassCreated, 
@@ -77496,7 +81697,7 @@ var ClassApp = React.createClass({displayName: "ClassApp",
 
 module.exports = ClassApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/card/UsersCardsList":549,"../../components/class/buttons/EditClassButton":552,"../../components/class/check/CheckUsersListDashboard":556,"../../components/class/header/ClassHeader":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/class/tabs/ClassTab":563,"../../components/class/tabs/ClassTabsNamePanel":564,"../../components/class/tasks/TaskPanel":566,"../../components/dialog/exercise/ExerciseDialogClickableArea":578,"../../components/dialog/exercise/ExerciseDialogViewer":580,"../../components/feed/SelfLoadingClassFeed":607,"../../components/header/teacher/TeacherHeader":615,"../../components/help/GifInstruction":616,"../../components/help/IconMessage":617,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518,"react-router":298}],523:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/card/UsersCardsList":565,"../../components/class/buttons/EditClassButton":581,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/class/tasks/TaskPanel":596,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/feed/SelfLoadingClassFeed":638,"../../components/header/teacher/TeacherHeader":649,"../../components/help/GifInstruction":650,"../../components/help/IconMessage":651,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527,"react-router":307}],537:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -77593,8 +81794,18 @@ var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchP
 
 var SelfLoadingKaraokePlayerPanel = require('../../components/karaoke/SelfLoadingKaraokePlayerPanel');
 
-
 var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
+
+var GrammarPanel = require('../../components/grammar/GrammarPanel');
+
+var SelfLoadingUserProgressPanel = require('../../components/chart/SelfLoadingUserProgressPanel');
+
+var MessagesList = require('../../components/chat/messages/MessagesList');
+
+var ChatPanel = require('../../components/chat/ChatPanel');
+var ChatButton = require('../../components/chat/ChatButton');
+
+var FileUploadButton = require('../../components/file/FileUploadButton');
 
 var DevApp = React.createClass({displayName: "DevApp",
     getDefaultProps: function () {
@@ -77751,11 +81962,14 @@ var DevApp = React.createClass({displayName: "DevApp",
 
     getContent: function(){
         var userId = this.state.user.id;
+        var messages = [];
 
         return (
-            React.createElement("div", null, 
+            React.createElement("div", {style: {padding: 10}}, 
 
-                React.createElement(KaraokeGroupsPanel, null)
+                React.createElement(ChatPanel, {userId: userId, role: this.state.user.role}), 
+
+                React.createElement(ChatButton, {friendId: 'akkOJiYay9'})
 
             )
 
@@ -77784,7 +81998,7 @@ var DevApp = React.createClass({displayName: "DevApp",
 
 module.exports = DevApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/buttons/student/AddClassPlusButton":554,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/corrector/CorrectorHelpButton":567,"../../components/corrector/CorrectorPanel":568,"../../components/corrector/sounds/SoundsList":570,"../../components/corrector/sounds/SoundsPanel":571,"../../components/corrector/words/WordsPanel":572,"../../components/exercise/diff/RightTextAnswerDiff":596,"../../components/exercise/search/ExercisesSearchButton":602,"../../components/exercise/search/ExercisesSearchPanel":603,"../../components/feed/FeedItem":604,"../../components/feed/SelfLoadingClassFeed":607,"../../components/feed/SelfLoadingFeedItem":608,"../../components/feed/SelfLoadingUpdateFeedItem":609,"../../components/feed/button/EditFeedItemButton":611,"../../components/feed/video/SelfLoadingVideosList":612,"../../components/header/teacher/TeacherHeader":615,"../../components/karaoke/KaraokeGroupsPanel":624,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":627,"../../components/material/MaterialTags":632,"../../components/material/buttons/MaterialCreateButton":633,"../../components/material/dialogs/MaterialDialog":635,"../../components/material/groups/MaterialGroupCard":641,"../../components/material/search/MaterialSearchButton":651,"../../components/material/search/MaterialsSearchPanel":652,"../../components/notification/SelfLoadingNotificationsList":669,"../../components/player/VimeoPlayer":673,"../../components/profile/UserProfilePanel":679,"../../components/sausage/FirstLevelPanelsList":683,"../../components/search/youtube/YoutubeSearchPanel":689,"../../components/search/youtube/checkbox/CategoryCheckboxesList":691,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/text/translatable/WordItem":706,"../../components/translate/TranslateButton":719,"../../components/user/RoleSelector":726,"../../components/video/youtube/YoutubeEmbedPlayer":730,"../../components/vocabulary/VocabularyPanel":734,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"../../mixins/MaterialsMixin":743,"../../mixins/MigrationMixin":744,"../../mixins/TranslateMixin":749,"../../mixins/UserMixin":750,"./LoginApp":529,"object-assign":33,"react-diff":110,"react-player":261,"react-speech":332,"react/addons":345}],524:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/chart/SelfLoadingUserProgressPanel":567,"../../components/chat/ChatButton":568,"../../components/chat/ChatPanel":570,"../../components/chat/messages/MessagesList":575,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":627,"../../components/exercise/search/ExercisesSearchButton":633,"../../components/exercise/search/ExercisesSearchPanel":634,"../../components/feed/FeedItem":635,"../../components/feed/SelfLoadingClassFeed":638,"../../components/feed/SelfLoadingFeedItem":639,"../../components/feed/SelfLoadingUpdateFeedItem":640,"../../components/feed/button/EditFeedItemButton":642,"../../components/feed/video/SelfLoadingVideosList":643,"../../components/file/FileUploadButton":644,"../../components/grammar/GrammarPanel":646,"../../components/header/teacher/TeacherHeader":649,"../../components/karaoke/KaraokeGroupsPanel":658,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":661,"../../components/material/MaterialTags":666,"../../components/material/buttons/MaterialCreateButton":667,"../../components/material/dialogs/MaterialDialog":669,"../../components/material/groups/MaterialGroupCard":675,"../../components/material/search/MaterialSearchButton":685,"../../components/material/search/MaterialsSearchPanel":686,"../../components/notification/SelfLoadingNotificationsList":703,"../../components/player/VimeoPlayer":707,"../../components/profile/UserProfilePanel":714,"../../components/sausage/FirstLevelPanelsList":718,"../../components/search/youtube/YoutubeSearchPanel":724,"../../components/search/youtube/checkbox/CategoryCheckboxesList":726,"../../components/segment/LoadingSegment":727,"../../components/templates/LeftSidebarTemplate":737,"../../components/text/translatable/WordItem":742,"../../components/translate/TranslateButton":755,"../../components/user/RoleSelector":762,"../../components/video/youtube/YoutubeEmbedPlayer":767,"../../components/vocabulary/VocabularyPanel":771,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"../../mixins/MaterialsMixin":781,"../../mixins/MigrationMixin":782,"../../mixins/TranslateMixin":787,"../../mixins/UserMixin":788,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],538:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -77808,6 +82022,8 @@ var LoginApp = require('./LoginApp');
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var DictionaryApp = React.createClass({displayName: "DictionaryApp",
     getDefaultProps: function () {
@@ -77865,6 +82081,9 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                                                     addClassMode: true, selectedClassId: this.props.params.classId})
 
@@ -77922,7 +82141,7 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
 
 module.exports = DictionaryApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/vocabulary/VocabularyPanel":734,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],525:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../components/vocabulary/VocabularyPanel":771,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],539:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -77969,6 +82188,7 @@ var CreateNewExerciseButton = require('../../components/exercise/create/button/C
 
 var CreateNewExerciseGroupButton = require('../../components/bunch/exercise/CreateNewExerciseGroupButton');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var ExercisesApp = React.createClass({displayName: "ExercisesApp",
     getDefaultProps: function () {
@@ -78069,8 +82289,12 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
     getSidebar: function(){
         return (
             React.createElement("div", {style: this.componentStyle.exercisesListPlaceholder}, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                     selectedClassId: this.props.params.classId})
+
             )
         );
     },
@@ -78167,7 +82391,7 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
 module.exports = ExercisesApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/bunch/exercise/CreateNewExerciseGroupButton":540,"../../components/bunch/exercise/ExercisesBunch":541,"../../components/bunch/exercise/ExercisesGroupsList":542,"../../components/card/ExerciseCard":545,"../../components/card/ExercisesPagedCardsList":547,"../../components/card/UsersCardsList":549,"../../components/class/check/CheckUsersListDashboard":556,"../../components/class/header/ClassHeader":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/class/tabs/ClassTab":563,"../../components/class/tabs/ClassTabsNamePanel":564,"../../components/dialog/exercise/ExerciseDialogClickableArea":578,"../../components/dialog/exercise/ExerciseDialogViewer":580,"../../components/exercise/create/button/CreateNewExerciseButton":595,"../../components/header/teacher/TeacherHeader":615,"../../components/help/GifInstruction":616,"../../components/help/IconMessage":617,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/ExerciseMixin":737,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],526:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/bunch/exercise/CreateNewExerciseGroupButton":556,"../../components/bunch/exercise/ExercisesBunch":557,"../../components/bunch/exercise/ExercisesGroupsList":558,"../../components/card/ExerciseCard":561,"../../components/card/ExercisesPagedCardsList":563,"../../components/card/UsersCardsList":565,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/exercise/create/button/CreateNewExerciseButton":626,"../../components/header/teacher/TeacherHeader":649,"../../components/help/GifInstruction":650,"../../components/help/IconMessage":651,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/ExerciseMixin":775,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],540:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78189,6 +82413,10 @@ var LoadingSegment = require('../../components/segment/LoadingSegment');
 var LoginApp = require('./LoginApp');
 
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
+
+var GrammarPanel = require('../../components/grammar/GrammarPanel');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var GrammarApp = React.createClass({displayName: "GrammarApp",
     getDefaultProps: function () {
@@ -78246,6 +82474,9 @@ var GrammarApp = React.createClass({displayName: "GrammarApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                                                     addClassMode: true, selectedClassId: this.props.params.classId})
             )
@@ -78273,7 +82504,7 @@ var GrammarApp = React.createClass({displayName: "GrammarApp",
         return (
             React.createElement("div", null, 
 
-                "Under construction"
+                React.createElement(GrammarPanel, {teacherId: this.state.user.id})
 
             )
 
@@ -78302,7 +82533,7 @@ var GrammarApp = React.createClass({displayName: "GrammarApp",
 
 module.exports = GrammarApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],527:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/grammar/GrammarPanel":646,"../../components/header/teacher/TeacherHeader":649,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],541:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78326,6 +82557,8 @@ var LoginApp = require('./LoginApp');
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var IdiomsPanel = require('../../components/idioms/IdiomsPanel');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var IdiomsApp = React.createClass({displayName: "IdiomsApp",
     getDefaultProps: function () {
@@ -78383,6 +82616,9 @@ var IdiomsApp = React.createClass({displayName: "IdiomsApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                                                     addClassMode: true, selectedClassId: this.props.params.classId})
             )
@@ -78439,7 +82675,7 @@ var IdiomsApp = React.createClass({displayName: "IdiomsApp",
 
 module.exports = IdiomsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/idioms/IdiomsPanel":618,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],528:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/idioms/IdiomsPanel":652,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],542:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78463,6 +82699,8 @@ var LoginApp = require('./LoginApp');
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var Sausage = require('../../components/sausage/Sausage');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var IndexApp = React.createClass({displayName: "IndexApp",
     getDefaultProps: function () {
@@ -78521,9 +82759,11 @@ var IndexApp = React.createClass({displayName: "IndexApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                     addClassMode: true, selectedClassId: this.props.params.classId})
-
             )
         );
     },
@@ -78578,7 +82818,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/sausage/Sausage":684,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],529:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/sausage/Sausage":719,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],543:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78588,6 +82828,8 @@ var assign = require('object-assign');
 
 var AuthForm = require('../../components/user/AuthForm');
 var LoginMixin = require('../../mixins/LoginMixin')
+
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
 
 var LoginApp = React.createClass({displayName: "LoginApp",
     getDefaultProps: function () {
@@ -78613,7 +82855,8 @@ var LoginApp = React.createClass({displayName: "LoginApp",
     onLogin: function(){
         //LoginMixin.lo
         console.log('onLogin occured - redirecting');
-        window.location.reload();
+        //window.location.reload();
+        CommonMixin.forceTransitionTo('/#/');
     },
 
     componentStyle: {
@@ -78655,7 +82898,7 @@ var LoginApp = React.createClass({displayName: "LoginApp",
 
 module.exports = LoginApp;
 
-},{"../../components/user/AuthForm":723,"../../mixins/LoginMixin":742,"object-assign":33,"react":518}],530:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../components/user/AuthForm":759,"../../mixins/LoginMixin":780,"object-assign":34,"react":527}],544:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78682,6 +82925,8 @@ var MaterialCard = require('../../components/material/list/MaterialCard');
 var PagedCardsList = require('../../components/material/list/PagedCardsList');
 
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var IndexApp = React.createClass({displayName: "IndexApp",
     getDefaultProps: function () {
@@ -78738,6 +82983,9 @@ var IndexApp = React.createClass({displayName: "IndexApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                     selectedClassId: this.props.params.classId})
             )
@@ -78807,7 +83055,86 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/material/list/MaterialCard":646,"../../components/material/list/PagedCardsList":649,"../../components/material/list/SelfLoadingMaterialsList":650,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/LoginMixin":742,"../../mixins/MaterialsMixin":743,"./LoginApp":529,"object-assign":33,"react":518}],531:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/material/list/MaterialCard":680,"../../components/material/list/PagedCardsList":683,"../../components/material/list/SelfLoadingMaterialsList":684,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/LoginMixin":780,"../../mixins/MaterialsMixin":781,"./LoginApp":543,"object-assign":34,"react":527}],545:[function(require,module,exports){
+/**
+ * Created by sabir on 02.12.15.
+ */
+
+var React = require('react/addons');
+var assign = require('object-assign');
+
+var LeftSidebarTemplate = require('../../components/templates/LeftSidebarTemplate');
+
+var LoginMixin = require('../../mixins/LoginMixin');
+
+var NoMatchApp = React.createClass({displayName: "NoMatchApp",
+    getDefaultProps: function () {
+        return {
+            teacherId: 'jnM2pCK62I'
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            text: 'color',
+            start: 0,
+            end: 0,
+            //url: 'http://www.youtube.com/watch?v=e-ORhEE9VVg',
+            url: 'http://www.youtube.com/watch?v=fOdOw_Dsf54',
+            loading: false,
+            users: [],
+            selectedTabName: 'users',
+            loggedIn: false,
+            user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser()
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        }
+    },
+
+
+    getFooter: function(){
+
+    },
+
+
+
+    onPause: function(){
+        this.setState({
+
+        });
+    },
+
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                "404 ", React.createElement("br", null), 
+                "Not found"
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = NoMatchApp;
+
+},{"../../components/templates/LeftSidebarTemplate":737,"../../mixins/LoginMixin":780,"object-assign":34,"react/addons":354}],546:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -78846,6 +83173,8 @@ var UpdateGroupButton = require('../../components/note/UpdateGroupButton');
 var NotesGroupsList = require('../../components/note/list/NotesGroupsList');
 
 var NotesGroupSelect = require('../../components/note/select/NotesGroupSelect');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var NotesApp = React.createClass({displayName: "NotesApp",
     getDefaultProps: function () {
@@ -79064,6 +83393,9 @@ var NotesApp = React.createClass({displayName: "NotesApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                     selectedClassId: this.props.params.classId})
             )
@@ -79308,7 +83640,7 @@ var NotesApp = React.createClass({displayName: "NotesApp",
 
 module.exports = NotesApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/buttons/DeleteButton":543,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/help/GifInstruction":616,"../../components/note/CreateNewNoteButton":653,"../../components/note/CreateNewNotesGroupButton":654,"../../components/note/SelfLoadingUpdatableNote":657,"../../components/note/SelfLoadingUpdateNotePanel":658,"../../components/note/UpdateGroupButton":659,"../../components/note/list/NotesGroupsList":662,"../../components/note/list/NotesList":663,"../../components/note/select/NotesGroupSelect":664,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"../../mixins/NotesMixin":745,"./LoginApp":529,"object-assign":33,"react":518}],532:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/buttons/DeleteButton":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/help/GifInstruction":650,"../../components/note/CreateNewNoteButton":687,"../../components/note/CreateNewNotesGroupButton":688,"../../components/note/SelfLoadingUpdatableNote":691,"../../components/note/SelfLoadingUpdateNotePanel":692,"../../components/note/UpdateGroupButton":693,"../../components/note/list/NotesGroupsList":696,"../../components/note/list/NotesList":697,"../../components/note/select/NotesGroupSelect":698,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"../../mixins/NotesMixin":783,"./LoginApp":543,"object-assign":34,"react":527}],547:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -79332,6 +83664,8 @@ var LoginApp = require('./LoginApp');
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var SelfLoadingNotificationsList = require('../../components/notification/SelfLoadingNotificationsList');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var NotificationsApp = React.createClass({displayName: "NotificationsApp",
     getDefaultProps: function () {
@@ -79390,6 +83724,9 @@ var NotificationsApp = React.createClass({displayName: "NotificationsApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                                                     addClassMode: true, selectedClassId: this.props.params.classId})
 
@@ -79444,7 +83781,7 @@ var NotificationsApp = React.createClass({displayName: "NotificationsApp",
 
 module.exports = NotificationsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/notification/SelfLoadingNotificationsList":669,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],533:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/notification/SelfLoadingNotificationsList":703,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],548:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -79473,6 +83810,12 @@ var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
 
 var MigrationMixin = require('../../mixins/MigrationMixin');
 
+var SharedClassPanel = require('../../components/class/share/SharedClassPanel');
+
+var CardTypeSelectButton = require('../../components/exercise/create/CardTypeSelectButton');
+
+var PatientPlayer = require('../../components/player/PatientPlayer');
+var VimeoPlayer = require('../../components/player/VimeoPlayer');
 
 var SimpleDev = React.createClass({displayName: "SimpleDev",
     getDefaultProps: function () {
@@ -79553,7 +83896,6 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
                 self.loadMaterials();
             });
 
-
         });
     },
 
@@ -79562,7 +83904,7 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
 
-                React.createElement("button", {onClick: this.loadMaterials}, " load ")
+                React.createElement(VimeoPlayer, {vimeoId: '147818654'})
 
 
             )
@@ -79573,7 +83915,7 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
 
 module.exports = SimpleDev;
 
-},{"../../components/background/video/VideoBackground":539,"../../components/player/PatientPlayer":672,"../../components/templates/LeftSidebarTemplate":701,"../../components/text/translatable/TranslatableText":705,"../../components/text/translatable/WordItem":706,"../../components/vocabulary/VocabularyPanel":734,"../../mixins/LoginMixin":742,"../../mixins/MigrationMixin":744,"object-assign":33,"react-tooltip":334,"react/addons":345}],534:[function(require,module,exports){
+},{"../../components/background/video/VideoBackground":555,"../../components/class/share/SharedClassPanel":592,"../../components/exercise/create/CardTypeSelectButton":619,"../../components/player/PatientPlayer":706,"../../components/player/VimeoPlayer":707,"../../components/templates/LeftSidebarTemplate":737,"../../components/text/translatable/TranslatableText":741,"../../components/text/translatable/WordItem":742,"../../components/vocabulary/VocabularyPanel":771,"../../mixins/LoginMixin":780,"../../mixins/MigrationMixin":782,"object-assign":34,"react-tooltip":343,"react/addons":354}],549:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -79815,7 +84157,7 @@ var ToolsApp = React.createClass({displayName: "ToolsApp",
 
 module.exports = ToolsApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/buttons/student/AddClassPlusButton":554,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/corrector/CorrectorHelpButton":567,"../../components/corrector/CorrectorPanel":568,"../../components/corrector/sounds/SoundsList":570,"../../components/corrector/sounds/SoundsPanel":571,"../../components/corrector/words/WordsPanel":572,"../../components/exercise/diff/RightTextAnswerDiff":596,"../../components/exercise/search/ExercisesSearchButton":602,"../../components/exercise/search/ExercisesSearchPanel":603,"../../components/feed/FeedItem":604,"../../components/feed/SelfLoadingClassFeed":607,"../../components/feed/SelfLoadingFeedItem":608,"../../components/feed/SelfLoadingUpdateFeedItem":609,"../../components/feed/button/EditFeedItemButton":611,"../../components/feed/video/SelfLoadingVideosList":612,"../../components/header/teacher/TeacherHeader":615,"../../components/material/MaterialTags":632,"../../components/material/buttons/MaterialCreateButton":633,"../../components/material/dialogs/MaterialDialog":635,"../../components/material/search/MaterialSearchButton":651,"../../components/material/search/MaterialsSearchPanel":652,"../../components/notification/SelfLoadingNotificationsList":669,"../../components/player/VimeoPlayer":673,"../../components/sausage/FirstLevelPanelsList":683,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/text/translatable/TranslatableText":705,"../../components/translate/TranslateButton":719,"../../components/user/RoleSelector":726,"../../components/video/youtube/YoutubeEmbedPlayer":730,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"../../mixins/MaterialsMixin":743,"../../mixins/MigrationMixin":744,"../../mixins/UserMixin":750,"./LoginApp":529,"object-assign":33,"react-diff":110,"react-player":261,"react-speech":332,"react/addons":345}],535:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":627,"../../components/exercise/search/ExercisesSearchButton":633,"../../components/exercise/search/ExercisesSearchPanel":634,"../../components/feed/FeedItem":635,"../../components/feed/SelfLoadingClassFeed":638,"../../components/feed/SelfLoadingFeedItem":639,"../../components/feed/SelfLoadingUpdateFeedItem":640,"../../components/feed/button/EditFeedItemButton":642,"../../components/feed/video/SelfLoadingVideosList":643,"../../components/header/teacher/TeacherHeader":649,"../../components/material/MaterialTags":666,"../../components/material/buttons/MaterialCreateButton":667,"../../components/material/dialogs/MaterialDialog":669,"../../components/material/search/MaterialSearchButton":685,"../../components/material/search/MaterialsSearchPanel":686,"../../components/notification/SelfLoadingNotificationsList":703,"../../components/player/VimeoPlayer":707,"../../components/sausage/FirstLevelPanelsList":718,"../../components/segment/LoadingSegment":727,"../../components/templates/LeftSidebarTemplate":737,"../../components/text/translatable/TranslatableText":741,"../../components/translate/TranslateButton":755,"../../components/user/RoleSelector":762,"../../components/video/youtube/YoutubeEmbedPlayer":767,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"../../mixins/MaterialsMixin":781,"../../mixins/MigrationMixin":782,"../../mixins/UserMixin":788,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],550:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -79849,6 +84191,8 @@ var SelfLoadingTopicDialog = require('../../components/topics/dialog/SelfLoading
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
 
 var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 
 var TopicsApp = React.createClass({displayName: "TopicsApp",
@@ -79933,6 +84277,9 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
     getSidebar: function(){
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(SelfLoadingLeftSidebarClassesList, {teacherId: this.state.user.id, 
                                                     addClassMode: true, selectedClassId: this.props.params.classId})
 
@@ -80036,7 +84383,84 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
 
 module.exports = TopicsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../components/header/teacher/TeacherHeader":615,"../../components/karaoke/KaraokeGroupsPanel":624,"../../components/material/list/SelfLoadingMaterialsList":650,"../../components/segment/LoadingSegment":692,"../../components/templates/LeftSidebarTemplate":701,"../../components/topics/SelfLoadingTopicsList":710,"../../components/topics/TopicsList":712,"../../components/topics/dialog/SelfLoadingTopicDialog":713,"../../components/topics/dialog/TopicDialog":714,"../../components/topics/panels/TopicPanel":718,"../../mixins/ClassMixin":736,"../../mixins/LoginMixin":742,"./LoginApp":529,"object-assign":33,"react":518}],536:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/karaoke/KaraokeGroupsPanel":658,"../../components/material/list/SelfLoadingMaterialsList":684,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../components/topics/SelfLoadingTopicsList":746,"../../components/topics/TopicsList":748,"../../components/topics/dialog/SelfLoadingTopicDialog":749,"../../components/topics/dialog/TopicDialog":750,"../../components/topics/panels/TopicPanel":754,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],551:[function(require,module,exports){
+/**
+ * Created by sabir on 02.12.15.
+ */
+
+
+var React = require('react/addons');
+var assign = require('object-assign');
+
+var LoginMixin = require('../../../mixins/LoginMixin');
+
+var SharedClassPanel = require('../../../components/class/share/SharedClassPanel');
+
+
+var SharedClassApp = React.createClass({displayName: "SharedClassApp",
+    getDefaultProps: function () {
+        return {
+            teacherId: 'jnM2pCK62I'
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            text: 'color',
+            start: 0,
+            end: 0,
+            //url: 'http://www.youtube.com/watch?v=e-ORhEE9VVg',
+            url: 'http://www.youtube.com/watch?v=fOdOw_Dsf54',
+            loading: false,
+            users: [],
+            selectedTabName: 'users',
+            loggedIn: false,
+            user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser()
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        }
+    },
+
+
+    getFooter: function(){
+
+    },
+
+
+
+    onPause: function(){
+        this.setState({
+
+        });
+    },
+
+
+    render: function () {
+        var classId = this.props.params.classId;
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                React.createElement(SharedClassPanel, {classId: classId, user: this.state.user})
+            )
+        );
+    }
+
+});
+
+module.exports = SharedClassApp;
+
+},{"../../../components/class/share/SharedClassPanel":592,"../../../mixins/LoginMixin":780,"object-assign":34,"react/addons":354}],552:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -80084,7 +84508,9 @@ var StudentSelfLoadingLeftSidebarClassesList = require('../../../components/clas
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 
+var SilentAddToClassComponent = require('../../../components/class/SilentAddToClassComponent');
 
+var SidebarChatButton = require('../../../components/sidebar/SidebarChatButton');
 
 var StudentClassApp = React.createClass({displayName: "StudentClassApp",
     mixins: [Router.Navigation],
@@ -80094,7 +84520,9 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
             headerLinks: [
 
             ],
-            teacherId: 'jnM2pCK62I'
+            teacherId: 'jnM2pCK62I',
+
+            silentAddMode: true
         }
     },
 
@@ -80203,6 +84631,9 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
         var classId = (this.props.params == undefined) ? undefined : this.props.params.classId;
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(StudentSelfLoadingLeftSidebarClassesList, {userId: this.state.user.id, 
                                                            addClassMode: true, 
                                                            selectedClassId: classId})
@@ -80225,6 +84656,10 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
 
     onClassLeft: function(){
         CommonMixin.forceTransitionTo('/#/');
+    },
+
+    onAddedToClass: function(){
+
     },
 
     getContent: function(){
@@ -80253,7 +84688,12 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
                         React.createElement(SelfLoadingClassFeed, {userId: userId, teacherMode: false, classId: classId})
                     )
 
-                )
+                ), 
+
+                this.props.silentAddMode == false ? null :
+                    React.createElement(SilentAddToClassComponent, {classId: classId, userId: userId}), 
+                
+                React.createElement(SilentAddToClassComponent, null)
             )
         );
     },
@@ -80274,7 +84714,7 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
 
 module.exports = StudentClassApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../components/card/UsersCardsList":549,"../../../components/class/buttons/student/LeaveClassButton":555,"../../../components/class/check/CheckUsersListDashboard":556,"../../../components/class/header/ClassHeader":559,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":561,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":562,"../../../components/class/tabs/ClassTab":563,"../../../components/class/tabs/ClassTabsNamePanel":564,"../../../components/class/tasks/TaskPanel":566,"../../../components/dialog/exercise/ExerciseDialogClickableArea":578,"../../../components/dialog/exercise/ExerciseDialogViewer":580,"../../../components/feed/SelfLoadingClassFeed":607,"../../../components/header/student/StudentHeader":614,"../../../components/help/GifInstruction":616,"../../../components/help/IconMessage":617,"../../../components/segment/LoadingSegment":692,"../../../components/templates/LeftSidebarTemplate":701,"../../../mixins/ClassMixin":736,"../../../mixins/LoginMixin":742,"../LoginApp":529,"object-assign":33,"react":518,"react-router":298}],537:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../components/card/UsersCardsList":565,"../../../components/class/SilentAddToClassComponent":578,"../../../components/class/buttons/student/LeaveClassButton":584,"../../../components/class/check/CheckUsersListDashboard":585,"../../../components/class/header/ClassHeader":588,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/class/tabs/ClassTab":593,"../../../components/class/tabs/ClassTabsNamePanel":594,"../../../components/class/tasks/TaskPanel":596,"../../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../../components/dialog/exercise/ExerciseDialogViewer":611,"../../../components/feed/SelfLoadingClassFeed":638,"../../../components/header/student/StudentHeader":648,"../../../components/help/GifInstruction":650,"../../../components/help/IconMessage":651,"../../../components/segment/LoadingSegment":727,"../../../components/sidebar/SidebarChatButton":730,"../../../components/templates/LeftSidebarTemplate":737,"../../../mixins/ClassMixin":774,"../../../mixins/LoginMixin":780,"../LoginApp":543,"object-assign":34,"react":527,"react-router":307}],553:[function(require,module,exports){
 
 var React = require('react');
 var assign = require('object-assign');
@@ -80298,6 +84738,7 @@ var StudentHeader = require('../../../components/header/student/StudentHeader');
 
 var AddClassButton = require('../../../components/class/buttons/student/AddClassButton');
 
+var SidebarChatButton = require('../../../components/sidebar/SidebarChatButton');
 
 
 var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
@@ -80372,6 +84813,9 @@ var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
         var classId = (this.props.params == undefined) ? undefined : this.props.params.classId;
         return (
             React.createElement("div", null, 
+
+                React.createElement(SidebarChatButton, null), 
+
                 React.createElement(StudentSelfLoadingLeftSidebarClassesList, {userId: this.state.user.id, 
                                                            addClassMode: true, 
                                                            selectedClassId: classId})
@@ -80460,7 +84904,7 @@ var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
 
 module.exports = StudentIndexApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../components/class/buttons/student/AddClassButton":553,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":562,"../../../components/header/student/StudentHeader":614,"../../../components/segment/LoadingSegment":692,"../../../components/templates/LeftSidebarTemplate":701,"../../../mixins/ClassMixin":736,"../../../mixins/LoginMixin":742,"object-assign":33,"react":518}],538:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../components/class/buttons/student/AddClassButton":582,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/header/student/StudentHeader":648,"../../../components/segment/LoadingSegment":727,"../../../components/sidebar/SidebarChatButton":730,"../../../components/templates/LeftSidebarTemplate":737,"../../../mixins/ClassMixin":774,"../../../mixins/LoginMixin":780,"object-assign":34,"react":527}],554:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -80528,7 +84972,7 @@ var PatientAudio = React.createClass({displayName: "PatientAudio",
 
 module.exports = PatientAudio;
 
-},{"object-assign":33,"react":518,"react-sound":331}],539:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-sound":340}],555:[function(require,module,exports){
 /**
  * Created by sabir on 24.11.15.
  */
@@ -80543,7 +84987,7 @@ var VideoBackground = React.createClass({displayName: "VideoBackground",
             opacity: 0.5,
             height: 500,
             logo: 'http://abali.ru/wp-content/uploads/2013/03/emblema_mfti.png',
-            videoSrc: 'http://app.englishpatient.org/assets/img/video.mp4'
+            videoSrc: 'https://englishpatient.org/app/assets/img/video.mp4'
         }
     },
 
@@ -80720,7 +85164,7 @@ var VideoBackground = React.createClass({displayName: "VideoBackground",
 
 module.exports = VideoBackground;
 
-},{"object-assign":33,"react":518}],540:[function(require,module,exports){
+},{"object-assign":34,"react":527}],556:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -80814,7 +85258,7 @@ var CreateNewExerciseGroupButton = React.createClass({displayName: "CreateNewExe
 
 module.exports = CreateNewExerciseGroupButton;
 
-},{"../../dialog/bunch/EditBunchDialog":577,"object-assign":33,"react":518}],541:[function(require,module,exports){
+},{"../../dialog/bunch/EditBunchDialog":608,"object-assign":34,"react":527}],557:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -81007,7 +85451,7 @@ var ExercisesBunch = React.createClass({displayName: "ExercisesBunch",
 
 module.exports = ExercisesBunch;
 
-},{"../../card/ExercisesPagedCardsList":547,"../../dialog/bunch/EditBunchDialog":577,"object-assign":33,"react":518}],542:[function(require,module,exports){
+},{"../../card/ExercisesPagedCardsList":563,"../../dialog/bunch/EditBunchDialog":608,"object-assign":34,"react":527}],558:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -81102,7 +85546,7 @@ var ExercisesGroupsList = React.createClass({displayName: "ExercisesGroupsList",
 
 module.exports = ExercisesGroupsList;
 
-},{"./ExercisesBunch":541,"object-assign":33,"react":518}],543:[function(require,module,exports){
+},{"./ExercisesBunch":557,"object-assign":34,"react":527}],559:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -81214,7 +85658,7 @@ var DeleteButton = React.createClass({displayName: "DeleteButton",
 
 module.exports = DeleteButton;
 
-},{"object-assign":33,"react":518}],544:[function(require,module,exports){
+},{"object-assign":34,"react":527}],560:[function(require,module,exports){
 /**
  * Created by sabir on 17.09.15.
  */
@@ -81321,7 +85765,7 @@ var RecordStopButton = React.createClass({displayName: "RecordStopButton",
 
 module.exports = RecordStopButton;
 
-},{"object-assign":33,"react":518}],545:[function(require,module,exports){
+},{"object-assign":34,"react":527}],561:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -81583,7 +86027,7 @@ var ExerciseCard = React.createClass({displayName: "ExerciseCard",
 
 module.exports = ExerciseCard;
 
-},{"../dialog/exercise/ExerciseDialogViewer":580,"object-assign":33,"react":518}],546:[function(require,module,exports){
+},{"../dialog/exercise/ExerciseDialogViewer":611,"object-assign":34,"react":527}],562:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -81671,7 +86115,7 @@ var ExercisesCardsList = React.createClass({displayName: "ExercisesCardsList",
 
 module.exports = ExercisesCardsList;
 
-},{"./ExerciseCard":545,"object-assign":33,"react":518}],547:[function(require,module,exports){
+},{"./ExerciseCard":561,"object-assign":34,"react":527}],563:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -81833,7 +86277,7 @@ var ExercisesPagedCardsList = React.createClass({displayName: "ExercisesPagedCar
 
 module.exports = ExercisesPagedCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"./ExercisesCardsList":546,"object-assign":33,"react":518}],548:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"./ExercisesCardsList":562,"object-assign":34,"react":527}],564:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -81843,6 +86287,7 @@ var assign = require('object-assign');
 var moment = require('moment');
 
 var ProfileUpdateButton = require('../profile/ProfileUpdateButton');
+var ProfileStatButton = require('../profile/ProfileStatButton');
 
 var UserCard = React.createClass({displayName: "UserCard",
     getDefaultProps: function () {
@@ -81924,16 +86369,26 @@ var UserCard = React.createClass({displayName: "UserCard",
                             ), 
                         
 
+                    React.createElement("div", null, 
                         this.props.stasiMode == false ? null :
-                            React.createElement("div", null, 
+
                                 React.createElement(ProfileUpdateButton, {userId: this.props.userId, 
                                                      email: this.props.email, 
                                                      name: this.props.name, 
                                                      avatar: this.props.avatar, 
                                                      timestamp: this.props.timestamp, 
-                                                     onUserDelete: this.onUserDelete})
-                            )
+                                                     onUserDelete: this.onUserDelete}), 
+
                         
+
+                        React.createElement(ProfileStatButton, {userId: this.props.userId, name: this.props.name})
+
+
+
+
+                    )
+
+
 
 
 
@@ -81947,7 +86402,7 @@ var UserCard = React.createClass({displayName: "UserCard",
 
 module.exports = UserCard;
 
-},{"../profile/ProfileUpdateButton":676,"moment":32,"object-assign":33,"react":518}],549:[function(require,module,exports){
+},{"../profile/ProfileStatButton":710,"../profile/ProfileUpdateButton":711,"moment":33,"object-assign":34,"react":527}],565:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -82026,7 +86481,1935 @@ var UsersCardsList = React.createClass({displayName: "UsersCardsList",
 
 module.exports = UsersCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"./UserCard":548,"object-assign":33,"react":518}],550:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"./UserCard":564,"object-assign":34,"react":527}],566:[function(require,module,exports){
+/**
+ * Created by sabir on 14.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var LineChart = require("react-chartjs").Line;
+var moment = require('moment');
+
+var ExercisesProgressChart = React.createClass({displayName: "ExercisesProgressChart",
+    getDefaultProps: function () {
+        return {
+            userAnswers: [],
+            daysNumber: 7,
+            ticksNumber: 7
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: '100%',
+            height: '100%'
+
+        },
+
+        noDataPanel: {
+            color: '#A1A4AA',
+            textAlign: 'center',
+            paddingTop: 150,
+            paddingBottom: 150,
+            fontSize: 26
+        }
+    },
+
+
+
+    getDaysArray: function(){
+        var arr = [];
+        var list = this.props.userAnswers;
+        var daysMap = {};
+        var minStart = +moment().startOf('day').format('x');
+        var maxStart = 0;
+        for (var i in list){
+            var t = list[i].timestamp;
+            var start = +moment(t).startOf('day').format('x');
+            if (start < minStart){
+                minStart = start;
+            }
+            if (start > maxStart){
+                maxStart = start;
+            }
+            if (daysMap[start] == undefined){
+                daysMap[start] = {
+                    answers: []
+                }
+            }
+            daysMap[start].answers.push(list[i]);
+        }
+        if (maxStart == 0){
+            return [];
+        }
+        maxStart = +moment().startOf('day').format('x');
+        var dayT = 24 * 60 * 60 * 1000;
+        var t = minStart - 1000 * dayT ;
+        while (t <= maxStart){
+            if (daysMap[t] == undefined){
+                daysMap[t] = {
+                    answers: []
+                }
+            }
+            t+=dayT;
+        }
+
+        for (var key in daysMap){
+            arr.push({
+                timestamp: key,
+                number: daysMap[key].answers.length
+            });
+        }
+        arr.sort(function(a, b){
+            return a.timestamp - b.timestamp;
+        });
+        return arr;
+    },
+
+    getDataForLastNDays: function(n){
+        var list = this.getDaysArray();
+        var arr = [];
+        var start = +moment().subtract(n, 'days').startOf('day').format('x');
+        for (var i in list){
+            if (list[i].timestamp >= start){
+                arr.push(list[i]);
+            }
+        }
+        return arr;
+    },
+
+    getChartData: function(){
+        var chartData = {};
+        var daysArray = this.getDaysArray();
+        var n = daysArray.length;
+        var ticksNumber = this.props.ticksNumber;
+        var step = 1;
+
+        n = this.props.daysNumber;
+
+        step = Math.floor(n / ticksNumber);
+        daysArray = this.getDataForLastNDays(n);
+
+        var chartData = {
+            //labels: daysArray.map(function(d){return d.timestamp}),
+            labels: daysArray.map(function(d, k){
+                if (k % step == 0) {
+                    return moment(+d.timestamp).format('D MMM')
+                }
+                if (k % Math.floor(step / 2.0) == 0){
+                    return moment(+d.timestamp).format('D')
+                }
+                return '';
+            }),
+            pointDot : false,
+            pointDotRadius: 1,
+            datasets: [{
+                //fillColor: "rgba(151,187,205,0.2)",
+                fillColor: "rgba(46, 60, 84, 0.2)",
+                //strokeColor: "rgba(151,187,205,1)",
+                //pointColor: "rgba(151,187,205,1)",
+
+                strokeColor: "rgba(46, 60, 84, 0.6)",
+                //pointColor: "rgba(46, 60, 84, 0.6)",
+
+                //pointStrokeColor: "#fff",
+                //pointHighlightFill: "#fff",
+                //pointHighlightStroke: "rgba(151,187,205,1)",
+                pointHighlightStroke: "#FC636B",
+                pointDotRadius: 1,
+                pointDot: false,
+                data: daysArray.map(function(d){return d.number})
+            }]
+        };
+        return chartData;
+    },
+
+    chartIsEmpty: function(chartData){
+        var list = chartData.datasets[0].data;
+        var n = 0;
+        for (var i in list){
+            n+= list[i];
+        }
+        if (n == 0){
+            return true;
+        }
+        return false;
+    },
+
+    render: function () {
+
+
+        var chartOptions = {
+            pointDotRadius: 1
+        };
+
+        var chartData = this.getChartData();
+
+        //var hasData = (chartData.datasets[0].data.length > 0);
+        var hasData = !this.chartIsEmpty(chartData);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                (hasData == false) ?
+                    React.createElement("div", {style: this.componentStyle.noDataPanel}, 
+                        "No data..."
+                    )
+                    :
+                    React.createElement(LineChart, {width: 600, height: 300, data: chartData, redraw: true, options: chartOptions})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = ExercisesProgressChart;
+
+},{"moment":33,"object-assign":34,"react":527,"react-chartjs":111}],567:[function(require,module,exports){
+/**
+ * Created by sabir on 15.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var ExerciseMixin = require('../../mixins/ExerciseMixin');
+
+var ExercisesProgressChart = require('./ExercisesProgressChart');
+
+var SelfLoadingUserProgressPanel = React.createClass({displayName: "SelfLoadingUserProgressPanel",
+    getDefaultProps: function () {
+        return {
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            answers: [],
+            daysNumber: 30
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        var userId = this.props.userId;
+        this.load(userId, function(data){
+            console.log('data loaded: ', data);
+        });
+    },
+
+    load: function(userId, callback){
+        if (userId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true,
+            answers: []
+        });
+        ExerciseMixin.loadAllUserAnswers(userId, function(answers){
+            this.setState({
+                loading: false,
+                answers: answers
+            });
+            callback(answers);
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 630,
+            padding: 5,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            margin: '0 auto'
+        },
+
+        tabItem: {
+            color: '#A1A4AA',
+            padding: 5,
+            cursor: 'pointer',
+            display: 'inline-block',
+            margin: 10,
+            marginBottom: 0
+        },
+
+        tabItemsPanel: {
+            textAlign: 'center',
+            padding: 5
+        },
+
+        active: {
+            fontWeight: 'bold',
+            borderBottom: '3px solid #FC636B',
+            color: '#1B2432'
+        },
+
+        chartPlaceholder: {
+
+        }
+    },
+
+    switchDaysNumber: function(daysNumber){
+        console.log('switchDaysNumber occured: ', daysNumber);
+        this.setState({
+            daysNumber: +daysNumber
+        });
+    },
+
+    render: function () {
+        var daysNumber = this.state.daysNumber;
+        var activeSt = this.componentStyle.active;
+
+        console.log('daysNumber = ' + daysNumber);
+        var st7 = (daysNumber == 7) ? activeSt : {};
+        var st30 = (daysNumber == 30) ? activeSt : {};
+        var st100 = (daysNumber == 100) ? activeSt : {};
+
+        st7 = assign({}, this.componentStyle.tabItem, st7);
+        st30 = assign({}, this.componentStyle.tabItem, st30);
+        st100 = assign({}, this.componentStyle.tabItem, st100);
+
+        console.log('styles: ', st7, st30, st100);
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.tabItemsPanel}, 
+
+                    React.createElement("div", {onClick: this.switchDaysNumber.bind(this, 7), 
+                         style: st7}, 
+                        "7 дней"
+                    ), 
+
+                    React.createElement("div", {onClick: this.switchDaysNumber.bind(this, 30), 
+                         style: st30}, 
+                        "30 дней"
+                    ), 
+
+                    React.createElement("div", {onClick: this.switchDaysNumber.bind(this, 100), 
+                         style: st100}, 
+                        "100 дней"
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.chartPlaceholder}, 
+
+                    React.createElement(ExercisesProgressChart, {
+                        daysNumber: this.state.daysNumber, 
+                        userAnswers: this.state.answers})
+
+                ), 
+
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingUserProgressPanel;
+
+},{"../../mixins/ExerciseMixin":775,"./ExercisesProgressChart":566,"object-assign":34,"react":527}],568:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingChatMessagesPanel = require('./SelfLoadingChatMessagesPanel');
+
+var Dialog = require('../dialog/Dialog');
+
+var ChatPanel = require('../chat/ChatPanel');
+
+var ChatButton = React.createClass({displayName: "ChatButton",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            friendId: undefined,
+            role: undefined,
+
+            sidebarEnabled: true,
+            buttonName: 'Открыть диалог',
+            //icon: 'icon comments',
+            icon: undefined,
+            buttonClassName: 'ui basic grey button',
+            style: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement(ChatPanel, {userId: this.props.userId, 
+                       role: this.props.role, 
+                       friendId: this.props.friendId})
+        );
+    },
+
+    onShowClick: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        buttonStyle: {
+
+        },
+
+        dialogPanelStyle: {
+            width: 860,
+            padding: 5,
+            backgroundColor: 'transparent'
+        }
+    },
+
+    render: function () {
+
+        var buttonSt = assign({}, this.componentStyle.buttonStyle, this.props.style);
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("span", {style: buttonSt, className: this.props.buttonClassName, onClick: this.onShowClick}, 
+                    this.props.icon == undefined ? null :
+                        React.createElement("i", {className: this.props.icon}), 
+                    
+                    this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {visible: true, 
+                            dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                            onClose: this.onClose, content: this.getDialogContent()})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = ChatButton;
+
+},{"../chat/ChatPanel":570,"../dialog/Dialog":604,"./SelfLoadingChatMessagesPanel":572,"object-assign":34,"react":527}],569:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ChatInput = require('./input/ChatInput');
+
+var MessagesList = require('./messages/MessagesList');
+
+var SelfLoadingUserSpan = require('../user/SeflLoadingUserSpan');
+
+var ChatMessagesPanel = React.createClass({displayName: "ChatMessagesPanel",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            friendId: undefined,
+            chatName: undefined,
+            messages: [],
+            sending: false,
+            refreshing: false,
+            onSubmit: function(m){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        setTimeout(function(){
+            this.scrollMessagesToDown();
+        }.bind(this), 300);
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: '100%',
+            height: '100%'
+            //position: 'relative'
+        },
+
+        header: {
+            height: 40,
+            padding: 10,
+            borderBottom: '1px solid #EFF0F1',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0
+        },
+
+        footer: {
+            height: 70,
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            padding: 10,
+            borderTop: '1px solid #EFF0F1'
+        },
+
+        sidebar: {
+            height: '100%',
+            width: 250,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            color: '#A2B4BC',
+            //backgroundColor: '#4D394B',
+            backgroundColor: '#2E3C54',
+            borderLeft: '1px solid #EFF0F1'
+        },
+
+        messages: {
+            marginTop: 40,
+            marginBottom: 100,
+            maxHeight: 440,
+            overflowY: 'auto'
+        },
+
+        chatNamePlaceholder: {
+
+        }
+    },
+
+    scrollMessagesToDown: function(){
+        var parentId = 'patient_chat_messages_placeholder';
+        var parent = document.getElementById(parentId);
+        if (parent != undefined){
+            parent.scrollTop = 1000000000;
+        }
+    },
+
+    componentDidUpdate: function(){
+        this.scrollMessagesToDown();
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                    React.createElement("div", {style: this.componentStyle.header}, 
+                        React.createElement("div", {style: this.componentStyle.chatNamePlaceholder}, 
+
+                            this.props.chatName == undefined ?
+                                React.createElement("div", null, 
+                                    React.createElement("span", {style: {color: '#9e9ea6'}}, "@"), " ", React.createElement("b", null, React.createElement(SelfLoadingUserSpan, {userId: this.props.friendId}))
+                                )
+                                :
+                                React.createElement("div", null, 
+                                    React.createElement("span", {style: {color: '#9e9ea6'}}, "@"), " ", React.createElement("b", null, this.props.chatName)
+                                ), 
+                            
+
+                            React.createElement("div", {className: 'ui inverted dimmer ' + (this.props.refreshing ? ' active ' : '') }, 
+                                React.createElement("div", {className: "ui indeterminate loader"})
+                            )
+                        )
+
+                    ), 
+
+
+                React.createElement("div", {id: 'patient_chat_messages_placeholder', style: this.componentStyle.messages}, 
+                    React.createElement("div", {id: 'patient_chat_messages'}, 
+                        React.createElement(MessagesList, {userId: this.props.userId, messages: this.props.messages})
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.footer}, 
+
+                    React.createElement(ChatInput, {sending: this.props.sending, onSubmit: this.props.onSubmit})
+
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = ChatMessagesPanel;
+
+},{"../user/SeflLoadingUserSpan":763,"./input/ChatInput":573,"./messages/MessagesList":575,"object-assign":34,"react":527}],570:[function(require,module,exports){
+/**
+ * Created by sabir on 15.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MessagesList = require('./messages/MessagesList');
+
+var ChatInput = require('../chat/input/ChatInput');
+
+var SelfLoadingChatMessagesPanel = require('./SelfLoadingChatMessagesPanel');
+
+var SelfLoadingFriendsList = require('./sidebar/SelfLoadingFriendsList');
+var LoginMixin = require('../../mixins/LoginMixin');
+
+
+var ChatPanel = React.createClass({displayName: "ChatPanel",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            role: undefined,
+            friendId: undefined,
+
+            onSubmit: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            friendId: this.props.friendId,
+            chatName: this.props.chatName
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var friendId = nextProps.friendId;
+        if (friendId != this.props.friendId){
+            this.setState({
+                friendId: friendId
+            });
+        }
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            height: 550,
+            width: 850,
+            color: 'rgba(0, 0, 0, 0.870588)',
+            margin: '0 auto',
+            backgroundColor: 'white'
+        },
+
+
+        sidebar: {
+            height: '100%',
+            width: 250,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            borderLeft: '1px solid #EFF0F1'
+        },
+
+        main: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 600,
+            height: '100%',
+            position: 'relative'
+        }
+
+
+    },
+
+    onUserSelect: function(u){
+        console.log('selected user: ', u);
+        this.setState({
+            friendId: u.id,
+            chatName: u.name
+        });
+    },
+
+
+    render: function () {
+        var u = LoginMixin.getCurrentUser();
+        var userId = this.props.userId;
+        var role = this.props.role;
+        if (userId == undefined){
+            userId = u.id;
+        }
+        if (role == undefined){
+            role = u.role;
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.main}, 
+
+                    React.createElement(SelfLoadingChatMessagesPanel, {userId: userId, 
+                                                  friendId: this.state.friendId, 
+                                                  chatName: this.state.chatName})
+
+                ), 
+
+
+                React.createElement("div", {style: this.componentStyle.sidebar}, 
+                    React.createElement(SelfLoadingFriendsList, {
+                        onUserSelect: this.onUserSelect, selectedUserId: this.state.friendId, 
+                        userId: userId, role: role})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = ChatPanel;
+
+},{"../../mixins/LoginMixin":780,"../chat/input/ChatInput":573,"./SelfLoadingChatMessagesPanel":572,"./messages/MessagesList":575,"./sidebar/SelfLoadingFriendsList":577,"object-assign":34,"react":527}],571:[function(require,module,exports){
+/**
+ * Created by sabir on 17.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var ChatMixin = require('../../mixins/ChatMixin');
+
+var NotReadChatSpan = React.createClass({displayName: "NotReadChatSpan",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            style: {
+
+            },
+            interval: 30 * 1000
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            map: {}
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load(function(map){});
+        this.initTimer();
+    },
+
+    componentWillUnmount: function(){
+        this.destroyTimer();
+    },
+
+    load: function(callback){
+        ChatMixin.loadNotReadMessagesUsersMap(this.props.userId, function(map){
+            this.setState({
+                map: map
+            });
+            callback(map);
+        }.bind(this));
+    },
+
+    initTimer: function(){
+        this.intervalId = setInterval(function(){
+            this.load(function(map){});
+        }.bind(this), this.props.interval);
+    },
+
+    destroyTimer: function(){
+        clearInterval(this.intervalId);
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            padding: '3px 5px',
+            color: 'white',
+            marginLeft: 3,
+            backgroundColor: 'rgb(252, 99, 107)',
+            borderRadius: 4,
+            lineHeight: '10px',
+            fontSize: 12
+        }
+    },
+
+    getNotReadNumber: function(){
+        var map = this.state.map;
+        var k = 0;
+        for (var key in map){
+            k+= map[key].messagesNumber;
+        }
+        return k;
+    },
+
+    render: function () {
+        var k = this.getNotReadNumber();
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
+        if (k == 0){
+            st = assign({}, st, {display: 'none'});
+        }
+
+        return (
+            React.createElement("div", {style: st}, 
+                k
+            )
+        );
+    }
+
+});
+
+module.exports = NotReadChatSpan;
+
+},{"../../mixins/ChatMixin":773,"object-assign":34,"react":527}],572:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ChatMessagesPanel = require('./ChatMessagesPanel');
+
+var ChatMixin = require('../../mixins/ChatMixin');
+
+var SelfLoadingChatMessagesPanel = React.createClass({displayName: "SelfLoadingChatMessagesPanel",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            friendId: undefined,
+            chatName: undefined,
+            refreshInterval: 10 * 1000
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            messages: [],
+            usersMap: {}
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var userId = nextProps.userId;
+        var friendId = nextProps.friendId;
+        console.log('SelfLoadingChatMessagesPanel: newProps: userId, friendId = ', userId, friendId);
+        //if (userId != this.props.userId || friendId != this.props.friendId){
+        this.load(userId, friendId, function(messages, uMap){
+            console.log('messages loaded: ', messages, uMap);
+        });
+        //}
+    },
+
+    componentDidMount: function () {
+        var userId = this.props.userId;
+        var friendId = this.props.friendId;
+
+        this.load(userId, friendId, function(messages, uMap){
+            console.log('messages loaded: ', messages, uMap);
+        });
+        this.initTimers();
+    },
+
+    componentWillUnmount: function(){
+        this.destroyTimers();
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        panelPlaceholder: {
+
+        }
+    },
+
+    load: function(userId, friendId, callback){
+        console.log('SelfLoadingChatMessagesPanel: load: ', userId, friendId);
+        if (userId == undefined || friendId == undefined){
+            return;
+        }
+        this.setState({
+            messages: [],
+            loading: true
+        });
+        ChatMixin.loadMessages(userId, friendId, undefined, function(messages, uMap){
+            this.setState({
+                loading: false,
+                messages: messages,
+                usersMap: uMap
+            });
+            setTimeout(function(){
+                this.makeMessagesRead();
+            }.bind(this), 300);
+
+
+            callback(messages, uMap);
+        }. bind(this))
+    },
+
+    makeMessagesRead: function(){
+        var list = this.state.messages;
+        var arr = [];
+        var refArr = [];
+        var userId = this.props.userId;
+        for (var i in list){
+            var m = list[i];
+            if (m.toId == userId && m.status == 'new'){
+                arr.push(m);
+                m.status = 'read';
+            }
+            refArr.push(m);
+        }
+        if (arr.length == 0){
+            return;
+        }
+        this.setState({
+            messages: refArr
+        });
+        ChatMixin.makeMessagesRead(arr, function(ms){
+            console.log('made read: ', ms);
+        });
+    },
+
+    initTimers: function(){
+        this.refreshTimerId = setInterval(function(){
+            this.refreshMessages(function(newMessages, uMap){
+                console.log(newMessages, uMap);
+            });
+        }.bind(this), this.props.refreshInterval);
+    },
+
+    destroyTimers: function(){
+        clearInterval(this.refreshTimerId);
+    },
+
+    refreshMessages: function(callback){
+        var userId = this.props.userId;
+        var friendId = this.props.friendId;
+        var messages = this.state.messages;
+        var t = 0;
+        //if (messages.length > 0){
+        //    t = +messages[messages.length - 1].timestamp + 1000;
+        //}
+        for (var i in messages){
+            if (messages[i].timestamp > t) {t = messages[i].timestamp}
+        }
+        t+= 1300;
+
+        this.setState({
+            refreshing: true
+        });
+        ChatMixin.loadMessages(userId, friendId, t, function(newMessages, uMap){
+            this.setState({
+                refreshing: false,
+                messages: messages.concat(newMessages),
+                usersMap: uMap
+            });
+
+            setTimeout(function(){
+                this.makeMessagesRead();
+            }.bind(this), 300);
+
+            callback(newMessages, uMap);
+        }. bind(this))
+    },
+
+    onSubmit: function(m){
+        this.sendMessage(m);
+    },
+
+    sendMessage: function(m){
+        var content = m.content;
+        var attachments = m.attachments;
+
+        var messages = this.state.messages;
+        this.setState({
+            loading: true
+        });
+        ChatMixin.sendMessage(this.props.userId, this.props.friendId, content, attachments, function(m){
+            var usersMap = this.state.usersMap;
+            var fromUser = (usersMap[m.fromId] == undefined) ? {} : usersMap[m.fromId];
+            var toUser = (usersMap[m.toId] == undefined) ? {} : usersMap[m.toId];
+            m.fromUserName =fromUser.name;
+            m.fromUserAvatar = fromUser.avatar;
+            m.toUserName = toUser.name;
+            m.toUserAvatar =toUser.avatar;
+            m.avatar = fromUser.avatar;
+            m.name = fromUser.name;
+            console.log('adding new message: ', m);
+            messages.push(m);
+            this.setState({
+                loading: false,
+                messages: messages
+            });
+        }.bind(this));
+    },
+
+    render: function () {
+        var friendIsSelect = (this.props.friendId != undefined);
+        var chatName = (friendIsSelect == false) ? 'выберите пользователя' : this.props.chatName;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.panelPlaceholder}, 
+
+                    friendIsSelect == false ?
+                        React.createElement("div", {style: {paddingTop: 100, fontSize: 20, textAlign: 'center', color: '#A1A4AA'}}, 
+                            React.createElement("div", {style: {marginBottom: 36, lineHeight: '26px'}}, "выберите собеседника из ", React.createElement("br", null), " списка справа "), 
+                            React.createElement("img", {style: {width: 200}, src: 'https://www.englishpatient.org/app/assets/images/messages.png'})
+                        ) :
+                        React.createElement(ChatMessagesPanel, {onSubmit: this.onSubmit, 
+                                           sending: this.state.loading, 
+                                           refreshing: this.state.refreshing, 
+                                           friendId: this.props.friendId, 
+                                           userId: this.props.userId, 
+                                           chatName: chatName, messages: this.state.messages})
+                    
+
+                ), 
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingChatMessagesPanel;
+
+},{"../../mixins/ChatMixin":773,"./ChatMessagesPanel":569,"object-assign":34,"react":527}],573:[function(require,module,exports){
+/**
+ * Created by sabir on 15.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FileUploader = require('../../file/FileUploader');
+var FileUploadButton = require('../../file/FileUploadButton');
+
+var ChatInput = React.createClass({displayName: "ChatInput",
+    getDefaultProps: function () {
+        return {
+            sending: false,
+            onSubmit: function(message){
+                console.log(message);
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            val: '',
+            attachment: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative',
+            backgroundColor: '#F6F6F7'
+        },
+
+        attachButton: {
+            cursor: 'pointer'
+        },
+
+        attachmentPlaceholder: {
+
+        },
+
+        attachmentLink: {
+            color: '#818997',
+            textDecoration: 'underline',
+            cursor: 'pointer'
+        },
+
+        removeAttachmentButton: {
+
+        },
+
+        bottomBlock: {
+
+        }
+    },
+
+    getFileIcon: function(){
+        var url = this.state.attachment;
+        if (url == undefined){
+            return '';
+        }
+        if (url.indexOf('.jpg') > -1 || url.indexOf('.png') > -1 || url.indexOf('.gif') > -1){
+            return 'icon file image outline';
+        }
+        return 'icon file outline';
+    },
+
+    onChange: function(evt){
+        var val = evt.target.value;
+        this.setState({
+            val: val
+        });
+    },
+
+    canSubmit: function(val){
+        if (val == undefined){
+            val = '';
+        }
+        if (val == '' && this.state.attachment == undefined){
+            return false;
+        }
+        return true;
+    },
+
+    submit: function(val){
+        if (this.canSubmit(val) == false){
+            return;
+        }
+        var m = {
+            content: val,
+            attachments: (this.state.attachment == undefined) ? [] : [this.state.attachment]
+        };
+        this.setState({
+            attachment: undefined,
+            val: ''
+        });
+        this.props.onSubmit(m);
+    },
+
+    onKeyUp: function(event){
+        if(event.keyCode == 13){
+            var val = event.target.value;
+            this.submit(val);
+        }
+    },
+
+    onFileUploaded: function(url){
+        this.setState({
+            attachment: url
+        });
+    },
+
+    removeAttachment: function(){
+        this.setState({
+            attachment: undefined
+        });
+    },
+
+
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                    React.createElement("div", {className: 'ui left action input', style: {width: '100%'}}, 
+
+
+
+                        React.createElement(FileUploadButton, {
+                            onFileUploaded: this.onFileUploaded, 
+                            icon: 'icon attach', className: 'ui icon button'}), 
+
+
+                        React.createElement("input", {type: "text", onChange: this.onChange, 
+                               onKeyUp: this.onKeyUp, 
+                               value: this.state.val, 
+                               placeholder: "Type your message and press Enter..."})
+
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.bottomBlock}, 
+
+                        this.state.attachment == undefined ? null :
+                            React.createElement("div", {style: this.componentStyle.attachmentPlaceholder}, 
+                                React.createElement("a", {href: this.state.attachment, target: "_blank"}, 
+                                    React.createElement("i", {className: this.getFileIcon()}), " ", this.state.attachment.substring(this.state.attachment.lastIndexOf('/') + 1)), 
+
+                                React.createElement("i", {style: {cursor: 'pointer', color: '#FC636B'}, 
+                                   className: 'icon remove', onClick: this.removeAttachment})
+
+                            )
+                        
+
+                    ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.props.sending ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = ChatInput;
+
+},{"../../file/FileUploadButton":644,"../../file/FileUploader":645,"object-assign":34,"react":527}],574:[function(require,module,exports){
+/**
+ * Created by sabir on 15.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var moment = require('moment');
+
+var MessageItem = React.createClass({displayName: "MessageItem",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+
+            fromId: undefined,
+            toId: undefined,
+            status: undefined,
+
+            content: undefined,
+            timestamp: undefined,
+            name: undefined,
+            avatar: 'https://www.englishpatient.org/app/assets/images/chat_avatar.jpg',
+            attachments: []
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            maxWidth: 600,
+            padding: 5,
+            marginBottom: 0
+        },
+
+        avatarPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 48,
+            height: 48,
+            borderRadius: 4,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            marginRight: 10,
+            marginLeft: 5
+        },
+
+        mainPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            maxWidth: 520
+        },
+
+        topPlaceholder: {
+
+        },
+
+        namePlaceholder: {
+            fontWeight: 'bold',
+            color: '#1B2432',
+            display: 'inline-block'
+        },
+
+        timePlaceholder: {
+            color: '#9e9ea6',
+            display: 'inline-block',
+            marginLeft: 10,
+            fontSize: 12
+        },
+
+        messagePlaceholder: {
+            maxWidth: 520
+        },
+
+        attachmentsPlaceholder: {
+            marginTop: 5,
+            marginBottom: 5
+
+        },
+
+        attLink: {
+            fontSize: 12,
+            color: '#1B2432',
+            opacity: 0.6,
+            textDecoration: 'underline'
+        }
+    },
+
+    getFileIcon: function(url){
+        if (url == undefined){
+            return '';
+        }
+        if (url.indexOf('.jpg') > -1 || url.indexOf('.png') > -1 || url.indexOf('.gif') > -1){
+            return 'icon file image outline';
+        }
+        return 'icon file outline';
+    },
+
+    render: function () {
+        var sDate = moment(this.props.timestamp).format('h:m A DD.MM.YY');
+        var avaSt = assign({}, this.componentStyle.avatarPlaceholder, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+        var list = this.props.attachments;
+
+        var isNotRead = ((this.props.userId == this.props.toId) && (this.props.status == 'new'))
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, className: 'patientMessageItem  ' + (isNotRead == true ? ' notRead ': '') }, 
+
+                React.createElement("div", {style: avaSt}), 
+
+                React.createElement("div", {style: this.componentStyle.mainPlaceholder}, 
+                    React.createElement("div", {style: this.componentStyle.topPlaceholder}, 
+
+                        React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                            this.props.name
+                        ), 
+
+                        React.createElement("div", {style: this.componentStyle.timePlaceholder}, 
+                            sDate
+                        )
+
+                    ), 
+                    
+                    React.createElement("div", {style: this.componentStyle.messagePlaceholder}, 
+                        React.createElement("div", {dangerouslySetInnerHTML: {__html: this.props.content}}), 
+
+                        list.length == 0 ? null :
+                            React.createElement("div", {style: this.componentStyle.attachmentsPlaceholder}, 
+                                list.map(function(a, k){
+                                    var key = 'key_att_' + k;
+                                    return (
+                                        React.createElement("div", {key: key}, 
+                                            React.createElement("a", {style: this.componentStyle.attLink, href: a, target: "_blank"}, 
+                                                React.createElement("i", {className: this.getFileIcon(a)}), " ", a.substring(a.lastIndexOf('/') + 1)
+                                            )
+                                        )
+                                    );
+                                }, this)
+                            )
+                        
+
+                    )
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = MessageItem;
+
+},{"moment":33,"object-assign":34,"react":527}],575:[function(require,module,exports){
+/**
+ * Created by sabir on 15.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MessageItem = require('./MessageItem');
+
+var MessagesList = React.createClass({displayName: "MessagesList",
+    getDefaultProps: function () {
+        return {
+            messages: [{
+                name: 'Sabir',
+                avatar: 'https://avatars2.githubusercontent.com/u/1834389?v=3&s=460',
+                content: 'Hi girls!'
+            }, {
+                name: 'Susanna',
+                content: 'Hi Sabir!',
+                avatar: 'https://pp.vk.me/c625829/v625829418/4dcc7/Uw50vmTB4AU.jpg'
+            }, {
+                name: ' Marina',
+                content: 'Hi! How about meeting tonight?',
+                avatar: 'https://pp.vk.me/c623230/v623230909/d2bc/o_hfIlTLv0M.jpg'
+            }, {
+                name: 'Sasha',
+                content: 'No, Marina, we spend this evening together.',
+                avatar: 'https://pp.vk.me/c624823/v624823671/8b4/xOTNos7LiQM.jpg'
+            }, {
+                name: 'Valery',
+                content: 'Nice to meet you!',
+                avatar: 'https://pp.vk.me/c627829/v627829856/25698/My0DVUWtqtI.jpg'
+            }, {
+                name: 'Sabir',
+                avatar: 'https://avatars2.githubusercontent.com/u/1834389?v=3&s=460',
+                content: 'Because the first day of the first week does not always fall on the first day of the year, sometimes the week-year will differ from the month year.'
+            }, {
+                name: 'Sasha',
+                content: 'I see...',
+                avatar: 'https://pp.vk.me/c624823/v624823671/8b4/xOTNos7LiQM.jpg'
+            }, {
+                name: ' Marina',
+                content: 'Bye',
+                avatar: 'https://pp.vk.me/c623230/v623230909/d2bc/o_hfIlTLv0M.jpg'
+            }, {
+                name: ' Marina',
+                content: "It's better for us to drift apart",
+                avatar: 'https://pp.vk.me/c623230/v623230909/d2bc/o_hfIlTLv0M.jpg'
+            },{
+                name: 'Sabir',
+                avatar: 'https://avatars2.githubusercontent.com/u/1834389?v=3&s=460',
+                content: 'Hi girls!'
+            }, {
+                name: 'Susanna',
+                content: 'Hi Sabir!',
+                avatar: 'https://pp.vk.me/c625829/v625829418/4dcc7/Uw50vmTB4AU.jpg'
+            }, {
+                name: ' Marina',
+                content: 'Hi! How about meeting tonight?',
+                avatar: 'https://pp.vk.me/c623230/v623230909/d2bc/o_hfIlTLv0M.jpg'
+            }, {
+                name: 'Sasha',
+                content: 'No, Marina, we spend this evening together.',
+                avatar: 'https://pp.vk.me/c624823/v624823671/8b4/xOTNos7LiQM.jpg'
+            }, {
+                name: 'Valery',
+                content: 'Nice to meet you!',
+                avatar: 'https://pp.vk.me/c627829/v627829856/25698/My0DVUWtqtI.jpg'
+            }, {
+                name: 'Sabir',
+                avatar: 'https://avatars2.githubusercontent.com/u/1834389?v=3&s=460',
+                content: 'Because the first day of the first week does not always fall on the first day of the year, sometimes the week-year will differ from the month year.'
+            }, {
+                name: 'Sasha',
+                content: 'I see...',
+                avatar: 'https://pp.vk.me/c624823/v624823671/8b4/xOTNos7LiQM.jpg'
+            }, {
+                name: ' Marina',
+                content: 'Bye',
+                avatar: 'https://pp.vk.me/c623230/v623230909/d2bc/o_hfIlTLv0M.jpg'
+            }, {
+                name: ' Marina',
+                content: "It's better for us to drift apart",
+                avatar: 'https://pp.vk.me/c623230/v623230909/d2bc/o_hfIlTLv0M.jpg'
+            }],
+
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 600,
+            backgroundColor: 'white',
+            margin: '0 auto'
+
+        }
+    },
+
+    getGroupedMessages: function(){
+        var arr = [];
+        var list = this.props.messages;
+        var map = {};
+        for (var i in list){
+            var t = list[i].timestamp;
+            t = Math.floor(t / 60000.0);
+            if (map[t] == undefined){
+                map[t] = {
+                    messages: []
+                }
+            }
+            map[t].messages.push(list[i]);
+        }
+        for (var key in map){
+            var mess = map[key].messages;
+            var atts = [];
+            var s = mess.join('<br/>');
+            for (var i in mess){
+                atts = atts.concat(mess[i].attachments);
+            }
+            //todo: finish this
+        }
+    },
+
+
+    render: function () {
+        var list = this.props.messages;
+        list.sort(function(m1, m2){
+            return m1.timestamp - m2.timestamp;
+        });
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(m, k){
+                    var key = 'message_' + m.id + '_' + k;
+
+                    return (
+                        React.createElement(MessageItem, {name: m.name, avatar: m.avatar, 
+                                     timestamp: m.timestamp, key: key, 
+                                     fromId: m.fromId, toId: m.toId, 
+                                     status: m.status, 
+                                     attachments: m.attachments, 
+                                     userId: this.props.userId, 
+                                     content: m.content})
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = MessagesList;
+
+},{"./MessageItem":574,"object-assign":34,"react":527}],576:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FriendsList = React.createClass({displayName: "FriendsList",
+    getDefaultProps: function () {
+        return {
+            //users: [{
+            //    name: 'Marina Gotovkina',
+            //    id: 3
+            //}, {
+            //    name: 'Susanna Bekker',
+            //    id: 2
+            //}, {
+            //    name: 'Valery Mokhova',
+            //    id: 1
+            //}, {
+            //    name: 'Sasha Markova',
+            //    id: 0
+            //}],
+            users: [],
+            selectedUserId: 0,
+            notReadMap: {},
+            onUserSelect: function(u){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            //width: 250,
+            width: '100%',
+            height: 550,
+            overflowY: 'auto',
+            color: '#A2B4BC',
+            //backgroundColor: '#4D394B',
+            backgroundColor: '#2E3C54'
+            //padding: 5
+        },
+
+        item: {
+            cursor: 'pointer',
+            //color: 'white',
+            //backgroundColor: '#1B2432',
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
+            padding: 8,
+            paddingLeft: 13,
+            fontSize: 14,
+            lineHeight: '16px',
+            height: 30
+        },
+
+        selected: {
+            color: 'white',
+            backgroundColor: '#1B2432'
+        },
+
+        notReadSpan: {
+            display: 'inline-block',
+            padding: '3px 5px',
+            color: 'white',
+            marginLeft: 3,
+            backgroundColor: 'rgb(252, 99, 107)',
+            borderRadius: 4,
+            lineHeight: '10px',
+            fontSize: 12
+        }
+    },
+
+    onUserClick: function(u){
+        this.props.onUserSelect(u);
+    },
+
+    getSortedList: function(){
+        var arr = this.props.users;
+        var map = this.props.notReadMap;
+        arr.sort(function(u1, u2){
+            var n1 = (map[u1.id] == undefined) ? 0 : map[u1.id].lastTimestamp;
+            var n2 = (map[u2.id] == undefined) ? 0 : map[u2.id].lastTimestamp;
+            var k2 = (map[u2.id] == undefined) ? 0 : map[u2.id].messagesNumber;
+            var k1 = (map[u1.id] == undefined) ? 0 : map[u1.id].messagesNumber;
+            var t1 = u1.timestamp;
+            var t2 = u2.timestamp;
+
+            //var p1 = k1 * 86400 * 1000 * 1000 + n1;
+            //var p2 = k2 * 86400 * 1000 * 1000 + n2;
+            var p1 = n1  * 86400 * 1000 * 1000 + t1;
+            var p2 = n2  * 86400 * 1000 * 1000 + t2;
+
+            return p2 - p1;
+        });
+        return arr;
+    },
+
+    render: function () {
+        var selectedSt = assign({}, this.componentStyle.item, this.componentStyle.selected);
+
+        var list = this.props.users;
+        var nMap = this.props.notReadMap;
+
+        list = this.getSortedList();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(u, k){
+                    var key = 'chat_' + u.id + '_user_' + k;
+                    var n = (nMap[u.id] == undefined) ? 0 : nMap[u.id].messagesNumber;
+                    var isSelected = (u.id == this.props.selectedUserId);
+                    var st = (isSelected == true) ? selectedSt : this.componentStyle.item;
+                    var onUserClick = this.onUserClick.bind(this, u);
+                    return (
+                        React.createElement("div", {className: 'chatFriendsListItem', key: key, style: st, onClick: onUserClick}, 
+                            React.createElement("span", null, u.name), 
+                            n == 0 ? null : React.createElement("span", {style: this.componentStyle.notReadSpan}, n)
+                        )
+                    );
+
+                }, this)
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = FriendsList;
+
+},{"object-assign":34,"react":527}],577:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FriendsList = require('./FriendsList');
+var ChatMixin = require('../../../mixins/ChatMixin');
+var ClassMixin = require('../../../mixins/ClassMixin');
+
+var SelfLoadingFriendsList = React.createClass({displayName: "SelfLoadingFriendsList",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            role: undefined,
+            selectedUserId: undefined,
+            onUserSelect: function(u){
+
+            },
+            refreshInterval: 30 * 1000
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            users: [],
+            loading: false,
+            selectedUserId: this.props.selectedUserId,
+            notReadMap: {}
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var selectedUserId = nextProps.selectedUserId;
+        if (selectedUserId != this.props.selectedUserId){
+            this.setState({
+                selectedUserId: selectedUserId
+            });
+        }
+    },
+
+    componentDidMount: function () {
+        this.load(function(users){
+            console.log('friends loaded: ', users);
+        });
+        this.initTimer();
+    },
+
+    componentWillUnmount: function(){
+        this.destroyTimer();
+    },
+
+    load: function(callback){
+        this.setState({
+            loading: true,
+            users: []
+        });
+        ClassMixin.loadFriends(this.props.userId, this.props.role, function(users){
+            this.setState({
+                loading: false,
+                users: users
+            });
+            this.loadNotReadMessagesUsersMap();
+            callback(users);
+        }.bind(this))
+    },
+
+    loadNotReadMessagesUsersMap: function(){
+        ChatMixin.loadNotReadMessagesUsersMap(this.props.userId, function(map){
+            this.setState({
+                notReadMap: map
+            });
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative'
+        },
+
+        listPlaceholder: {
+
+        }
+    },
+
+    initTimer: function(){
+        this.intervalId = setInterval(function(){
+            this.loadNotReadMessagesUsersMap();
+        }.bind(this), this.props.refreshInterval);
+    },
+
+    destroyTimer: function(){
+        clearInterval(this.intervalId);
+    },
+
+    onUserSelect: function(u){
+        this.setState({
+            selectedUserId: u.id
+        });
+        this.props.onUserSelect(u);
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                    React.createElement(FriendsList, {users: this.state.users, notReadMap: this.state.notReadMap, 
+                                 onUserSelect: this.onUserSelect, 
+                                 selectedUserId: this.state.selectedUserId})
+                ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingFriendsList;
+
+},{"../../../mixins/ChatMixin":773,"../../../mixins/ClassMixin":774,"./FriendsList":576,"object-assign":34,"react":527}],578:[function(require,module,exports){
+/**
+ * Created by sabir on 02.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ClassMixin = require('../../mixins/ClassMixin');
+
+var SilentAddToClassComponent = React.createClass({displayName: "SilentAddToClassComponent",
+    getDefaultProps: function () {
+        return {
+            classId: undefined,
+            userId: undefined,
+            onUserAddedToClass: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.addToClass();
+    },
+
+    addToClass: function(){
+        var classId = this.props.classId;
+        var userId = this.props.userId;
+        if (classId == undefined || userId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        ClassMixin.addUserToClass(classId, userId, function(patientClass){
+            this.setState({
+                loading: false
+            });
+            this.props.onUserAddedToClass(patientClass);
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SilentAddToClassComponent;
+
+},{"../../mixins/ClassMixin":774,"object-assign":34,"react":527}],579:[function(require,module,exports){
 /**
  * Created by sabir on 02.11.15.
  */
@@ -82221,7 +88604,7 @@ var AddNewClassButton = React.createClass({displayName: "AddNewClassButton",
 
 module.exports = AddNewClassButton;
 
-},{"../../../mixins/ClassMixin":736,"../../dialog/Dialog":573,"object-assign":33,"react":518}],551:[function(require,module,exports){
+},{"../../../mixins/ClassMixin":774,"../../dialog/Dialog":604,"object-assign":34,"react":527}],580:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -82314,7 +88697,7 @@ var ArchiveClassButton = React.createClass({displayName: "ArchiveClassButton",
 
 module.exports = ArchiveClassButton;
 
-},{"object-assign":33,"react":518}],552:[function(require,module,exports){
+},{"object-assign":34,"react":527}],581:[function(require,module,exports){
 /**
  * Created by sabir on 02.11.15.
  */
@@ -82329,6 +88712,8 @@ var DeleteButton = require('../../buttons/DeleteButton');
 var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
 
 var ArchiveClassButton = require('./ArchiveClassButton');
+
+var PatientEditor = require('../../editor/PatientEditor');
 
 var EditClassButton = React.createClass({displayName: "EditClassButton",
     getDefaultProps: function () {
@@ -82354,7 +88739,9 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
             status: 'active',
             name: undefined,
             description: undefined,
-            code: undefined
+            code: undefined,
+            extendedDescription: undefined,
+            defaultExtendedDescription: undefined
         }
     },
 
@@ -82489,6 +88876,8 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
                 name: cl.name,
                 status: cl.status,
                 description: cl.description,
+                extendedDescription: cl.extendedDescription,
+                defaultExtendedDescription: cl.extendedDescription,
                 code: cl.code
             });
             callback(cl);
@@ -82503,10 +88892,11 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
         var classId = this.props.classId;
         var name = this.state.name;
         var description = this.state.description;
+        var extendedDescription = this.state.extendedDescription;
         var status = this.state.status;
 
         //createClass: function(teacherId, name, description, callback)
-        ClassMixin.updateClass(classId, name, description, status, function(updatedClass){
+        ClassMixin.updateClass(classId, name, description, status, extendedDescription, function(updatedClass){
             self.setState({
                 loading: false
             });
@@ -82530,6 +88920,11 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
         });
     },
 
+    onContentChange: function(val){
+        this.setState({
+            extendedDescription: val
+        });
+    },
 
     getDialogContent: function(){
         var classId = this.props.classId;
@@ -82556,9 +88951,18 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
                     ), 
 
                     React.createElement("div", {className: "field"}, 
-                        React.createElement("textarea", {type: "text", value: this.state.description, placeholder: "Название класса", 
+                        React.createElement("textarea", {type: "text", value: this.state.description, placeholder: "Описание класса", 
                                   onChange: this.onDescriptionChange})
+                    ), 
+
+
+                    React.createElement("div", {className: 'field'}, 
+                        React.createElement("label", null, "Расширенное описание класса"), 
+                        React.createElement(PatientEditor, {value: this.state.defaultExtendedDescription, 
+                                       onContentChange: this.onContentChange})
                     )
+
+
                 ), 
 
                 React.createElement("div", {className: 'ui message'}, 
@@ -82610,7 +89014,7 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
 
 module.exports = EditClassButton;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/ClassMixin":736,"../../buttons/DeleteButton":543,"../../dialog/Dialog":573,"./ArchiveClassButton":551,"object-assign":33,"react":518}],553:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/ClassMixin":774,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"../../editor/PatientEditor":612,"./ArchiveClassButton":580,"object-assign":34,"react":527}],582:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -82821,7 +89225,7 @@ var AddClassButton = React.createClass({displayName: "AddClassButton",
 
 module.exports = AddClassButton;
 
-},{"../../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../mixins/ClassMixin":736,"../../../dialog/Dialog":573,"object-assign":33,"react":518}],554:[function(require,module,exports){
+},{"../../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../mixins/ClassMixin":774,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],583:[function(require,module,exports){
 /**
  * Created by sabir on 07.11.15.
  */
@@ -82893,7 +89297,7 @@ var AddClassPlusButton = React.createClass({displayName: "AddClassPlusButton",
 
 module.exports = AddClassPlusButton;
 
-},{"./AddClassButton":553,"object-assign":33,"react":518}],555:[function(require,module,exports){
+},{"./AddClassButton":582,"object-assign":34,"react":527}],584:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -83040,7 +89444,7 @@ var LeaveClassButton = React.createClass({displayName: "LeaveClassButton",
 
 module.exports = LeaveClassButton;
 
-},{"../../../../mixins/ClassMixin":736,"../../../buttons/DeleteButton":543,"../../../dialog/Dialog":573,"object-assign":33,"react":518}],556:[function(require,module,exports){
+},{"../../../../mixins/ClassMixin":774,"../../../buttons/DeleteButton":559,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],585:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83200,7 +89604,7 @@ var CheckUsersListDashboard = React.createClass({displayName: "CheckUsersListDas
 
 module.exports = CheckUsersListDashboard;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/ExerciseMixin":737,"../../exercise/ListOfSelfLoadingUserExercises":582,"../../feed/SelfLoadingClassFeed":607,"../../help/GifInstruction":616,"./VerticalUsersList":557,"object-assign":33,"react":518}],557:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/ExerciseMixin":775,"../../exercise/ListOfSelfLoadingUserExercises":613,"../../feed/SelfLoadingClassFeed":638,"../../help/GifInstruction":650,"./VerticalUsersList":586,"object-assign":34,"react":527}],586:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83265,7 +89669,7 @@ var VerticalUsersList = React.createClass({displayName: "VerticalUsersList",
 
 module.exports = VerticalUsersList;
 
-},{"./VerticalUsersListItem":558,"object-assign":33,"react":518}],558:[function(require,module,exports){
+},{"./VerticalUsersListItem":587,"object-assign":34,"react":527}],587:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83370,7 +89774,7 @@ var VerticalUsersListItem = React.createClass({displayName: "VerticalUsersListIt
 
 module.exports = VerticalUsersListItem;
 
-},{"object-assign":33,"react":518}],559:[function(require,module,exports){
+},{"object-assign":34,"react":527}],588:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83434,7 +89838,7 @@ var ClassHeader = React.createClass({displayName: "ClassHeader",
 
 module.exports = ClassHeader;
 
-},{"react":518}],560:[function(require,module,exports){
+},{"react":527}],589:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83548,7 +89952,7 @@ var LeftSidebarClassesList = React.createClass({displayName: "LeftSidebarClasses
 
 module.exports = LeftSidebarClassesList;
 
-},{"object-assign":33,"react":518,"react-router":298}],561:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],590:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -83799,7 +90203,7 @@ var SelfLoadingLeftSidebarClassesList = React.createClass({displayName: "SelfLoa
 
 module.exports = SelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ClassMixin":736,"../../class/buttons/AddNewClassButton":550,"./LeftSidebarClassesList":560,"react":518}],562:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ClassMixin":774,"../../class/buttons/AddNewClassButton":579,"./LeftSidebarClassesList":589,"react":527}],591:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -83958,7 +90362,140 @@ var StudentSelfLoadingLeftSidebarClassesList = React.createClass({displayName: "
 
 module.exports = StudentSelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ClassMixin":736,"../../class/buttons/AddNewClassButton":550,"../../class/buttons/student/AddClassPlusButton":554,"./LeftSidebarClassesList":560,"react":518}],563:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ClassMixin":774,"../../class/buttons/AddNewClassButton":579,"../../class/buttons/student/AddClassPlusButton":583,"./LeftSidebarClassesList":589,"react":527}],592:[function(require,module,exports){
+/**
+ * Created by sabir on 02.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var TopBrandContainer = require('../../containers/TopBrandContainer');
+
+var ClassMixin = require('../../../mixins/ClassMixin');
+
+var SelfLoadingClassFeed = require('../../feed/SelfLoadingClassFeed');
+
+var SelfInitHeader = require('../../../components/header/SelfInitHeader');
+
+var SharedClassPanel = React.createClass({displayName: "SharedClassPanel",
+    getDefaultProps: function () {
+        return {
+            classId: undefined,
+            user: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            patientClass: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        var classId = this.props.classId;
+        this.loadClass(classId, function(data){
+            console.log('class loaded: ', data);
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        feedPlaceholder: {
+            //backgroundColor: 'white',
+            //border: '1px solid #EFF0F1',
+            width: 655,
+            margin: '0 auto',
+            marginTop: 10,
+            borderRadius: 4
+        },
+
+        descriptionPlaceholder: {
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            padding: 10,
+            width: 650,
+            margin: '0 auto',
+            marginTop: 10
+        }
+    },
+
+    loadClass: function(classId, callback){
+        if (classId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        ClassMixin.loadClass(classId, function(patientClass){
+            this.setState({
+                patientClass: patientClass,
+                loading: false
+            });
+            callback(patientClass);
+        }.bind(this));
+
+    },
+
+    render: function () {
+        var patientClass = this.state.patientClass;
+        var user = (this.props.user == undefined || this.props.user.id == undefined) ? undefined : this.props.user;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                patientClass == undefined ? null :
+                    React.createElement("div", null, 
+                        React.createElement(SelfInitHeader, null), 
+
+                        React.createElement(TopBrandContainer, {mainText: patientClass.name, bottomText: patientClass.description}), 
+
+                        React.createElement("div", {style: this.componentStyle.descriptionPlaceholder}, 
+                            React.createElement("div", {dangerouslySetInnerHTML: {__html: patientClass.extendedDescription}})
+                        ), 
+
+                        user == undefined ?
+
+                            React.createElement("div", null, 
+                                React.createElement("div", {style: this.componentStyle.feedPlaceholder}, 
+                                    React.createElement(SelfLoadingClassFeed, {
+                                        teacherMode: false, 
+                                        classId: this.props.classId})
+                                )
+
+                            )
+                            :
+                            React.createElement("div", {style: this.componentStyle.feedPlaceholder}, 
+                                React.createElement(SelfLoadingClassFeed, {
+                                    teacherMode: false, 
+                                    classId: this.props.classId, userId: user.id})
+                            )
+                        
+
+                    ), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SharedClassPanel;
+
+},{"../../../components/header/SelfInitHeader":647,"../../../mixins/ClassMixin":774,"../../containers/TopBrandContainer":597,"../../feed/SelfLoadingClassFeed":638,"object-assign":34,"react":527}],593:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -84016,7 +90553,7 @@ var ClassTab = React.createClass({displayName: "ClassTab",
 
 module.exports = ClassTab;
 
-},{"object-assign":33,"react":518}],564:[function(require,module,exports){
+},{"object-assign":34,"react":527}],594:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -84142,7 +90679,7 @@ var ClassTabsNamePanel = React.createClass({displayName: "ClassTabsNamePanel",
 
 module.exports = ClassTabsNamePanel;
 
-},{"object-assign":33,"react":518}],565:[function(require,module,exports){
+},{"object-assign":34,"react":527}],595:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -84350,7 +90887,7 @@ var CreateNewFeedItemPanel = React.createClass({displayName: "CreateNewFeedItemP
 
 module.exports = CreateNewFeedItemPanel;
 
-},{"../../editor/PatientEditor":581,"../../feed/FeedItem":604,"object-assign":33,"react":518}],566:[function(require,module,exports){
+},{"../../editor/PatientEditor":612,"../../feed/FeedItem":635,"object-assign":34,"react":527}],596:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -84530,7 +91067,110 @@ var TaskPanel = React.createClass({displayName: "TaskPanel",
 
 module.exports = TaskPanel;
 
-},{"../../../mixins/FeedMixin":738,"../../editor/PatientEditor":581,"../../feed/PagedFeedItemsList":606,"../../feed/SelfLoadingClassFeed":607,"../../feed/button/CreateFeedItemButton":610,"./CreateNewFeedItemPanel":565,"object-assign":33,"react":518}],567:[function(require,module,exports){
+},{"../../../mixins/FeedMixin":776,"../../editor/PatientEditor":612,"../../feed/PagedFeedItemsList":637,"../../feed/SelfLoadingClassFeed":638,"../../feed/button/CreateFeedItemButton":641,"./CreateNewFeedItemPanel":595,"object-assign":34,"react":527}],597:[function(require,module,exports){
+/**
+ * Created by sabir on 03.10.15.
+ */
+var React = require('react');
+var assign = require('object-assign');
+var TopBrandContainer = React.createClass({displayName: "TopBrandContainer",
+    getDefaultProps: function () {
+        return {
+            mainText: undefined,
+            //mainText: 'International Programs Office',
+            bottomText: undefined,
+            //bottomText: 'English Level Test',
+            //backgroundImg: 'http://static.ngs.ru/news/preview/84756916e5e79d2ecff1902f1fb60ddc0ff6fa62_1024.jpg'
+            backgroundImg: 'http://www.bhmpics.com/wallpapers/andromeda_galaxy_space-1920x1080.jpg'
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative',
+            backgroundColor: 'black',
+            width: '100%',
+            minHeight: '500px',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center'
+        },
+        overlay: {
+            position: 'absolute',
+            top: '0px',
+            zIndex: '1',
+            bottom: '0px',
+            left: '0px',
+            right: '0px',
+            backgroundColor: 'black',
+            opacity: 0.9
+        },
+
+        contentPlaceholder: {
+            position: 'absolute',
+            color: 'white',
+            textAlign: 'center',
+            paddingTop: 180,
+            top: 0,
+            zIndex: 1,
+            bottom: 0,
+            left: 0,
+            right: 0
+        },
+
+        mainTextPlaceholder: {
+            fontSize: '70px',
+            lineHeight: '72px'
+        },
+
+        bottomTextPlaceholder: {
+            fontSize: '30px',
+            lineHeight: '36px',
+            marginTop: 30
+        }
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url("' + this.props.backgroundImg + '")'});
+        return (
+            React.createElement("div", {style: st}, 
+                React.createElement("div", {style: this.componentStyle.overlay}), 
+                React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
+
+                    this.props.mainText == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.mainTextPlaceholder}, 
+                            this.props.mainText
+                        ), 
+                    
+
+                    this.props.bottomText == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.bottomTextPlaceholder}, 
+                            this.props.bottomText
+                        )
+                    
+
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = TopBrandContainer;
+
+},{"object-assign":34,"react":527}],598:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84627,7 +91267,7 @@ var CorrectorHelpButton = React.createClass({displayName: "CorrectorHelpButton",
 
 module.exports = CorrectorHelpButton;
 
-},{"../../components/dialog/Dialog":573,"./CorrectorPanel":568,"object-assign":33,"react":518}],568:[function(require,module,exports){
+},{"../../components/dialog/Dialog":604,"./CorrectorPanel":599,"object-assign":34,"react":527}],599:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84759,7 +91399,7 @@ var CorrectorPanel = React.createClass({displayName: "CorrectorPanel",
 
 module.exports = CorrectorPanel;
 
-},{"./sounds/SoundsPanel":571,"./words/WordsPanel":572,"object-assign":33,"react":518}],569:[function(require,module,exports){
+},{"./sounds/SoundsPanel":602,"./words/WordsPanel":603,"object-assign":34,"react":527}],600:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84875,7 +91515,7 @@ var SoundItem = React.createClass({displayName: "SoundItem",
 
 module.exports = SoundItem;
 
-},{"object-assign":33,"react":518}],570:[function(require,module,exports){
+},{"object-assign":34,"react":527}],601:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -84939,7 +91579,7 @@ var SoundsList = React.createClass({displayName: "SoundsList",
 
 module.exports = SoundsList;
 
-},{"./SoundItem":569,"object-assign":33,"react":518}],571:[function(require,module,exports){
+},{"./SoundItem":600,"object-assign":34,"react":527}],602:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -85154,7 +91794,7 @@ var SoundsPanel = React.createClass({displayName: "SoundsPanel",
 
 module.exports = SoundsPanel;
 
-},{"../../editor/PatientEditor":581,"./SoundsList":570,"object-assign":33,"react":518}],572:[function(require,module,exports){
+},{"../../editor/PatientEditor":612,"./SoundsList":601,"object-assign":34,"react":527}],603:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -85268,7 +91908,7 @@ var WordsPanel = React.createClass({displayName: "WordsPanel",
 
 module.exports = WordsPanel;
 
-},{"../../editor/PatientEditor":581,"object-assign":33,"react":518}],573:[function(require,module,exports){
+},{"../../editor/PatientEditor":612,"object-assign":34,"react":527}],604:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85357,7 +91997,7 @@ var Dialog = React.createClass({displayName: "Dialog",
 
 module.exports = Dialog;
 
-},{"./DialogOverlay":575,"./DialogPanel":576,"object-assign":33,"react":518}],574:[function(require,module,exports){
+},{"./DialogOverlay":606,"./DialogPanel":607,"object-assign":34,"react":527}],605:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85442,7 +92082,7 @@ var DialogClickableArea = React.createClass({displayName: "DialogClickableArea",
 
 module.exports = DialogClickableArea;
 
-},{"../dialog/Dialog":573,"object-assign":33,"react":518}],575:[function(require,module,exports){
+},{"../dialog/Dialog":604,"object-assign":34,"react":527}],606:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85544,7 +92184,7 @@ var DialogOverlay = React.createClass({displayName: "DialogOverlay",
 });
 module.exports = DialogOverlay;
 
-},{"object-assign":33,"react":518}],576:[function(require,module,exports){
+},{"object-assign":34,"react":527}],607:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -85758,7 +92398,7 @@ var DialogPanel = React.createClass({displayName: "DialogPanel",
 
 module.exports = DialogPanel;
 
-},{"object-assign":33,"react":518}],577:[function(require,module,exports){
+},{"object-assign":34,"react":527}],608:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -85974,7 +92614,7 @@ var EditBunchDialog = React.createClass({displayName: "EditBunchDialog",
 
 module.exports = EditBunchDialog;
 
-},{"../../../mixins/ExerciseMixin":737,"../../buttons/DeleteButton":543,"../../dialog/Dialog":573,"object-assign":33,"react":518}],578:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":775,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"object-assign":34,"react":527}],609:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -86051,7 +92691,7 @@ var ExerciseDialogClickableArea = React.createClass({displayName: "ExerciseDialo
 
 module.exports = ExerciseDialogClickableArea;
 
-},{"../../exercise/SelfLoadingUserExercise":586,"../DialogClickableArea":574,"object-assign":33,"react":518}],579:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":617,"../DialogClickableArea":605,"object-assign":34,"react":527}],610:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -86143,7 +92783,7 @@ var ExerciseDialogInfoBlock = React.createClass({displayName: "ExerciseDialogInf
 
 module.exports = ExerciseDialogInfoBlock;
 
-},{"../../exercise/SelfLoadingUserExercise":586,"../../exercise/info/SelfLoadingExerciseInfoCard":599,"object-assign":33,"react":518}],580:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":617,"../../exercise/info/SelfLoadingExerciseInfoCard":630,"object-assign":34,"react":527}],611:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -86328,7 +92968,7 @@ var ExerciseDialogViewer = React.createClass({displayName: "ExerciseDialogViewer
 
 module.exports = ExerciseDialogViewer;
 
-},{"../../../mixins/ExerciseMixin":737,"../../dialog/Dialog":573,"../../exercise/SelfLoadingUserExercise":586,"../../exercise/create/ExerciseUpdateTabs":591,"../../exercise/info/ExerciseInfoCard":598,"./ExerciseDialogInfoBlock":579,"object-assign":33,"react":518}],581:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":775,"../../dialog/Dialog":604,"../../exercise/SelfLoadingUserExercise":617,"../../exercise/create/ExerciseUpdateTabs":622,"../../exercise/info/ExerciseInfoCard":629,"./ExerciseDialogInfoBlock":610,"object-assign":34,"react":527}],612:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -86556,7 +93196,7 @@ var PatientEditor = React.createClass({displayName: "PatientEditor",
 
 module.exports = PatientEditor;
 
-},{"../file/FileUploader":613,"object-assign":33,"react":518,"react-quill":276}],582:[function(require,module,exports){
+},{"../file/FileUploader":645,"object-assign":34,"react":527,"react-quill":285}],613:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -86663,7 +93303,7 @@ var ListOfSelfLoadingUserExercises = React.createClass({displayName: "ListOfSelf
 
 module.exports = ListOfSelfLoadingUserExercises;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"./SelfLoadingUserExercise":586,"react":518}],583:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"./SelfLoadingUserExercise":617,"react":527}],614:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -86797,7 +93437,7 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
 module.exports = PatientCard;
 
-},{"../../components/text/translatable/TranslatableText":705,"../task/PatientTask":695,"../text/ToggledText":704,"./UserExerciseInput":587,"object-assign":33,"react":518}],584:[function(require,module,exports){
+},{"../../components/text/translatable/TranslatableText":741,"../task/PatientTask":731,"../text/ToggledText":740,"./UserExerciseInput":618,"object-assign":34,"react":527}],615:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -87065,7 +93705,7 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
 
 module.exports = PatientExercise;
 
-},{"../numbers/NumbersBlock":671,"./PatientCard":583,"react":518}],585:[function(require,module,exports){
+},{"../numbers/NumbersBlock":705,"./PatientCard":614,"react":527}],616:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -87121,7 +93761,7 @@ var SelfLoadingCurrentUserExercise = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingCurrentUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":756,"./SelfLoadingUserExercise":586,"parse":34,"react":518}],586:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":794,"./SelfLoadingUserExercise":617,"parse":35,"react":527}],617:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -87418,7 +94058,7 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
 
 module.exports = SelfLoadingUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../mixins/ExerciseMixin":737,"../exercise/PatientExercise":584,"../preloader/PatientPreloader":674,"../teacher/TeacherExerciseBlock":696,"../user/AuthButton":722,"object-assign":33,"react":518}],587:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../mixins/ExerciseMixin":775,"../exercise/PatientExercise":615,"../preloader/PatientPreloader":708,"../teacher/TeacherExerciseBlock":732,"../user/AuthButton":758,"object-assign":34,"react":527}],618:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -87545,7 +94185,7 @@ var UserExerciseInput = React.createClass({displayName: "UserExerciseInput",
 
 module.exports = UserExerciseInput;
 
-},{"../input/PatientExerciseInput":620,"../recognition/SpeechRecognitionArea":680,"../record/PatientRecordComponent":681,"./diff/RightTextAnswerDiff":596,"react":518}],588:[function(require,module,exports){
+},{"../input/PatientExerciseInput":654,"../recognition/SpeechRecognitionArea":715,"../record/PatientRecordComponent":716,"./diff/RightTextAnswerDiff":627,"react":527}],619:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -87559,7 +94199,17 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
             onSelect: function(name){
                 console.log('selected Name = ' + name);
             },
-            activeName: undefined
+            activeName: undefined,
+            list: [{
+                name: 'speaking',
+                displayName: 'Voice recording'
+            },{
+                name: 'typing',
+                displayName: 'Typing'
+            },{
+                name: 'recognition',
+                displayName: 'Speech recognition'
+            }]
         }
     },
 
@@ -87594,18 +94244,7 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
     },
 
     render: function () {
-        var list = [{
-            name: 'speaking',
-            displayName: 'Voice recording'
-        },{
-            name: 'typing',
-            displayName: 'Typing'
-        },{
-            name: 'recognition',
-            displayName: 'Speech recognition'
-        }
-
-        ];
+        var list = this.props.list;
 
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
@@ -87627,7 +94266,7 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
 
 module.exports = CardTypeSelectButton;
 
-},{"object-assign":33,"react":518}],589:[function(require,module,exports){
+},{"object-assign":34,"react":527}],620:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -88193,7 +94832,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
 
 module.exports = EditableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/MaterialsMixin":743,"../../audio/PatientAudio":538,"../../file/FileUploader":613,"../../material/search/MaterialSearchButton":651,"../../player/VimeoPlayer":673,"../../task/PatientTask":695,"../../text/ToggledText":704,"./CardTypeSelectButton":588,"./UserAnswerTypeDemo":594,"object-assign":33,"react":518}],590:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/MaterialsMixin":781,"../../audio/PatientAudio":554,"../../file/FileUploader":645,"../../material/search/MaterialSearchButton":685,"../../player/VimeoPlayer":707,"../../task/PatientTask":731,"../../text/ToggledText":740,"./CardTypeSelectButton":619,"./UserAnswerTypeDemo":625,"object-assign":34,"react":527}],621:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -88454,7 +95093,7 @@ var ExerciseUpdatableCards = React.createClass({displayName: "ExerciseUpdatableC
 
 module.exports = ExerciseUpdatableCards;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/ExerciseMixin":737,"../../numbers/NumbersBlock":671,"./UpdatableCardBlock":593,"object-assign":33,"react":518}],591:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/ExerciseMixin":775,"../../numbers/NumbersBlock":705,"./UpdatableCardBlock":624,"object-assign":34,"react":527}],622:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -88598,7 +95237,7 @@ var ExerciseUpdateTabs = React.createClass({displayName: "ExerciseUpdateTabs",
 
 module.exports = ExerciseUpdateTabs;
 
-},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":592,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":600,"../../exercise/info/UpdateExerciseInfoTab":601,"object-assign":33,"react":518}],592:[function(require,module,exports){
+},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":623,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":631,"../../exercise/info/UpdateExerciseInfoTab":632,"object-assign":34,"react":527}],623:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -88711,7 +95350,7 @@ var SelfLoadingExerciseUpdatableCardsList = React.createClass({displayName: "Sel
 
 module.exports = SelfLoadingExerciseUpdatableCardsList;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./ExerciseUpdatableCards":590,"object-assign":33,"react":518}],593:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./ExerciseUpdatableCards":621,"object-assign":34,"react":527}],624:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -88833,7 +95472,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
 
 module.exports = UpdatableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./EditableCardBlock":589,"object-assign":33,"react":518}],594:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./EditableCardBlock":620,"object-assign":34,"react":527}],625:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -88889,7 +95528,7 @@ var UserAnswerTypeDemo = React.createClass({displayName: "UserAnswerTypeDemo",
 
 module.exports = UserAnswerTypeDemo;
 
-},{"object-assign":33,"react":518}],595:[function(require,module,exports){
+},{"object-assign":34,"react":527}],626:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -88981,7 +95620,7 @@ var CreateNewExerciseButton = React.createClass({displayName: "CreateNewExercise
 
 module.exports = CreateNewExerciseButton;
 
-},{"../../../dialog/exercise/ExerciseDialogViewer":580,"object-assign":33,"react":518}],596:[function(require,module,exports){
+},{"../../../dialog/exercise/ExerciseDialogViewer":611,"object-assign":34,"react":527}],627:[function(require,module,exports){
 /**
  * Created by sabir on 09.11.15.
  */
@@ -89081,7 +95720,7 @@ var RightTextAnswerDiff = React.createClass({displayName: "RightTextAnswerDiff",
 
 module.exports = RightTextAnswerDiff;
 
-},{"object-assign":33,"react":518,"react-diff":110}],597:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-diff":119}],628:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -89183,7 +95822,7 @@ var AccessSwitcher = React.createClass({displayName: "AccessSwitcher",
 
 module.exports = AccessSwitcher;
 
-},{"object-assign":33,"react":518}],598:[function(require,module,exports){
+},{"object-assign":34,"react":527}],629:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -89361,7 +96000,7 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
 
 module.exports = ExerciseInfoCard;
 
-},{"object-assign":33,"react":518}],599:[function(require,module,exports){
+},{"object-assign":34,"react":527}],630:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -89446,7 +96085,7 @@ var SelfLoadingExerciseInfoCard = React.createClass({displayName: "SelfLoadingEx
 
 module.exports = SelfLoadingExerciseInfoCard;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./ExerciseInfoCard":598,"object-assign":33,"react":518}],600:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./ExerciseInfoCard":629,"object-assign":34,"react":527}],631:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -89575,7 +96214,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({displayName: "SelfLoad
 
 module.exports = SelfLoadingUpdateExerciseInfoTab;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"../info/UpdateExerciseInfoTab":601,"object-assign":33,"react":518}],601:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"../info/UpdateExerciseInfoTab":632,"object-assign":34,"react":527}],632:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -89890,7 +96529,7 @@ var UpdateExerciseInfoTab = React.createClass({displayName: "UpdateExerciseInfoT
 
 module.exports = UpdateExerciseInfoTab;
 
-},{"../../buttons/DeleteButton":543,"../../file/FileUploader":613,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":694,"../info/ExerciseInfoCard":598,"./AccessSwitcher":597,"object-assign":33,"react":518}],602:[function(require,module,exports){
+},{"../../buttons/DeleteButton":559,"../../file/FileUploader":645,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":729,"../info/ExerciseInfoCard":629,"./AccessSwitcher":628,"object-assign":34,"react":527}],633:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -89993,7 +96632,7 @@ var ExercisesSearchButton = React.createClass({displayName: "ExercisesSearchButt
 
 module.exports = ExercisesSearchButton;
 
-},{"../../dialog/Dialog":573,"./ExercisesSearchPanel":603,"object-assign":33,"react":518}],603:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./ExercisesSearchPanel":634,"object-assign":34,"react":527}],634:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -90163,7 +96802,7 @@ var ExercisesSearchPanel = React.createClass({displayName: "ExercisesSearchPanel
 
 module.exports = ExercisesSearchPanel;
 
-},{"../../../mixins/ExerciseMixin":737,"../../bunch/exercise/ExercisesGroupsList":542,"object-assign":33,"react":518}],604:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":775,"../../bunch/exercise/ExercisesGroupsList":558,"object-assign":34,"react":527}],635:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90385,7 +97024,7 @@ var FeedItem = React.createClass({displayName: "FeedItem",
 
 module.exports = FeedItem;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":755,"../../mixins/NotificationMixin":746,"../exercise/SelfLoadingCurrentUserExercise":585,"../exercise/SelfLoadingUserExercise":586,"../note/SelfLoadingNote":656,"./button/EditFeedItemButton":611,"./video/SelfLoadingVideosList":612,"moment":32,"object-assign":33,"react":518}],605:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../mixins/NotificationMixin":784,"../exercise/SelfLoadingCurrentUserExercise":616,"../exercise/SelfLoadingUserExercise":617,"../note/SelfLoadingNote":690,"./button/EditFeedItemButton":642,"./video/SelfLoadingVideosList":643,"moment":33,"object-assign":34,"react":527}],636:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90483,7 +97122,7 @@ var FeedItemsList = React.createClass({displayName: "FeedItemsList",
 
 module.exports = FeedItemsList;
 
-},{"./FeedItem":604,"object-assign":33,"react":518}],606:[function(require,module,exports){
+},{"./FeedItem":635,"object-assign":34,"react":527}],637:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90605,7 +97244,7 @@ var PagedFeedItemsList = React.createClass({displayName: "PagedFeedItemsList",
 
 module.exports = PagedFeedItemsList;
 
-},{"./FeedItemsList":605,"object-assign":33,"react":518}],607:[function(require,module,exports){
+},{"./FeedItemsList":636,"object-assign":34,"react":527}],638:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -90716,7 +97355,7 @@ var SelfLoadingClassFeed = React.createClass({displayName: "SelfLoadingClassFeed
 
 module.exports = SelfLoadingClassFeed;
 
-},{"../../mixins/FeedMixin":738,"./PagedFeedItemsList":606,"object-assign":33,"react":518}],608:[function(require,module,exports){
+},{"../../mixins/FeedMixin":776,"./PagedFeedItemsList":637,"object-assign":34,"react":527}],639:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -90810,7 +97449,7 @@ var SelfLoadingFeedItem = React.createClass({displayName: "SelfLoadingFeedItem",
 
 module.exports = SelfLoadingFeedItem;
 
-},{"../../mixins/FeedMixin":738,"./FeedItem":604,"object-assign":33,"react":518}],609:[function(require,module,exports){
+},{"../../mixins/FeedMixin":776,"./FeedItem":635,"object-assign":34,"react":527}],640:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -91233,7 +97872,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
 
 module.exports = SelfLoadingUpdateFeedItem;
 
-},{"../../mixins/FeedMixin":738,"../buttons/DeleteButton":543,"../editor/PatientEditor":581,"../exercise/SelfLoadingCurrentUserExercise":585,"../exercise/SelfLoadingUserExercise":586,"../exercise/search/ExercisesSearchButton":602,"../feed/FeedItem":604,"../material/search/MaterialSearchButton":651,"../note/SelfLoadingNote":656,"./video/SelfLoadingVideosList":612,"moment":32,"object-assign":33,"react":518}],610:[function(require,module,exports){
+},{"../../mixins/FeedMixin":776,"../buttons/DeleteButton":559,"../editor/PatientEditor":612,"../exercise/SelfLoadingCurrentUserExercise":616,"../exercise/SelfLoadingUserExercise":617,"../exercise/search/ExercisesSearchButton":633,"../feed/FeedItem":635,"../material/search/MaterialSearchButton":685,"../note/SelfLoadingNote":690,"./video/SelfLoadingVideosList":643,"moment":33,"object-assign":34,"react":527}],641:[function(require,module,exports){
 /**
  * Created by sabir on 01.11.15.
  */
@@ -91339,7 +97978,7 @@ var CreateFeedItemButton = React.createClass({displayName: "CreateFeedItemButton
 
 module.exports = CreateFeedItemButton;
 
-},{"../../dialog/Dialog":573,"../SelfLoadingUpdateFeedItem":609,"object-assign":33,"react":518}],611:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":640,"object-assign":34,"react":527}],642:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -91461,7 +98100,7 @@ var EditFeedItemButton = React.createClass({displayName: "EditFeedItemButton",
 
 module.exports = EditFeedItemButton;
 
-},{"../../dialog/Dialog":573,"../SelfLoadingUpdateFeedItem":609,"object-assign":33,"react":518}],612:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":640,"object-assign":34,"react":527}],643:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -91588,7 +98227,83 @@ var SelfLoadingVideosList = React.createClass({displayName: "SelfLoadingVideosLi
 
 module.exports = SelfLoadingVideosList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":755,"../../../mixins/MaterialsMixin":743,"../../material/list/CardsList":645,"object-assign":33,"react":518}],613:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/MaterialsMixin":781,"../../material/list/CardsList":679,"object-assign":34,"react":527}],644:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FileUploader = require('./FileUploader');
+
+var FileUploadButton = React.createClass({displayName: "FileUploadButton",
+    getDefaultProps: function () {
+        return {
+            className: 'ui button',
+            icon: undefined,
+            buttonName: undefined,
+            style: {
+
+            },
+            onFileUploaded: function(url){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative',
+            display: 'inline-block'
+        },
+
+        uploaderPlaceholder: {
+            opacity: 0,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0
+        }
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, className: this.props.className}, 
+                this.props.icon == undefined ? null :
+                    React.createElement("i", {className: this.props.icon}), 
+                
+                this.props.buttonName == undefined ? null :
+                    React.createElement("span", null, this.props.buttonName), 
+                
+
+                React.createElement("div", {style: this.componentStyle.uploaderPlaceholder}, 
+                    React.createElement(FileUploader, {hiddenMode: true, onFileUploaded: this.props.onFileUploaded})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = FileUploadButton;
+
+},{"./FileUploader":645,"object-assign":34,"react":527}],645:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -91604,8 +98319,10 @@ var FileUploader = React.createClass({displayName: "FileUploader",
             containerClassName: 'ui brown message',
             iconFiletypes: ['.png', '.jpg', '.gif'],
             uploadFileMessage: 'Загрузить файл',
-            uploadScript: 'http://beta.englishpatient.org/dropzone/upload.php',
-            uploadDir: 'http://beta.englishpatient.org/dropzone/uploads/',
+            uploadScript: 'https://www.englishpatientdrive.pw/dropzone/upload.php',
+            //uploadScript: 'http://beta.englishpatient.org/dropzone/upload.php',
+            uploadDir: 'https://www.englishpatientdrive.pw/dropzone/uploads/',
+            //uploadDir: 'http://beta.englishpatient.org/dropzone/uploads/',
 
             onFileUploaded: function(url){
                 console.log('--->>> UPLOADED FILE ', url);
@@ -91616,7 +98333,9 @@ var FileUploader = React.createClass({displayName: "FileUploader",
             customIconClassName: 'icon file image outline',
             style:{
 
-            }
+            },
+
+            hiddenMode: false
         }
     },
 
@@ -91636,7 +98355,7 @@ var FileUploader = React.createClass({displayName: "FileUploader",
 
     componentStyle: {
         placeholder: {
-            minWidth: 165,
+            //minWidth: 165,
             //height: 60,
             height: 40,
             position: 'relative',
@@ -91759,37 +98478,46 @@ var FileUploader = React.createClass({displayName: "FileUploader",
             previewTemplate: React.renderToStaticMarkup(
 
                 React.createElement("div", null, 
-                    React.createElement("div", {style: this.componentStyle.previewPlaceholder, className: "dz-preview dz-file-preview "}, 
+                    this.props.hiddenMode == true ? null :
+
+                            React.createElement("div", {style: this.componentStyle.previewPlaceholder, className: "dz-preview dz-file-preview "}, 
 
 
+                                React.createElement("div", {className: "dz-details", style: this.componentStyle.dzDetails}, 
+                                    React.createElement("div", {style: this.componentStyle.dzFilename, className: "dz-filename"}, 
+                                        React.createElement("span", {"data-dz-name": true, style: this.componentStyle.dzName}), 
 
-                            React.createElement("div", {className: "dz-details", style: this.componentStyle.dzDetails}, 
-                                React.createElement("div", {style: this.componentStyle.dzFilename, className: "dz-filename"}, 
-                                    React.createElement("span", {"data-dz-name": true, style: this.componentStyle.dzName}), 
-                                    React.createElement("div", {className: "dz-size", "data-dz-size": true, style: this.componentStyle.dzSize})
+                                        React.createElement("div", {className: "dz-size", "data-dz-size": true, style: this.componentStyle.dzSize})
+                                    ), 
+
+
+                                    React.createElement("img", {style: this.componentStyle.img, "data-dz-thumbnail": true})
                                 ), 
 
 
-                                React.createElement("img", {style: this.componentStyle.img, "data-dz-thumbnail": true})
-                            ), 
+                                React.createElement("div", {className: "dz-progress", style: this.componentStyle.dzProgress}, 
+                                    React.createElement("span", {className: "dz-upload", style: this.componentStyle.dzUpload, 
+                                          "data-dz-uploadprogress": true})
+                                ), 
 
-                            React.createElement("div", {className: "dz-progress", style: this.componentStyle.dzProgress}, 
-                                React.createElement("span", {className: "dz-upload", style: this.componentStyle.dzUpload, "data-dz-uploadprogress": true})
-                            ), 
 
-                            React.createElement("div", {className: "dz-error-mark", style: this.componentStyle.errorMark}, 
-                                React.createElement("span", null, 
-                                    React.createElement("a", {className: "dz-remove", style: this.componentStyle.dzRemove, href: "javascript:undefined;", "data-dz-remove": ""}, 
-                                        "удалить"
+                                React.createElement("div", {className: "dz-error-mark", style: this.componentStyle.errorMark}, 
+                                    React.createElement("span", null, 
+                                        React.createElement("a", {className: "dz-remove", style: this.componentStyle.dzRemove, 
+                                           href: "javascript:undefined;", "data-dz-remove": ""}, 
+                                            "удалить"
+                                        )
                                     )
-                                )
-                            ), 
+                                ), 
 
-                            React.createElement("div", {style: this.componentStyle.dzErrorMessage, className: "dz-error-message"}, 
-                                React.createElement("span", {"data-dz-errormessage": true})
+                                React.createElement("div", {style: this.componentStyle.dzErrorMessage, className: "dz-error-message"}, 
+                                    React.createElement("span", {"data-dz-errormessage": true})
+                                )
+
                             )
 
-                        )
+                        
+
                     )
             )
         };
@@ -91848,7 +98576,167 @@ var FileUploader = React.createClass({displayName: "FileUploader",
 
 module.exports = FileUploader;
 
-},{"object-assign":33,"react":518,"react-dropzone-component":256}],614:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-dropzone-component":265}],646:[function(require,module,exports){
+/**
+ * Created by sabir on 03.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingTopicsList = require('../topics/SelfLoadingTopicsList');
+
+var GrammarPanel = React.createClass({displayName: "GrammarPanel",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            margin: '0 auto',
+            marginTop: 10
+        }
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement(SelfLoadingTopicsList, {teacherId: this.props.teacherId, topicType: 'grammar'})
+
+            )
+        );
+    }
+
+});
+
+module.exports = GrammarPanel;
+
+},{"../topics/SelfLoadingTopicsList":746,"object-assign":34,"react":527}],647:[function(require,module,exports){
+/**
+ * Created by sabir on 02.10.15.
+ */
+var React = require('react');
+var ParseMixin = require('../../../react/mixins/commonMixins/ParseMixin');
+
+//var HeaderPanel = require('../../../react/commonComponents/headers/HeaderPanel');
+var HeaderPanel = require('../../../../react/commonComponents/headers/HeaderPanel');
+var AuthButton = require('../user/AuthButton');
+
+var Parse = require('parse').Parse;
+
+var SelfInitHeader = React.createClass({displayName: "SelfInitHeader",
+    getDefaultProps: function () {
+        return {
+            links: [],
+            logo: 'http://beta.englishpatient.org/home/img/logo_mini.png',
+            logoText: 'English Patient',
+            dropdownLinks: [{
+                name: 'Выход',
+                icon: 'ui sign out icon',
+                onClick: function(){
+                    Parse.User.logOut().then(function(){
+                        window.location.href = window.location.href;
+                    });
+                }
+            }],
+            extraLogo: undefined,
+            extraLogoText: undefined,
+            extraLinksContent: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            user: undefined
+        }
+    },
+
+    initCurrentUser: function(){
+        var u = Parse.User.current();
+        if (u != undefined){
+            var firstName = u.get('firstName');
+            var lastName = u.get('lastName');
+            var name = (firstName == undefined ? '' : firstName) + ' ' + (lastName == undefined ? '' : lastName);
+            if (name == ' '){
+                name = u.get('email');
+            }
+            this.setState({
+                user: {
+                    name: name,
+                    avatar: u.get('avatar')
+                }
+            });
+        }
+
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    onDropdownLinkClick: function(num){
+        var ls = this.props.dropdownLinks;
+        if ( ls!= undefined && ls.length > num ){
+            ls[num].onClick();
+        }
+    },
+
+    componentDidMount: function () {
+        ParseMixin.initParse();
+        this.initCurrentUser();
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    getCustomHtml: function(){
+        return (
+            React.createElement("div", null, 
+
+                this.props.extraLinksContent == undefined ? null :
+                    React.createElement("span", null, this.props.extraLinksContent), 
+                
+
+                React.createElement(AuthButton, null)
+            )
+        );
+    },
+
+    render: function () {
+        var isLoggedIn = (this.state.user != undefined);
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                React.createElement(HeaderPanel, {extraLogo: this.props.extraLogo, extraLogoText: this.props.extraLogoText, 
+                             logo: this.props.logo, logoText: this.props.logoText, 
+                             onDropdownLinkClick: this.onDropdownLinkClick, dropdownLinks: this.props.dropdownLinks, 
+                             isLoggedIn: isLoggedIn, user: this.state.user, links: this.props.links, 
+                             customLoginButtonComponent: this.getCustomHtml()})
+            )
+        );
+    }
+
+});
+
+module.exports = SelfInitHeader;
+
+},{"../../../../react/commonComponents/headers/HeaderPanel":534,"../../../react/mixins/commonMixins/ParseMixin":794,"../user/AuthButton":758,"parse":35,"react":527}],648:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -91982,7 +98870,7 @@ var StudentHeader = React.createClass({displayName: "StudentHeader",
 
 module.exports = StudentHeader;
 
-},{"../../../mixins/LoginMixin":742,"../../profile/UserProfileButton":678,"../../templates/CurrentUserMenuItem":698,"../../templates/HeaderLeftLinks":699,"../../templates/HeaderTemplate":700,"object-assign":33,"react":518,"react-router":298}],615:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":780,"../../profile/UserProfileButton":713,"../../templates/CurrentUserMenuItem":734,"../../templates/HeaderLeftLinks":735,"../../templates/HeaderTemplate":736,"object-assign":34,"react":527,"react-router":307}],649:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -92195,7 +99083,7 @@ var TeacherHeader = React.createClass({displayName: "TeacherHeader",
 
 module.exports = TeacherHeader;
 
-},{"../../../mixins/LoginMixin":742,"../../notification/NotificationsNumberSpan":667,"../../profile/UserProfileButton":678,"../../templates/CurrentUserMenuItem":698,"../../templates/HeaderLeftLinks":699,"../../templates/HeaderTemplate":700,"object-assign":33,"react":518,"react-router":298}],616:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":780,"../../notification/NotificationsNumberSpan":701,"../../profile/UserProfileButton":713,"../../templates/CurrentUserMenuItem":734,"../../templates/HeaderLeftLinks":735,"../../templates/HeaderTemplate":736,"object-assign":34,"react":527,"react-router":307}],650:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -92274,7 +99162,7 @@ var GifInstruction = React.createClass({displayName: "GifInstruction",
 
 module.exports = GifInstruction;
 
-},{"object-assign":33,"react":518}],617:[function(require,module,exports){
+},{"object-assign":34,"react":527}],651:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -92335,7 +99223,7 @@ var IconMessage = React.createClass({displayName: "IconMessage",
 
 module.exports = IconMessage;
 
-},{"object-assign":33,"react":518}],618:[function(require,module,exports){
+},{"object-assign":34,"react":527}],652:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -92577,7 +99465,7 @@ var IdiomsPanel = React.createClass({displayName: "IdiomsPanel",
 
 module.exports = IdiomsPanel;
 
-},{"../../mixins/IdiomsMixin":740,"../material/list/CardsList":645,"object-assign":33,"react":518}],619:[function(require,module,exports){
+},{"../../mixins/IdiomsMixin":778,"../material/list/CardsList":679,"object-assign":34,"react":527}],653:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -92632,7 +99520,7 @@ var PatientImg = React.createClass({displayName: "PatientImg",
 
 module.exports = PatientImg;
 
-},{"legit-image":31,"object-assign":33,"react":518}],620:[function(require,module,exports){
+},{"legit-image":32,"object-assign":34,"react":527}],654:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -92754,7 +99642,7 @@ var PatientExerciseInput = React.createClass({displayName: "PatientExerciseInput
 
 module.exports = PatientExerciseInput;
 
-},{"react":518}],621:[function(require,module,exports){
+},{"react":527}],655:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -92830,7 +99718,7 @@ var GroupsListItem = React.createClass({displayName: "GroupsListItem",
 
 module.exports = GroupsListItem;
 
-},{"object-assign":33,"react":518}],622:[function(require,module,exports){
+},{"object-assign":34,"react":527}],656:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -92923,7 +99811,7 @@ var KaraokeCard = React.createClass({displayName: "KaraokeCard",
 
 module.exports = KaraokeCard;
 
-},{"object-assign":33,"react":518}],623:[function(require,module,exports){
+},{"object-assign":34,"react":527}],657:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93037,7 +99925,7 @@ var KaraokeCardsList = React.createClass({displayName: "KaraokeCardsList",
 
 module.exports = KaraokeCardsList;
 
-},{"../dialog/Dialog":573,"./KaraokeCard":622,"./SelfLoadingKaraokePlayerPanel":627,"object-assign":33,"react":518}],624:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./KaraokeCard":656,"./SelfLoadingKaraokePlayerPanel":661,"object-assign":34,"react":527}],658:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93102,7 +99990,7 @@ var KaraokeGroupsPanel = React.createClass({displayName: "KaraokeGroupsPanel",
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
             textAlign: 'center',
-            backgroundImage: 'url(\'http://app.englishpatient.org/assets/img/avatars/_1.jpg\')'
+            backgroundImage: 'url(\'http://englishpatient.org/app/assets/img/avatars/_1.jpg\')'
         }
     },
 
@@ -93173,7 +100061,7 @@ var KaraokeGroupsPanel = React.createClass({displayName: "KaraokeGroupsPanel",
 
 module.exports = KaraokeGroupsPanel;
 
-},{"../../mixins/KaraokeMixin":741,"../topics/dialog/TopicDialog":714,"./GroupsListItem":621,"./SelfLoadingCategoryKaraokeCardsList":626,"object-assign":33,"react":518}],625:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":779,"../topics/dialog/TopicDialog":750,"./GroupsListItem":655,"./SelfLoadingCategoryKaraokeCardsList":660,"object-assign":34,"react":527}],659:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93332,7 +100220,7 @@ var KaraokePlayerPanel = React.createClass({displayName: "KaraokePlayerPanel",
 
 module.exports = KaraokePlayerPanel;
 
-},{"../../mixins/KaraokeMixin":741,"../player/PatientPlayer":672,"./subtitles/MainSubtitlesBlock":629,"./subtitles/SubtitlesList":630,"object-assign":33,"react":518}],626:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":779,"../player/PatientPlayer":706,"./subtitles/MainSubtitlesBlock":663,"./subtitles/SubtitlesList":664,"object-assign":34,"react":527}],660:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93423,7 +100311,7 @@ var SelfLoadingCategoryKaraokeCardsList = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingCategoryKaraokeCardsList;
 
-},{"../../mixins/KaraokeMixin":741,"./KaraokeCardsList":623,"object-assign":33,"react":518}],627:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":779,"./KaraokeCardsList":657,"object-assign":34,"react":527}],661:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93512,7 +100400,7 @@ var SelfLoadingKaraokePlayerPanel = React.createClass({displayName: "SelfLoading
 
 module.exports = SelfLoadingKaraokePlayerPanel;
 
-},{"../../mixins/KaraokeMixin":741,"./KaraokePlayerPanel":625,"object-assign":33,"react":518}],628:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":779,"./KaraokePlayerPanel":659,"object-assign":34,"react":527}],662:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93566,7 +100454,7 @@ var MainSubtitle = React.createClass({displayName: "MainSubtitle",
 
 module.exports = MainSubtitle;
 
-},{"../../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],629:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],663:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93654,7 +100542,7 @@ var MainSubtitlesBlock = React.createClass({displayName: "MainSubtitlesBlock",
 
 module.exports = MainSubtitlesBlock;
 
-},{"./MainSubtitle":628,"object-assign":33,"react":518}],630:[function(require,module,exports){
+},{"./MainSubtitle":662,"object-assign":34,"react":527}],664:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93772,7 +100660,7 @@ var SubtitlesList = React.createClass({displayName: "SubtitlesList",
 
 module.exports = SubtitlesList;
 
-},{"../../../mixins/KaraokeMixin":741,"./SubtitlesListItem":631,"object-assign":33,"react":518}],631:[function(require,module,exports){
+},{"../../../mixins/KaraokeMixin":779,"./SubtitlesListItem":665,"object-assign":34,"react":527}],665:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -93847,7 +100735,7 @@ var SubtitlesListItem = React.createClass({displayName: "SubtitlesListItem",
 
 module.exports = SubtitlesListItem;
 
-},{"../../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],632:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],666:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -93916,7 +100804,7 @@ var MaterialTags = React.createClass({displayName: "MaterialTags",
 
 module.exports = MaterialTags;
 
-},{"object-assign":33,"react":518,"react-addons-linked-state-mixin":109,"react-tagsinput":333}],633:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-addons-linked-state-mixin":110,"react-tagsinput":342}],667:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -94017,7 +100905,7 @@ var MaterialCreateButton = React.createClass({displayName: "MaterialCreateButton
 
 module.exports = MaterialCreateButton;
 
-},{"../../dialog/Dialog":573,"../dialogs/SelfLoadingMaterialUpdatePanel":639,"object-assign":33,"react":518}],634:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../dialogs/SelfLoadingMaterialUpdatePanel":673,"object-assign":34,"react":527}],668:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -94159,7 +101047,7 @@ var MaterialGroupCreateButton = React.createClass({displayName: "MaterialGroupCr
 
 module.exports = MaterialGroupCreateButton;
 
-},{"../../dialog/Dialog":573,"../groups/SelfLoadingUpdateMaterialGroupPanel":642,"object-assign":33,"react":518}],635:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../groups/SelfLoadingUpdateMaterialGroupPanel":676,"object-assign":34,"react":527}],669:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -94317,7 +101205,7 @@ var MaterialDialog = React.createClass({displayName: "MaterialDialog",
 
 module.exports = MaterialDialog;
 
-},{"../../dialog/Dialog":573,"./SelfLoadingMaterialPanel":638,"./SelfLoadingMaterialUpdatePanel":639,"object-assign":33,"react":518}],636:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./SelfLoadingMaterialPanel":672,"./SelfLoadingMaterialUpdatePanel":673,"object-assign":34,"react":527}],670:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -94464,7 +101352,7 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
 
 module.exports = MaterialPanel;
 
-},{"../../player/VimeoPlayer":673,"../../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],637:[function(require,module,exports){
+},{"../../player/VimeoPlayer":707,"../../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],671:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -94818,7 +101706,7 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
 
 module.exports = MaterialUpdatePanel;
 
-},{"../../../mixins/MaterialsMixin":743,"../../buttons/DeleteButton":543,"../../editor/PatientEditor":581,"../../material/MaterialTags":632,"../../player/VimeoPlayer":673,"../groups/GroupsSelect":640,"object-assign":33,"react":518}],638:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":781,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":612,"../../material/MaterialTags":666,"../../player/VimeoPlayer":707,"../groups/GroupsSelect":674,"object-assign":34,"react":527}],672:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -94916,7 +101804,7 @@ var SelfLoadingMaterialPanel = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialPanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/MaterialsMixin":743,"./MaterialPanel":636,"object-assign":33,"react":518}],639:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/MaterialsMixin":781,"./MaterialPanel":670,"object-assign":34,"react":527}],673:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -95064,7 +101952,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingMaterialUpdatePanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/MaterialsMixin":743,"./MaterialUpdatePanel":637,"object-assign":33,"react":518}],640:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/MaterialsMixin":781,"./MaterialUpdatePanel":671,"object-assign":34,"react":527}],674:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -95178,7 +102066,7 @@ var GroupsSelect = React.createClass({displayName: "GroupsSelect",
 
 module.exports = GroupsSelect;
 
-},{"object-assign":33,"react":518,"react-select":326}],641:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],675:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -95255,7 +102143,7 @@ var MaterialGroupCard = React.createClass({displayName: "MaterialGroupCard",
 
 module.exports = MaterialGroupCard;
 
-},{"object-assign":33,"react":518}],642:[function(require,module,exports){
+},{"object-assign":34,"react":527}],676:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -95375,7 +102263,7 @@ var SelfLoadingUpdateMaterialGroupPanel = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingUpdateMaterialGroupPanel;
 
-},{"../../../mixins/MaterialsMixin":743,"./UpdateMaterialGroupPanel":644,"object-assign":33,"react":518}],643:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":781,"./UpdateMaterialGroupPanel":678,"object-assign":34,"react":527}],677:[function(require,module,exports){
 /**
  * Created by sabir on 21.07.15.
  */
@@ -95506,7 +102394,7 @@ var UpdateMaterialGroupButton = React.createClass({displayName: "UpdateMaterialG
 
 module.exports = UpdateMaterialGroupButton;
 
-},{"../../dialog/Dialog":573,"./SelfLoadingUpdateMaterialGroupPanel":642,"object-assign":33,"react":518}],644:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./SelfLoadingUpdateMaterialGroupPanel":676,"object-assign":34,"react":527}],678:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -95638,7 +102526,7 @@ var UpdateMaterialGroupPanel = React.createClass({displayName: "UpdateMaterialGr
 
 module.exports = UpdateMaterialGroupPanel;
 
-},{"../../buttons/DeleteButton":543,"object-assign":33,"react":518}],645:[function(require,module,exports){
+},{"../../buttons/DeleteButton":559,"object-assign":34,"react":527}],679:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -95753,7 +102641,7 @@ var CardsList = React.createClass({displayName: "CardsList",
 
 module.exports = CardsList;
 
-},{"./MaterialCard":646,"object-assign":33,"react":518}],646:[function(require,module,exports){
+},{"./MaterialCard":680,"object-assign":34,"react":527}],680:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -96012,7 +102900,7 @@ var MaterialCard = React.createClass({displayName: "MaterialCard",
 
 module.exports = MaterialCard;
 
-},{"../dialogs/MaterialDialog":635,"./MaterialHoverPanel":647,"object-assign":33,"react":518}],647:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":669,"./MaterialHoverPanel":681,"object-assign":34,"react":527}],681:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -96144,7 +103032,7 @@ var MaterialHoverPanel = React.createClass({displayName: "MaterialHoverPanel",
 
 module.exports = MaterialHoverPanel;
 
-},{"../dialogs/MaterialDialog":635,"object-assign":33,"react":518}],648:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":669,"object-assign":34,"react":527}],682:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -96341,7 +103229,7 @@ var MaterialsBunch = React.createClass({displayName: "MaterialsBunch",
 
 module.exports = MaterialsBunch;
 
-},{"../groups/UpdateMaterialGroupButton":643,"../list/PagedCardsList":649,"object-assign":33,"react":518}],649:[function(require,module,exports){
+},{"../groups/UpdateMaterialGroupButton":677,"../list/PagedCardsList":683,"object-assign":34,"react":527}],683:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -96521,7 +103409,7 @@ var PagedCardsList = React.createClass({displayName: "PagedCardsList",
 
 module.exports = PagedCardsList;
 
-},{"./CardsList":645,"object-assign":33,"react":518}],650:[function(require,module,exports){
+},{"./CardsList":679,"object-assign":34,"react":527}],684:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -96730,7 +103618,7 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
             React.createElement("div", null, c)
         );
     },
-//1 3 5 7 - Maxim ()
+
     componentStyle: {
         placeholder: {
             //width: 865,
@@ -96816,7 +103704,7 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialsList;
 
-},{"../../../mixins/MaterialsMixin":743,"../buttons/MaterialCreateButton":633,"../buttons/MaterialGroupCreateButton":634,"./MaterialsBunch":648,"./PagedCardsList":649,"object-assign":33,"react":518}],651:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":781,"../buttons/MaterialCreateButton":667,"../buttons/MaterialGroupCreateButton":668,"./MaterialsBunch":682,"./PagedCardsList":683,"object-assign":34,"react":527}],685:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -96936,7 +103824,7 @@ var MaterialSearchButton = React.createClass({displayName: "MaterialSearchButton
 
 module.exports = MaterialSearchButton;
 
-},{"../../dialog/Dialog":573,"./MaterialsSearchPanel":652,"object-assign":33,"react":518}],652:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./MaterialsSearchPanel":686,"object-assign":34,"react":527}],686:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -97365,7 +104253,7 @@ var MaterialsSearchPanel = React.createClass({displayName: "MaterialsSearchPanel
 
 module.exports = MaterialsSearchPanel;
 
-},{"../../../mixins/MaterialsMixin":743,"../../material/list/MaterialCard":646,"../../material/list/MaterialsBunch":648,"object-assign":33,"react":518}],653:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":781,"../../material/list/MaterialCard":680,"../../material/list/MaterialsBunch":682,"object-assign":34,"react":527}],687:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -97470,7 +104358,7 @@ var CreateNewNoteButton = React.createClass({displayName: "CreateNewNoteButton",
 
 module.exports = CreateNewNoteButton;
 
-},{"../dialog/Dialog":573,"./SelfLoadingUpdateNotePanel":658,"object-assign":33,"react":518}],654:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./SelfLoadingUpdateNotePanel":692,"object-assign":34,"react":527}],688:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -97574,7 +104462,7 @@ var CreateNewNotesGroupButton = React.createClass({displayName: "CreateNewNotesG
 
 module.exports = CreateNewNotesGroupButton;
 
-},{"../dialog/Dialog":573,"./SelfLoadingGroupPanel":655,"object-assign":33,"react":518}],655:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":689,"object-assign":34,"react":527}],689:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -97731,7 +104619,7 @@ var SelfLoadingGroupPanel = React.createClass({displayName: "SelfLoadingGroupPan
 
 module.exports = SelfLoadingGroupPanel;
 
-},{"../../components/buttons/DeleteButton":543,"../../mixins/NotesMixin":745,"object-assign":33,"react":518}],656:[function(require,module,exports){
+},{"../../components/buttons/DeleteButton":559,"../../mixins/NotesMixin":783,"object-assign":34,"react":527}],690:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -97842,7 +104730,7 @@ var SelfLoadingNote = React.createClass({displayName: "SelfLoadingNote",
 
 module.exports = SelfLoadingNote;
 
-},{"../../mixins/NotesMixin":745,"object-assign":33,"react":518}],657:[function(require,module,exports){
+},{"../../mixins/NotesMixin":783,"object-assign":34,"react":527}],691:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -98051,7 +104939,7 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
 
 module.exports = SelfLoadingUpdatableNote;
 
-},{"../../components/dialog/Dialog":573,"../../mixins/NotesMixin":745,"./SelfLoadingUpdateNotePanel":658,"object-assign":33,"react":518}],658:[function(require,module,exports){
+},{"../../components/dialog/Dialog":604,"../../mixins/NotesMixin":783,"./SelfLoadingUpdateNotePanel":692,"object-assign":34,"react":527}],692:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -98290,7 +105178,7 @@ var SelfLoadingUpdateNotePanel = React.createClass({displayName: "SelfLoadingUpd
 
 module.exports = SelfLoadingUpdateNotePanel;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":756,"../../components/buttons/DeleteButton":543,"../../components/note/select/NotesGroupSelect":664,"../../mixins/NotesMixin":745,"../editor/PatientEditor":581,"object-assign":33,"react":518}],659:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/buttons/DeleteButton":559,"../../components/note/select/NotesGroupSelect":698,"../../mixins/NotesMixin":783,"../editor/PatientEditor":612,"object-assign":34,"react":527}],693:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -98410,7 +105298,7 @@ var UpdateGroupButton = React.createClass({displayName: "UpdateGroupButton",
 
 module.exports = UpdateGroupButton;
 
-},{"../dialog/Dialog":573,"./SelfLoadingGroupPanel":655,"object-assign":33,"react":518}],660:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":689,"object-assign":34,"react":527}],694:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -98511,7 +105399,7 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
 
 module.exports = NoteListItem;
 
-},{"moment":32,"object-assign":33,"react":518}],661:[function(require,module,exports){
+},{"moment":33,"object-assign":34,"react":527}],695:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -98594,7 +105482,7 @@ var NotesGroupListItem = React.createClass({displayName: "NotesGroupListItem",
 
 module.exports = NotesGroupListItem;
 
-},{"object-assign":33,"react":518}],662:[function(require,module,exports){
+},{"object-assign":34,"react":527}],696:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -98661,7 +105549,7 @@ var NotesGroupsList = React.createClass({displayName: "NotesGroupsList",
 
 module.exports = NotesGroupsList;
 
-},{"./NotesGroupListItem":661,"object-assign":33,"react":518}],663:[function(require,module,exports){
+},{"./NotesGroupListItem":695,"object-assign":34,"react":527}],697:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -98731,7 +105619,7 @@ var NotesList = React.createClass({displayName: "NotesList",
 
 module.exports = NotesList;
 
-},{"./NoteListItem":660,"object-assign":33,"react":518}],664:[function(require,module,exports){
+},{"./NoteListItem":694,"object-assign":34,"react":527}],698:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -98857,7 +105745,7 @@ var NotesGroupSelect = React.createClass({displayName: "NotesGroupSelect",
 
 module.exports = NotesGroupSelect;
 
-},{"object-assign":33,"react":518,"react-select":326}],665:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],699:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -99020,7 +105908,7 @@ var NotificationItem = React.createClass({displayName: "NotificationItem",
 
 module.exports = NotificationItem;
 
-},{"../../mixins/NotificationMixin":746,"../exercise/SelfLoadingUserExercise":586,"moment":32,"object-assign":33,"react":518}],666:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":784,"../exercise/SelfLoadingUserExercise":617,"moment":33,"object-assign":34,"react":527}],700:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -99107,7 +105995,7 @@ var NotificationsList = React.createClass({displayName: "NotificationsList",
 
 module.exports = NotificationsList;
 
-},{"./NotificationItem":665,"object-assign":33,"react":518}],667:[function(require,module,exports){
+},{"./NotificationItem":699,"object-assign":34,"react":527}],701:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -99185,7 +106073,7 @@ var NotificationsNumberSpan = React.createClass({displayName: "NotificationsNumb
 
 module.exports = NotificationsNumberSpan;
 
-},{"../../mixins/NotificationMixin":746,"object-assign":33,"react":518}],668:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":784,"object-assign":34,"react":527}],702:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -99280,7 +106168,7 @@ var PagedNotificationsList = React.createClass({displayName: "PagedNotifications
 
 module.exports = PagedNotificationsList;
 
-},{"./NotificationsList":666,"object-assign":33,"react":518}],669:[function(require,module,exports){
+},{"./NotificationsList":700,"object-assign":34,"react":527}],703:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -99415,7 +106303,7 @@ var SelfLoadingNotificationsList = React.createClass({displayName: "SelfLoadingN
 
 module.exports = SelfLoadingNotificationsList;
 
-},{"../../mixins/NotificationMixin":746,"./NotificationsList":666,"./PagedNotificationsList":668,"object-assign":33,"react":518}],670:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":784,"./NotificationsList":700,"./PagedNotificationsList":702,"object-assign":34,"react":527}],704:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -99495,7 +106383,7 @@ var NumberItem = React.createClass({displayName: "NumberItem",
 
 module.exports = NumberItem;
 
-},{"object-assign":33,"react":518}],671:[function(require,module,exports){
+},{"object-assign":34,"react":527}],705:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -99586,7 +106474,7 @@ var NumbersBlock = React.createClass({displayName: "NumbersBlock",
 
 module.exports = NumbersBlock;
 
-},{"./NumberItem":670,"object-assign":33,"react":518}],672:[function(require,module,exports){
+},{"./NumberItem":704,"object-assign":34,"react":527}],706:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -99667,7 +106555,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
     getUrl: function(){
         if (this.props.vimeoId != undefined){
-            return ('http://vimeo.com/' + this.props.vimeoId)
+            return ('https://vimeo.com/' + this.props.vimeoId)
         }
         if (this.props.youtubeId != undefined){
             return ('https://www.youtube.com/watch?v=' + this.props.youtubeId)
@@ -99810,7 +106698,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
 module.exports = PatientPlayer;
 
-},{"../../mixins/VideoMixin":751,"object-assign":33,"react-player":261,"react/addons":345}],673:[function(require,module,exports){
+},{"../../mixins/VideoMixin":789,"object-assign":34,"react-player":270,"react/addons":354}],707:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -99905,7 +106793,7 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
 
 module.exports = VimeoPlayer;
 
-},{"object-assign":33,"react":518,"react-vimeo":339}],674:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-vimeo":348}],708:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -99966,7 +106854,7 @@ var PatientPreloader = React.createClass({displayName: "PatientPreloader",
 
 module.exports = PatientPreloader;
 
-},{"object-assign":33,"react":518}],675:[function(require,module,exports){
+},{"object-assign":34,"react":527}],709:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -100130,7 +107018,123 @@ var ProfilePanel = React.createClass({displayName: "ProfilePanel",
 
 module.exports = ProfilePanel;
 
-},{"../editor/PatientEditor":581,"object-assign":33,"react":518}],676:[function(require,module,exports){
+},{"../editor/PatientEditor":612,"object-assign":34,"react":527}],710:[function(require,module,exports){
+/**
+ * Created by sabir on 15.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var Dialog = require('../dialog/Dialog');
+
+var SelfLoadingUserProgressPanel = require('../chart/SelfLoadingUserProgressPanel');
+
+var ProfileStatButton = React.createClass({displayName: "ProfileStatButton",
+    getDefaultProps: function () {
+        return {
+            buttonName: 'статистика',
+            buttonClassName: 'ui basic grey button',
+            icon: 'icon line chart',
+            style: {
+                fontSize: 11,
+                padding: 5,
+                paddingLeft: 7
+            },
+            userId: undefined,
+            name: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        dialogPanelStyle: {
+            width: 630,
+            backgroundColor: 'transparent'
+        },
+
+        statHeadPanel: {
+            backgroundColor: 'white',
+            padding: 5,
+            textAlign: 'center'
+        }
+    },
+
+    showDialog: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    hideDialog: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    getDialogContent: function(){
+        var userId = this.props.userId;
+        if (userId == undefined){
+            return null;
+        }
+        return (
+            React.createElement("div", null, 
+
+                React.createElement("div", {style: this.componentStyle.statHeadPanel}, 
+                    "Активность пользователя ", React.createElement("b", null, this.props.name)
+                ), 
+
+                React.createElement(SelfLoadingUserProgressPanel, {userId: userId})
+            )
+        );
+
+    },
+
+    render: function () {
+        var buttonStyle = assign({}, this.componentStyle.placeholder, this.props.style);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, style: buttonStyle, onClick: this.showDialog}, 
+                    React.createElement("i", {className: this.props.icon}), 
+                    this.props.buttonName
+                ), 
+
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                            visible: this.state.dialogVisible, onClose: this.hideDialog, 
+                            content: this.getDialogContent()}
+                        )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = ProfileStatButton;
+
+},{"../chart/SelfLoadingUserProgressPanel":567,"../dialog/Dialog":604,"object-assign":34,"react":527}],711:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -100263,7 +107267,7 @@ var ProfileUpdateButton = React.createClass({displayName: "ProfileUpdateButton",
         },
 
         buttonStyle: {
-            fontSize: '12px',
+            fontSize: '11px',
             padding: '5px',
             paddingLeft: '7px'
         }
@@ -100296,7 +107300,7 @@ var ProfileUpdateButton = React.createClass({displayName: "ProfileUpdateButton",
 
 module.exports = ProfileUpdateButton;
 
-},{"../buttons/DeleteButton":543,"../dialog/Dialog":573,"./SelfLoadingProfilePanel":677,"moment":32,"object-assign":33,"react":518}],677:[function(require,module,exports){
+},{"../buttons/DeleteButton":559,"../dialog/Dialog":604,"./SelfLoadingProfilePanel":712,"moment":33,"object-assign":34,"react":527}],712:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -100422,7 +107426,7 @@ var SelfLoadingProfilePanel = React.createClass({displayName: "SelfLoadingProfil
 
 module.exports = SelfLoadingProfilePanel;
 
-},{"../../mixins/ProfileMixin":747,"./ProfilePanel":675,"object-assign":33,"react":518}],678:[function(require,module,exports){
+},{"../../mixins/ProfileMixin":785,"./ProfilePanel":709,"object-assign":34,"react":527}],713:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -100520,7 +107524,7 @@ var UserProfileButton = React.createClass({displayName: "UserProfileButton",
 
 module.exports = UserProfileButton;
 
-},{"../dialog/Dialog":573,"./UserProfilePanel":679,"object-assign":33,"react":518}],679:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./UserProfilePanel":714,"object-assign":34,"react":527}],714:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -100753,7 +107757,7 @@ var UserProfilePanel = React.createClass({displayName: "UserProfilePanel",
 
 module.exports = UserProfilePanel;
 
-},{"../../mixins/UserMixin":750,"../file/FileUploader":613,"object-assign":33,"react":518}],680:[function(require,module,exports){
+},{"../../mixins/UserMixin":788,"../file/FileUploader":645,"object-assign":34,"react":527}],715:[function(require,module,exports){
 /**
  * Created by sabir on 16.09.15.
  */
@@ -101024,7 +108028,7 @@ var SpeechRecognitionArea = React.createClass({displayName: "SpeechRecognitionAr
 
 module.exports = SpeechRecognitionArea;
 
-},{"react":518}],681:[function(require,module,exports){
+},{"react":527}],716:[function(require,module,exports){
 /**
  * Created by sabir on 17.09.15.
  */
@@ -101063,12 +108067,21 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
             },
             dt: 100,
-            serverBaseUrl: 'http://beta.englishpatient.org/audio/',
+            //serverBaseUrl: 'http://beta.englishpatient.org/audio/',
+            serverBaseUrl: 'https://www.englishpatientdrive.pw/audio/',
             //maxRecordTime: 10,
             maxRecordTime: 15,
             userAnswer: undefined,
             number: undefined
         }
+    },
+
+    webRTCisSupported: function(){
+        var f = window.webRTCSupported;
+        if (f == undefined){
+            return true;
+        }
+        return f;
     },
 
     getInitialState: function () {
@@ -101153,6 +108166,14 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
         //    });
         //    return;
         //}
+        var supported = this.webRTCisSupported();
+        if (supported == false){
+            this.setState({
+                compatible: false
+            });
+            return;
+        }
+
 
         console.log('initWebRTC occured');
 
@@ -101349,36 +108370,48 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
         var buttonMode = this.state.recording ? 'stop' : 'record';
 
+        var supported = this.webRTCisSupported();
+        console.log('WEB SUPPORTED = ' + supported);
 
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
 
-                React.createElement("div", {style: this.componentStyle.buttonsPlaceholder}, 
-                    React.createElement(RecordStopButton, {mode: buttonMode, disabled: recordButtonDisabled, recordButtonName: 'record', stopButtonName: 'stop', recordClicked: this.startRecording, stopClicked: this.stopRecording}), 
+                supported == false ?
+                    React.createElement("div", {style: {padding: 5}}, 
+                        "Ваш браузер не поддерживает запись звука." + ' ' +
+                        "Пожалуйста, скачайте", 
+                        React.createElement("a", {style: {marginLeft: 5}, target: "_blank", href: "https://www.google.com/chrome/browser/desktop/index.html"}, 
+                            "Google Chrome"
+                        ), "."
+                    )
+                    :
+                    React.createElement("div", {style: this.componentStyle.buttonsPlaceholder}, 
+                        React.createElement(RecordStopButton, {mode: buttonMode, disabled: recordButtonDisabled, recordButtonName: 'record', stopButtonName: 'stop', recordClicked: this.startRecording, stopClicked: this.stopRecording}), 
 
-                    this.state.recording ?
-                        React.createElement("span", null, 
+                        this.state.recording ?
+                            React.createElement("span", null, 
                         React.createElement("i", {className: 'ui wait icon'}), " ", t, " s"
                         )
-                        : null, 
+                            : null, 
 
-                    this.state.needToSave ?
-                        React.createElement("div", {className: "ui basic blue button", style: assign({}, this.state.saving ? this.componentStyle.disabled : {}), onClick: this.saveRecording}, 
-                            this.state.saving ?
-                                React.createElement("span", null, React.createElement("i", {className: 'ui cloud upload icon'}), " saving... (", this.state.savingProgress, " %)")
-                                :
-                                React.createElement("span", null, React.createElement("i", {className: 'ui save icon'}), " save")
-                            
-                        )
+                        this.state.needToSave ?
+                            React.createElement("div", {className: "ui basic blue button", style: assign({}, this.state.saving ? this.componentStyle.disabled : {}), onClick: this.saveRecording}, 
+                                this.state.saving ?
+                                    React.createElement("span", null, React.createElement("i", {className: 'ui cloud upload icon'}), " saving... (", this.state.savingProgress, " %)")
+                                    :
+                                    React.createElement("span", null, React.createElement("i", {className: 'ui save icon'}), " save")
+                                
+                            )
 
-                        : null, 
+                            : null, 
 
-                    this.state.saved ?
-                        React.createElement("span", null, " ", React.createElement("i", {className: 'ui checkmark icon'}), " saved")
-                        : null
+                        this.state.saved ?
+                            React.createElement("span", null, " ", React.createElement("i", {className: 'ui checkmark icon'}), " saved")
+                            : null
 
+                    ), 
+                
 
-                ), 
 
                 this.state.stopped ?
                     React.createElement("div", {style: this.componentStyle.audioPlayerPlaceholder}, 
@@ -101395,7 +108428,7 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
 module.exports = PatientRecordComponent;
 
-},{"../../mixins/FileUploadMixin":739,"../buttons/RecordStopButton":544,"object-assign":33,"react":518,"recordrtc":519}],682:[function(require,module,exports){
+},{"../../mixins/FileUploadMixin":777,"../buttons/RecordStopButton":560,"object-assign":34,"react":527,"recordrtc":528}],717:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -101467,7 +108500,7 @@ var FirstLevelPanelItem = React.createClass({displayName: "FirstLevelPanelItem",
 
 module.exports = FirstLevelPanelItem;
 
-},{"object-assign":33,"react":518}],683:[function(require,module,exports){
+},{"object-assign":34,"react":527}],718:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -101538,7 +108571,7 @@ var FirstLevelPanelsList = React.createClass({displayName: "FirstLevelPanelsList
 
 module.exports = FirstLevelPanelsList;
 
-},{"../../data/DataFactory":735,"./FirstLevelPanelItem":682,"object-assign":33,"react":518}],684:[function(require,module,exports){
+},{"../../data/DataFactory":772,"./FirstLevelPanelItem":717,"object-assign":34,"react":527}],719:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -101656,7 +108689,7 @@ var Sausage = React.createClass({displayName: "Sausage",
 
 module.exports = Sausage;
 
-},{"./FirstLevelPanelsList":683,"./dialog/SausageDialog":686,"object-assign":33,"react":518}],685:[function(require,module,exports){
+},{"./FirstLevelPanelsList":718,"./dialog/SausageDialog":721,"object-assign":34,"react":527}],720:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -101795,7 +108828,7 @@ var SecondLevelPanelItem = React.createClass({displayName: "SecondLevelPanelItem
 
 module.exports = SecondLevelPanelItem;
 
-},{"../video/dialog/VideoDialog":728,"object-assign":33,"react":518}],686:[function(require,module,exports){
+},{"../video/dialog/VideoDialog":765,"object-assign":34,"react":527}],721:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -101936,7 +108969,7 @@ var SausageDialog = React.createClass({displayName: "SausageDialog",
 
 module.exports = SausageDialog;
 
-},{"../../topics/dialog/TopicDialog":714,"../SecondLevelPanelItem":685,"object-assign":33,"react":518}],687:[function(require,module,exports){
+},{"../../topics/dialog/TopicDialog":750,"../SecondLevelPanelItem":720,"object-assign":34,"react":527}],722:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -102117,7 +109150,7 @@ var ResultsItemPanel = React.createClass({displayName: "ResultsItemPanel",
 
 module.exports = ResultsItemPanel;
 
-},{"object-assign":33,"react":518}],688:[function(require,module,exports){
+},{"object-assign":34,"react":527}],723:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -102194,7 +109227,7 @@ var SearchResultsPanel = React.createClass({displayName: "SearchResultsPanel",
 
 module.exports = SearchResultsPanel;
 
-},{"./ResultsItemPanel":687,"object-assign":33,"react":518}],689:[function(require,module,exports){
+},{"./ResultsItemPanel":722,"object-assign":34,"react":527}],724:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -102505,7 +109538,7 @@ var YoutubeSearchPanel = React.createClass({displayName: "YoutubeSearchPanel",
 
 module.exports = YoutubeSearchPanel;
 
-},{"../../../mixins/YoutubeSearchMixin":753,"../../player/PatientPlayer":672,"../../text/translatable/TranslatableText":705,"./SearchResultsPanel":688,"./checkbox/CategoryCheckboxesList":691,"object-assign":33,"react":518}],690:[function(require,module,exports){
+},{"../../../mixins/YoutubeSearchMixin":791,"../../player/PatientPlayer":706,"../../text/translatable/TranslatableText":741,"./SearchResultsPanel":723,"./checkbox/CategoryCheckboxesList":726,"object-assign":34,"react":527}],725:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -102585,7 +109618,7 @@ var CategoryCheckbox = React.createClass({displayName: "CategoryCheckbox",
 
 module.exports = CategoryCheckbox;
 
-},{"object-assign":33,"react":518}],691:[function(require,module,exports){
+},{"object-assign":34,"react":527}],726:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -102667,7 +109700,7 @@ var CategoryCheckboxesList = React.createClass({displayName: "CategoryCheckboxes
 
 module.exports = CategoryCheckboxesList;
 
-},{"./CategoryCheckbox":690,"object-assign":33,"react":518}],692:[function(require,module,exports){
+},{"./CategoryCheckbox":725,"object-assign":34,"react":527}],727:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -102733,7 +109766,7 @@ var LoadingSegment = React.createClass({displayName: "LoadingSegment",
 
 module.exports = LoadingSegment;
 
-},{"object-assign":33,"react":518}],693:[function(require,module,exports){
+},{"object-assign":34,"react":527}],728:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -102846,7 +109879,7 @@ var ExerciseGroupSelect = React.createClass({displayName: "ExerciseGroupSelect",
 
 module.exports = ExerciseGroupSelect;
 
-},{"object-assign":33,"react":518,"react-select":326}],694:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],729:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -102938,7 +109971,85 @@ var SelfLoadingExerciseGroupsSelect = React.createClass({displayName: "SelfLoadi
 
 module.exports = SelfLoadingExerciseGroupsSelect;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":756,"../../../mixins/ExerciseMixin":737,"./ExerciseGroupSelect":693,"object-assign":33,"react":518}],695:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./ExerciseGroupSelect":728,"object-assign":34,"react":527}],730:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ChatButton = require('../chat/ChatButton');
+
+var NotReadChatSpan= require('../chat/NotReadChatSpan')
+
+var LoginMixin = require('../../mixins/LoginMixin');
+
+var SidebarChatButton = React.createClass({displayName: "SidebarChatButton",
+    getDefaultProps: function () {
+        return {}
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            //padding: 8,
+            paddingTop: 8,
+            paddingBottom: 8,
+            //marginLeft: 10,
+            paddingLeft: 10,
+            //marginRight: 10,
+            paddingRight: 10,
+            height: 30,
+            fontSize: 14,
+            lineHeight: '16px',
+            //color: '#8897A3',
+            color: '#B3BCC4',
+
+            marginBottom: 20
+        },
+
+        buttonStyle: {
+            //color: 'white',
+            borderBottom: '1px dotted rgba(103, 109, 118, 0.18)',
+            cursor: 'pointer',
+            width: '100%',
+            height: 30,
+            paddingBottom: 5
+        }
+    },
+
+    render: function () {
+        var user = LoginMixin.getCurrentUser();
+        var userId = (user == undefined) ? undefined : user.id;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, className: ''}, 
+                React.createElement(ChatButton, {style: this.componentStyle.buttonStyle, 
+                            buttonClassName: '', icon: undefined, buttonName: 'Мои сообщения'}), 
+
+                React.createElement(NotReadChatSpan, {userId: userId})
+
+            )
+        );
+    }
+
+});
+
+module.exports = SidebarChatButton;
+
+},{"../../mixins/LoginMixin":780,"../chat/ChatButton":568,"../chat/NotReadChatSpan":571,"object-assign":34,"react":527}],731:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -103080,7 +110191,7 @@ var PatientTask = React.createClass({displayName: "PatientTask",
 
 module.exports = PatientTask;
 
-},{"../audio/PatientAudio":538,"../image/PatientImg":619,"../player/VimeoPlayer":673,"../text/PatientText":703,"../text/translatable/TranslatableText":705,"react":518}],696:[function(require,module,exports){
+},{"../audio/PatientAudio":554,"../image/PatientImg":653,"../player/VimeoPlayer":707,"../text/PatientText":739,"../text/translatable/TranslatableText":741,"react":527}],732:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -103156,7 +110267,7 @@ var TeacherExerciseBlock = React.createClass({displayName: "TeacherExerciseBlock
 
 module.exports = TeacherExerciseBlock;
 
-},{"./TeacherFeedbackCreationBlock":697,"react":518}],697:[function(require,module,exports){
+},{"./TeacherFeedbackCreationBlock":733,"react":527}],733:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -103306,7 +110417,7 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
 
 module.exports = TeacherFeedbackCreationBlock;
 
-},{"../../components/editor/PatientEditor":581,"../../mixins/ExerciseMixin":737,"../corrector/CorrectorHelpButton":567,"react":518}],698:[function(require,module,exports){
+},{"../../components/editor/PatientEditor":612,"../../mixins/ExerciseMixin":775,"../corrector/CorrectorHelpButton":598,"react":527}],734:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -103430,7 +110541,7 @@ var CurrentUserMenuItem = React.createClass({displayName: "CurrentUserMenuItem",
 
 module.exports = CurrentUserMenuItem;
 
-},{"./TopbarSettingsMenu":702,"object-assign":33,"react":518}],699:[function(require,module,exports){
+},{"./TopbarSettingsMenu":738,"object-assign":34,"react":527}],735:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -103541,7 +110652,7 @@ var HeaderLeftLinks = React.createClass({displayName: "HeaderLeftLinks",
 
 module.exports = HeaderLeftLinks;
 
-},{"object-assign":33,"react":518,"react-router":298}],700:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],736:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -103615,7 +110726,7 @@ var HeaderTemplate = React.createClass({displayName: "HeaderTemplate",
 
 module.exports = HeaderTemplate;
 
-},{"react":518}],701:[function(require,module,exports){
+},{"react":527}],737:[function(require,module,exports){
 /**
  * Created by sabir on 09.10.15.
  */
@@ -103899,7 +111010,7 @@ var LeftSidebarTemplate = React.createClass({displayName: "LeftSidebarTemplate",
 
 module.exports = LeftSidebarTemplate;
 
-},{"object-assign":33,"react":518,"react-router":298}],702:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],738:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -104015,7 +111126,7 @@ var TopbarSettingsMenu = React.createClass({displayName: "TopbarSettingsMenu",
 
 module.exports = TopbarSettingsMenu;
 
-},{"object-assign":33,"react":518,"react-onclickoutside":260}],703:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-onclickoutside":269}],739:[function(require,module,exports){
 /**
  * Created by sabir on 28.09.15.
  */
@@ -104081,7 +111192,7 @@ var PatientText = React.createClass({displayName: "PatientText",
 
 module.exports = PatientText;
 
-},{"../text/translatable/TranslatableText":705,"object-assign":33,"react":518}],704:[function(require,module,exports){
+},{"../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],740:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -104200,7 +111311,7 @@ var ToggledText = React.createClass({displayName: "ToggledText",
 
 module.exports = ToggledText;
 
-},{"object-assign":33,"react":518}],705:[function(require,module,exports){
+},{"object-assign":34,"react":527}],741:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -104287,7 +111398,7 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
 
 module.exports = TranslatableText;
 
-},{"../../../mixins/TranslateMixin":749,"../../translate/TranslateDialog":720,"./WordsList":707,"object-assign":33,"react":518}],706:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":787,"../../translate/TranslateDialog":756,"./WordsList":743,"object-assign":34,"react":527}],742:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -104415,7 +111526,7 @@ var WordItem = React.createClass({displayName: "WordItem",
 
 module.exports = WordItem;
 
-},{"../../../mixins/TranslateMixin":749,"object-assign":33,"react":518}],707:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":787,"object-assign":34,"react":527}],743:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -104473,7 +111584,7 @@ var WordsList = React.createClass({displayName: "WordsList",
 
 module.exports = WordsList;
 
-},{"./WordItem":706,"object-assign":33,"react":518}],708:[function(require,module,exports){
+},{"./WordItem":742,"object-assign":34,"react":527}],744:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -104487,6 +111598,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
     getDefaultProps: function () {
         return {
             teacherId: undefined,
+            topicType: 'basic',
             onTopicCreated: function(topic){
 
             }
@@ -104513,7 +111625,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
         },
 
         buttonPlaceholder: {
-            backgroundImage: 'url("http://app.englishpatient.org/assets/img/newTopic.jpg")',
+            backgroundImage: 'url("http://englishpatient.org/app/assets/img/newTopic.jpg")',
             display: 'inline-block',
             width: 160,
             height: 160,
@@ -104573,6 +111685,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
                     React.createElement("div", null, 
 
                         React.createElement(UpdateTopicDialog, {
+                            topicType: this.props.topicType, 
                             onClose: this.onClose, 
                             teacherId: this.props.teacherId, 
                             onTopicCreated: this.onTopicCreated}
@@ -104589,7 +111702,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
 
 module.exports = AddTopicButton;
 
-},{"./dialog/UpdateTopicDialog":715,"object-assign":33,"react":518}],709:[function(require,module,exports){
+},{"./dialog/UpdateTopicDialog":751,"object-assign":34,"react":527}],745:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -104697,7 +111810,7 @@ var EditTopicButton = React.createClass({displayName: "EditTopicButton",
 
 module.exports = EditTopicButton;
 
-},{"../buttons/DeleteButton":543,"./dialog/UpdateTopicDialog":715,"object-assign":33,"react":518}],710:[function(require,module,exports){
+},{"../buttons/DeleteButton":559,"./dialog/UpdateTopicDialog":751,"object-assign":34,"react":527}],746:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -104717,7 +111830,8 @@ var AddTopicButton = require('./AddTopicButton');
 var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsList",
     getDefaultProps: function () {
         return {
-            teacherId: undefined
+            teacherId: undefined,
+            topicType: 'basic'
         }
     },
 
@@ -104760,7 +111874,8 @@ var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsLi
         this.setState({
             loading: true
         });
-        TopicsMixin.loadTeacherTopics(teacherId, function(topics){
+        var topicType = this.props.topicType;
+        TopicsMixin.loadTeacherTopics(teacherId, topicType, function(topics){
             this.setState({
                 loading: false,
                 topics: topics
@@ -104823,6 +111938,7 @@ var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsLi
                 React.createElement(TopicsList, {topics: this.state.topics, onTopicClick: this.onTopicClick}), 
 
                 React.createElement(AddTopicButton, {
+                    topicType: this.props.topicType, 
                     onTopicCreated: this.onTopicCreated, 
                     teacherId: this.props.teacherId}
                     ), 
@@ -104858,7 +111974,7 @@ var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsLi
 
 module.exports = SelfLoadingTopicsList;
 
-},{"../../mixins/TopicsMixin":748,"./AddTopicButton":708,"./TopicsList":712,"./dialog/SelfLoadingTopicDialog":713,"object-assign":33,"react":518}],711:[function(require,module,exports){
+},{"../../mixins/TopicsMixin":786,"./AddTopicButton":744,"./TopicsList":748,"./dialog/SelfLoadingTopicDialog":749,"object-assign":34,"react":527}],747:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -104873,7 +111989,7 @@ var TopicItem = React.createClass({displayName: "TopicItem",
             topicId: undefined,
             teacherId: undefined,
             name: 'No Name',
-            avatar: 'http://app.englishpatient.org/assets/img/stars.jpg',
+            avatar: 'http://englishpatient.org/app/assets/img/stars.jpg',
 
             onTopicClick: function(){
 
@@ -104970,7 +112086,7 @@ var TopicItem = React.createClass({displayName: "TopicItem",
 
 module.exports = TopicItem;
 
-},{"object-assign":33,"react":518}],712:[function(require,module,exports){
+},{"object-assign":34,"react":527}],748:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -105055,7 +112171,7 @@ var TopicsList = React.createClass({displayName: "TopicsList",
 
 module.exports = TopicsList;
 
-},{"./TopicItem":711,"object-assign":33,"react":518}],713:[function(require,module,exports){
+},{"./TopicItem":747,"object-assign":34,"react":527}],749:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -105170,7 +112286,7 @@ var SelfLoadingTopicDialog = React.createClass({displayName: "SelfLoadingTopicDi
 
 module.exports = SelfLoadingTopicDialog;
 
-},{"../panels/TopicPanel":718,"./TopicDialog":714,"object-assign":33,"react":518}],714:[function(require,module,exports){
+},{"../panels/TopicPanel":754,"./TopicDialog":750,"object-assign":34,"react":527}],750:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -105315,7 +112431,7 @@ var TopicDialog = React.createClass({displayName: "TopicDialog",
 
 module.exports = TopicDialog;
 
-},{"object-assign":33,"react":518}],715:[function(require,module,exports){
+},{"object-assign":34,"react":527}],751:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -105344,6 +112460,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
             teacherId: undefined,
             topicId: undefined,
             dialogLevel: 10,
+            topicType: 'basic',
 
             onTopicUpdated: function(topic){
 
@@ -105366,7 +112483,8 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
 
     getInitialState: function () {
         return {
-            access: 'private'
+            access: 'private',
+            topicType: this.props.topicType
         }
     },
 
@@ -105473,6 +112591,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
         var description = this.state.description;
         var avatar = this.state.avatar;
         var access = this.state.access;
+        var topicType = this.state.topicType;
 
         var topicId = this.props.topicId;
 
@@ -105483,7 +112602,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
         });
 
         if (topicId == undefined){
-            TopicsMixin.createTopic(teacherId, name, description, avatar, access, function(topic){
+            TopicsMixin.createTopic(teacherId, name, description, avatar, access, topicType, function(topic){
                 this.setState({
                     loading: false
                 });
@@ -105652,7 +112771,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
 
 module.exports = UpdateTopicDialog;
 
-},{"../../../mixins/TopicsMixin":748,"../../buttons/DeleteButton":543,"../../exercise/info/AccessSwitcher":597,"../../file/FileUploader":613,"../TopicItem":711,"../panels/SimpleTopicHeaderPanel":716,"../panels/TopicHeaderPanel":717,"./TopicDialog":714,"object-assign":33,"react":518}],716:[function(require,module,exports){
+},{"../../../mixins/TopicsMixin":786,"../../buttons/DeleteButton":559,"../../exercise/info/AccessSwitcher":628,"../../file/FileUploader":645,"../TopicItem":747,"../panels/SimpleTopicHeaderPanel":752,"../panels/TopicHeaderPanel":753,"./TopicDialog":750,"object-assign":34,"react":527}],752:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -105772,7 +112891,7 @@ var SimpleTopicHeaderPanel = React.createClass({displayName: "SimpleTopicHeaderP
 
 module.exports = SimpleTopicHeaderPanel;
 
-},{"../EditTopicButton":709,"object-assign":33,"react":518}],717:[function(require,module,exports){
+},{"../EditTopicButton":745,"object-assign":34,"react":527}],753:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -105838,7 +112957,8 @@ var TopicHeaderPanel = React.createClass({displayName: "TopicHeaderPanel",
             left: 0,
             zIndex: 1,
             backgroundColor: '#2E3C54',
-            opacity: 0.9
+            //opacity: 0.9
+            opacity: 0.7
         },
 
         topPanelOverlayPanel: {
@@ -105923,7 +113043,7 @@ var TopicHeaderPanel = React.createClass({displayName: "TopicHeaderPanel",
 
 module.exports = TopicHeaderPanel;
 
-},{"../EditTopicButton":709,"object-assign":33,"react":518}],718:[function(require,module,exports){
+},{"../EditTopicButton":745,"object-assign":34,"react":527}],754:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -106068,7 +113188,7 @@ var TopicPanel = React.createClass({displayName: "TopicPanel",
 
 module.exports = TopicPanel;
 
-},{"../../material/list/SelfLoadingMaterialsList":650,"./TopicHeaderPanel":717,"object-assign":33,"react":518}],719:[function(require,module,exports){
+},{"../../material/list/SelfLoadingMaterialsList":684,"./TopicHeaderPanel":753,"object-assign":34,"react":527}],755:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -106140,7 +113260,7 @@ var TranslateButton = React.createClass({displayName: "TranslateButton",
 
 module.exports = TranslateButton;
 
-},{"./TranslateDialog":720,"object-assign":33,"react":518}],720:[function(require,module,exports){
+},{"./TranslateDialog":756,"object-assign":34,"react":527}],756:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -106214,7 +113334,7 @@ var TranslateDialog = React.createClass({displayName: "TranslateDialog",
 
 module.exports = TranslateDialog;
 
-},{"../dialog/Dialog":573,"./panel/TranslatePanel":721,"object-assign":33,"react":518}],721:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./panel/TranslatePanel":757,"object-assign":34,"react":527}],757:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -106231,7 +113351,9 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
         return {
             text: undefined,
 
-            searchInputVisible: true
+            searchInputVisible: true,
+
+            topBlockEnabled: true
         }
     },
 
@@ -106256,7 +113378,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
             //});
             this.translate(text, function(){
 
-            }.bind(this));
+            }.bind(this), this.props.topBlockEnabled);
         }
     },
 
@@ -106267,7 +113389,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
         }
         this.translate(text, function(tr){
            console.log('translated! ', tr);
-        });
+        }, this.props.topBlockEnabled);
     },
 
     translate: function(text, callback){
@@ -106285,14 +113407,14 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
                 loading: false
             });
             callback(html);
-        }.bind(this));
+        }.bind(this), this.props.topBlockEnabled);
     },
 
     onClick: function(){
         var text = this.state.text;
         this.translate(text, function(html){
            console.log('translated: ', html);
-        });
+        }, this.props.topBlockEnabled);
     },
 
     onTextChange: function(evt){
@@ -106385,7 +113507,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
 
 module.exports = TranslatePanel;
 
-},{"../../../mixins/TranslateMixin":749,"object-assign":33,"react-speech":332,"react/addons":345}],722:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":787,"object-assign":34,"react-speech":341,"react/addons":354}],758:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -106399,7 +113521,8 @@ var AuthButton = React.createClass({displayName: "AuthButton",
             buttonClassName: 'ui inverted compact button',
             buttonText: 'Вход',
             onLogin: function(){
-                window.location.href = window.location.href;
+                //window.location.href = window.location.href;
+                window.location.reload();
             }
         }
     },
@@ -106456,7 +113579,7 @@ var AuthButton = React.createClass({displayName: "AuthButton",
 
 module.exports = AuthButton;
 
-},{"./AuthOverlay":724,"react":518}],723:[function(require,module,exports){
+},{"./AuthOverlay":760,"react":527}],759:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -106598,7 +113721,7 @@ var AuthForm = React.createClass({displayName: "AuthForm",
 
 module.exports = AuthForm;
 
-},{"./LoginForm":725,"./SignupForm":727,"react":518}],724:[function(require,module,exports){
+},{"./LoginForm":761,"./SignupForm":764,"react":527}],760:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -106697,7 +113820,7 @@ var AuthOverlay = React.createClass({displayName: "AuthOverlay",
 
 module.exports = AuthOverlay;
 
-},{"./AuthForm":723,"object-assign":33,"react":518}],725:[function(require,module,exports){
+},{"./AuthForm":759,"object-assign":34,"react":527}],761:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -106859,7 +113982,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../../mixins/LoginMixin":742,"react":518}],726:[function(require,module,exports){
+},{"../../mixins/LoginMixin":780,"react":527}],762:[function(require,module,exports){
 /**
  * Created by sabir on 05.11.15.
  */
@@ -106935,7 +114058,76 @@ var RoleSelector = React.createClass({displayName: "RoleSelector",
 
 module.exports = RoleSelector;
 
-},{"object-assign":33,"react":518}],727:[function(require,module,exports){
+},{"object-assign":34,"react":527}],763:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var UserMixin = require('../../mixins/UserMixin');
+
+var SelfLoadingUserSpan = React.createClass({displayName: "SelfLoadingUserSpan",
+    getDefaultProps: function () {
+        return {
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            user: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        this.load();
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    load: function(){
+        var userId = this.props.userId;
+        if (userId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        UserMixin.loadUser(userId, function(u){
+            this.setState({
+                loading: false,
+                user: u
+            });
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        }
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                this.state.user == undefined ? null :
+                    React.createElement("span", null, this.state.user.name)
+                
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingUserSpan;
+
+},{"../../mixins/UserMixin":788,"object-assign":34,"react":527}],764:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -107185,7 +114377,7 @@ var SignupForm = React.createClass({displayName: "SignupForm",
 
 module.exports = SignupForm;
 
-},{"../../mixins/LoginMixin":742,"../user/RoleSelector":726,"react":518}],728:[function(require,module,exports){
+},{"../../mixins/LoginMixin":780,"../user/RoleSelector":762,"react":527}],765:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -107272,7 +114464,7 @@ var VideoDialog = React.createClass({displayName: "VideoDialog",
 
 module.exports = VideoDialog;
 
-},{"../../dialog/Dialog":573,"./VideoPanel":729,"object-assign":33,"react":518}],729:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./VideoPanel":766,"object-assign":34,"react":527}],766:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -107369,7 +114561,7 @@ var VideoPanel = React.createClass({displayName: "VideoPanel",
 
 module.exports = VideoPanel;
 
-},{"../../player/VimeoPlayer":673,"object-assign":33,"react":518}],730:[function(require,module,exports){
+},{"../../player/VimeoPlayer":707,"object-assign":34,"react":527}],767:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -107433,7 +114625,7 @@ var YoutubeEmbedPlayer = React.createClass({displayName: "YoutubeEmbedPlayer",
 
 module.exports = YoutubeEmbedPlayer;
 
-},{"object-assign":33,"react":518}],731:[function(require,module,exports){
+},{"object-assign":34,"react":527}],768:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -107514,7 +114706,7 @@ var VocabularyItem = React.createClass({displayName: "VocabularyItem",
 
 module.exports = VocabularyItem;
 
-},{"object-assign":33,"react":518}],732:[function(require,module,exports){
+},{"object-assign":34,"react":527}],769:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -107582,7 +114774,7 @@ var VocabularyItemsList = React.createClass({displayName: "VocabularyItemsList",
 
 module.exports = VocabularyItemsList;
 
-},{"./VocabularyItem":731,"object-assign":33,"react":518}],733:[function(require,module,exports){
+},{"./VocabularyItem":768,"object-assign":34,"react":527}],770:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -107665,7 +114857,7 @@ var VocabularyNavigationPanel = React.createClass({displayName: "VocabularyNavig
 
 module.exports = VocabularyNavigationPanel;
 
-},{"object-assign":33,"react":518}],734:[function(require,module,exports){
+},{"object-assign":34,"react":527}],771:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -107700,7 +114892,6 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
             text: '',
             dialogVisible: false,
             selectedWord: undefined
-
         }
     },
 
@@ -107869,7 +115060,7 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
                 React.createElement("div", {style: this.componentStyle.wordContent}, 
 
                    React.createElement("div", {style: this.componentStyle.wordLeftContent}, 
-                        React.createElement(TranslatePanel, {text: this.state.selectedWord, searchInputVisible: true})
+                        React.createElement(TranslatePanel, {topBlockEnabled: false, text: this.state.selectedWord, searchInputVisible: true})
                    ), 
 
                     React.createElement("div", {style: this.componentStyle.wordRightContent}, 
@@ -107970,7 +115161,7 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
 
 module.exports = VocabularyPanel;
 
-},{"../../mixins/VocabularyMixin":752,"../material/list/CardsList":645,"../topics/dialog/TopicDialog":714,"../translate/panel/TranslatePanel":721,"./VocabularyItemsList":732,"./VocabularyNavigationPanel":733,"object-assign":33,"react":518}],735:[function(require,module,exports){
+},{"../../mixins/VocabularyMixin":790,"../material/list/CardsList":679,"../topics/dialog/TopicDialog":750,"../translate/panel/TranslatePanel":757,"./VocabularyItemsList":769,"./VocabularyNavigationPanel":770,"object-assign":34,"react":527}],772:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -108063,7 +115254,7 @@ var DataFactory = {
 
     SAUSAGE_ITEMS: [{
         name: 'Аудирование',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_1.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_1.jpg',
         description: 'Труднее всего - научить понимать реальную речь. Для решения этой задачи мы создали тренажеры и собрали видеоматериалы.',
         id: 1,
         items: [
@@ -108099,7 +115290,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Говорение',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_2.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_2.jpg',
         id: 2,
         description: 'Мы уделяем максимальное внимание вашей способности говорить на иностранном языке. Для работы Вам понадобится микрофон (встроенный в Ваш ноутбук либо внешний) - мы будем записывать Ваш голос.',
         items: [
@@ -108192,7 +115383,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Чтение',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_3.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_3.jpg',
         id: 3,
         description: undefined,
         items: [
@@ -108221,7 +115412,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Письмо',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_4.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_4.jpg',
         id: 4,
         description: undefined,
         items: [
@@ -108243,7 +115434,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Грамматика',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_5.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_5.jpg',
         id: 5,
         description: 'Облегченное изучение необходимой грамматики на ярких примерах из реальной жизни',
         items: [
@@ -108251,7 +115442,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Лексика',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_6.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_6.jpg',
         id: 6,
         description: 'Помимо изучения новых фраз, мы уделяем особое внимание их закреплению. Пользуйтесь нашими инструментами, и то, что было однажды услышано, закрепится в Вашей памяти на всю жизнь.',
         items: [
@@ -108289,7 +115480,203 @@ var DataFactory = {
 
 module.exports = DataFactory;
 
-},{}],736:[function(require,module,exports){
+},{}],773:[function(require,module,exports){
+/**
+ * Created by sabir on 16.12.15.
+ */
+
+var assign = require('object-assign');
+var Parse = require('parse').Parse;
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
+var UserMixin = require('./UserMixin');
+var ClassMixin = require('./ClassMixin');
+
+var ChatMixin = {
+
+    // usersMap - map of transformed users, m - parse obj
+    transformMessage: function(m, usersMap){
+        if (m == undefined || usersMap == undefined ){
+            return undefined;
+        }
+        var fromUser = (usersMap[m.get('fromId')] == undefined) ? {} : usersMap[m.get('fromId')];
+        var toUser = (usersMap[m.get('toId')] == undefined) ? {} : usersMap[m.get('toId')];
+        return {
+            timestamp: (new Date(m.createdAt)).getTime(),
+            content: m.get('content'),
+            attachments: m.get('attachments'),
+            fromId: m.get('fromId'),
+            toId: m.get('toId'),
+            fromUserName: fromUser.name,
+            fromUserAvatar: fromUser.avatar,
+            avatar: fromUser.avatar,
+            name: fromUser.name,
+            toUserName: toUser.name,
+            toUserAvatar: toUser.avatar,
+            id: m.id,
+            status: m.get('status'),
+            messageId: m.id
+        }
+    },
+
+    loadUsersMapByMessagesList: function(messages, callback){
+        var map = {};
+        var arr = [];
+        for (var i in messages){
+            map[messages[i].get('fromId')] = messages[i];
+            map[messages[i].get('toId')] = messages[i];
+        }
+        for (var key in map){
+            arr.push(key);
+        }
+        UserMixin.loadUsersByIdsList(arr, function(users){
+            var uMap = {};
+            for (var i in users){
+                uMap[users[i].id] = users[i];
+            }
+            callback(uMap);
+        });
+    },
+
+    loadUsersMap: function(ids, callback){
+        UserMixin.loadUsersByIdsList(ids, function(users){
+            var uMap = {};
+            for (var i in users){
+                uMap[users[i].id] = users[i];
+            }
+            callback(uMap);
+        });
+    },
+
+    loadMessages: function(userId, friendId, fromTimestamp, callback){
+        console.log('loadMessages: ', userId, friendId, fromTimestamp);
+        if (userId == undefined || friendId == undefined){
+            return;
+        }
+        if (fromTimestamp == undefined){
+            fromTimestamp = 0;
+        }
+        var date = new Date(+fromTimestamp);
+        //console.log('=---->>>> loading messages fromTimestamp: ', fromTimestamp);
+        //console.log('=---->>>> loading messages date: ', date);
+
+
+        var q = new Parse.Query('PatientMessage');
+        q.limit(1000);
+        q.greaterThan('createdAt', new Date(fromTimestamp));
+        q.containedIn('fromId', [friendId, userId]);
+        q.containedIn('toId', [friendId, userId]);
+        var self = this;
+
+        if (fromTimestamp == 0){
+            ParseMixin.loadAllDataFromParse(q, function(list){
+                console.log('loaded messages: ', list);
+                self.loadUsersMap([userId, friendId], function(uMap){
+                    var arr = list.map(function(m){
+                        return self.transformMessage(m, uMap);
+                    });
+
+                    console.log('transformed messsages = ', arr);
+                    callback(arr, uMap);
+                });
+            });
+        }else {
+            q.find(function(list){
+                self.loadUsersMap([userId, friendId], function(uMap){
+                    var arr = list.map(function(m){
+                        return self.transformMessage(m, uMap);
+                    });
+                    console.log('transformed messsages = ', arr);
+                    callback(arr, uMap);
+                });
+            }.bind(this));
+        }
+
+    },
+
+    //map: userId - notReadNumber
+    loadNotReadMessagesUsersMap: function(userId, callback){
+        var q = new Parse.Query('PatientMessage');
+        q.limit(1000);
+        q.containedIn('toId', [userId]);
+        q.equalTo('status', 'new');
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var map = {};
+            for (var i in list){
+                if (map[list[i].get('fromId')] == undefined){
+                    map[list[i].get('fromId')] = {
+                        messagesNumber: 0,
+                        lastTimestamp: 0
+                    };
+                }
+                map[list[i].get('fromId')].messagesNumber++;
+                if (map[list[i].get('fromId')].lastTimestamp < (new Date(list[i].createdAt)).getTime()){
+                    map[list[i].get('fromId')].lastTimestamp = (new Date(list[i].createdAt)).getTime();
+                }
+
+            }
+            console.log('loaded not read map: ', map);
+            callback(map);
+        });
+    },
+
+    sendMessage: function(fromId, toId, content, attachments, callback){
+        var PatientMessage = Parse.Object.extend('PatientMessage');
+        var m = new PatientMessage();
+        m = ParseMixin.safeSet(m, [{name: 'fromId', value: fromId},
+            {name: 'toId', value: toId},
+            {name: 'content', value: content},
+            {name: 'attachments', value: attachments},
+            {name: 'status', value: 'new'}
+        ]);
+        var self = this;
+        m.save().then(function(savedM){
+            callback(self.transformMessage(savedM, {}));
+        });
+    },
+
+    loadTeacherStudents: function(userId, callback){
+        ClassMixin.loadTeacherStudents(userId, function(students){
+            callback(students);
+        })
+    },
+
+    makeMessagesRead: function(messages, callback){
+        console.log('makeMessagesRead occured: ', messages);
+        if (messages == undefined){
+            return;
+        }
+        var messagesIds = messages.map(function(m){return m.id});
+        var q = new Parse.Query('PatientMessage');
+        q.limit(1000);
+        q.containedIn('objectId', messagesIds);
+        q.find(function(results){
+            var arr = [];
+            for (var i in results){
+                var r = results[i];
+                r.set('status', 'read');
+                arr.push(r);
+            }
+            Parse.Object.saveAll(arr, {
+                success: function(){
+                    var list = [];
+                    for (var i in messages){
+                        var mm = messages[i];
+                        mm.status = 'read';
+                        list.push(mm);
+                    }
+                    callback(list);
+                }
+            });
+        });
+    }
+
+}
+
+module.exports = ChatMixin;
+
+},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"./ClassMixin":774,"./UserMixin":788,"object-assign":34,"parse":35}],774:[function(require,module,exports){
 /**
  * Created by sabir on 05.10.15.
  */
@@ -108297,6 +115684,8 @@ var Parse = require('parse').Parse;
 var FeedMixin = require('./FeedMixin');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
+var UserMixin = require('./UserMixin');
+
 
 var ClassMixin = {
 
@@ -108312,9 +115701,11 @@ var ClassMixin = {
             invitationCode: p.get('invitationCode'),
             id: p.id,
             ownerId: p.get('ownerId'),
-            classId: p.classId
+            classId: p.classId,
+            extendedDescription: p.get('extendedDescription')
         }
     },
+
 
     loadClassById: function(classId, callback){
         if (classId == undefined){
@@ -108435,7 +115826,7 @@ var ClassMixin = {
         });
     },
 
-    updateClass: function(classId, name, description, status, callback){
+    updateClass: function(classId, name, description, status, extendedDescription, callback){
         var self = this;
         this.loadClassById(classId, function(c){
             if (c == undefined){
@@ -108445,7 +115836,8 @@ var ClassMixin = {
             c = ParseMixin.safeSet(c, [
                 {name: 'name', value: name},
                 {name: 'description', value: description},
-                {name: 'status', value: status}
+                {name: 'status', value: status},
+                {name: 'extendedDescription', value: extendedDescription}
             ]);
             c.save().then(function(cl){
                 callback({
@@ -108670,22 +116062,76 @@ var ClassMixin = {
             q.limit(1000);
             q.find(function(links){
                 console.log('class links: ', links);
-                var q2 = new Parse.Query(Parse.User);
-                q2.limit(1000);
-                q2.containedIn('objectId', links.map(function(l){return l.get('studentId');}));
-                q2.find(function(users){
-                    console.log('users: ', users);
-                    var list = users.map(function(u){
-                        return {
-                            id: u.id,
-                            name: self.getUserName(u),
-                            avatar: u.get('avatar')
-                        }
-                    });
-                    callback(list);
+
+                var userIds = links.map(function(l){return l.get('studentId');});
+                var uMap = {};
+                for (var i in userIds){
+                    uMap[userIds[i]] = 1;
+                }
+                var arr = [];
+                for (var key in uMap){
+                    arr.push(key);
+                }
+                console.log('userIds = ', arr);
+
+
+                UserMixin.loadUsersByIdsList(arr, function(urs){
+                    callback(urs);
                 });
+                //var q2 = new Parse.Query(Parse.User);
+                //q2.limit(1000);
+                //q2.containedIn('objectId', links.map(function(l){return l.get('studentId');}));
+                //q2.find(function(users){
+                //    console.log('users: ', users);
+                //    var list = users.map(function(u){
+                //        return {
+                //            id: u.id,
+                //            name: self.getUserName(u),
+                //            avatar: u.get('avatar')
+                //        }
+                //    });
+                //    callback(list);
+                //});
+
+
             });
         });
+    },
+
+    loadStudentTeachers: function(userId, callback){
+        var self = this;
+        this.loadUserClasses(userId, function(classes){
+            UserMixin.loadUsersByIdsList(classes.map(function(cl){
+                return cl.ownerId;
+            }), function(users){
+                callback(users);
+            });
+        });
+    },
+
+    getListUsersListWithoutMe: function(list, userId){
+        var arr = [];
+        for (var i in list){
+            if (list[i].id == userId){
+                continue;
+            }
+            arr.push(list[i]);
+        }
+        return arr;
+    },
+
+    loadFriends: function(userId, role, callback){
+        var self = this;
+        if (role == 'student'){
+            this.loadStudentTeachers(userId, function(users){
+                callback(self.getListUsersListWithoutMe(users, userId));
+            })
+        }
+        if (role == 'teacher'){
+            this.loadTeacherStudents(userId, function(users){
+                callback(self.getListUsersListWithoutMe(users, userId));
+            });
+        }
     }
 
 
@@ -108693,7 +116139,7 @@ var ClassMixin = {
 
 module.exports = ClassMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":755,"../../react/mixins/commonMixins/ParseMixin":756,"./FeedMixin":738,"parse":34}],737:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"./FeedMixin":776,"./UserMixin":788,"parse":35}],775:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -108867,6 +116313,25 @@ var ExerciseMixin = {
             }
             callback(arr);
         }.bind(this));
+    },
+
+    loadAllUserAnswers: function(userId, callback){
+        var q = new Parse.Query('UserAnswer');
+        q.equalTo('userId', userId);
+        q.limit(1000);
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(a){
+                return {
+                    cardId: a.get('cardId'),
+                    text: a.get('answerText'),
+                    url: a.get('answerUrl'),
+                    status: a.get('status'),
+                    t: (new Date(a.createdAt)).getTime(),
+                    timestamp: (new Date(a.createdAt)).getTime()
+                }
+            });
+            callback(arr);
+        });
     },
 
     loadUserExerciseScore: function(userId, exerciseId, callback){
@@ -109626,7 +117091,7 @@ var ExerciseMixin = {
 
 module.exports = ExerciseMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],738:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],776:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -109851,7 +117316,7 @@ function migrateFeeds(){
     });
 }
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],739:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],777:[function(require,module,exports){
 /**
  * Created by sabir on 20.09.15.
  */
@@ -109890,7 +117355,7 @@ var FileUploadMixin = {
 
 module.exports = FileUploadMixin;
 
-},{}],740:[function(require,module,exports){
+},{}],778:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -109989,7 +117454,7 @@ module.exports = IdiomsMixin;
 //    });
 //})();
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"./MaterialsMixin":743,"./VocabularyMixin":752,"parse":34,"react":518}],741:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"./MaterialsMixin":781,"./VocabularyMixin":790,"parse":35,"react":527}],779:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -110137,21 +117602,21 @@ var KaraokeMixin = {
 
 
     karaokeAvatarsMap: {
-        'Howto & Style': 'http://app.englishpatient.org/assets/images/youtubeCategories/howtostyle.png',
-        'Nonprofits & Activism': 'http://app.englishpatient.org/assets/images/youtubeCategories/nonprofitsactivism.png',
-        'Education': 'http://app.englishpatient.org/assets/images/youtubeCategories/education.png',
-        'People & Blogs': 'http://app.englishpatient.org/assets/images/youtubeCategories/peopleblogs.png',
-        'Shows': 'http://app.englishpatient.org/assets/images/youtubeCategories/shows.png',
-        'News & Politics': 'http://app.englishpatient.org/assets/images/youtubeCategories/newspolitics.png',
-        'Comedy': 'http://app.englishpatient.org/assets/images/youtubeCategories/comedy.png',
-        'Gaming': 'http://app.englishpatient.org/assets/images/youtubeCategories/gaming.png',
-        'Sports': 'http://app.englishpatient.org/assets/images/youtubeCategories/sports.png',
-        'Film & Animation': 'http://app.englishpatient.org/assets/images/youtubeCategories/filmanimation.png',
-        'Science & Technology': 'http://app.englishpatient.org/assets/images/youtubeCategories/sciencetechnology.png',
-        'Entertainment': 'http://app.englishpatient.org/assets/images/youtubeCategories/entertainment.png',
-        'Travel & Events': 'http://app.englishpatient.org/assets/images/youtubeCategories/travelevents.png',
-        'Music': 'http://app.englishpatient.org/assets/images/youtubeCategories/music.png',
-        'Pets & Animals': 'http://app.englishpatient.org/assets/images/youtubeCategories/petsanimals.png'
+        'Howto & Style': 'https://englishpatient.org/app/assets/images/youtubeCategories/howtostyle.png',
+        'Nonprofits & Activism': 'https://englishpatient.org/app/assets/images/youtubeCategories/nonprofitsactivism.png',
+        'Education': 'https://englishpatient.org/app/assets/images/youtubeCategories/education.png',
+        'People & Blogs': 'https://englishpatient.org/app/assets/images/youtubeCategories/peopleblogs.png',
+        'Shows': 'https://englishpatient.org/app/assets/images/youtubeCategories/shows.png',
+        'News & Politics': 'https://englishpatient.org/app/assets/images/youtubeCategories/newspolitics.png',
+        'Comedy': 'https://englishpatient.org/app/assets/images/youtubeCategories/comedy.png',
+        'Gaming': 'https://englishpatient.org/app/assets/images/youtubeCategories/gaming.png',
+        'Sports': 'https://englishpatient.org/app/assets/images/youtubeCategories/sports.png',
+        'Film & Animation': 'https://englishpatient.org/app/assets/images/youtubeCategories/filmanimation.png',
+        'Science & Technology': 'https://englishpatient.org/app/assets/images/youtubeCategories/sciencetechnology.png',
+        'Entertainment': 'https://englishpatient.org/app/assets/images/youtubeCategories/entertainment.png',
+        'Travel & Events': 'https://englishpatient.org/app/assets/images/youtubeCategories/travelevents.png',
+        'Music': 'https://englishpatient.org/app/assets/images/youtubeCategories/music.png',
+        'Pets & Animals': 'https://englishpatient.org/app/assets/images/youtubeCategories/petsanimals.png'
     },
 
     getAllCategories: function(){
@@ -110173,7 +117638,7 @@ var KaraokeMixin = {
 
 module.exports = KaraokeMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"jquery":30,"parse":34}],742:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"jquery":31,"parse":35}],780:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -110195,6 +117660,7 @@ var LoginMixin = {
             errorCallback('Неправильно введен Email');
             return;
         }
+        email = email.toLowerCase();
         Parse.User.logIn(email, password, {
             success: function(u){
                 callback(u);
@@ -110226,6 +117692,7 @@ var LoginMixin = {
             errorCallback('Пустой логин или пароль');
             return;
         }
+        email = email.toLowerCase();
         var user = new Parse.User();
         user.set("username", email);
         user.set("password", password);
@@ -110292,7 +117759,7 @@ var LoginMixin = {
 
 module.exports = LoginMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":755,"../../react/mixins/commonMixins/ParseMixin":756,"parse":34,"react":518}],743:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"parse":35,"react":527}],781:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -110824,9 +118291,9 @@ var MaterialsMixin = {
             return;
         }
         console.log('loading info for vimeoId = ' + vimeoId);
-        $.ajax('http://vimeo.com/api/v2/video/' + vimeoId + '.json', {
+        $.ajax('https://vimeo.com/api/v2/video/' + vimeoId + '.json', {
             success: function(data){
-                console.log('http://vimeo.com/api/v2/video/' + vimeoId + '.json', data);
+                console.log('https://vimeo.com/api/v2/video/' + vimeoId + '.json', data);
                 if (data == undefined || data.length == 0){
                     callback(undefined);
                     return;
@@ -110899,7 +118366,7 @@ var MaterialsMixin = {
 
 module.exports = MaterialsMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"./TopicsMixin":748,"./UserMixin":750,"jquery":30,"parse":34}],744:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"./TopicsMixin":786,"./UserMixin":788,"jquery":31,"parse":35}],782:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -110987,7 +118454,7 @@ var MigrationMixin = {
 
 module.exports = MigrationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"../data/DataFactory":735,"./MaterialsMixin":743,"./VideoMixin":751,"parse":34}],745:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"../data/DataFactory":772,"./MaterialsMixin":781,"./VideoMixin":789,"parse":35}],783:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -111278,7 +118745,7 @@ var NotesMixin = {
 
 module.exports = NotesMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],746:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],784:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -111418,7 +118885,7 @@ var NotificationMixin = {
 
 module.exports = NotificationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"./ClassMixin":736,"./UserMixin":750,"parse":34}],747:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"./ClassMixin":774,"./UserMixin":788,"parse":35}],785:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -111533,7 +119000,7 @@ var ProfileMixin = {
 
 module.exports = ProfileMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34}],748:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],786:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -111556,23 +119023,42 @@ var TopicsMixin = {
             creatorId: p.get('creatorId'),
             description: p.get('description'),
             avatar: p.get('avatar'),
-            access: p.get('access')
+            access: p.get('access'),
+            topicType: p.get('topicType')
         }
     },
 
-    loadTeacherTopics: function(teacherId, callback){
+    loadTeacherTopics: function(teacherId, topicType, callback){
         if (teacherId == undefined){
             callback([]);
             return;
         }
+        if (topicType == undefined){
+            topicType = 'basic';
+        }
         var q = new Parse.Query('PatientTopic');
         q.limit(1000);
         q.addDescending('createdAt');
+        q.equalTo('topicType', topicType);
         q.equalTo('creatorId', teacherId);
         var self = this;
         q.find(function(results){
             var arr = results.map(function(p){
                 return self.transformTopic(p);
+            });
+            callback(arr);
+        });
+    },
+
+    loadGrammarTopics: function(teacherId, callback){
+        var q = new Parse.Query('PatientTopic');
+        q.limit(1000);
+        q.equalTo('creatorId', teacherId);
+        q.equalTo('topicType', 'grammar');
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(p){
+                return self.transformTopic(p)
             });
             callback(arr);
         });
@@ -111598,7 +119084,7 @@ var TopicsMixin = {
         });
     },
 
-    createTopic: function(teacherId, name, description, avatar, access, callback){
+    createTopic: function(teacherId, name, description, avatar, access, topicType, callback){
         console.log('createTopic occured', teacherId, name, description, avatar, access);
         if (teacherId == undefined){
             callback(undefined);
@@ -111611,6 +119097,7 @@ var TopicsMixin = {
             [{name: 'name', value: name},
             {name: 'description', value: description},
             {name: 'avatar', value: avatar},
+            {name: 'topicType', value: topicType},
             {name: 'access', value: access}]
         );
         var self = this;
@@ -111667,7 +119154,7 @@ var TopicsMixin = {
 
 module.exports = TopicsMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":755,"../../react/mixins/commonMixins/ParseMixin":756,"./FeedMixin":738,"parse":34}],749:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"./FeedMixin":776,"parse":35}],787:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -111758,8 +119245,11 @@ var TranslateMixin = {
         return s;
     },
 
-    translate: function(text, callback){
+    translate: function(text, callback, enableTranslation){
         var self = this;
+        if (enableTranslation == undefined){
+            enableTranslation = true;
+        }
         text = text.split("’")[0];
         text = VocabularyMixin.getClearWord(text).trim();
         var url = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=' + self.yandexDicApiKey + '&format=html&lang=' + self.lang +'&ui=ru&text=' + text;
@@ -111774,14 +119264,26 @@ var TranslateMixin = {
 
                     data = self.getTranslationHtml(data);
 
-                    if (dt != undefined){
-                        data = '<div style="padding: 10px; text-align: center; ' +
-                            'font-weight: bold; font-size: 20px; " >' + dt + '</div>' + data;
+
+
+                    //dt - whole translation
+
+                    if (enableTranslation == true){
+
+                        if (data == ''){
+                            if (dt != undefined){
+                                data = '<div style="padding: 10px; text-align: center; ' +
+                                    'font-weight: bold; font-size: 20px; " >' + dt + '</div>' + data;
+                            }
+                        }
+
+                        if (dt == text){ // if there is no whole translation
+                            data = '';
+                        }
+
                     }
 
-                    if (dt == text){
-                        data = '';
-                    }
+
 
                     callback(data);
 
@@ -111831,7 +119333,7 @@ var TranslateMixin = {
 
 module.exports = TranslateMixin;
 
-},{"./VocabularyMixin":752,"jquery":30}],750:[function(require,module,exports){
+},{"./VocabularyMixin":790,"jquery":31}],788:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -111860,6 +119362,7 @@ var UserMixin = {
             role: u.get('userRole'),
             email: u.get('email'),
             avatar: u.get('avatar'),
+            timestamp: (new Date(u.createdAt)).getTime(),
             id: u.id
         }
     },
@@ -111907,12 +119410,15 @@ var UserMixin = {
         var self = this;
         var q = new Parse.Query(Parse.User);
         q.containedIn('objectId', ids);
-        q.find(function(results){
+        q.limit(1000);
+
+        ParseMixin.loadAllDataFromParse(q, function(results){
             var arr = results.map(function(r){
                 return self.transformUser(r)
             });
             callback(arr);
         });
+
     }
 
 
@@ -111923,7 +119429,7 @@ var UserMixin = {
 
 module.exports = UserMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"parse":34,"react":518}],751:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35,"react":527}],789:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -111939,7 +119445,7 @@ var VideoMixin = {
             return;
         }
         console.log('loading info for vimeoId = ' + vimeoId);
-        $.ajax('http://vimeo.com/api/v2/video/' + vimeoId + '.json', {
+        $.ajax('https://vimeo.com/api/v2/video/' + vimeoId + '.json', {
             success: function(data){
                 console.log('http://vimeo.com/api/v2/video/' + vimeoId + '.json', data);
                 if (data == undefined || data.length == 0){
@@ -111995,7 +119501,7 @@ var VideoMixin = {
 
 module.exports = VideoMixin;
 
-},{"jquery":30,"moment":32}],752:[function(require,module,exports){
+},{"jquery":31,"moment":33}],790:[function(require,module,exports){
 
 var React = require('react');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
@@ -112116,7 +119622,7 @@ var VocabularyMixin = {
 
 module.exports = VocabularyMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"./MaterialsMixin":743,"parse":34,"react":518}],753:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"./MaterialsMixin":781,"parse":35,"react":527}],791:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -112141,7 +119647,7 @@ var YoutubeSearchMixin = {
 
 module.exports = YoutubeSearchMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":756,"./MaterialsMixin":743,"parse":34,"react":518}],754:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":794,"./MaterialsMixin":781,"parse":35,"react":527}],792:[function(require,module,exports){
 /**
  * Created by sabir on 26.08.15.
  */
@@ -112163,7 +119669,7 @@ var constants = {
 
 module.exports = constants;
 
-},{}],755:[function(require,module,exports){
+},{}],793:[function(require,module,exports){
 /**
  * Created by sabir on 29.07.15.
  */
@@ -112308,7 +119814,20 @@ var CommonMixin = {
             }
     },
 
+    isLocalhost: function(){
+        var url = window.location.href;
+        if (url.indexOf('0.0.0.0') > -1){
+            return true;
+        }
+        return false;
+    },
+
     forceTransitionTo: function(url){
+        var isLocalhost = this.isLocalhost();
+        var base = 'https://www.englishpatient.org/app';
+        if (isLocalhost == false){
+            url = base + url;
+        }
         history.pushState(null, null, url);
         window.location.reload();
     }
@@ -112317,7 +119836,7 @@ var CommonMixin = {
 
 module.exports = CommonMixin;
 
-},{}],756:[function(require,module,exports){
+},{}],794:[function(require,module,exports){
 /**
  * Created by sabir on 15.08.15.
  */
@@ -112479,4 +119998,4 @@ var ParseMixin = {
 
 module.exports = ParseMixin;
 
-},{"../../../js/Constants":754,"jquery":30,"parse":34}]},{},[521]);
+},{"../../../js/Constants":792,"jquery":31,"parse":35}]},{},[535]);

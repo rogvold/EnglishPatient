@@ -90,7 +90,7 @@ var DataFactory = {
 
     SAUSAGE_ITEMS: [{
         name: 'Аудирование',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_1.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_1.jpg',
         description: 'Труднее всего - научить понимать реальную речь. Для решения этой задачи мы создали тренажеры и собрали видеоматериалы.',
         id: 1,
         items: [
@@ -126,7 +126,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Говорение',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_2.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_2.jpg',
         id: 2,
         description: 'Мы уделяем максимальное внимание вашей способности говорить на иностранном языке. Для работы Вам понадобится микрофон (встроенный в Ваш ноутбук либо внешний) - мы будем записывать Ваш голос.',
         items: [
@@ -219,7 +219,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Чтение',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_3.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_3.jpg',
         id: 3,
         description: undefined,
         items: [
@@ -248,7 +248,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Письмо',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_4.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_4.jpg',
         id: 4,
         description: undefined,
         items: [
@@ -270,7 +270,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Грамматика',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_5.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_5.jpg',
         id: 5,
         description: 'Облегченное изучение необходимой грамматики на ярких примерах из реальной жизни',
         items: [
@@ -278,7 +278,7 @@ var DataFactory = {
         ]
     }, {
         name: 'Лексика',
-        avatar: 'http://app.englishpatient.org/assets/img/avatars/_6.jpg',
+        avatar: 'https://englishpatient.org/app/assets/img/avatars/_6.jpg',
         id: 6,
         description: 'Помимо изучения новых фраз, мы уделяем особое внимание их закреплению. Пользуйтесь нашими инструментами, и то, что было однажды услышано, закрепится в Вашей памяти на всю жизнь.',
         items: [

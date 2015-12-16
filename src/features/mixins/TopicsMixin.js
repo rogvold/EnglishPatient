@@ -20,23 +20,42 @@ var TopicsMixin = {
             creatorId: p.get('creatorId'),
             description: p.get('description'),
             avatar: p.get('avatar'),
-            access: p.get('access')
+            access: p.get('access'),
+            topicType: p.get('topicType')
         }
     },
 
-    loadTeacherTopics: function(teacherId, callback){
+    loadTeacherTopics: function(teacherId, topicType, callback){
         if (teacherId == undefined){
             callback([]);
             return;
         }
+        if (topicType == undefined){
+            topicType = 'basic';
+        }
         var q = new Parse.Query('PatientTopic');
         q.limit(1000);
         q.addDescending('createdAt');
+        q.equalTo('topicType', topicType);
         q.equalTo('creatorId', teacherId);
         var self = this;
         q.find(function(results){
             var arr = results.map(function(p){
                 return self.transformTopic(p);
+            });
+            callback(arr);
+        });
+    },
+
+    loadGrammarTopics: function(teacherId, callback){
+        var q = new Parse.Query('PatientTopic');
+        q.limit(1000);
+        q.equalTo('creatorId', teacherId);
+        q.equalTo('topicType', 'grammar');
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(p){
+                return self.transformTopic(p)
             });
             callback(arr);
         });
@@ -62,7 +81,7 @@ var TopicsMixin = {
         });
     },
 
-    createTopic: function(teacherId, name, description, avatar, access, callback){
+    createTopic: function(teacherId, name, description, avatar, access, topicType, callback){
         console.log('createTopic occured', teacherId, name, description, avatar, access);
         if (teacherId == undefined){
             callback(undefined);
@@ -75,6 +94,7 @@ var TopicsMixin = {
             [{name: 'name', value: name},
             {name: 'description', value: description},
             {name: 'avatar', value: avatar},
+            {name: 'topicType', value: topicType},
             {name: 'access', value: access}]
         );
         var self = this;

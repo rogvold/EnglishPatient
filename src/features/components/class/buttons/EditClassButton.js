@@ -13,6 +13,8 @@ var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
 
 var ArchiveClassButton = require('./ArchiveClassButton');
 
+var PatientEditor = require('../../editor/PatientEditor');
+
 var EditClassButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -37,7 +39,9 @@ var EditClassButton = React.createClass({
             status: 'active',
             name: undefined,
             description: undefined,
-            code: undefined
+            code: undefined,
+            extendedDescription: undefined,
+            defaultExtendedDescription: undefined
         }
     },
 
@@ -172,6 +176,8 @@ var EditClassButton = React.createClass({
                 name: cl.name,
                 status: cl.status,
                 description: cl.description,
+                extendedDescription: cl.extendedDescription,
+                defaultExtendedDescription: cl.extendedDescription,
                 code: cl.code
             });
             callback(cl);
@@ -186,10 +192,11 @@ var EditClassButton = React.createClass({
         var classId = this.props.classId;
         var name = this.state.name;
         var description = this.state.description;
+        var extendedDescription = this.state.extendedDescription;
         var status = this.state.status;
 
         //createClass: function(teacherId, name, description, callback)
-        ClassMixin.updateClass(classId, name, description, status, function(updatedClass){
+        ClassMixin.updateClass(classId, name, description, status, extendedDescription, function(updatedClass){
             self.setState({
                 loading: false
             });
@@ -213,6 +220,11 @@ var EditClassButton = React.createClass({
         });
     },
 
+    onContentChange: function(val){
+        this.setState({
+            extendedDescription: val
+        });
+    },
 
     getDialogContent: function(){
         var classId = this.props.classId;
@@ -239,9 +251,18 @@ var EditClassButton = React.createClass({
                     </div>
 
                     <div className="field">
-                        <textarea type="text" value={this.state.description} placeholder="Название класса"
+                        <textarea type="text" value={this.state.description} placeholder="Описание класса"
                                   onChange={this.onDescriptionChange} ></textarea>
                     </div>
+
+
+                    <div className={'field'}>
+                        <label>Расширенное описание класса</label>
+                        <PatientEditor value={this.state.defaultExtendedDescription}
+                                       onContentChange={this.onContentChange} />
+                    </div>
+
+
                 </div>
 
                 <div className={'ui message'} >

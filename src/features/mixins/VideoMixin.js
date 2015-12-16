@@ -13,7 +13,7 @@ var VideoMixin = {
             return;
         }
         console.log('loading info for vimeoId = ' + vimeoId);
-        $.ajax('http://vimeo.com/api/v2/video/' + vimeoId + '.json', {
+        $.ajax('https://vimeo.com/api/v2/video/' + vimeoId + '.json', {
             success: function(data){
                 console.log('http://vimeo.com/api/v2/video/' + vimeoId + '.json', data);
                 if (data == undefined || data.length == 0){

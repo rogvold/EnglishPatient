@@ -1973,3 +1973,7 @@ body{
 .mainSubtitlesBlock:hover{
     background-color: #E2E3E7;
 }
+
+.patientMessageItem:hover{
+    background: #f9f9f9 !important;
+}

@@ -19,6 +19,7 @@ var LoginMixin = {
             errorCallback('Неправильно введен Email');
             return;
         }
+        email = email.toLowerCase();
         Parse.User.logIn(email, password, {
             success: function(u){
                 callback(u);
@@ -50,6 +51,7 @@ var LoginMixin = {
             errorCallback('Пустой логин или пароль');
             return;
         }
+        email = email.toLowerCase();
         var user = new Parse.User();
         user.set("username", email);
         user.set("password", password);

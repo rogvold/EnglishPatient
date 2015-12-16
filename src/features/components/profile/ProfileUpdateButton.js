@@ -130,7 +130,7 @@ var ProfileUpdateButton = React.createClass({
         },
 
         buttonStyle: {
-            fontSize: '12px',
+            fontSize: '11px',
             padding: '5px',
             paddingLeft: '7px'
         }

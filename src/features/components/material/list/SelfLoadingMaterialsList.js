@@ -206,7 +206,7 @@ var SelfLoadingMaterialsList = React.createClass({
             <div>{c}</div>
         );
     },
-//1 3 5 7 - Maxim ()
+
     componentStyle: {
         placeholder: {
             //width: 865,

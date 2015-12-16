@@ -7,6 +7,7 @@ var assign = require('object-assign');
 var moment = require('moment');
 
 var ProfileUpdateButton = require('../profile/ProfileUpdateButton');
+var ProfileStatButton = require('../profile/ProfileStatButton');
 
 var UserCard = React.createClass({
     getDefaultProps: function () {
@@ -88,16 +89,26 @@ var UserCard = React.createClass({
                             </div>
                         }
 
+                    <div>
                         {this.props.stasiMode == false ? null :
-                            <div>
+
                                 <ProfileUpdateButton userId={this.props.userId}
                                                      email={this.props.email}
                                                      name={this.props.name}
                                                      avatar={this.props.avatar}
                                                      timestamp={this.props.timestamp}
                                                      onUserDelete={this.onUserDelete} />
-                            </div>
+
                         }
+
+                        <ProfileStatButton userId={this.props.userId} name={this.props.name} />
+
+
+
+
+                    </div>
+
+
 
 
 

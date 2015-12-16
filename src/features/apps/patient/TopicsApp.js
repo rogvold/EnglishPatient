@@ -32,6 +32,8 @@ var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadi
 
 var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 
 var TopicsApp = React.createClass({
     getDefaultProps: function () {
@@ -115,6 +117,9 @@ var TopicsApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
 

@@ -26,6 +26,7 @@ var UserMixin = {
             role: u.get('userRole'),
             email: u.get('email'),
             avatar: u.get('avatar'),
+            timestamp: (new Date(u.createdAt)).getTime(),
             id: u.id
         }
     },
@@ -73,12 +74,15 @@ var UserMixin = {
         var self = this;
         var q = new Parse.Query(Parse.User);
         q.containedIn('objectId', ids);
-        q.find(function(results){
+        q.limit(1000);
+
+        ParseMixin.loadAllDataFromParse(q, function(results){
             var arr = results.map(function(r){
                 return self.transformUser(r)
             });
             callback(arr);
         });
+
     }
 
 

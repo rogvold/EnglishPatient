@@ -78,7 +78,7 @@ var PatientPlayer = React.createClass({
 
     getUrl: function(){
         if (this.props.vimeoId != undefined){
-            return ('http://vimeo.com/' + this.props.vimeoId)
+            return ('https://vimeo.com/' + this.props.vimeoId)
         }
         if (this.props.youtubeId != undefined){
             return ('https://www.youtube.com/watch?v=' + this.props.youtubeId)

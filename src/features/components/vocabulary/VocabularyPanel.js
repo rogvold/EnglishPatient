@@ -32,7 +32,6 @@ var VocabularyPanel = React.createClass({
             text: '',
             dialogVisible: false,
             selectedWord: undefined
-
         }
     },
 
@@ -201,7 +200,7 @@ var VocabularyPanel = React.createClass({
                 <div style={this.componentStyle.wordContent}>
 
                    <div style={this.componentStyle.wordLeftContent}>
-                        <TranslatePanel text={this.state.selectedWord} searchInputVisible={true} />
+                        <TranslatePanel topBlockEnabled={false} text={this.state.selectedWord} searchInputVisible={true} />
                    </div>
 
                     <div style={this.componentStyle.wordRightContent}>

@@ -17,8 +17,8 @@ var DictionaryApp = require('./DictionaryApp');
 var IdiomsApp = require('./IdiomsApp');
 var GrammarApp = require('./GrammarApp');
 
-
-
+var NoMatchApp = require('./NoMatchApp');
+var SharedClassApp = require('./shared/SharedClassApp');
 
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
@@ -121,6 +121,8 @@ var App = React.createClass({
                     <IndexRoute component={SimpleDev} />
                 </Route>
 
+                <Route path="*" component={NoMatchApp}/>
+
             </Router>
         )
     },
@@ -131,19 +133,30 @@ var App = React.createClass({
                 <Route useAutoKeys={false} path="/" component={StudentIndexApp} >
                     <IndexRoute component={StudentIndexApp} />
                 </Route>
-
+                <Route path="/dev" component={DevApp}>
+                    <IndexRoute component={DevApp} />
+                </Route>
                 <Route path="/class/:classId" component={StudentClassApp}/>
-
             </Router>
         );
     },
 
     getLoginContent: function(){
-
         return (
             <LoginApp />
         );
+    },
 
+    getNotLoggedInContent: function(){
+        return (
+        <Router history={createHashHistory({queryKey: false})}>
+            <Route useAutoKeys={false} path="/" component={LoginApp} >
+                <IndexRoute component={LoginApp} />
+            </Route>
+            <Route path="/class/:classId" component={SharedClassApp}/>
+            <Route path="*" component={LoginApp}/>
+        </Router>
+        );
     },
 
 
@@ -155,9 +168,7 @@ var App = React.createClass({
         var content = null;
         var isLoggedIn = LoginMixin.isLoggedIn();
         if (isLoggedIn == false){
-            content = (
-                <LoginApp />
-            );
+            content = this.getNotLoggedInContent();
         }else{
             if (role == 'student'){
                 content = this.getStudentRouter();

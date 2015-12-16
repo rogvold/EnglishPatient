@@ -13,8 +13,10 @@ var FileUploader = React.createClass({
             containerClassName: 'ui brown message',
             iconFiletypes: ['.png', '.jpg', '.gif'],
             uploadFileMessage: 'Загрузить файл',
-            uploadScript: 'http://beta.englishpatient.org/dropzone/upload.php',
-            uploadDir: 'http://beta.englishpatient.org/dropzone/uploads/',
+            uploadScript: 'https://www.englishpatientdrive.pw/dropzone/upload.php',
+            //uploadScript: 'http://beta.englishpatient.org/dropzone/upload.php',
+            uploadDir: 'https://www.englishpatientdrive.pw/dropzone/uploads/',
+            //uploadDir: 'http://beta.englishpatient.org/dropzone/uploads/',
 
             onFileUploaded: function(url){
                 console.log('--->>> UPLOADED FILE ', url);
@@ -25,7 +27,9 @@ var FileUploader = React.createClass({
             customIconClassName: 'icon file image outline',
             style:{
 
-            }
+            },
+
+            hiddenMode: false
         }
     },
 
@@ -45,7 +49,7 @@ var FileUploader = React.createClass({
 
     componentStyle: {
         placeholder: {
-            minWidth: 165,
+            //minWidth: 165,
             //height: 60,
             height: 40,
             position: 'relative',
@@ -168,37 +172,46 @@ var FileUploader = React.createClass({
             previewTemplate: React.renderToStaticMarkup(
 
                 <div>
-                    <div style={this.componentStyle.previewPlaceholder} className="dz-preview dz-file-preview ">
+                    {this.props.hiddenMode == true ? null :
+
+                            <div style={this.componentStyle.previewPlaceholder} className="dz-preview dz-file-preview ">
 
 
+                                <div className="dz-details" style={this.componentStyle.dzDetails}>
+                                    <div style={this.componentStyle.dzFilename} className="dz-filename">
+                                        <span data-dz-name style={this.componentStyle.dzName}></span>
 
-                            <div className="dz-details" style={this.componentStyle.dzDetails} >
-                                <div style={this.componentStyle.dzFilename} className="dz-filename">
-                                    <span data-dz-name style={this.componentStyle.dzName} ></span>
-                                    <div className="dz-size" data-dz-size style={this.componentStyle.dzSize} ></div>
+                                        <div className="dz-size" data-dz-size style={this.componentStyle.dzSize}></div>
+                                    </div>
+
+
+                                    <img style={this.componentStyle.img} data-dz-thumbnail/>
                                 </div>
 
 
-                                <img style={this.componentStyle.img} data-dz-thumbnail />
+                                <div className="dz-progress" style={this.componentStyle.dzProgress}>
+                                    <span className="dz-upload" style={this.componentStyle.dzUpload}
+                                          data-dz-uploadprogress></span>
+                                </div>
+
+
+                                <div className="dz-error-mark" style={this.componentStyle.errorMark}>
+                                    <span>
+                                        <a className="dz-remove" style={this.componentStyle.dzRemove}
+                                           href="javascript:undefined;" data-dz-remove="">
+                                            удалить
+                                        </a>
+                                    </span>
+                                </div>
+
+                                <div style={this.componentStyle.dzErrorMessage} className="dz-error-message">
+                                    <span data-dz-errormessage></span>
+                                </div>
+
                             </div>
 
-                            <div className="dz-progress" style={this.componentStyle.dzProgress} >
-                                <span className="dz-upload" style={this.componentStyle.dzUpload} data-dz-uploadprogress></span>
-                            </div>
+                        }
 
-                            <div className="dz-error-mark" style={this.componentStyle.errorMark} >
-                                <span>
-                                    <a className="dz-remove" style={this.componentStyle.dzRemove} href="javascript:undefined;" data-dz-remove="">
-                                        удалить
-                                    </a>
-                                </span>
-                            </div>
-
-                            <div style={this.componentStyle.dzErrorMessage} className="dz-error-message">
-                                <span data-dz-errormessage></span>
-                            </div>
-
-                        </div>
                     </div>
             )
         };

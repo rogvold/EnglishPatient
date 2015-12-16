@@ -37,6 +37,8 @@ var NotesGroupsList = require('../../components/note/list/NotesGroupsList');
 
 var NotesGroupSelect = require('../../components/note/select/NotesGroupSelect');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var NotesApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -254,6 +256,9 @@ var NotesApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />
             </div>

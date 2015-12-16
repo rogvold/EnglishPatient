@@ -45,7 +45,7 @@ var AddToClassButton = React.createClass({
 
     onAdded: function(){
         var classId = this.props.classId;
-        var url = 'http://app.englishpatient.org/#/class/' + classId;
+        var url = 'http://www.englishpatient.org/app/#/class/' + classId;
         CommonMixin.forceTransitionTo(url);
     },
 

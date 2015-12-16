@@ -63,7 +63,8 @@ var TopicHeaderPanel = React.createClass({
             left: 0,
             zIndex: 1,
             backgroundColor: '#2E3C54',
-            opacity: 0.9
+            //opacity: 0.9
+            opacity: 0.7
         },
 
         topPanelOverlayPanel: {

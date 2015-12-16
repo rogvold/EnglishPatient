@@ -5,6 +5,8 @@ var Parse = require('parse').Parse;
 var FeedMixin = require('./FeedMixin');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
+var UserMixin = require('./UserMixin');
+
 
 var ClassMixin = {
 
@@ -20,9 +22,11 @@ var ClassMixin = {
             invitationCode: p.get('invitationCode'),
             id: p.id,
             ownerId: p.get('ownerId'),
-            classId: p.classId
+            classId: p.classId,
+            extendedDescription: p.get('extendedDescription')
         }
     },
+
 
     loadClassById: function(classId, callback){
         if (classId == undefined){
@@ -143,7 +147,7 @@ var ClassMixin = {
         });
     },
 
-    updateClass: function(classId, name, description, status, callback){
+    updateClass: function(classId, name, description, status, extendedDescription, callback){
         var self = this;
         this.loadClassById(classId, function(c){
             if (c == undefined){
@@ -153,7 +157,8 @@ var ClassMixin = {
             c = ParseMixin.safeSet(c, [
                 {name: 'name', value: name},
                 {name: 'description', value: description},
-                {name: 'status', value: status}
+                {name: 'status', value: status},
+                {name: 'extendedDescription', value: extendedDescription}
             ]);
             c.save().then(function(cl){
                 callback({
@@ -378,22 +383,76 @@ var ClassMixin = {
             q.limit(1000);
             q.find(function(links){
                 console.log('class links: ', links);
-                var q2 = new Parse.Query(Parse.User);
-                q2.limit(1000);
-                q2.containedIn('objectId', links.map(function(l){return l.get('studentId');}));
-                q2.find(function(users){
-                    console.log('users: ', users);
-                    var list = users.map(function(u){
-                        return {
-                            id: u.id,
-                            name: self.getUserName(u),
-                            avatar: u.get('avatar')
-                        }
-                    });
-                    callback(list);
+
+                var userIds = links.map(function(l){return l.get('studentId');});
+                var uMap = {};
+                for (var i in userIds){
+                    uMap[userIds[i]] = 1;
+                }
+                var arr = [];
+                for (var key in uMap){
+                    arr.push(key);
+                }
+                console.log('userIds = ', arr);
+
+
+                UserMixin.loadUsersByIdsList(arr, function(urs){
+                    callback(urs);
                 });
+                //var q2 = new Parse.Query(Parse.User);
+                //q2.limit(1000);
+                //q2.containedIn('objectId', links.map(function(l){return l.get('studentId');}));
+                //q2.find(function(users){
+                //    console.log('users: ', users);
+                //    var list = users.map(function(u){
+                //        return {
+                //            id: u.id,
+                //            name: self.getUserName(u),
+                //            avatar: u.get('avatar')
+                //        }
+                //    });
+                //    callback(list);
+                //});
+
+
             });
         });
+    },
+
+    loadStudentTeachers: function(userId, callback){
+        var self = this;
+        this.loadUserClasses(userId, function(classes){
+            UserMixin.loadUsersByIdsList(classes.map(function(cl){
+                return cl.ownerId;
+            }), function(users){
+                callback(users);
+            });
+        });
+    },
+
+    getListUsersListWithoutMe: function(list, userId){
+        var arr = [];
+        for (var i in list){
+            if (list[i].id == userId){
+                continue;
+            }
+            arr.push(list[i]);
+        }
+        return arr;
+    },
+
+    loadFriends: function(userId, role, callback){
+        var self = this;
+        if (role == 'student'){
+            this.loadStudentTeachers(userId, function(users){
+                callback(self.getListUsersListWithoutMe(users, userId));
+            })
+        }
+        if (role == 'teacher'){
+            this.loadTeacherStudents(userId, function(users){
+                callback(self.getListUsersListWithoutMe(users, userId));
+            });
+        }
     }
 
 

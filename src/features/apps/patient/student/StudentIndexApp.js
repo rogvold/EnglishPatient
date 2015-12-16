@@ -21,6 +21,7 @@ var StudentHeader = require('../../../components/header/student/StudentHeader');
 
 var AddClassButton = require('../../../components/class/buttons/student/AddClassButton');
 
+var SidebarChatButton = require('../../../components/sidebar/SidebarChatButton');
 
 
 var StudentIndexApp = React.createClass({
@@ -95,6 +96,9 @@ var StudentIndexApp = React.createClass({
         var classId = (this.props.params == undefined) ? undefined : this.props.params.classId;
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <StudentSelfLoadingLeftSidebarClassesList  userId={this.state.user.id}
                                                            addClassMode={true}
                                                            selectedClassId={classId} />

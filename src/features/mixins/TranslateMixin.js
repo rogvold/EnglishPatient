@@ -88,8 +88,11 @@ var TranslateMixin = {
         return s;
     },
 
-    translate: function(text, callback){
+    translate: function(text, callback, enableTranslation){
         var self = this;
+        if (enableTranslation == undefined){
+            enableTranslation = true;
+        }
         text = text.split("’")[0];
         text = VocabularyMixin.getClearWord(text).trim();
         var url = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=' + self.yandexDicApiKey + '&format=html&lang=' + self.lang +'&ui=ru&text=' + text;
@@ -104,14 +107,26 @@ var TranslateMixin = {
 
                     data = self.getTranslationHtml(data);
 
-                    if (dt != undefined){
-                        data = '<div style="padding: 10px; text-align: center; ' +
-                            'font-weight: bold; font-size: 20px; " >' + dt + '</div>' + data;
+
+
+                    //dt - whole translation
+
+                    if (enableTranslation == true){
+
+                        if (data == ''){
+                            if (dt != undefined){
+                                data = '<div style="padding: 10px; text-align: center; ' +
+                                    'font-weight: bold; font-size: 20px; " >' + dt + '</div>' + data;
+                            }
+                        }
+
+                        if (dt == text){ // if there is no whole translation
+                            data = '';
+                        }
+
                     }
 
-                    if (dt == text){
-                        data = '';
-                    }
+
 
                     callback(data);
 

@@ -6,9 +6,12 @@ var assign = require('object-assign');
 var TopBrandContainer = React.createClass({
     getDefaultProps: function () {
         return {
-            mainText: 'International Programs Office',
-            bottomText: 'English Level Test',
-            backgroundImg: 'http://static.ngs.ru/news/preview/84756916e5e79d2ecff1902f1fb60ddc0ff6fa62_1024.jpg'
+            mainText: undefined,
+            //mainText: 'International Programs Office',
+            bottomText: undefined,
+            //bottomText: 'English Level Test',
+            //backgroundImg: 'http://static.ngs.ru/news/preview/84756916e5e79d2ecff1902f1fb60ddc0ff6fa62_1024.jpg'
+            backgroundImg: 'http://www.bhmpics.com/wallpapers/andromeda_galaxy_space-1920x1080.jpg'
         }
     },
 
@@ -75,12 +78,19 @@ var TopBrandContainer = React.createClass({
             <div style={st}>
                 <div style={this.componentStyle.overlay}></div>
                 <div style={this.componentStyle.contentPlaceholder}>
-                    <div style={this.componentStyle.mainTextPlaceholder}>
-                        {this.props.mainText}
-                    </div>
-                    <div style={this.componentStyle.bottomTextPlaceholder}>
-                        {this.props.bottomText}
-                    </div>
+
+                    {this.props.mainText == undefined ? null :
+                        <div style={this.componentStyle.mainTextPlaceholder}>
+                            {this.props.mainText}
+                        </div>
+                    }
+
+                    {this.props.bottomText == undefined ? null :
+                        <div style={this.componentStyle.bottomTextPlaceholder}>
+                            {this.props.bottomText}
+                        </div>
+                    }
+
                 </div>
             </div>
         );

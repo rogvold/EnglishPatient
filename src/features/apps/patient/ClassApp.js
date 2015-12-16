@@ -42,6 +42,8 @@ var EditClassButton = require('../../components/class/buttons/EditClassButton');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var ClassApp = React.createClass({
     mixins: [Router.Navigation],
 
@@ -235,6 +237,9 @@ var ClassApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList addClassMode={true} teacherId={this.state.user.id}
                                                    selectedClassId={this.props.params.classId}
                                                    onClassCreated={this.onClassCreated}

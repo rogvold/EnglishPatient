@@ -20,6 +20,10 @@ var LoginApp = require('./LoginApp');
 
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
+var GrammarPanel = require('../../components/grammar/GrammarPanel');
+
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var GrammarApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -76,6 +80,9 @@ var GrammarApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
             </div>
@@ -103,7 +110,7 @@ var GrammarApp = React.createClass({
         return (
             <div>
 
-                Under construction
+                <GrammarPanel teacherId={this.state.user.id} />
 
             </div>
 

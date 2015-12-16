@@ -26,7 +26,8 @@ var SelfInitHeader = React.createClass({
                 }
             }],
             extraLogo: undefined,
-            extraLogoText: undefined
+            extraLogoText: undefined,
+            extraLinksContent: undefined
         }
     },
 
@@ -75,6 +76,19 @@ var SelfInitHeader = React.createClass({
         placeholder: {}
     },
 
+    getCustomHtml: function(){
+        return (
+            <div>
+
+                {this.props.extraLinksContent == undefined ? null :
+                    <span>{this.props.extraLinksContent}</span>
+                }
+
+                <AuthButton />
+            </div>
+        );
+    },
+
     render: function () {
         var isLoggedIn = (this.state.user != undefined);
         return (
@@ -83,7 +97,7 @@ var SelfInitHeader = React.createClass({
                              logo={this.props.logo} logoText={this.props.logoText}
                              onDropdownLinkClick={this.onDropdownLinkClick} dropdownLinks={this.props.dropdownLinks}
                              isLoggedIn={isLoggedIn} user={this.state.user} links={this.props.links}
-                             customLoginButtonComponent={<AuthButton />} />
+                             customLoginButtonComponent={this.getCustomHtml()} />
             </div>
         );
     }

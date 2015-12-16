@@ -22,6 +22,8 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var Sausage = require('../../components/sausage/Sausage');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var IndexApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -79,9 +81,11 @@ var IndexApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     addClassMode={true} selectedClassId={this.props.params.classId} />
-
             </div>
         );
     },

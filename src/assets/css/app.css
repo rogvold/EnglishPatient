@@ -7,3 +7,12 @@
     background-color: #179DBA !important;
     color: white !important;
 }
+
+.chatFriendsListItem:hover {
+    background-color: #179DBA !important;
+    color: white !important;
+}
+
+.patientMessageItem.notRead {
+    background-color: #F0F0F0 !important;
+}

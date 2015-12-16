@@ -12,7 +12,7 @@ var TopicItem = React.createClass({
             topicId: undefined,
             teacherId: undefined,
             name: 'No Name',
-            avatar: 'http://app.englishpatient.org/assets/img/stars.jpg',
+            avatar: 'http://englishpatient.org/app/assets/img/stars.jpg',
 
             onTopicClick: function(){
 

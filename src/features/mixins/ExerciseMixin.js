@@ -173,6 +173,25 @@ var ExerciseMixin = {
         }.bind(this));
     },
 
+    loadAllUserAnswers: function(userId, callback){
+        var q = new Parse.Query('UserAnswer');
+        q.equalTo('userId', userId);
+        q.limit(1000);
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(a){
+                return {
+                    cardId: a.get('cardId'),
+                    text: a.get('answerText'),
+                    url: a.get('answerUrl'),
+                    status: a.get('status'),
+                    t: (new Date(a.createdAt)).getTime(),
+                    timestamp: (new Date(a.createdAt)).getTime()
+                }
+            });
+            callback(arr);
+        });
+    },
+
     loadUserExerciseScore: function(userId, exerciseId, callback){
         var UserExerciseScore = Parse.Object.extend('UserExerciseScore');
         var q = new Parse.Query(UserExerciseScore);

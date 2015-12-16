@@ -11,7 +11,8 @@ var AuthButton = React.createClass({
             buttonClassName: 'ui inverted compact button',
             buttonText: 'Вход',
             onLogin: function(){
-                window.location.href = window.location.href;
+                //window.location.href = window.location.href;
+                window.location.reload();
             }
         }
     },

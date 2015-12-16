@@ -44,6 +44,7 @@ var CreateNewExerciseButton = require('../../components/exercise/create/button/C
 
 var CreateNewExerciseGroupButton = require('../../components/bunch/exercise/CreateNewExerciseGroupButton');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var ExercisesApp = React.createClass({
     getDefaultProps: function () {
@@ -144,8 +145,12 @@ var ExercisesApp = React.createClass({
     getSidebar: function(){
         return (
             <div style={this.componentStyle.exercisesListPlaceholder}>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />
+
             </div>
         );
     },

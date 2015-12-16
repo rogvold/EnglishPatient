@@ -145,21 +145,21 @@ var KaraokeMixin = {
 
 
     karaokeAvatarsMap: {
-        'Howto & Style': 'http://app.englishpatient.org/assets/images/youtubeCategories/howtostyle.png',
-        'Nonprofits & Activism': 'http://app.englishpatient.org/assets/images/youtubeCategories/nonprofitsactivism.png',
-        'Education': 'http://app.englishpatient.org/assets/images/youtubeCategories/education.png',
-        'People & Blogs': 'http://app.englishpatient.org/assets/images/youtubeCategories/peopleblogs.png',
-        'Shows': 'http://app.englishpatient.org/assets/images/youtubeCategories/shows.png',
-        'News & Politics': 'http://app.englishpatient.org/assets/images/youtubeCategories/newspolitics.png',
-        'Comedy': 'http://app.englishpatient.org/assets/images/youtubeCategories/comedy.png',
-        'Gaming': 'http://app.englishpatient.org/assets/images/youtubeCategories/gaming.png',
-        'Sports': 'http://app.englishpatient.org/assets/images/youtubeCategories/sports.png',
-        'Film & Animation': 'http://app.englishpatient.org/assets/images/youtubeCategories/filmanimation.png',
-        'Science & Technology': 'http://app.englishpatient.org/assets/images/youtubeCategories/sciencetechnology.png',
-        'Entertainment': 'http://app.englishpatient.org/assets/images/youtubeCategories/entertainment.png',
-        'Travel & Events': 'http://app.englishpatient.org/assets/images/youtubeCategories/travelevents.png',
-        'Music': 'http://app.englishpatient.org/assets/images/youtubeCategories/music.png',
-        'Pets & Animals': 'http://app.englishpatient.org/assets/images/youtubeCategories/petsanimals.png'
+        'Howto & Style': 'https://englishpatient.org/app/assets/images/youtubeCategories/howtostyle.png',
+        'Nonprofits & Activism': 'https://englishpatient.org/app/assets/images/youtubeCategories/nonprofitsactivism.png',
+        'Education': 'https://englishpatient.org/app/assets/images/youtubeCategories/education.png',
+        'People & Blogs': 'https://englishpatient.org/app/assets/images/youtubeCategories/peopleblogs.png',
+        'Shows': 'https://englishpatient.org/app/assets/images/youtubeCategories/shows.png',
+        'News & Politics': 'https://englishpatient.org/app/assets/images/youtubeCategories/newspolitics.png',
+        'Comedy': 'https://englishpatient.org/app/assets/images/youtubeCategories/comedy.png',
+        'Gaming': 'https://englishpatient.org/app/assets/images/youtubeCategories/gaming.png',
+        'Sports': 'https://englishpatient.org/app/assets/images/youtubeCategories/sports.png',
+        'Film & Animation': 'https://englishpatient.org/app/assets/images/youtubeCategories/filmanimation.png',
+        'Science & Technology': 'https://englishpatient.org/app/assets/images/youtubeCategories/sciencetechnology.png',
+        'Entertainment': 'https://englishpatient.org/app/assets/images/youtubeCategories/entertainment.png',
+        'Travel & Events': 'https://englishpatient.org/app/assets/images/youtubeCategories/travelevents.png',
+        'Music': 'https://englishpatient.org/app/assets/images/youtubeCategories/music.png',
+        'Pets & Animals': 'https://englishpatient.org/app/assets/images/youtubeCategories/petsanimals.png'
     },
 
     getAllCategories: function(){

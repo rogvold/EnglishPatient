@@ -22,6 +22,8 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var SelfLoadingNotificationsList = require('../../components/notification/SelfLoadingNotificationsList');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var NotificationsApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -79,6 +81,9 @@ var NotificationsApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
 

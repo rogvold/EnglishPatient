@@ -11,6 +11,7 @@ var AddTopicButton = React.createClass({
     getDefaultProps: function () {
         return {
             teacherId: undefined,
+            topicType: 'basic',
             onTopicCreated: function(topic){
 
             }
@@ -37,7 +38,7 @@ var AddTopicButton = React.createClass({
         },
 
         buttonPlaceholder: {
-            backgroundImage: 'url("http://app.englishpatient.org/assets/img/newTopic.jpg")',
+            backgroundImage: 'url("http://englishpatient.org/app/assets/img/newTopic.jpg")',
             display: 'inline-block',
             width: 160,
             height: 160,
@@ -97,6 +98,7 @@ var AddTopicButton = React.createClass({
                     <div>
 
                         <UpdateTopicDialog
+                            topicType={this.props.topicType}
                             onClose={this.onClose}
                             teacherId={this.props.teacherId}
                             onTopicCreated={this.onTopicCreated}

@@ -26,6 +26,7 @@ var UpdateTopicDialog = React.createClass({
             teacherId: undefined,
             topicId: undefined,
             dialogLevel: 10,
+            topicType: 'basic',
 
             onTopicUpdated: function(topic){
 
@@ -48,7 +49,8 @@ var UpdateTopicDialog = React.createClass({
 
     getInitialState: function () {
         return {
-            access: 'private'
+            access: 'private',
+            topicType: this.props.topicType
         }
     },
 
@@ -155,6 +157,7 @@ var UpdateTopicDialog = React.createClass({
         var description = this.state.description;
         var avatar = this.state.avatar;
         var access = this.state.access;
+        var topicType = this.state.topicType;
 
         var topicId = this.props.topicId;
 
@@ -165,7 +168,7 @@ var UpdateTopicDialog = React.createClass({
         });
 
         if (topicId == undefined){
-            TopicsMixin.createTopic(teacherId, name, description, avatar, access, function(topic){
+            TopicsMixin.createTopic(teacherId, name, description, avatar, access, topicType, function(topic){
                 this.setState({
                     loading: false
                 });

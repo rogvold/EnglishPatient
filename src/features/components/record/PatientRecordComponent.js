@@ -36,12 +36,21 @@ var PatientRecordComponent = React.createClass({
 
             },
             dt: 100,
-            serverBaseUrl: 'http://beta.englishpatient.org/audio/',
+            //serverBaseUrl: 'http://beta.englishpatient.org/audio/',
+            serverBaseUrl: 'https://www.englishpatientdrive.pw/audio/',
             //maxRecordTime: 10,
             maxRecordTime: 15,
             userAnswer: undefined,
             number: undefined
         }
+    },
+
+    webRTCisSupported: function(){
+        var f = window.webRTCSupported;
+        if (f == undefined){
+            return true;
+        }
+        return f;
     },
 
     getInitialState: function () {
@@ -126,6 +135,14 @@ var PatientRecordComponent = React.createClass({
         //    });
         //    return;
         //}
+        var supported = this.webRTCisSupported();
+        if (supported == false){
+            this.setState({
+                compatible: false
+            });
+            return;
+        }
+
 
         console.log('initWebRTC occured');
 
@@ -322,36 +339,48 @@ var PatientRecordComponent = React.createClass({
 
         var buttonMode = this.state.recording ? 'stop' : 'record';
 
+        var supported = this.webRTCisSupported();
+        console.log('WEB SUPPORTED = ' + supported);
 
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.buttonsPlaceholder}>
-                    <RecordStopButton mode={buttonMode} disabled={recordButtonDisabled} recordButtonName={'record'} stopButtonName={'stop'} recordClicked={this.startRecording} stopClicked={this.stopRecording} />
+                {supported == false ?
+                    <div style={{padding: 5}} >
+                        Ваш браузер не поддерживает запись звука.
+                        Пожалуйста, скачайте
+                        <a style={{marginLeft: 5}} target="_blank" href="https://www.google.com/chrome/browser/desktop/index.html">
+                            Google Chrome
+                        </a>.
+                    </div>
+                    :
+                    <div style={this.componentStyle.buttonsPlaceholder}>
+                        <RecordStopButton mode={buttonMode} disabled={recordButtonDisabled} recordButtonName={'record'} stopButtonName={'stop'} recordClicked={this.startRecording} stopClicked={this.stopRecording} />
 
-                    {this.state.recording ?
-                        <span>
+                        {this.state.recording ?
+                            <span>
                         <i className={'ui wait icon'}></i> {t} s
                         </span>
-                        : null}
+                            : null}
 
-                    {this.state.needToSave ?
-                        <div className="ui basic blue button" style={assign({}, this.state.saving ? this.componentStyle.disabled : {})} onClick={this.saveRecording} >
-                            {this.state.saving ?
-                                <span><i className={'ui cloud upload icon'}></i> saving... ({this.state.savingProgress} %)</span>
-                                :
-                                <span><i className={'ui save icon'}></i> save</span>
-                            }
-                        </div>
+                        {this.state.needToSave ?
+                            <div className="ui basic blue button" style={assign({}, this.state.saving ? this.componentStyle.disabled : {})} onClick={this.saveRecording} >
+                                {this.state.saving ?
+                                    <span><i className={'ui cloud upload icon'}></i> saving... ({this.state.savingProgress} %)</span>
+                                    :
+                                    <span><i className={'ui save icon'}></i> save</span>
+                                }
+                            </div>
 
-                        : null }
+                            : null }
 
-                    {this.state.saved ?
-                        <span> <i className={'ui checkmark icon'} ></i> saved</span>
-                        : null }
+                        {this.state.saved ?
+                            <span> <i className={'ui checkmark icon'} ></i> saved</span>
+                            : null }
 
+                    </div>
+                }
 
-                </div>
 
                 {this.state.stopped ?
                     <div style={this.componentStyle.audioPlayerPlaceholder}>

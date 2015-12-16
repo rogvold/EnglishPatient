@@ -11,7 +11,17 @@ var CardTypeSelectButton = React.createClass({
             onSelect: function(name){
                 console.log('selected Name = ' + name);
             },
-            activeName: undefined
+            activeName: undefined,
+            list: [{
+                name: 'speaking',
+                displayName: 'Voice recording'
+            },{
+                name: 'typing',
+                displayName: 'Typing'
+            },{
+                name: 'recognition',
+                displayName: 'Speech recognition'
+            }]
         }
     },
 
@@ -46,18 +56,7 @@ var CardTypeSelectButton = React.createClass({
     },
 
     render: function () {
-        var list = [{
-            name: 'speaking',
-            displayName: 'Voice recording'
-        },{
-            name: 'typing',
-            displayName: 'Typing'
-        },{
-            name: 'recognition',
-            displayName: 'Speech recognition'
-        }
-
-        ];
+        var list = this.props.list;
 
         return (
             <div style={this.componentStyle.placeholder}>

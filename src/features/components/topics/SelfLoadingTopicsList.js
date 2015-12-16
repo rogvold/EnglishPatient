@@ -17,7 +17,8 @@ var AddTopicButton = require('./AddTopicButton');
 var SelfLoadingTopicsList = React.createClass({
     getDefaultProps: function () {
         return {
-            teacherId: undefined
+            teacherId: undefined,
+            topicType: 'basic'
         }
     },
 
@@ -60,7 +61,8 @@ var SelfLoadingTopicsList = React.createClass({
         this.setState({
             loading: true
         });
-        TopicsMixin.loadTeacherTopics(teacherId, function(topics){
+        var topicType = this.props.topicType;
+        TopicsMixin.loadTeacherTopics(teacherId, topicType, function(topics){
             this.setState({
                 loading: false,
                 topics: topics
@@ -123,6 +125,7 @@ var SelfLoadingTopicsList = React.createClass({
                 <TopicsList topics={this.state.topics} onTopicClick={this.onTopicClick} />
 
                 <AddTopicButton
+                    topicType={this.props.topicType}
                     onTopicCreated={this.onTopicCreated}
                     teacherId={this.props.teacherId}
                     />

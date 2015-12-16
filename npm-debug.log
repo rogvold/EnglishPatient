@@ -2,256 +2,815 @@
 1 verbose cli [ '/usr/local/Cellar/iojs/2.5.0/bin/iojs',
 1 verbose cli   '/usr/local/bin/npm',
 1 verbose cli   'install',
-1 verbose cli   'react-scroll' ]
+1 verbose cli   'react-d3-components' ]
 2 info using npm@2.12.1
 3 info using node@v2.5.0
 4 verbose install initial load of /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json
 5 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/babelify/package.json
 6 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/browserify/package.json
-7 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/classnames/package.json
-8 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/flux/package.json
-9 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/fluxxor/package.json
-10 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp/package.json
-11 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-browserify/package.json
-12 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-jsx/package.json
-13 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-uglify/package.json
-14 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/history/package.json
-15 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/jquery/package.json
-16 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/legit-image/package.json
-17 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/moment/package.json
-18 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/object-assign/package.json
-19 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/parse/package.json
-20 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/promise/package.json
-21 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/quill/package.json
-22 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react/package.json
-23 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons/package.json
-24 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons-linked-state-mixin/package.json
-25 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons-pure-render-mixin/package.json
-26 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-card/package.json
-27 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-credit-card/package.json
-28 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-diff/package.json
-29 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-dom/package.json
-30 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-dropzone-component/package.json
-31 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-nested-router/package.json
-32 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-onclickoutside/package.json
-33 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-player/package.json
-34 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-popover/package.json
-35 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill/package.json
-36 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor/package.json
-37 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-router/package.json
-38 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-router-component/package.json
-39 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll/package.json
-40 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-select/package.json
-41 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-select-box/package.json
-42 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-sound/package.json
-43 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-speech/package.json
-44 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tabs/package.json
-45 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tagsinput/package.json
-46 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tooltip/package.json
-47 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-vimeo/package.json
-48 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/reactify/package.json
-49 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/recordrtc/package.json
-50 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/soundmanager2/package.json
-51 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/sweetalert-react/package.json
-52 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/tilting-image/package.json
-53 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/uglify-js/package.json
-54 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/vinyl-source-stream/package.json
-55 info package.json jquery@2.1.4 No license field.
-56 info package.json react-nested-router@0.3.6 No repository field.
-57 info package.json react-nested-router@0.3.6 No license field.
-58 info package.json react-sound@0.2.1 No repository field.
-59 info package.json uglify-js@2.4.24 license should be a valid SPDX license expression
-60 info package.json react-addons@0.9.0 No license field.
-61 info package.json react-addons-linked-state-mixin@0.14.0 No repository field.
-62 info package.json react-speech@0.2.11 No license field.
-63 info package.json soundmanager2@2.97.20150601-a license should be a valid SPDX license expression
-64 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json
-65 verbose install react-scroll is installed as 0.30.0
-66 silly cache add args [ 'react-scroll', null ]
-67 verbose cache add spec react-scroll
-68 silly cache add parsed spec { raw: 'react-scroll',
-68 silly cache add   scope: null,
-68 silly cache add   name: 'react-scroll',
-68 silly cache add   rawSpec: '',
-68 silly cache add   spec: '*',
-68 silly cache add   type: 'range' }
-69 silly addNamed react-scroll@*
-70 verbose addNamed "*" is a valid semver range for react-scroll
-71 silly addNameRange { name: 'react-scroll', range: '*', hasData: false }
-72 silly mapToRegistry name react-scroll
-73 silly mapToRegistry using default registry
-74 silly mapToRegistry registry https://registry.npmjs.org/
-75 silly mapToRegistry uri https://registry.npmjs.org/react-scroll
-76 verbose addNameRange registry:https://registry.npmjs.org/react-scroll not in flight; fetching
-77 verbose request uri https://registry.npmjs.org/react-scroll
-78 verbose request no auth needed
-79 info attempt registry request try #1 at 13:39:43
-80 verbose request id 6d1df109ed11c4ca
-81 verbose etag "4119DVMZBKAK56B7V5NGF94BV"
-82 http request GET https://registry.npmjs.org/react-scroll
-83 http 304 https://registry.npmjs.org/react-scroll
-84 silly get cb [ 304,
-84 silly get   { date: 'Sat, 28 Nov 2015 10:39:42 GMT',
-84 silly get     via: '1.1 varnish',
-84 silly get     'cache-control': 'max-age=60',
-84 silly get     etag: '"4119DVMZBKAK56B7V5NGF94BV"',
-84 silly get     age: '0',
-84 silly get     connection: 'keep-alive',
-84 silly get     'x-served-by': 'cache-ams4137-AMS',
-84 silly get     'x-cache': 'HIT',
-84 silly get     'x-cache-hits': '1',
-84 silly get     'x-timer': 'S1448707182.764736,VS0,VE481',
-84 silly get     vary: 'Accept' } ]
-85 verbose etag https://registry.npmjs.org/react-scroll from cache
-86 verbose get saving react-scroll to /Users/sabir/.npm/registry.npmjs.org/react-scroll/.cache.json
-87 silly addNameRange number 2 { name: 'react-scroll', range: '*', hasData: true }
-88 silly addNameRange versions [ 'react-scroll',
-88 silly addNameRange   [ '0.0.1',
-88 silly addNameRange     '0.1.0',
-88 silly addNameRange     '0.2.0',
-88 silly addNameRange     '0.3.0',
-88 silly addNameRange     '0.4.0',
-88 silly addNameRange     '0.5.0',
-88 silly addNameRange     '0.6.0',
-88 silly addNameRange     '0.7.0',
-88 silly addNameRange     '0.8.0',
-88 silly addNameRange     '0.9.0',
-88 silly addNameRange     '0.10.0',
-88 silly addNameRange     '0.11.0',
-88 silly addNameRange     '0.12.0',
-88 silly addNameRange     '0.13.0',
-88 silly addNameRange     '0.14.0',
-88 silly addNameRange     '0.15.0',
-88 silly addNameRange     '0.16.0',
-88 silly addNameRange     '0.17.0',
-88 silly addNameRange     '0.18.0',
-88 silly addNameRange     '0.19.0',
-88 silly addNameRange     '0.20.0',
-88 silly addNameRange     '0.21.0',
-88 silly addNameRange     '0.22.0',
-88 silly addNameRange     '0.23.0',
-88 silly addNameRange     '0.26.0',
-88 silly addNameRange     '0.27.0',
-88 silly addNameRange     '0.28.0',
-88 silly addNameRange     '0.29.0',
-88 silly addNameRange     '0.30.0' ] ]
-89 silly addNamed react-scroll@0.30.0
-90 verbose addNamed "0.30.0" is a plain semver version for react-scroll
-91 silly cache afterAdd react-scroll@0.30.0
-92 verbose afterAdd /Users/sabir/.npm/react-scroll/0.30.0/package/package.json not in flight; writing
-93 verbose afterAdd /Users/sabir/.npm/react-scroll/0.30.0/package/package.json written
-94 silly install resolved [ { name: 'react-scroll',
-94 silly install resolved     version: '0.30.0',
-94 silly install resolved     description: 'A scroll component for React.js',
-94 silly install resolved     main: 'lib',
-94 silly install resolved     repository:
-94 silly install resolved      { type: 'git',
-94 silly install resolved        url: 'git+https://github.com/fisshy/react-scroll.git' },
-94 silly install resolved     homepage: 'https://github.com/fisshy/react-scroll',
-94 silly install resolved     bugs: { url: 'https://github.com/fisshy/react-scroll/issues' },
-94 silly install resolved     authors: [ 'Joachim Karlsson' ],
-94 silly install resolved     license: 'MIT',
-94 silly install resolved     tags: [ 'react', 'scroll' ],
-94 silly install resolved     keywords:
-94 silly install resolved      [ 'react',
-94 silly install resolved        'react-component',
-94 silly install resolved        'scroll',
-94 silly install resolved        'scroller',
-94 silly install resolved        'scrolls',
-94 silly install resolved        'scrolling  ' ],
-94 silly install resolved     peerDependencies: { react: '>=0.13.0' },
-94 silly install resolved     _id: 'react-scroll@0.30.0',
-94 silly install resolved     scripts: {},
-94 silly install resolved     _shasum: 'ccf6fd210e1688b50fcf39320ca8f48c04d1d79c',
-94 silly install resolved     _from: 'react-scroll@*',
-94 silly install resolved     _npmVersion: '2.14.2',
-94 silly install resolved     _nodeVersion: '4.0.0',
-94 silly install resolved     _npmUser: { name: 'fisshy', email: 'Jockkee_@hotmail.com' },
-94 silly install resolved     dist:
-94 silly install resolved      { shasum: 'ccf6fd210e1688b50fcf39320ca8f48c04d1d79c',
-94 silly install resolved        tarball: 'http://registry.npmjs.org/react-scroll/-/react-scroll-0.30.0.tgz' },
-94 silly install resolved     maintainers: [ [Object] ],
-94 silly install resolved     directories: {},
-94 silly install resolved     _resolved: 'https://registry.npmjs.org/react-scroll/-/react-scroll-0.30.0.tgz',
-94 silly install resolved     readme: 'ERROR: No README data found!' } ]
-95 info install react-scroll@0.30.0 into /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
-96 info installOne react-scroll@0.30.0
-97 verbose installOne of react-scroll to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient not in flight; installing
-98 verbose lock using /Users/sabir/.npm/_locks/react-scroll-b2a5cb459c265831.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-99 silly install write writing react-scroll 0.30.0 to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-100 verbose unbuild node_modules/react-scroll
-101 info preuninstall react-scroll@0.30.0
-102 info uninstall react-scroll@0.30.0
-103 verbose unbuild rmStuff react-scroll@0.30.0 from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules
-104 info postuninstall react-scroll@0.30.0
-105 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll is being purged from base /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
-106 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-107 silly vacuum-fs purging /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-108 silly vacuum-fs quitting because other entries in /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules
-109 verbose tar unpack /Users/sabir/.npm/react-scroll/0.30.0/package.tgz
-110 verbose tar unpacking to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-111 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll is being purged
-112 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-113 silly gunzTarPerm modes [ '755', '644' ]
-114 silly gunzTarPerm extractEntry package.json
-115 silly gunzTarPerm extractEntry README.md
-116 silly gunzTarPerm extractEntry lib/index.js
-117 silly gunzTarPerm extractEntry lib/components/Button.js
-118 silly gunzTarPerm extractEntry lib/components/Element.js
-119 silly gunzTarPerm extractEntry lib/components/Link.js
-120 silly gunzTarPerm extractEntry lib/mixins/Helpers.js
-121 silly gunzTarPerm extractEntry lib/mixins/animate-scroll.js
-122 silly gunzTarPerm extractEntry lib/mixins/cancel-events.js
-123 silly gunzTarPerm extractEntry lib/mixins/scroll-spy.js
-124 silly gunzTarPerm extractEntry lib/mixins/scroller.js
-125 silly gunzTarPerm extractEntry lib/mixins/smooth.js
-126 verbose write writing to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll/package.json
-127 info preinstall react-scroll@0.30.0
-128 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll/package.json
-129 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll/package.json
-130 silly install resolved []
-131 verbose about to build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-132 info build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-133 info linkStuff react-scroll@0.30.0
-134 silly linkStuff react-scroll@0.30.0 has /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules as its parent node_modules
-135 verbose linkBins react-scroll@0.30.0
-136 verbose linkMans react-scroll@0.30.0
-137 verbose rebuildBundles react-scroll@0.30.0
-138 info install react-scroll@0.30.0
-139 info postinstall react-scroll@0.30.0
-140 verbose unlock done using /Users/sabir/.npm/_locks/react-scroll-b2a5cb459c265831.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll
-141 verbose validateInstall loading /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json for validation
-142 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/legit-image requires react@'^0.13.3' but will load
-142 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
-142 warn unmet dependency which is version 0.14.0
-143 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires quill@'^0.19.10' but will load
-143 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/quill,
-143 warn unmet dependency which is version 0.20.0
-144 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires classnames@'^1.2.0' but will load
-144 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/classnames,
-144 warn unmet dependency which is version 2.2.0
-145 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires react@'^0.13.0' but will load
-145 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
-145 warn unmet dependency which is version 0.14.0
-146 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/tilting-image requires react@'^0.13.3' but will load
-146 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
-146 warn unmet dependency which is version 0.14.0
-147 verbose stack Error: The package react does not satisfy its siblings' peerDependencies requirements!
-147 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
-147 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:267:7
-147 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
-147 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-147 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-147 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-147 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-147 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-147 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
-147 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
-148 verbose cwd /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
-149 error Darwin 15.0.0
-150 error argv "/usr/local/Cellar/iojs/2.5.0/bin/iojs" "/usr/local/bin/npm" "install" "react-scroll"
-151 error node v2.5.0
-152 error npm  v2.12.1
-153 error code EPEERINVALID
-154 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
-155 verbose exit [ 1, true ]
+7 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/chart.js/package.json
+8 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/classnames/package.json
+9 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/flux/package.json
+10 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/fluxxor/package.json
+11 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp/package.json
+12 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-browserify/package.json
+13 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-jsx/package.json
+14 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/gulp-uglify/package.json
+15 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/history/package.json
+16 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/jquery/package.json
+17 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/legit-image/package.json
+18 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/moment/package.json
+19 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/object-assign/package.json
+20 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/parse/package.json
+21 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/promise/package.json
+22 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/quill/package.json
+23 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react/package.json
+24 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons/package.json
+25 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons-linked-state-mixin/package.json
+26 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-addons-pure-render-mixin/package.json
+27 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-card/package.json
+28 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-chartist/package.json
+29 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-chartjs/package.json
+30 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-credit-card/package.json
+31 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/package.json
+32 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-diff/package.json
+33 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-dom/package.json
+34 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-dropzone-component/package.json
+35 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-nested-router/package.json
+36 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-onclickoutside/package.json
+37 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-player/package.json
+38 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-popover/package.json
+39 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill/package.json
+40 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor/package.json
+41 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-router/package.json
+42 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-router-component/package.json
+43 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-scroll/package.json
+44 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-select/package.json
+45 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-select-box/package.json
+46 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-sound/package.json
+47 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-speech/package.json
+48 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tabs/package.json
+49 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tagsinput/package.json
+50 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-tooltip/package.json
+51 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-vimeo/package.json
+52 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/reactify/package.json
+53 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/recordrtc/package.json
+54 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/soundmanager2/package.json
+55 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/sweetalert-react/package.json
+56 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/tilting-image/package.json
+57 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/uglify-js/package.json
+58 verbose installManyTop reading scoped package data from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/vinyl-source-stream/package.json
+59 info package.json jquery@2.1.4 No license field.
+60 info package.json react-nested-router@0.3.6 No repository field.
+61 info package.json react-nested-router@0.3.6 No license field.
+62 info package.json react-sound@0.2.1 No repository field.
+63 info package.json uglify-js@2.4.24 license should be a valid SPDX license expression
+64 info package.json chart.js@1.0.2 No license field.
+65 info package.json react-addons@0.9.0 No license field.
+66 info package.json react-addons-linked-state-mixin@0.14.0 No repository field.
+67 info package.json soundmanager2@2.97.20150601-a license should be a valid SPDX license expression
+68 info package.json react-speech@0.2.11 No license field.
+69 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json
+70 verbose install react-d3-components is installed as 0.6.0
+71 silly cache add args [ 'react-d3-components', null ]
+72 verbose cache add spec react-d3-components
+73 silly cache add parsed spec { raw: 'react-d3-components',
+73 silly cache add   scope: null,
+73 silly cache add   name: 'react-d3-components',
+73 silly cache add   rawSpec: '',
+73 silly cache add   spec: '*',
+73 silly cache add   type: 'range' }
+74 silly addNamed react-d3-components@*
+75 verbose addNamed "*" is a valid semver range for react-d3-components
+76 silly addNameRange { name: 'react-d3-components', range: '*', hasData: false }
+77 silly mapToRegistry name react-d3-components
+78 silly mapToRegistry using default registry
+79 silly mapToRegistry registry https://registry.npmjs.org/
+80 silly mapToRegistry uri https://registry.npmjs.org/react-d3-components
+81 verbose addNameRange registry:https://registry.npmjs.org/react-d3-components not in flight; fetching
+82 verbose request uri https://registry.npmjs.org/react-d3-components
+83 verbose request no auth needed
+84 info attempt registry request try #1 at 23:20:07
+85 verbose request id 9813db2c3053ef5b
+86 verbose etag "6RFD547LSDPHW5I07X5YLGEV1"
+87 http request GET https://registry.npmjs.org/react-d3-components
+88 http 304 https://registry.npmjs.org/react-d3-components
+89 silly get cb [ 304,
+89 silly get   { date: 'Mon, 14 Dec 2015 20:20:07 GMT',
+89 silly get     via: '1.1 varnish',
+89 silly get     'cache-control': 'max-age=300',
+89 silly get     etag: '"6RFD547LSDPHW5I07X5YLGEV1"',
+89 silly get     age: '1',
+89 silly get     connection: 'keep-alive',
+89 silly get     'x-served-by': 'cache-ams4145-AMS',
+89 silly get     'x-cache': 'HIT',
+89 silly get     'x-cache-hits': '1',
+89 silly get     'x-timer': 'S1450124407.427667,VS0,VE0',
+89 silly get     vary: 'Accept' } ]
+90 verbose etag https://registry.npmjs.org/react-d3-components from cache
+91 verbose get saving react-d3-components to /Users/sabir/.npm/registry.npmjs.org/react-d3-components/.cache.json
+92 silly addNameRange number 2 { name: 'react-d3-components', range: '*', hasData: true }
+93 silly addNameRange versions [ 'react-d3-components',
+93 silly addNameRange   [ '0.1.0',
+93 silly addNameRange     '0.2.0',
+93 silly addNameRange     '0.2.1',
+93 silly addNameRange     '0.2.2',
+93 silly addNameRange     '0.2.3',
+93 silly addNameRange     '0.3.0',
+93 silly addNameRange     '0.3.1',
+93 silly addNameRange     '0.3.2',
+93 silly addNameRange     '0.3.3',
+93 silly addNameRange     '0.3.4',
+93 silly addNameRange     '0.3.5',
+93 silly addNameRange     '0.3.6',
+93 silly addNameRange     '0.3.7',
+93 silly addNameRange     '0.4.1',
+93 silly addNameRange     '0.4.2',
+93 silly addNameRange     '0.4.3',
+93 silly addNameRange     '0.4.4',
+93 silly addNameRange     '0.4.5',
+93 silly addNameRange     '0.4.6',
+93 silly addNameRange     '0.4.7',
+93 silly addNameRange     '0.4.8',
+93 silly addNameRange     '0.5.0',
+93 silly addNameRange     '0.5.1',
+93 silly addNameRange     '0.5.2',
+93 silly addNameRange     '0.6.0' ] ]
+94 silly addNamed react-d3-components@0.6.0
+95 verbose addNamed "0.6.0" is a plain semver version for react-d3-components
+96 silly cache afterAdd react-d3-components@0.6.0
+97 verbose afterAdd /Users/sabir/.npm/react-d3-components/0.6.0/package/package.json not in flight; writing
+98 verbose afterAdd /Users/sabir/.npm/react-d3-components/0.6.0/package/package.json written
+99 silly install resolved [ { name: 'react-d3-components',
+99 silly install resolved     version: '0.6.0',
+99 silly install resolved     description: 'D3 components for React',
+99 silly install resolved     main: 'lib/index.js',
+99 silly install resolved     repository:
+99 silly install resolved      { type: 'git',
+99 silly install resolved        url: 'git+https://github.com/codesuki/react-d3-components.git' },
+99 silly install resolved     keywords:
+99 silly install resolved      [ 'd3',
+99 silly install resolved        'react',
+99 silly install resolved        'graph',
+99 silly install resolved        'visualization',
+99 silly install resolved        'chart',
+99 silly install resolved        'react-component' ],
+99 silly install resolved     author:
+99 silly install resolved      { name: 'Neri Marschik',
+99 silly install resolved        email: 'marschik_neri@cyberagent.co.jp',
+99 silly install resolved        url: 'http://www.cyberagent.co.jp' },
+99 silly install resolved     license: 'MIT',
+99 silly install resolved     bugs: { url: 'https://github.com/codesuki/react-d3-components/issues' },
+99 silly install resolved     homepage: 'https://github.com/codesuki/react-d3-components',
+99 silly install resolved     peerDependencies: { react: '^0.14.0' },
+99 silly install resolved     dependencies: { d3: '^3.5.3' },
+99 silly install resolved     devDependencies:
+99 silly install resolved      { babel: '^4.6.4',
+99 silly install resolved        'babel-core': '^4.7.16',
+99 silly install resolved        'babel-loader': '^4.2.0',
+99 silly install resolved        'eslint-plugin-react': '^3.4.2',
+99 silly install resolved        webpack: '^1.7.3' },
+99 silly install resolved     scripts:
+99 silly install resolved      { prepublish: 'babel -c -d ./lib ./src/',
+99 silly install resolved        postpublish: 'rm -r ./lib',
+99 silly install resolved        'build:js': 'webpack && webpack --config webpack.config.min.js' },
+99 silly install resolved     gitHead: '2bf7d96b7ea21c46c61a18d0a8230dd9c96c5dbd',
+99 silly install resolved     _id: 'react-d3-components@0.6.0',
+99 silly install resolved     _shasum: 'c06efbb4d883ffa8928ba96576593b632a3c349b',
+99 silly install resolved     _from: 'react-d3-components@*',
+99 silly install resolved     _npmVersion: '2.3.0',
+99 silly install resolved     _nodeVersion: '0.10.33',
+99 silly install resolved     _npmUser: { name: 'codesuki', email: 'marschik_neri@cyberagent.co.jp' },
+99 silly install resolved     maintainers: [ [Object] ],
+99 silly install resolved     dist:
+99 silly install resolved      { shasum: 'c06efbb4d883ffa8928ba96576593b632a3c349b',
+99 silly install resolved        tarball: 'http://registry.npmjs.org/react-d3-components/-/react-d3-components-0.6.0.tgz' },
+99 silly install resolved     directories: {},
+99 silly install resolved     _resolved: 'https://registry.npmjs.org/react-d3-components/-/react-d3-components-0.6.0.tgz',
+99 silly install resolved     readme: 'ERROR: No README data found!' } ]
+100 info install react-d3-components@0.6.0 into /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+101 info installOne react-d3-components@0.6.0
+102 verbose installOne of react-d3-components to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient not in flight; installing
+103 verbose lock using /Users/sabir/.npm/_locks/react-d3-components-2830e3259295a77e.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+104 silly install write writing react-d3-components 0.6.0 to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+105 verbose unbuild node_modules/react-d3-components
+106 info preuninstall react-d3-components@0.6.0
+107 info uninstall react-d3-components@0.6.0
+108 verbose unbuild rmStuff react-d3-components@0.6.0 from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules
+109 info postuninstall react-d3-components@0.6.0
+110 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components is being purged from base /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+111 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+112 silly vacuum-fs purging /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+113 silly vacuum-fs quitting because other entries in /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules
+114 verbose tar unpack /Users/sabir/.npm/react-d3-components/0.6.0/package.tgz
+115 verbose tar unpacking to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+116 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components is being purged
+117 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+118 silly gunzTarPerm modes [ '755', '644' ]
+119 silly gunzTarPerm extractEntry package.json
+120 silly gunzTarPerm extractEntry .npmignore
+121 silly gunzTarPerm extractEntry README.md
+122 silly gunzTarPerm extractEntry LICENSE
+123 silly gunzTarPerm extractEntry webpack.config.min.js
+124 silly gunzTarPerm extractEntry webpack.config.js
+125 silly gunzTarPerm extractEntry LICENSE.d3
+126 silly gunzTarPerm extractEntry .eslintrc
+127 silly gunzTarPerm extractEntry lib/AccessorMixin.js
+128 silly gunzTarPerm extractEntry lib/Chart.js
+129 silly gunzTarPerm extractEntry lib/DefaultPropsMixin.js
+130 silly gunzTarPerm extractEntry lib/DefaultScalesMixin.js
+131 silly gunzTarPerm extractEntry lib/Brush.js
+132 silly gunzTarPerm extractEntry lib/LineChart.js
+133 silly gunzTarPerm extractEntry lib/Path.js
+134 silly gunzTarPerm extractEntry lib/PieChart.js
+135 silly gunzTarPerm extractEntry lib/ScatterPlot.js
+136 silly gunzTarPerm extractEntry lib/StackAccessorMixin.js
+137 silly gunzTarPerm extractEntry lib/BarChart.js
+138 silly gunzTarPerm extractEntry lib/StackDataMixin.js
+139 silly gunzTarPerm extractEntry lib/Bar.js
+140 silly gunzTarPerm extractEntry lib/Tooltip.js
+141 silly gunzTarPerm extractEntry lib/Axis.js
+142 silly gunzTarPerm extractEntry lib/TooltipMixin.js
+143 silly gunzTarPerm extractEntry lib/ArrayifyMixin.js
+144 silly gunzTarPerm extractEntry lib/Waveform.js
+145 silly gunzTarPerm extractEntry lib/AreaChart.js
+146 silly gunzTarPerm extractEntry lib/index.js
+147 silly gunzTarPerm extractEntry lib/HeightWidthMixin.js
+148 silly gunzTarPerm extractEntry .editorconfig
+149 silly gunzTarPerm extractEntry dist/react-d3-components.js
+150 silly gunzTarPerm extractEntry dist/react-d3-components.min.js
+151 silly gunzTarPerm extractEntry dist/react-d3-components.js.map
+152 verbose write writing to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/package.json
+153 info preinstall react-d3-components@0.6.0
+154 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/package.json
+155 silly prepareForInstallMany adding d3@^3.5.3 from react-d3-components dependencies
+156 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/package.json
+157 silly cache add args [ 'd3@^3.5.3', null ]
+158 verbose cache add spec d3@^3.5.3
+159 silly cache add parsed spec { raw: 'd3@^3.5.3',
+159 silly cache add   scope: null,
+159 silly cache add   name: 'd3',
+159 silly cache add   rawSpec: '^3.5.3',
+159 silly cache add   spec: '>=3.5.3 <4.0.0',
+159 silly cache add   type: 'range' }
+160 silly addNamed d3@>=3.5.3 <4.0.0
+161 verbose addNamed ">=3.5.3 <4.0.0" is a valid semver range for d3
+162 silly addNameRange { name: 'd3', range: '>=3.5.3 <4.0.0', hasData: false }
+163 silly mapToRegistry name d3
+164 silly mapToRegistry using default registry
+165 silly mapToRegistry registry https://registry.npmjs.org/
+166 silly mapToRegistry uri https://registry.npmjs.org/d3
+167 verbose addNameRange registry:https://registry.npmjs.org/d3 not in flight; fetching
+168 verbose request uri https://registry.npmjs.org/d3
+169 verbose request no auth needed
+170 info attempt registry request try #1 at 23:20:07
+171 verbose etag "E29LR9CXZGVJU4YNR0XDU1AS3"
+172 http request GET https://registry.npmjs.org/d3
+173 http 304 https://registry.npmjs.org/d3
+174 silly get cb [ 304,
+174 silly get   { date: 'Mon, 14 Dec 2015 20:20:07 GMT',
+174 silly get     via: '1.1 varnish',
+174 silly get     'cache-control': 'max-age=300',
+174 silly get     etag: '"E29LR9CXZGVJU4YNR0XDU1AS3"',
+174 silly get     age: '0',
+174 silly get     connection: 'keep-alive',
+174 silly get     'x-served-by': 'cache-ams4125-AMS',
+174 silly get     'x-cache': 'HIT',
+174 silly get     'x-cache-hits': '1',
+174 silly get     'x-timer': 'S1450124407.844167,VS0,VE402',
+174 silly get     vary: 'Accept' } ]
+175 verbose etag https://registry.npmjs.org/d3 from cache
+176 verbose get saving d3 to /Users/sabir/.npm/registry.npmjs.org/d3/.cache.json
+177 silly addNameRange number 2 { name: 'd3', range: '>=3.5.3 <4.0.0', hasData: true }
+178 silly addNameRange versions [ 'd3',
+178 silly addNameRange   [ '1.29.5',
+178 silly addNameRange     '2.1.3',
+178 silly addNameRange     '2.2.1',
+178 silly addNameRange     '2.3.0',
+178 silly addNameRange     '2.3.2',
+178 silly addNameRange     '2.3.3',
+178 silly addNameRange     '2.3.4',
+178 silly addNameRange     '2.4.0',
+178 silly addNameRange     '2.4.1',
+178 silly addNameRange     '2.4.2',
+178 silly addNameRange     '2.5.1',
+178 silly addNameRange     '2.5.2',
+178 silly addNameRange     '2.6.0',
+178 silly addNameRange     '2.7.0',
+178 silly addNameRange     '2.7.2',
+178 silly addNameRange     '2.7.3',
+178 silly addNameRange     '2.7.4',
+178 silly addNameRange     '2.7.5',
+178 silly addNameRange     '2.8.0',
+178 silly addNameRange     '2.8.1',
+178 silly addNameRange     '2.9.0',
+178 silly addNameRange     '2.9.1',
+178 silly addNameRange     '2.9.2',
+178 silly addNameRange     '2.9.3',
+178 silly addNameRange     '2.9.4',
+178 silly addNameRange     '2.9.6',
+178 silly addNameRange     '2.9.7',
+178 silly addNameRange     '2.10.0',
+178 silly addNameRange     '2.10.1',
+178 silly addNameRange     '2.10.3',
+178 silly addNameRange     '3.0.0',
+178 silly addNameRange     '3.0.1',
+178 silly addNameRange     '3.0.2',
+178 silly addNameRange     '3.0.3',
+178 silly addNameRange     '3.0.4',
+178 silly addNameRange     '3.0.5',
+178 silly addNameRange     '3.0.6',
+178 silly addNameRange     '3.0.7',
+178 silly addNameRange     '3.0.8',
+178 silly addNameRange     '3.1.0',
+178 silly addNameRange     '3.1.1',
+178 silly addNameRange     '3.1.2',
+178 silly addNameRange     '3.1.3',
+178 silly addNameRange     '3.1.4',
+178 silly addNameRange     '3.1.5',
+178 silly addNameRange     '3.1.6',
+178 silly addNameRange     '3.1.7',
+178 silly addNameRange     '3.1.8',
+178 silly addNameRange     '3.1.9',
+178 silly addNameRange     '3.1.10',
+178 silly addNameRange     '3.2.0',
+178 silly addNameRange     '3.2.1',
+178 silly addNameRange     '3.2.2',
+178 silly addNameRange     '3.2.3',
+178 silly addNameRange     '3.2.4',
+178 silly addNameRange     '3.2.5',
+178 silly addNameRange     '3.2.6',
+178 silly addNameRange     '3.2.7',
+178 silly addNameRange     '3.2.8',
+178 silly addNameRange     '3.3.0',
+178 silly addNameRange     '3.3.1',
+178 silly addNameRange     '3.3.2',
+178 silly addNameRange     '3.3.3',
+178 silly addNameRange     '3.3.4',
+178 silly addNameRange     '3.3.5',
+178 silly addNameRange     '3.3.6',
+178 silly addNameRange     '3.3.7',
+178 silly addNameRange     '3.3.8',
+178 silly addNameRange     '3.3.9',
+178 silly addNameRange     '3.3.10',
+178 silly addNameRange     '3.3.11',
+178 silly addNameRange     '3.3.12',
+178 silly addNameRange     '3.3.13',
+178 silly addNameRange     '3.4.0',
+178 silly addNameRange     '3.4.1',
+178 silly addNameRange     '3.4.2',
+178 silly addNameRange     '3.4.3',
+178 silly addNameRange     '3.4.4',
+178 silly addNameRange     '3.4.5',
+178 silly addNameRange     '3.4.6',
+178 silly addNameRange     '3.4.7',
+178 silly addNameRange     '3.4.8',
+178 silly addNameRange     '3.4.9',
+178 silly addNameRange     '3.4.10',
+178 silly addNameRange     '3.4.11',
+178 silly addNameRange     '3.4.12',
+178 silly addNameRange     '3.4.13',
+178 silly addNameRange     '3.5.0',
+178 silly addNameRange     '3.5.1',
+178 silly addNameRange     '3.5.2',
+178 silly addNameRange     '3.5.3',
+178 silly addNameRange     '3.5.4',
+178 silly addNameRange     '3.5.5',
+178 silly addNameRange     '3.5.6',
+178 silly addNameRange     '3.5.7',
+178 silly addNameRange     '3.5.8',
+178 silly addNameRange     '3.5.9',
+178 silly addNameRange     '3.5.10',
+178 silly addNameRange     '3.5.11' ] ]
+179 silly addNamed d3@3.5.11
+180 verbose addNamed "3.5.11" is a plain semver version for d3
+181 silly cache afterAdd d3@3.5.11
+182 verbose afterAdd /Users/sabir/.npm/d3/3.5.11/package/package.json not in flight; writing
+183 verbose afterAdd /Users/sabir/.npm/d3/3.5.11/package/package.json written
+184 silly install resolved [ { name: 'd3',
+184 silly install resolved     version: '3.5.11',
+184 silly install resolved     description: 'A JavaScript visualization library for HTML and SVG.',
+184 silly install resolved     keywords: [ 'dom', 'w3c', 'visualization', 'svg', 'animation', 'canvas' ],
+184 silly install resolved     homepage: 'http://d3js.org',
+184 silly install resolved     author: { name: 'Mike Bostock', url: 'http://bost.ocks.org/mike' },
+184 silly install resolved     contributors: [ [Object] ],
+184 silly install resolved     repository: { type: 'git', url: 'git+https://github.com/mbostock/d3.git' },
+184 silly install resolved     main: 'd3.js',
+184 silly install resolved     browserify: 'd3.js',
+184 silly install resolved     jspm:
+184 silly install resolved      { main: 'd3',
+184 silly install resolved        shim: [Object],
+184 silly install resolved        files: [Object],
+184 silly install resolved        buildConfig: [Object] },
+184 silly install resolved     jam: { main: 'd3.js', shim: [Object] },
+184 silly install resolved     spm: { main: 'd3.js' },
+184 silly install resolved     devDependencies:
+184 silly install resolved      { jsdom: '3',
+184 silly install resolved        seedrandom: '2',
+184 silly install resolved        smash: '0.0',
+184 silly install resolved        'uglify-js': '2.6.1',
+184 silly install resolved        vows: '0.8' },
+184 silly install resolved     scripts: { test: 'vows; echo' },
+184 silly install resolved     license: 'BSD-3-Clause',
+184 silly install resolved     gitHead: 'e7652fc14913b512ff619875162ea23e7251b9d6',
+184 silly install resolved     bugs: { url: 'https://github.com/mbostock/d3/issues' },
+184 silly install resolved     _id: 'd3@3.5.11',
+184 silly install resolved     _shasum: 'd130750eed0554db70e8432102f920a12407b69c',
+184 silly install resolved     _from: 'd3@>=3.5.3 <4.0.0',
+184 silly install resolved     _npmVersion: '2.11.3',
+184 silly install resolved     _nodeVersion: '0.12.7',
+184 silly install resolved     _npmUser: { name: 'mbostock', email: 'mbostock@gmail.com' },
+184 silly install resolved     maintainers: [ [Object], [Object] ],
+184 silly install resolved     dist:
+184 silly install resolved      { shasum: 'd130750eed0554db70e8432102f920a12407b69c',
+184 silly install resolved        tarball: 'http://registry.npmjs.org/d3/-/d3-3.5.11.tgz' },
+184 silly install resolved     directories: {},
+184 silly install resolved     _resolved: 'https://registry.npmjs.org/d3/-/d3-3.5.11.tgz',
+184 silly install resolved     readme: 'ERROR: No README data found!' } ]
+185 info install d3@3.5.11 into /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+186 info installOne d3@3.5.11
+187 verbose installOne of d3 to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components not in flight; installing
+188 verbose lock using /Users/sabir/.npm/_locks/d3-5f7e35ec94ba087b.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+189 silly install write writing d3 3.5.11 to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+190 verbose unbuild node_modules/react-d3-components/node_modules/d3
+191 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3 is being purged from base /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+192 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+193 verbose tar unpack /Users/sabir/.npm/d3/3.5.11/package.tgz
+194 verbose tar unpacking to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+195 silly gentlyRm /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3 is being purged
+196 verbose gentlyRm don't care about contents; nuking /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+197 silly gunzTarPerm modes [ '755', '644' ]
+198 silly gunzTarPerm extractEntry package.json
+199 silly gunzTarPerm extractEntry .npmignore
+200 silly gunzTarPerm extractEntry README.md
+201 silly gunzTarPerm extractEntry LICENSE
+202 silly gunzTarPerm extractEntry d3.js
+203 silly gunzTarPerm extractEntry d3.min.js
+204 silly gunzTarPerm extractEntry package.js
+205 silly gunzTarPerm extractEntry bower.json
+206 silly gunzTarPerm extractEntry bin/component
+207 silly gunzTarPerm extractEntry bin/meteor
+208 silly gunzTarPerm extractEntry bin/start
+209 silly gunzTarPerm extractEntry bin/uglify
+210 silly gunzTarPerm extractEntry component.json
+211 silly gunzTarPerm extractEntry composer.json
+212 silly gunzTarPerm extractEntry .spmignore
+213 silly gunzTarPerm extractEntry CONTRIBUTING.md
+214 silly gunzTarPerm extractEntry src/d3.js
+215 silly gunzTarPerm extractEntry src/end.js
+216 silly gunzTarPerm extractEntry src/start.js
+217 silly gunzTarPerm extractEntry src/geom/clip-line.js
+218 silly gunzTarPerm extractEntry src/geom/delaunay.js
+219 silly gunzTarPerm extractEntry src/geom/geom.js
+220 silly gunzTarPerm extractEntry src/geom/hull.js
+221 silly gunzTarPerm extractEntry src/geom/index.js
+222 silly gunzTarPerm extractEntry src/geom/point.js
+223 silly gunzTarPerm extractEntry src/geom/polygon.js
+224 silly gunzTarPerm extractEntry src/geom/quadtree.js
+225 silly gunzTarPerm extractEntry src/geom/voronoi.js
+226 silly gunzTarPerm extractEntry src/geom/voronoi/beach.js
+227 silly gunzTarPerm extractEntry src/geom/voronoi/cell.js
+228 silly gunzTarPerm extractEntry src/geom/voronoi/circle.js
+229 silly gunzTarPerm extractEntry src/geom/voronoi/clip.js
+230 silly gunzTarPerm extractEntry src/geom/voronoi/edge.js
+231 silly gunzTarPerm extractEntry src/geom/voronoi/index.js
+232 silly gunzTarPerm extractEntry src/geom/voronoi/red-black.js
+233 silly gunzTarPerm extractEntry src/core/array.js
+234 silly gunzTarPerm extractEntry src/core/identity.js
+235 silly gunzTarPerm extractEntry src/core/index.js
+236 silly gunzTarPerm extractEntry src/core/noop.js
+237 silly gunzTarPerm extractEntry src/core/functor.js
+238 silly gunzTarPerm extractEntry src/core/rebind.js
+239 silly gunzTarPerm extractEntry src/core/source.js
+240 silly gunzTarPerm extractEntry src/core/subclass.js
+241 silly gunzTarPerm extractEntry src/core/target.js
+242 silly gunzTarPerm extractEntry src/core/true.js
+243 silly gunzTarPerm extractEntry src/core/document.js
+244 silly gunzTarPerm extractEntry src/core/vendor.js
+245 silly gunzTarPerm extractEntry src/core/class.js
+246 silly gunzTarPerm extractEntry src/core/zero.js
+247 silly gunzTarPerm extractEntry src/core/ns.js
+248 silly gunzTarPerm extractEntry src/arrays/ascending.js
+249 silly gunzTarPerm extractEntry src/arrays/max.js
+250 silly gunzTarPerm extractEntry src/arrays/mean.js
+251 silly gunzTarPerm extractEntry src/arrays/median.js
+252 silly gunzTarPerm extractEntry src/arrays/merge.js
+253 silly gunzTarPerm extractEntry src/arrays/map.js
+254 silly gunzTarPerm extractEntry src/arrays/nest.js
+255 silly gunzTarPerm extractEntry src/arrays/pairs.js
+256 silly gunzTarPerm extractEntry src/arrays/permute.js
+257 silly gunzTarPerm extractEntry src/arrays/quantile.js
+258 silly gunzTarPerm extractEntry src/arrays/range.js
+259 silly gunzTarPerm extractEntry src/arrays/keys.js
+260 silly gunzTarPerm extractEntry src/arrays/set.js
+261 silly gunzTarPerm extractEntry src/arrays/index.js
+262 silly gunzTarPerm extractEntry src/arrays/shuffle.js
+263 silly gunzTarPerm extractEntry src/arrays/extent.js
+264 silly gunzTarPerm extractEntry src/arrays/sum.js
+265 silly gunzTarPerm extractEntry src/arrays/entries.js
+266 silly gunzTarPerm extractEntry src/arrays/transpose.js
+267 silly gunzTarPerm extractEntry src/arrays/deviation.js
+268 silly gunzTarPerm extractEntry src/arrays/values.js
+269 silly gunzTarPerm extractEntry src/arrays/descending.js
+270 silly gunzTarPerm extractEntry src/arrays/variance.js
+271 silly gunzTarPerm extractEntry src/arrays/bisect.js
+272 silly gunzTarPerm extractEntry src/arrays/zip.js
+273 silly gunzTarPerm extractEntry src/arrays/min.js
+274 silly gunzTarPerm extractEntry src/dsv/csv.js
+275 silly gunzTarPerm extractEntry src/dsv/dsv.js
+276 silly gunzTarPerm extractEntry src/dsv/index.js
+277 silly gunzTarPerm extractEntry src/dsv/tsv.js
+278 silly gunzTarPerm extractEntry src/color/color.js
+279 silly gunzTarPerm extractEntry src/color/hcl.js
+280 silly gunzTarPerm extractEntry src/color/hsl.js
+281 silly gunzTarPerm extractEntry src/color/index.js
+282 silly gunzTarPerm extractEntry src/color/lab.js
+283 silly gunzTarPerm extractEntry src/color/rgb.js
+284 silly gunzTarPerm extractEntry src/color/xyz.js
+285 silly gunzTarPerm extractEntry src/event/dispatch.js
+286 silly gunzTarPerm extractEntry src/event/drag.js
+287 silly gunzTarPerm extractEntry src/event/event.js
+288 silly gunzTarPerm extractEntry src/event/index.js
+289 silly gunzTarPerm extractEntry src/event/mouse.js
+290 silly gunzTarPerm extractEntry src/event/timer.js
+291 silly gunzTarPerm extractEntry src/event/touch.js
+292 silly gunzTarPerm extractEntry src/event/touches.js
+293 silly gunzTarPerm extractEntry src/format/collapse.js
+294 silly gunzTarPerm extractEntry src/format/format.js
+295 silly gunzTarPerm extractEntry src/format/formatPrefix.js
+296 silly gunzTarPerm extractEntry src/format/index.js
+297 silly gunzTarPerm extractEntry src/format/precision.js
+298 silly gunzTarPerm extractEntry src/format/requote.js
+299 silly gunzTarPerm extractEntry src/format/round.js
+300 silly gunzTarPerm extractEntry src/geo/albers-usa.js
+301 silly gunzTarPerm extractEntry src/geo/conic.js
+302 silly gunzTarPerm extractEntry src/geo/distance.js
+303 silly gunzTarPerm extractEntry src/geo/equirectangular.js
+304 silly gunzTarPerm extractEntry src/geo/geo.js
+305 silly gunzTarPerm extractEntry src/geo/conic-equidistant.js
+306 silly gunzTarPerm extractEntry src/geo/graticule.js
+307 silly gunzTarPerm extractEntry src/geo/greatArc.js
+308 silly gunzTarPerm extractEntry src/geo/index.js
+309 silly gunzTarPerm extractEntry src/geo/interpolate.js
+310 silly gunzTarPerm extractEntry src/geo/length.js
+311 silly gunzTarPerm extractEntry src/geo/conic-equal-area.js
+312 silly gunzTarPerm extractEntry src/geo/mercator.js
+313 silly gunzTarPerm extractEntry src/geo/conic-conformal.js
+314 silly gunzTarPerm extractEntry src/geo/orthographic.js
+315 silly gunzTarPerm extractEntry src/geo/compose.js
+316 silly gunzTarPerm extractEntry src/geo/path-area.js
+317 silly gunzTarPerm extractEntry src/geo/clip.js
+318 silly gunzTarPerm extractEntry src/geo/path-bounds.js
+319 silly gunzTarPerm extractEntry src/geo/clip-polygon.js
+320 silly gunzTarPerm extractEntry src/geo/path-buffer.js
+321 silly gunzTarPerm extractEntry src/geo/clip-extent.js
+322 silly gunzTarPerm extractEntry src/geo/path-centroid.js
+323 silly gunzTarPerm extractEntry src/geo/clip-circle.js
+324 silly gunzTarPerm extractEntry src/geo/path-context.js
+325 silly gunzTarPerm extractEntry src/geo/clip-antimeridian.js
+326 silly gunzTarPerm extractEntry src/geo/path.js
+327 silly gunzTarPerm extractEntry src/geo/circle.js
+328 silly gunzTarPerm extractEntry src/geo/point-in-polygon.js
+329 silly gunzTarPerm extractEntry src/geo/centroid.js
+330 silly gunzTarPerm extractEntry src/geo/projection.js
+331 silly gunzTarPerm extractEntry src/geo/cartesian.js
+332 silly gunzTarPerm extractEntry src/geo/resample.js
+333 silly gunzTarPerm extractEntry src/geo/bounds.js
+334 silly gunzTarPerm extractEntry src/geo/rotation.js
+335 silly gunzTarPerm extractEntry src/geo/azimuthal.js
+336 silly gunzTarPerm extractEntry src/geo/spherical.js
+337 silly gunzTarPerm extractEntry src/geo/azimuthal-equidistant.js
+338 silly gunzTarPerm extractEntry src/geo/stereographic.js
+339 silly gunzTarPerm extractEntry src/geo/azimuthal-equal-area.js
+340 silly gunzTarPerm extractEntry src/geo/stream.js
+341 silly gunzTarPerm extractEntry src/geo/area.js
+342 silly gunzTarPerm extractEntry src/geo/transform.js
+343 silly gunzTarPerm extractEntry src/geo/albers.js
+344 silly gunzTarPerm extractEntry src/geo/transverse-mercator.js
+345 silly gunzTarPerm extractEntry src/geo/gnomonic.js
+346 silly gunzTarPerm extractEntry src/behavior/behavior.js
+347 silly gunzTarPerm extractEntry src/behavior/drag.js
+348 silly gunzTarPerm extractEntry src/behavior/index.js
+349 silly gunzTarPerm extractEntry src/behavior/zoom.js
+350 silly gunzTarPerm extractEntry src/interpolate/array.js
+351 silly gunzTarPerm extractEntry src/interpolate/index.js
+352 silly gunzTarPerm extractEntry src/interpolate/interpolate.js
+353 silly gunzTarPerm extractEntry src/interpolate/lab.js
+354 silly gunzTarPerm extractEntry src/interpolate/hsl.js
+355 silly gunzTarPerm extractEntry src/interpolate/object.js
+356 silly gunzTarPerm extractEntry src/interpolate/rgb.js
+357 silly gunzTarPerm extractEntry src/interpolate/round.js
+358 silly gunzTarPerm extractEntry src/interpolate/string.js
+359 silly gunzTarPerm extractEntry src/interpolate/transform.js
+360 silly gunzTarPerm extractEntry src/interpolate/hcl.js
+361 silly gunzTarPerm extractEntry src/interpolate/uninterpolate.js
+362 silly gunzTarPerm extractEntry src/interpolate/ease.js
+363 silly gunzTarPerm extractEntry src/interpolate/zoom.js
+364 silly gunzTarPerm extractEntry src/interpolate/number.js
+365 silly gunzTarPerm extractEntry src/layout/bundle.js
+366 silly gunzTarPerm extractEntry src/layout/force.js
+367 silly gunzTarPerm extractEntry src/layout/hierarchy.js
+368 silly gunzTarPerm extractEntry src/layout/histogram.js
+369 silly gunzTarPerm extractEntry src/layout/index.js
+370 silly gunzTarPerm extractEntry src/layout/cluster.js
+371 silly gunzTarPerm extractEntry src/layout/pack.js
+372 silly gunzTarPerm extractEntry src/layout/partition.js
+373 silly gunzTarPerm extractEntry src/layout/pie.js
+374 silly gunzTarPerm extractEntry src/layout/stack.js
+375 silly gunzTarPerm extractEntry src/layout/tree.js
+376 silly gunzTarPerm extractEntry src/layout/chord.js
+377 silly gunzTarPerm extractEntry src/layout/treemap.js
+378 silly gunzTarPerm extractEntry src/layout/layout.js
+379 silly gunzTarPerm extractEntry src/locale/ca-ES.js
+380 silly gunzTarPerm extractEntry src/locale/fr-FR.js
+381 silly gunzTarPerm extractEntry src/locale/he-IL.js
+382 silly gunzTarPerm extractEntry src/locale/hu-HU.js
+383 silly gunzTarPerm extractEntry src/locale/it-IT.js
+384 silly gunzTarPerm extractEntry src/locale/fr-CA.js
+385 silly gunzTarPerm extractEntry src/locale/ko-KR.js
+386 silly gunzTarPerm extractEntry src/locale/locale.js
+387 silly gunzTarPerm extractEntry src/locale/mk-MK.js
+388 silly gunzTarPerm extractEntry src/locale/nl-NL.js
+389 silly gunzTarPerm extractEntry src/locale/number-format.js
+390 silly gunzTarPerm extractEntry src/locale/fi-FI.js
+391 silly gunzTarPerm extractEntry src/locale/pl-PL.js
+392 silly gunzTarPerm extractEntry src/locale/es-ES.js
+393 silly gunzTarPerm extractEntry src/locale/pt-BR.js
+394 silly gunzTarPerm extractEntry src/locale/en-US.js
+395 silly gunzTarPerm extractEntry src/locale/ru-RU.js
+396 silly gunzTarPerm extractEntry src/locale/en-GB.js
+397 silly gunzTarPerm extractEntry src/locale/sv-SE.js
+398 silly gunzTarPerm extractEntry src/locale/en-CA.js
+399 silly gunzTarPerm extractEntry src/locale/time-format.js
+400 silly gunzTarPerm extractEntry src/locale/de-DE.js
+401 silly gunzTarPerm extractEntry src/locale/time-scale.js
+402 silly gunzTarPerm extractEntry src/locale/de-CH.js
+403 silly gunzTarPerm extractEntry src/locale/zh-CN.js
+404 silly gunzTarPerm extractEntry src/locale/ja-JP.js
+405 silly gunzTarPerm extractEntry src/math/abs.js
+406 silly gunzTarPerm extractEntry src/math/adder.js
+407 silly gunzTarPerm extractEntry src/math/index.js
+408 silly gunzTarPerm extractEntry src/math/number.js
+409 silly gunzTarPerm extractEntry src/math/random.js
+410 silly gunzTarPerm extractEntry src/math/transform.js
+411 silly gunzTarPerm extractEntry src/math/trigonometry.js
+412 silly gunzTarPerm extractEntry src/scale/bilinear.js
+413 silly gunzTarPerm extractEntry src/scale/linear.js
+414 silly gunzTarPerm extractEntry src/scale/log.js
+415 silly gunzTarPerm extractEntry src/scale/nice.js
+416 silly gunzTarPerm extractEntry src/scale/index.js
+417 silly gunzTarPerm extractEntry src/scale/polylinear.js
+418 silly gunzTarPerm extractEntry src/scale/pow.js
+419 silly gunzTarPerm extractEntry src/scale/quantile.js
+420 silly gunzTarPerm extractEntry src/scale/quantize.js
+421 silly gunzTarPerm extractEntry src/scale/scale.js
+422 silly gunzTarPerm extractEntry src/scale/identity.js
+423 silly gunzTarPerm extractEntry src/scale/sqrt.js
+424 silly gunzTarPerm extractEntry src/scale/category.js
+425 silly gunzTarPerm extractEntry src/scale/threshold.js
+426 silly gunzTarPerm extractEntry src/scale/ordinal.js
+427 silly gunzTarPerm extractEntry src/selection/append.js
+428 silly gunzTarPerm extractEntry src/selection/filter.js
+429 silly gunzTarPerm extractEntry src/selection/html.js
+430 silly gunzTarPerm extractEntry src/selection/index.js
+431 silly gunzTarPerm extractEntry src/selection/enter.js
+432 silly gunzTarPerm extractEntry src/selection/interrupt.js
+433 silly gunzTarPerm extractEntry src/selection/node.js
+434 silly gunzTarPerm extractEntry src/selection/on.js
+435 silly gunzTarPerm extractEntry src/selection/order.js
+436 silly gunzTarPerm extractEntry src/selection/property.js
+437 silly gunzTarPerm extractEntry src/selection/enter-select.js
+438 silly gunzTarPerm extractEntry src/selection/remove.js
+439 silly gunzTarPerm extractEntry src/selection/enter-insert.js
+440 silly gunzTarPerm extractEntry src/selection/select.js
+441 silly gunzTarPerm extractEntry src/selection/empty.js
+442 silly gunzTarPerm extractEntry src/selection/selectAll.js
+443 silly gunzTarPerm extractEntry src/selection/each.js
+444 silly gunzTarPerm extractEntry src/selection/selection.js
+445 silly gunzTarPerm extractEntry src/selection/datum.js
+446 silly gunzTarPerm extractEntry src/selection/size.js
+447 silly gunzTarPerm extractEntry src/selection/data.js
+448 silly gunzTarPerm extractEntry src/selection/sort.js
+449 silly gunzTarPerm extractEntry src/selection/classed.js
+450 silly gunzTarPerm extractEntry src/selection/style.js
+451 silly gunzTarPerm extractEntry src/selection/call.js
+452 silly gunzTarPerm extractEntry src/selection/text.js
+453 silly gunzTarPerm extractEntry src/selection/attr.js
+454 silly gunzTarPerm extractEntry src/selection/transition.js
+455 silly gunzTarPerm extractEntry src/selection/insert.js
+456 silly gunzTarPerm extractEntry src/compat/array.js
+457 silly gunzTarPerm extractEntry src/compat/date.js
+458 silly gunzTarPerm extractEntry src/compat/index.js
+459 silly gunzTarPerm extractEntry src/compat/style.js
+460 silly gunzTarPerm extractEntry src/svg/arc.js
+461 silly gunzTarPerm extractEntry src/svg/axis.js
+462 silly gunzTarPerm extractEntry src/svg/brush.js
+463 silly gunzTarPerm extractEntry src/svg/chord.js
+464 silly gunzTarPerm extractEntry src/svg/area.js
+465 silly gunzTarPerm extractEntry src/svg/diagonal.js
+466 silly gunzTarPerm extractEntry src/svg/index.js
+467 silly gunzTarPerm extractEntry src/svg/line-radial.js
+468 silly gunzTarPerm extractEntry src/svg/line.js
+469 silly gunzTarPerm extractEntry src/svg/svg.js
+470 silly gunzTarPerm extractEntry src/svg/area-radial.js
+471 silly gunzTarPerm extractEntry src/svg/symbol.js
+472 silly gunzTarPerm extractEntry src/svg/diagonal-radial.js
+473 silly gunzTarPerm extractEntry src/time/day.js
+474 silly gunzTarPerm extractEntry src/time/hour.js
+475 silly gunzTarPerm extractEntry src/time/index.js
+476 silly gunzTarPerm extractEntry src/time/interval.js
+477 silly gunzTarPerm extractEntry src/time/format.js
+478 silly gunzTarPerm extractEntry src/time/month.js
+479 silly gunzTarPerm extractEntry src/time/scale-utc.js
+480 silly gunzTarPerm extractEntry src/time/scale.js
+481 silly gunzTarPerm extractEntry src/time/second.js
+482 silly gunzTarPerm extractEntry src/time/time.js
+483 silly gunzTarPerm extractEntry src/time/format-utc.js
+484 silly gunzTarPerm extractEntry src/time/week.js
+485 silly gunzTarPerm extractEntry src/time/format-iso.js
+486 silly gunzTarPerm extractEntry src/time/year.js
+487 silly gunzTarPerm extractEntry src/time/minute.js
+488 silly gunzTarPerm extractEntry src/transition/attr.js
+489 silly gunzTarPerm extractEntry src/transition/ease.js
+490 silly gunzTarPerm extractEntry src/transition/filter.js
+491 silly gunzTarPerm extractEntry src/transition/index.js
+492 silly gunzTarPerm extractEntry src/transition/each.js
+493 silly gunzTarPerm extractEntry src/transition/select.js
+494 silly gunzTarPerm extractEntry src/transition/selectAll.js
+495 silly gunzTarPerm extractEntry src/transition/style.js
+496 silly gunzTarPerm extractEntry src/transition/subtransition.js
+497 silly gunzTarPerm extractEntry src/transition/text.js
+498 silly gunzTarPerm extractEntry src/transition/duration.js
+499 silly gunzTarPerm extractEntry src/transition/transition.js
+500 silly gunzTarPerm extractEntry src/transition/delay.js
+501 silly gunzTarPerm extractEntry src/transition/tween.js
+502 silly gunzTarPerm extractEntry src/transition/remove.js
+503 silly gunzTarPerm extractEntry src/xhr/html.js
+504 silly gunzTarPerm extractEntry src/xhr/index.js
+505 silly gunzTarPerm extractEntry src/xhr/json.js
+506 silly gunzTarPerm extractEntry src/xhr/text.js
+507 silly gunzTarPerm extractEntry src/xhr/xhr.js
+508 silly gunzTarPerm extractEntry src/xhr/xml.js
+509 silly gunzTarPerm extractEntry .gitattributes
+510 silly gunzTarPerm extractEntry Makefile
+511 verbose write writing to /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3/package.json
+512 info preinstall d3@3.5.11
+513 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3/package.json
+514 verbose readDependencies loading dependencies from /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3/package.json
+515 silly install resolved []
+516 verbose about to build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+517 info build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+518 info linkStuff d3@3.5.11
+519 silly linkStuff d3@3.5.11 has /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules as its parent node_modules
+520 verbose linkBins d3@3.5.11
+521 verbose linkMans d3@3.5.11
+522 verbose rebuildBundles d3@3.5.11
+523 info install d3@3.5.11
+524 info postinstall d3@3.5.11
+525 verbose unlock done using /Users/sabir/.npm/_locks/d3-5f7e35ec94ba087b.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components/node_modules/d3
+526 verbose about to build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+527 info build /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+528 info linkStuff react-d3-components@0.6.0
+529 silly linkStuff react-d3-components@0.6.0 has /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules as its parent node_modules
+530 verbose linkBins react-d3-components@0.6.0
+531 verbose linkMans react-d3-components@0.6.0
+532 verbose rebuildBundles react-d3-components@0.6.0
+533 verbose rebuildBundles [ 'd3' ]
+534 info install react-d3-components@0.6.0
+535 info postinstall react-d3-components@0.6.0
+536 verbose unlock done using /Users/sabir/.npm/_locks/react-d3-components-2830e3259295a77e.lock for /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-d3-components
+537 verbose validateInstall loading /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/package.json for validation
+538 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/legit-image requires react@'^0.13.3' but will load
+538 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
+538 warn unmet dependency which is version 0.14.0
+539 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires quill@'^0.19.10' but will load
+539 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/quill,
+539 warn unmet dependency which is version 0.20.0
+540 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires classnames@'^1.2.0' but will load
+540 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/classnames,
+540 warn unmet dependency which is version 2.2.0
+541 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react-quill-editor requires react@'^0.13.0' but will load
+541 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
+541 warn unmet dependency which is version 0.14.0
+542 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/tilting-image requires react@'^0.13.3' but will load
+542 warn unmet dependency /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/node_modules/react,
+542 warn unmet dependency which is version 0.14.0
+543 verbose stack Error: The package react does not satisfy its siblings' peerDependencies requirements!
+543 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:125:32
+543 verbose stack     at /usr/local/lib/node_modules/npm/lib/install.js:267:7
+543 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:142:5
+543 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+543 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+543 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+543 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+543 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+543 verbose stack     at cb (/usr/local/lib/node_modules/npm/node_modules/slide/lib/async-map.js:47:24)
+543 verbose stack     at /usr/local/lib/node_modules/npm/node_modules/read-installed/read-installed.js:263:14
+544 verbose cwd /Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient
+545 error Darwin 15.0.0
+546 error argv "/usr/local/Cellar/iojs/2.5.0/bin/iojs" "/usr/local/bin/npm" "install" "react-d3-components"
+547 error node v2.5.0
+548 error npm  v2.12.1
+549 error code EPEERINVALID
+550 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
+551 verbose exit [ 1, true ]

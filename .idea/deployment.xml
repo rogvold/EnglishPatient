@@ -5,7 +5,7 @@
       <paths name="app.englishpatient.org">
         <serverdata>
           <mappings>
-            <mapping deploy="/var/www/app.englishpatient.org" local="$PROJECT_DIR$/features" web="/" />
+            <mapping deploy="/var/www/englishpatient.org/app" local="$PROJECT_DIR$/features" web="/" />
           </mappings>
         </serverdata>
       </paths>

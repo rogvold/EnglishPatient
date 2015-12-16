@@ -150,7 +150,7 @@ var TopBlock = React.createClass({
 
                                 <div style={this.componentStyle.loginBlock}>
 
-                                    <a href="http://app.englishpatient.org"  >
+                                    <a href="http://www.englishpatient.org/app"  >
                                         <button className={'ui button inverted white'} >
                                             Вход
                                         </button>

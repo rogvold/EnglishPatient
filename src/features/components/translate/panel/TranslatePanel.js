@@ -14,7 +14,9 @@ var TranslatePanel = React.createClass({
         return {
             text: undefined,
 
-            searchInputVisible: true
+            searchInputVisible: true,
+
+            topBlockEnabled: true
         }
     },
 
@@ -39,7 +41,7 @@ var TranslatePanel = React.createClass({
             //});
             this.translate(text, function(){
 
-            }.bind(this));
+            }.bind(this), this.props.topBlockEnabled);
         }
     },
 
@@ -50,7 +52,7 @@ var TranslatePanel = React.createClass({
         }
         this.translate(text, function(tr){
            console.log('translated! ', tr);
-        });
+        }, this.props.topBlockEnabled);
     },
 
     translate: function(text, callback){
@@ -68,14 +70,14 @@ var TranslatePanel = React.createClass({
                 loading: false
             });
             callback(html);
-        }.bind(this));
+        }.bind(this), this.props.topBlockEnabled);
     },
 
     onClick: function(){
         var text = this.state.text;
         this.translate(text, function(html){
            console.log('translated: ', html);
-        });
+        }, this.props.topBlockEnabled);
     },
 
     onTextChange: function(evt){

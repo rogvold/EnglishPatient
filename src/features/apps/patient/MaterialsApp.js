@@ -25,6 +25,8 @@ var PagedCardsList = require('../../components/material/list/PagedCardsList');
 
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var IndexApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -80,6 +82,9 @@ var IndexApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />
             </div>

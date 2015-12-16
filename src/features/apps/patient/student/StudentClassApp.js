@@ -45,7 +45,9 @@ var StudentSelfLoadingLeftSidebarClassesList = require('../../../components/clas
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 
+var SilentAddToClassComponent = require('../../../components/class/SilentAddToClassComponent');
 
+var SidebarChatButton = require('../../../components/sidebar/SidebarChatButton');
 
 var StudentClassApp = React.createClass({
     mixins: [Router.Navigation],
@@ -55,7 +57,9 @@ var StudentClassApp = React.createClass({
             headerLinks: [
 
             ],
-            teacherId: 'jnM2pCK62I'
+            teacherId: 'jnM2pCK62I',
+
+            silentAddMode: true
         }
     },
 
@@ -164,6 +168,9 @@ var StudentClassApp = React.createClass({
         var classId = (this.props.params == undefined) ? undefined : this.props.params.classId;
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <StudentSelfLoadingLeftSidebarClassesList  userId={this.state.user.id}
                                                            addClassMode={true}
                                                            selectedClassId={classId} />
@@ -186,6 +193,10 @@ var StudentClassApp = React.createClass({
 
     onClassLeft: function(){
         CommonMixin.forceTransitionTo('/#/');
+    },
+
+    onAddedToClass: function(){
+
     },
 
     getContent: function(){
@@ -215,6 +226,11 @@ var StudentClassApp = React.createClass({
                     </div>
 
                 </div>
+
+                {this.props.silentAddMode == false ? null :
+                    <SilentAddToClassComponent classId={classId} userId={userId} />
+                }
+                <SilentAddToClassComponent />
             </LoadingSegment>
         );
     },

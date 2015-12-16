@@ -8,6 +8,8 @@ var assign = require('object-assign');
 var AuthForm = require('../../components/user/AuthForm');
 var LoginMixin = require('../../mixins/LoginMixin')
 
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
+
 var LoginApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -32,7 +34,8 @@ var LoginApp = React.createClass({
     onLogin: function(){
         //LoginMixin.lo
         console.log('onLogin occured - redirecting');
-        window.location.reload();
+        //window.location.reload();
+        CommonMixin.forceTransitionTo('/#/');
     },
 
     componentStyle: {

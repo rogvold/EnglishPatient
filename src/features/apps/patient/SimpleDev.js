@@ -26,6 +26,12 @@ var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
 
 var MigrationMixin = require('../../mixins/MigrationMixin');
 
+var SharedClassPanel = require('../../components/class/share/SharedClassPanel');
+
+var CardTypeSelectButton = require('../../components/exercise/create/CardTypeSelectButton');
+
+var PatientPlayer = require('../../components/player/PatientPlayer');
+var VimeoPlayer = require('../../components/player/VimeoPlayer');
 
 var SimpleDev = React.createClass({
     getDefaultProps: function () {
@@ -106,7 +112,6 @@ var SimpleDev = React.createClass({
                 self.loadMaterials();
             });
 
-
         });
     },
 
@@ -115,7 +120,7 @@ var SimpleDev = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <button onClick={this.loadMaterials} > load </button>
+                <VimeoPlayer vimeoId={'147818654'} />
 
 
             </div>

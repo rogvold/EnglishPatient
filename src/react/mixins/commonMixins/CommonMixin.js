@@ -142,7 +142,20 @@ var CommonMixin = {
             }
     },
 
+    isLocalhost: function(){
+        var url = window.location.href;
+        if (url.indexOf('0.0.0.0') > -1){
+            return true;
+        }
+        return false;
+    },
+
     forceTransitionTo: function(url){
+        var isLocalhost = this.isLocalhost();
+        var base = 'https://www.englishpatient.org/app';
+        if (isLocalhost == false){
+            url = base + url;
+        }
         history.pushState(null, null, url);
         window.location.reload();
     }

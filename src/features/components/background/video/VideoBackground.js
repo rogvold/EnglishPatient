@@ -12,7 +12,7 @@ var VideoBackground = React.createClass({
             opacity: 0.5,
             height: 500,
             logo: 'http://abali.ru/wp-content/uploads/2013/03/emblema_mfti.png',
-            videoSrc: 'http://app.englishpatient.org/assets/img/video.mp4'
+            videoSrc: 'https://englishpatient.org/app/assets/img/video.mp4'
         }
     },
 

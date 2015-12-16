@@ -22,6 +22,8 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var IdiomsPanel = require('../../components/idioms/IdiomsPanel');
 
+var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+
 var IdiomsApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -78,6 +80,9 @@ var IdiomsApp = React.createClass({
     getSidebar: function(){
         return (
             <div>
+
+                <SidebarChatButton />
+
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
             </div>

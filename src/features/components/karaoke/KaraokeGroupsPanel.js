@@ -62,7 +62,7 @@ var KaraokeGroupsPanel = React.createClass({
             backgroundPosition: 'center center',
             backgroundRepeat: 'no-repeat',
             textAlign: 'center',
-            backgroundImage: 'url(\'http://app.englishpatient.org/assets/img/avatars/_1.jpg\')'
+            backgroundImage: 'url(\'http://englishpatient.org/app/assets/img/avatars/_1.jpg\')'
         }
     },
 

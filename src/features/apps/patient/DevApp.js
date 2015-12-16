@@ -94,8 +94,18 @@ var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchP
 
 var SelfLoadingKaraokePlayerPanel = require('../../components/karaoke/SelfLoadingKaraokePlayerPanel');
 
-
 var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
+
+var GrammarPanel = require('../../components/grammar/GrammarPanel');
+
+var SelfLoadingUserProgressPanel = require('../../components/chart/SelfLoadingUserProgressPanel');
+
+var MessagesList = require('../../components/chat/messages/MessagesList');
+
+var ChatPanel = require('../../components/chat/ChatPanel');
+var ChatButton = require('../../components/chat/ChatButton');
+
+var FileUploadButton = require('../../components/file/FileUploadButton');
 
 var DevApp = React.createClass({
     getDefaultProps: function () {
@@ -252,11 +262,14 @@ var DevApp = React.createClass({
 
     getContent: function(){
         var userId = this.state.user.id;
+        var messages = [];
 
         return (
-            <div>
+            <div style={{padding: 10}} >
 
-                <KaraokeGroupsPanel />
+                <ChatPanel userId={userId} role={this.state.user.role} />
+
+                <ChatButton  friendId={'akkOJiYay9'}  />
 
             </div>
 
