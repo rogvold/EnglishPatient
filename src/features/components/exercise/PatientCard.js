@@ -90,7 +90,6 @@ var PatientCard = React.createClass({
                 {showTranscript == false ? null :
                     <div style={this.componentStyle.transcriptPlaceholder} className={'disable-select'} >
 
-
                         <TranslatableText text={this.props.transcript} />
 
                     </div>

@@ -107,6 +107,40 @@ var ChatButton = require('../../components/chat/ChatButton');
 
 var FileUploadButton = require('../../components/file/FileUploadButton');
 
+var DialogEditInfoPanel = require('../../components/dialog_exercise/edit/DialogEditInfoPanel');
+
+var ExerciseDialogCard = require('../../components/dialog_exercise/card/ExerciseDialogCard');
+
+
+var SelfLoadingDialogEditPanel = require('../../components/dialog_exercise/edit/SelfLoadingDialogEditPanel');
+
+var SelfLoadingDialogPanel = require('../../components/dialog_exercise/view/SelfLoadingDialogPanel');
+
+var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
+
+var SelfLoadingDialogsSearchList = require('../../components/dialog_exercise/list/SelfLoadingDialogsSearchList');
+
+//var QuestionAnswerPanelsList = require('../../components/questionnaire/panels/answer/QuestionAnswerPanelsList');
+
+var QuestionnaireQuestionPanel = require('../../components/questionnaire/panels/question/QuestionnaireQuestionPanel');
+//var SelfLoadingUpdateQuestionPanel = require('../../components/questionnaire/panels/question/SelfLoadingUpdateQuestionPanel');
+var QuestionnaireEditPanel = require('../../components/questionnaire/panels/QuestionnaireEditPanel');
+
+var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
+
+var SelfLoadingQuestionnairePanel = require('../../components/questionnaire/panels/view/SelfLoadingQuestionnairePanel');
+
+var SelfLoadingQuestionnaireSearchList = require('../../components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList');
+
+var QuestionnaireSearchButton = require('../../components/questionnaire/panels/list/QuestionnaireSearchButton');
+
+var DurationsBar = require('../../components/moses/player/DurationsBar');
+var SelfLoadingMosesPlayer = require('../../components/moses/player/SelfLoadingMosesPlayer');
+
+var SelfLoadingMosesEditor = require('../../components/moses/editor/SelfLoadingMosesEditor');
+var MosesEditorButton = require('../../components/moses/editor/MosesEditorButton');
+
+
 var DevApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -263,13 +297,16 @@ var DevApp = React.createClass({
     getContent: function(){
         var userId = this.state.user.id;
         var messages = [];
+        //var dialogId = 'HvKq4rvEud';
+        //var dialogId = 'oL7bWXnet2';
+        var dialogId = 'c0zx8Ip83A';
+        var questionnaireId = 'lpN66i903P';
 
         return (
             <div style={{padding: 10}} >
 
-                <ChatPanel userId={userId} role={this.state.user.role} />
 
-                <ChatButton  friendId={'akkOJiYay9'}  />
+
 
             </div>
 

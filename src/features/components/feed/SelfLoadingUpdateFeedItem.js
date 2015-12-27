@@ -24,6 +24,14 @@ var SelfLoadingUserExercise = require('../exercise/SelfLoadingUserExercise');
 
 var DeleteButton = require('../buttons/DeleteButton');
 
+var DialogsSearchButton = require('../dialog_exercise/list/DialogSearchButton');
+
+var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogPanel');
+
+var QuestionnaireSearchButton = require('../questionnaire/panels/list/QuestionnaireSearchButton');
+
+var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
+
 var SelfLoadingUpdateFeedItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -53,6 +61,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({
             information: undefined,
             defaultInformation: undefined,
             exerciseId: undefined,
+            dialogId: undefined,
             noteId: undefined,
             materialIds: undefined,
 
@@ -116,6 +125,14 @@ var SelfLoadingUpdateFeedItem = React.createClass({
         },
 
         exercisePlaceholder: {
+            paddingTop: 10
+        },
+
+        dialogPlaceholder: {
+            paddingTop: 10
+        },
+
+        questionnairePlaceholder: {
             paddingTop: 10
         },
 
@@ -194,6 +211,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({
                 information: item.information,
                 defaultInformation: item.information,
                 exerciseId: item.exerciseId,
+                dialogId: item.dialogId,
                 noteId: item.noteId,
                 materialIds: item.materialIds
             });
@@ -217,7 +235,8 @@ var SelfLoadingUpdateFeedItem = React.createClass({
             //information, exerciseId, noteId, materialIds, callback
             var self = this;
             FeedMixin.createFeedItem(this.props.feedId, this.state.information,
-                this.state.exerciseId, this.state.noteId, this.state.materialIds,
+                this.state.exerciseId, this.state.noteId, this.state.materialIds, this.state.dialogId,
+                this.state.questionnaireId,
                 function(item){
                     self.setState({
                         loading: false
@@ -225,9 +244,11 @@ var SelfLoadingUpdateFeedItem = React.createClass({
                     self.props.onFeedItemCreated(item);
                 });
             //this.props.onFeedItemCreated({});
+            //feedId, information, exerciseId, noteId, materialIds, dialogId, questionnaireId
         }else{
             FeedMixin.updateFeedItem(feedItemId, this.state.information,
-                this.state.exerciseId, this.state.noteId, this.state.materialIds,
+                this.state.exerciseId, this.state.noteId, this.state.materialIds, this.state.dialogId,
+                this.state.questionnaireId,
                 function(updatedItem){
                     self.setState({
                         loading: false
@@ -265,6 +286,20 @@ var SelfLoadingUpdateFeedItem = React.createClass({
         console.log(ex);
         this.setState({
             exerciseId: ex.id
+        });
+    },
+
+    onDialogSelect: function(dialog){
+        console.log('onDialogSelect: ', dialog);
+        this.setState({
+            dialogId: dialog.id
+        });
+    },
+
+    onQuestionnaireSelect: function(questionnaire){
+        console.log('onQuestionnaireSelect: ', questionnaire);
+        this.setState({
+            questionnaireId: questionnaire.id
         });
     },
 
@@ -341,6 +376,15 @@ var SelfLoadingUpdateFeedItem = React.createClass({
 
                         </span>
 
+                        <span style={this.componentStyle.additionalLink} >
+                            <DialogsSearchButton userId={this.props.teacherId} onSelect={this.onDialogSelect} />
+                        </span>
+
+
+                        <span style={this.componentStyle.additionalLink} >
+                            <QuestionnaireSearchButton teacherId={this.props.teacherId} onSelect={this.onQuestionnaireSelect} />
+                        </span>
+
                     </div>
 
                     <div style={this.componentStyle.buttonsPlaceholder}>
@@ -399,6 +443,26 @@ var SelfLoadingUpdateFeedItem = React.createClass({
                                                              exerciseId={this.state.exerciseId} />
                                 </div>
                             }
+
+                            {this.state.dialogId == undefined ? null :
+                                <div style={this.componentStyle.dialogPlaceholder}>
+
+                                    <SelfLoadingDialogPanel
+                                        userId={this.props.teacherId}
+                                        dialogId={this.state.dialogId} />
+
+                                </div>
+                            }
+
+                            {this.state.questionnaireId == undefined ? null :
+
+                                <div style={this.componentStyle.questionnairePlaceholder}>
+                                    <SelfLoadingQuestionnairePanel
+                                        questionnaireId={this.state.questionnaireId}
+                                        userId={this.props.teacherId} />
+                                </div>
+                            }
+
 
                         </div>
 

@@ -72,7 +72,10 @@ var FeedItemsList = React.createClass({
                         var key = 'feedItem_' + n + '_' + item.id;
 
                         return (
-                            <FeedItem key={key} exerciseId={item.exerciseId} information={item.information}
+                            <FeedItem key={key} exerciseId={item.exerciseId}
+                                                dialogId={item.dialogId}
+                                                questionnaireId={item.questionnaireId}
+                                      information={item.information}
                                       onFeedItemUpdated={this.onFeedItemUpdated} onFeedItemDeleted={this.onFeedItemDeleted}
                                       teacherMode={this.props.teacherMode} timestamp={item.timestamp}
                                       classId={this.props.classId}

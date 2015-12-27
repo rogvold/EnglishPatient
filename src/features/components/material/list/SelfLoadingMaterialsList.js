@@ -181,8 +181,8 @@ var SelfLoadingMaterialsList = React.createClass({
         var c = list.map(function(g, k){
             var key = 'bunch_' + k + '_' + g.group.id;
             var group = g.group;
-            var onMaterialUpdated = this.onMaterialUpdated.bind(this);
-            var onGroupUpdated = this.onGroupUpdated.bind(this);
+            //var onMaterialUpdated = this.onMaterialUpdated.bind(this);
+            //var onGroupUpdated = this.onGroupUpdated.bind(this);
             var onGroupDeleted = this.onGroupDeleted.bind(this, g.group.id);
             var allGroupsList = this.getAllGroupsList();
             if ((this.props.showUnsorted == false) && (group.id == undefined)){
@@ -194,8 +194,8 @@ var SelfLoadingMaterialsList = React.createClass({
             }
 
             return (
-                <MaterialsBunch allGroupsList={allGroupsList} key={key} onGroupUpdated={onGroupUpdated} onGroupDeleted={this.onGroupDeleted}
-                                onMaterialUpdated={onMaterialUpdated} onMaterialDeleted={this.onMaterialDeleted}
+                <MaterialsBunch allGroupsList={allGroupsList} key={key} onGroupUpdated={this.onGroupUpdated} onGroupDeleted={this.onGroupDeleted}
+                                onMaterialUpdated={this.onMaterialUpdated} onMaterialDeleted={this.onMaterialDeleted}
                                 materials={g.materials}
                                 groupId={group.id} teacherId={this.props.teacherId} name={group.name}
                                 description={group.description} editMode={this.props.editMode} />

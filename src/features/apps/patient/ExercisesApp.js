@@ -46,6 +46,10 @@ var CreateNewExerciseGroupButton = require('../../components/bunch/exercise/Crea
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
+var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
+
+var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
+
 var ExercisesApp = React.createClass({
     getDefaultProps: function () {
         return {}
@@ -58,7 +62,9 @@ var ExercisesApp = React.createClass({
             selectedTabName: 'users',
             loggedIn: false,
             user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser(),
-            groups: []
+            groups: [],
+
+            mode: 'exercise'
         }
     },
 
@@ -80,6 +86,12 @@ var ExercisesApp = React.createClass({
 
         this.loadGroups(this.state.user.id, function(grs){
             console.log('groups loaded: ', grs);
+        });
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
         });
     },
 
@@ -125,6 +137,31 @@ var ExercisesApp = React.createClass({
         contentPlaceholder: {
             width: 900,
             margin: '0 auto'
+        },
+
+        tabsPlaceholder: {
+            padding: 5,
+            backgroundColor: 'white',
+            textAlign: 'center',
+            borderBottom: '1px solid #EFF0F1',
+            height: 27,
+            paddingTop: 0,
+            lineHeight: '6px',
+            marginBottom: 5
+        },
+
+        tabItem: {
+            margin: 10,
+            marginLeft: 15,
+            marginRight: 15,
+            color: '#2E3C54',
+            display: 'inline-block',
+            cursor: 'pointer',
+            paddingBottom: 7
+        },
+
+        active: {
+            borderBottom: '3px solid rgb(252, 99, 107)'
         }
     },
 
@@ -143,6 +180,8 @@ var ExercisesApp = React.createClass({
 
 
     getSidebar: function(){
+
+
         return (
             <div style={this.componentStyle.exercisesListPlaceholder}>
 
@@ -200,8 +239,61 @@ var ExercisesApp = React.createClass({
 
     getContent: function(){
         console.log('getting content for the list: groups = ', this.state.groups);
+        var mode = this.state.mode;
+
         return (
-            <div style={this.componentStyle.contentPlaceholder}>
+
+            <div>
+
+                <div style={this.componentStyle.tabsPlaceholder}>
+                    <div onClick={this.switchMode.bind(this, 'exercise')}
+                         style={assign({}, this.componentStyle.tabItem, (mode == 'exercise') ? this.componentStyle.active : {})}>
+                        аудирование и говорение
+                    </div>
+                    <div onClick={this.switchMode.bind(this, 'dialog')}
+                         style={assign({}, this.componentStyle.tabItem, (mode == 'dialog') ? this.componentStyle.active : {})}>
+                        диалоги
+                    </div>
+                    <div onClick={this.switchMode.bind(this, 'questionnaire')}
+                         style={assign({}, this.componentStyle.tabItem, (mode == 'questionnaire') ? this.componentStyle.active : {})}>
+                        опросники
+                    </div>
+                </div>
+
+                <div style={this.componentStyle.contentPlaceholder}>
+
+
+                    {mode == 'exercise' ?
+                        <div>
+                            {this.getExerciseSubApp()}
+                        </div> : null
+                    }
+
+                    {mode == 'dialog' ?
+                        <div>
+                            {this.getDialogsSubApp()}
+                        </div> : null
+                    }
+
+                    {mode == 'questionnaire' ?
+                        <div>
+                            {this.getQuestionnairesSubApp()}
+                        </div> : null
+                    }
+
+
+                </div>
+
+            </div>
+
+
+        );
+    },
+
+
+    getExerciseSubApp: function(){
+        return (
+            <div>
 
                 <div style={this.componentStyle.createExerciseButtonPlaceholder}>
                     <CreateNewExerciseButton style={{float: 'right'}} teacherId={this.state.user.id} onExerciseCreate={this.onExerciseCreate}
@@ -219,6 +311,24 @@ var ExercisesApp = React.createClass({
                     <div className="ui text loader">Загрузка...</div>
                 </div>
 
+            </div>
+        );
+    },
+
+    getDialogsSubApp: function(){
+        var userId = LoginMixin.getCurrentUser().id;
+        return (
+            <div>
+                <SelfLoadingDialogsList teacherId={userId} />
+            </div>
+        );
+    },
+
+    getQuestionnairesSubApp: function(){
+        var userId = LoginMixin.getCurrentUser().id;
+        return (
+            <div>
+                <SelfLoadingTeacherQuestionnairesList teacherId={userId} />
             </div>
         );
     },

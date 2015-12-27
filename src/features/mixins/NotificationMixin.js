@@ -118,10 +118,70 @@ var NotificationMixin = {
                 var patientClassName = cl.name;
                 var content = 'Пользователь <b>' + userName + '</b>' +
                     ' выполнил упражнение в классе ' +
-                    '<a target="_blank" href="/#/class/' + cl.id + '" >' + patientClassName + '</a>';
+                    '<a target="_blank" href="/app/#/class/' + cl.id + '" >' + patientClassName + '</a>';
                 var attachment = {
                     type: 'exercise',
                     exerciseId: exerciseId,
+                    userId: userId
+                };
+                self.createNotification(cl.ownerId, forRole, name, content, attachment, function(no){
+                    callback(no);
+                });
+            });
+        })
+    },
+
+    createStudentFinishedDialogNotification: function(userId, dialogId, classId, callback){
+        console.log('createStudentFinishedDialogNotification occured: ' +
+            'userId, dialogId, classId = ', userId, dialogId, classId);
+
+        var forRole = 'teacher';
+        var name = 'Пользователь выполнил упражнение (диалог)';
+        var self = this;
+        console.log('loading user: userId = ', userId);
+        UserMixin.loadUser(userId, function(u){
+            console.log('user loaded: ', u);
+            var userName = u.name;
+            console.log('loading class: classId = ', classId);
+            ClassMixin.loadClass(classId, function(cl){
+                console.log('class loaded: ', cl);
+                var patientClassName = cl.name;
+                var content = 'Пользователь <b>' + userName + '</b>' +
+                    ' выполнил упражнение (диалог) в классе ' +
+                    '<a target="_blank" href="/app/#/class/' + cl.id + '" >' + patientClassName + '</a>';
+                var attachment = {
+                    type: 'dialog',
+                    dialogId: dialogId,
+                    userId: userId
+                };
+                self.createNotification(cl.ownerId, forRole, name, content, attachment, function(no){
+                    callback(no);
+                });
+            });
+        })
+    },
+
+    createStudentFinishedQuestionnaireNotification: function(userId, questionnaireId, classId, callback){
+        console.log('createStudentFinishedQuestionnaireNotification occured: ' +
+            'userId, questionnaireId, classId = ', userId, questionnaireId, classId);
+
+        var forRole = 'teacher';
+        var name = 'Пользователь выполнил упражнение (опросник)';
+        var self = this;
+        console.log('loading user: userId = ', userId);
+        UserMixin.loadUser(userId, function(u){
+            console.log('user loaded: ', u);
+            var userName = u.name;
+            console.log('loading class: classId = ', classId);
+            ClassMixin.loadClass(classId, function(cl){
+                console.log('class loaded: ', cl);
+                var patientClassName = cl.name;
+                var content = 'Пользователь <b>' + userName + '</b>' +
+                    ' выполнил упражнение (опросник) в классе ' +
+                    '<a target="_blank" href="/app/#/class/' + cl.id + '" >' + patientClassName + '</a>';
+                var attachment = {
+                    type: 'questionnaire',
+                    questionnaireId: questionnaireId,
                     userId: userId
                 };
                 self.createNotification(cl.ownerId, forRole, name, content, attachment, function(no){

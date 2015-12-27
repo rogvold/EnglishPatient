@@ -2,93 +2,96 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40dad2a3-a209-4109-bfc1-a42537237cac" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/chat_avatar.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/intro.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/intro2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/messages.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/class/buttons/AddToClassButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/ChatButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/input/ChatInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/ChatMessagesPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/ChatMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/ChatPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chart/ExercisesProgressChart.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/file/FileUploadButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/sidebar/FriendsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/grammar/GrammarPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialsBunchDialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/messages/MessageItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/messages/MessagesList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/apps/patient/NoMatchApp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/NotReadChatSpan.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/profile/ProfileStatButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/user/SeflLoadingUserSpan.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/SelfLoadingChatMessagesPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chat/sidebar/SelfLoadingFriendsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/chart/SelfLoadingUserProgressPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/apps/patient/shared/SharedClassApp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/class/share/SharedClassPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/sidebar/SidebarChatButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/class/SilentAddToClassComponent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/class/buttons/student/AddToClassButton.js" afterPath="$PROJECT_DIR$/src/features/components/class/buttons/student/AddToClassButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/AddTopicButton.js" afterPath="$PROJECT_DIR$/src/features/components/topics/AddTopicButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/App.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/user/AuthButton.js" afterPath="$PROJECT_DIR$/src/features/components/user/AuthButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/create/CardTypeSelectButton.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/create/CardTypeSelectButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/ClassApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/ClassApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/ClassMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/ClassMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/AnswersList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/edit/CreateDialogButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/card/DialogCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/edit/DialogEditInfoPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/DialogEditableViewPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/list/DialogItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/DialogMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogOneReplicPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogPreparePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogReplicsPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/list/DialogSearchButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogTaskCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogTaskPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogViewButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/DialogViewPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/list/DialogsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/player/DurationsBar.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/card/ExerciseDialogCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/card/ExerciseDialogCardsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/video/ExerciseVideo.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/editor/MosesEditorButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/player/MosesPlayer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/editor/adjust/MosesTimeInput.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/editor/adjust/MosesTimePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/prepare/PreparePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/prepare/PrepareSinglePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/answer/QuestionAnswerPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/answer/QuestionAnswerPanelsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/QuestionnaireEditPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/QuestionnaireEditViewDialog.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/QuestionnaireMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/QuestionnairePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/question/QuestionnaireQuestionPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/list/QuestionnaireSearchButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/list/QuestionnaireSearchList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/QuestionnaireSinglePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/test/QuestionnaireTestPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/QuestionnaireViewPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/SelectRolePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/SelectedUserRolePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/SelfLoadingAnswersList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/edit/SelfLoadingDialogEditPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/SelfLoadingDialogViewPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/list/SelfLoadingDialogsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/list/SelfLoadingDialogsSearchList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/editor/SelfLoadingMosesEditor.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/moses/player/SelfLoadingMosesPlayer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/prepare/SelfLoadingPrepareSinglePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/question/SelfLoadingQuestionnaireEditInfoPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/SelfLoadingQuestionnairePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/question/SelfLoadingQuestionsEditPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/test/SelfLoadingTestPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/question/SelfLoadingUpdateQuestionPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/list/TeacherQuestionnairesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/questionnaire/panels/view/test/TestPanel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/react/mixins/commonMixins/CommonMixin.js" afterPath="$PROJECT_DIR$/src/react/mixins/commonMixins/CommonMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/data/DataFactory.js" afterPath="$PROJECT_DIR$/src/features/data/DataFactory.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/DevApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/DevApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/DictionaryApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/DictionaryApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/class/buttons/EditClassButton.js" afterPath="$PROJECT_DIR$/src/features/components/class/buttons/EditClassButton.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/ExerciseMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/ExerciseMixin.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/ExercisesApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/ExercisesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/file/FileUploader.js" afterPath="$PROJECT_DIR$/src/features/components/file/FileUploader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/GrammarApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/GrammarApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/IdiomsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/IdiomsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/IndexApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/IndexApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/karaoke/KaraokeGroupsPanel.js" afterPath="$PROJECT_DIR$/src/features/components/karaoke/KaraokeGroupsPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/KaraokeMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/KaraokeMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/LoginApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/LoginApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/LoginMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/LoginMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/MaterialsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/MaterialsApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/chart/ExercisesProgressChart.js" afterPath="$PROJECT_DIR$/src/features/components/chart/ExercisesProgressChart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/feed/FeedItem.js" afterPath="$PROJECT_DIR$/src/features/components/feed/FeedItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/feed/FeedItemsList.js" afterPath="$PROJECT_DIR$/src/features/components/feed/FeedItemsList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/FeedMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/FeedMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialUpdatePanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialUpdatePanel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/MaterialsMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/MaterialsMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/NotesApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/NotesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/NotificationsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/NotificationsApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/notification/NotificationItem.js" afterPath="$PROJECT_DIR$/src/features/components/notification/NotificationItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/NotificationMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/NotificationMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/PatientCard.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/PatientCard.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" afterPath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/record/PatientRecordComponent.js" afterPath="$PROJECT_DIR$/src/features/components/record/PatientRecordComponent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/profile/ProfileUpdateButton.js" afterPath="$PROJECT_DIR$/src/features/components/profile/ProfileUpdateButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/recordrtc/RecordRTC.js" afterPath="$PROJECT_DIR$/node_modules/recordrtc/RecordRTC.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/header/SelfInitHeader.js" afterPath="$PROJECT_DIR$/src/features/components/header/SelfInitHeader.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/task/PatientTask.js" afterPath="$PROJECT_DIR$/src/features/components/task/PatientTask.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-vimeo/lib/umd/ReactVimeo.js" afterPath="$PROJECT_DIR$/node_modules/react-vimeo/lib/umd/ReactVimeo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-vimeo/lib/umd/ReactVimeo.min.js" afterPath="$PROJECT_DIR$/node_modules/react-vimeo/lib/umd/ReactVimeo.min.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/chat/SelfLoadingChatMessagesPanel.js" afterPath="$PROJECT_DIR$/src/features/components/chat/SelfLoadingChatMessagesPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/feed/SelfLoadingFeedItem.js" afterPath="$PROJECT_DIR$/src/features/components/feed/SelfLoadingFeedItem.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js" afterPath="$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/SelfLoadingTopicsList.js" afterPath="$PROJECT_DIR$/src/features/components/topics/SelfLoadingTopicsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/SimpleDev.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/SimpleDev.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/student/StudentClassApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/student/StudentClassApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/student/StudentIndexApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/student/StudentIndexApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/front/TopBlock.js" afterPath="$PROJECT_DIR$/src/features/components/front/TopBlock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/containers/TopBrandContainer.js" afterPath="$PROJECT_DIR$/src/features/components/containers/TopBrandContainer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/panels/TopicHeaderPanel.js" afterPath="$PROJECT_DIR$/src/features/components/topics/panels/TopicHeaderPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/TopicItem.js" afterPath="$PROJECT_DIR$/src/features/components/topics/TopicItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/TopicsApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/TopicsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/TopicsMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/TopicsMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" afterPath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/dialog/UpdateTopicDialog.js" afterPath="$PROJECT_DIR$/src/features/components/topics/dialog/UpdateTopicDialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/note/SelfLoadingUpdatableNote.js" afterPath="$PROJECT_DIR$/src/features/components/note/SelfLoadingUpdatableNote.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/feed/SelfLoadingUpdateFeedItem.js" afterPath="$PROJECT_DIR$/src/features/components/feed/SelfLoadingUpdateFeedItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/SelfLoadingUserExercise.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/SelfLoadingUserExercise.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/teacher/TeacherFeedbackCreationBlock.js" afterPath="$PROJECT_DIR$/src/features/components/teacher/TeacherFeedbackCreationBlock.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/card/UserCard.js" afterPath="$PROJECT_DIR$/src/features/components/card/UserCard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/UserMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/UserMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/background/video/VideoBackground.js" afterPath="$PROJECT_DIR$/src/features/components/background/video/VideoBackground.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/VideoMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/VideoMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/UserExerciseInput.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/UserExerciseInput.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-vimeo/lib/Vimeo.js" afterPath="$PROJECT_DIR$/node_modules/react-vimeo/lib/Vimeo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyPanel.js" afterPath="$PROJECT_DIR$/src/features/components/vocabulary/VocabularyPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-vimeo/lib/ajax.js" afterPath="$PROJECT_DIR$/node_modules/react-vimeo/lib/ajax.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-vimeo/src/Vimeo.jsx" afterPath="$PROJECT_DIR$/node_modules/react-vimeo/src/Vimeo.jsx" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/assets/css/app.css" afterPath="$PROJECT_DIR$/features/assets/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/app.css" afterPath="$PROJECT_DIR$/src/assets/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/js/app.js" afterPath="$PROJECT_DIR$/features/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/assets/css/custom.css" afterPath="$PROJECT_DIR$/features/assets/css/custom.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/custom.css" afterPath="$PROJECT_DIR$/src/assets/css/custom.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/npm-debug.log" afterPath="$PROJECT_DIR$/npm-debug.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/.idea/workspace.xml" afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" />
     </list>
@@ -111,16 +114,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="VideoMixin.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/mixins/VideoMixin.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="StudentChatManager.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/student/js/StudentChatManager.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -131,11 +124,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClassMixin.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DialogMixin.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/features/mixins/DialogMixin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="432" column="18" selection-start-line="432" selection-start-column="18" selection-end-line="432" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClassMixin.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/features/mixins/ClassMixin.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.60493827">
-              <caret line="440" column="19" selection-start-line="440" selection-start-column="19" selection-end-line="440" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="443" column="26" selection-start-line="443" selection-start-column="26" selection-end-line="443" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ExerciseMixin.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/features/mixins/ExerciseMixin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="145" column="34" selection-start-line="145" selection-start-column="29" selection-end-line="145" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -145,18 +158,20 @@
         <entry file="file://$PROJECT_DIR$/common/js/UserChatManager.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="133" column="40" selection-start-line="133" selection-start-column="40" selection-end-line="133" selection-end-column="40" />
+              <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PatientRecordComponent.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/components/record/PatientRecordComponent.js">
+      <file leaf-file-name="ReactVimeo.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/umd/ReactVimeo.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
-              <folding />
+              <caret line="298" column="32" selection-start-line="298" selection-start-column="14" selection-end-line="298" selection-end-column="32" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -165,18 +180,20 @@
         <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/Vimeo.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="184" column="20" selection-start-line="184" selection-start-column="20" selection-end-line="184" selection-end-column="20" />
+              <caret line="293" column="12" selection-start-line="293" selection-start-column="12" selection-end-line="293" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RecordRTC.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/recordrtc/RecordRTC.js">
+      <file leaf-file-name="Play-Button.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/Play-Button.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1246" column="4" selection-start-line="1246" selection-start-column="4" selection-end-line="1246" selection-end-column="4" />
-              <folding />
+            <state vertical-scroll-proportion="0.8148148">
+              <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -186,26 +203,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="54" column="17" selection-start-line="54" selection-start-column="17" selection-end-line="54" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CardsList.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/components/material/list/CardsList.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MaterialCard.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/features/components/material/list/MaterialCard.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="20" column="37" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -242,6 +239,9 @@
         <option value="$PROJECT_DIR$/node_modules/react-vimeo/lib/Vimeo.js" />
         <option value="$PROJECT_DIR$/src/features/mixins/VideoMixin.js" />
         <option value="$PROJECT_DIR$/src/features/mixins/ClassMixin.js" />
+        <option value="$PROJECT_DIR$/src/features/mixins/DialogMixin.js" />
+        <option value="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogTaskPanel.js" />
+        <option value="$PROJECT_DIR$/node_modules/react-vimeo/src/Vimeo.jsx" />
       </list>
     </option>
   </component>
@@ -261,7 +261,7 @@
     <option name="x" value="2" />
     <option name="y" value="23" />
     <option name="width" value="1271" />
-    <option name="height" value="732" />
+    <option name="height" value="730" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -286,8 +286,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -353,6 +351,148 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="react-vimeo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="react-vimeo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="react-vimeo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="react-vimeo" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="umd" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="react-player" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EnglishPatient" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="node_modules" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="react-player" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -452,6 +592,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -459,7 +601,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
-    <property name="SearchEverywhereHistoryKey" value="classmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ClassMixin.js&#10;chatma&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/student/js/StudentChatManager.js&#10;patientrecor&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/record/PatientRecordComponent.js&#10;CardsList&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/CardsList.js&#10;App.&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/App.js&#10;parsemixin&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/mixins/commonMixins/ParseMixin.js&#10;materialsmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;videomi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/VideoMixin.js&#10;simp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/SimpleDev.js&#10;simplede&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/SimpleDev.js&#10;panel&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/idioms/IdiomsPanel.js&#10;authfo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/user/AuthForm.js&#10;idiom&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/idioms/IdiomsPanel.js&#10;translatema&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/common/js/TranslateManager.js&#10;textme&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/front/TextMediaPanel.js" />
+    <property name="SearchEverywhereHistoryKey" value="taskpane&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/view/DialogTaskPanel.js&#10;dialogmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;exercisemix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ExerciseMixin.js&#10;classmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ClassMixin.js&#10;chatma&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/student/js/StudentChatManager.js&#10;patientrecor&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/record/PatientRecordComponent.js&#10;CardsList&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/CardsList.js&#10;App.&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/App.js&#10;parsemixin&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/mixins/commonMixins/ParseMixin.js&#10;materialsmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;videomi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/VideoMixin.js&#10;simp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/SimpleDev.js&#10;simplede&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/SimpleDev.js&#10;panel&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/idioms/IdiomsPanel.js&#10;authfo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/user/AuthForm.js&#10;idiom&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/idioms/IdiomsPanel.js&#10;translatema&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/common/js/TranslateManager.js&#10;textme&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/front/TextMediaPanel.js" />
     <property name="JavaScriptLanguageLevel" value="JSX" />
     <property name="recentsLimit" value="5" />
     <property name="js.buildTools.gulp.node_interpreter" value="/usr/local/bin/node" />
@@ -540,17 +682,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="23" width="1271" height="732" extended-state="0" />
+    <frame x="2" y="23" width="1271" height="730" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32554516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3234375" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35638732" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.362083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -581,48 +723,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/features/front.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="248" column="34" selection-start-line="248" selection-start-column="34" selection-end-line="248" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/front.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="248" column="34" selection-start-line="248" selection-start-column="34" selection-end-line="248" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gulpfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -851,7 +951,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="37" selection-start-line="20" selection-start-column="22" selection-end-line="20" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -859,7 +958,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="30" selection-start-line="14" selection-start-column="30" selection-end-line="14" selection-end-column="30" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -874,7 +972,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1246" column="4" selection-start-line="1246" selection-start-column="4" selection-end-line="1246" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -886,27 +983,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/components/record/PatientRecordComponent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/Vimeo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="184" column="20" selection-start-line="184" selection-start-column="20" selection-end-line="184" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-chartist/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2198697">
           <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -914,21 +994,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="49" column="19" selection-start-line="49" selection-start-column="19" selection-end-line="49" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/assets/images/chat_avatar.jpg">
       <provider selected="true" editor-type-id="images">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/js/UserChatManager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="133" column="40" selection-start-line="133" selection-start-column="40" selection-end-line="133" selection-end-column="40" />
-          <folding />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/student/js/StudentChatManager.js">
@@ -941,9 +1012,84 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/features/mixins/ClassMixin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60493827">
-          <caret line="440" column="19" selection-start-line="440" selection-start-column="19" selection-end-line="440" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="443" column="26" selection-start-line="443" selection-start-column="26" selection-end-line="443" selection-end-column="26" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mixins/ExerciseMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="145" column="34" selection-start-line="145" selection-start-column="29" selection-end-line="145" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/mixins/DialogMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="432" column="18" selection-start-line="432" selection-start-column="18" selection-end-line="432" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogTaskPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.16666667">
+          <caret line="172" column="26" selection-start-line="172" selection-start-column="26" selection-end-line="172" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/components/record/PatientRecordComponent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="16" selection-start-line="55" selection-start-column="16" selection-end-line="55" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/js/UserChatManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/Vimeo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="293" column="12" selection-start-line="293" selection-start-column="12" selection-end-line="293" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/umd/ReactVimeo.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="298" column="32" selection-start-line="298" selection-start-column="14" selection-end-line="298" selection-end-column="32" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/src/Vimeo.jsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21568628">
+          <caret line="224" column="12" selection-start-line="224" selection-start-column="12" selection-end-line="224" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-vimeo/lib/Play-Button.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8148148">
+          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

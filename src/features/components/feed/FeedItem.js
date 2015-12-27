@@ -18,6 +18,10 @@ var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
 
 var NotificationMixin = require('../../mixins/NotificationMixin');
 
+var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogPanel');
+
+var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
+
 var FeedItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -29,6 +33,9 @@ var FeedItem = React.createClass({
             //noteId: '5gcVkoThTm',
             timestamp: undefined,
             exerciseId: undefined,
+            dialogId: undefined,
+            questionnaireId: undefined,
+
             //exerciseId: 's5Y1PZTBGe',
             //exerciseId: 's5Y1PZTBGe',
             //information: '<div><span style="font-family: sans-serif;">Все приведенные ниже цитаты имеют отношение к образованию в целом и к изучению языка, в частности.&nbsp;</span></div><div><br></div><div><span style="font-family: sans-serif; background-color: inherit;">“</span><b><span style="font-family: sans-serif;">It is a miracle that curiosity survives formal education.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">A.Einstein</span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“The whole art of teaching is only the art of awakening the natural curiosity of the young mind for the purpose of satisfying it afterwards.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Anatole France</span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“Curiosity is as much the parent of attention, as attention is of memory.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Richard Whately </span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“The cure for boredom is curiosity. There is no cure for curiosity.”&nbsp;</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Ellen Parr </span></span></div><div><br></div><div><span style="font-family: sans-serif;">Первая цитата противоречат высказыванию Э.Парра, прямо указывая на наличие инструмента для умерщвления любопытства. Скорее всего, вы уже испытали его на себе, если учили английский в школе или вузе.</span></div>'
@@ -102,6 +109,14 @@ var FeedItem = React.createClass({
             paddingTop: 10
         },
 
+        dialogPlaceholder: {
+            paddingTop: 10
+        },
+
+        questionnairePlaceholder: {
+            paddingTop: 10
+        },
+
         infoPlaceholder: {
             borderBottom: '1px solid #EFF0F1'
         },
@@ -148,6 +163,29 @@ var FeedItem = React.createClass({
         }
 
         NotificationMixin.createStudentFinishedExerciseNotification(userId, exerciseId, classId, function(no){
+            console.log('Notification sent: ', no);
+        });
+    },
+
+    onDialogFinished: function(dialogId, userId){
+        var classId = this.props.classId;
+        console.log('onDialogFinished occured: classId, dialogId, userId = ', classId, dialogId, userId);
+        if (classId == undefined || userId == undefined || dialogId == undefined){
+            return;
+        }
+
+        NotificationMixin.createStudentFinishedDialogNotification(userId, dialogId, classId, function(no){
+            console.log('Notification sent: ', no);
+        });
+    },
+
+    onQuestionnaireFinished: function(questionnaireId, userId){
+        var classId = this.props.classId;
+        console.log('onQuestionnaireFinished occured: classId, questionnaireId, userId = ', classId, questionnaireId, userId);
+        if (classId == undefined || userId == undefined || questionnaireId == undefined){
+            return;
+        }
+        NotificationMixin.createStudentFinishedQuestionnaireNotification(userId, questionnaireId, classId, function(no){
             console.log('Notification sent: ', no);
         });
     },
@@ -207,6 +245,27 @@ var FeedItem = React.createClass({
                             onExerciseFinished={this.onExerciseFinished}
                             userId={this.props.userId} teacherMode={teacherMode}
                             teacherId={this.props.teacherId} exerciseId={this.props.exerciseId} />
+                    </div>
+                }
+
+                {this.props.dialogId == undefined ? null :
+                    <div style={this.componentStyle.dialogPlaceholder}>
+                        <SelfLoadingDialogPanel
+                            teacherMode={teacherMode}
+                            teacherId={this.props.teacherId}
+                            dialogId={this.props.dialogId}
+                            onDialogFinished={this.onDialogFinished}
+                            userId={this.props.userId} />
+                    </div>
+                }
+
+                {this.props.questionnaireId == undefined ? null :
+                    <div style={this.componentStyle.questionnairePlaceholder}>
+                        <SelfLoadingQuestionnairePanel userId={this.props.userId}
+                                                       teacherMode={teacherMode}
+                                                       teacherId={this.props.teacherId}
+                                                       onQuestionnaireFinished={this.onQuestionnaireFinished}
+                                                       questionnaireId={this.props.questionnaireId} />
                     </div>
                 }
 

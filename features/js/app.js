@@ -66774,11 +66774,15 @@ exports['default'] = _react2['default'].createClass({
       'div',
       {
         className: 'vimeo-embed',
-        style: embedVideoStyle },
+        style: embedVideoStyle
+      },
       _react2['default'].createElement('iframe', {
         frameBorder: '0',
         style: {width: '100%', height: '100%'},
         ref: 'player',
+          webkitAllowFullScreen: 'true',
+          mozAllowFullScreen: 'true',
+          allowFullScreen: 'allowfullscreen',
         src: this.getIframeUrl() })
     );
   },
@@ -81287,7 +81291,7 @@ React.render((React.createElement(App, null)
 
 ), document.getElementById('main'));
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../mixins/LoginMixin":780,"./ClassApp":536,"./DevApp":537,"./DictionaryApp":538,"./ExercisesApp":539,"./GrammarApp":540,"./IdiomsApp":541,"./IndexApp":542,"./LoginApp":543,"./MaterialsApp":544,"./NoMatchApp":545,"./NotesApp":546,"./NotificationsApp":547,"./SimpleDev":548,"./ToolsApp":549,"./TopicsApp":550,"./shared/SharedClassApp":551,"./student/StudentClassApp":552,"./student/StudentIndexApp":553,"history":17,"object-assign":34,"react":527,"react-router":307}],536:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../mixins/LoginMixin":837,"./ClassApp":536,"./DevApp":537,"./DictionaryApp":538,"./ExercisesApp":539,"./GrammarApp":540,"./IdiomsApp":541,"./IndexApp":542,"./LoginApp":543,"./MaterialsApp":544,"./NoMatchApp":545,"./NotesApp":546,"./NotificationsApp":547,"./SimpleDev":548,"./ToolsApp":549,"./TopicsApp":550,"./shared/SharedClassApp":551,"./student/StudentClassApp":552,"./student/StudentIndexApp":553,"history":17,"object-assign":34,"react":527,"react-router":307}],536:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -81697,7 +81701,7 @@ var ClassApp = React.createClass({displayName: "ClassApp",
 
 module.exports = ClassApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/card/UsersCardsList":565,"../../components/class/buttons/EditClassButton":581,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/class/tasks/TaskPanel":596,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/feed/SelfLoadingClassFeed":638,"../../components/header/teacher/TeacherHeader":649,"../../components/help/GifInstruction":650,"../../components/help/IconMessage":651,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527,"react-router":307}],537:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/card/UsersCardsList":565,"../../components/class/buttons/EditClassButton":581,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/class/tasks/TaskPanel":596,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/feed/SelfLoadingClassFeed":661,"../../components/header/teacher/TeacherHeader":672,"../../components/help/GifInstruction":673,"../../components/help/IconMessage":674,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527,"react-router":307}],537:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -81806,6 +81810,40 @@ var ChatPanel = require('../../components/chat/ChatPanel');
 var ChatButton = require('../../components/chat/ChatButton');
 
 var FileUploadButton = require('../../components/file/FileUploadButton');
+
+var DialogEditInfoPanel = require('../../components/dialog_exercise/edit/DialogEditInfoPanel');
+
+var ExerciseDialogCard = require('../../components/dialog_exercise/card/ExerciseDialogCard');
+
+
+var SelfLoadingDialogEditPanel = require('../../components/dialog_exercise/edit/SelfLoadingDialogEditPanel');
+
+var SelfLoadingDialogPanel = require('../../components/dialog_exercise/view/SelfLoadingDialogPanel');
+
+var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
+
+var SelfLoadingDialogsSearchList = require('../../components/dialog_exercise/list/SelfLoadingDialogsSearchList');
+
+//var QuestionAnswerPanelsList = require('../../components/questionnaire/panels/answer/QuestionAnswerPanelsList');
+
+var QuestionnaireQuestionPanel = require('../../components/questionnaire/panels/question/QuestionnaireQuestionPanel');
+//var SelfLoadingUpdateQuestionPanel = require('../../components/questionnaire/panels/question/SelfLoadingUpdateQuestionPanel');
+var QuestionnaireEditPanel = require('../../components/questionnaire/panels/QuestionnaireEditPanel');
+
+var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
+
+var SelfLoadingQuestionnairePanel = require('../../components/questionnaire/panels/view/SelfLoadingQuestionnairePanel');
+
+var SelfLoadingQuestionnaireSearchList = require('../../components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList');
+
+var QuestionnaireSearchButton = require('../../components/questionnaire/panels/list/QuestionnaireSearchButton');
+
+var DurationsBar = require('../../components/moses/player/DurationsBar');
+var SelfLoadingMosesPlayer = require('../../components/moses/player/SelfLoadingMosesPlayer');
+
+var SelfLoadingMosesEditor = require('../../components/moses/editor/SelfLoadingMosesEditor');
+var MosesEditorButton = require('../../components/moses/editor/MosesEditorButton');
+
 
 var DevApp = React.createClass({displayName: "DevApp",
     getDefaultProps: function () {
@@ -81963,13 +82001,16 @@ var DevApp = React.createClass({displayName: "DevApp",
     getContent: function(){
         var userId = this.state.user.id;
         var messages = [];
+        //var dialogId = 'HvKq4rvEud';
+        //var dialogId = 'oL7bWXnet2';
+        var dialogId = 'c0zx8Ip83A';
+        var questionnaireId = 'lpN66i903P';
 
         return (
-            React.createElement("div", {style: {padding: 10}}, 
+            React.createElement("div", {style: {padding: 10}}
 
-                React.createElement(ChatPanel, {userId: userId, role: this.state.user.role}), 
 
-                React.createElement(ChatButton, {friendId: 'akkOJiYay9'})
+
 
             )
 
@@ -81998,7 +82039,7 @@ var DevApp = React.createClass({displayName: "DevApp",
 
 module.exports = DevApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/chart/SelfLoadingUserProgressPanel":567,"../../components/chat/ChatButton":568,"../../components/chat/ChatPanel":570,"../../components/chat/messages/MessagesList":575,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":627,"../../components/exercise/search/ExercisesSearchButton":633,"../../components/exercise/search/ExercisesSearchPanel":634,"../../components/feed/FeedItem":635,"../../components/feed/SelfLoadingClassFeed":638,"../../components/feed/SelfLoadingFeedItem":639,"../../components/feed/SelfLoadingUpdateFeedItem":640,"../../components/feed/button/EditFeedItemButton":642,"../../components/feed/video/SelfLoadingVideosList":643,"../../components/file/FileUploadButton":644,"../../components/grammar/GrammarPanel":646,"../../components/header/teacher/TeacherHeader":649,"../../components/karaoke/KaraokeGroupsPanel":658,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":661,"../../components/material/MaterialTags":666,"../../components/material/buttons/MaterialCreateButton":667,"../../components/material/dialogs/MaterialDialog":669,"../../components/material/groups/MaterialGroupCard":675,"../../components/material/search/MaterialSearchButton":685,"../../components/material/search/MaterialsSearchPanel":686,"../../components/notification/SelfLoadingNotificationsList":703,"../../components/player/VimeoPlayer":707,"../../components/profile/UserProfilePanel":714,"../../components/sausage/FirstLevelPanelsList":718,"../../components/search/youtube/YoutubeSearchPanel":724,"../../components/search/youtube/checkbox/CategoryCheckboxesList":726,"../../components/segment/LoadingSegment":727,"../../components/templates/LeftSidebarTemplate":737,"../../components/text/translatable/WordItem":742,"../../components/translate/TranslateButton":755,"../../components/user/RoleSelector":762,"../../components/video/youtube/YoutubeEmbedPlayer":767,"../../components/vocabulary/VocabularyPanel":771,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"../../mixins/MaterialsMixin":781,"../../mixins/MigrationMixin":782,"../../mixins/TranslateMixin":787,"../../mixins/UserMixin":788,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],538:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/chart/SelfLoadingUserProgressPanel":567,"../../components/chat/ChatButton":568,"../../components/chat/ChatPanel":570,"../../components/chat/messages/MessagesList":575,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/dialog_exercise/card/ExerciseDialogCard":616,"../../components/dialog_exercise/edit/DialogEditInfoPanel":619,"../../components/dialog_exercise/edit/SelfLoadingDialogEditPanel":620,"../../components/dialog_exercise/list/SelfLoadingDialogsList":624,"../../components/dialog_exercise/list/SelfLoadingDialogsSearchList":625,"../../components/dialog_exercise/view/SelfLoadingDialogPanel":634,"../../components/exercise/diff/RightTextAnswerDiff":650,"../../components/exercise/search/ExercisesSearchButton":656,"../../components/exercise/search/ExercisesSearchPanel":657,"../../components/feed/FeedItem":658,"../../components/feed/SelfLoadingClassFeed":661,"../../components/feed/SelfLoadingFeedItem":662,"../../components/feed/SelfLoadingUpdateFeedItem":663,"../../components/feed/button/EditFeedItemButton":665,"../../components/feed/video/SelfLoadingVideosList":666,"../../components/file/FileUploadButton":667,"../../components/grammar/GrammarPanel":669,"../../components/header/teacher/TeacherHeader":672,"../../components/karaoke/KaraokeGroupsPanel":681,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":684,"../../components/material/MaterialTags":689,"../../components/material/buttons/MaterialCreateButton":690,"../../components/material/dialogs/MaterialDialog":692,"../../components/material/groups/MaterialGroupCard":698,"../../components/material/search/MaterialSearchButton":708,"../../components/material/search/MaterialsSearchPanel":709,"../../components/moses/editor/MosesEditorButton":710,"../../components/moses/editor/SelfLoadingMosesEditor":711,"../../components/moses/player/DurationsBar":714,"../../components/moses/player/SelfLoadingMosesPlayer":716,"../../components/notification/SelfLoadingNotificationsList":733,"../../components/player/VimeoPlayer":737,"../../components/profile/UserProfilePanel":744,"../../components/questionnaire/panels/QuestionnaireEditPanel":746,"../../components/questionnaire/panels/list/QuestionnaireSearchButton":750,"../../components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList":752,"../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList":753,"../../components/questionnaire/panels/question/QuestionnaireQuestionPanel":755,"../../components/questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"../../components/sausage/FirstLevelPanelsList":773,"../../components/search/youtube/YoutubeSearchPanel":779,"../../components/search/youtube/checkbox/CategoryCheckboxesList":781,"../../components/segment/LoadingSegment":782,"../../components/templates/LeftSidebarTemplate":792,"../../components/text/translatable/WordItem":797,"../../components/translate/TranslateButton":810,"../../components/user/RoleSelector":817,"../../components/video/youtube/YoutubeEmbedPlayer":823,"../../components/vocabulary/VocabularyPanel":827,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"../../mixins/MaterialsMixin":838,"../../mixins/MigrationMixin":839,"../../mixins/TranslateMixin":845,"../../mixins/UserMixin":846,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],538:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82141,7 +82182,7 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
 
 module.exports = DictionaryApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../components/vocabulary/VocabularyPanel":771,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],539:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../components/vocabulary/VocabularyPanel":827,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],539:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82190,6 +82231,10 @@ var CreateNewExerciseGroupButton = require('../../components/bunch/exercise/Crea
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
+var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
+
+var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
+
 var ExercisesApp = React.createClass({displayName: "ExercisesApp",
     getDefaultProps: function () {
         return {}
@@ -82202,7 +82247,9 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
             selectedTabName: 'users',
             loggedIn: false,
             user: (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser(),
-            groups: []
+            groups: [],
+
+            mode: 'exercise'
         }
     },
 
@@ -82224,6 +82271,12 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
         this.loadGroups(this.state.user.id, function(grs){
             console.log('groups loaded: ', grs);
+        });
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
         });
     },
 
@@ -82269,6 +82322,31 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
         contentPlaceholder: {
             width: 900,
             margin: '0 auto'
+        },
+
+        tabsPlaceholder: {
+            padding: 5,
+            backgroundColor: 'white',
+            textAlign: 'center',
+            borderBottom: '1px solid #EFF0F1',
+            height: 27,
+            paddingTop: 0,
+            lineHeight: '6px',
+            marginBottom: 5
+        },
+
+        tabItem: {
+            margin: 10,
+            marginLeft: 15,
+            marginRight: 15,
+            color: '#2E3C54',
+            display: 'inline-block',
+            cursor: 'pointer',
+            paddingBottom: 7
+        },
+
+        active: {
+            borderBottom: '3px solid rgb(252, 99, 107)'
         }
     },
 
@@ -82287,6 +82365,8 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
 
     getSidebar: function(){
+
+
         return (
             React.createElement("div", {style: this.componentStyle.exercisesListPlaceholder}, 
 
@@ -82344,8 +82424,61 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
     getContent: function(){
         console.log('getting content for the list: groups = ', this.state.groups);
+        var mode = this.state.mode;
+
         return (
-            React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
+
+            React.createElement("div", null, 
+
+                React.createElement("div", {style: this.componentStyle.tabsPlaceholder}, 
+                    React.createElement("div", {onClick: this.switchMode.bind(this, 'exercise'), 
+                         style: assign({}, this.componentStyle.tabItem, (mode == 'exercise') ? this.componentStyle.active : {})}, 
+                        "аудирование и говорение"
+                    ), 
+                    React.createElement("div", {onClick: this.switchMode.bind(this, 'dialog'), 
+                         style: assign({}, this.componentStyle.tabItem, (mode == 'dialog') ? this.componentStyle.active : {})}, 
+                        "диалоги"
+                    ), 
+                    React.createElement("div", {onClick: this.switchMode.bind(this, 'questionnaire'), 
+                         style: assign({}, this.componentStyle.tabItem, (mode == 'questionnaire') ? this.componentStyle.active : {})}, 
+                        "опросники"
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
+
+
+                    mode == 'exercise' ?
+                        React.createElement("div", null, 
+                            this.getExerciseSubApp()
+                        ) : null, 
+                    
+
+                    mode == 'dialog' ?
+                        React.createElement("div", null, 
+                            this.getDialogsSubApp()
+                        ) : null, 
+                    
+
+                    mode == 'questionnaire' ?
+                        React.createElement("div", null, 
+                            this.getQuestionnairesSubApp()
+                        ) : null
+                    
+
+
+                )
+
+            )
+
+
+        );
+    },
+
+
+    getExerciseSubApp: function(){
+        return (
+            React.createElement("div", null, 
 
                 React.createElement("div", {style: this.componentStyle.createExerciseButtonPlaceholder}, 
                     React.createElement(CreateNewExerciseButton, {style: {float: 'right'}, teacherId: this.state.user.id, onExerciseCreate: this.onExerciseCreate, 
@@ -82363,6 +82496,24 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
                     React.createElement("div", {className: "ui text loader"}, "Загрузка...")
                 )
 
+            )
+        );
+    },
+
+    getDialogsSubApp: function(){
+        var userId = LoginMixin.getCurrentUser().id;
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingDialogsList, {teacherId: userId})
+            )
+        );
+    },
+
+    getQuestionnairesSubApp: function(){
+        var userId = LoginMixin.getCurrentUser().id;
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingTeacherQuestionnairesList, {teacherId: userId})
             )
         );
     },
@@ -82391,7 +82542,7 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
 module.exports = ExercisesApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/bunch/exercise/CreateNewExerciseGroupButton":556,"../../components/bunch/exercise/ExercisesBunch":557,"../../components/bunch/exercise/ExercisesGroupsList":558,"../../components/card/ExerciseCard":561,"../../components/card/ExercisesPagedCardsList":563,"../../components/card/UsersCardsList":565,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/exercise/create/button/CreateNewExerciseButton":626,"../../components/header/teacher/TeacherHeader":649,"../../components/help/GifInstruction":650,"../../components/help/IconMessage":651,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/ExerciseMixin":775,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],540:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/bunch/exercise/CreateNewExerciseGroupButton":556,"../../components/bunch/exercise/ExercisesBunch":557,"../../components/bunch/exercise/ExercisesGroupsList":558,"../../components/card/ExerciseCard":561,"../../components/card/ExercisesPagedCardsList":563,"../../components/card/UsersCardsList":565,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/dialog_exercise/list/SelfLoadingDialogsList":624,"../../components/exercise/create/button/CreateNewExerciseButton":649,"../../components/header/teacher/TeacherHeader":672,"../../components/help/GifInstruction":673,"../../components/help/IconMessage":674,"../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList":753,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/ExerciseMixin":832,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],540:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82533,7 +82684,7 @@ var GrammarApp = React.createClass({displayName: "GrammarApp",
 
 module.exports = GrammarApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/grammar/GrammarPanel":646,"../../components/header/teacher/TeacherHeader":649,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],541:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/grammar/GrammarPanel":669,"../../components/header/teacher/TeacherHeader":672,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],541:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82675,7 +82826,7 @@ var IdiomsApp = React.createClass({displayName: "IdiomsApp",
 
 module.exports = IdiomsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/idioms/IdiomsPanel":652,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],542:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/idioms/IdiomsPanel":675,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],542:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82818,7 +82969,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/sausage/Sausage":719,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],543:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/sausage/Sausage":774,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],543:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82898,7 +83049,7 @@ var LoginApp = React.createClass({displayName: "LoginApp",
 
 module.exports = LoginApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../components/user/AuthForm":759,"../../mixins/LoginMixin":780,"object-assign":34,"react":527}],544:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../components/user/AuthForm":814,"../../mixins/LoginMixin":837,"object-assign":34,"react":527}],544:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -83055,7 +83206,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/material/list/MaterialCard":680,"../../components/material/list/PagedCardsList":683,"../../components/material/list/SelfLoadingMaterialsList":684,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/LoginMixin":780,"../../mixins/MaterialsMixin":781,"./LoginApp":543,"object-assign":34,"react":527}],545:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/material/list/MaterialCard":703,"../../components/material/list/PagedCardsList":706,"../../components/material/list/SelfLoadingMaterialsList":707,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/LoginMixin":837,"../../mixins/MaterialsMixin":838,"./LoginApp":543,"object-assign":34,"react":527}],545:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -83134,7 +83285,7 @@ var NoMatchApp = React.createClass({displayName: "NoMatchApp",
 
 module.exports = NoMatchApp;
 
-},{"../../components/templates/LeftSidebarTemplate":737,"../../mixins/LoginMixin":780,"object-assign":34,"react/addons":354}],546:[function(require,module,exports){
+},{"../../components/templates/LeftSidebarTemplate":792,"../../mixins/LoginMixin":837,"object-assign":34,"react/addons":354}],546:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -83640,7 +83791,7 @@ var NotesApp = React.createClass({displayName: "NotesApp",
 
 module.exports = NotesApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/buttons/DeleteButton":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/help/GifInstruction":650,"../../components/note/CreateNewNoteButton":687,"../../components/note/CreateNewNotesGroupButton":688,"../../components/note/SelfLoadingUpdatableNote":691,"../../components/note/SelfLoadingUpdateNotePanel":692,"../../components/note/UpdateGroupButton":693,"../../components/note/list/NotesGroupsList":696,"../../components/note/list/NotesList":697,"../../components/note/select/NotesGroupSelect":698,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"../../mixins/NotesMixin":783,"./LoginApp":543,"object-assign":34,"react":527}],547:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/buttons/DeleteButton":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/help/GifInstruction":673,"../../components/note/CreateNewNoteButton":717,"../../components/note/CreateNewNotesGroupButton":718,"../../components/note/SelfLoadingUpdatableNote":721,"../../components/note/SelfLoadingUpdateNotePanel":722,"../../components/note/UpdateGroupButton":723,"../../components/note/list/NotesGroupsList":726,"../../components/note/list/NotesList":727,"../../components/note/select/NotesGroupSelect":728,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"../../mixins/NotesMixin":840,"./LoginApp":543,"object-assign":34,"react":527}],547:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -83781,7 +83932,7 @@ var NotificationsApp = React.createClass({displayName: "NotificationsApp",
 
 module.exports = NotificationsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/notification/SelfLoadingNotificationsList":703,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],548:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/notification/SelfLoadingNotificationsList":733,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],548:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -83915,7 +84066,7 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
 
 module.exports = SimpleDev;
 
-},{"../../components/background/video/VideoBackground":555,"../../components/class/share/SharedClassPanel":592,"../../components/exercise/create/CardTypeSelectButton":619,"../../components/player/PatientPlayer":706,"../../components/player/VimeoPlayer":707,"../../components/templates/LeftSidebarTemplate":737,"../../components/text/translatable/TranslatableText":741,"../../components/text/translatable/WordItem":742,"../../components/vocabulary/VocabularyPanel":771,"../../mixins/LoginMixin":780,"../../mixins/MigrationMixin":782,"object-assign":34,"react-tooltip":343,"react/addons":354}],549:[function(require,module,exports){
+},{"../../components/background/video/VideoBackground":555,"../../components/class/share/SharedClassPanel":592,"../../components/exercise/create/CardTypeSelectButton":642,"../../components/player/PatientPlayer":736,"../../components/player/VimeoPlayer":737,"../../components/templates/LeftSidebarTemplate":792,"../../components/text/translatable/TranslatableText":796,"../../components/text/translatable/WordItem":797,"../../components/vocabulary/VocabularyPanel":827,"../../mixins/LoginMixin":837,"../../mixins/MigrationMixin":839,"object-assign":34,"react-tooltip":343,"react/addons":354}],549:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -84157,7 +84308,7 @@ var ToolsApp = React.createClass({displayName: "ToolsApp",
 
 module.exports = ToolsApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":627,"../../components/exercise/search/ExercisesSearchButton":633,"../../components/exercise/search/ExercisesSearchPanel":634,"../../components/feed/FeedItem":635,"../../components/feed/SelfLoadingClassFeed":638,"../../components/feed/SelfLoadingFeedItem":639,"../../components/feed/SelfLoadingUpdateFeedItem":640,"../../components/feed/button/EditFeedItemButton":642,"../../components/feed/video/SelfLoadingVideosList":643,"../../components/header/teacher/TeacherHeader":649,"../../components/material/MaterialTags":666,"../../components/material/buttons/MaterialCreateButton":667,"../../components/material/dialogs/MaterialDialog":669,"../../components/material/search/MaterialSearchButton":685,"../../components/material/search/MaterialsSearchPanel":686,"../../components/notification/SelfLoadingNotificationsList":703,"../../components/player/VimeoPlayer":707,"../../components/sausage/FirstLevelPanelsList":718,"../../components/segment/LoadingSegment":727,"../../components/templates/LeftSidebarTemplate":737,"../../components/text/translatable/TranslatableText":741,"../../components/translate/TranslateButton":755,"../../components/user/RoleSelector":762,"../../components/video/youtube/YoutubeEmbedPlayer":767,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"../../mixins/MaterialsMixin":781,"../../mixins/MigrationMixin":782,"../../mixins/UserMixin":788,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],550:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":650,"../../components/exercise/search/ExercisesSearchButton":656,"../../components/exercise/search/ExercisesSearchPanel":657,"../../components/feed/FeedItem":658,"../../components/feed/SelfLoadingClassFeed":661,"../../components/feed/SelfLoadingFeedItem":662,"../../components/feed/SelfLoadingUpdateFeedItem":663,"../../components/feed/button/EditFeedItemButton":665,"../../components/feed/video/SelfLoadingVideosList":666,"../../components/header/teacher/TeacherHeader":672,"../../components/material/MaterialTags":689,"../../components/material/buttons/MaterialCreateButton":690,"../../components/material/dialogs/MaterialDialog":692,"../../components/material/search/MaterialSearchButton":708,"../../components/material/search/MaterialsSearchPanel":709,"../../components/notification/SelfLoadingNotificationsList":733,"../../components/player/VimeoPlayer":737,"../../components/sausage/FirstLevelPanelsList":773,"../../components/segment/LoadingSegment":782,"../../components/templates/LeftSidebarTemplate":792,"../../components/text/translatable/TranslatableText":796,"../../components/translate/TranslateButton":810,"../../components/user/RoleSelector":817,"../../components/video/youtube/YoutubeEmbedPlayer":823,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"../../mixins/MaterialsMixin":838,"../../mixins/MigrationMixin":839,"../../mixins/UserMixin":846,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],550:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -84383,7 +84534,7 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
 
 module.exports = TopicsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":649,"../../components/karaoke/KaraokeGroupsPanel":658,"../../components/material/list/SelfLoadingMaterialsList":684,"../../components/segment/LoadingSegment":727,"../../components/sidebar/SidebarChatButton":730,"../../components/templates/LeftSidebarTemplate":737,"../../components/topics/SelfLoadingTopicsList":746,"../../components/topics/TopicsList":748,"../../components/topics/dialog/SelfLoadingTopicDialog":749,"../../components/topics/dialog/TopicDialog":750,"../../components/topics/panels/TopicPanel":754,"../../mixins/ClassMixin":774,"../../mixins/LoginMixin":780,"./LoginApp":543,"object-assign":34,"react":527}],551:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/karaoke/KaraokeGroupsPanel":681,"../../components/material/list/SelfLoadingMaterialsList":707,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../components/topics/SelfLoadingTopicsList":801,"../../components/topics/TopicsList":803,"../../components/topics/dialog/SelfLoadingTopicDialog":804,"../../components/topics/dialog/TopicDialog":805,"../../components/topics/panels/TopicPanel":809,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],551:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -84460,7 +84611,7 @@ var SharedClassApp = React.createClass({displayName: "SharedClassApp",
 
 module.exports = SharedClassApp;
 
-},{"../../../components/class/share/SharedClassPanel":592,"../../../mixins/LoginMixin":780,"object-assign":34,"react/addons":354}],552:[function(require,module,exports){
+},{"../../../components/class/share/SharedClassPanel":592,"../../../mixins/LoginMixin":837,"object-assign":34,"react/addons":354}],552:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -84714,7 +84865,7 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
 
 module.exports = StudentClassApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../components/card/UsersCardsList":565,"../../../components/class/SilentAddToClassComponent":578,"../../../components/class/buttons/student/LeaveClassButton":584,"../../../components/class/check/CheckUsersListDashboard":585,"../../../components/class/header/ClassHeader":588,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/class/tabs/ClassTab":593,"../../../components/class/tabs/ClassTabsNamePanel":594,"../../../components/class/tasks/TaskPanel":596,"../../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../../components/dialog/exercise/ExerciseDialogViewer":611,"../../../components/feed/SelfLoadingClassFeed":638,"../../../components/header/student/StudentHeader":648,"../../../components/help/GifInstruction":650,"../../../components/help/IconMessage":651,"../../../components/segment/LoadingSegment":727,"../../../components/sidebar/SidebarChatButton":730,"../../../components/templates/LeftSidebarTemplate":737,"../../../mixins/ClassMixin":774,"../../../mixins/LoginMixin":780,"../LoginApp":543,"object-assign":34,"react":527,"react-router":307}],553:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../components/card/UsersCardsList":565,"../../../components/class/SilentAddToClassComponent":578,"../../../components/class/buttons/student/LeaveClassButton":584,"../../../components/class/check/CheckUsersListDashboard":585,"../../../components/class/header/ClassHeader":588,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/class/tabs/ClassTab":593,"../../../components/class/tabs/ClassTabsNamePanel":594,"../../../components/class/tasks/TaskPanel":596,"../../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../../components/dialog/exercise/ExerciseDialogViewer":611,"../../../components/feed/SelfLoadingClassFeed":661,"../../../components/header/student/StudentHeader":671,"../../../components/help/GifInstruction":673,"../../../components/help/IconMessage":674,"../../../components/segment/LoadingSegment":782,"../../../components/sidebar/SidebarChatButton":785,"../../../components/templates/LeftSidebarTemplate":792,"../../../mixins/ClassMixin":830,"../../../mixins/LoginMixin":837,"../LoginApp":543,"object-assign":34,"react":527,"react-router":307}],553:[function(require,module,exports){
 
 var React = require('react');
 var assign = require('object-assign');
@@ -84904,7 +85055,7 @@ var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
 
 module.exports = StudentIndexApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../components/class/buttons/student/AddClassButton":582,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/header/student/StudentHeader":648,"../../../components/segment/LoadingSegment":727,"../../../components/sidebar/SidebarChatButton":730,"../../../components/templates/LeftSidebarTemplate":737,"../../../mixins/ClassMixin":774,"../../../mixins/LoginMixin":780,"object-assign":34,"react":527}],554:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../components/class/buttons/student/AddClassButton":582,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/header/student/StudentHeader":671,"../../../components/segment/LoadingSegment":782,"../../../components/sidebar/SidebarChatButton":785,"../../../components/templates/LeftSidebarTemplate":792,"../../../mixins/ClassMixin":830,"../../../mixins/LoginMixin":837,"object-assign":34,"react":527}],554:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -86277,7 +86428,7 @@ var ExercisesPagedCardsList = React.createClass({displayName: "ExercisesPagedCar
 
 module.exports = ExercisesPagedCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"./ExercisesCardsList":562,"object-assign":34,"react":527}],564:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"./ExercisesCardsList":562,"object-assign":34,"react":527}],564:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -86288,6 +86439,8 @@ var moment = require('moment');
 
 var ProfileUpdateButton = require('../profile/ProfileUpdateButton');
 var ProfileStatButton = require('../profile/ProfileStatButton');
+
+var ChatButton = require('../chat/ChatButton');
 
 var UserCard = React.createClass({displayName: "UserCard",
     getDefaultProps: function () {
@@ -86323,7 +86476,7 @@ var UserCard = React.createClass({displayName: "UserCard",
 
     componentStyle: {
         placeholder: {
-
+            //padding: 10
         },
 
         header: {
@@ -86339,6 +86492,15 @@ var UserCard = React.createClass({displayName: "UserCard",
             fontSize: '12px',
             padding: '5px',
             paddingLeft: '7px'
+
+        },
+
+        avaDiv: {
+            width: 36,
+            height: 36,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat'
         }
     },
 
@@ -86355,11 +86517,17 @@ var UserCard = React.createClass({displayName: "UserCard",
         if (formattedDate != undefined){
             formattedDate = ' ' + formattedDate;
         }
+
+        var avaSt = assign({}, this.componentStyle.avaDiv, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+
         return (
             React.createElement("div", {style: this.componentStyle.placeholder, className: 'ui card', onClick: this.onClick}, 
 
-                React.createElement("div", {className: "content"}, 
-                        React.createElement("img", {className: "right floated mini ui image", src: this.props.avatar}), 
+                React.createElement("div", {className: "content", style: {padding: 10}}, 
+
+                        React.createElement("div", {className: 'right floated', style: avaSt}), 
+
+
                         React.createElement("div", {className: "header", style: this.componentStyle.header}, 
                             this.props.name
                         ), 
@@ -86369,7 +86537,7 @@ var UserCard = React.createClass({displayName: "UserCard",
                             ), 
                         
 
-                    React.createElement("div", null, 
+                    React.createElement("div", {style: {marginTop: 8}}, 
                         this.props.stasiMode == false ? null :
 
                                 React.createElement(ProfileUpdateButton, {userId: this.props.userId, 
@@ -86377,12 +86545,19 @@ var UserCard = React.createClass({displayName: "UserCard",
                                                      name: this.props.name, 
                                                      avatar: this.props.avatar, 
                                                      timestamp: this.props.timestamp, 
+                                                     buttonName: 'инфо', 
                                                      onUserDelete: this.onUserDelete}), 
 
                         
 
-                        React.createElement(ProfileStatButton, {userId: this.props.userId, name: this.props.name})
+                        React.createElement(ProfileStatButton, {userId: this.props.userId, name: this.props.name}), 
 
+                        React.createElement(ChatButton, {
+                            friendId: this.props.userId, 
+                            style: this.componentStyle.buttonStyle, 
+                            buttonClassName: 'ui button mini grey basic', 
+                            icon: 'icon comments', 
+                            buttonName: 'сообщения'})
 
 
 
@@ -86402,7 +86577,7 @@ var UserCard = React.createClass({displayName: "UserCard",
 
 module.exports = UserCard;
 
-},{"../profile/ProfileStatButton":710,"../profile/ProfileUpdateButton":711,"moment":33,"object-assign":34,"react":527}],565:[function(require,module,exports){
+},{"../chat/ChatButton":568,"../profile/ProfileStatButton":740,"../profile/ProfileUpdateButton":741,"moment":33,"object-assign":34,"react":527}],565:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -86481,7 +86656,7 @@ var UsersCardsList = React.createClass({displayName: "UsersCardsList",
 
 module.exports = UsersCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"./UserCard":564,"object-assign":34,"react":527}],566:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"./UserCard":564,"object-assign":34,"react":527}],566:[function(require,module,exports){
 /**
  * Created by sabir on 14.12.15.
  */
@@ -86497,7 +86672,8 @@ var ExercisesProgressChart = React.createClass({displayName: "ExercisesProgressC
         return {
             userAnswers: [],
             daysNumber: 7,
-            ticksNumber: 7
+            ticksNumber: 7,
+            mode: 'diff'
         }
     },
 
@@ -86604,6 +86780,17 @@ var ExercisesProgressChart = React.createClass({displayName: "ExercisesProgressC
         step = Math.floor(n / ticksNumber);
         daysArray = this.getDataForLastNDays(n);
 
+        if (this.props.mode == 'integral'){
+            var sum = 0;
+            var array = [];
+            for (var i in daysArray){
+                var da = daysArray[i];
+                var sum = sum + da.number;
+                array.push({timestamp: da.timestamp, number: sum});
+            }
+            daysArray = array;
+        }
+
         var chartData = {
             //labels: daysArray.map(function(d){return d.timestamp}),
             labels: daysArray.map(function(d, k){
@@ -86637,6 +86824,8 @@ var ExercisesProgressChart = React.createClass({displayName: "ExercisesProgressC
         };
         return chartData;
     },
+
+
 
     chartIsEmpty: function(chartData){
         var list = chartData.datasets[0].data;
@@ -86836,7 +87025,7 @@ var SelfLoadingUserProgressPanel = React.createClass({displayName: "SelfLoadingU
 
 module.exports = SelfLoadingUserProgressPanel;
 
-},{"../../mixins/ExerciseMixin":775,"./ExercisesProgressChart":566,"object-assign":34,"react":527}],568:[function(require,module,exports){
+},{"../../mixins/ExerciseMixin":832,"./ExercisesProgressChart":566,"object-assign":34,"react":527}],568:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -87101,7 +87290,7 @@ var ChatMessagesPanel = React.createClass({displayName: "ChatMessagesPanel",
 
 module.exports = ChatMessagesPanel;
 
-},{"../user/SeflLoadingUserSpan":763,"./input/ChatInput":573,"./messages/MessagesList":575,"object-assign":34,"react":527}],570:[function(require,module,exports){
+},{"../user/SeflLoadingUserSpan":818,"./input/ChatInput":573,"./messages/MessagesList":575,"object-assign":34,"react":527}],570:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -87227,7 +87416,7 @@ var ChatPanel = React.createClass({displayName: "ChatPanel",
 
 module.exports = ChatPanel;
 
-},{"../../mixins/LoginMixin":780,"../chat/input/ChatInput":573,"./SelfLoadingChatMessagesPanel":572,"./messages/MessagesList":575,"./sidebar/SelfLoadingFriendsList":577,"object-assign":34,"react":527}],571:[function(require,module,exports){
+},{"../../mixins/LoginMixin":837,"../chat/input/ChatInput":573,"./SelfLoadingChatMessagesPanel":572,"./messages/MessagesList":575,"./sidebar/SelfLoadingFriendsList":577,"object-assign":34,"react":527}],571:[function(require,module,exports){
 /**
  * Created by sabir on 17.12.15.
  */
@@ -87325,7 +87514,7 @@ var NotReadChatSpan = React.createClass({displayName: "NotReadChatSpan",
 
 module.exports = NotReadChatSpan;
 
-},{"../../mixins/ChatMixin":773,"object-assign":34,"react":527}],572:[function(require,module,exports){
+},{"../../mixins/ChatMixin":829,"object-assign":34,"react":527}],572:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -87527,6 +87716,7 @@ var SelfLoadingChatMessagesPanel = React.createClass({displayName: "SelfLoadingC
                             React.createElement("img", {style: {width: 200}, src: 'https://www.englishpatient.org/app/assets/images/messages.png'})
                         ) :
                         React.createElement(ChatMessagesPanel, {onSubmit: this.onSubmit, 
+                                           userId: this.props.userId, 
                                            sending: this.state.loading, 
                                            refreshing: this.state.refreshing, 
                                            friendId: this.props.friendId, 
@@ -87549,7 +87739,7 @@ var SelfLoadingChatMessagesPanel = React.createClass({displayName: "SelfLoadingC
 
 module.exports = SelfLoadingChatMessagesPanel;
 
-},{"../../mixins/ChatMixin":773,"./ChatMessagesPanel":569,"object-assign":34,"react":527}],573:[function(require,module,exports){
+},{"../../mixins/ChatMixin":829,"./ChatMessagesPanel":569,"object-assign":34,"react":527}],573:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -87728,7 +87918,7 @@ var ChatInput = React.createClass({displayName: "ChatInput",
 
 module.exports = ChatInput;
 
-},{"../../file/FileUploadButton":644,"../../file/FileUploader":645,"object-assign":34,"react":527}],574:[function(require,module,exports){
+},{"../../file/FileUploadButton":667,"../../file/FileUploader":668,"object-assign":34,"react":527}],574:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -88338,7 +88528,7 @@ var SelfLoadingFriendsList = React.createClass({displayName: "SelfLoadingFriends
 
 module.exports = SelfLoadingFriendsList;
 
-},{"../../../mixins/ChatMixin":773,"../../../mixins/ClassMixin":774,"./FriendsList":576,"object-assign":34,"react":527}],578:[function(require,module,exports){
+},{"../../../mixins/ChatMixin":829,"../../../mixins/ClassMixin":830,"./FriendsList":576,"object-assign":34,"react":527}],578:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -88409,7 +88599,7 @@ var SilentAddToClassComponent = React.createClass({displayName: "SilentAddToClas
 
 module.exports = SilentAddToClassComponent;
 
-},{"../../mixins/ClassMixin":774,"object-assign":34,"react":527}],579:[function(require,module,exports){
+},{"../../mixins/ClassMixin":830,"object-assign":34,"react":527}],579:[function(require,module,exports){
 /**
  * Created by sabir on 02.11.15.
  */
@@ -88604,7 +88794,7 @@ var AddNewClassButton = React.createClass({displayName: "AddNewClassButton",
 
 module.exports = AddNewClassButton;
 
-},{"../../../mixins/ClassMixin":774,"../../dialog/Dialog":604,"object-assign":34,"react":527}],580:[function(require,module,exports){
+},{"../../../mixins/ClassMixin":830,"../../dialog/Dialog":604,"object-assign":34,"react":527}],580:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -89014,7 +89204,7 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
 
 module.exports = EditClassButton;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/ClassMixin":774,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"../../editor/PatientEditor":612,"./ArchiveClassButton":580,"object-assign":34,"react":527}],582:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/ClassMixin":830,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"../../editor/PatientEditor":635,"./ArchiveClassButton":580,"object-assign":34,"react":527}],582:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -89225,7 +89415,7 @@ var AddClassButton = React.createClass({displayName: "AddClassButton",
 
 module.exports = AddClassButton;
 
-},{"../../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../mixins/ClassMixin":774,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],583:[function(require,module,exports){
+},{"../../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../mixins/ClassMixin":830,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],583:[function(require,module,exports){
 /**
  * Created by sabir on 07.11.15.
  */
@@ -89444,7 +89634,7 @@ var LeaveClassButton = React.createClass({displayName: "LeaveClassButton",
 
 module.exports = LeaveClassButton;
 
-},{"../../../../mixins/ClassMixin":774,"../../../buttons/DeleteButton":559,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],585:[function(require,module,exports){
+},{"../../../../mixins/ClassMixin":830,"../../../buttons/DeleteButton":559,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],585:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -89604,7 +89794,7 @@ var CheckUsersListDashboard = React.createClass({displayName: "CheckUsersListDas
 
 module.exports = CheckUsersListDashboard;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/ExerciseMixin":775,"../../exercise/ListOfSelfLoadingUserExercises":613,"../../feed/SelfLoadingClassFeed":638,"../../help/GifInstruction":650,"./VerticalUsersList":586,"object-assign":34,"react":527}],586:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/ExerciseMixin":832,"../../exercise/ListOfSelfLoadingUserExercises":636,"../../feed/SelfLoadingClassFeed":661,"../../help/GifInstruction":673,"./VerticalUsersList":586,"object-assign":34,"react":527}],586:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -90203,7 +90393,7 @@ var SelfLoadingLeftSidebarClassesList = React.createClass({displayName: "SelfLoa
 
 module.exports = SelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ClassMixin":774,"../../class/buttons/AddNewClassButton":579,"./LeftSidebarClassesList":589,"react":527}],591:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ClassMixin":830,"../../class/buttons/AddNewClassButton":579,"./LeftSidebarClassesList":589,"react":527}],591:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -90362,7 +90552,7 @@ var StudentSelfLoadingLeftSidebarClassesList = React.createClass({displayName: "
 
 module.exports = StudentSelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ClassMixin":774,"../../class/buttons/AddNewClassButton":579,"../../class/buttons/student/AddClassPlusButton":583,"./LeftSidebarClassesList":589,"react":527}],592:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ClassMixin":830,"../../class/buttons/AddNewClassButton":579,"../../class/buttons/student/AddClassPlusButton":583,"./LeftSidebarClassesList":589,"react":527}],592:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -90495,7 +90685,7 @@ var SharedClassPanel = React.createClass({displayName: "SharedClassPanel",
 
 module.exports = SharedClassPanel;
 
-},{"../../../components/header/SelfInitHeader":647,"../../../mixins/ClassMixin":774,"../../containers/TopBrandContainer":597,"../../feed/SelfLoadingClassFeed":638,"object-assign":34,"react":527}],593:[function(require,module,exports){
+},{"../../../components/header/SelfInitHeader":670,"../../../mixins/ClassMixin":830,"../../containers/TopBrandContainer":597,"../../feed/SelfLoadingClassFeed":661,"object-assign":34,"react":527}],593:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -90887,7 +91077,7 @@ var CreateNewFeedItemPanel = React.createClass({displayName: "CreateNewFeedItemP
 
 module.exports = CreateNewFeedItemPanel;
 
-},{"../../editor/PatientEditor":612,"../../feed/FeedItem":635,"object-assign":34,"react":527}],596:[function(require,module,exports){
+},{"../../editor/PatientEditor":635,"../../feed/FeedItem":658,"object-assign":34,"react":527}],596:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -91067,7 +91257,7 @@ var TaskPanel = React.createClass({displayName: "TaskPanel",
 
 module.exports = TaskPanel;
 
-},{"../../../mixins/FeedMixin":776,"../../editor/PatientEditor":612,"../../feed/PagedFeedItemsList":637,"../../feed/SelfLoadingClassFeed":638,"../../feed/button/CreateFeedItemButton":641,"./CreateNewFeedItemPanel":595,"object-assign":34,"react":527}],597:[function(require,module,exports){
+},{"../../../mixins/FeedMixin":833,"../../editor/PatientEditor":635,"../../feed/PagedFeedItemsList":660,"../../feed/SelfLoadingClassFeed":661,"../../feed/button/CreateFeedItemButton":664,"./CreateNewFeedItemPanel":595,"object-assign":34,"react":527}],597:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -91794,7 +91984,7 @@ var SoundsPanel = React.createClass({displayName: "SoundsPanel",
 
 module.exports = SoundsPanel;
 
-},{"../../editor/PatientEditor":612,"./SoundsList":601,"object-assign":34,"react":527}],603:[function(require,module,exports){
+},{"../../editor/PatientEditor":635,"./SoundsList":601,"object-assign":34,"react":527}],603:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -91908,7 +92098,7 @@ var WordsPanel = React.createClass({displayName: "WordsPanel",
 
 module.exports = WordsPanel;
 
-},{"../../editor/PatientEditor":612,"object-assign":34,"react":527}],604:[function(require,module,exports){
+},{"../../editor/PatientEditor":635,"object-assign":34,"react":527}],604:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -92614,7 +92804,7 @@ var EditBunchDialog = React.createClass({displayName: "EditBunchDialog",
 
 module.exports = EditBunchDialog;
 
-},{"../../../mixins/ExerciseMixin":775,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"object-assign":34,"react":527}],609:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":832,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"object-assign":34,"react":527}],609:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -92691,7 +92881,7 @@ var ExerciseDialogClickableArea = React.createClass({displayName: "ExerciseDialo
 
 module.exports = ExerciseDialogClickableArea;
 
-},{"../../exercise/SelfLoadingUserExercise":617,"../DialogClickableArea":605,"object-assign":34,"react":527}],610:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":640,"../DialogClickableArea":605,"object-assign":34,"react":527}],610:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -92783,7 +92973,7 @@ var ExerciseDialogInfoBlock = React.createClass({displayName: "ExerciseDialogInf
 
 module.exports = ExerciseDialogInfoBlock;
 
-},{"../../exercise/SelfLoadingUserExercise":617,"../../exercise/info/SelfLoadingExerciseInfoCard":630,"object-assign":34,"react":527}],611:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":640,"../../exercise/info/SelfLoadingExerciseInfoCard":653,"object-assign":34,"react":527}],611:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -92968,7 +93158,3425 @@ var ExerciseDialogViewer = React.createClass({displayName: "ExerciseDialogViewer
 
 module.exports = ExerciseDialogViewer;
 
-},{"../../../mixins/ExerciseMixin":775,"../../dialog/Dialog":604,"../../exercise/SelfLoadingUserExercise":617,"../../exercise/create/ExerciseUpdateTabs":622,"../../exercise/info/ExerciseInfoCard":629,"./ExerciseDialogInfoBlock":610,"object-assign":34,"react":527}],612:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":832,"../../dialog/Dialog":604,"../../exercise/SelfLoadingUserExercise":640,"../../exercise/create/ExerciseUpdateTabs":645,"../../exercise/info/ExerciseInfoCard":652,"./ExerciseDialogInfoBlock":610,"object-assign":34,"react":527}],612:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogViewPanel = require('./DialogViewPanel');
+
+var SelfLoadingDialogViewPanel = require('./SelfLoadingDialogViewPanel');
+
+var SelfLoadingDialogEditPanel = require('./edit/SelfLoadingDialogEditPanel');
+
+var DialogEditableViewPanel = React.createClass({displayName: "DialogEditableViewPanel",
+    getDefaultProps: function () {
+        return {
+            dialog: {},
+            editable: true,
+            userId: undefined,
+
+            onDelete: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            mode: 'view'
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        panelsPlaceholder: {
+            marginBottom: 70
+        },
+
+        footerPlaceholder: {
+            height: 47,
+            position: 'absolute',
+            padding: 5,
+            zIndex: 100,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            textAlign: 'left',
+            borderTop: '1px solid #EFF0F1',
+            backgroundColor: 'white'
+        }
+    },
+
+
+    getContent: function(){
+        var mode = this.state.mode;
+
+
+        if (mode == 'view'){
+            return (
+                React.createElement(SelfLoadingDialogViewPanel, {userId: this.props.userId, dialogId: this.props.dialog.id})
+            );
+        }
+        if (mode == 'edit'){
+            return (
+                React.createElement(SelfLoadingDialogEditPanel, {onDelete: this.onDelete, dialogId: this.props.dialog.id})
+            );
+        }
+
+        return null;
+
+    },
+
+    onDelete: function(){
+        this.props.onDelete();
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
+        });
+    },
+
+    render: function () {
+        var mode = this.state.mode;
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.panelsPlaceholder}, 
+
+                    this.getContent()
+
+                ), 
+
+                this.props.editable == false ? null :
+
+                    React.createElement("div", {style: this.componentStyle.footerPlaceholder}, 
+                        mode == 'edit' ?
+                            React.createElement("div", null, 
+                                React.createElement("button", {className: 'ui button primary', onClick: this.switchMode.bind(this, 'view')}, 
+                                    React.createElement("i", {className: 'icon reply'}), 
+                                    "просмотр"
+                                )
+                            )
+                            :
+                            React.createElement("div", null, 
+                                React.createElement("button", {className: 'ui button primary', onClick: this.switchMode.bind(this, 'edit')}, 
+                                    React.createElement("i", {className: 'icon pencil'}), 
+                                    "редактировать"
+                                )
+                            )
+                        
+                    )
+                
+
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogEditableViewPanel;
+
+},{"./DialogViewPanel":613,"./SelfLoadingDialogViewPanel":614,"./edit/SelfLoadingDialogEditPanel":620,"object-assign":34,"react":527}],613:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('./card/DialogCard');
+
+var SelfLoadingDialogPanel = require('./view/SelfLoadingDialogPanel');
+
+var moment = require('moment');
+
+var DialogViewPanel = React.createClass({displayName: "DialogViewPanel",
+    getDefaultProps: function () {
+        return {
+            dialog: {},
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 900,
+            padding: 4,
+            height: '100%'
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            borderRight: '1px solid #EFF0F1',
+            width: 280,
+            pading: 5
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 610,
+            padding: 5
+        },
+
+        avatarPlaceholder: {
+            width: 270,
+            height: 180
+        },
+
+        infoPlaceholder: {
+            padding: 5
+        }
+
+    },
+
+    render: function () {
+        var dialog = this.props.dialog;
+        var sDate = moment(dialog.timestamp).format('LLL');
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+                        React.createElement(DialogCard, {avatar: dialog.avatar, name: dialog.name})
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.infoPlaceholder}, 
+                        React.createElement("b", null, React.createElement("i", {className: 'icon calendar'}), " дата создания:"), 
+                        sDate, 
+                        React.createElement("br", null), 
+
+                        React.createElement("b", null, React.createElement("i", {className: 'icon file'}), " описание:"), 
+                        dialog.description
+
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+                    React.createElement(SelfLoadingDialogPanel, {userId: this.props.userId, dialogId: dialog.id})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogViewPanel;
+
+},{"./card/DialogCard":615,"./view/SelfLoadingDialogPanel":634,"moment":33,"object-assign":34,"react":527}],614:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogViewPanel = require('./DialogViewPanel');
+
+var DialogMixin = require('../../mixins/DialogMixin');
+
+var SelfLoadingDialogViewPanel = React.createClass({displayName: "SelfLoadingDialogViewPanel",
+    getDefaultProps: function () {
+        return {
+            dialogId: undefined,
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            dialog: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        }
+    },
+
+    load: function(){
+        var dialogId = this.props.dialogId;
+        this.setState({
+            loading: true
+        });
+        DialogMixin.loadDialog(dialogId, function(dialog){
+            this.setState({
+                loading: false,
+                dialog: dialog
+            });
+        }.bind(this));
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.state.dialog == undefined ? null :
+                    React.createElement(DialogViewPanel, {userId: this.props.userId, dialog: this.state.dialog}), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+
+        );
+    }
+
+});
+
+module.exports = SelfLoadingDialogViewPanel;
+
+},{"../../mixins/DialogMixin":831,"./DialogViewPanel":613,"object-assign":34,"react":527}],615:[function(require,module,exports){
+/**
+ * Created by sabir on 17.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+
+
+var DialogCard = React.createClass({displayName: "DialogCard",
+    getDefaultProps: function () {
+        return {
+            avatar: 'http://www.unoosa.org/res/timeline/index_html/space-2.jpg',
+            name: undefined,
+            opacity: 0.7,
+            style: {
+
+            },
+
+            mode: 'square',
+            radius: 200,
+            width: 120
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            //cursor: 'pointer',
+            marginRight: 5,
+            height: '100%',
+            width: '100%',
+            border: '1px solid #EFF0F1',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            position: 'relative',
+            borderRadius: '4px',
+            fontSize: '16px'
+        },
+
+
+        overlay: {
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            opacity: 0.7,
+            backgroundColor: '#2E3C54',
+            borderRadius: '4px'
+        },
+
+        overlayPanel: {
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1,
+            //zIndex: 2,
+            padding: 5,
+            borderRadius: '4px'
+        },
+
+        namePlaceholder: {
+            position: 'absolute',
+            bottom: 5,
+            left: 5,
+            color: 'white',
+            maxWidth: '98%'
+        },
+
+        roundStyle: {
+            borderRadius: 1000
+        }
+    },
+
+    render: function () {
+        var name = this.props.name;
+        var st = assign({}, this.componentStyle.placeholder,
+            {backgroundImage: 'url(\'' + this.props.avatar + '\')'}, this.props.style);
+        if (this.props.mode == 'round'){
+            st = assign({}, st, this.componentStyle.roundStyle, {width: this.props.width, height: this.props.width});
+        }
+
+        var overlayStyle = assign({}, this.componentStyle.overlay, {borderRadius: st.borderRadius, opacity: this.props.opacity});
+
+
+        return (
+            React.createElement("div", {style: st, className: 'dialogCard'}, 
+                React.createElement("div", {style: overlayStyle}
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.overlayPanel, onClick: this.onPanelClick}, 
+                    name == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                            name
+                        )
+                    
+                )
+            )
+        );
+    }
+
+});
+
+module.exports = DialogCard;
+
+},{"object-assign":34,"react":527}],616:[function(require,module,exports){
+/**
+ * Created by sabir on 17.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FileUploadButton = require('../../file/FileUploadButton');
+
+var ExerciseDialogCard = React.createClass({displayName: "ExerciseDialogCard",
+    getDefaultProps: function () {
+        return {
+
+            audioUrl: undefined,
+            text: undefined,
+            name: undefined,
+
+            onChange: function(text, url){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            audioUrl: this.props.audioUrl,
+            text: this.props.text
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var text = nextProps.text;
+        var audioUrl = nextProps.audioUrl;
+        this.setState({
+            audioUrl: audioUrl,
+            text: text
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 612,
+            height: 80,
+            padding: 5,
+            borderRadius: 2,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1'
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 400,
+            padding: 2,
+            height: '100%'
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 200,
+            padding: 5
+        },
+
+        textarea: {
+            width: '100%',
+            minHeight: 0,
+            height: '100%'
+        },
+
+        audioPlaceholder: {
+            width: '100%',
+            height: 27
+
+        },
+
+        uploaderPlaceholder: {
+            marginTop: 3
+        }
+    },
+
+    onTextChange: function(evt){
+        var val = evt.target.value;
+        if (val == undefined){
+            val = '';
+        }
+        this.setState({
+            text: val
+        });
+        this.onChange(val, this.state.audioUrl);
+    },
+
+
+    onAudioUploaded: function(url){
+        this.setState({
+            audioUrl: url
+        });
+        this.onChange(this.state.text, url);
+    },
+
+    deleteAudio: function(){
+        this.setState({
+            audioUrl: undefined
+        });
+        this.onChange(this.state.text, undefined);
+    },
+
+    onChange: function(text, audioUrl){
+        this.props.onChange(text, audioUrl);
+    },
+
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement("div", {className: 'ui form', style: {height: '100%'}}, 
+                        React.createElement("div", {class: "field", style: {height: '100%'}}, 
+                            React.createElement("textarea", {value: this.state.text, 
+                                      placeholder: 'Текст речи персонажа', 
+                                      onChange: this.onTextChange, 
+                                      row: 2, 
+                                      style: this.componentStyle.textarea})
+                        )
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+
+                    React.createElement("div", {style: this.componentStyle.audioPlaceholder}, 
+
+                        this.state.audioUrl == undefined ?
+                            React.createElement("div", {style: { opacity: 0.6, lineHeight: '13px', fontSize: 12, textAlign: 'center'}}, 
+                                "загрузите аудио-файл реплики (.mp3)"
+                            )
+                            :
+                            React.createElement("div", {style: {height: '100%', width: '100%'}}, 
+                                React.createElement("audio", {style: {height: '100%', width: '100%'}, controls: true, src: this.state.audioUrl})
+                            )
+                        
+
+                    ), 
+
+
+                    React.createElement("div", {style: this.componentStyle.uploaderPlaceholder}, 
+
+                            React.createElement(FileUploadButton, {className: 'ui button tiny fluid basic grey', 
+                                              icon: 'upload icon', buttonName: 'загрузить аудио', 
+                                              onFileUploaded: this.onAudioUploaded})
+
+                    ), 
+
+
+                    React.createElement("div", {style: {padding: 6, display: 'none', marginTop: 2, cursor: 'pointer', opacity: 0.8}, 
+                                className: 'ui red message', onClick: this.deleteAudio}, 
+                            React.createElement("i", {className: 'icon remove'}), " удалить аудио"
+                    )
+
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = ExerciseDialogCard;
+
+},{"../../file/FileUploadButton":667,"object-assign":34,"react":527}],617:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ExerciseDialogCard = require('./ExerciseDialogCard');
+
+var ExerciseDialogCardsList = React.createClass({displayName: "ExerciseDialogCardsList",
+    getDefaultProps: function () {
+        return {
+            firstRoleName: undefined,
+            secondRoleName: undefined,
+
+            cards: [],
+            onChange: function(cards){
+                console.log(cards);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            cards: this.props.cards
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var cards = nextProps.cards;
+        this.setState({
+            cards: cards
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+        labelPlaceholder: {
+            fontWeight: 'bold',
+            opacity: 0.6,
+            fontSize: 12
+        }
+    },
+
+    onChange: function(k, text, audioUrl){
+        //console.log('ExerciseDialogCardsList: onChange: k, text, audioUrl = ', k, text, audioUrl);
+        var list = this.state.cards;
+        list[k].text = text;
+        list[k].audioUrl = audioUrl;
+
+        //console.log('cards changes: ', list);
+
+        this.setState({
+            cards: list
+        });
+
+        this.props.onChange(list);
+    },
+
+    render: function () {
+        var list = this.props.cards;
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(card, k){
+                    var key = 'd_card_' + k;
+                    var num = +k + 1;
+                    var sNum = num + ') '
+                    var onChange = this.onChange.bind(this, k);
+                    var label = (k % 2 == 0) ? this.props.firstRoleName : this.props.secondRoleName;
+                    return (
+                        React.createElement("div", {key: key, style: {marginTop: 10}}, 
+                            React.createElement("div", {style: this.componentStyle.labelPlaceholder}, 
+                                sNum, " ", label
+                            ), 
+                            React.createElement(ExerciseDialogCard, {
+                                onChange: onChange, 
+                                text: card.text, audioUrl: card.audioUrl})
+                        )
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = ExerciseDialogCardsList;
+
+},{"./ExerciseDialogCard":616,"object-assign":34,"react":527}],618:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var Dialog = require('../../dialog/Dialog');
+
+var DialogEditInfoPanel = require('./DialogEditInfoPanel');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+
+var CreateDialogButton = React.createClass({displayName: "CreateDialogButton",
+    getDefaultProps: function () {
+        return {
+            buttonName: 'Создать диалог',
+            buttonClassName: 'ui button basic ',
+            icon: 'icon plus',
+
+            onDialogCreated: function(dialog){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        dialogPanelStyle: {
+            width: 865,
+            padding: 5,
+            textAlign: 'left'
+        }
+    },
+
+    onUpdate: function(data){
+        console.log('onUpdate occured: data = ', data);
+        this.setState({
+            loading: true
+        });
+        DialogMixin.updateDialog(this.props.dialogId, data, function(dialog){
+            this.setState({
+                loading: false,
+                dialogVisible: false
+            });
+            this.props.onDialogCreated(dialog);
+        }.bind(this));
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    showDialog: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement("div", null, 
+                React.createElement(DialogEditInfoPanel, {onUpdate: this.onUpdate}), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, onClick: this.showDialog}, 
+                    React.createElement("i", {className: this.props.icon}), " ", this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {content: this.getDialogContent(), onClose: this.onClose, 
+                            visible: true, 
+                            dialogPanelStyle: this.componentStyle.dialogContentStyle})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = CreateDialogButton;
+
+},{"../../../mixins/DialogMixin":831,"../../dialog/Dialog":604,"./DialogEditInfoPanel":619,"object-assign":34,"react":527}],619:[function(require,module,exports){
+/**
+ * Created by sabir on 17.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FileUploader = require('../../file/FileUploader');
+
+var FileUploadButton = require('../../file/FileUploadButton');
+
+var DialogCard = require('../card/DialogCard');
+
+var VimeoPlayer = require('../../player/VimeoPlayer');
+
+var PatientEditor = require('../../editor/PatientEditor');
+
+var ExerciseDialogCardsList = require('../card/ExerciseDialogCardsList');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+
+var DeleteButton = require('../../buttons/DeleteButton');
+
+var DialogEditInfoButton = React.createClass({displayName: "DialogEditInfoButton",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+
+            dialogId: undefined,
+
+            avatar: undefined,
+            name: undefined,
+            description: undefined,
+
+            firstRoleImg: undefined,
+            secondRoleImg: undefined,
+
+            task: undefined,
+
+            cards: [],
+
+            firstRoleName: undefined,
+            secondRoleName: undefined,
+            vimeoId: undefined,
+
+            onUpdate: function(data){
+
+            },
+
+            onDelete: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            avatar: this.props.avatar,
+            name: this.props.name,
+            task: this.props.task,
+            description: this.props.description,
+            firstRoleImg: this.props.firstRoleImg,
+            secondRoleImg: this.props.secondRoleImg,
+            firstRoleName: this.props.firstRoleName,
+            secondRoleName: this.props.secondRoleName,
+            vimeoId: this.props.vimeoId,
+
+            cards: this.props.cards,
+
+            loading: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 865,
+            height: 600,
+            textAlign: 'left',
+            margin: '0 auto',
+            backgroundColor: 'white'
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 240,
+            padding: 5,
+            height: '100%',
+            overflowY: 'auto',
+            borderRight: '1px solid #EFF0F1'
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            overflowY: 'auto',
+            width: 625,
+            padding: 5,
+            height: '100%'
+        },
+
+        avatarPlaceholder: {
+            height: 150,
+            width: 230,
+            marginBottom: 5
+        },
+
+        avasBlock: {
+            textAlign: 'center',
+            width: 390,
+            margin: '0 auto'
+        },
+
+        avaPlaceholder: {
+            margin: 7,
+            marginTop: 0,
+            width: 180,
+            textAlign: 'center',
+            display: 'inline-block'
+        },
+
+        roleAva: {
+            width: 160,
+            height: 160,
+            margin: '0 auto',
+            marginBottom: 5
+        },
+
+        roleAvaStyle: {
+            borderRadius: 200,
+            border: '3px solid #EFF0F1'
+        },
+
+        roleNameInput: {
+            textAlign: 'center',
+            padding: 6
+        },
+
+        nameInput: {
+            padding: 6
+        },
+
+        videoBlockPlaceholder: {
+            width: '100%',
+            minHeight: 167,
+            backgroundColor: '#EFF0F1',
+            padding: 5,
+            borderRadius: 3,
+            marginTop: 5
+        },
+
+        style: {
+            width: '100%',
+            height: '100%'
+        },
+
+        videoPlaceholder: {
+            width: '100%',
+            height: 170,
+            backgroundColor: '#EFF0F1'
+        },
+
+        descriptionPlaceholder: {
+            marginTop: 10
+        },
+
+        taskPlaceholder: {
+            marginTop: 10
+        },
+
+        cardsPlaceholder: {
+            margin: '0 auto',
+            marginTop: 10,
+            width: 613
+        },
+
+        bottomButtonsPlaceholder: {
+            padding: 10,
+            textAlign: 'center'
+        },
+
+        saveButtonPlaceholder: {
+            padding: 5,
+            paddingLeft: 0
+        }
+    },
+
+    onAvatarUploaded: function(url){
+        this.setState({
+            avatar: url
+        });
+    },
+
+    deleteAvatar: function(){
+        this.setState({
+            avatar: undefined
+        });
+    },
+
+    getValFromEvt: function(evt){
+        if (evt.target.value == undefined){
+            return '';
+        }else{
+            return evt.target.value;
+        }
+    },
+
+    onNameChange: function(evt){
+        this.setState({
+            name: this.getValFromEvt(evt)
+        });
+    },
+
+    onDescriptionChange: function(evt){
+        this.setState({
+            description: this.getValFromEvt(evt)
+        });
+    },
+
+    onFirstRoleNameChange: function(evt){
+        this.setState({
+            firstRoleName: this.getValFromEvt(evt)
+        });
+    },
+
+    onSecondRoleNameChange: function(evt){
+        this.setState({
+            secondRoleName: this.getValFromEvt(evt)
+        });
+    },
+
+    onFirstRoleImgChange: function(url){
+        this.setState({
+            firstRoleImg: url
+        });
+    },
+
+    onSecondRoleImgChange: function(url){
+        this.setState({
+            secondRoleImg: url
+        });
+    },
+
+    onTaskChange: function(evt){
+        this.setState({
+            task: this.getValFromEvt(evt)
+        });
+    },
+
+    onVimeoIdChange: function(evt){
+        var val = evt.target.value;
+        if (val == '') {
+            val = undefined;
+        }
+        if (val != undefined){
+            var matches = /(\d+)/.exec(val);
+            if (matches != undefined && matches.length > 0){
+                val = matches[0];
+            }else{
+                val = undefined;
+            }
+        }
+
+        this.setState({
+            vimeoId: val
+        });
+    },
+
+    onCardsChange: function(cards){
+        this.setState({
+            cards: cards
+        });
+    },
+
+    addCard: function(){
+        var cards = this.state.cards;
+        cards.push({
+            dialogId: this.props.dialogId,
+            number: cards.length
+        });
+        this.setState({
+            cards: cards
+        });
+    },
+
+    canAddCard: function(){
+        var f = true;
+        var list = this.state.cards;
+        for (var i in list){
+            var c = list[i];
+            if ((c.text == undefined || c.text.trim() == '') || (c.audioUrl == undefined)){
+                f = false;
+                break;
+            }
+        }
+        return f;
+    },
+
+    removeLastCard: function(){
+        this.setState({
+            cards: this.state.cards.slice(0, this.state.cards.length - 1)
+        });
+    },
+
+    updateDialog: function(){
+        var data = {
+            name: this.state.name,
+            avatar: this.state.avatar,
+            task: this.state.task,
+            description: this.state.description,
+            firstRoleImg: this.state.firstRoleImg,
+            secondRoleImg: this.state.secondRoleImg,
+            cards: this.state.cards,
+            firstRoleName: this.state.firstRoleName,
+            secondRoleName: this.state.secondRoleName,
+            vimeoId: this.state.vimeoId
+        };
+        this.props.onUpdate(data);
+    },
+
+    canSave: function(){
+        if (this.canAddCard() == false){
+            return false;
+        }
+        if (this.state.name == undefined ||
+                                        this.state.firstRoleName == undefined ||
+                                        this.state.vimeoId == undefined ||
+                                        this.state.secondRoleName == undefined){
+            return false;
+        }
+        return true;
+    },
+
+    onDelete: function(){
+        this.props.onDelete();
+    },
+
+    render: function () {
+        var vimeoId = (this.state.vimeoId == undefined) ? '' : this.state.vimeoId;
+        var canAddCard = this.canAddCard();
+        var canRemoveLastCard = (this.state.cards != undefined && this.state.cards.length > 0);
+        var canSave = this.canSave();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+                        React.createElement(DialogCard, {avatar: this.state.avatar, name: this.state.name})
+                    ), 
+
+
+                    React.createElement("div", {style: {marginBottom: 5}}, 
+                        this.state.avatar == undefined ?
+                            React.createElement(FileUploadButton, {icon: 'icon upload', className: 'ui fluid tiny basic grey button', 
+                                               buttonName: 'загрузить картинку', onFileUploaded: this.onAvatarUploaded})
+                            :
+                            React.createElement("div", {style: {padding: 7, cursor: 'pointer', opacity: 0.8}, className: 'ui red message', onClick: this.deleteAvatar}, 
+                                React.createElement("i", {className: 'icon remove'}), "удалить аватар"
+                            )
+                        
+                    ), 
+
+                    React.createElement("div", {className: 'ui form'}, 
+                        React.createElement("label", null, "Название диалога", React.createElement("sup", {style: {color: '#FC636B'}}, "*")), 
+                        React.createElement("input", {placeholder: 'Название диалога', 
+                               style: this.componentStyle.nameInput, 
+                               value: this.state.name, 
+                               onChange: this.onNameChange})
+                    ), 
+
+
+                    React.createElement("div", {style: this.componentStyle.videoBlockPlaceholder}, 
+
+                        this.state.vimeoId == undefined ?
+                            React.createElement("div", {style: {marginBottom: 15}}, 
+                                "Введите ссылку на видео (с сайта vimeo.com) в поле ниже"
+                            )
+                            :
+                            React.createElement("div", {style: this.componentStyle.videoPlaceholder}, 
+                                React.createElement(VimeoPlayer, {style: this.componentStyle.style, vimeoId: this.state.vimeoId})
+                            ), 
+                        
+
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("div", {className: "field", style: {marginTop: 10}}, 
+                                React.createElement("label", null, "Ссылка на видео", React.createElement("sup", {style: {color: '#FC636B'}}, "*")), 
+                                React.createElement("input", {onChange: this.onVimeoIdChange, 
+                                       style: this.componentStyle.nameInput, 
+                                       value: vimeoId, type: "text", 
+                                       placeholder: "ссылка на видео"})
+                            )
+                        )
+
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.descriptionPlaceholder}, 
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("textarea", {value: this.state.description, style: {minHeight: 0, height: '6em'}, 
+                                  placeholder: 'Краткое описание диалога', 
+                                  onChange: this.onDescriptionChange})
+                        )
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.taskPlaceholder}, 
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("textarea", {value: this.state.task, style: {minHeight: 0, height: '6em'}, 
+                                      placeholder: 'Описание задания для ученика', 
+                                      onChange: this.onTaskChange})
+                        )
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.saveButtonPlaceholder}, 
+
+                        React.createElement("button", {disabled: !canSave, className: 'ui primary tiny button', onClick: this.updateDialog}, 
+                            React.createElement("i", {className: 'icon save'}), " Сохранить"
+                        ), 
+
+                        this.props.dialogId == undefined ? null :
+                            React.createElement("div", {style: {marginTop: 5}}, 
+                                React.createElement(DeleteButton, {onDelete: this.onDelete})
+                            )
+                        
+
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+
+                    React.createElement("div", {style: this.componentStyle.avasBlock}, 
+
+                        React.createElement("div", {style: this.componentStyle.avaPlaceholder}, 
+
+                            React.createElement("div", {style: this.componentStyle.roleAva}, 
+                                React.createElement(DialogCard, {style: this.componentStyle.roleAvaStyle, 
+                                            opacity: 0.3, 
+                                            avatar: this.state.firstRoleImg})
+                            ), 
+
+                            React.createElement("div", {style: {marginTop: 5, marginBottom: 5}}, 
+                                this.state.firstRoleImg == undefined ?
+                                    React.createElement(FileUploadButton, {className: 'ui fluid tiny basic grey button', icon: 'icon upload', buttonName: 'загрузить картинку', onFileUploaded: this.onFirstRoleImgChange})
+                                    :
+                                    React.createElement("div", {style: {padding: 6, cursor: 'pointer', opacity: 0.8}, className: 'ui red message', onClick: this.onFirstRoleImgChange.bind(this, undefined)}, 
+                                        React.createElement("i", {className: 'icon remove'}), "удалить аватар"
+                                    )
+                                
+                            ), 
+
+                            React.createElement("div", {className: 'ui form'}, 
+                                React.createElement("input", {placeholder: 'Имя первого персонажа', value: this.state.firstRoleName, 
+                                       style: this.componentStyle.roleNameInput, onChange: this.onFirstRoleNameChange})
+                            )
+
+                        ), 
+
+                        React.createElement("div", {style: this.componentStyle.avaPlaceholder}, 
+
+                            React.createElement("div", {style: this.componentStyle.roleAva}, 
+                                React.createElement(DialogCard, {style: this.componentStyle.roleAvaStyle, 
+                                            opacity: 0.3, 
+                                            avatar: this.state.secondRoleImg})
+                            ), 
+
+                            React.createElement("div", {style: {marginTop: 5, marginBottom: 5}}, 
+                                this.state.secondRoleImg == undefined ?
+                                    React.createElement(FileUploadButton, {className: 'ui fluid tiny basic grey button', icon: 'icon upload', buttonName: 'загрузить картинку', onFileUploaded: this.onSecondRoleImgChange})
+                                    :
+                                    React.createElement("div", {style: {padding: 6, cursor: 'pointer', opacity: 0.8}, className: 'ui red message', onClick: this.onSecondRoleImgChange.bind(this, undefined)}, 
+                                        React.createElement("i", {className: 'icon remove'}), "удалить аватар"
+                                    )
+                                
+                            ), 
+
+                            React.createElement("div", {className: 'ui form'}, 
+                                React.createElement("input", {placeholder: 'Имя второго персонажа', value: this.state.secondRoleName, 
+                                       style: this.componentStyle.roleNameInput, 
+                                       onChange: this.onSecondRoleNameChange})
+                            )
+
+                        )
+
+                    ), 
+
+
+
+
+                    React.createElement("div", {style: this.componentStyle.cardsPlaceholder}, 
+
+                        React.createElement(ExerciseDialogCardsList, {
+                            firstRoleName: this.state.firstRoleName, 
+                            secondRoleName: this.state.secondRoleName, 
+                            cards: this.state.cards, onChange: this.onCardsChange})
+
+                    ), 
+
+
+                        React.createElement("div", {style: this.componentStyle.bottomButtonsPlaceholder}, 
+
+                            canRemoveLastCard == false ? null :
+                                React.createElement("button", {style: {marginRight: 15}, className: 'ui tiny button red basic', onClick: this.removeLastCard}, 
+                                    React.createElement("i", {className: 'icon remove'}), "  удалить последнюю фразу"
+                                ), 
+                            
+
+                            canAddCard == false ? null :
+                                React.createElement("button", {className: 'ui tiny button green basic', onClick: this.addCard}, 
+                                    React.createElement("i", {className: 'icon plus'}), "  добавить фразу"
+                                )
+                            
+
+                        )
+
+
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogEditInfoButton;
+
+},{"../../../mixins/DialogMixin":831,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":635,"../../file/FileUploadButton":667,"../../file/FileUploader":668,"../../player/VimeoPlayer":737,"../card/DialogCard":615,"../card/ExerciseDialogCardsList":617,"object-assign":34,"react":527}],620:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var DialogMixin = require('../../../mixins/DialogMixin');
+var DialogEditInfoPanel = require('./DialogEditInfoPanel');
+
+
+var SelfLoadingDialogEditPanel = React.createClass({displayName: "SelfLoadingDialogEditPanel",
+    getDefaultProps: function () {
+        return {
+            dialogId: undefined,
+
+            onDelete: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            dialog: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    load: function(){
+        var dialogId = this.props.dialogId;
+        if (dialogId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        DialogMixin.loadDialog(dialogId, function(dialog){
+            this.setState({
+                dialog: dialog,
+                cards: dialog.cards,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        }
+
+    },
+
+    saveCards: function(){
+        var cards = this.state.cards;
+        this.setState({
+            loading: true
+        });
+        DialogMixin.saveCards(cards, this.props.dialogId, function(crds){
+            this.setState({
+                cards: crds,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    onUpdate: function(data){
+        console.log('onUpdate occured: data = ', data);
+        this.setState({
+            loading: true
+        });
+        DialogMixin.updateDialog(this.props.dialogId, data, function(dialog){
+            this.setState({
+                loading: false,
+                dialog: dialog,
+                cards: dialog.cards
+            });
+        }.bind(this));
+    },
+
+    onDelete: function(){
+        this.setState({
+            loading: true
+        });
+        DialogMixin.deleteDialog(this.props.dialogId, function(){
+            this.setState({
+                loading: false
+            });
+            this.props.onDelete();
+        }.bind(this))
+    },
+
+
+    render: function () {
+        var dialog = this.state.dialog;
+        var cards = this.state.cards;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                    dialog == undefined ? null :
+                        React.createElement("div", null, 
+                            React.createElement(DialogEditInfoPanel, {
+                                dialogId: this.props.dialogId, 
+                                avatar: dialog.avatar, 
+                                name: dialog.name, 
+                                task: dialog.task, 
+                                description: dialog.description, 
+                                firstRoleImg: dialog.firstRoleImg, 
+                                secondRoleImg: dialog.secondRoleImg, 
+                                firstRoleName: dialog.firstRoleName, 
+                                secondRoleName: dialog.secondRoleName, 
+                                vimeoId: dialog.vimeoId, 
+                                cards: cards, 
+                                onUpdate: this.onUpdate, 
+                                onDelete: this.onDelete}
+                                )
+                        ), 
+                    
+
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingDialogEditPanel;
+
+},{"../../../mixins/DialogMixin":831,"./DialogEditInfoPanel":619,"object-assign":34,"react":527}],621:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var DialogCard = require('../card/DialogCard');
+
+var DialogItem = React.createClass({displayName: "DialogItem",
+    getDefaultProps: function () {
+        return {
+            dialog: {},
+            onItemClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            margin: 5,
+            display: 'inline-block'
+        },
+
+        cardPlaceholder: {
+            width: 200,
+            cursor: 'pointer',
+            height: 150
+        }
+    },
+
+    onClick: function(){
+        this.props.onItemClick();
+    },
+
+    render: function () {
+        var dialog = this.props.dialog;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, onClick: this.onClick}, 
+
+
+                React.createElement("div", {style: this.componentStyle.cardPlaceholder}, 
+                    React.createElement(DialogCard, {avatar: dialog.avatar, name: dialog.name})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogItem;
+
+},{"../card/DialogCard":615,"object-assign":34,"react":527}],622:[function(require,module,exports){
+/**
+ * Created by sabir on 20.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var Dialog = require('../../dialog/Dialog');
+
+var SelfLoadingDialogsSearchList = require('./SelfLoadingDialogsSearchList');
+
+var DialogSearchButton = React.createClass({displayName: "DialogSearchButton",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            buttonName: 'Диалог',
+            icon: 'icon users',
+            buttonClassName: 'ui mini basic grey button',
+
+            onSelect: function(dialog){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        dialogPanelStyle: {
+            width: 730,
+            padding: 5
+        }
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onShow: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    onSelect: function(dialog){
+        this.props.onSelect(dialog);
+        this.onClose();
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement(SelfLoadingDialogsSearchList, {teacherId: this.props.userId, onSelect: this.onSelect})
+        );
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, onClick: this.onShow}, 
+                    React.createElement("i", {className: this.props.icon}), 
+                    this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {level: 100, 
+                        dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                        onClose: this.onClose, 
+                        visible: true, content: this.getDialogContent()}
+                        )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogSearchButton;
+
+},{"../../dialog/Dialog":604,"./SelfLoadingDialogsSearchList":625,"object-assign":34,"react":527}],623:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogItem = require('./DialogItem');
+
+var DialogsList = React.createClass({displayName: "DialogsList",
+    getDefaultProps: function () {
+        return {
+            dialogs: [],
+            onItemClick: function(dialog){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 850,
+            padding: 5,
+            margin: '0 auto',
+            backgroundColor: 'white'
+        }
+    },
+
+
+    onClick: function(dialog){
+        this.props.onItemClick(dialog);
+    },
+
+    render: function (){
+
+        var list = this.props.dialogs;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(dialog, k){
+                    var key = 'dialog_' + dialog.id + '_' + k;
+                    var bClick = this.onClick.bind(this, dialog);
+                    return (
+                        React.createElement(DialogItem, {dialog: dialog, key: key, onItemClick: bClick})
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogsList;
+
+},{"./DialogItem":621,"object-assign":34,"react":527}],624:[function(require,module,exports){
+/**
+ * Created by sabir on 19.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+
+var DialogsList = require('./DialogsList');
+
+var Dialog = require('../../dialog/Dialog');
+
+var SelfLoadingDialogPanel = require('../view/SelfLoadingDialogPanel');
+
+var DialogViewPanel = require('../DialogViewPanel');
+
+var DialogEditableViewPanel = require('../DialogEditableViewPanel');
+
+var CreateDialogButton = require('../edit/CreateDialogButton');
+
+
+var SelfLoadingDialogsList = React.createClass({displayName: "SelfLoadingDialogsList",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+            createButtonVisible: true
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            dialogs: [],
+            selectedDialog: undefined,
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        listPlaceholder: {
+
+        },
+
+        dialogPanelStyle: {
+            width: 900,
+            textAlign: 'left'
+        },
+
+        createButtonPlaceholder: {
+            paddingTop: 10,
+            paddingRight: 10,
+            backgroundColor: 'white',
+            margin: '0 auto',
+            width: 850,
+            textAlign: 'right'
+        }
+    },
+
+    load: function(){
+        var userId = this.props.teacherId;
+        this.setState({
+            loading: true
+        });
+
+        DialogMixin.loadTeacherDialogs(userId, function(dialogs){
+            this.setState({
+                dialogs: dialogs,
+                loading: false
+            });
+        }.bind(this));
+
+    },
+
+    onItemClick: function(dialog){
+        this.setState({
+            selectedDialog: dialog,
+            dialogVisible: true
+        });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    getDialogContent: function(){
+        var dialog = this.state.selectedDialog;
+        //var userId =
+
+        return (
+            React.createElement("div", null, 
+                dialog == undefined ? null :
+                    React.createElement(DialogEditableViewPanel, {userId: this.props.teacherId, onDelete: this.onDelete, dialog: dialog})
+                
+            )
+        );
+    },
+
+    onDialogCreated: function(dialog){
+        var dialogs = this.state.dialogs;
+        dialogs.push(dialog);
+        this.setState({
+            dialogs: dialogs
+        });
+    },
+
+    onDelete: function(){
+        this.load();
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.createButtonPlaceholder}, 
+
+                    React.createElement(CreateDialogButton, {onDialogCreated: this.onDialogCreated})
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+
+                    React.createElement(DialogsList, {onItemClick: this.onItemClick, dialogs: this.state.dialogs})
+
+                ), 
+
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {visible: true, 
+                            dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                            content: this.getDialogContent(), 
+                            onClose: this.onClose}), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingDialogsList;
+
+},{"../../../mixins/DialogMixin":831,"../../dialog/Dialog":604,"../DialogEditableViewPanel":612,"../DialogViewPanel":613,"../edit/CreateDialogButton":618,"../view/SelfLoadingDialogPanel":634,"./DialogsList":623,"object-assign":34,"react":527}],625:[function(require,module,exports){
+/**
+ * Created by sabir on 20.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogViewButton = require('../view/DialogViewButton');
+
+var DialogCard = require('../card/DialogCard');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+
+var SelfLoadingDialogsSearchList = React.createClass({displayName: "SelfLoadingDialogsSearchList",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+            onSelect: function(dialog){
+                console.log('default: onSelect: ', dialog);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            dialogs: []
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 720,
+            backgroundColor: 'white',
+            margin: '0 auto'
+        },
+
+        dialogItem: {
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            padding: 5,
+            borderBottom: 5
+        },
+
+        dialogItemAvatar: {
+            width: 100,
+            height: 70,
+            marginRight: 5,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        dialogItemContent: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 500
+        },
+
+        dialogName: {
+            fontWeight: 'bold'
+        },
+
+        dialogDescription: {
+
+        },
+
+        dialogControls: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        listPlaceholder: {
+
+        }
+
+    },
+
+    load: function(){
+        this.setState({
+            loading: true
+        });
+        DialogMixin.loadTeacherDialogs(this.props.teacherId, function(dialogs){
+            this.setState({
+                loading: false,
+                dialogs: dialogs
+            });
+        }.bind(this));
+    },
+
+    onSelect: function(dialog){
+        this.props.onSelect(dialog);
+    },
+
+    render: function () {
+        var list = this.state.dialogs;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+
+                    list.map(function(dialog, k){
+                        var key = 'dialog_' + k + '_' + dialog.id;
+                        var onSelect = this.onSelect.bind(this, dialog);
+
+                        return (
+                            React.createElement("div", {style: this.componentStyle.dialogItem, key: key}, 
+                                React.createElement("div", {style: this.componentStyle.dialogItemAvatar}, 
+                                    React.createElement(DialogCard, {avatar: dialog.avatar})
+                                ), 
+
+                                React.createElement("div", {style: this.componentStyle.dialogItemContent}, 
+
+                                    React.createElement("div", {style: this.componentStyle.dialogName}, 
+                                        dialog.name
+                                    ), 
+                                    dialog.description == undefined ? null :
+                                        React.createElement("div", {style: this.componentStyle.dialogDescription}, 
+                                            dialog.description
+                                        )
+                                    
+                                ), 
+
+                                React.createElement("div", {style: this.componentStyle.dialogControls}, 
+                                    React.createElement(DialogViewButton, {dialogId: dialog.id, userId: this.props.teacherId}), 
+
+                                    React.createElement("button", {style: {marginTop: 5}, className: 'ui basic button mini', onClick: onSelect}, 
+                                        React.createElement("i", {className: 'icon checkmark'}), " выбрать"
+                                    )
+
+                                )
+
+                            )
+                        );
+
+                    }, this)
+
+                ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingDialogsSearchList;
+
+},{"../../../mixins/DialogMixin":831,"../card/DialogCard":615,"../view/DialogViewButton":631,"object-assign":34,"react":527}],626:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../card/DialogCard');
+
+var TranslatableText = require('../../text/translatable/TranslatableText');
+
+var DialogOneReplicPanel = React.createClass({displayName: "DialogOneReplicPanel",
+    getDefaultProps: function () {
+        return {
+            orientation: 'left',
+            name: 'Sabir',
+            avatar: undefined,
+            text: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        cardStyle: {
+            fontSize: 10
+        },
+
+        cardPlaceholder: {
+            width: 50,
+            height: 50
+        },
+
+        avaPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 2
+        },
+
+        contentPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 2,
+            width: 500,
+            fontSize: 14,
+            lineHeight: '16px'
+        }
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.props.orientation == 'left' ?
+                    React.createElement("div", null, 
+                        React.createElement("div", {style: this.componentStyle.avaPlaceholder}, 
+                            React.createElement("div", {style: this.componentStyle.cardPlaceholder}, 
+                                React.createElement(DialogCard, {style: this.componentStyle.cardStyle, 
+                                            name: this.props.name, 
+                                            opacity: 0.3, avatar: this.props.avatar})
+                            )
+                        ), 
+
+                        React.createElement("div", {style: assign({}, this.componentStyle.contentPlaceholder, {textAlign: this.props.orientation})}, 
+                            React.createElement(TranslatableText, {text: this.props.text, 
+                                              fontSize: this.componentStyle.contentPlaceholder.fontSize})
+                        )
+                    )
+                    :
+                    React.createElement("div", null, 
+                        React.createElement("div", {style: assign({}, this.componentStyle.contentPlaceholder, {textAlign: this.props.orientation})}, 
+                            React.createElement(TranslatableText, {text: this.props.text, 
+                                              fontSize: this.componentStyle.contentPlaceholder.fontSize})
+                        ), 
+
+                        React.createElement("div", {style: this.componentStyle.avaPlaceholder}, 
+                            React.createElement("div", {style: this.componentStyle.cardPlaceholder}, 
+                                React.createElement(DialogCard, {style: this.componentStyle.cardStyle, 
+                                            name: this.props.name, 
+                                            opacity: 0.3, avatar: this.props.avatar})
+                            )
+                        )
+                    )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogOneReplicPanel;
+
+},{"../../text/translatable/TranslatableText":796,"../card/DialogCard":615,"object-assign":34,"react":527}],627:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogReplicsPanel = require('./DialogReplicsPanel');
+
+var VimeoPlayer = require('../../player/VimeoPlayer');
+
+var SelectRolePanel = require('./SelectRolePanel');
+
+var DialoPreparePanel = React.createClass({displayName: "DialoPreparePanel",
+    getDefaultProps: function () {
+        return {
+            dialog: {
+
+            },
+            cards: [],
+            onRoleSelect: function(number){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 600,
+            padding: 0,
+            margin: '0 auto',
+            backgroundColor: 'white'
+            //border: '1px solid #EFF0F1'
+        },
+
+        topPlaceholder: {
+            width: '100%'
+        },
+
+        playerPlaceholder: {
+            width: '100%',
+            height: 360
+        },
+
+        selectRolePlaceholder: {
+
+        },
+
+        taskPlaceholder: {
+            padding: 10,
+            fontSize: 18
+        }
+
+    },
+
+    onRoleSelect: function(number){
+        this.props.onRoleSelect(number);
+    },
+
+    render: function () {
+        var dialog = this.props.dialog;
+        var cards = this.props.cards;
+
+        var task = (dialog == undefined) ? undefined : dialog.task;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                task == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.taskPlaceholder}, 
+                        React.createElement("div", {dangerouslySetInnerHTML: {__html: task}})
+                    ), 
+                
+
+                React.createElement("div", {style: this.componentStyle.topPlaceholder}, 
+
+                    React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                        React.createElement(VimeoPlayer, {vimeoId: dialog.vimeoId})
+                    )
+
+                ), 
+
+                React.createElement(DialogReplicsPanel, {
+                    firstRoleName: dialog.firstRoleName, 
+                    secondRoleName: dialog.secondRoleName, 
+                    firstRoleImg: dialog.firstRoleImg, 
+                    secondRoleImg: dialog.secondRoleImg, 
+                    cards: cards}), 
+
+                React.createElement("div", {style: this.componentStyle.selectRolePlaceholder}, 
+
+                    React.createElement("div", {style: {textAlign: 'center', padding: 10, fontSize: 18, marginTop: 15, borderTop: '1px dotted #EFF0F1'}}, 
+                        "Выберите роль"
+                    ), 
+
+                    React.createElement(SelectRolePanel, {
+                        firstRoleName: dialog.firstRoleName, 
+                        secondRoleName: dialog.secondRoleName, 
+                        firstRoleImg: dialog.firstRoleImg, 
+                        secondRoleImg: dialog.secondRoleImg, 
+                        onSelect: this.onRoleSelect}
+                        )
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialoPreparePanel;
+
+},{"../../player/VimeoPlayer":737,"./DialogReplicsPanel":628,"./SelectRolePanel":632,"object-assign":34,"react":527}],628:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogOneReplicPanel = require('./DialogOneReplicPanel');
+
+var DialogReplicsPanel = React.createClass({displayName: "DialogReplicsPanel",
+    getDefaultProps: function () {
+        return {
+            firstRoleImg: undefined,
+            firstRoleName: undefined,
+
+            secondRoleName: undefined,
+            secondRoleImg: undefined,
+
+            cards: []
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 560,
+            backgroundColor: 'white',
+            margin: '0 auto'
+        }
+    },
+
+    render: function () {
+        var list = this.props.cards;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(c, k){
+                    var key = 'card_' + c.id + '_' + k;
+                    var avatar = (k % 2 == 0) ? this.props.firstRoleImg : this.props.secondRoleImg;
+                    var name = (k % 2 == 0) ? this.props.firstRoleName : this.props.secondRoleName;
+                    var text = c.text;
+                    var orientation = (k % 2 == 0) ? 'left' : 'right';
+                    return(
+                        React.createElement("div", {key: key, style: {marginTop: 10}}, 
+                            React.createElement(DialogOneReplicPanel, {orientation: orientation, avatar: avatar, name: name, text: text})
+                        )
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogReplicsPanel;
+
+},{"./DialogOneReplicPanel":626,"object-assign":34,"react":527}],629:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../card/DialogCard');
+
+var UserExerciseInput = require('../../exercise/UserExerciseInput');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+
+var DialogTaskCard = React.createClass({displayName: "DialogTaskCard",
+    getDefaultProps: function () {
+        return {
+            dialog: {},
+            roleNumber: 0,
+            cardNumber: 0,
+            isStart: false,
+
+            userId: undefined,
+
+            userAnswerAudioUrl: undefined,
+
+            card: {},
+
+            answerCard: {},
+
+            teacherMode: false,
+
+            onAnswer: function(url){
+
+            }
+
+
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.ensureVisible();
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white'
+
+        },
+
+        questionPlaceholder: {
+
+        },
+
+        imagePlaceholder: {
+            textAlign: 'center',
+            width: 250,
+            height: 250,
+            margin: '0 auto'
+        },
+
+        audioPlaceholder: {
+            margin: '0 auto',
+            width: 250
+        },
+        
+        answerPlaceholder: {
+            
+        }
+
+
+    },
+
+    ensureVisible() {
+        var domNode = React.findDOMNode(this);
+        console.log('ensureVisible: domNode = ', domNode);
+        domNode.scrollIntoView(true);
+    },
+
+    onRecordingSave: function(tp, url){
+        this.props.onAnswer(url);
+    },
+
+    render: function () {
+        var defaultLirmakCard = DialogMixin.getLirmakDefaultCard();
+        var card = ((this.props.isStart == true) && (roleNumber == 0)) ? defaultLirmakCard : this.props.card;
+
+        var cardNumber = this.props.cardNumber;
+
+        var roleNumber = this.props.roleNumber;
+        var dialog = this.props.dialog;
+
+        var friendAvatar = (roleNumber == 0) ? dialog.secondRoleImg : dialog.firstRoleImg;
+        var friendName = (roleNumber == 0) ? dialog.secondRoleName : dialog.firstRoleName;
+        var audioUrl = this.props.card.audioUrl;
+
+        if ((this.props.isStart == true) && (roleNumber == 0)){
+            friendAvatar = defaultLirmakCard.img;
+        }
+
+        if (this.props.teacherMode == true){
+            if (cardNumber % 2 == 0){
+                friendAvatar = dialog.firstRoleImg;
+            }else{
+                friendAvatar = dialog.secondRoleImg;
+            }
+        }
+
+        var needToAnswer = (this.props.answerCard.id != undefined);
+
+        var uA = {url: this.props.userAnswerAudioUrl};
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.questionPlaceholder}, 
+
+                    React.createElement("div", {style: this.componentStyle.imagePlaceholder}, 
+                        React.createElement(DialogCard, {avatar: friendAvatar, opacity: 0.2})
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.audioPlaceholder}, 
+                        React.createElement("audio", {style: {width: '100%'}, autoPlay: true, controls: true, src: audioUrl})
+                    )
+
+                ), 
+
+                needToAnswer == false ? null :
+                    React.createElement("div", {style: this.componentStyle.answerPlaceholder}, 
+                        React.createElement(UserExerciseInput, {onAnswer: this.onRecordingSave, 
+                                           number: this.props.cardNumber, 
+                                           userAnswer: uA})
+                    )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogTaskCard;
+
+},{"../../../mixins/DialogMixin":831,"../../exercise/UserExerciseInput":641,"../card/DialogCard":615,"object-assign":34,"react":527}],630:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var SelectedUserRolePanel = require('./SelectedUserRolePanel');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+
+var DialogTaskCard = require('./DialogTaskCard');
+
+var NumbersBlock = require('../../numbers/NumbersBlock');
+
+var DialogTaskPanel = React.createClass({displayName: "DialogTaskPanel",
+    getDefaultProps: function () {
+        return {
+            //0 or 1
+            dialog: {},
+            cards: [],
+            answersMap: {},
+            roleNumber: 0,
+            onAnswer: function(cardId, url){
+
+            },
+
+            onGoBack: function(){
+
+            },
+
+            teacherMode: false
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedNumber: 0
+        }
+    },
+
+
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 610,
+            padding: 5,
+            backgroundColor: 'white',
+            margin: '0 auto'
+        },
+
+        topPlaceholder: {
+
+        },
+
+        numbersPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+
+        backPlaceholder: {
+            textAlign: 'center',
+            marginTop: -30
+        }
+
+    },
+
+    onCardItemClick: function(n){
+        this.setState({
+            selectedNumber: n
+        });
+    },
+
+    getPassedNumbers: function(){
+        var pairedCards = this.getPairedCards();
+        var arr = [];
+        var aMap = this.props.answersMap;
+        for (var i in pairedCards){
+            var aCard = pairedCards[i].answerCard;
+            if (aCard.id == undefined){
+                continue;
+            }
+            if (aMap[aCard.id] == undefined){
+                continue;
+            }
+            arr.push(i);
+        }
+        return arr;
+    },
+
+    onGoBack: function(){
+        this.props.onGoBack();
+    },
+
+    onAnswer: function(url){
+        var pairedCards = this.getPairedCards();
+        var k = this.state.selectedNumber;
+        var pc = (pairedCards.length > 0) ? pairedCards[k] : undefined;
+        var answerCard = (pc == undefined) ? undefined : pc.answerCard;
+        var cardId = answerCard.id;
+
+        console.log('onAnswer: cardId, url = ', cardId, url);
+
+        this.props.onAnswer(cardId, url);
+
+        var selectedNumber = this.state.selectedNumber;
+        if (selectedNumber < pairedCards.length - 1){
+            selectedNumber++;
+        }
+        this.setState({
+            selectedNumber: selectedNumber
+        });
+
+    },
+
+    getPairedCards: function(){
+        var pairedCards = [];
+        var cards = this.props.cards;
+        if (this.props.teacherMode == false){
+            pairedCards = DialogMixin.getDialogPairedCards(this.props.cards, this.props.roleNumber);
+        }else {
+            pairedCards = cards.map(function(card){
+                return {
+                    questionCard: card,
+                    answerCard: card
+                }
+            });
+        }
+        return pairedCards;
+    },
+
+    render: function () {
+        var pairedCards = this.getPairedCards();
+
+        var k = this.state.selectedNumber;
+
+        var pc = (pairedCards.length > 0) ? pairedCards[k] : undefined;
+        var isStart = (k == 0);
+        var card = (pc == undefined) ? undefined : pc.questionCard;
+        var answerCard = (pc == undefined) ? undefined : pc.answerCard;
+
+        var aMap = this.props.answersMap;
+        var userAnswer = (answerCard == undefined) ? undefined : aMap[answerCard.id];
+        var userAnswerAudioUrl = (userAnswer == undefined) ? undefined : userAnswer.answerUrl;
+
+        var passedNumbers = this.getPassedNumbers();
+
+        console.log('rendering DialogTaskPanel: userAnswer = ', userAnswer);
+        console.log('rendering DialogTaskPanel: userAnswerAudioUrl = ', userAnswerAudioUrl);
+
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.props.teacherMode == true ? null :
+                    React.createElement("div", null, 
+
+                        React.createElement("div", {style: this.componentStyle.topPlaceholder}, 
+                            React.createElement(SelectedUserRolePanel, {
+                                         roleNumber: this.props.roleNumber, dialog: this.props.dialog})
+                        ), 
+                        React.createElement("div", {style: this.componentStyle.backPlaceholder}, 
+                            React.createElement("button", {className: 'ui basic mini button grey', onClick: this.onGoBack}, 
+                                React.createElement("i", {className: 'icon reply'}), " повторить"
+                            )
+                        )
+
+                    ), 
+                
+
+
+
+
+                React.createElement("div", {style: this.componentStyle.numbersPlaceholder}, 
+                    React.createElement(NumbersBlock, {amount: pairedCards.length, 
+                                  passedNumbers: passedNumbers, 
+                                  selectedNumber: this.state.selectedNumber, 
+                                  onItemClick: this.onCardItemClick})
+                ), 
+
+                React.createElement("div", null, 
+                    React.createElement(DialogTaskCard, {dialog: this.props.dialog, 
+                                            card: card, answerCard: answerCard, 
+                                            cardNumber: k, isStart: isStart, 
+                                            userAnswerAudioUrl: userAnswerAudioUrl, 
+                                            onAnswer: this.onAnswer, 
+                                            teacherMode: this.props.teacherMode, 
+                                            roleNumber: this.props.roleNumber})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogTaskPanel;
+
+},{"../../../mixins/DialogMixin":831,"../../numbers/NumbersBlock":735,"./DialogTaskCard":629,"./SelectedUserRolePanel":633,"object-assign":34,"react":527}],631:[function(require,module,exports){
+/**
+ * Created by sabir on 20.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var Dialog = require('../../dialog/Dialog');
+
+var SelfLoadingDialogPanel = require('./SelfLoadingDialogPanel');
+
+var DialogViewButton = React.createClass({displayName: "DialogViewButton",
+    getDefaultProps: function () {
+        return {
+            dialogId: undefined,
+            userId: undefined,
+
+            buttonStyle: {
+
+            },
+
+            buttonName: 'посмотреть',
+            icon: 'icon unhide',
+            buttonClassName: 'ui mini basic button'
+
+
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onShow: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement("div", null, 
+
+                React.createElement(SelfLoadingDialogPanel, {userId: this.props.userId, dialogId: this.props.dialogId})
+
+            )
+        );
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        dialogPanelStyle: {
+            width: 620,
+            padding: 5
+        }
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, onClick: this.onShow}, 
+                    React.createElement("i", {className: this.props.icon}), 
+                    this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {level: 1000, 
+                        content: this.getDialogContent(), 
+                        dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                        visible: true, onClose: this.onClose})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = DialogViewButton;
+
+},{"../../dialog/Dialog":604,"./SelfLoadingDialogPanel":634,"object-assign":34,"react":527}],632:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../card/DialogCard');
+
+var SelectRolePanel = React.createClass({displayName: "SelectRolePanel",
+    getDefaultProps: function () {
+        return {
+            firstRoleImg: undefined,
+            secondRoleImg: undefined,
+
+            firstRoleName: undefined,
+            secondRoleName: undefined,
+
+            //0 or 1
+            onSelect: function(number){
+                console.log(number);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        avatarPlaceholder: {
+            height: 150,
+            width: 230,
+            marginBottom: 5
+        },
+
+        avasBlock: {
+            textAlign: 'center',
+            width: 390,
+            margin: '0 auto'
+        },
+
+        avaPlaceholder: {
+            margin: 7,
+            marginTop: 0,
+            width: 180,
+            textAlign: 'center',
+            display: 'inline-block'
+
+        },
+
+        roleAva: {
+            width: 120,
+            height: 120,
+            cursor: 'pointer',
+            margin: '0 auto',
+            marginBottom: 5
+        },
+
+        roleAvaStyle: {
+            borderRadius: 200,
+            border: '3px solid #EFF0F1'
+        },
+
+        namePlaceholder: {
+            fontSize: 16,
+            fontWeight: 'bold'
+        }
+    },
+
+    onClick: function(number){
+        this.props.onSelect(number);
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, className: 'selectRolePanel'}, 
+
+                React.createElement("div", {style: this.componentStyle.avasBlock}, 
+
+                    React.createElement("div", {style: this.componentStyle.avaPlaceholder, onClick: this.onClick.bind(this, 0)}, 
+
+                        React.createElement("div", {style: this.componentStyle.roleAva, className: 'roleAva'}, 
+                            React.createElement(DialogCard, {style: this.componentStyle.roleAvaStyle, 
+                                        opacity: 0.3, 
+                                        avatar: this.props.firstRoleImg})
+                        ), 
+
+                        React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                            this.props.firstRoleName
+                        )
+
+
+
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.avaPlaceholder, onClick: this.onClick.bind(this, 1)}, 
+                        React.createElement("div", {style: this.componentStyle.roleAva, className: 'roleAva'}, 
+                            React.createElement(DialogCard, {style: this.componentStyle.roleAvaStyle, 
+                                        opacity: 0.3, 
+                                        avatar: this.props.secondRoleImg})
+                        ), 
+                        React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                            this.props.secondRoleName
+                        )
+                    )
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelectRolePanel;
+
+},{"../card/DialogCard":615,"object-assign":34,"react":527}],633:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../card/DialogCard');
+
+var SelectedUserRolePanel = React.createClass({displayName: "SelectedUserRolePanel",
+    getDefaultProps: function () {
+        return {
+            roleNumber: 0,
+            dialog: {}
+
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 600,
+            padding: 10,
+            margin: '0 auto',
+            backgroundColor: 'white'
+        },
+
+        left: {
+            width: '50%',
+            display: 'inline-block',
+            verticalAlign: 'top',
+            textAlign: 'left'
+        },
+
+        right: {
+            width: '50%',
+            display: 'inline-block',
+            verticalAlign: 'top',
+            textAlign: 'right'
+        },
+
+        cardPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        textPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        }
+    },
+
+
+
+    render: function () {
+        var leftInfo = {avatar: this.props.dialog.firstRoleImg, name: this.props.dialog.firstRoleName};
+        var rightInfo = {avatar: this.props.dialog.secondRoleImg, name: this.props.dialog.secondRoleName};
+
+        if (this.props.roleNumber == 1){
+            var c = leftInfo;
+            leftInfo = rightInfo;
+            rightInfo = c;
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement(DialogCard, {style: this.componentStyle.roleAvaStyle, 
+                                opacity: 0.3, 
+                                mode: 'round', width: 36, 
+                                avatar: leftInfo.avatar}), 
+
+                    React.createElement("div", {style: this.componentStyle.textPlaceholder}, 
+                        "Ваша роль ", React.createElement("br", null), " ", React.createElement("b", null, leftInfo.name)
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+                    React.createElement("div", {style: this.componentStyle.textPlaceholder}, 
+                        "Ваш собеседник ", React.createElement("br", null), " ", React.createElement("b", null, rightInfo.name)
+                    ), 
+
+                    React.createElement(DialogCard, {style: this.componentStyle.roleAvaStyle, 
+                                opacity: 0.3, 
+                                mode: 'round', width: 36, 
+                                avatar: rightInfo.avatar})
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelectedUserRolePanel;
+
+},{"../card/DialogCard":615,"object-assign":34,"react":527}],634:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogMixin = require('../../../mixins/DialogMixin');
+var DialogReplicsPanel = require('./DialogReplicsPanel');
+
+var DialogPreparePanel = require('./DialogPreparePanel');
+
+var DialogTaskPanel = require('./DialogTaskPanel');
+
+var TeacherFeedbackCreationBlock = require('../../teacher/TeacherFeedbackCreationBlock');
+
+
+var SelfLoadingDialogPanel = React.createClass({displayName: "SelfLoadingDialogPanel",
+    getDefaultProps: function () {
+        return {
+            dialogId: undefined,
+            userId: undefined,
+
+            teacherId: undefined,
+
+            teacherMode: false,
+
+            onDialogFinished: function(dialogId, userId){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            cards: [],
+            userId: undefined,
+            dialog: {},
+            score: undefined,
+            loading: false,
+            mode: 'prepare',
+            roleNumber: 0,
+            answersMap: {}
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 610,
+            margin: '0 auto'
+        },
+
+        finishBlock: {
+            padding: 10,
+            textAlign: 'center'
+        },
+
+        isFinishedBlock: {
+            //textAlign: 'center',
+            marginTop: 10,
+            marginBottom: 10
+        }
+    },
+
+    load: function(){
+        var dialogId = this.props.dialogId;
+        var userId = this.props.userId;
+        if (dialogId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        var self = this;
+        DialogMixin.loadDialog(dialogId, function(dialog){
+            DialogMixin.loadAnswersMap(dialogId, userId, function(answersMap){
+                DialogMixin.loadUserDialogScore(userId, dialogId, function(score){
+                    self.setState({
+                        answersMap: answersMap,
+                        dialog: dialog,
+                        cards: dialog.cards,
+                        score: score,
+                        loading: false
+                    });
+                });
+            });
+
+        }.bind(this));
+    },
+
+    switchMode: function(){
+        var mode = 'exercise';
+        if (this.state.mode == 'exercise'){
+            mode = 'prepare';
+        }
+        this.setState({
+            mode: mode
+        });
+    },
+
+    onRoleSelect: function(number){
+        this.setState({
+            mode: 'exercise',
+            roleNumber: number
+        });
+    },
+
+    onGoBack: function(){
+        this.setState({
+            mode: 'prepare'
+        });
+    },
+
+    onAnswer: function(cardId, url){
+        this.setState({
+            loading: true
+        });
+        var map = this.state.answersMap;
+        DialogMixin.saveUserAnswer(cardId, url, function(a){
+            map[a.cardId] = a;
+            this.setState({
+                answersMap: map,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    isFinished: function(){
+        var score = this.state.score;
+        if (score == undefined){
+            return false;
+        }
+        if (score.status == 'new'){
+            return false;
+        }
+        return true;
+    },
+
+    canFinish: function(){
+        console.log('canFinish() occured: ');
+        var roleNumber = this.state.roleNumber;
+        var isFinished = this.isFinished();
+        if (isFinished == true){
+            return false;
+        }
+        var map = this.state.answersMap;
+        var cards = this.state.cards;
+        var f1 = true;
+
+        console.log('map = ', map);
+        console.log('cards = ', cards);
+
+        var dn = ((roleNumber + 1) % 2);
+        for (var i = 0 + dn ; i < cards.length; i = i + 2){
+            if (map[cards[i].id] == undefined){
+                f1 = false;
+            }
+        }
+        var f2 = true;
+        dn = ((dn + 1) % 2);
+        for (var i = 0 + dn ; i < cards.length; i = i + 2){
+            if (map[cards[i].id] == undefined){
+                f2 = false;
+            }
+        }
+        var f = (f1 || f2)
+
+        return f;
+    },
+
+    onFinishExercise: function(){
+        var userId = this.props.userId;
+        var dialogId = this.props.dialogId;
+        this.setState({
+            loading: true
+        });
+        DialogMixin.finishDialog(userId, dialogId, function(score){
+            this.setState({
+                score: score,
+                loading: false
+            });
+            this.onDialogFinished(dialogId, userId);
+        }.bind(this));
+    },
+
+    getFeedback: function(){
+        var score = this.state.score;
+        if (score == undefined){
+            return undefined;
+        }
+        var feedback = score.feedback;
+        if (feedback == undefined || feedback.trim() == ''){
+            return undefined;
+        }
+        return feedback;
+    },
+
+    onComment: function(score){
+        console.log('teacher commented student: score = ', score);
+        this.load();
+    },
+
+    onDialogFinished: function(dialogId, userId){
+        this.props.onDialogFinished(dialogId, userId);
+    },
+
+    render: function () {
+        var dialog = (this.state.dialog == undefined) ? {} : this.state.dialog;
+        var cards = this.state.cards;
+        var canFinish = this.canFinish();
+        var isFinished = this.isFinished();
+        var feedback = this.getFeedback();
+        var score = (this.state.score == undefined) ? {} : this.state.score;
+
+        console.log('rednering SelfLoadingDialogPanel: canFinish = ', canFinish);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.props.teacherMode == true ?
+                    React.createElement("div", null, 
+                        React.createElement(DialogTaskPanel, {dialog: dialog, 
+                                         answersMap: this.state.answersMap, 
+                                         teacherMode: true, 
+                                         cards: cards})
+                    )
+                    :
+                    React.createElement("div", null, 
+                        this.state.mode == 'prepare' ?
+                            React.createElement(DialogPreparePanel, {
+                                onRoleSelect: this.onRoleSelect, 
+                                dialog: dialog, cards: cards})
+                            :
+                            React.createElement("div", null, 
+                                React.createElement(DialogTaskPanel, {dialog: dialog, 
+                                                 onGoBack: this.onGoBack, 
+                                                 onAnswer: this.onAnswer, 
+                                                 answersMap: this.state.answersMap, 
+                                                 teacherMode: false, 
+                                                 roleNumber: this.state.roleNumber, cards: cards})
+                            )
+                        
+                    ), 
+                
+
+                isFinished == true ?
+                    React.createElement("div", {style: this.componentStyle.isFinishedBlock}, 
+
+                        feedback == undefined ?
+                            React.createElement("div", {style: {textAlign: 'center'}}, 
+                                this.props.teacherMode == true ?
+                                    React.createElement("div", null, 
+                                        "Пользователь завершил выполнение этого упражнения."
+                                    ) :
+                                    React.createElement("div", null, 
+                                        "Вы завершили данное упражнение. Скоро преподаватель его проверит."
+                                    )
+                                
+
+                            ) :
+                            React.createElement("div", null, 
+
+                                React.createElement("h3", {style: {textAlign: 'center'}}, 
+                                    "Комментарий преподавателя"
+                                ), 
+
+                                React.createElement("div", {dangerouslySetInnerHTML: {__html: feedback}})
+                            )
+                        
+
+                    )
+                    :
+                    React.createElement("div", null, 
+                        canFinish == false ? null :
+                            React.createElement("div", {style: this.componentStyle.finishBlock}, 
+
+                                React.createElement("button", {onClick: this.onFinishExercise, 
+                                        className: 'ui inverted green button'}, "завершить упражнение"
+                                )
+
+                            )
+                        
+                    ), 
+                
+
+                this.props.teacherMode == false ? null :
+
+                    React.createElement("div", null, 
+                        React.createElement("h3", {style: {textAlign: 'center'}}, 
+                            "Блок преподавателя"
+                        ), 
+
+                        React.createElement(TeacherFeedbackCreationBlock, {feedback: feedback, 
+                                                      userId: score.userId, teacherId: this.props.teacherId, 
+                                                      mode: 'dialog', 
+                                                      dialogId: score.dialogId, onComment: this.onComment})
+
+                    ), 
+
+                
+
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingDialogPanel;
+
+},{"../../../mixins/DialogMixin":831,"../../teacher/TeacherFeedbackCreationBlock":788,"./DialogPreparePanel":627,"./DialogReplicsPanel":628,"./DialogTaskPanel":630,"object-assign":34,"react":527}],635:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -93196,7 +96804,7 @@ var PatientEditor = React.createClass({displayName: "PatientEditor",
 
 module.exports = PatientEditor;
 
-},{"../file/FileUploader":645,"object-assign":34,"react":527,"react-quill":285}],613:[function(require,module,exports){
+},{"../file/FileUploader":668,"object-assign":34,"react":527,"react-quill":285}],636:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -93303,7 +96911,7 @@ var ListOfSelfLoadingUserExercises = React.createClass({displayName: "ListOfSelf
 
 module.exports = ListOfSelfLoadingUserExercises;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"./SelfLoadingUserExercise":617,"react":527}],614:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"./SelfLoadingUserExercise":640,"react":527}],637:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -93396,7 +97004,6 @@ var PatientCard = React.createClass({displayName: "PatientCard",
                 showTranscript == false ? null :
                     React.createElement("div", {style: this.componentStyle.transcriptPlaceholder, className: 'disable-select'}, 
 
-
                         React.createElement(TranslatableText, {text: this.props.transcript})
 
                     ), 
@@ -93437,7 +97044,7 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
 module.exports = PatientCard;
 
-},{"../../components/text/translatable/TranslatableText":741,"../task/PatientTask":731,"../text/ToggledText":740,"./UserExerciseInput":618,"object-assign":34,"react":527}],615:[function(require,module,exports){
+},{"../../components/text/translatable/TranslatableText":796,"../task/PatientTask":786,"../text/ToggledText":795,"./UserExerciseInput":641,"object-assign":34,"react":527}],638:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -93705,7 +97312,7 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
 
 module.exports = PatientExercise;
 
-},{"../numbers/NumbersBlock":705,"./PatientCard":614,"react":527}],616:[function(require,module,exports){
+},{"../numbers/NumbersBlock":735,"./PatientCard":637,"react":527}],639:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -93761,7 +97368,7 @@ var SelfLoadingCurrentUserExercise = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingCurrentUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":794,"./SelfLoadingUserExercise":617,"parse":35,"react":527}],617:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":852,"./SelfLoadingUserExercise":640,"parse":35,"react":527}],640:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -94033,14 +97640,16 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
                 readyToFinish ?
                     React.createElement("div", {style: this.componentStyle.finishButtonBlock}, 
                         React.createElement("div", {style: {marginBottom: 10}}, "Проверьте свои ответы и нажмите на кнопку"), 
-                        React.createElement("button", {onClick: this.onFinishExercise, className: 'ui inverted green button'}, "завершить упражнение")
+                        React.createElement("button", {onClick: this.onFinishExercise, 
+                                className: 'ui inverted green button'}, "завершить упражнение")
                     )
                     : null, 
                 
 
                 this.props.teacherMode == false ? null :
                     React.createElement("div", {style: this.componentStyle.teacherBlockPlaceholder}, 
-                        React.createElement(TeacherExerciseBlock, {onComment: this.onTeacherUpdate, teacherId: this.props.teacherId, score: this.state.score})
+                        React.createElement(TeacherExerciseBlock, {onComment: this.onTeacherUpdate, 
+                                              teacherId: this.props.teacherId, score: this.state.score})
                     ), 
                 
 
@@ -94058,7 +97667,7 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
 
 module.exports = SelfLoadingUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../mixins/ExerciseMixin":775,"../exercise/PatientExercise":615,"../preloader/PatientPreloader":708,"../teacher/TeacherExerciseBlock":732,"../user/AuthButton":758,"object-assign":34,"react":527}],618:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../mixins/ExerciseMixin":832,"../exercise/PatientExercise":638,"../preloader/PatientPreloader":738,"../teacher/TeacherExerciseBlock":787,"../user/AuthButton":813,"object-assign":34,"react":527}],641:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -94152,7 +97761,8 @@ var UserExerciseInput = React.createClass({displayName: "UserExerciseInput",
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
                 this.props.type == 'speaking' ?
-                    React.createElement(PatientRecordComponent, {number: this.props.number, userAnswer: ans, onSave: this.onRecordingSave})
+                    React.createElement(PatientRecordComponent, {number: this.props.number, 
+                                            userAnswer: ans, onSave: this.onRecordingSave})
                     : null, 
                 
 
@@ -94185,7 +97795,7 @@ var UserExerciseInput = React.createClass({displayName: "UserExerciseInput",
 
 module.exports = UserExerciseInput;
 
-},{"../input/PatientExerciseInput":654,"../recognition/SpeechRecognitionArea":715,"../record/PatientRecordComponent":716,"./diff/RightTextAnswerDiff":627,"react":527}],619:[function(require,module,exports){
+},{"../input/PatientExerciseInput":677,"../recognition/SpeechRecognitionArea":770,"../record/PatientRecordComponent":771,"./diff/RightTextAnswerDiff":650,"react":527}],642:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -94266,7 +97876,7 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
 
 module.exports = CardTypeSelectButton;
 
-},{"object-assign":34,"react":527}],620:[function(require,module,exports){
+},{"object-assign":34,"react":527}],643:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -94832,7 +98442,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
 
 module.exports = EditableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/MaterialsMixin":781,"../../audio/PatientAudio":554,"../../file/FileUploader":645,"../../material/search/MaterialSearchButton":685,"../../player/VimeoPlayer":707,"../../task/PatientTask":731,"../../text/ToggledText":740,"./CardTypeSelectButton":619,"./UserAnswerTypeDemo":625,"object-assign":34,"react":527}],621:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/MaterialsMixin":838,"../../audio/PatientAudio":554,"../../file/FileUploader":668,"../../material/search/MaterialSearchButton":708,"../../player/VimeoPlayer":737,"../../task/PatientTask":786,"../../text/ToggledText":795,"./CardTypeSelectButton":642,"./UserAnswerTypeDemo":648,"object-assign":34,"react":527}],644:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -95093,7 +98703,7 @@ var ExerciseUpdatableCards = React.createClass({displayName: "ExerciseUpdatableC
 
 module.exports = ExerciseUpdatableCards;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/ExerciseMixin":775,"../../numbers/NumbersBlock":705,"./UpdatableCardBlock":624,"object-assign":34,"react":527}],622:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/ExerciseMixin":832,"../../numbers/NumbersBlock":735,"./UpdatableCardBlock":647,"object-assign":34,"react":527}],645:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -95237,7 +98847,7 @@ var ExerciseUpdateTabs = React.createClass({displayName: "ExerciseUpdateTabs",
 
 module.exports = ExerciseUpdateTabs;
 
-},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":623,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":631,"../../exercise/info/UpdateExerciseInfoTab":632,"object-assign":34,"react":527}],623:[function(require,module,exports){
+},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":646,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":654,"../../exercise/info/UpdateExerciseInfoTab":655,"object-assign":34,"react":527}],646:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -95350,7 +98960,7 @@ var SelfLoadingExerciseUpdatableCardsList = React.createClass({displayName: "Sel
 
 module.exports = SelfLoadingExerciseUpdatableCardsList;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./ExerciseUpdatableCards":621,"object-assign":34,"react":527}],624:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./ExerciseUpdatableCards":644,"object-assign":34,"react":527}],647:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -95472,7 +99082,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
 
 module.exports = UpdatableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./EditableCardBlock":620,"object-assign":34,"react":527}],625:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./EditableCardBlock":643,"object-assign":34,"react":527}],648:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -95528,7 +99138,7 @@ var UserAnswerTypeDemo = React.createClass({displayName: "UserAnswerTypeDemo",
 
 module.exports = UserAnswerTypeDemo;
 
-},{"object-assign":34,"react":527}],626:[function(require,module,exports){
+},{"object-assign":34,"react":527}],649:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -95620,7 +99230,7 @@ var CreateNewExerciseButton = React.createClass({displayName: "CreateNewExercise
 
 module.exports = CreateNewExerciseButton;
 
-},{"../../../dialog/exercise/ExerciseDialogViewer":611,"object-assign":34,"react":527}],627:[function(require,module,exports){
+},{"../../../dialog/exercise/ExerciseDialogViewer":611,"object-assign":34,"react":527}],650:[function(require,module,exports){
 /**
  * Created by sabir on 09.11.15.
  */
@@ -95720,7 +99330,7 @@ var RightTextAnswerDiff = React.createClass({displayName: "RightTextAnswerDiff",
 
 module.exports = RightTextAnswerDiff;
 
-},{"object-assign":34,"react":527,"react-diff":119}],628:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-diff":119}],651:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -95822,7 +99432,7 @@ var AccessSwitcher = React.createClass({displayName: "AccessSwitcher",
 
 module.exports = AccessSwitcher;
 
-},{"object-assign":34,"react":527}],629:[function(require,module,exports){
+},{"object-assign":34,"react":527}],652:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -96000,7 +99610,7 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
 
 module.exports = ExerciseInfoCard;
 
-},{"object-assign":34,"react":527}],630:[function(require,module,exports){
+},{"object-assign":34,"react":527}],653:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -96085,7 +99695,7 @@ var SelfLoadingExerciseInfoCard = React.createClass({displayName: "SelfLoadingEx
 
 module.exports = SelfLoadingExerciseInfoCard;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./ExerciseInfoCard":629,"object-assign":34,"react":527}],631:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./ExerciseInfoCard":652,"object-assign":34,"react":527}],654:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -96214,7 +99824,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({displayName: "SelfLoad
 
 module.exports = SelfLoadingUpdateExerciseInfoTab;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"../info/UpdateExerciseInfoTab":632,"object-assign":34,"react":527}],632:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"../info/UpdateExerciseInfoTab":655,"object-assign":34,"react":527}],655:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -96529,7 +100139,7 @@ var UpdateExerciseInfoTab = React.createClass({displayName: "UpdateExerciseInfoT
 
 module.exports = UpdateExerciseInfoTab;
 
-},{"../../buttons/DeleteButton":559,"../../file/FileUploader":645,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":729,"../info/ExerciseInfoCard":629,"./AccessSwitcher":628,"object-assign":34,"react":527}],633:[function(require,module,exports){
+},{"../../buttons/DeleteButton":559,"../../file/FileUploader":668,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":784,"../info/ExerciseInfoCard":652,"./AccessSwitcher":651,"object-assign":34,"react":527}],656:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -96632,7 +100242,7 @@ var ExercisesSearchButton = React.createClass({displayName: "ExercisesSearchButt
 
 module.exports = ExercisesSearchButton;
 
-},{"../../dialog/Dialog":604,"./ExercisesSearchPanel":634,"object-assign":34,"react":527}],634:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./ExercisesSearchPanel":657,"object-assign":34,"react":527}],657:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -96802,7 +100412,7 @@ var ExercisesSearchPanel = React.createClass({displayName: "ExercisesSearchPanel
 
 module.exports = ExercisesSearchPanel;
 
-},{"../../../mixins/ExerciseMixin":775,"../../bunch/exercise/ExercisesGroupsList":558,"object-assign":34,"react":527}],635:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":832,"../../bunch/exercise/ExercisesGroupsList":558,"object-assign":34,"react":527}],658:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -96823,6 +100433,10 @@ var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
 
 var NotificationMixin = require('../../mixins/NotificationMixin');
 
+var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogPanel');
+
+var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
+
 var FeedItem = React.createClass({displayName: "FeedItem",
     getDefaultProps: function () {
         return {
@@ -96834,6 +100448,9 @@ var FeedItem = React.createClass({displayName: "FeedItem",
             //noteId: '5gcVkoThTm',
             timestamp: undefined,
             exerciseId: undefined,
+            dialogId: undefined,
+            questionnaireId: undefined,
+
             //exerciseId: 's5Y1PZTBGe',
             //exerciseId: 's5Y1PZTBGe',
             //information: '<div><span style="font-family: sans-serif;">Все приведенные ниже цитаты имеют отношение к образованию в целом и к изучению языка, в частности.&nbsp;</span></div><div><br></div><div><span style="font-family: sans-serif; background-color: inherit;">“</span><b><span style="font-family: sans-serif;">It is a miracle that curiosity survives formal education.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">A.Einstein</span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“The whole art of teaching is only the art of awakening the natural curiosity of the young mind for the purpose of satisfying it afterwards.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Anatole France</span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“Curiosity is as much the parent of attention, as attention is of memory.”</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Richard Whately </span></span></div><div><br></div><div><b><span style="font-family: sans-serif;">“The cure for boredom is curiosity. There is no cure for curiosity.”&nbsp;</span></b></div><div><span style="color: rgb(136, 136, 136);"><span style="font-family: sans-serif;">Ellen Parr </span></span></div><div><br></div><div><span style="font-family: sans-serif;">Первая цитата противоречат высказыванию Э.Парра, прямо указывая на наличие инструмента для умерщвления любопытства. Скорее всего, вы уже испытали его на себе, если учили английский в школе или вузе.</span></div>'
@@ -96907,6 +100524,14 @@ var FeedItem = React.createClass({displayName: "FeedItem",
             paddingTop: 10
         },
 
+        dialogPlaceholder: {
+            paddingTop: 10
+        },
+
+        questionnairePlaceholder: {
+            paddingTop: 10
+        },
+
         infoPlaceholder: {
             borderBottom: '1px solid #EFF0F1'
         },
@@ -96953,6 +100578,29 @@ var FeedItem = React.createClass({displayName: "FeedItem",
         }
 
         NotificationMixin.createStudentFinishedExerciseNotification(userId, exerciseId, classId, function(no){
+            console.log('Notification sent: ', no);
+        });
+    },
+
+    onDialogFinished: function(dialogId, userId){
+        var classId = this.props.classId;
+        console.log('onDialogFinished occured: classId, dialogId, userId = ', classId, dialogId, userId);
+        if (classId == undefined || userId == undefined || dialogId == undefined){
+            return;
+        }
+
+        NotificationMixin.createStudentFinishedDialogNotification(userId, dialogId, classId, function(no){
+            console.log('Notification sent: ', no);
+        });
+    },
+
+    onQuestionnaireFinished: function(questionnaireId, userId){
+        var classId = this.props.classId;
+        console.log('onQuestionnaireFinished occured: classId, questionnaireId, userId = ', classId, questionnaireId, userId);
+        if (classId == undefined || userId == undefined || questionnaireId == undefined){
+            return;
+        }
+        NotificationMixin.createStudentFinishedQuestionnaireNotification(userId, questionnaireId, classId, function(no){
             console.log('Notification sent: ', no);
         });
     },
@@ -97012,6 +100660,27 @@ var FeedItem = React.createClass({displayName: "FeedItem",
                             onExerciseFinished: this.onExerciseFinished, 
                             userId: this.props.userId, teacherMode: teacherMode, 
                             teacherId: this.props.teacherId, exerciseId: this.props.exerciseId})
+                    ), 
+                
+
+                this.props.dialogId == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.dialogPlaceholder}, 
+                        React.createElement(SelfLoadingDialogPanel, {
+                            teacherMode: teacherMode, 
+                            teacherId: this.props.teacherId, 
+                            dialogId: this.props.dialogId, 
+                            onDialogFinished: this.onDialogFinished, 
+                            userId: this.props.userId})
+                    ), 
+                
+
+                this.props.questionnaireId == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.questionnairePlaceholder}, 
+                        React.createElement(SelfLoadingQuestionnairePanel, {userId: this.props.userId, 
+                                                       teacherMode: teacherMode, 
+                                                       teacherId: this.props.teacherId, 
+                                                       onQuestionnaireFinished: this.onQuestionnaireFinished, 
+                                                       questionnaireId: this.props.questionnaireId})
                     )
                 
 
@@ -97024,7 +100693,7 @@ var FeedItem = React.createClass({displayName: "FeedItem",
 
 module.exports = FeedItem;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":793,"../../mixins/NotificationMixin":784,"../exercise/SelfLoadingCurrentUserExercise":616,"../exercise/SelfLoadingUserExercise":617,"../note/SelfLoadingNote":690,"./button/EditFeedItemButton":642,"./video/SelfLoadingVideosList":643,"moment":33,"object-assign":34,"react":527}],636:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../mixins/NotificationMixin":841,"../dialog_exercise/view/SelfLoadingDialogPanel":634,"../exercise/SelfLoadingCurrentUserExercise":639,"../exercise/SelfLoadingUserExercise":640,"../note/SelfLoadingNote":720,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"./button/EditFeedItemButton":665,"./video/SelfLoadingVideosList":666,"moment":33,"object-assign":34,"react":527}],659:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -97099,7 +100768,10 @@ var FeedItemsList = React.createClass({displayName: "FeedItemsList",
                         var key = 'feedItem_' + n + '_' + item.id;
 
                         return (
-                            React.createElement(FeedItem, {key: key, exerciseId: item.exerciseId, information: item.information, 
+                            React.createElement(FeedItem, {key: key, exerciseId: item.exerciseId, 
+                                                dialogId: item.dialogId, 
+                                                questionnaireId: item.questionnaireId, 
+                                      information: item.information, 
                                       onFeedItemUpdated: this.onFeedItemUpdated, onFeedItemDeleted: this.onFeedItemDeleted, 
                                       teacherMode: this.props.teacherMode, timestamp: item.timestamp, 
                                       classId: this.props.classId, 
@@ -97122,7 +100794,7 @@ var FeedItemsList = React.createClass({displayName: "FeedItemsList",
 
 module.exports = FeedItemsList;
 
-},{"./FeedItem":635,"object-assign":34,"react":527}],637:[function(require,module,exports){
+},{"./FeedItem":658,"object-assign":34,"react":527}],660:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -97244,7 +100916,7 @@ var PagedFeedItemsList = React.createClass({displayName: "PagedFeedItemsList",
 
 module.exports = PagedFeedItemsList;
 
-},{"./FeedItemsList":636,"object-assign":34,"react":527}],638:[function(require,module,exports){
+},{"./FeedItemsList":659,"object-assign":34,"react":527}],661:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -97355,7 +101027,7 @@ var SelfLoadingClassFeed = React.createClass({displayName: "SelfLoadingClassFeed
 
 module.exports = SelfLoadingClassFeed;
 
-},{"../../mixins/FeedMixin":776,"./PagedFeedItemsList":637,"object-assign":34,"react":527}],639:[function(require,module,exports){
+},{"../../mixins/FeedMixin":833,"./PagedFeedItemsList":660,"object-assign":34,"react":527}],662:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -97419,6 +101091,8 @@ var SelfLoadingFeedItem = React.createClass({displayName: "SelfLoadingFeedItem",
                 information: item.information,
                 exerciseId: item.exerciseId,
                 noteId: item.noteId,
+                questionnaireId: item.questionnaireId,
+                dialogId: item.dialogId,
                 materialIds: item.materialIds
             });
         }.bind(this));
@@ -97433,6 +101107,7 @@ var SelfLoadingFeedItem = React.createClass({displayName: "SelfLoadingFeedItem",
                 React.createElement("div", {style: this.componentStyle.contentPlaceholder}, 
                     React.createElement(FeedItem, {information: this.state.information, feedItemId: this.props.feedItemId, 
                               exerciseId: this.state.exerciseId, noteId: this.state.noteId, 
+                              questionnaireId: this.state.questionnaireId, dialogId: this.state.questionnaireId, 
                               materialIds: this.state.materialIds, userId: this.props.userId, 
                               teacherId: this.props.teacherId, editMode: this.props.editMode})
                 ), 
@@ -97449,7 +101124,7 @@ var SelfLoadingFeedItem = React.createClass({displayName: "SelfLoadingFeedItem",
 
 module.exports = SelfLoadingFeedItem;
 
-},{"../../mixins/FeedMixin":776,"./FeedItem":635,"object-assign":34,"react":527}],640:[function(require,module,exports){
+},{"../../mixins/FeedMixin":833,"./FeedItem":658,"object-assign":34,"react":527}],663:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -97475,6 +101150,14 @@ var SelfLoadingCurrentUserExercise = require('../exercise/SelfLoadingCurrentUser
 var SelfLoadingUserExercise = require('../exercise/SelfLoadingUserExercise');
 
 var DeleteButton = require('../buttons/DeleteButton');
+
+var DialogsSearchButton = require('../dialog_exercise/list/DialogSearchButton');
+
+var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogPanel');
+
+var QuestionnaireSearchButton = require('../questionnaire/panels/list/QuestionnaireSearchButton');
+
+var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
 
 var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpdateFeedItem",
     getDefaultProps: function () {
@@ -97505,6 +101188,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
             information: undefined,
             defaultInformation: undefined,
             exerciseId: undefined,
+            dialogId: undefined,
             noteId: undefined,
             materialIds: undefined,
 
@@ -97568,6 +101252,14 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
         },
 
         exercisePlaceholder: {
+            paddingTop: 10
+        },
+
+        dialogPlaceholder: {
+            paddingTop: 10
+        },
+
+        questionnairePlaceholder: {
             paddingTop: 10
         },
 
@@ -97646,6 +101338,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
                 information: item.information,
                 defaultInformation: item.information,
                 exerciseId: item.exerciseId,
+                dialogId: item.dialogId,
                 noteId: item.noteId,
                 materialIds: item.materialIds
             });
@@ -97669,7 +101362,8 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
             //information, exerciseId, noteId, materialIds, callback
             var self = this;
             FeedMixin.createFeedItem(this.props.feedId, this.state.information,
-                this.state.exerciseId, this.state.noteId, this.state.materialIds,
+                this.state.exerciseId, this.state.noteId, this.state.materialIds, this.state.dialogId,
+                this.state.questionnaireId,
                 function(item){
                     self.setState({
                         loading: false
@@ -97677,9 +101371,11 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
                     self.props.onFeedItemCreated(item);
                 });
             //this.props.onFeedItemCreated({});
+            //feedId, information, exerciseId, noteId, materialIds, dialogId, questionnaireId
         }else{
             FeedMixin.updateFeedItem(feedItemId, this.state.information,
-                this.state.exerciseId, this.state.noteId, this.state.materialIds,
+                this.state.exerciseId, this.state.noteId, this.state.materialIds, this.state.dialogId,
+                this.state.questionnaireId,
                 function(updatedItem){
                     self.setState({
                         loading: false
@@ -97717,6 +101413,20 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
         console.log(ex);
         this.setState({
             exerciseId: ex.id
+        });
+    },
+
+    onDialogSelect: function(dialog){
+        console.log('onDialogSelect: ', dialog);
+        this.setState({
+            dialogId: dialog.id
+        });
+    },
+
+    onQuestionnaireSelect: function(questionnaire){
+        console.log('onQuestionnaireSelect: ', questionnaire);
+        this.setState({
+            questionnaireId: questionnaire.id
         });
     },
 
@@ -97791,6 +101501,15 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
                                                   onSelect: this.onMaterialsSelect, teacherId: this.props.teacherId, 
                                                   buttonClassName: 'ui mini basic grey button', buttonName: videoButtonName})
 
+                        ), 
+
+                        React.createElement("span", {style: this.componentStyle.additionalLink}, 
+                            React.createElement(DialogsSearchButton, {userId: this.props.teacherId, onSelect: this.onDialogSelect})
+                        ), 
+
+
+                        React.createElement("span", {style: this.componentStyle.additionalLink}, 
+                            React.createElement(QuestionnaireSearchButton, {teacherId: this.props.teacherId, onSelect: this.onQuestionnaireSelect})
                         )
 
                     ), 
@@ -97849,8 +101568,28 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
                                 React.createElement("div", {style: this.componentStyle.exercisePlaceholder}, 
                                     React.createElement(SelfLoadingUserExercise, {userId: this.props.teacherId, 
                                                              exerciseId: this.state.exerciseId})
+                                ), 
+                            
+
+                            this.state.dialogId == undefined ? null :
+                                React.createElement("div", {style: this.componentStyle.dialogPlaceholder}, 
+
+                                    React.createElement(SelfLoadingDialogPanel, {
+                                        userId: this.props.teacherId, 
+                                        dialogId: this.state.dialogId})
+
+                                ), 
+                            
+
+                            this.state.questionnaireId == undefined ? null :
+
+                                React.createElement("div", {style: this.componentStyle.questionnairePlaceholder}, 
+                                    React.createElement(SelfLoadingQuestionnairePanel, {
+                                        questionnaireId: this.state.questionnaireId, 
+                                        userId: this.props.teacherId})
                                 )
                             
+
 
                         )
 
@@ -97872,7 +101611,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
 
 module.exports = SelfLoadingUpdateFeedItem;
 
-},{"../../mixins/FeedMixin":776,"../buttons/DeleteButton":559,"../editor/PatientEditor":612,"../exercise/SelfLoadingCurrentUserExercise":616,"../exercise/SelfLoadingUserExercise":617,"../exercise/search/ExercisesSearchButton":633,"../feed/FeedItem":635,"../material/search/MaterialSearchButton":685,"../note/SelfLoadingNote":690,"./video/SelfLoadingVideosList":643,"moment":33,"object-assign":34,"react":527}],641:[function(require,module,exports){
+},{"../../mixins/FeedMixin":833,"../buttons/DeleteButton":559,"../dialog_exercise/list/DialogSearchButton":622,"../dialog_exercise/view/SelfLoadingDialogPanel":634,"../editor/PatientEditor":635,"../exercise/SelfLoadingCurrentUserExercise":639,"../exercise/SelfLoadingUserExercise":640,"../exercise/search/ExercisesSearchButton":656,"../feed/FeedItem":658,"../material/search/MaterialSearchButton":708,"../note/SelfLoadingNote":720,"../questionnaire/panels/list/QuestionnaireSearchButton":750,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"./video/SelfLoadingVideosList":666,"moment":33,"object-assign":34,"react":527}],664:[function(require,module,exports){
 /**
  * Created by sabir on 01.11.15.
  */
@@ -97978,7 +101717,7 @@ var CreateFeedItemButton = React.createClass({displayName: "CreateFeedItemButton
 
 module.exports = CreateFeedItemButton;
 
-},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":640,"object-assign":34,"react":527}],642:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":663,"object-assign":34,"react":527}],665:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -98100,7 +101839,7 @@ var EditFeedItemButton = React.createClass({displayName: "EditFeedItemButton",
 
 module.exports = EditFeedItemButton;
 
-},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":640,"object-assign":34,"react":527}],643:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":663,"object-assign":34,"react":527}],666:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -98227,7 +101966,7 @@ var SelfLoadingVideosList = React.createClass({displayName: "SelfLoadingVideosLi
 
 module.exports = SelfLoadingVideosList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":793,"../../../mixins/MaterialsMixin":781,"../../material/list/CardsList":679,"object-assign":34,"react":527}],644:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/MaterialsMixin":838,"../../material/list/CardsList":702,"object-assign":34,"react":527}],667:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -98303,7 +102042,7 @@ var FileUploadButton = React.createClass({displayName: "FileUploadButton",
 
 module.exports = FileUploadButton;
 
-},{"./FileUploader":645,"object-assign":34,"react":527}],645:[function(require,module,exports){
+},{"./FileUploader":668,"object-assign":34,"react":527}],668:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -98576,7 +102315,7 @@ var FileUploader = React.createClass({displayName: "FileUploader",
 
 module.exports = FileUploader;
 
-},{"object-assign":34,"react":527,"react-dropzone-component":265}],646:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-dropzone-component":265}],669:[function(require,module,exports){
 /**
  * Created by sabir on 03.12.15.
  */
@@ -98627,7 +102366,7 @@ var GrammarPanel = React.createClass({displayName: "GrammarPanel",
 
 module.exports = GrammarPanel;
 
-},{"../topics/SelfLoadingTopicsList":746,"object-assign":34,"react":527}],647:[function(require,module,exports){
+},{"../topics/SelfLoadingTopicsList":801,"object-assign":34,"react":527}],670:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -98736,7 +102475,7 @@ var SelfInitHeader = React.createClass({displayName: "SelfInitHeader",
 
 module.exports = SelfInitHeader;
 
-},{"../../../../react/commonComponents/headers/HeaderPanel":534,"../../../react/mixins/commonMixins/ParseMixin":794,"../user/AuthButton":758,"parse":35,"react":527}],648:[function(require,module,exports){
+},{"../../../../react/commonComponents/headers/HeaderPanel":534,"../../../react/mixins/commonMixins/ParseMixin":852,"../user/AuthButton":813,"parse":35,"react":527}],671:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -98870,7 +102609,7 @@ var StudentHeader = React.createClass({displayName: "StudentHeader",
 
 module.exports = StudentHeader;
 
-},{"../../../mixins/LoginMixin":780,"../../profile/UserProfileButton":713,"../../templates/CurrentUserMenuItem":734,"../../templates/HeaderLeftLinks":735,"../../templates/HeaderTemplate":736,"object-assign":34,"react":527,"react-router":307}],649:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":837,"../../profile/UserProfileButton":743,"../../templates/CurrentUserMenuItem":789,"../../templates/HeaderLeftLinks":790,"../../templates/HeaderTemplate":791,"object-assign":34,"react":527,"react-router":307}],672:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -99083,7 +102822,7 @@ var TeacherHeader = React.createClass({displayName: "TeacherHeader",
 
 module.exports = TeacherHeader;
 
-},{"../../../mixins/LoginMixin":780,"../../notification/NotificationsNumberSpan":701,"../../profile/UserProfileButton":713,"../../templates/CurrentUserMenuItem":734,"../../templates/HeaderLeftLinks":735,"../../templates/HeaderTemplate":736,"object-assign":34,"react":527,"react-router":307}],650:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":837,"../../notification/NotificationsNumberSpan":731,"../../profile/UserProfileButton":743,"../../templates/CurrentUserMenuItem":789,"../../templates/HeaderLeftLinks":790,"../../templates/HeaderTemplate":791,"object-assign":34,"react":527,"react-router":307}],673:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -99162,7 +102901,7 @@ var GifInstruction = React.createClass({displayName: "GifInstruction",
 
 module.exports = GifInstruction;
 
-},{"object-assign":34,"react":527}],651:[function(require,module,exports){
+},{"object-assign":34,"react":527}],674:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -99223,7 +102962,7 @@ var IconMessage = React.createClass({displayName: "IconMessage",
 
 module.exports = IconMessage;
 
-},{"object-assign":34,"react":527}],652:[function(require,module,exports){
+},{"object-assign":34,"react":527}],675:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -99465,7 +103204,7 @@ var IdiomsPanel = React.createClass({displayName: "IdiomsPanel",
 
 module.exports = IdiomsPanel;
 
-},{"../../mixins/IdiomsMixin":778,"../material/list/CardsList":679,"object-assign":34,"react":527}],653:[function(require,module,exports){
+},{"../../mixins/IdiomsMixin":835,"../material/list/CardsList":702,"object-assign":34,"react":527}],676:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -99520,7 +103259,7 @@ var PatientImg = React.createClass({displayName: "PatientImg",
 
 module.exports = PatientImg;
 
-},{"legit-image":32,"object-assign":34,"react":527}],654:[function(require,module,exports){
+},{"legit-image":32,"object-assign":34,"react":527}],677:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -99642,7 +103381,7 @@ var PatientExerciseInput = React.createClass({displayName: "PatientExerciseInput
 
 module.exports = PatientExerciseInput;
 
-},{"react":527}],655:[function(require,module,exports){
+},{"react":527}],678:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -99718,7 +103457,7 @@ var GroupsListItem = React.createClass({displayName: "GroupsListItem",
 
 module.exports = GroupsListItem;
 
-},{"object-assign":34,"react":527}],656:[function(require,module,exports){
+},{"object-assign":34,"react":527}],679:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -99811,7 +103550,7 @@ var KaraokeCard = React.createClass({displayName: "KaraokeCard",
 
 module.exports = KaraokeCard;
 
-},{"object-assign":34,"react":527}],657:[function(require,module,exports){
+},{"object-assign":34,"react":527}],680:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -99925,7 +103664,7 @@ var KaraokeCardsList = React.createClass({displayName: "KaraokeCardsList",
 
 module.exports = KaraokeCardsList;
 
-},{"../dialog/Dialog":604,"./KaraokeCard":656,"./SelfLoadingKaraokePlayerPanel":661,"object-assign":34,"react":527}],658:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./KaraokeCard":679,"./SelfLoadingKaraokePlayerPanel":684,"object-assign":34,"react":527}],681:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100061,7 +103800,7 @@ var KaraokeGroupsPanel = React.createClass({displayName: "KaraokeGroupsPanel",
 
 module.exports = KaraokeGroupsPanel;
 
-},{"../../mixins/KaraokeMixin":779,"../topics/dialog/TopicDialog":750,"./GroupsListItem":655,"./SelfLoadingCategoryKaraokeCardsList":660,"object-assign":34,"react":527}],659:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":836,"../topics/dialog/TopicDialog":805,"./GroupsListItem":678,"./SelfLoadingCategoryKaraokeCardsList":683,"object-assign":34,"react":527}],682:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100220,7 +103959,7 @@ var KaraokePlayerPanel = React.createClass({displayName: "KaraokePlayerPanel",
 
 module.exports = KaraokePlayerPanel;
 
-},{"../../mixins/KaraokeMixin":779,"../player/PatientPlayer":706,"./subtitles/MainSubtitlesBlock":663,"./subtitles/SubtitlesList":664,"object-assign":34,"react":527}],660:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":836,"../player/PatientPlayer":736,"./subtitles/MainSubtitlesBlock":686,"./subtitles/SubtitlesList":687,"object-assign":34,"react":527}],683:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100311,7 +104050,7 @@ var SelfLoadingCategoryKaraokeCardsList = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingCategoryKaraokeCardsList;
 
-},{"../../mixins/KaraokeMixin":779,"./KaraokeCardsList":657,"object-assign":34,"react":527}],661:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":836,"./KaraokeCardsList":680,"object-assign":34,"react":527}],684:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100400,7 +104139,7 @@ var SelfLoadingKaraokePlayerPanel = React.createClass({displayName: "SelfLoading
 
 module.exports = SelfLoadingKaraokePlayerPanel;
 
-},{"../../mixins/KaraokeMixin":779,"./KaraokePlayerPanel":659,"object-assign":34,"react":527}],662:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":836,"./KaraokePlayerPanel":682,"object-assign":34,"react":527}],685:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100454,7 +104193,7 @@ var MainSubtitle = React.createClass({displayName: "MainSubtitle",
 
 module.exports = MainSubtitle;
 
-},{"../../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],663:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],686:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100542,7 +104281,7 @@ var MainSubtitlesBlock = React.createClass({displayName: "MainSubtitlesBlock",
 
 module.exports = MainSubtitlesBlock;
 
-},{"./MainSubtitle":662,"object-assign":34,"react":527}],664:[function(require,module,exports){
+},{"./MainSubtitle":685,"object-assign":34,"react":527}],687:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100660,7 +104399,7 @@ var SubtitlesList = React.createClass({displayName: "SubtitlesList",
 
 module.exports = SubtitlesList;
 
-},{"../../../mixins/KaraokeMixin":779,"./SubtitlesListItem":665,"object-assign":34,"react":527}],665:[function(require,module,exports){
+},{"../../../mixins/KaraokeMixin":836,"./SubtitlesListItem":688,"object-assign":34,"react":527}],688:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -100735,7 +104474,7 @@ var SubtitlesListItem = React.createClass({displayName: "SubtitlesListItem",
 
 module.exports = SubtitlesListItem;
 
-},{"../../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],666:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],689:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -100804,7 +104543,7 @@ var MaterialTags = React.createClass({displayName: "MaterialTags",
 
 module.exports = MaterialTags;
 
-},{"object-assign":34,"react":527,"react-addons-linked-state-mixin":110,"react-tagsinput":342}],667:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-addons-linked-state-mixin":110,"react-tagsinput":342}],690:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -100905,7 +104644,7 @@ var MaterialCreateButton = React.createClass({displayName: "MaterialCreateButton
 
 module.exports = MaterialCreateButton;
 
-},{"../../dialog/Dialog":604,"../dialogs/SelfLoadingMaterialUpdatePanel":673,"object-assign":34,"react":527}],668:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../dialogs/SelfLoadingMaterialUpdatePanel":696,"object-assign":34,"react":527}],691:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -101047,7 +104786,7 @@ var MaterialGroupCreateButton = React.createClass({displayName: "MaterialGroupCr
 
 module.exports = MaterialGroupCreateButton;
 
-},{"../../dialog/Dialog":604,"../groups/SelfLoadingUpdateMaterialGroupPanel":676,"object-assign":34,"react":527}],669:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"../groups/SelfLoadingUpdateMaterialGroupPanel":699,"object-assign":34,"react":527}],692:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -101205,7 +104944,7 @@ var MaterialDialog = React.createClass({displayName: "MaterialDialog",
 
 module.exports = MaterialDialog;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingMaterialPanel":672,"./SelfLoadingMaterialUpdatePanel":673,"object-assign":34,"react":527}],670:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./SelfLoadingMaterialPanel":695,"./SelfLoadingMaterialUpdatePanel":696,"object-assign":34,"react":527}],693:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -101352,7 +105091,7 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
 
 module.exports = MaterialPanel;
 
-},{"../../player/VimeoPlayer":707,"../../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],671:[function(require,module,exports){
+},{"../../player/VimeoPlayer":737,"../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],694:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -101370,6 +105109,8 @@ var GroupsSelect = require('../groups/GroupsSelect');
 var DeleteButton = require('../../buttons/DeleteButton');
 
 var MaterialsMixin = require('../../../mixins/MaterialsMixin');
+
+var MosesEditorButton = require('../../moses/editor/MosesEditorButton');
 
 var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
     getDefaultProps: function () {
@@ -101476,6 +105217,10 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
             marginTop: 10,
             paddingTop: 10,
             borderTop: '1px solid #EFF0F1'
+        },
+
+        mosesButtonBlock: {
+            padding: 5
         }
     },
 
@@ -101679,6 +105424,12 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
                         )
                     ), 
 
+                    this.props.materialId == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.mosesButtonBlock}, 
+                            React.createElement(MosesEditorButton, {materialId: this.props.materialId})
+                        ), 
+                    
+
                     React.createElement("div", {style: this.componentStyle.saveBlock}, 
                         React.createElement("button", {disabled: !needToSave, className: 'ui primary button', onClick: this.onSave}, 
                             React.createElement("i", {className: 'save icon'}), 
@@ -101706,7 +105457,7 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
 
 module.exports = MaterialUpdatePanel;
 
-},{"../../../mixins/MaterialsMixin":781,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":612,"../../material/MaterialTags":666,"../../player/VimeoPlayer":707,"../groups/GroupsSelect":674,"object-assign":34,"react":527}],672:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":838,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":635,"../../material/MaterialTags":689,"../../moses/editor/MosesEditorButton":710,"../../player/VimeoPlayer":737,"../groups/GroupsSelect":697,"object-assign":34,"react":527}],695:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -101804,7 +105555,7 @@ var SelfLoadingMaterialPanel = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialPanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/MaterialsMixin":781,"./MaterialPanel":670,"object-assign":34,"react":527}],673:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/MaterialsMixin":838,"./MaterialPanel":693,"object-assign":34,"react":527}],696:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -101952,7 +105703,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingMaterialUpdatePanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/MaterialsMixin":781,"./MaterialUpdatePanel":671,"object-assign":34,"react":527}],674:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/MaterialsMixin":838,"./MaterialUpdatePanel":694,"object-assign":34,"react":527}],697:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -102066,7 +105817,7 @@ var GroupsSelect = React.createClass({displayName: "GroupsSelect",
 
 module.exports = GroupsSelect;
 
-},{"object-assign":34,"react":527,"react-select":335}],675:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],698:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -102143,7 +105894,7 @@ var MaterialGroupCard = React.createClass({displayName: "MaterialGroupCard",
 
 module.exports = MaterialGroupCard;
 
-},{"object-assign":34,"react":527}],676:[function(require,module,exports){
+},{"object-assign":34,"react":527}],699:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -102263,7 +106014,7 @@ var SelfLoadingUpdateMaterialGroupPanel = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingUpdateMaterialGroupPanel;
 
-},{"../../../mixins/MaterialsMixin":781,"./UpdateMaterialGroupPanel":678,"object-assign":34,"react":527}],677:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":838,"./UpdateMaterialGroupPanel":701,"object-assign":34,"react":527}],700:[function(require,module,exports){
 /**
  * Created by sabir on 21.07.15.
  */
@@ -102394,7 +106145,7 @@ var UpdateMaterialGroupButton = React.createClass({displayName: "UpdateMaterialG
 
 module.exports = UpdateMaterialGroupButton;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingUpdateMaterialGroupPanel":676,"object-assign":34,"react":527}],678:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./SelfLoadingUpdateMaterialGroupPanel":699,"object-assign":34,"react":527}],701:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -102526,7 +106277,7 @@ var UpdateMaterialGroupPanel = React.createClass({displayName: "UpdateMaterialGr
 
 module.exports = UpdateMaterialGroupPanel;
 
-},{"../../buttons/DeleteButton":559,"object-assign":34,"react":527}],679:[function(require,module,exports){
+},{"../../buttons/DeleteButton":559,"object-assign":34,"react":527}],702:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -102641,7 +106392,7 @@ var CardsList = React.createClass({displayName: "CardsList",
 
 module.exports = CardsList;
 
-},{"./MaterialCard":680,"object-assign":34,"react":527}],680:[function(require,module,exports){
+},{"./MaterialCard":703,"object-assign":34,"react":527}],703:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -102900,7 +106651,7 @@ var MaterialCard = React.createClass({displayName: "MaterialCard",
 
 module.exports = MaterialCard;
 
-},{"../dialogs/MaterialDialog":669,"./MaterialHoverPanel":681,"object-assign":34,"react":527}],681:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":692,"./MaterialHoverPanel":704,"object-assign":34,"react":527}],704:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -103032,7 +106783,7 @@ var MaterialHoverPanel = React.createClass({displayName: "MaterialHoverPanel",
 
 module.exports = MaterialHoverPanel;
 
-},{"../dialogs/MaterialDialog":669,"object-assign":34,"react":527}],682:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":692,"object-assign":34,"react":527}],705:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -103229,7 +106980,7 @@ var MaterialsBunch = React.createClass({displayName: "MaterialsBunch",
 
 module.exports = MaterialsBunch;
 
-},{"../groups/UpdateMaterialGroupButton":677,"../list/PagedCardsList":683,"object-assign":34,"react":527}],683:[function(require,module,exports){
+},{"../groups/UpdateMaterialGroupButton":700,"../list/PagedCardsList":706,"object-assign":34,"react":527}],706:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -103409,7 +107160,7 @@ var PagedCardsList = React.createClass({displayName: "PagedCardsList",
 
 module.exports = PagedCardsList;
 
-},{"./CardsList":679,"object-assign":34,"react":527}],684:[function(require,module,exports){
+},{"./CardsList":702,"object-assign":34,"react":527}],707:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -103593,8 +107344,8 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
         var c = list.map(function(g, k){
             var key = 'bunch_' + k + '_' + g.group.id;
             var group = g.group;
-            var onMaterialUpdated = this.onMaterialUpdated.bind(this);
-            var onGroupUpdated = this.onGroupUpdated.bind(this);
+            //var onMaterialUpdated = this.onMaterialUpdated.bind(this);
+            //var onGroupUpdated = this.onGroupUpdated.bind(this);
             var onGroupDeleted = this.onGroupDeleted.bind(this, g.group.id);
             var allGroupsList = this.getAllGroupsList();
             if ((this.props.showUnsorted == false) && (group.id == undefined)){
@@ -103606,8 +107357,8 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
             }
 
             return (
-                React.createElement(MaterialsBunch, {allGroupsList: allGroupsList, key: key, onGroupUpdated: onGroupUpdated, onGroupDeleted: this.onGroupDeleted, 
-                                onMaterialUpdated: onMaterialUpdated, onMaterialDeleted: this.onMaterialDeleted, 
+                React.createElement(MaterialsBunch, {allGroupsList: allGroupsList, key: key, onGroupUpdated: this.onGroupUpdated, onGroupDeleted: this.onGroupDeleted, 
+                                onMaterialUpdated: this.onMaterialUpdated, onMaterialDeleted: this.onMaterialDeleted, 
                                 materials: g.materials, 
                                 groupId: group.id, teacherId: this.props.teacherId, name: group.name, 
                                 description: group.description, editMode: this.props.editMode})
@@ -103704,7 +107455,7 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialsList;
 
-},{"../../../mixins/MaterialsMixin":781,"../buttons/MaterialCreateButton":667,"../buttons/MaterialGroupCreateButton":668,"./MaterialsBunch":682,"./PagedCardsList":683,"object-assign":34,"react":527}],685:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":838,"../buttons/MaterialCreateButton":690,"../buttons/MaterialGroupCreateButton":691,"./MaterialsBunch":705,"./PagedCardsList":706,"object-assign":34,"react":527}],708:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -103824,7 +107575,7 @@ var MaterialSearchButton = React.createClass({displayName: "MaterialSearchButton
 
 module.exports = MaterialSearchButton;
 
-},{"../../dialog/Dialog":604,"./MaterialsSearchPanel":686,"object-assign":34,"react":527}],686:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./MaterialsSearchPanel":709,"object-assign":34,"react":527}],709:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -104253,7 +108004,1102 @@ var MaterialsSearchPanel = React.createClass({displayName: "MaterialsSearchPanel
 
 module.exports = MaterialsSearchPanel;
 
-},{"../../../mixins/MaterialsMixin":781,"../../material/list/MaterialCard":680,"../../material/list/MaterialsBunch":682,"object-assign":34,"react":527}],687:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":838,"../../material/list/MaterialCard":703,"../../material/list/MaterialsBunch":705,"object-assign":34,"react":527}],710:[function(require,module,exports){
+/**
+ * Created by sabir on 27.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingMosesEditor = require('./SelfLoadingMosesEditor');
+
+var Dialog = require('../../dialog/Dialog');
+
+
+var MosesEditorButton = React.createClass({displayName: "MosesEditorButton",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined,
+            buttonName: 'Разбить',
+            buttonClassName: 'ui basic button',
+            //icon: 'icon connectdevelop',
+            icon: 'icon wizard',
+            style: {
+
+            },
+            level: 100,
+            onUpdated: function(m){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        dialogPanelStyle: {
+            width: 720,
+            padding: 5
+        },
+
+        buttonStyle: {
+
+        }
+    },
+
+    show: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onUpdated: function(m){
+        this.props.onUpdate(m);
+        this.onClose();
+    },
+
+    getContent: function(){
+        var materialId = this.props.materialId;
+        if (materialId == undefined){
+            return null;
+        }
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingMosesEditor, {materialId: materialId, onUpdated: this.onUpdated})
+            )
+        );
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.buttonStyle, this.props.style);
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, style: st, onClick: this.show}, 
+                    React.createElement("i", {className: this.props.icon}), " ", this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {content: this.getContent(), visible: true, onClose: this.onClose, 
+                            level: this.props.level, 
+                            dialogPanelStyle: this.componentStyle.dialogPanelStyle})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = MosesEditorButton;
+
+},{"../../dialog/Dialog":604,"./SelfLoadingMosesEditor":711,"object-assign":34,"react":527}],711:[function(require,module,exports){
+/**
+ * Created by sabir on 27.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MaterialsMixin = require('../../../mixins/MaterialsMixin');
+
+var PatientPlayer = require('../../player/PatientPlayer');
+
+var MosesTimePanel = require('./adjust/MosesTimePanel');
+
+var SelfLoadingMosesEditor = React.createClass({displayName: "SelfLoadingMosesEditor",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined,
+
+            onUpdated: function(m){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            durations: [],
+            needToSave: false,
+            vimeoId: undefined,
+            seconds: undefined,
+            selectedNumber: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    load: function(){
+        var materialId = this.props.materialId;
+        if (materialId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        console.log('SelfLoadingMosesEditor: mterialId = ', materialId);
+        MaterialsMixin.loadMaterial(materialId, function(m){
+            console.log('material loaded: m = ', m);
+            var durations = m.mosesDurations;
+            this.setState({
+                vimeoId: m.vimeoId,
+                durations: durations,
+                needToSave: false,
+                loading: false
+            });
+
+        }.bind(this));
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 710,
+            backgroundColor: 'white',
+            margin: '0 auto',
+            padding: 5,
+            minHeight: 120,
+            position: 'relative'
+        },
+
+        playerPlaceholder: {
+            width: 700,
+            height: 450,
+            margin: '0 auto'
+        },
+
+        durationsPlaceholder: {
+
+        },
+
+        bottomButtonsPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+        saveButtonPlaceholder: {
+            marginTop: 10,
+            paddingTop: 10,
+            paddingBottom: 5,
+            borderTop: '1px dotted #EFF0F1',
+            textAlign: 'right'
+        },
+
+        currentSecondsPlaceholder: {
+            backgroundColor: 'white',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            padding: 10,
+            fontSize: 20,
+            fontWeight: 'bold',
+            textAlign: 'center',
+            borderBottomRightRadius: 4
+        }
+    },
+
+    onDurChange: function(n, data){
+        var arr = [];
+        var list = this.state.durations;
+        for (var i in list){
+            var d = list[i];
+            if (i == n){
+                d.start = data.start;
+                d.end = data.end;
+                d.text = data.text;
+                arr.push(d);
+            } else{
+                arr.push(d);
+            }
+        }
+        this.setState({
+            durations: arr,
+            needToSave: true
+        });
+    },
+
+    getSelectedDuration: function(){
+        var n = this.state.selectedNumber;
+        if (n == undefined){
+            return undefined;
+        }
+        var list = this.state.durations;
+        if (list == undefined || list.length == 0){
+            return;
+        }
+        return list[n];
+    },
+
+    getStart: function(){
+        var d = this.getSelectedDuration();
+        if (d == undefined){
+            return undefined;
+        }
+        return d.start;
+    },
+
+    getEnd: function(){
+        var d = this.getSelectedDuration();
+        if (d == undefined){
+            return undefined;
+        }
+        return d.end;
+    },
+
+    onPanelSelect: function(n){
+        if (n == this.state.selectedNumber){
+            return;
+        }
+        this.setState({
+            selectedNumber: n
+        });
+    },
+
+    canAddMoreDuration: function(){
+        var list = this.state.durations;
+        var f = true;
+        if (list == undefined || list.length == 0){
+            return true;
+        }
+        for (var i in list){
+            if (list[i].start == undefined || list[i].end == undefined || list[i].start == list[i].end){
+                f = false;
+            }
+        }
+        return f;
+    },
+
+    addDuration: function(){
+        var list = (this.state.durations == undefined) ? [] : this.state.durations;
+        if (this.canAddMoreDuration() == false){
+            return;
+        }
+        list.push({
+            start: 0,
+            end: 0,
+            text: undefined
+        });
+        this.setState({
+            durations: list,
+            needToSave: true
+        });
+    },
+
+    canDeleteLastDuration: function(){
+        var list = (this.state.durations == undefined) ? [] : this.state.durations;
+        if (list.length == 0){
+            return false;
+        }
+        return true;
+    },
+
+    deleteLastDuration: function(){
+        var list = (this.state.durations == undefined) ? [] : this.state.durations;
+        if (this.canDeleteLastDuration() == false){
+            return;
+        }
+        list = list.slice(0, list.length - 1);
+        this.setState({
+            durations: list,
+            needToSave: true,
+            selectedNumber: undefined
+        });
+    },
+
+    save: function(){
+        var list = this.state.durations;
+        var materialId = this.props.materialId;
+        var arr = [];
+        for (var i in list){
+            var d = list[i];
+            if (d.start == undefined || d.end == undefined || d.start == d.end){
+                continue;
+            }
+            arr.push(d);
+        }
+        this.setState({
+            loading: true
+        });
+        MaterialsMixin.updateMosesDurations(materialId, arr, function(m){
+            this.setState({
+                loading: false,
+                durations: m.mosesDurations,
+                needToSave: false,
+                selectedNumber: undefined
+            });
+            this.props.onUpdated(m);
+        }.bind(this))
+
+    },
+
+    canSave: function(){
+        return this.state.needToSave;
+    },
+
+    onProgress: function(seconds){
+        this.setState({
+            seconds: seconds
+        });
+    },
+
+    render: function () {
+        var list = this.state.durations;
+        var start = this.getStart();
+        var end = this.getEnd();
+        var vimeoId = this.state.vimeoId;
+        var canAddMoreDuration = this.canAddMoreDuration();
+        var canDeleteLastDuration = this.canDeleteLastDuration();
+        var canSave = this.canSave();
+        var seconds = this.state.seconds;
+        if (seconds != undefined){
+            seconds = Math.floor(100.0 * seconds) / 100.0;
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                seconds == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.currentSecondsPlaceholder}, 
+                        React.createElement("i", {className: 'icon wait'}), 
+                        seconds
+                    ), 
+                
+
+
+                vimeoId == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                        React.createElement(PatientPlayer, {onProgress: this.onProgress, 
+                            abMode: true, vimeoId: vimeoId, start: start, end: end})
+                    ), 
+                
+
+                list == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.durationsPlaceholder}, 
+                        list.map(function(dur, k){
+                            var key = 'dur_' + k;
+                            var onClick = this.onPanelSelect.bind(this, k);
+                            var onChange = this.onDurChange.bind(this, k);
+                            var isActive = (k == this.state.selectedNumber);
+                            return (
+                                React.createElement("div", {key: key, onClick: onClick, style: {marginTop: 5}}, 
+                                    React.createElement(MosesTimePanel, {active: isActive, 
+                                        onChange: onChange, start: dur.start, end: dur.end, text: dur.text})
+                                )
+                            );
+                        }, this)
+                    ), 
+                
+
+
+                    React.createElement("div", {style: this.componentStyle.bottomButtonsPlaceholder}, 
+
+                        canDeleteLastDuration == false ? null :
+                            React.createElement("button", {className: 'ui basic red button', onClick: this.deleteLastDuration}, 
+                                React.createElement("i", {className: 'icon close'}), " Удалить последний временной отрезок"
+                            ), 
+                        
+
+                        canAddMoreDuration == false ? null :
+                            React.createElement("button", {className: 'ui basic green button', onClick: this.addDuration}, 
+                                React.createElement("i", {className: 'icon plus'}), " Добавить новый временной отрезок"
+                            )
+                        
+
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.saveButtonPlaceholder}, 
+                        React.createElement("button", {className: 'ui primary button', disabled: !canSave, onClick: this.save}, 
+                            React.createElement("i", {className: 'icon save'}), " Сохранить"
+                        )
+                    ), 
+
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingMosesEditor;
+
+},{"../../../mixins/MaterialsMixin":838,"../../player/PatientPlayer":736,"./adjust/MosesTimePanel":713,"object-assign":34,"react":527}],712:[function(require,module,exports){
+/**
+ * Created by sabir on 27.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MosesTimeInput = React.createClass({displayName: "MosesTimeInput",
+    getDefaultProps: function () {
+        return {
+            t: 0,
+            dt: 0.05,
+            onChange: function(t){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            t: this.props.t
+        }
+    },
+
+    componentWillReceiveProps: function(nextProps) {
+        var t = nextProps.t;
+        console.log('MosesTimeInput: componentWillReceiveProps: t = ', t);
+        if (t != this.props.t){
+            this.setState({
+                t: t,
+            });
+        }
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        inputPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        leftButtonPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        rightButtonPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        input: {
+            width: 90,
+            height: 26,
+            textAlign: 'center',
+            marginRight: 3
+        }
+    },
+
+    onTimeChange: function(sign){
+        if (sign == undefined){
+            return;
+        }
+        var t = this.state.t;
+        if (t == undefined){
+            t = 0;
+        }
+        t = t + sign * this.props.dt;
+        this.setState({
+            t: t
+        });
+        this.props.onChange(t);
+    },
+
+    onChange: function(evt){
+        var s = evt.target.value;
+        s = s.trim();
+        if (s == ''){
+            s = '0';
+        }
+        if (isNaN(s) == true){
+            return;
+        }
+        var t = parseFloat(s);
+        this.setState({
+            t: t
+        });
+        this.props.onChange(t);
+    },
+
+    render: function () {
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.leftButtonPlaceholder}, 
+                    React.createElement("button", {className: 'ui button basic mini', 
+                            style: {paddingLeft: 8, paddingRight: 4}, 
+                            onClick: this.onTimeChange.bind(this, -1)}, 
+                        React.createElement("i", {className: 'icon angle double left'})
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.inputPlaceholder}, 
+                    React.createElement("div", {className: 'ui form'}, 
+                        React.createElement("input", {style: this.componentStyle.input, value: this.state.t, onChange: this.onChange})
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.rightButtonPlaceholder}, 
+                    React.createElement("button", {className: 'ui button basic mini', 
+                            style: {paddingLeft: 4, paddingRight: 8}, 
+                            onClick: this.onTimeChange.bind(this, 1)}, 
+                        React.createElement("i", {className: 'icon angle double right'})
+                    )
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = MosesTimeInput;
+
+},{"object-assign":34,"react":527}],713:[function(require,module,exports){
+/**
+ * Created by sabir on 27.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MosesTimeInput = require('./MosesTimeInput');
+
+var MosesTimePanel = React.createClass({displayName: "MosesTimePanel",
+    getDefaultProps: function () {
+        return {
+            start: 0,
+            end: 0,
+            text: undefined,
+            dt: 0.05,
+
+            active: false,
+
+            textEnabled: true,
+
+            onChange: function(data){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            start: this.props.start,
+            end: this.props.end,
+            text: this.props.text
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var start = nextProps.start;
+        var end = nextProps.end;
+        var text = nextProps.text;
+        console.log('MosesTimePanel: componentWillReceiveProps: start, end, text = ', start, end, text);
+        if (start != this.props.start || end != this.props.end || text != this.props.text){
+            this.setState({
+                start: start,
+                end: end,
+                text: text
+            });
+        }
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 700,
+            padding: 5,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            borderRadius: 3
+        },
+
+        startPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        endPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        inputPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            marginLeft: 15
+        },
+
+        dash: {
+            width: 20,
+            lineHeight: '26px',
+            textAlign: 'center',
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        input: {
+            height: 26,
+            width: 353
+        },
+
+        active: {
+            backgroundColor: '#ADB2BB',
+            color: 'white'
+        }
+    },
+
+    onStartChange: function(t){
+        var start = this.state.start == undefined ? 0 : +this.state.start;
+        var end = this.state.end == undefined ? 0 : +this.state.end;
+        if (+t > end || +t < 0){
+            return;
+        }
+        this.setState({
+            start: +t
+        });
+        this.onChange({start: +t});
+    },
+
+    onEndChange: function(t){
+        var start = this.state.start == undefined ? 0 : +this.state.start;
+        var end = this.state.end == undefined ? 0 : +this.state.end;
+        if (+t < start || +t < 0){
+            return;
+        }
+        this.setState({
+            end: +t
+        });
+        this.onChange({end: +t});
+    },
+
+    onTextChange: function(evt){
+        var text = evt.target.value;
+        this.setState({
+            text: text
+        });
+        this.onChange({text: text});
+    },
+
+    getData: function(){
+        var data = {
+            start: this.state.start,
+            end: this.state.end,
+            text: this.state.text
+        };
+        return data;
+    },
+
+    onChange: function(d){
+        var data = this.getData();
+        data = assign({}, data, d);
+        console.log('onChange: data = ', data);
+        this.props.onChange(data);
+    },
+
+    render: function () {
+        var st = this.componentStyle.placeholder;
+        if (this.props.active == true){
+            st = assign({}, st, this.componentStyle.active);
+        }
+
+        return (
+            React.createElement("div", {style: st}, 
+
+                React.createElement("div", {style: this.componentStyle.startPlaceholder}, 
+                    React.createElement(MosesTimeInput, {placeholder: 'Start', 
+                                    dt: this.props.dt, t: this.state.start, onChange: this.onStartChange})
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.dash}, 
+                    "-"
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.endPlaceholder}, 
+                    React.createElement(MosesTimeInput, {placeholder: 'End', 
+                        dt: this.props.dt, t: this.state.end, onChange: this.onEndChange})
+                ), 
+
+                this.props.textEnabled == false ? null :
+                    React.createElement("div", {style: this.componentStyle.inputPlaceholder}, 
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("input", {value: this.state.text, placeholder: 'Text', 
+                                   style: this.componentStyle.input, 
+                                   onChange: this.onTextChange})
+                        )
+                    )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = MosesTimePanel;
+
+},{"./MosesTimeInput":712,"object-assign":34,"react":527}],714:[function(require,module,exports){
+/**
+ * Created by sabir on 26.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+
+var DurationsBar = React.createClass({displayName: "DurationsBar",
+    getDefaultProps: function () {
+        return {
+            durations: [
+                {
+                    start: 0,
+                    end: 4.5
+                },
+                {
+                    start: 5,
+                    end: 8
+                },
+                {
+                    start: 9,
+                    end: 15
+                }
+            ],
+            selectedNumber: undefined,
+            onItemClick: function(item){
+                console.log('onItemClick: item = ', item);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: '100%',
+            margin: '0 auto',
+            textAlign: 'center',
+            backgroundColor: '#D8DADE',
+            height: 20
+        },
+
+        itemStyle: {
+            display: 'inline-block',
+            borderRadius: 2,
+            height: 20,
+            cursor: 'pointer',
+            boxSizing: 'border-box',
+            border: '1px solid #EFF0F1',
+            backgroundColor: '#D8DADE',
+            opacity: 0.9
+        },
+
+        selected: {
+            backgroundColor: '#2E3C54',
+            opacity: 1
+        }
+    },
+
+    onItemClick: function(item){
+        this.props.onItemClick(item);
+    },
+
+    getList: function(){
+        var arr = [];
+        var list = this.props.durations;
+        var duration = 0;
+        for (var i in list){
+            var d = list[i];
+            duration = duration + (d.end - d.start);
+            arr.push(assign({}, d, {number: i, duration: d.end - d.start}));
+        }
+        list = arr;
+        arr = [];
+        for (var i in list){
+            var widthPercent = 1.0 * list[i].duration / duration;
+            widthPercent = Math.floor(widthPercent * 100);
+            widthPercent = widthPercent + '%';
+            arr.push(assign({}, list[i], {style: {
+                width: widthPercent
+            }}));
+        }
+        return arr;
+    },
+
+    render: function () {
+        var list = this.getList();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                list.map(function(d, k){
+                    var key = 'moses_bar_' + k;
+                    var st = assign({}, this.componentStyle.itemStyle, d.style);
+                    if (d.number == this.props.selectedNumber){
+                        st = assign({}, st, this.componentStyle.selected);
+                    }
+                    var onClick = this.onItemClick.bind(this, d);
+                    return (
+                        React.createElement("div", {key: key, style: st, onClick: onClick}
+                        )
+                    );
+
+                }, this)
+            )
+        );
+    }
+
+});
+
+module.exports = DurationsBar;
+
+},{"object-assign":34,"react":527}],715:[function(require,module,exports){
+/**
+ * Created by sabir on 26.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DurationsBar = require('./DurationsBar');
+var PatientPlayer = require('../../player/PatientPlayer');
+
+var MosesPlayer = React.createClass({displayName: "MosesPlayer",
+    getDefaultProps: function () {
+        return {
+            durations: [],
+            vimeoId: undefined,
+
+            onProgress: function(seconds){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedItem: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 600,
+            margin: '0 auto'
+        },
+
+        playerPlaceholder: {
+            width: 600,
+            height: 350
+        },
+
+        durationsPlaceholder: {
+            width: '100%'
+        }
+    },
+
+    getCurrentDuration: function(){
+        var n = this.state.selectedNumber;
+        var list = this.props.durations;
+        if (n == undefined || list == undefined || list.length == 0){
+            return undefined;
+        }
+        return list[n];
+    },
+
+    onItemClick: function(item){
+        console.log('onItemClick occured: item = ', item);
+        var number = item.number;
+        if (number == this.state.selectedNumber){
+            this.setState({
+                selectedNumber: undefined
+            });
+        }else {
+            this.setState({
+                selectedNumber: number
+            });
+        }
+    },
+
+    render: function () {
+        var dur = this.getCurrentDuration();
+        if (dur == undefined){
+            dur = {};
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                    React.createElement(PatientPlayer, {vimeoId: this.props.vimeoId, 
+                                   end: dur.end, 
+                                   start: dur.start, 
+                                   abMode: true, 
+                                   onProgress: this.props.onProgress}
+                        )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.durationsPlaceholder}, 
+                    React.createElement(DurationsBar, {onItemClick: this.onItemClick, selectedNumber: this.state.selectedNumber, 
+                        durations: this.props.durations})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = MosesPlayer;
+
+},{"../../player/PatientPlayer":736,"./DurationsBar":714,"object-assign":34,"react":527}],716:[function(require,module,exports){
+/**
+ * Created by sabir on 26.12.15.
+ */
+
+// this player will not be used
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MaterialsMixin = require('../../../mixins/MaterialsMixin');
+
+var MosesPlayer = require('./MosesPlayer');
+
+var SelfLoadingMosesPlayer = React.createClass({displayName: "SelfLoadingMosesPlayer",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            vimeoId: undefined,
+            durations: []
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative'
+        },
+
+        playerPlaceholder: {
+
+        }
+    },
+
+    load: function(){
+        var materialId = this.props.materialId;
+        if (materialId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        MaterialsMixin.loadMaterial(materialId, function(m){
+            this.setState({
+                vimeoId: m.vimeoId,
+                durations: m.mosesDurations,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.state.loading == true ? null :
+                    React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                        React.createElement(MosesPlayer, {vimeoId: this.state.vimeoId, durations: this.state.durations})
+                    ), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingMosesPlayer;
+
+},{"../../../mixins/MaterialsMixin":838,"./MosesPlayer":715,"object-assign":34,"react":527}],717:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -104358,7 +109204,7 @@ var CreateNewNoteButton = React.createClass({displayName: "CreateNewNoteButton",
 
 module.exports = CreateNewNoteButton;
 
-},{"../dialog/Dialog":604,"./SelfLoadingUpdateNotePanel":692,"object-assign":34,"react":527}],688:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./SelfLoadingUpdateNotePanel":722,"object-assign":34,"react":527}],718:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -104462,7 +109308,7 @@ var CreateNewNotesGroupButton = React.createClass({displayName: "CreateNewNotesG
 
 module.exports = CreateNewNotesGroupButton;
 
-},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":689,"object-assign":34,"react":527}],689:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":719,"object-assign":34,"react":527}],719:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -104619,7 +109465,7 @@ var SelfLoadingGroupPanel = React.createClass({displayName: "SelfLoadingGroupPan
 
 module.exports = SelfLoadingGroupPanel;
 
-},{"../../components/buttons/DeleteButton":559,"../../mixins/NotesMixin":783,"object-assign":34,"react":527}],690:[function(require,module,exports){
+},{"../../components/buttons/DeleteButton":559,"../../mixins/NotesMixin":840,"object-assign":34,"react":527}],720:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -104730,7 +109576,7 @@ var SelfLoadingNote = React.createClass({displayName: "SelfLoadingNote",
 
 module.exports = SelfLoadingNote;
 
-},{"../../mixins/NotesMixin":783,"object-assign":34,"react":527}],691:[function(require,module,exports){
+},{"../../mixins/NotesMixin":840,"object-assign":34,"react":527}],721:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -104742,6 +109588,7 @@ var SelfLoadingUpdateNotePanel = require('./SelfLoadingUpdateNotePanel');
 var Dialog = require('../../components/dialog/Dialog');
 var NotesMixin = require('../../mixins/NotesMixin');
 
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
 
 var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdatableNote",
     getDefaultProps: function () {
@@ -104900,6 +109747,13 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
         this.props.onNoteDelete();
     },
 
+    print: function(){
+        var data = '';
+        data = data + '<h3>' + this.state.name + '</h3>';
+        data = data + (this.state.content == undefined ? '' : this.state.content);
+        CommonMixin.printHtml(data);
+    },
+
     render: function () {
 
         return (
@@ -104921,7 +109775,12 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
                 React.createElement("div", {style: this.componentStyle.editNoteButtonPlaceholder}, 
                     React.createElement("button", {style: this.componentStyle.editButton, className: 'ui basic grey button', onClick: this.showDialog}, 
                         React.createElement("i", {className: 'pencil icon'})
+                    ), 
+
+                    React.createElement("button", {style: this.componentStyle.editButton, className: 'ui basic grey button', onClick: this.print}, 
+                        React.createElement("i", {className: 'print icon'})
                     )
+
                 ), 
 
                 React.createElement(Dialog, {dialogPanelStyle: this.componentStyle.dialogContentStyle, 
@@ -104939,7 +109798,7 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
 
 module.exports = SelfLoadingUpdatableNote;
 
-},{"../../components/dialog/Dialog":604,"../../mixins/NotesMixin":783,"./SelfLoadingUpdateNotePanel":692,"object-assign":34,"react":527}],692:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../components/dialog/Dialog":604,"../../mixins/NotesMixin":840,"./SelfLoadingUpdateNotePanel":722,"object-assign":34,"react":527}],722:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -105178,7 +110037,7 @@ var SelfLoadingUpdateNotePanel = React.createClass({displayName: "SelfLoadingUpd
 
 module.exports = SelfLoadingUpdateNotePanel;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":794,"../../components/buttons/DeleteButton":559,"../../components/note/select/NotesGroupSelect":698,"../../mixins/NotesMixin":783,"../editor/PatientEditor":612,"object-assign":34,"react":527}],693:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/buttons/DeleteButton":559,"../../components/note/select/NotesGroupSelect":728,"../../mixins/NotesMixin":840,"../editor/PatientEditor":635,"object-assign":34,"react":527}],723:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -105298,7 +110157,7 @@ var UpdateGroupButton = React.createClass({displayName: "UpdateGroupButton",
 
 module.exports = UpdateGroupButton;
 
-},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":689,"object-assign":34,"react":527}],694:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":719,"object-assign":34,"react":527}],724:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -105399,7 +110258,7 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
 
 module.exports = NoteListItem;
 
-},{"moment":33,"object-assign":34,"react":527}],695:[function(require,module,exports){
+},{"moment":33,"object-assign":34,"react":527}],725:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -105482,7 +110341,7 @@ var NotesGroupListItem = React.createClass({displayName: "NotesGroupListItem",
 
 module.exports = NotesGroupListItem;
 
-},{"object-assign":34,"react":527}],696:[function(require,module,exports){
+},{"object-assign":34,"react":527}],726:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -105549,7 +110408,7 @@ var NotesGroupsList = React.createClass({displayName: "NotesGroupsList",
 
 module.exports = NotesGroupsList;
 
-},{"./NotesGroupListItem":695,"object-assign":34,"react":527}],697:[function(require,module,exports){
+},{"./NotesGroupListItem":725,"object-assign":34,"react":527}],727:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -105619,7 +110478,7 @@ var NotesList = React.createClass({displayName: "NotesList",
 
 module.exports = NotesList;
 
-},{"./NoteListItem":694,"object-assign":34,"react":527}],698:[function(require,module,exports){
+},{"./NoteListItem":724,"object-assign":34,"react":527}],728:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -105745,7 +110604,7 @@ var NotesGroupSelect = React.createClass({displayName: "NotesGroupSelect",
 
 module.exports = NotesGroupSelect;
 
-},{"object-assign":34,"react":527,"react-select":335}],699:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],729:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -105758,6 +110617,10 @@ var NotificationMixin = require('../../mixins/NotificationMixin');
 var SelfLoadingUserExercise = require('../exercise/SelfLoadingUserExercise');
 
 var moment = require('moment');
+
+var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogPanel');
+
+var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
 
 var NotificationItem = React.createClass({displayName: "NotificationItem",
     getDefaultProps: function () {
@@ -105887,7 +110750,27 @@ var NotificationItem = React.createClass({displayName: "NotificationItem",
                                                      teacherId: this.props.userId, 
                                                      teacherMode: true}
                                 )
-                        ) : null
+                        ) : null, 
+                        
+
+                        ((att.type == 'dialog') && (forRole == 'teacher')  ) ?
+                            React.createElement("div", null, 
+                                React.createElement(SelfLoadingDialogPanel, {userId: att.userId, 
+                                                         dialogId: att.dialogId, 
+                                                         teacherId: this.props.userId, 
+                                                         teacherMode: true}
+                                    )
+                            ) : null, 
+                        
+
+                        ((att.type == 'questionnaire') && (forRole == 'teacher')  ) ?
+                            React.createElement("div", null, 
+                                React.createElement(SelfLoadingQuestionnairePanel, {userId: att.userId, 
+                                                                questionnaireId: att.questionnaireId, 
+                                                                teacherId: this.props.userId, 
+                                                                teacherMode: true}
+                                    )
+                            ) : null
                         
 
                     ), 
@@ -105908,7 +110791,7 @@ var NotificationItem = React.createClass({displayName: "NotificationItem",
 
 module.exports = NotificationItem;
 
-},{"../../mixins/NotificationMixin":784,"../exercise/SelfLoadingUserExercise":617,"moment":33,"object-assign":34,"react":527}],700:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":841,"../dialog_exercise/view/SelfLoadingDialogPanel":634,"../exercise/SelfLoadingUserExercise":640,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"moment":33,"object-assign":34,"react":527}],730:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -105995,7 +110878,7 @@ var NotificationsList = React.createClass({displayName: "NotificationsList",
 
 module.exports = NotificationsList;
 
-},{"./NotificationItem":699,"object-assign":34,"react":527}],701:[function(require,module,exports){
+},{"./NotificationItem":729,"object-assign":34,"react":527}],731:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -106073,7 +110956,7 @@ var NotificationsNumberSpan = React.createClass({displayName: "NotificationsNumb
 
 module.exports = NotificationsNumberSpan;
 
-},{"../../mixins/NotificationMixin":784,"object-assign":34,"react":527}],702:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":841,"object-assign":34,"react":527}],732:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -106168,7 +111051,7 @@ var PagedNotificationsList = React.createClass({displayName: "PagedNotifications
 
 module.exports = PagedNotificationsList;
 
-},{"./NotificationsList":700,"object-assign":34,"react":527}],703:[function(require,module,exports){
+},{"./NotificationsList":730,"object-assign":34,"react":527}],733:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -106303,7 +111186,7 @@ var SelfLoadingNotificationsList = React.createClass({displayName: "SelfLoadingN
 
 module.exports = SelfLoadingNotificationsList;
 
-},{"../../mixins/NotificationMixin":784,"./NotificationsList":700,"./PagedNotificationsList":702,"object-assign":34,"react":527}],704:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":841,"./NotificationsList":730,"./PagedNotificationsList":732,"object-assign":34,"react":527}],734:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -106383,7 +111266,7 @@ var NumberItem = React.createClass({displayName: "NumberItem",
 
 module.exports = NumberItem;
 
-},{"object-assign":34,"react":527}],705:[function(require,module,exports){
+},{"object-assign":34,"react":527}],735:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -106474,7 +111357,7 @@ var NumbersBlock = React.createClass({displayName: "NumbersBlock",
 
 module.exports = NumbersBlock;
 
-},{"./NumberItem":704,"object-assign":34,"react":527}],706:[function(require,module,exports){
+},{"./NumberItem":734,"object-assign":34,"react":527}],736:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -106499,6 +111382,10 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
             seekToValue: 0,
             paused: false,
 
+            abMode: false,
+
+            abPauseDuration: 500,
+
             onProgress: function(seconds){
 
             }
@@ -106512,7 +111399,8 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
             loading: false,
             loaded: 0,
             played: 0,
-            playing: true,
+            //playing: true,
+            playing: false,
             duration: 0,
             name: undefined,
             imgSrc: undefined
@@ -106520,6 +111408,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
     },
 
     componentWillReceiveProps: function (nextProps) {
+        console.log('PatientPlayer: componentWillReceiveProps occured: nextProps = ', nextProps);
         var vimeoId = nextProps.vimeoId;
         var youtubeId = nextProps.youtubeId;
 
@@ -106531,12 +111420,26 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
             //return;
         }
 
+        var start = nextProps.start;
+        var end = nextProps.end;
+
         if (paused != this.props.paused){
             console.log('paused changed');
             this.setState({
                 playing: !paused
             });
         }
+
+        if (start != this.props.start || end != this.props.end){
+            console.log('-->>> !!! >>> PatientPlayer: new start or end: start, end = ', start, end);
+
+            console.log('start != this.props.start || end != this.props.end');
+            if (this.props.abMode == true){
+                this.abPlayPause();
+            }
+        }
+
+
 
         if (vimeoId == this.props.vimeoId && youtubeId == this.props.youtubeId){
             return;
@@ -106597,6 +111500,20 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
         this.refs.player.seekTo(fraction);
     },
 
+    onEnded: function(){
+        console.log('onEnded occured');
+        if (this.props.abMode == true){
+            this.abPlayPause();
+        }
+    },
+
+    play: function(){
+        console.log('play occured');
+        //this.refs.player.play();
+        console.log('this.refs.player = ', this.refs.player);
+        //this.forceUpdate();
+    },
+
     load: function(youtubeId, vimeoId, callback){
         if (callback == undefined) callback = function(){};
         if (vimeoId != undefined){
@@ -106646,6 +111563,15 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
         if (pos < start || pos > end ){
             this.seekTo( 1.0 * start / duration);
         }
+        if (this.props.abMode == true){
+            if (pos >= end){
+                //this.seekTo( 1.0 * start / duration);
+                //setTimeout(function(){
+                //    this.play();
+                //}.bind(this), 1000);
+                this.abPlayPause();
+            }
+        }
         this.props.onProgress(pos / 1000.0);
 
     },
@@ -106654,7 +111580,26 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
     },
 
+    abPlayPause: function(){
+        console.log('abPlayPause occured');
+        this.setState({
+            playing: false
+        });
+        //var fraction =
+        var start = (this.props.start == undefined) ? 0 : this.props.start * 1000;
+        var duration = this.state.duration;
+        this.seekTo( 1.0 * start / duration);
+
+        setTimeout(function(){
+            this.setState({
+                playing: true
+            });
+        }.bind(this), this.props.abPauseDuration);
+    },
+
     render: function () {
+        console.log('PatientPlayer: render occured: playing = ', this.state.playing);
+
         var url = this.getUrl();
         var start = (this.props.start == undefined) ? 0 : this.props.start;
         var end = (this.props.end == undefined) ? 0 : this.props.end;
@@ -106669,7 +111614,8 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
             badge: 0,
             byline: 0,
             portrait: 0,
-            title: 0
+            title: 0,
+            autoplay: !this.props.paused
         };
 
         return (
@@ -106683,9 +111629,10 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
                                      onPlay: this.onPlay, 
                                      playing: this.state.playing, 
                                      onPause: this.onPause, 
+                                     onEnded: this.onEnded, 
                                      youtubeConfig: youtubeConfig, 
                                      vimeoConfig: vimeoConfig}
-                            )
+                        )
                 
 
 
@@ -106698,7 +111645,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
 module.exports = PatientPlayer;
 
-},{"../../mixins/VideoMixin":789,"object-assign":34,"react-player":270,"react/addons":354}],707:[function(require,module,exports){
+},{"../../mixins/VideoMixin":847,"object-assign":34,"react-player":270,"react/addons":354}],737:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -106793,7 +111740,7 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
 
 module.exports = VimeoPlayer;
 
-},{"object-assign":34,"react":527,"react-vimeo":348}],708:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-vimeo":348}],738:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -106854,7 +111801,7 @@ var PatientPreloader = React.createClass({displayName: "PatientPreloader",
 
 module.exports = PatientPreloader;
 
-},{"object-assign":34,"react":527}],709:[function(require,module,exports){
+},{"object-assign":34,"react":527}],739:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -107018,7 +111965,7 @@ var ProfilePanel = React.createClass({displayName: "ProfilePanel",
 
 module.exports = ProfilePanel;
 
-},{"../editor/PatientEditor":612,"object-assign":34,"react":527}],710:[function(require,module,exports){
+},{"../editor/PatientEditor":635,"object-assign":34,"react":527}],740:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -107134,7 +112081,7 @@ var ProfileStatButton = React.createClass({displayName: "ProfileStatButton",
 
 module.exports = ProfileStatButton;
 
-},{"../chart/SelfLoadingUserProgressPanel":567,"../dialog/Dialog":604,"object-assign":34,"react":527}],711:[function(require,module,exports){
+},{"../chart/SelfLoadingUserProgressPanel":567,"../dialog/Dialog":604,"object-assign":34,"react":527}],741:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -107300,7 +112247,7 @@ var ProfileUpdateButton = React.createClass({displayName: "ProfileUpdateButton",
 
 module.exports = ProfileUpdateButton;
 
-},{"../buttons/DeleteButton":559,"../dialog/Dialog":604,"./SelfLoadingProfilePanel":712,"moment":33,"object-assign":34,"react":527}],712:[function(require,module,exports){
+},{"../buttons/DeleteButton":559,"../dialog/Dialog":604,"./SelfLoadingProfilePanel":742,"moment":33,"object-assign":34,"react":527}],742:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -107426,7 +112373,7 @@ var SelfLoadingProfilePanel = React.createClass({displayName: "SelfLoadingProfil
 
 module.exports = SelfLoadingProfilePanel;
 
-},{"../../mixins/ProfileMixin":785,"./ProfilePanel":709,"object-assign":34,"react":527}],713:[function(require,module,exports){
+},{"../../mixins/ProfileMixin":842,"./ProfilePanel":739,"object-assign":34,"react":527}],743:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -107524,7 +112471,7 @@ var UserProfileButton = React.createClass({displayName: "UserProfileButton",
 
 module.exports = UserProfileButton;
 
-},{"../dialog/Dialog":604,"./UserProfilePanel":714,"object-assign":34,"react":527}],714:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./UserProfilePanel":744,"object-assign":34,"react":527}],744:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -107757,7 +112704,4158 @@ var UserProfilePanel = React.createClass({displayName: "UserProfilePanel",
 
 module.exports = UserProfilePanel;
 
-},{"../../mixins/UserMixin":788,"../file/FileUploader":645,"object-assign":34,"react":527}],715:[function(require,module,exports){
+},{"../../mixins/UserMixin":846,"../file/FileUploader":668,"object-assign":34,"react":527}],745:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireViewPanel = require('./panels/QuestionnaireViewPanel');
+var QuestionnaireEditPanel = require('./panels/QuestionnaireEditPanel');
+
+var Dialog = require('../dialog/Dialog');
+
+var QuestionnaireEditViewDialog = React.createClass({displayName: "QuestionnaireEditViewDialog",
+    getDefaultProps: function () {
+        return {
+            questionnaireId: undefined,
+            teacherId: undefined,
+            editMode: true,
+            onClose: function(){
+
+            },
+            onDeleted: function(){
+
+            },
+
+            onUpdated: function(d){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            mode: 'info'
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
+        });
+    },
+
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        dialogPanelStyle: {
+            width: 870
+        },
+
+        footerStyle: {
+            minHeight: 47
+        }
+    },
+
+    onClose: function(){
+        this.props.onClose();
+    },
+
+    getFooter: function(){
+        return (
+            React.createElement("div", {style: {padding: 5}}, 
+                this.state.mode == 'info' ?
+                    React.createElement("button", {className: 'ui primary button', onClick: this.switchMode.bind(this, 'edit')}, 
+                        React.createElement("i", {className: 'icon pencil'}), " Редактировать"
+                    )
+                    :
+                    React.createElement("button", {className: 'ui primary button', onClick: this.switchMode.bind(this, 'info')}, 
+                        React.createElement("i", {className: 'icon unhide'}), " Просмотр"
+                    )
+                
+            )
+        );
+    },
+
+    onDeleted: function(){
+        this.props.onDeleted();
+    },
+
+    onUpdated: function(d){
+        this.props.onUpdated(d);
+    },
+
+    getContent: function(){
+        return (
+            React.createElement("div", {style: this.componentStyle.content}, 
+
+                this.state.mode == 'info' ?
+                    React.createElement("div", null, 
+                        React.createElement(QuestionnaireViewPanel, {
+                            userId: this.props.teacherId, 
+                            questionnaireId: this.props.questionnaireId})
+                    )
+                    :
+                    React.createElement("div", {style: {height: '100%', overflowY: 'auto'}}, 
+                        React.createElement(QuestionnaireEditPanel, {teacherId: this.props.teacherId, editMode: this.props.editMode, 
+                                                questionnaireId: this.props.questionnaireId, 
+                                                onDeleted: this.onDeleted, onUpdated: this.onUpdated}
+                            )
+                    )
+                
+
+            )
+        );
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement(Dialog, {visible: true, dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                        footerStyle: this.componentStyle.footerStyle, onClose: this.onClose, 
+                    content: this.getContent(), footer: this.getFooter()}
+                    )
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireEditViewDialog;
+
+},{"../dialog/Dialog":604,"./panels/QuestionnaireEditPanel":746,"./panels/QuestionnaireViewPanel":747,"object-assign":34,"react":527}],746:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingQuestionnaireEditInfoPanel = require('./question/SelfLoadingQuestionnaireEditInfoPanel');
+
+var SelfLoadingQuestionsEditPanel = require('./question/SelfLoadingQuestionsEditPanel');
+
+var QuestionnaireEditPanel = React.createClass({displayName: "QuestionnaireEditPanel",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+            questionnaireId: undefined,
+            onUpdated: function(){
+
+            },
+
+            onDeleted: function(){
+                console.log('QuestionnaireEditPanel: default onDeleted');
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            mode: 'info',
+            questionnaireId: this.props.questionnaireId
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    switchMode: function(mode){
+        console.log('new mode: ', mode);
+        this.setState({
+            mode: mode
+        });
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 855,
+            backgroundColor: 'white',
+            padding: 5,
+            margin: '0 auto'
+        },
+
+        tabsPlaceholder: {
+            textAlign: 'center',
+            padding: 5,
+            paddingTop: 0
+        },
+
+        tabItem: {
+            padding: 5,
+            cursor: 'pointer',
+            margin: 10,
+            marginTop: 0,
+            marginBottom: 0,
+            display: 'inline-block'
+        },
+
+        active: {
+            borderBottom: '3px solid rgb(252, 99, 107)'
+        },
+
+        content: {
+
+        }
+    },
+
+    onLoaded: function(q){
+        this.setState({
+            questionnaireId: q.id
+        });
+    },
+
+    onUpdated: function(q){
+        this.setState({
+            questionnaireId: q.id
+        });
+        this.props.onUpdated(q);
+    },
+
+    onDeleted: function(){
+        this.props.onDeleted();
+    },
+
+    render: function () {
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.state.questionnaireId == undefined ?
+                    React.createElement("div", null, 
+                        React.createElement("h3", {style: {textAlign: 'center'}}, 
+                            "Создание нового опросника"
+                        )
+                    )
+                    :
+                    React.createElement("div", {style: this.componentStyle.tabsPlaceholder}, 
+                        React.createElement("div", {onClick: this.switchMode.bind(this, 'info'), 
+                             style: assign({}, this.componentStyle.tabItem, (this.state.mode == 'info') ? this.componentStyle.active: {})}, 
+                            "Информация"
+                        ), 
+
+                        React.createElement("div", {onClick: this.switchMode.bind(this, 'questions'), 
+                             style: assign({}, this.componentStyle.tabItem, (this.state.mode == 'questions') ? this.componentStyle.active: {})}, 
+                            "Вопросы"
+                        )
+                    ), 
+                
+
+                React.createElement("div", {style: this.componentStyle.content}, 
+
+                    this.state.mode == 'info' ?
+                        React.createElement("div", null, 
+                            React.createElement(SelfLoadingQuestionnaireEditInfoPanel, {teacherId: this.props.teacherId, 
+                                                               onLoaded: this.onLoaded, 
+                                                               onUpdated: this.onUpdated, 
+                                                               onDeleted: this.onDeleted, 
+                                                               questionnaireId: this.props.questionnaireId})
+
+                        )
+                        :
+                        React.createElement("div", null, 
+                            React.createElement(SelfLoadingQuestionsEditPanel, {questionnaireId: this.state.questionnaireId})
+                        )
+                    
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireEditPanel;
+
+},{"./question/SelfLoadingQuestionnaireEditInfoPanel":756,"./question/SelfLoadingQuestionsEditPanel":757,"object-assign":34,"react":527}],747:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../../dialog_exercise/card/DialogCard');
+
+var QuestionnaireMixin = require('../../../mixins/QuestionnaireMixin');
+
+var SelfLoadingQuestionnairePanel = require('./view/SelfLoadingQuestionnairePanel');
+
+var QuestionnaireViewPanel = React.createClass({displayName: "QuestionnaireViewPanel",
+    getDefaultProps: function () {
+        return {
+            questionnaireId: undefined,
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            name: undefined,
+            avatar: undefined,
+            description: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 850,
+            padding: 5
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 240,
+            borderRight: '1px solid #EFF0F1'
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 590
+        },
+
+        cardPlaceholder: {
+            width: '100%',
+            height: 160
+        },
+
+        infoPlaceholder: {
+            marginTop: 5
+        }
+    },
+
+    load: function(){
+        var id = this.props.questionnaireId;
+        if (id == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.loadQuestionnaire(id, function(q){
+            this.setState({
+                loading: false,
+                name: q.name,
+                avatar: q.avatar,
+                description: q.description
+            });
+        }.bind(this));
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+                    React.createElement("div", {style: this.componentStyle.cardPlaceholder}, 
+                        React.createElement(DialogCard, {avatar: this.state.avatar, name: this.state.name})
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.infoPlaceholder}, 
+                        this.state.description
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+                    React.createElement(SelfLoadingQuestionnairePanel, {
+                        userId: this.props.userId, 
+                        questionnaireId: this.props.questionnaireId})
+
+
+                ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireViewPanel;
+
+},{"../../../mixins/QuestionnaireMixin":843,"../../dialog_exercise/card/DialogCard":615,"./view/SelfLoadingQuestionnairePanel":763,"object-assign":34,"react":527}],748:[function(require,module,exports){
+/**
+ * Created by sabir on 21.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FileUploadButton = require('../../../file/FileUploadButton');
+
+var QuestionAnswerPanel = React.createClass({displayName: "QuestionAnswerPanel",
+    getDefaultProps: function () {
+        return {
+            answer: undefined,
+            ruAnswer: undefined,
+            audioUrl: undefined,
+            number: undefined,
+
+            onChange: function(number, answer, ruAnswer, audioUrl){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            ruAnswer: this.props.ruAnswer,
+            answer: this.props.answer,
+            audioUrl: this.props.audioUrl
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var answer = nextProps.answer;
+        var ruAnswer = nextProps.ruAnswer;
+        var audioUrl = nextProps.audioUrl;
+        this.setState({
+            answer: answer,
+            ruAnswer: ruAnswer,
+            audioUrl: audioUrl
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            padding: 5,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            width: 822,
+            borderRadius: 4
+        },
+
+        answerPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            marginRight: 5,
+            width: 300
+        },
+
+        ruAnswerPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            marginRight: 5,
+            width: 300
+        },
+
+        audioPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 200
+        },
+
+        audio: {
+            width: '100%'
+        },
+
+        uploadButtonPlaceholder: {
+
+        },
+
+        textarea: {
+            minHeight: 0,
+            height: '5em'
+        }
+
+    },
+
+    onChange: function(){
+        var number = this.props.number;
+        var answer = this.state.answer;
+        var ruAnswer = this.state.ruAnswer;
+        var audioUrl = this.state.audioUrl;
+        this.props.onChange(number, answer, ruAnswer, audioUrl);
+    },
+
+    getValFromEvt: function(evt){
+        var val = evt.target.value;
+        if (val == ''){
+            val = undefined;
+        }
+        return val;
+    },
+
+    onAnswerChange: function(evt){
+        this.setState({
+            answer: this.getValFromEvt(evt)
+        });
+        this.props.onChange(this.props.number, this.getValFromEvt(evt), this.state.ruAnswer, this.state.audioUrl);
+    },
+
+    onRuAnswerChange: function(evt){
+        this.setState({
+            ruAnswer: this.getValFromEvt(evt)
+        });
+        this.props.onChange(this.props.number, this.state.answer, this.getValFromEvt(evt), this.state.audioUrl);
+    },
+
+    onFileUploaded: function(url){
+        this.setState({
+            audioUrl: url
+        });
+        this.props.onChange(this.props.number, this.state.answer, this.state.ruAnswer, url);
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.answerPlaceholder}, 
+                    React.createElement("div", {className: 'ui form'}, 
+                        React.createElement("textarea", {value: this.state.answer, placeholder: 'Вариант ответа (по-английски)', 
+                                  style: this.componentStyle.textarea, 
+                                  onChange: this.onAnswerChange})
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.ruAnswerPlaceholder}, 
+                    React.createElement("div", {className: 'ui form'}, 
+                        React.createElement("textarea", {style: this.componentStyle.textarea, placeholder: 'Перевод ответа', 
+                                  value: this.state.ruAnswer, 
+                                  onChange: this.onRuAnswerChange})
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.audioPlaceholder}, 
+
+                    this.state.audioUrl == undefined ? null :
+                        React.createElement("audio", {style: this.componentStyle.audio, src: this.state.audioUrl, controls: true}), 
+                    
+
+                    React.createElement("div", {style: this.componentStyle.uploadButtonPlaceholder}, 
+                        React.createElement(FileUploadButton, {
+                            buttonName: 'загрузить аудио', icon: 'icon upload', 
+                            className: 'ui basic fluid button', onFileUploaded: this.onFileUploaded})
+                    )
+
+
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionAnswerPanel;
+
+},{"../../../file/FileUploadButton":667,"object-assign":34,"react":527}],749:[function(require,module,exports){
+/**
+ * Created by sabir on 21.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionAnswerPanel = require('./QuestionAnswerPanel');
+
+var QuestionAnswerPanelsList = React.createClass({displayName: "QuestionAnswerPanelsList",
+    getDefaultProps: function () {
+        return {
+            answers: [],
+            //answers: [],
+            onChange: function(answers){
+                console.log('default: QuestionAnswerPanelsList: onChange: ', answers);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 830,
+            padding: 4,
+            margin: '0 auto',
+            backgroundColor: 'white'
+        },
+
+        itemPlaceholder: {
+            marginTop: 5
+        }
+    },
+
+    onChange: function(number, answer, ruAnswer, audioUrl){
+        var list = this.props.answers;
+        var arr = [];
+        for (var i in list){
+            var q = list[i];
+            if (i == number){
+                q.answer = answer;
+                q.ruAnswer = ruAnswer;
+                q.audioUrl = audioUrl;
+            }
+            arr.push(q);
+        }
+        this.props.onChange(arr);
+    },
+
+    render: function () {
+        var list = this.props.answers;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(q, k){
+                    var key = 'panel_answer' + k + '';
+                    return (
+                        React.createElement("div", {key: key, style: this.componentStyle.itemPlaceholder}, 
+                            React.createElement("div", {style: {color: 'rgba(0, 0, 0, 0.6)'}}, +k+1, ")"), 
+                            React.createElement(QuestionAnswerPanel, {number: k, 
+                                                 audioUrl: q.audioUrl, onChange: this.onChange, 
+                                                 answer: q.answer, ruAnswer: q.ruAnswer})
+                        )
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionAnswerPanelsList;
+
+},{"./QuestionAnswerPanel":748,"object-assign":34,"react":527}],750:[function(require,module,exports){
+/**
+ * Created by sabir on 24.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var Dialog = require('../../../dialog/Dialog');
+
+var SelfLoadingQuestionnaireSearchList = require('./SelfLoadingQuestionnaireSearchList');
+
+var QuestionnaireSearchButton = React.createClass({displayName: "QuestionnaireSearchButton",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+
+            buttonName: 'Опросник',
+            buttonClassName: 'ui basic mini button',
+            icon: 'icon newspaper',
+
+            style: {
+
+            },
+
+            onSelect: function(q){
+                console.log('QuestionnaireSearchButton: default onSelect: q = ', q);
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    showDialog: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onSelect: function(q){
+        this.props.onSelect(q);
+        this.onClose();
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        buttonStyle: {
+
+        },
+
+        dialogPanelStyle: {
+            width: 690,
+            paddingTop: 10
+        }
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement("div", null, 
+
+                React.createElement("h3", {style: {textAlign: 'center'}}, 
+                    "Выберите опросник"
+                ), 
+
+                React.createElement(SelfLoadingQuestionnaireSearchList, {
+                    onSelect: this.onSelect, 
+                    teacherId: this.props.teacherId})
+            )
+        );
+    },
+
+
+    render: function () {
+        var bSt = assign({}, this.componentStyle.buttonStyle, this.props.style);
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, style: bSt, onClick: this.showDialog}, 
+                    React.createElement("i", {className: this.props.icon}), " ", this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {content: this.getDialogContent(), onClose: this.onClose, level: 100, 
+                        dialogPanelStyle: this.componentStyle.dialogPanelStyle, visible: true})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireSearchButton;
+
+},{"../../../dialog/Dialog":604,"./SelfLoadingQuestionnaireSearchList":752,"object-assign":34,"react":527}],751:[function(require,module,exports){
+/**
+ * Created by sabir on 24.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var Dialog = require('../../../dialog/Dialog');
+
+var SelfLoadingQuestionnairePanel = require('../view/SelfLoadingQuestionnairePanel');
+
+var QuestionnaireSearchList = React.createClass({displayName: "QuestionnaireSearchList",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            questionnaires: [],
+            onSelect: function(q){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false,
+            selectedQuestionnaire: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 650,
+            margin: '0 auto',
+            backgroundColor: 'white',
+            padding: 5
+        },
+
+        dialogPanelStyle: {
+            width: 640,
+            padding: 5
+        },
+
+        list: {
+
+        },
+
+        itemStyle: {
+            marginTop: 5,
+            marginBottom: 5,
+            padding: 5,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            borderRadius: 2
+        },
+
+        name: {
+            fontSize: 16,
+            fontWeight: 'bold'
+        },
+
+        description: {
+            marginTop: 5
+        },
+
+        left: {
+            width: 450,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        right: {
+            width: 178,
+            padding: 5,
+            textAlign: 'right',
+            display: 'inline-block',
+            verticalAlign: 'top'
+        }
+
+    },
+
+    getDialogContent: function(){
+        var q = this.state.selectedQuestionnaire;
+        if (q == undefined){
+            return null;
+        }
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingQuestionnairePanel, {questionnaireId: q.id, userId: this.props.userId})
+            )
+        );
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onSelect: function(q){
+        this.props.onSelect(q);
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    show: function(q){
+        this.setState({
+            selectedQuestionnaire: q,
+            dialogVisible: true
+        });
+    },
+
+
+    render: function () {
+        var list = this.props.questionnaires;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.list}, 
+
+                    list.map(function(q, k){
+                        var key = 'que_' + k + '_' + q.id;
+                        var show = this.show.bind(this, q);
+                        var select = this.onSelect.bind(this, q);
+                        return (
+                            React.createElement("div", {style: this.componentStyle.itemStyle}, 
+
+                                React.createElement("div", {style: this.componentStyle.left}, 
+                                    React.createElement("div", {style: this.componentStyle.name}, 
+                                        q.name
+                                    ), 
+
+                                    React.createElement("div", {style: this.componentStyle.description}, 
+                                        q.description
+                                    )
+
+                                ), 
+
+                                React.createElement("div", {style: this.componentStyle.right}, 
+                                    React.createElement("div", {style: {marginBottom: 5}}, 
+                                        React.createElement("button", {onClick: show, className: 'ui basic mini button'}, 
+                                            React.createElement("i", {className: 'icon unhide'}), " Посмотреть"
+                                        )
+                                    ), 
+                                    React.createElement("div", null, 
+                                        React.createElement("button", {onClick: select, className: 'ui basic mini button'}, 
+                                            React.createElement("i", {className: 'icon checkmark'}), " Выбрать"
+                                        )
+                                    )
+                                )
+
+
+                            )
+                        );
+                    }, this)
+
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {visible: true, content: this.getDialogContent(), 
+                            level: 1000, 
+                            onClose: this.onClose, 
+                        dialogPanelStyle: this.componentStyle.dialogPanelStyle})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireSearchList;
+
+},{"../../../dialog/Dialog":604,"../view/SelfLoadingQuestionnairePanel":763,"object-assign":34,"react":527}],752:[function(require,module,exports){
+/**
+ * Created by sabir on 24.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var QuestionnaireSearchList = require('./QuestionnaireSearchList');
+
+var SelfLoadingQuestionnaireSearchList = React.createClass({displayName: "SelfLoadingQuestionnaireSearchList",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+
+            onSelect: function(q){
+                console.log('SelfLoadingQuestionnaireSearchList: q = ', q);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            questionnaires: []
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    load: function(){
+        var teacherId = this.props.teacherId;
+        if (teacherId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.loadTeacherQuestionnaires(teacherId, function(questionnaires){
+            this.setState({
+                questionnaires: questionnaires,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative'
+        },
+
+        list: {
+
+        }
+    },
+
+    onSelect: function(q){
+        this.props.onSelect(q);
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.list}, 
+                    React.createElement(QuestionnaireSearchList, {userId: this.props.teacherId, 
+                                             onSelect: this.onSelect, 
+                                             questionnaires: this.state.questionnaires})
+                ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingQuestionnaireSearchList;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"./QuestionnaireSearchList":751,"object-assign":34,"react":527}],753:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var TeacherQuestionnairesList = require('./TeacherQuestionnairesList');
+
+var Dialog = require('../../../dialog/Dialog');
+
+var QuestionnaireEditPanel = require('../QuestionnaireEditPanel');
+
+var SelfLoadingTeacherQuestionnairesList = React.createClass({displayName: "SelfLoadingTeacherQuestionnairesList",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            questionnaires: [],
+            loading: false,
+            createDialogVisible: false
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    load: function(){
+        var teacherId = this.props.teacherId;
+        if (teacherId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.loadTeacherQuestionnaires(teacherId, function(questionnaires){
+            this.setState({
+                questionnaires: questionnaires,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 870,
+            margin: '0 auto',
+            //padding: 5,
+            //paddingTop: 5,
+            paddingBottom: 10,
+            backgroundColor: 'white'
+        },
+
+        listPlaceholder: {
+
+        },
+
+        createButtonPlaceholder: {
+            textAlign: 'right',
+            padding: 5,
+            paddingRight: 0
+        },
+
+        dialogPanelStyle: {
+            width: 870
+        }
+    },
+
+    onCreated: function(){
+        this.load();
+        setTimeout(function(){
+            this.onClose();
+        }.bind(this), 200);
+    },
+
+    onDeleted: function(){
+        this.onClose();
+        setTimeout(function(){
+            this.load();
+        }.bind(this), 200);
+    },
+
+    onUpdated: function(q){
+        this.load();
+        setTimeout(function(){
+            this.onClose();
+        }.bind(this), 200);
+
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement("div", null, 
+                React.createElement(QuestionnaireEditPanel, {onUpdated: this.onCreated, 
+                                        onDeleted: this.onDeleted, 
+                                        teacherId: this.props.teacherId})
+            )
+        );
+    },
+
+    onClose: function(){
+        this.setState({
+            createDialogVisible: false
+        });
+    },
+
+    onShowDialog: function(){
+        this.setState({
+            createDialogVisible: true
+        });
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.createButtonPlaceholder}, 
+                    React.createElement("button", {className: 'ui basic button', onClick: this.onShowDialog, onClick: this.onShowDialog}, 
+                        React.createElement("i", {className: 'icon plus'}), " Создать новый опросник"
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                    React.createElement(TeacherQuestionnairesList, {teacherId: this.props.teacherId, 
+                                               onDeleted: this.onDeleted, onUpdated: this.onUpdated, 
+                        questionnaires: this.state.questionnaires})
+                ), 
+
+                this.state.createDialogVisible == false ? null :
+                    React.createElement(Dialog, {
+                        dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                        content: this.getDialogContent(), onClose: this.onClose, 
+                        visible: true}), 
+                
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingTeacherQuestionnairesList;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"../../../dialog/Dialog":604,"../QuestionnaireEditPanel":746,"./TeacherQuestionnairesList":754,"object-assign":34,"react":527}],754:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../../../dialog_exercise/card/DialogCard');
+
+var Dialog = require('../../../dialog/Dialog');
+
+var QuestionnaireEditPanel = require('../QuestionnaireEditPanel');
+
+var QuestionnaireEditViewDialog = require('../../QuestionnaireEditViewDialog');
+
+
+
+var TeacherQuestionnairesList = React.createClass({displayName: "TeacherQuestionnairesList",
+    getDefaultProps: function () {
+        return {
+            questionnaires: [],
+            teacherId: undefined,
+
+            editMode: true,
+
+            onDeleted: function(){
+
+            },
+
+            onUpdated: function(q){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false,
+            selectedQuestionnaireId: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 850,
+            margin: '0 auto'
+        },
+
+        dialogPanelStyle: {
+            width: 850
+        },
+
+        itemStyle: {
+            width: 200,
+            height: 150,
+            margin: 5,
+            display: 'inline-block',
+            cursor: 'pointer'
+        },
+
+        listPlaceholder: {
+
+        }
+    },
+
+
+    onItemClick: function(questionnaireId){
+        this.setState({
+            selectedQuestionnaireId: questionnaireId,
+            dialogVisible: true
+        });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onDeleted: function(){
+        this.props.onDeleted();
+        this.onClose();
+    },
+
+    onUpdated: function(q){
+        this.props.onUpdated(q);
+    },
+
+    render: function () {
+        var list = this.props.questionnaires;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                    list.map(function(q, k){
+                        var key = 'qu_' + k;
+                        var onClick = this.onItemClick.bind(this, q.id);
+
+                        return (
+                            React.createElement("div", {onClick: onClick, style: this.componentStyle.itemStyle}, 
+                                React.createElement(DialogCard, {avatar: q.avatar, name: q.name})
+                            )
+                        );
+
+                    }, this)
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(QuestionnaireEditViewDialog, {
+                        teacherId: this.props.teacherId, onClose: this.onClose, 
+                        onDeleted: this.onDeleted, 
+                        onUpdated: this.onUpdated, 
+                        questionnaireId: this.state.selectedQuestionnaireId})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = TeacherQuestionnairesList;
+
+},{"../../../dialog/Dialog":604,"../../../dialog_exercise/card/DialogCard":615,"../../QuestionnaireEditViewDialog":745,"../QuestionnaireEditPanel":746,"object-assign":34,"react":527}],755:[function(require,module,exports){
+/**
+ * Created by sabir on 21.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionAnswerPanelsList = require('../answer/QuestionAnswerPanelsList');
+
+var VimeoPlayer = require('../../../player/VimeoPlayer');
+
+var DeleteButton = require('../../../buttons/DeleteButton');
+
+var QuestionnaireQuestionPanel = React.createClass({displayName: "QuestionnaireQuestionPanel",
+    getDefaultProps: function () {
+        return {
+            number: undefined,
+            question: undefined,
+            ruQuestion: undefined,
+            vimeoId: undefined,
+            answers: [],
+            name: undefined,
+
+            canDelete: false,
+
+            onChange: function(data){
+                console.log(data);
+            },
+
+            onSave: function(data){
+
+            },
+
+            onDelete: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            answers: this.props.answers,
+            question: (this.props.question == undefined) ? '' : this.props.question,
+            ruQuestion: (this.props.ruQuestion == undefined) ? '' : this.props.ruQuestion,
+            vimeoId: this.props.vimeoId,
+            name: this.props.name
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        console.log('QuestionnaireQuestionPanel: componentWillReceiveProps: ', nextProps);
+        this.setState({
+            answers: nextProps.answers,
+            question: (nextProps.question == undefined) ? '' : nextProps.question,
+            ruQuestion: (nextProps.ruQuestion == undefined) ? '' : nextProps.ruQuestion,
+            vimeoId: nextProps.vimeoId,
+            name: nextProps.name
+
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    getCurrentData: function(){
+        return {
+            answers: this.state.answers,
+            question: this.state.question,
+            ruQuestion: this.state.ruQuestion,
+            vimeoId: this.state.vimeoId,
+            name: this.state.name
+        }
+    },
+
+    getValFromEvt: function(evt){
+        var val = evt.target.value;
+        if (val == ''){
+            val = undefined;
+        }
+        return val;
+    },
+
+    onVimeoIdChange: function(evt){
+        this.setState({
+            vimeoId: this.getValFromEvt(evt)
+        });
+    },
+
+    onNameChange: function(evt){
+        this.setState({
+            name: this.getValFromEvt(evt)
+        });
+    },
+
+    onQuestionChange: function(evt){
+        this.setState({
+            question: this.getValFromEvt(evt)
+        });
+    },
+
+    onRuQuestionChange: function(evt){
+        this.setState({
+            ruQuestion: this.getValFromEvt(evt)
+        });
+    },
+
+    onAnswersChange: function(answers){
+        this.setState({
+            answers: answers
+        });
+    },
+
+
+
+    addAnswer: function(){
+        var answers = this.state.answers;
+        answers.push({
+
+        });
+        this.setState({
+            answers: answers
+        });
+    },
+
+    removeLastAnswer: function(){
+        var answers = this.state.answers;
+        answers = answers.slice(0, answers.length - 1);
+        this.setState({
+            answers: answers
+        });
+    },
+
+    canAddAnswer: function(){
+        var answers = this.state.answers;
+        if (answers.length == 0){
+            return true;
+        }
+        var f = true;
+        for (var i in answers){
+            var a = answers[i];
+            if (a.answer == undefined || a.answer.trim() == '' || a.audioUrl == undefined || a.audioUrl.trim() == ''){
+                f = false;
+            }
+        }
+        return f;
+    },
+
+    canRemoveAnswer: function(){
+        var answers = this.state.answers;
+        if (answers.length == 0){
+            return false;
+        }
+        return true;
+    },
+
+    onListChange: function(answers){
+        this.setState({
+            answers: answers
+        });
+    },
+
+    canSave: function(){
+        var q = this.state;
+        var f = true;
+        if (q.question == undefined || q.question == ''
+            || q.ruQuestion == undefined || q.ruQuestion == ''
+            || q.vimeoId == undefined || q.vimeoId == ''){
+            f = false;
+        }
+        return f;
+    },
+
+    onSave: function(){
+        var data = this.getCurrentData();
+        this.props.onSave(data);
+    },
+
+    onDelete: function(){
+        this.props.onDelete();
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 850,
+            backgroundColor: 'white',
+            padding: 5
+        },
+
+        topPlaceholder: {
+            minHeight: 180,
+            borderBottom: '1px dotted #EFF0F1'
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            borderRight: '1px solid #EFF0F1',
+            height: '100%',
+            width: 250
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 590,
+            padding: 5
+        },
+
+        answersPlaceholder: {
+
+        },
+
+        textarea: {
+            minHeight: 0,
+            height: '6em'
+        },
+
+        videoBlockPlaceholder: {
+            width: '100%',
+            minHeight: 167,
+            backgroundColor: '#EFF0F1',
+            padding: 5,
+            borderRadius: 3,
+            marginTop: 5
+        },
+
+        style: {
+            width: '100%',
+            height: '100%'
+        },
+
+        videoPlaceholder: {
+            width: '100%',
+            height: 170,
+            backgroundColor: '#EFF0F1'
+        },
+
+        bottomPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+        saveButtonPlaceholder: {
+            padding: 5,
+            textAlign: 'right'
+        }
+
+    },
+
+    onDelete: function(){
+        this.props.onDelete();
+    },
+
+    render: function () {
+        var vimeoId = (this.state.vimeoId == undefined) ? '' : this.state.vimeoId;
+        var canAddAnswer = this.canAddAnswer();
+        var canRemoveAnswer = this.canRemoveAnswer();
+        var canSave = this.canSave();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.topPlaceholder}, 
+
+                    React.createElement("div", {style: this.componentStyle.left}, 
+                        React.createElement("div", {style: this.componentStyle.videoBlockPlaceholder}, 
+
+                            this.state.vimeoId == undefined ?
+                                React.createElement("div", {style: {marginBottom: 15}}, 
+                                    "Введите ссылку на видео (с сайта vimeo.com) в поле ниже"
+                                )
+                                :
+                                React.createElement("div", {style: this.componentStyle.videoPlaceholder}, 
+                                    React.createElement(VimeoPlayer, {style: this.componentStyle.style, vimeoId: this.state.vimeoId})
+                                ), 
+                            
+
+                            React.createElement("div", {className: 'ui form'}, 
+                                React.createElement("div", {className: "field", style: {marginTop: 10}}, 
+                                    React.createElement("label", null, "Ссылка на видео", React.createElement("sup", {style: {color: '#FC636B'}}, "*")), 
+                                    React.createElement("input", {onChange: this.onVimeoIdChange, 
+                                           value: vimeoId, type: "text", 
+                                           placeholder: "ссылка на видео"})
+                                )
+                            )
+
+                        )
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.right}, 
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("input", {value: this.state.name, onChange: this.onNameChange, placeholder: 'Название темы вопросы'})
+                        ), 
+                        React.createElement("div", {className: 'ui form', style: {marginTop: 5}}, 
+                            React.createElement("textarea", {onChange: this.onQuestionChange, placeholder: 'Вопрос (по-английски)', 
+                                      value: this.state.question, style: this.componentStyle.textarea})
+                        ), 
+                        React.createElement("div", {className: 'ui form', style: {marginTop: 5}}, 
+                            React.createElement("textarea", {onChange: this.onRuQuestionChange, placeholder: 'Перевод вопроса (по-русски)', 
+                                      value: this.state.ruQuestion, style: this.componentStyle.textarea})
+                        )
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.answersPlaceholder}, 
+                    React.createElement(QuestionAnswerPanelsList, {onChange: this.onListChange, answers: this.state.answers})
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.bottomPlaceholder}, 
+
+                    canRemoveAnswer == false ? null :
+                        React.createElement("span", {style: {marginLeft: 10, marginRight: 10}}, 
+                            React.createElement("button", {className: 'ui basic red button', onClick: this.removeLastAnswer}, 
+                                React.createElement("i", {className: 'icon remove'}), " удалить последний ответ"
+                            )
+                        ), 
+                    
+
+                    canAddAnswer == false ? null :
+                        React.createElement("span", {style: {marginLeft: 10, marginRight: 10}}, 
+                            React.createElement("button", {className: 'ui basic green button', onClick: this.addAnswer}, 
+                                React.createElement("i", {className: 'icon plus'}), " добавить ответ"
+                            )
+                        )
+                    
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.saveButtonPlaceholder}, 
+                    React.createElement("button", {disabled: !canSave, onClick: this.onSave, className: 'ui primary button'}, 
+                        React.createElement("i", {className: 'icon save'}), " Сохранить"
+                    ), 
+
+                    this.props.canDelete == false ? null :
+                        React.createElement("div", {style: {marginTop: 5}}, 
+                            React.createElement(DeleteButton, {onDelete: this.onDelete})
+                        )
+                    
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireQuestionPanel;
+
+},{"../../../buttons/DeleteButton":559,"../../../player/VimeoPlayer":737,"../answer/QuestionAnswerPanelsList":749,"object-assign":34,"react":527}],756:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var DialogCard = require('../../../dialog_exercise/card/DialogCard');
+var FileUploadButton = require('../../../file/FileUploadButton');
+
+var DeleteButton = require('../../../buttons/DeleteButton');
+
+var SelfLoadingQuestionnaireEditInfoPanel = React.createClass({displayName: "SelfLoadingQuestionnaireEditInfoPanel",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+            questionnaireId: undefined,
+
+            onUpdated: function(q){
+
+            },
+
+            onLoaded: function(q){
+
+            },
+
+            onDeleted: function(){
+                console.log('SelfLoadingQuestionnaireEditInfoPanel: default onDeleted occured ');
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            name: undefined,
+            task: undefined,
+            avatar: undefined,
+            description: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load(function(q){
+            this.props.onLoaded(q);
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 830,
+            padding: 5
+        },
+
+        top: {
+            width: '100%',
+            //height: 200,
+            borderBottom: '1px dotted #EFF0F1'
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            margin: 5,
+            marginRight: '1px solid #EFF0F1',
+            width: 200,
+            height: '100%'
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 600,
+            margin: 5
+        },
+
+        bottom: {
+            padding: 5,
+            textAlign: 'right'
+        },
+
+        avatarPlaceholder: {
+            width: '100%',
+            height: 142,
+            marginBottom: 5
+        },
+
+        textarea: {
+            minHeight: 0,
+            height: '7em'
+        }
+    },
+
+    load: function(callback){
+        var id = this.props.questionnaireId;
+        if (id == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.loadQuestionnaire(id, function(q){
+            this.setState({
+                loading: false,
+                name: q.name,
+                description: q.description,
+                task: q.task,
+                avatar: q.avatar
+            });
+            if (callback != undefined){
+                callback(q);
+            }
+        }.bind(this));
+    },
+
+    onSave: function(){
+        var questionnaireId = this.props.questionnaireId;
+        var teacherId = this.props.teacherId;
+        var name = this.state.name;
+        var description = this.state.description;
+        var avatar = this.state.avatar;
+        var task = this.state.task;
+
+
+        if (questionnaireId == undefined){
+            if (teacherId == undefined){ return; }
+            this.setState({loading: true});
+            QuestionnaireMixin.createQuestionnaire(teacherId, name, description, avatar, task, function(uQ){
+                this.setState({
+                    loading: false
+                });
+                this.props.onUpdated(uQ);
+            }.bind(this));
+            return;
+        }
+        this.setState({loading: true});
+        QuestionnaireMixin.updateQuestionnaire(questionnaireId, name, description, avatar, task, function(uQ){
+            this.setState({
+                loading: false
+            });
+            this.props.onUpdated(uQ);
+        }.bind(this));
+    },
+
+    onAvatarChange: function(url){
+        this.setState({
+            avatar: url
+        });
+    },
+
+    getValFromEvt: function(evt){
+        var val = evt.target.value;
+        if (val == ''){
+            val = undefined;
+        }
+        return val;
+    },
+
+    onNameChange: function(evt){
+        this.setState({
+            name: this.getValFromEvt(evt)
+        });
+    },
+
+    onDescriptionChange: function(evt){
+        this.setState({
+            description: this.getValFromEvt(evt)
+        });
+    },
+
+    onTaskChange: function(evt){
+        this.setState({
+            task: this.getValFromEvt(evt)
+        });
+    },
+
+    canSave: function(){
+        if (this.state.name == undefined || this.state.name == ''){
+            return false;
+        }
+        return true;
+    },
+
+    onDelete: function(){
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.deleteQuestionnaire(this.props.questionnaireId, function(){
+            this.setState({
+                loading: false
+            });
+            this.props.onDeleted();
+        }.bind(this));
+    },
+
+    render: function () {
+
+        var canSave = this.canSave();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.top}, 
+
+                    React.createElement("div", {style: this.componentStyle.left}, 
+
+                        React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+
+                            React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+                                React.createElement(DialogCard, {avatar: this.state.avatar, name: this.state.name})
+                            ), 
+
+                            this.state.avatar == undefined ?
+                                React.createElement("div", null, 
+                                    React.createElement(FileUploadButton, {className: 'ui basic fluid button', 
+                                                      buttonName: 'Загрузить аватар', 
+                                                      icon: 'icon upload', 
+                                                      onFileUploaded: this.onAvatarChange})
+                                )
+                                :
+                                React.createElement("div", null, 
+                                    React.createElement("div", {style: {cursor: 'pointer', padding: 7}, className: 'ui red message', 
+                                         onClick: this.onAvatarChange.bind(this, undefined)}, 
+                                        React.createElement("i", {className: 'icon remove'}), " Удалить аватар"
+                                    )
+                                )
+                            
+
+                        )
+
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.right}, 
+
+                        React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                            React.createElement("input", {value: this.state.name, onChange: this.onNameChange, placeholder: 'Название опросника'})
+                        ), 
+
+                        React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                            React.createElement("textarea", {value: this.state.description, placeholder: 'Описание опросника', 
+                                      onChange: this.onDescriptionChange, style: this.componentStyle.textarea})
+                        ), 
+
+                        React.createElement("div", {className: 'ui form'}, 
+                            React.createElement("textarea", {value: this.state.task, placeholder: 'Задание ученику', 
+                                      onChange: this.onTaskChange, style: this.componentStyle.textarea})
+                        )
+
+
+                    )
+
+                ), 
+
+
+                React.createElement("div", {style: this.componentStyle.bottom}, 
+
+                    React.createElement("div", null, 
+                        React.createElement("button", {disabled: !canSave, className: 'ui primary button', onClick: this.onSave}, 
+                            React.createElement("i", {className: 'icon save'}), " Сохранить"
+                        )
+                    ), 
+
+                    this.props.questionnaireId == undefined ? null :
+                        React.createElement("div", {style: {marginTop: 10}}, 
+                            React.createElement(DeleteButton, {onDelete: this.onDelete})
+                        )
+                    
+
+
+
+                ), 
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+
+
+    }
+
+});
+
+module.exports = SelfLoadingQuestionnaireEditInfoPanel;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"../../../buttons/DeleteButton":559,"../../../dialog_exercise/card/DialogCard":615,"../../../file/FileUploadButton":667,"object-assign":34,"react":527}],757:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var NumbersBlock = require('../../../numbers/NumbersBlock');
+
+var SelfLoadingUpdateQuestionPanel = require('./SelfLoadingUpdateQuestionPanel');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var SelfLoadingQuestionsEditPanel = React.createClass({displayName: "SelfLoadingQuestionsEditPanel",
+    getDefaultProps: function () {
+        return {
+            questionnaireId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedNumber: 0,
+            questions: [],
+            loading: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var questionnaireId = nextProps.questionnaireId;
+        this.load(questionnaireId);
+    },
+
+    componentDidMount: function () {
+        var questionnaireId = this.props.questionnaireId;
+        this.load(questionnaireId);
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 830
+        },
+
+        topPlaceholder: {
+
+        },
+
+        leftTop: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 5,
+            width: 650
+        },
+
+        rightTop: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 5,
+            width: 180,
+            textAlign: 'right'
+        },
+
+        numbersBlockPlaceholder: {
+
+        },
+
+        questionPlaceholder: {
+
+        }
+    },
+
+    load: function(questionnaireId){
+        if (questionnaireId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.loadQuestionnaireQuestions(questionnaireId, function(questions){
+            this.setState({
+                loading: false,
+                questions: questions
+            });
+        }.bind(this))
+    },
+
+    onUpdated: function(q){
+        var list = this.state.questions;
+        var arr = [];
+        for (var i in list){
+            var question = list[i];
+            if (i == question.number){
+                arr.push(q);
+            }else{
+                arr.push(question);
+            }
+        }
+        this.setState({
+            questions: arr
+        });
+    },
+
+    canAddQuestion: function(){
+        var questions = this.state.questions;
+        if (questions.length == 0){
+            return true;
+        }
+        var lastQ = questions[questions.length - 1];
+        if (lastQ.id == undefined || lastQ.question == undefined){
+            return false;
+        }
+        return true;
+    },
+
+    addQuestion: function(){
+        var questions = this.state.questions;
+        var number = questions.length;
+        questions.push({
+            questionnaireId: this.props.questionnaireId,
+            number: number
+        });
+        this.setState({
+            questions: questions,
+            selectedNumber: number
+        });
+    },
+
+    onNumberClick: function(n){
+        this.setState({
+            selectedNumber: n
+        });
+    },
+
+    onDeleted: function(number){
+        var list = this.state.questions;
+        var arr = [];
+        for (var i in list){
+            if (i == number){
+                continue;
+            }
+            arr.push(list[i]);
+        }
+        var newNum = 0;
+        if (arr.length > 0){
+            newNum = arr.length - 1;
+        }
+        this.setState({
+            questions: arr,
+            selectedNumber: newNum
+        });
+    },
+
+    canDeleteQuestion: function(){
+        var questions = this.state.questions;
+        if (questions.length == 0){
+            return false;
+        }
+        if (this.state.selectedNumber == questions.length - 1){
+            return true;
+        }
+        return false;
+    },
+
+    render: function () {
+        var questions = this.state.questions;
+        var canAddQuestion = this.canAddQuestion();
+        var canDelete = this.canDeleteQuestion();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.topPlaceholder}, 
+
+                    React.createElement("div", {style: this.componentStyle.leftTop}, 
+                        React.createElement("div", {style: this.componentStyle.numbersBlockPlaceholder}, 
+                            React.createElement(NumbersBlock, {
+                                onItemClick: this.onNumberClick, 
+                                amount: questions.length, selectedNumber: this.state.selectedNumber})
+                        )
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.rightTop}, 
+                        React.createElement("button", {className: 'ui basic mini button', onClick: this.addQuestion, disabled: !canAddQuestion}, 
+                            React.createElement("i", {className: 'icon plus'}), " добавить вопрос #", +questions.length + 1
+                        )
+                    )
+
+                ), 
+
+
+                questions.length == 0 ? null :
+                    React.createElement("div", {style: this.componentStyle.questionPlaceholder}, 
+                        React.createElement(SelfLoadingUpdateQuestionPanel, {
+                            questionnaireId: this.props.questionnaireId, 
+                            onUpdated: this.onUpdated, 
+                            onDeleted: this.onDeleted, 
+                            canDelete: canDelete, 
+                            number: this.state.selectedNumber})
+                    ), 
+                
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingQuestionsEditPanel;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"../../../numbers/NumbersBlock":735,"./SelfLoadingUpdateQuestionPanel":758,"object-assign":34,"react":527}],758:[function(require,module,exports){
+/**
+ * Created by sabir on 22.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireQuestionPanel = require('./QuestionnaireQuestionPanel');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var SelfLoadingUpdateQuestionPanel = React.createClass({displayName: "SelfLoadingUpdateQuestionPanel",
+    getDefaultProps: function () {
+        return {
+            questionnaireId: undefined,
+            number: undefined,
+            canDelete: false,
+
+            onUpdated: function(updatedQuestion){
+
+            },
+
+            onDeleted: function(number) {
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            question: {}
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        this.load(nextProps.questionnaireId, nextProps.number);
+    },
+
+    componentDidMount: function () {
+        this.load(this.props.questionnaireId, this.props.number);
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        }
+    },
+
+    load: function(qId, number){
+        var questionnaireId = qId;
+        var number = number;
+        if (questionnaireId == undefined || number == undefined){
+            return;
+        }
+        this.setState({
+            loading: true,
+            question: {}
+        });
+        QuestionnaireMixin.loadTransformedQuestionByQuestionnaireIdAndNumber(questionnaireId, number, function(question){
+            this.setState({
+                loading: false,
+                question: question
+            });
+        }.bind(this));
+    },
+
+    onChange: function(data){
+        this.setState({
+            question: data
+        });
+    },
+
+    onSave: function(data){
+        this.onUpdate(data);
+    },
+
+    onUpdate: function(data){
+        console.log('SelfLoadingUpdateQuestionPanel: onUpdate: data = ', data);
+        this.setState({
+            loading: true
+        });
+        var q = data;
+        QuestionnaireMixin.updateQuestionnaireQuestion(this.props.questionnaireId, this.props.number, q.name,
+                                                       q.vimeoId, q.question, q.ruQuestion, q.answers, function(uQ){
+                this.setState({
+                    question: uQ,
+                    loading: false
+                });
+                this.props.onUpdated(uQ);
+            }.bind(this))
+    },
+
+    onDelete: function(){
+        this.setState({
+            loading: true
+        });
+        var question = this.state.question;
+        QuestionnaireMixin.deleteQuestionnaireQuestion(question.id, function(){
+            this.setState({
+                loading: false
+            });
+            this.props.onDeleted(this.props.number);
+        }.bind(this))
+    },
+
+
+
+
+    render: function () {
+        var question = this.state.question;
+        var answers = (question.answers == undefined) ? [] : question.answers;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement(QuestionnaireQuestionPanel, {canDelete: this.props.canDelete, 
+                    question: question.question, ruQuestion: question.ruQuestion, 
+                    vimeoId: question.vimeoId, name: question.name, onSave: this.onSave, onDelete: this.onDelete, 
+                    number: this.props.number, answers: answers}), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingUpdateQuestionPanel;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"./QuestionnaireQuestionPanel":755,"object-assign":34,"react":527}],759:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var TranslatableText = require('../../../text/translatable/TranslatableText');
+
+var AnswersList = React.createClass({displayName: "AnswersList",
+    getDefaultProps: function () {
+        return {
+            answers: [],
+            selectedVariant: undefined,
+
+            audioMode: false,
+
+            onSelect: function(number){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative',
+            width: 610,
+            margin: '0 auto'
+        },
+
+        itemStyle: {
+            borderRadius: 4,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            padding: 5,
+            width: 600,
+            margin: 5
+        },
+
+        active: {
+            //backgroundColor: 'whitesmoke',
+            backgroundColor: '#D7D9DD',
+            border: '1px solid #2E3C54'
+        },
+
+        answersPlaceholder: {
+            width: 450,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        controlsPlaceholder: {
+            width: 134,
+            paddingTop: 5,
+            textAlign: 'right',
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        answerPlaceholder: {
+            fontWeight: 'bold'
+        },
+
+        ruAnswerPlaceholder: {
+            marginTop: 5,
+            padding: 5,
+            opacity: 0.7
+        },
+
+        audioPlaceholder: {
+
+        }
+    },
+
+    onSelect: function(number){
+        console.log('onSelect: number = ' + number);
+        this.props.onSelect(number);
+    },
+
+    getAnswers: function(){
+        var list = this.props.answers;
+        var arr = [];
+        for (var i in list){
+            var a = list[i];
+            a.number = i;
+            arr.push(a);
+        }
+        arr.push({
+            answer: "I have my personal opinion on that.",
+            ruAnswer: 'У меня есть собственное мнение.',
+            number: -2
+        });
+
+        arr.push({
+            answer: "I'm not interested in that.",
+            ruAnswer: 'Мне это неинтересно.',
+            number: -1
+        });
+        return arr;
+    },
+
+    render: function () {
+        var list = this.getAnswers();
+        var selectedNumber = this.props.selectedVariant;
+
+        console.log('AnswersList: render: answers = ', list);
+        console.log('selectedNumber = ', selectedNumber);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(a, k){
+                    var key = 'answer_' + k;
+                    var isSelected = (selectedNumber == a.number);
+                    var st = assign({}, this.componentStyle.itemStyle);
+                    if (isSelected == true){
+                        st = assign({}, st, this.componentStyle.active);
+                    }
+                    var onSel = this.onSelect.bind(this, a.number);
+                    return (
+                        React.createElement("div", {key: key, style: st}, 
+
+                            React.createElement("div", {style: this.componentStyle.answersPlaceholder}, 
+
+                                React.createElement("div", {style: this.componentStyle.answerPlaceholder}, 
+                                    React.createElement(TranslatableText, {fonSize: '14px', text: a.answer})
+                                ), 
+
+                                a.ruAnswer == undefined ? null :
+                                    React.createElement("div", {style: this.componentStyle.ruAnswerPlaceholder}, 
+                                        a.ruAnswer
+                                    ), 
+                                
+
+
+                                this.props.audioMode == false ? null :
+                                    React.createElement("div", {style: this.componentStyle.audioPlaceholder}, 
+                                        React.createElement("audio", {controls: true, src: a.audioUrl})
+                                    )
+                                
+
+                            ), 
+
+                            React.createElement("div", {style: this.componentStyle.controlsPlaceholder}, 
+
+                                React.createElement("button", {className: 'ui button basic', onClick: onSel}, 
+                                    React.createElement("i", {className: 'icon checkmark'}), " Выбрать"
+                                )
+
+                            )
+
+                        )
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = AnswersList;
+
+},{"../../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],760:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var NumbersBlock = require('../../../numbers/NumbersBlock');
+
+
+
+var QuestionnaireSinglePanel = require('./QuestionnaireSinglePanel');
+
+var QuestionnairePanel = React.createClass({displayName: "QuestionnairePanel",
+    getDefaultProps: function () {
+        return {
+            questionnaire: {},
+            questions: [],
+            answersMap: {},
+            userId: undefined,
+
+            onAnswerSelect: function(questionId, answerNumber){
+
+            },
+
+            onForward: function(){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedNumber: 0
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        //this.setState({
+        //    //selectedNumber: nextProps.selectedNumber
+        //});
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white',
+            width: 620,
+            margin: '0 auto',
+            padding: 5
+        },
+
+        numbersPlaceholder: {
+        },
+
+        content: {
+            borderTop: '1px dotted #EFF0F1',
+            paddingTop: 2,
+            marginTop: 5
+        },
+
+        forwardPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+        task: {
+            padding: 10,
+            fontSize: 20,
+            color: 'rgba(0, 0, 0, 0.870588)'
+        }
+
+    },
+
+    onItemClick: function(n){
+        this.setState({
+            selectedNumber: n
+        });
+    },
+
+    getSelectedQuestion: function(){
+        var n = this.state.selectedNumber;
+        var list = this.props.questions;
+        if (n == undefined || list == undefined || list.length == 0){
+            return undefined;
+        }
+        return list[n];
+    },
+
+    getUserAnswer: function(){
+        var map = this.props.answersMap;
+        var q = this.getSelectedQuestion();
+        if (q == undefined){
+            return undefined;
+        }
+        return map[q.id];
+    },
+
+    onAnswerSelect: function(answerNumber){
+        var question = this.getSelectedQuestion();
+        if (question == undefined){
+            return;
+        }
+        var questionId = question.id;
+        this.props.onAnswerSelect(questionId, answerNumber);
+    },
+
+    getPassedNumbers: function(){
+        var arr = [];
+        var map = this.props.answersMap;
+        var list = this.props.questions;
+        for (var i in list){
+            if (map[list[i].id] != undefined){
+                arr.push(i);
+            }
+        }
+        return arr;
+    },
+
+    onForward: function(){
+        this.props.onForward();
+    },
+
+    render: function () {
+        var questions = this.props.questions;
+        var selectedQuestion = this.getSelectedQuestion();
+        var userAnswer = this.getUserAnswer();
+        var passedNumbers = this.getPassedNumbers();
+        var questionnaire = this.props.questionnaire;
+        var task = (questionnaire == undefined) ? undefined : questionnaire.task;
+        if (task != undefined){
+            task = task.replace(/\n/g, '<br/>')
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                task == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.task, className: 'questionnaireTaskPlaceholder'}, 
+                        React.createElement("div", {dangerouslySetInnerHTML: {__html: task}})
+                    ), 
+                
+
+                React.createElement("div", {style: this.componentStyle.numbersPlaceholder}, 
+                    React.createElement(NumbersBlock, {amount: questions.length, passedNumbers: passedNumbers, 
+                                  selectedNumber: this.state.selectedNumber, onItemClick: this.onItemClick})
+                ), 
+
+
+                React.createElement("div", {style: this.componentStyle.content}, 
+
+                    selectedQuestion == undefined ? null :
+                        React.createElement(QuestionnaireSinglePanel, {question: selectedQuestion, userAnswer: userAnswer, 
+                                                  userId: this.props.userId, 
+                                                  answers: selectedQuestion.answers, onSelect: this.onAnswerSelect})
+                    
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.forwardPlaceholder}, 
+
+                    React.createElement("button", {onClick: this.onForward, className: 'ui button basic'}, 
+                        React.createElement("i", {className: 'icon forward mail'}), " Перейти к подготовке"
+                    )
+
+                )
+
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnairePanel;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"../../../numbers/NumbersBlock":735,"./QuestionnaireSinglePanel":761,"object-assign":34,"react":527}],761:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var VimeoPlayer = require('../../../player/VimeoPlayer');
+
+var AnswersList = require('./AnswersList');
+var SelfLoadingAnswersList = require('./SelfLoadingAnswersList');
+
+var TranslatableText = require('../../../text/translatable/TranslatableText');
+
+var QuestionnaireSinglePanel = React.createClass({displayName: "QuestionnaireSinglePanel",
+    getDefaultProps: function () {
+        return {
+            question: {},
+            answers: [],
+            userAnswer: undefined,
+            userId: undefined,
+
+            onSelect: function(number){
+                console.log('QuestionnaireSinglePanel: default: number = ', number);
+            }
+        }
+
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        content: {
+
+        },
+
+        topBlock: {
+
+        },
+
+        playerPlaceholder: {
+            width: 600,
+            height: 350,
+            margin: '0 auto'
+        },
+
+        namePlaceholder: {
+            padding: 5,
+            textAlign: 'center',
+            fontSize: 16,
+            fontWeight: 'bold',
+            marginBottom: 7
+        },
+
+        answersBlock: {
+
+        }
+    },
+
+    onSelect: function(number){
+        this.props.onSelect(number);
+    },
+
+    render: function () {
+        var q = this.props.question;
+        var userVariant = (this.props.userAnswer == undefined) ? undefined : this.props.userAnswer.variant;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.topBlock}, 
+
+                    React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                        React.createElement(TranslatableText, {text: q.name})
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                        React.createElement(VimeoPlayer, {vimeoId: q.vimeoId})
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.answersBlock}, 
+
+                    React.createElement(SelfLoadingAnswersList, {questionId: q.id, 
+                                            onSelect: this.onSelect, 
+                                            userId: this.props.userId})
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireSinglePanel;
+
+},{"../../../player/VimeoPlayer":737,"../../../text/translatable/TranslatableText":796,"./AnswersList":759,"./SelfLoadingAnswersList":762,"object-assign":34,"react":527}],762:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var AnswersList = require('./AnswersList');
+
+var SelfLoadingAnswersList = React.createClass({displayName: "SelfLoadingAnswersList",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            questionId: undefined,
+
+            onSelect: function(number){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            selectedVariant: undefined,
+            answers: []
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({
+            selectedVariant: undefined,
+            answers: []
+        });
+        var questionId = nextProps.questionId;
+        this.load(questionId);
+    },
+
+    componentDidMount: function () {
+        var questionId = this.props.questionId;
+        this.load(questionId);
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative'
+        },
+
+        listPlaceholder: {
+
+        }
+    },
+
+    load: function(questionId){
+        var userId = this.props.userId;
+        //var questionId = this.props.questionId;
+        if (userId == undefined || questionId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        var self = this;
+        QuestionnaireMixin.loadQuestionnaireQuestion(questionId, function(question){
+            this.setState({
+                answers: question.answers
+            });
+            QuestionnaireMixin.loadTransformedUserAnswer(userId, questionId, function(answer){
+                if (answer == undefined){
+                    self.setState({loading: false});
+                }else {
+                    self.setState({
+                        loading: false,
+                        selectedVariant: answer.variant
+                    });
+                }
+            });
+        }.bind(this))
+    },
+
+    onSelect: function(number){
+        console.log('saving user answer: number = ', number);
+        var userId = this.props.userId;
+        var questionId = this.props.questionId;
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.saveUserAnswer(userId, questionId, number, undefined, function(a){
+            this.setState({
+                loading: false,
+                selectedVariant: number
+            });
+            this.props.onSelect(number);
+        }.bind(this));
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                    React.createElement(AnswersList, {answers: this.state.answers, 
+                                 onSelect: this.onSelect, 
+                                 selectedVariant: this.state.selectedVariant})
+                ), 
+
+                React.createElement("div", {className: 'SelfLoadingAnswersList ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingAnswersList;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"./AnswersList":759,"object-assign":34,"react":527}],763:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../mixins/QuestionnaireMixin');
+
+var QuestionnairePanel = require('./QuestionnairePanel');
+
+var PreparePanel = require('./prepare/PreparePanel');
+
+var QuestionnaireTestPanel = require('./test/QuestionnaireTestPanel');
+
+var TeacherFeedbackCreationBlock =require('../../../teacher/TeacherFeedbackCreationBlock');
+
+var SelfLoadingQuestionnairePanel = React.createClass({displayName: "SelfLoadingQuestionnairePanel",
+    getDefaultProps: function () {
+        return {
+            questionnaireId: undefined,
+            userId: undefined,
+
+            teacherMode: false,
+            teacherId: undefined,
+
+            onQuestionnaireFinished: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            questionnaire: {},
+            questions: [],
+            answersMap: {},
+            score: undefined,
+            mode: 'initial'
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            border: '1px solid #EFF0F1',
+            borderRadius: 4
+        },
+
+        content: {
+            width: 620,
+            margin: '0 auto'
+        },
+
+        isFinishedBlock: {
+            marginTop: 10,
+            marginBottom: 10
+        },
+
+        finishBlock: {
+            padding: 10,
+            textAlign: 'center'
+        },
+
+    },
+
+    onBack: function(){
+        console.log('onBack occured');
+        var mode = this.state.mode;
+        if (mode == 'prepare'){
+            this.setState({
+                mode: 'initial'
+            });
+        }
+        if (mode == 'test'){
+            this.setState({
+                mode: 'prepare'
+            });
+        }
+    },
+
+    onForward: function(){
+        var mode = this.state.mode;
+        if (mode == 'initial'){
+            this.setState({
+                mode: 'prepare'
+            });
+        }
+        if (mode == 'prepare'){
+            this.setState({
+                mode: 'test'
+            });
+        }
+    },
+
+    load: function(){
+        var questionnaireId = this.props.questionnaireId;
+        var userId = this.props.userId;
+        this.setState({
+            loading: true
+        });
+        var self = this;
+        console.log('SelfLoadingQuestionnairePanel: load: userId, questionnaireId = ', userId, questionnaireId);
+        QuestionnaireMixin.loadQuestionnaire(questionnaireId, function(questionnaire){
+            QuestionnaireMixin.loadQuestionnaireQuestions(questionnaireId, function(questions){
+                if (userId == undefined){
+                    self.setState({
+                        loading: false,
+                        questionnaire: questionnaire,
+                        questions: questions
+                    });
+                    return;
+                }
+                QuestionnaireMixin.loadUserQuestionnaireAnswersMap(userId, questions, function(answersMap){
+                    //self.setState({
+                    //    loading: false
+                    //});
+                    console.log('answersMap loaded: ', answersMap);
+                    QuestionnaireMixin.loadUserQuestionnaireScore(userId, questionnaireId, function(score){
+                        console.log('score loaded: ', score);
+                        console.log('setting loading to false');
+                        self.setState({
+                            score: score,
+                            loading: false,
+                            answersMap: answersMap,
+                            questionnaire: questionnaire,
+                            questions: questions
+                        });
+                    });
+                });
+            });
+        });
+    },
+
+    onAnswerSelect: function(questionId, answerNumber){
+        var map = this.state.answersMap;
+        map[questionId] = {questionId: questionId, variant: answerNumber}
+        this.setState({
+            answersMap: map
+        });
+    },
+
+    switchMode: function(mode){
+        this.setState({
+            mode: mode
+        });
+    },
+
+    onTestAnswer: function(a){
+        console.log('onTestAnswer: a = ', a);
+        if (a == undefined){
+            return;
+        }
+        var map = this.state.answersMap;
+        console.log('answers map = ', map);
+        map[a.questionId] = a;
+        this.setState({
+            answersMap: map
+        });
+    },
+
+    onFinishQuestionnaire: function(){
+        var userId = this.props.userId;
+        var questionnaireId = this.props.questionnaireId;
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.onFinishQuestionnaire(userId, questionnaireId, function(score){
+            this.setState({
+                loading: false,
+                score: score
+            });
+            this.props.onQuestionnaireFinished(questionnaireId, userId);
+        }.bind(this));
+    },
+
+    onComment: function(score){
+        console.log('onComment occured');
+        this.load();
+    },
+
+    canFinish: function(){
+        console.log('canFinish occured:');
+        var list = this.state.questions;
+        console.log('questions = ', list);
+        var map = this.state.answersMap;
+        var f = true;
+        for (var i in list){
+            var q = list[i];
+            var a = map[q.id];
+            if (a == undefined){
+                console.log('answer for the question is not defined: a = ', a);
+                f = false;
+                continue;
+            }
+            if (a.variant == -1){
+                continue;
+            }
+            if (a.audioUrl == undefined){
+                console.log('selected, but not answered: a = ', a);
+                f = false
+            }
+        }
+        return f;
+    },
+
+    render: function () {
+        var score = this.state.score;
+        var feedback = (score == undefined) ? undefined : score.feedback;
+        var isFinished = (score == undefined) ? true : (score.status == 'finished');
+        var canFinish = this.canFinish();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.state.loading == true ? null :
+                    React.createElement("div", {style: this.componentStyle.content}, 
+
+                        this.state.mode == 'initial' ?
+                            React.createElement(QuestionnairePanel, {questionnaire: this.state.questionnaire, questions: this.state.questions, 
+                                                answersMap: this.state.answersMap, 
+                                                userId: this.props.userId, 
+                                                onForward: this.onForward, 
+                                                onAnswerSelect: this.onAnswerSelect}
+                                )
+                            : null, 
+                        
+
+                        this.state.mode == 'prepare' ?
+                            React.createElement("div", null, 
+                                React.createElement(PreparePanel, {answersMap: this.state.answersMap, 
+                                              onBack: this.onBack, 
+                                              onForward: this.onForward, 
+                                              questions: this.state.questions})
+                            )
+                            : null, 
+                        
+
+                        this.state.mode == 'test' ?
+                            React.createElement("div", null, 
+                                React.createElement(QuestionnaireTestPanel, {userId: this.props.userId, onBack: this.onBack, 
+                                                        onAnswer: this.onTestAnswer, 
+                                    questions: this.state.questions, answersMap: this.state.answersMap})
+                            )
+                            : null, 
+                        
+
+                        isFinished == true ?
+                            React.createElement("div", {style: this.componentStyle.isFinishedBlock}, 
+                                feedback == undefined ?
+                                    React.createElement("div", {style: {textAlign: 'center'}}, 
+                                        this.props.teacherMode == true ?
+                                            React.createElement("div", null, 
+                                                "Пользователь завершил выполнение этого упражнения."
+                                            ) :
+                                            React.createElement("div", null, 
+                                                "Вы завершили данное упражнение. Скоро преподаватель его проверит."
+                                            )
+                                        
+
+                                    ) :
+                                    React.createElement("div", null, 
+
+                                        React.createElement("h3", {style: {textAlign: 'center'}}, 
+                                            "Комментарий преподавателя"
+                                        ), 
+
+                                        React.createElement("div", {dangerouslySetInnerHTML: {__html: feedback}})
+                                    )
+                                
+                            )
+                            :
+                            React.createElement("div", null, 
+                                canFinish == false ? null :
+                                    React.createElement("div", {style: this.componentStyle.finishBlock}, 
+
+                                        React.createElement("button", {onClick: this.onFinishQuestionnaire, 
+                                                className: 'ui inverted green button'}, "завершить упражнение"
+                                        )
+
+                                    )
+                                
+                            ), 
+                        
+
+                        this.props.teacherMode == false ? null :
+
+                            React.createElement("div", null, 
+                                React.createElement("h3", {style: {textAlign: 'center'}}, 
+                                    "Блок преподавателя"
+                                ), 
+
+                                score == undefined ? null :
+                                    React.createElement(TeacherFeedbackCreationBlock, {feedback: feedback, 
+                                                                  userId: score.userId, teacherId: this.props.teacherId, 
+                                                                  mode: 'questionnaire', 
+                                                                  questionnaireId: score.questionnaireId, onComment: this.onComment})
+                                
+
+
+                            )
+
+                        
+
+                    ), 
+                
+
+                React.createElement("div", {className: 'SelfLoadingQuestionnairePanel ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingQuestionnairePanel;
+
+},{"../../../../mixins/QuestionnaireMixin":843,"../../../teacher/TeacherFeedbackCreationBlock":788,"./QuestionnairePanel":760,"./prepare/PreparePanel":764,"./test/QuestionnaireTestPanel":767,"object-assign":34,"react":527}],764:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var NumbersBlock = require('../../../../numbers/NumbersBlock');
+
+var SelfLoadingPrepareSinglePanel = require('./SelfLoadingPrepareSinglePanel');
+
+var PreparePanel = React.createClass({displayName: "PreparePanel",
+    getDefaultProps: function () {
+        return {
+            questions: [],
+            answersMap: {},
+
+            backButtonMode: true,
+
+            onBack: function(){
+
+            },
+
+            onForward: function(){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedNumber: 0
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.ensureVisible();
+    },
+
+    ensureVisible: function() {
+        var domNode = React.findDOMNode(this);
+        console.log('ensureVisible: domNode = ', domNode);
+        domNode.scrollIntoView(true);
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white'
+        },
+
+        numbersBlock: {
+            padding: 5,
+            borderBottom: '1px dotted #EFF0F1',
+            marginBottom: 30
+        },
+
+        content: {
+
+        },
+
+        backPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+        forwardPlaceholder: {
+            padding: 5,
+            textAlign: 'center',
+            borderTop: '1px dotted #EFF0F1'
+        }
+    },
+
+    onItemSelect: function(number){
+        this.setState({
+            selectedNumber: number
+        });
+    },
+
+    getAnswerNumber: function(){
+        var map = this.props.answersMap;
+        //var list = (this.props.questions == undefined) ? [] : this.props.questions;
+        var list = this.getQuestions();
+
+        var q = (list.length > 0) ? list[this.state.selectedNumber] : {};
+        var a = map[q.id];
+        if (a == undefined){
+            return undefined;
+        }
+        return a.variant;
+    },
+
+    getQuestions: function(){
+        console.log('PreparePanel: getQuestions occured');
+        var map = this.props.answersMap;
+        var arr = [];
+        var list = this.props.questions;
+        for (var i in list){
+            var q = list[i];
+            var ans = map[q.id];
+            console.log(q.id, ' - ', ans);
+            if (ans == undefined){
+                continue;
+            }
+            if (ans.variant == -1){
+                continue;
+            }
+            arr.push(q);
+        }
+        console.log('returning: ', arr);
+        return arr;
+    },
+
+    onBack: function(){
+        this.props.onBack();
+    },
+
+    onForward: function(){
+        this.props.onForward();
+    },
+
+    render: function () {
+        var list = this.getQuestions();
+        var selectedQuestionId = (list.length > 0) ? list[this.state.selectedNumber].id : undefined;
+        var answerNumber = this.getAnswerNumber();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.props.backButtonMode == false ? null :
+                    React.createElement("div", {style: this.componentStyle.backPlaceholder}, 
+                        React.createElement("button", {className: 'ui basic button mini', onClick: this.onBack}, 
+                            React.createElement("i", {className: 'icon reply'}), " Вернуться к вопросам"
+                        )
+                    ), 
+                
+
+
+
+                React.createElement("div", {style: this.componentStyle.numbersBlock}, 
+                    React.createElement(NumbersBlock, {onItemClick: this.onItemSelect, 
+                        selectedNumber: this.state.selectedNumber, amount: list.length})
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.content}, 
+
+                    React.createElement(SelfLoadingPrepareSinglePanel, {questionId: selectedQuestionId, answerNumber: answerNumber})
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.forwardPlaceholder}, 
+                    React.createElement("button", {className: 'ui button basic', onClick: this.onForward}, 
+                        React.createElement("i", {className: 'icon forward mail'}), " Перейти к тестированию"
+                    )
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = PreparePanel;
+
+},{"../../../../numbers/NumbersBlock":735,"./SelfLoadingPrepareSinglePanel":766,"object-assign":34,"react":527}],765:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var VimeoPlayer = require('../../../../player/VimeoPlayer');
+
+var TranslatableText = require('../../../../text/translatable/TranslatableText');
+
+var PrepareSinglePanel = React.createClass({displayName: "PrepareSinglePanel",
+    getDefaultProps: function () {
+        return {
+            vimeoId: undefined,
+            questionName: undefined,
+            audioUrl: undefined,
+            answer: undefined,
+            ruAnswer: undefined,
+            answerNumber: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 620,
+            padding: 5,
+            backgroundColor: 'white'
+        },
+
+        left: {
+            width: 280,
+            verticalAlign: 'top',
+            display: 'inline-block'
+        },
+
+        right: {
+            verticalAlign: 'top',
+            display: 'inline-block',
+            width: 330,
+            paddingLeft: 5
+            //padding: 5
+        },
+
+        playerPlaceholder: {
+            width: 280,
+            height: 180
+        },
+
+        answerPlaceholder: {
+            marginTop: 7
+        },
+
+        audioPlaceholder: {
+            paddingLeft: 5,
+            paddingRight: 5,
+            marginTop: 5
+        },
+
+        answer: {
+
+        },
+
+        ruAnswer: {
+            paddingRight: 5,
+            paddingLeft: 5,
+            marginTop: 10,
+            opacity: 0.7,
+            textAlign: 'justify'
+        },
+
+        namePlaceholder: {
+            paddingTop: 5,
+            paddingBottom: 5,
+            fontSize: 14,
+            textAlign: 'center',
+            fontWeight: 'bold'
+        },
+
+        h3: {
+            borderBottom: '1px dotted #EFF0F1',
+            textAlign: 'center',
+            marginBottom: 0
+        }
+
+    },
+
+    render: function () {
+        var hasOwnAnswer = (this.props.answerNumber == -2);
+
+        console.log('answer: ', this.props.answer);
+        console.log('ruAnswer: ', this.props.ruAnswer);
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement("h3", {style: this.componentStyle.h3}, 
+                         "Вопрос"
+                    ), 
+
+                    this.props.questionName == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                            React.createElement(TranslatableText, {fontSize: '14px', text: this.props.questionName})
+                        ), 
+                    
+
+                    React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                        React.createElement(VimeoPlayer, {vimeoId: this.props.vimeoId, style: {width: '100%', height: '100%'}})
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+                    React.createElement("h3", {style: this.componentStyle.h3}, 
+                        "Ответ"
+                    ), 
+
+                    hasOwnAnswer == false ?
+                        React.createElement("div", {style: this.componentStyle.answerPlaceholder}, 
+
+                            this.props.answer == undefined ? null :
+                                React.createElement("div", {style: this.componentStyle.answer}, 
+                                    React.createElement(TranslatableText, {fontSize: '14px', text: this.props.answer})
+                                ), 
+                            
+
+                            this.props.ruAnswer == undefined ? null :
+                                React.createElement("div", {style: this.componentStyle.ruAnswer}, 
+                                    this.props.ruAnswer
+                                ), 
+                            
+
+                            this.props.audioUrl == undefined ? null :
+                                React.createElement("div", {style: this.componentStyle.audioPlaceholder}, 
+                                    React.createElement("audio", {style: {width: '100%'}, controls: true, src: this.props.audioUrl})
+                                )
+                            
+
+                        )
+                        :
+                        React.createElement("div", {style: {textAlign: 'center'}}, 
+                            "У вас собственный ответ"
+                        )
+                    
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = PrepareSinglePanel;
+
+},{"../../../../player/VimeoPlayer":737,"../../../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],766:[function(require,module,exports){
+/**
+ * Created by sabir on 23.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var PrepareSinglePanel = require('./PrepareSinglePanel');
+
+var QuestionnaireMixin = require('../../../../../mixins/QuestionnaireMixin');
+
+var PrepareSinglePanel = require('./PrepareSinglePanel');
+
+var SelfLoadingPrepareSinglePanel = React.createClass({displayName: "SelfLoadingPrepareSinglePanel",
+    getDefaultProps: function () {
+        return {
+            questionId: undefined,
+            answerNumber: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            question: undefined
+        }
+    },
+
+    componentWillReceiveProps: function(nextProps) {
+        this.load(nextProps.questionId);
+    },
+
+    componentDidMount: function() {
+        this.load(this.props.questionId);
+    },
+
+    load: function(questionId){
+        //var questionId = this.props.questionId;
+        if (questionId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.loadQuestionnaireQuestion(questionId, function(question){
+            this.setState({
+                loading: false,
+                question: question
+            });
+        }.bind(this));
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white'
+        },
+
+        content: {
+
+        }
+    },
+
+    getAnswer: function(){
+        console.log('getAnswer');
+        var q = this.state.question;
+
+        if (q == undefined){
+            return undefined;
+        }
+
+        var n = this.props.answerNumber;
+        var answers = q.answers;
+        console.log('answers = ', answers, 'n = ', n);
+
+        if (n == -1){
+            return undefined;
+        }
+        if (n == -2){
+            return {
+                answerNumber: -2
+            }
+        }
+        var a = answers[n];
+
+        a = assign({}, a, {answerNumber: n});
+
+        console.log('a = ', a);
+
+        return a;
+    },
+
+    render: function () {
+        var q = this.state.question;
+        var a = this.getAnswer();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                this.state.question == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.content}, 
+                        React.createElement(PrepareSinglePanel, {
+                            vimeoId: q.vimeoId, 
+                            audioUrl: a.audioUrl, answer: a.answer, ruAnswer: a.ruAnswer, questionName: q.name, 
+                            answerNumber: this.props.answerNumber})
+                    ), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingPrepareSinglePanel;
+
+},{"../../../../../mixins/QuestionnaireMixin":843,"./PrepareSinglePanel":765,"object-assign":34,"react":527}],767:[function(require,module,exports){
+/**
+ * Created by sabir on 24.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingTestPanel = require('./SelfLoadingTestPanel');
+
+var NumbersBlock = require('../../../../numbers/NumbersBlock');
+
+var QuestionnaireTestPanel = React.createClass({displayName: "QuestionnaireTestPanel",
+    getDefaultProps: function () {
+        return {
+            questions: [],
+            userId: undefined,
+            answersMap: {},
+
+            onBack: function(){
+
+            },
+
+            onAnswer: function(a){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedNumber: 0
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white'
+        },
+
+        numbersPlaceholder: {
+            padding: 5,
+            borderBottom: '1px dotted #EFF0F1',
+            marginBottom: 5
+        },
+
+        backPlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        },
+
+        content: {
+
+        }
+    },
+
+    getQuestions: function(){
+        console.log('QuestionnaireTestPanel: getQuestions occured');
+        var map = this.props.answersMap;
+        var arr = [];
+        var list = this.props.questions;
+        for (var i in list){
+            var q = list[i];
+            var ans = map[q.id];
+            console.log(q.id, ' - ', ans);
+            if (ans == undefined){
+                continue;
+            }
+            if (ans.variant == -1){
+                continue;
+            }
+            arr.push(q);
+        }
+        console.log('returning: ', arr);
+        return arr;
+    },
+
+    getSelectedQuestion: function(){
+        var map = this.props.answersMap;
+        var list = this.getQuestions();
+        var q = (list.length > 0) ? list[this.state.selectedNumber] : undefined;
+        return q;
+    },
+
+    getSelectedAnswer: function(){
+        var map = this.props.answersMap;
+        var list = this.getQuestions();
+        var q = (list.length > 0) ? list[this.state.selectedNumber] : {};
+        var a = map[q.id];
+        if (a == undefined){
+            return undefined;
+        }
+        return a;
+    },
+
+    onItemClick: function(number){
+        this.setState({
+            selectedNumber: number
+        });
+    },
+
+    onAnswer: function(answer){
+        var a = this.getSelectedAnswer();
+        a = answer;
+        this.props.onAnswer(a);
+    },
+
+    onBack: function(){
+        this.props.onBack();
+    },
+
+    getPassedNumbers: function(){
+        var arr = [];
+        var list = this.getQuestions();
+        var map = this.props.answersMap;
+        for (var i in list){
+            var q = list[i];
+            var a = map[q.id];
+            if (a == undefined || a.audioUrl == undefined){
+                continue;
+            }
+            arr.push(i);
+        }
+
+        return arr;
+    },
+
+    render: function () {
+        var questions = this.getQuestions();
+        var selectedQuestion = this.getSelectedQuestion();
+        var selectedAnswer = this.getSelectedAnswer();
+        var passedNumbers = this.getPassedNumbers();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.backPlaceholder}, 
+                    React.createElement("button", {className: 'ui basic button mini', onClick: this.onBack}, 
+                        React.createElement("i", {className: 'icon reply'}), " Вернуться к подготовке"
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.numbersPlaceholder}, 
+                    React.createElement(NumbersBlock, {amount: questions.length, onItemClick: this.onItemClick, 
+                                  passedNumbers: passedNumbers, 
+                                          selectedNumber: this.state.selectedNumber})
+                ), 
+
+                selectedQuestion == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.content}, 
+                        React.createElement(SelfLoadingTestPanel, {onAnswer: this.onAnswer, 
+                            questionId: selectedQuestion.id, userId: this.props.userId})
+                    )
+                
+            )
+        );
+    }
+
+});
+
+module.exports = QuestionnaireTestPanel;
+
+},{"../../../../numbers/NumbersBlock":735,"./SelfLoadingTestPanel":768,"object-assign":34,"react":527}],768:[function(require,module,exports){
+/**
+ * Created by sabir on 24.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var QuestionnaireMixin = require('../../../../../mixins/QuestionnaireMixin');
+
+var TestPanel = require('./TestPanel');
+
+var SelfLoadingTestPanel = React.createClass({displayName: "SelfLoadingTestPanel",
+    getDefaultProps: function () {
+        return {
+            questionId: undefined,
+            userId: undefined,
+
+            onAnswer: function(a){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            question: undefined,
+            answer: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var questionId = nextProps.questionId;
+        this.load(questionId);
+    },
+
+    componentDidMount: function () {
+        var questionId = this.props.questionId;
+        this.load(questionId);
+    },
+
+    componentStyle: {
+        placeholder: {
+            backgroundColor: 'white',
+            width: 620,
+            margin: '0 auto'
+        },
+
+        content: {
+
+        }
+    },
+
+    load: function(questionId){
+        var userId = this.props.userId;
+        if (questionId == undefined || userId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        var self = this;
+        QuestionnaireMixin.loadQuestionnaireQuestion(questionId, function(question){
+            QuestionnaireMixin.loadTransformedUserAnswer(userId, questionId, function(answer){
+                self.setState({
+                    question: question,
+                    answer: answer,
+                    loading: false
+                });
+            })
+        })
+
+    },
+
+    onAnswer: function(url){
+        var userId = this.props.userId;
+        var questionId = this.props.questionId;
+        var answer = this.state.answer;
+        if (answer == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        QuestionnaireMixin.saveUserAnswer(userId, questionId, answer.variant, url, function(a){
+            this.setState({
+                loading: false,
+                answer: a
+            });
+            this.props.onAnswer(a);
+        }.bind(this))
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.content}, 
+
+                    React.createElement(TestPanel, {question: this.state.question, answer: this.state.answer, onAnswer: this.onAnswer})
+
+                ), 
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingTestPanel;
+
+},{"../../../../../mixins/QuestionnaireMixin":843,"./TestPanel":769,"object-assign":34,"react":527}],769:[function(require,module,exports){
+/**
+ * Created by sabir on 24.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var PatientRecordComponent = require('../../../../record/PatientRecordComponent');
+
+var VimeoPlayer = require('../../../../player/VimeoPlayer');
+
+var TestPanel = React.createClass({displayName: "TestPanel",
+    getDefaultProps: function () {
+        return {
+            question: undefined,
+            answer: undefined,
+
+            onAnswer: function(url){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            paddingBottom: 5
+        },
+
+        content: {
+
+        },
+
+        topBlock: {
+
+        },
+
+        namePlaceholder: {
+            fontWeight: 'bold',
+            fontSize: 16,
+            textAlign: 'center',
+            padding: 5,
+            marginBottom: 8
+        },
+
+        playerPlaceholder: {
+            width: 600,
+            height: 350,
+            margin: '0 auto',
+            marginBottom: 10
+        },
+
+        recorderBlock: {
+            width: 600,
+            margin: '0 auto',
+            marginBottom: 5
+        }
+    },
+
+    getAnswerUrl: function(){
+        var a = this.props.answer;
+        if (a == undefined){
+            return undefined;
+        }
+        return a.audioUrl;
+    },
+
+    onAnswer: function(url){
+        this.props.onAnswer(url);
+    },
+
+
+    render: function () {
+        var q = this.props.question;
+        var userAudioUrl = this.getAnswerUrl();
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                q == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.content}, 
+
+                        React.createElement("div", {style: this.componentStyle.topBlock}, 
+
+                            React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                                q.name
+                            ), 
+
+                            React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                                React.createElement(VimeoPlayer, {vimeoId: q.vimeoId, style: {width: '100%', height: '100%'}})
+                            )
+
+                        ), 
+
+                        React.createElement("div", {style: this.componentStyle.recorderBlock}, 
+                            React.createElement(PatientRecordComponent, {onSave: this.onAnswer, userAnswer: userAudioUrl})
+                        )
+
+                    )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = TestPanel;
+
+},{"../../../../player/VimeoPlayer":737,"../../../../record/PatientRecordComponent":771,"object-assign":34,"react":527}],770:[function(require,module,exports){
 /**
  * Created by sabir on 16.09.15.
  */
@@ -108028,7 +117126,7 @@ var SpeechRecognitionArea = React.createClass({displayName: "SpeechRecognitionAr
 
 module.exports = SpeechRecognitionArea;
 
-},{"react":527}],716:[function(require,module,exports){
+},{"react":527}],771:[function(require,module,exports){
 /**
  * Created by sabir on 17.09.15.
  */
@@ -108070,7 +117168,7 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
             //serverBaseUrl: 'http://beta.englishpatient.org/audio/',
             serverBaseUrl: 'https://www.englishpatientdrive.pw/audio/',
             //maxRecordTime: 10,
-            maxRecordTime: 15,
+            maxRecordTime: 30,
             userAnswer: undefined,
             number: undefined
         }
@@ -108093,11 +117191,28 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
             initializing: false,
             time: 0,
             audioSrc: undefined,
+            //audioSrc: this.props.userAnswer,
             savingProgress: 0,
             needToSave: false,
             stopped: false,
             saved: false
         }
+    },
+
+    componentDidMount: function () {
+        console.log('PatientRecordComponent: componentDidMount occured');
+        this.init();
+
+        //added 19 dec
+        if (this.props.userAnswer != undefined){
+            this.setState({
+                stopped: true,
+                audioSrc: this.props.userAnswer,
+                needToSave: false,
+                saved: true
+            });
+        }
+        // -- end
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -108321,10 +117436,7 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
 
 
-    componentDidMount: function () {
-        console.log('PatientRecordComponent: componentDidMount occured');
-        this.init();
-    },
+
 
     componentWillUnmount: function(){
         if (this.intervalId == undefined){
@@ -108372,6 +117484,8 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
         var supported = this.webRTCisSupported();
         console.log('WEB SUPPORTED = ' + supported);
+
+        console.log('rendering PatientRecordComponent: this.state.audioSrc = ', this.state.audioSrc);
 
         return (
             React.createElement("div", {style: this.componentStyle.placeholder}, 
@@ -108428,7 +117542,7 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
 module.exports = PatientRecordComponent;
 
-},{"../../mixins/FileUploadMixin":777,"../buttons/RecordStopButton":560,"object-assign":34,"react":527,"recordrtc":528}],717:[function(require,module,exports){
+},{"../../mixins/FileUploadMixin":834,"../buttons/RecordStopButton":560,"object-assign":34,"react":527,"recordrtc":528}],772:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -108500,7 +117614,7 @@ var FirstLevelPanelItem = React.createClass({displayName: "FirstLevelPanelItem",
 
 module.exports = FirstLevelPanelItem;
 
-},{"object-assign":34,"react":527}],718:[function(require,module,exports){
+},{"object-assign":34,"react":527}],773:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -108571,7 +117685,7 @@ var FirstLevelPanelsList = React.createClass({displayName: "FirstLevelPanelsList
 
 module.exports = FirstLevelPanelsList;
 
-},{"../../data/DataFactory":772,"./FirstLevelPanelItem":717,"object-assign":34,"react":527}],719:[function(require,module,exports){
+},{"../../data/DataFactory":828,"./FirstLevelPanelItem":772,"object-assign":34,"react":527}],774:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -108689,7 +117803,7 @@ var Sausage = React.createClass({displayName: "Sausage",
 
 module.exports = Sausage;
 
-},{"./FirstLevelPanelsList":718,"./dialog/SausageDialog":721,"object-assign":34,"react":527}],720:[function(require,module,exports){
+},{"./FirstLevelPanelsList":773,"./dialog/SausageDialog":776,"object-assign":34,"react":527}],775:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -108828,7 +117942,7 @@ var SecondLevelPanelItem = React.createClass({displayName: "SecondLevelPanelItem
 
 module.exports = SecondLevelPanelItem;
 
-},{"../video/dialog/VideoDialog":765,"object-assign":34,"react":527}],721:[function(require,module,exports){
+},{"../video/dialog/VideoDialog":821,"object-assign":34,"react":527}],776:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -108969,7 +118083,7 @@ var SausageDialog = React.createClass({displayName: "SausageDialog",
 
 module.exports = SausageDialog;
 
-},{"../../topics/dialog/TopicDialog":750,"../SecondLevelPanelItem":720,"object-assign":34,"react":527}],722:[function(require,module,exports){
+},{"../../topics/dialog/TopicDialog":805,"../SecondLevelPanelItem":775,"object-assign":34,"react":527}],777:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -109150,7 +118264,7 @@ var ResultsItemPanel = React.createClass({displayName: "ResultsItemPanel",
 
 module.exports = ResultsItemPanel;
 
-},{"object-assign":34,"react":527}],723:[function(require,module,exports){
+},{"object-assign":34,"react":527}],778:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -109227,7 +118341,7 @@ var SearchResultsPanel = React.createClass({displayName: "SearchResultsPanel",
 
 module.exports = SearchResultsPanel;
 
-},{"./ResultsItemPanel":722,"object-assign":34,"react":527}],724:[function(require,module,exports){
+},{"./ResultsItemPanel":777,"object-assign":34,"react":527}],779:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -109538,7 +118652,7 @@ var YoutubeSearchPanel = React.createClass({displayName: "YoutubeSearchPanel",
 
 module.exports = YoutubeSearchPanel;
 
-},{"../../../mixins/YoutubeSearchMixin":791,"../../player/PatientPlayer":706,"../../text/translatable/TranslatableText":741,"./SearchResultsPanel":723,"./checkbox/CategoryCheckboxesList":726,"object-assign":34,"react":527}],725:[function(require,module,exports){
+},{"../../../mixins/YoutubeSearchMixin":849,"../../player/PatientPlayer":736,"../../text/translatable/TranslatableText":796,"./SearchResultsPanel":778,"./checkbox/CategoryCheckboxesList":781,"object-assign":34,"react":527}],780:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -109618,7 +118732,7 @@ var CategoryCheckbox = React.createClass({displayName: "CategoryCheckbox",
 
 module.exports = CategoryCheckbox;
 
-},{"object-assign":34,"react":527}],726:[function(require,module,exports){
+},{"object-assign":34,"react":527}],781:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -109700,7 +118814,7 @@ var CategoryCheckboxesList = React.createClass({displayName: "CategoryCheckboxes
 
 module.exports = CategoryCheckboxesList;
 
-},{"./CategoryCheckbox":725,"object-assign":34,"react":527}],727:[function(require,module,exports){
+},{"./CategoryCheckbox":780,"object-assign":34,"react":527}],782:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -109766,7 +118880,7 @@ var LoadingSegment = React.createClass({displayName: "LoadingSegment",
 
 module.exports = LoadingSegment;
 
-},{"object-assign":34,"react":527}],728:[function(require,module,exports){
+},{"object-assign":34,"react":527}],783:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -109879,7 +118993,7 @@ var ExerciseGroupSelect = React.createClass({displayName: "ExerciseGroupSelect",
 
 module.exports = ExerciseGroupSelect;
 
-},{"object-assign":34,"react":527,"react-select":335}],729:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],784:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -109971,7 +119085,7 @@ var SelfLoadingExerciseGroupsSelect = React.createClass({displayName: "SelfLoadi
 
 module.exports = SelfLoadingExerciseGroupsSelect;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":794,"../../../mixins/ExerciseMixin":775,"./ExerciseGroupSelect":728,"object-assign":34,"react":527}],730:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./ExerciseGroupSelect":783,"object-assign":34,"react":527}],785:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -110049,16 +119163,18 @@ var SidebarChatButton = React.createClass({displayName: "SidebarChatButton",
 
 module.exports = SidebarChatButton;
 
-},{"../../mixins/LoginMixin":780,"../chat/ChatButton":568,"../chat/NotReadChatSpan":571,"object-assign":34,"react":527}],731:[function(require,module,exports){
+},{"../../mixins/LoginMixin":837,"../chat/ChatButton":568,"../chat/NotReadChatSpan":571,"object-assign":34,"react":527}],786:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
 var React = require('react');
 
 var VimeoPlayer = require('../player/VimeoPlayer');
+
 var PatientImg = require('../image/PatientImg');
 var PatientText = require('../text/PatientText');
 var PatientAudio = require('../audio/PatientAudio');
+var ExerciseVideo = require('../video/ExerciseVideo');
 
 var TranslatableText = require('../text/translatable/TranslatableText');
 
@@ -110147,6 +119263,7 @@ var PatientTask = React.createClass({displayName: "PatientTask",
 
     },
 
+
     render: function () {
         var audio = this.getAudio();
         var video = this.getVideo();
@@ -110158,7 +119275,7 @@ var PatientTask = React.createClass({displayName: "PatientTask",
 
                 ((video == undefined) || (video.vimeoId == undefined)) ? null :
                     React.createElement("div", {style: this.componentStyle.videoPlaceholder}, 
-                        React.createElement(VimeoPlayer, {vimeoId: video.vimeoId})
+                        React.createElement(ExerciseVideo, {vimeoId: video.vimeoId})
                     ), 
                 
 
@@ -110191,7 +119308,7 @@ var PatientTask = React.createClass({displayName: "PatientTask",
 
 module.exports = PatientTask;
 
-},{"../audio/PatientAudio":554,"../image/PatientImg":653,"../player/VimeoPlayer":707,"../text/PatientText":739,"../text/translatable/TranslatableText":741,"react":527}],732:[function(require,module,exports){
+},{"../audio/PatientAudio":554,"../image/PatientImg":676,"../player/VimeoPlayer":737,"../text/PatientText":794,"../text/translatable/TranslatableText":796,"../video/ExerciseVideo":820,"react":527}],787:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -110267,16 +119384,20 @@ var TeacherExerciseBlock = React.createClass({displayName: "TeacherExerciseBlock
 
 module.exports = TeacherExerciseBlock;
 
-},{"./TeacherFeedbackCreationBlock":733,"react":527}],733:[function(require,module,exports){
+},{"./TeacherFeedbackCreationBlock":788,"react":527}],788:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
 var React = require('react');
 var ExerciseMixin = require('../../mixins/ExerciseMixin');
 
+var DialogMixin = require('../../mixins/DialogMixin');
+
 var PatientEditor = require('../../components/editor/PatientEditor');
 
 var CorrectorHelpButton = require('../corrector/CorrectorHelpButton');
+
+var QuestionnaireMixin = require('../../mixins/QuestionnaireMixin');
 
 var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedbackCreationBlock",
     getDefaultProps: function () {
@@ -110287,7 +119408,11 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
             onComment: function(score){
                 console.log(score);
             },
-            placeholder: 'Leave your feedback here'
+            placeholder: 'Leave your feedback here',
+
+            mode: 'exercise',
+            dialogId: undefined,
+            questionnaireId: undefined
         }
     },
 
@@ -110303,6 +119428,9 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
 
     componentWillReceiveProps: function (nextProps) {
         var feedback = nextProps.feedback;
+        console.log('TeacherFeedbackCreationBlock: componentWillReceiveProps occured');
+        console.log('feedback = ', feedback);
+
         if (feedback != this.props.feedback){
             this.setState({
                 value: feedback,
@@ -110357,9 +119485,21 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
     onComment: function(){
         var userId = this.props.userId;
         var exerciseId = this.props.exerciseId;
-        if (userId == undefined || exerciseId == undefined){
+        var dialogId = this.props.dialogId;
+        var questionnaireId = this.props.questionnaireId;
+
+        console.log('TeacherFeedbackCreationBlock: onComment: exerciseId, dialogId, questionnaireId = ', exerciseId, dialogId, questionnaireId);
+
+        //if (userId == undefined || exerciseId == undefined){
+        //    return;
+        //}
+        if (userId == undefined){
             return;
         }
+        if ((exerciseId == undefined) && (dialogId == undefined) && (questionnaireId == undefined)){
+            return;
+        }
+
         this.setState({
             loading: true
         });
@@ -110367,13 +119507,40 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
         if (comment == undefined || comment == '' || comment.trim() == ''){
             comment = undefined;
         }
-        ExerciseMixin.commentUserExercise(userId, exerciseId, comment, function(score){
-            this.setState({
-                loading: false,
-                needToSave: false
-            });
-            this.props.onComment(score);
-        }.bind(this));
+
+        console.log('mode = ', this.props.mode);
+
+        if (this.props.mode == 'exercise'){
+            ExerciseMixin.commentUserExercise(userId, exerciseId, comment, function(score){
+                this.setState({
+                    loading: false,
+                    needToSave: false
+                });
+                this.props.onComment(score);
+            }.bind(this));
+        }
+
+        if (this.props.mode == 'dialog'){
+            DialogMixin.commentUserDialog(userId, dialogId, comment, function(score){
+                this.setState({
+                    loading: false,
+                    needToSave: false
+                });
+                this.props.onComment(score);
+            }.bind(this));
+        }
+
+        if (this.props.mode == 'questionnaire'){
+            console.log('commenting');
+            QuestionnaireMixin.commentUserQuestionnaire(userId, questionnaireId, comment, function(score){
+                this.setState({
+                    loading: false,
+                    needToSave: false
+                });
+                this.props.onComment(score);
+            }.bind(this))
+        }
+
     },
 
     onContentChange: function(content){
@@ -110417,7 +119584,7 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
 
 module.exports = TeacherFeedbackCreationBlock;
 
-},{"../../components/editor/PatientEditor":612,"../../mixins/ExerciseMixin":775,"../corrector/CorrectorHelpButton":598,"react":527}],734:[function(require,module,exports){
+},{"../../components/editor/PatientEditor":635,"../../mixins/DialogMixin":831,"../../mixins/ExerciseMixin":832,"../../mixins/QuestionnaireMixin":843,"../corrector/CorrectorHelpButton":598,"react":527}],789:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -110541,7 +119708,7 @@ var CurrentUserMenuItem = React.createClass({displayName: "CurrentUserMenuItem",
 
 module.exports = CurrentUserMenuItem;
 
-},{"./TopbarSettingsMenu":738,"object-assign":34,"react":527}],735:[function(require,module,exports){
+},{"./TopbarSettingsMenu":793,"object-assign":34,"react":527}],790:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -110652,7 +119819,7 @@ var HeaderLeftLinks = React.createClass({displayName: "HeaderLeftLinks",
 
 module.exports = HeaderLeftLinks;
 
-},{"object-assign":34,"react":527,"react-router":307}],736:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],791:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -110726,7 +119893,7 @@ var HeaderTemplate = React.createClass({displayName: "HeaderTemplate",
 
 module.exports = HeaderTemplate;
 
-},{"react":527}],737:[function(require,module,exports){
+},{"react":527}],792:[function(require,module,exports){
 /**
  * Created by sabir on 09.10.15.
  */
@@ -111010,7 +120177,7 @@ var LeftSidebarTemplate = React.createClass({displayName: "LeftSidebarTemplate",
 
 module.exports = LeftSidebarTemplate;
 
-},{"object-assign":34,"react":527,"react-router":307}],738:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],793:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -111126,7 +120293,7 @@ var TopbarSettingsMenu = React.createClass({displayName: "TopbarSettingsMenu",
 
 module.exports = TopbarSettingsMenu;
 
-},{"object-assign":34,"react":527,"react-onclickoutside":269}],739:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-onclickoutside":269}],794:[function(require,module,exports){
 /**
  * Created by sabir on 28.09.15.
  */
@@ -111192,7 +120359,7 @@ var PatientText = React.createClass({displayName: "PatientText",
 
 module.exports = PatientText;
 
-},{"../text/translatable/TranslatableText":741,"object-assign":34,"react":527}],740:[function(require,module,exports){
+},{"../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],795:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -111311,7 +120478,7 @@ var ToggledText = React.createClass({displayName: "ToggledText",
 
 module.exports = ToggledText;
 
-},{"object-assign":34,"react":527}],741:[function(require,module,exports){
+},{"object-assign":34,"react":527}],796:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -111398,7 +120565,7 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
 
 module.exports = TranslatableText;
 
-},{"../../../mixins/TranslateMixin":787,"../../translate/TranslateDialog":756,"./WordsList":743,"object-assign":34,"react":527}],742:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":845,"../../translate/TranslateDialog":811,"./WordsList":798,"object-assign":34,"react":527}],797:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -111526,7 +120693,7 @@ var WordItem = React.createClass({displayName: "WordItem",
 
 module.exports = WordItem;
 
-},{"../../../mixins/TranslateMixin":787,"object-assign":34,"react":527}],743:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":845,"object-assign":34,"react":527}],798:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -111584,7 +120751,7 @@ var WordsList = React.createClass({displayName: "WordsList",
 
 module.exports = WordsList;
 
-},{"./WordItem":742,"object-assign":34,"react":527}],744:[function(require,module,exports){
+},{"./WordItem":797,"object-assign":34,"react":527}],799:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -111702,7 +120869,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
 
 module.exports = AddTopicButton;
 
-},{"./dialog/UpdateTopicDialog":751,"object-assign":34,"react":527}],745:[function(require,module,exports){
+},{"./dialog/UpdateTopicDialog":806,"object-assign":34,"react":527}],800:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -111810,7 +120977,7 @@ var EditTopicButton = React.createClass({displayName: "EditTopicButton",
 
 module.exports = EditTopicButton;
 
-},{"../buttons/DeleteButton":559,"./dialog/UpdateTopicDialog":751,"object-assign":34,"react":527}],746:[function(require,module,exports){
+},{"../buttons/DeleteButton":559,"./dialog/UpdateTopicDialog":806,"object-assign":34,"react":527}],801:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -111974,7 +121141,7 @@ var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsLi
 
 module.exports = SelfLoadingTopicsList;
 
-},{"../../mixins/TopicsMixin":786,"./AddTopicButton":744,"./TopicsList":748,"./dialog/SelfLoadingTopicDialog":749,"object-assign":34,"react":527}],747:[function(require,module,exports){
+},{"../../mixins/TopicsMixin":844,"./AddTopicButton":799,"./TopicsList":803,"./dialog/SelfLoadingTopicDialog":804,"object-assign":34,"react":527}],802:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -112086,7 +121253,7 @@ var TopicItem = React.createClass({displayName: "TopicItem",
 
 module.exports = TopicItem;
 
-},{"object-assign":34,"react":527}],748:[function(require,module,exports){
+},{"object-assign":34,"react":527}],803:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -112171,7 +121338,7 @@ var TopicsList = React.createClass({displayName: "TopicsList",
 
 module.exports = TopicsList;
 
-},{"./TopicItem":747,"object-assign":34,"react":527}],749:[function(require,module,exports){
+},{"./TopicItem":802,"object-assign":34,"react":527}],804:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -112286,7 +121453,7 @@ var SelfLoadingTopicDialog = React.createClass({displayName: "SelfLoadingTopicDi
 
 module.exports = SelfLoadingTopicDialog;
 
-},{"../panels/TopicPanel":754,"./TopicDialog":750,"object-assign":34,"react":527}],750:[function(require,module,exports){
+},{"../panels/TopicPanel":809,"./TopicDialog":805,"object-assign":34,"react":527}],805:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -112431,7 +121598,7 @@ var TopicDialog = React.createClass({displayName: "TopicDialog",
 
 module.exports = TopicDialog;
 
-},{"object-assign":34,"react":527}],751:[function(require,module,exports){
+},{"object-assign":34,"react":527}],806:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -112771,7 +121938,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
 
 module.exports = UpdateTopicDialog;
 
-},{"../../../mixins/TopicsMixin":786,"../../buttons/DeleteButton":559,"../../exercise/info/AccessSwitcher":628,"../../file/FileUploader":645,"../TopicItem":747,"../panels/SimpleTopicHeaderPanel":752,"../panels/TopicHeaderPanel":753,"./TopicDialog":750,"object-assign":34,"react":527}],752:[function(require,module,exports){
+},{"../../../mixins/TopicsMixin":844,"../../buttons/DeleteButton":559,"../../exercise/info/AccessSwitcher":651,"../../file/FileUploader":668,"../TopicItem":802,"../panels/SimpleTopicHeaderPanel":807,"../panels/TopicHeaderPanel":808,"./TopicDialog":805,"object-assign":34,"react":527}],807:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -112891,7 +122058,7 @@ var SimpleTopicHeaderPanel = React.createClass({displayName: "SimpleTopicHeaderP
 
 module.exports = SimpleTopicHeaderPanel;
 
-},{"../EditTopicButton":745,"object-assign":34,"react":527}],753:[function(require,module,exports){
+},{"../EditTopicButton":800,"object-assign":34,"react":527}],808:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -113043,7 +122210,7 @@ var TopicHeaderPanel = React.createClass({displayName: "TopicHeaderPanel",
 
 module.exports = TopicHeaderPanel;
 
-},{"../EditTopicButton":745,"object-assign":34,"react":527}],754:[function(require,module,exports){
+},{"../EditTopicButton":800,"object-assign":34,"react":527}],809:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -113188,7 +122355,7 @@ var TopicPanel = React.createClass({displayName: "TopicPanel",
 
 module.exports = TopicPanel;
 
-},{"../../material/list/SelfLoadingMaterialsList":684,"./TopicHeaderPanel":753,"object-assign":34,"react":527}],755:[function(require,module,exports){
+},{"../../material/list/SelfLoadingMaterialsList":707,"./TopicHeaderPanel":808,"object-assign":34,"react":527}],810:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -113260,7 +122427,7 @@ var TranslateButton = React.createClass({displayName: "TranslateButton",
 
 module.exports = TranslateButton;
 
-},{"./TranslateDialog":756,"object-assign":34,"react":527}],756:[function(require,module,exports){
+},{"./TranslateDialog":811,"object-assign":34,"react":527}],811:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -113334,7 +122501,7 @@ var TranslateDialog = React.createClass({displayName: "TranslateDialog",
 
 module.exports = TranslateDialog;
 
-},{"../dialog/Dialog":604,"./panel/TranslatePanel":757,"object-assign":34,"react":527}],757:[function(require,module,exports){
+},{"../dialog/Dialog":604,"./panel/TranslatePanel":812,"object-assign":34,"react":527}],812:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -113507,7 +122674,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
 
 module.exports = TranslatePanel;
 
-},{"../../../mixins/TranslateMixin":787,"object-assign":34,"react-speech":341,"react/addons":354}],758:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":845,"object-assign":34,"react-speech":341,"react/addons":354}],813:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -113579,7 +122746,7 @@ var AuthButton = React.createClass({displayName: "AuthButton",
 
 module.exports = AuthButton;
 
-},{"./AuthOverlay":760,"react":527}],759:[function(require,module,exports){
+},{"./AuthOverlay":815,"react":527}],814:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -113721,7 +122888,7 @@ var AuthForm = React.createClass({displayName: "AuthForm",
 
 module.exports = AuthForm;
 
-},{"./LoginForm":761,"./SignupForm":764,"react":527}],760:[function(require,module,exports){
+},{"./LoginForm":816,"./SignupForm":819,"react":527}],815:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -113820,7 +122987,7 @@ var AuthOverlay = React.createClass({displayName: "AuthOverlay",
 
 module.exports = AuthOverlay;
 
-},{"./AuthForm":759,"object-assign":34,"react":527}],761:[function(require,module,exports){
+},{"./AuthForm":814,"object-assign":34,"react":527}],816:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -113982,7 +123149,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../../mixins/LoginMixin":780,"react":527}],762:[function(require,module,exports){
+},{"../../mixins/LoginMixin":837,"react":527}],817:[function(require,module,exports){
 /**
  * Created by sabir on 05.11.15.
  */
@@ -114058,7 +123225,7 @@ var RoleSelector = React.createClass({displayName: "RoleSelector",
 
 module.exports = RoleSelector;
 
-},{"object-assign":34,"react":527}],763:[function(require,module,exports){
+},{"object-assign":34,"react":527}],818:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -114127,7 +123294,7 @@ var SelfLoadingUserSpan = React.createClass({displayName: "SelfLoadingUserSpan",
 
 module.exports = SelfLoadingUserSpan;
 
-},{"../../mixins/UserMixin":788,"object-assign":34,"react":527}],764:[function(require,module,exports){
+},{"../../mixins/UserMixin":846,"object-assign":34,"react":527}],819:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -114377,7 +123544,91 @@ var SignupForm = React.createClass({displayName: "SignupForm",
 
 module.exports = SignupForm;
 
-},{"../../mixins/LoginMixin":780,"../user/RoleSelector":762,"react":527}],765:[function(require,module,exports){
+},{"../../mixins/LoginMixin":837,"../user/RoleSelector":817,"react":527}],820:[function(require,module,exports){
+/**
+ * Created by sabir on 26.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MaterialsMixin = require('../../mixins/MaterialsMixin');
+var VimeoPlayer = require('../player/VimeoPlayer');
+
+var MosesPlayer = require('../moses/player/MosesPlayer');
+
+var ExerciseVideo = React.createClass({displayName: "ExerciseVideo",
+    getDefaultProps: function () {
+        return {
+            vimeoId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            durations: []
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var vimeoId = nextProps.vimeoId;
+        if (vimeoId != this.props.vimeoId){
+            this.load(vimeoId);
+        }
+    },
+
+    componentDidMount: function () {
+        var vimeoId = this.props.vimeoId;
+        this.load(vimeoId);
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    load: function(vimeoId){
+        console.log('ExerciseVideo: load: vimeoId = ' + vimeoId);
+        if (this.state.durations != undefined && this.state.durations.length > 0){
+            this.setState({
+                durations: []
+            });
+        }
+        MaterialsMixin.loadMaterialByVimeoId(vimeoId, function(m){
+            console.log('video loaded: ', m);
+            if (m == undefined){
+                return;
+            }
+            var durations = m.mosesDurations;
+            if (durations != undefined && durations.length > 0){
+                this.setState({
+                    durations: durations
+                });
+            }
+        }.bind(this));
+    },
+
+    render: function () {
+        var isMosesable = (this.state.durations != undefined && this.state.durations.length > 0);
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                isMosesable == true ?
+                    React.createElement("div", null, 
+                        React.createElement(MosesPlayer, {vimeoId: this.props.vimeoId, durations: this.state.durations})
+                    )
+                    :
+                    React.createElement(VimeoPlayer, {vimeoId: this.props.vimeoId})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = ExerciseVideo;
+
+},{"../../mixins/MaterialsMixin":838,"../moses/player/MosesPlayer":715,"../player/VimeoPlayer":737,"object-assign":34,"react":527}],821:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -114464,7 +123715,7 @@ var VideoDialog = React.createClass({displayName: "VideoDialog",
 
 module.exports = VideoDialog;
 
-},{"../../dialog/Dialog":604,"./VideoPanel":766,"object-assign":34,"react":527}],766:[function(require,module,exports){
+},{"../../dialog/Dialog":604,"./VideoPanel":822,"object-assign":34,"react":527}],822:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -114561,7 +123812,7 @@ var VideoPanel = React.createClass({displayName: "VideoPanel",
 
 module.exports = VideoPanel;
 
-},{"../../player/VimeoPlayer":707,"object-assign":34,"react":527}],767:[function(require,module,exports){
+},{"../../player/VimeoPlayer":737,"object-assign":34,"react":527}],823:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -114625,7 +123876,7 @@ var YoutubeEmbedPlayer = React.createClass({displayName: "YoutubeEmbedPlayer",
 
 module.exports = YoutubeEmbedPlayer;
 
-},{"object-assign":34,"react":527}],768:[function(require,module,exports){
+},{"object-assign":34,"react":527}],824:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -114706,7 +123957,7 @@ var VocabularyItem = React.createClass({displayName: "VocabularyItem",
 
 module.exports = VocabularyItem;
 
-},{"object-assign":34,"react":527}],769:[function(require,module,exports){
+},{"object-assign":34,"react":527}],825:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -114774,7 +124025,7 @@ var VocabularyItemsList = React.createClass({displayName: "VocabularyItemsList",
 
 module.exports = VocabularyItemsList;
 
-},{"./VocabularyItem":768,"object-assign":34,"react":527}],770:[function(require,module,exports){
+},{"./VocabularyItem":824,"object-assign":34,"react":527}],826:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -114857,7 +124108,7 @@ var VocabularyNavigationPanel = React.createClass({displayName: "VocabularyNavig
 
 module.exports = VocabularyNavigationPanel;
 
-},{"object-assign":34,"react":527}],771:[function(require,module,exports){
+},{"object-assign":34,"react":527}],827:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -115161,7 +124412,7 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
 
 module.exports = VocabularyPanel;
 
-},{"../../mixins/VocabularyMixin":790,"../material/list/CardsList":679,"../topics/dialog/TopicDialog":750,"../translate/panel/TranslatePanel":757,"./VocabularyItemsList":769,"./VocabularyNavigationPanel":770,"object-assign":34,"react":527}],772:[function(require,module,exports){
+},{"../../mixins/VocabularyMixin":848,"../material/list/CardsList":702,"../topics/dialog/TopicDialog":805,"../translate/panel/TranslatePanel":812,"./VocabularyItemsList":825,"./VocabularyNavigationPanel":826,"object-assign":34,"react":527}],828:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -115480,7 +124731,7 @@ var DataFactory = {
 
 module.exports = DataFactory;
 
-},{}],773:[function(require,module,exports){
+},{}],829:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -115676,7 +124927,7 @@ var ChatMixin = {
 
 module.exports = ChatMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"./ClassMixin":774,"./UserMixin":788,"object-assign":34,"parse":35}],774:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./ClassMixin":830,"./UserMixin":846,"object-assign":34,"parse":35}],830:[function(require,module,exports){
 /**
  * Created by sabir on 05.10.15.
  */
@@ -116139,7 +125390,493 @@ var ClassMixin = {
 
 module.exports = ClassMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"./FeedMixin":776,"./UserMixin":788,"parse":35}],775:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./FeedMixin":833,"./UserMixin":846,"parse":35}],831:[function(require,module,exports){
+/**
+ * Created by sabir on 18.12.15.
+ */
+
+
+var assign = require('object-assign');
+var Parse = require('parse').Parse;
+var FeedMixin = require('./FeedMixin');
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
+var UserMixin = require('./UserMixin');
+var ExerciseMixin = require('./ExerciseMixin');
+var LoginMixin = require('./LoginMixin');
+
+
+var DialogMixin = {
+
+    transformDialog: function(d){
+        return {
+            name: d.get('name'),
+            description: d.get('description'),
+            task: d.get('task'),
+            firstRoleName: d.get('firstRoleName'),
+            secondRoleName: d.get('secondRoleName'),
+            firstRoleImg: d.get('firstRoleImg'),
+            secondRoleImg: d.get('secondRoleImg'),
+            timestamp: (new Date(d.createdAt)).getTime(),
+            avatar: d.get('avatar'),
+            vimeoId: d.get('vimeoId'),
+            creatorId: d.get('creatorId'),
+            id: d.id,
+            dialogId: d.id
+        }
+    },
+
+    transformCard: function(c){
+        var materials = c.get('materials');
+        var audioUrl = undefined;
+        var text = undefined;
+        for (var i in materials){
+            var m = materials[i];
+            if (m.materialType == 'text'){
+                text = m.text;
+            }
+            if (m.materialType == 'audio'){
+                audioUrl = m.audioUrl;
+            }
+        }
+        if (text == undefined){
+            text = c.get('transcript')
+        }
+
+        return {
+            dialogId: c.get('dialogId'),
+            cardId: c.id,
+            id: c.id,
+            number: c.get('number'),
+            text: text,
+            audioUrl: audioUrl
+        }
+    },
+
+    loadDialogById: function(dialogId, callback){
+        var q = new Parse.Query('PatientDialog');
+        q.get(dialogId, {
+            success: function(d){
+                callback(d);
+            }
+        })
+    },
+
+
+    loadDialogCards: function(dialogId, callback){
+        var q = new Parse.Query('ExerciseCard');
+        q.equalTo('dialogId', dialogId);
+        q.notEqualTo('status', 'deleted');
+        q.limit(1000);
+        q.addAscending('number');
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(c){
+                return self.transformCard(c);
+            });
+            callback(arr);
+        });
+    },
+
+
+    loadDialog: function(dialogId, callback){
+        var self = this;
+        this.loadDialogById(dialogId, function(d){
+            var dialog = self.transformDialog(d);
+            self.loadDialogCards(dialogId, function(cards){
+                dialog.cards = cards;
+                callback(dialog);
+            });
+        });
+    },
+
+    loadCardsListByIds: function(ids, callback){
+        var q = new Parse.Query('ExerciseCard');
+        q.containedIn('objectId', ids);
+        q.find(function(results){
+            callback(results);
+        });
+    },
+
+    prepareNewCards: function(newCards, dialogId){
+        console.log('prepareNewCards: newCards = ', newCards);
+        var arr = [];
+        var ExerciseCard = Parse.Object.extend('ExerciseCard');
+        for (var i in newCards){
+            var card = newCards[i];
+            var c = new ExerciseCard();
+            c.set('dialogId', dialogId);
+            c.set('number', card.number);
+            c.set('status', 'active');
+            arr.push(c);
+        }
+        console.log('cards prepared: arr = ', arr);
+        return arr;
+    },
+
+    loadCardsForSave: function(cards, dialogId, callback){
+        console.log('loadCardsForSave: cards = ', cards);
+        var ids = [];
+        var newCards = [];
+        for (var i in cards){
+            if (cards[i].id != undefined){
+                ids.push(cards[i].id);
+            }else{
+                newCards.push(cards[i]);
+            }
+        }
+        newCards = this.prepareNewCards(newCards, dialogId); // Parse cards ready for saving
+        this.loadCardsListByIds(ids, function(oldCards){
+            var saveCards = oldCards.concat(newCards);
+            saveCards.sort(function(c1, c2){return c1.get('number') - c2.get('number')});
+            console.log('cards for saving = ', saveCards);
+            callback(saveCards);
+        });
+    },
+
+    getMaterialsByTransformedCard: function(card){
+        if (card == undefined){
+            return undefined;
+        }
+        var text = card.text;
+        var audioUrl = card.audioUrl;
+        var arr = [];
+        if (text != undefined){
+            arr.push({
+                materialType: 'text',
+                text: text
+            });
+        }
+        if (audioUrl != undefined){
+            arr.push({
+                materialType: 'audio',
+                audioUrl: audioUrl
+            });
+        }
+        return arr;
+    },
+
+    destroyCardsNotContainedInIds: function(dialogId, ids, callback){
+        var q = new Parse.Query('ExerciseCard');
+        q.equalTo('dialogId', dialogId);
+        q.notContainedIn('objectId', ids);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback();
+                return;
+            }
+            var arr = [];
+            for (var i in results){
+                var re = results[i];
+                re.set('status', 'deleted');
+                arr.push(re);
+            }
+            Parse.Object.saveAll(results, {
+                success: function(){
+                    callback();
+                }
+            });
+        });
+    },
+
+    saveCards: function(cards, dialogId, callback){
+        console.log('DialogMixin: saveCards occured: ', cards, dialogId);
+        var self = this;
+        this.loadCardsForSave(cards, dialogId, function(cardsForSave){
+            if (cards.length != cardsForSave.length){
+                alert('cards.length != cardsForSave.length');
+                return;
+            }
+            var arr = [];
+
+            for (var i in cardsForSave){
+                var c = cardsForSave[i];
+                var iCard = cards[i];
+                var materials = self.getMaterialsByTransformedCard(iCard);
+                c = ParseMixin.safeSet(c, [{name: 'materials', value: materials}]);
+                arr.push(c);
+            }
+            Parse.Object.saveAll(arr, {
+                success: function(savedCards){
+                    var arr = savedCards.map(function(sc){return self.transformCard(sc)});
+                    var ids = arr.map(function(sc){return sc.id});
+                    self.destroyCardsNotContainedInIds(dialogId, ids, function(){
+                        self.loadDialogCards(dialogId, function(crds){
+                            callback(crds);
+                        });
+                    });
+                }
+            });
+        });
+    },
+
+    createDialog: function(callback){
+        var user = LoginMixin.getCurrentUser();
+        var userId = (user == undefined) ? undefined : user.id;
+        var PatientDialog = Parse.Object.extend('PatientDialog');
+        var dialog = new PatientDialog();
+        dialog.set('creatorId', userId);
+        console.log('createDialog: userId = ', userId);
+        dialog.save().then(function(d){
+            callback(d);
+        });
+    },
+
+    loadDialogForUpdatingById: function(dialogId, callback){
+        if (dialogId == undefined){
+            this.createDialog(function(d){
+                callback(d);
+            });
+            return;
+        }
+        this.loadDialogById(dialogId, function(d){
+            callback(d);
+        });
+    },
+
+    updateDialog: function(dialogId, data, callback){
+        console.log('update dialog occured: dialogId, data = ', dialogId, data);
+        var self = this;
+        this.loadDialogForUpdatingById(dialogId, function(dialog){
+            dialog = ParseMixin.safeSet(dialog, [
+                {name: 'name', value: data.name},
+                {name: 'task', value: data.task},
+                {name: 'avatar', value: data.avatar},
+                {name: 'firstRoleName', value: data.firstRoleName},
+                {name: 'secondRoleName', value: data.secondRoleName},
+                {name: 'firstRoleImg', value: data.firstRoleImg},
+                {name: 'secondRoleImg', value: data.secondRoleImg},
+                {name: 'description', value: data.description},
+                {name: 'vimeoId', value: data.vimeoId}
+            ]);
+            dialog.save().then(function(savedDialog){
+                var transformedDialog = self.transformDialog(savedDialog);
+                var cards = data.cards;
+                self.saveCards(cards, transformedDialog.id, function(iCards){
+                    transformedDialog.cards = iCards;
+                    callback(transformedDialog);
+                });
+            });
+        });
+    },
+
+    getLirmakDefaultCard: function(){
+        return {
+            audioUrl: 'http://beta.englishpatient.org/audio/uploads/143658861207858649999.wav',
+            text: 'Начинайте говорить.',
+            img: 'http://disk.englishpatient.org/uploads/MPEHidviDBWBz81.jpg'
+        }
+    },
+
+    getDialogPairedCards: function(cards, roleNumber, dialog){
+        var arr = [];
+        if (roleNumber == 0){
+            cards = [this.getLirmakDefaultCard()].concat(cards);
+        }
+        if (cards.length % 2 == 1){
+            cards.push({});
+        }
+        for (var i=0; i<cards.length - 1; i++){
+            if (i % 2 == 1){
+                continue;
+            }
+            arr.push({
+                questionCard: assign({}, cards[i]),
+                answerCard: assign({}, cards[i+1])
+            });
+        }
+        return arr;
+    },
+
+    transformUserAnswer: function(a){
+        return {
+            id: a.id,
+            cardId: a.get('cardId'),
+            audioUrl: a.get('answerUrl'),
+            answerUrl: a.get('answerUrl'),
+            userId: a.get('userId')
+        }
+    },
+
+    saveUserAnswer: function(cardId, answerUrl, callback){
+        console.log('saveUserAnswer: cardId, answerUrl = ', cardId, answerUrl);
+        if (cardId == undefined){
+            return;
+        }
+        var self = this;
+        var userId = LoginMixin.getCurrentUser().id;
+        var UserAnswer = Parse.Object.extend('UserAnswer');
+        var q = new Parse.Query('UserAnswer');
+        q.equalTo('cardId', cardId);
+        q.equalTo('userId', userId);
+        q.find(function(results){
+            var answer = undefined;
+            if (results == undefined || results.length == 0){
+                answer = new UserAnswer();
+                answer.set('userId', userId);
+                answer.set('cardId', cardId);
+            }else{
+                answer = results[0];
+            }
+            answer.set('answerUrl', answerUrl);
+            answer.save().then(function(a){
+                callback(self.transformUserAnswer(a));
+            });
+        });
+    },
+
+    loadAnswersMap: function(dialogId, userId, callback){
+        //var userId = LoginMixin.getCurrentUser().id;
+        console.log('loadAnswersMap: dialogId, userId = ', dialogId, userId);
+        var self = this;
+        var map = {};
+        if (userId == undefined){
+            callback({});
+            return;
+        }
+        this.loadDialogCards(dialogId, function(cards){
+            var ids = cards.map(function(c){return c.id});
+            var q = new Parse.Query('UserAnswer');
+            q.containedIn('cardId', ids);
+            q.equalTo('userId', userId);
+            q.find(function(answers){
+                for (var i in answers){
+                    var a = self.transformUserAnswer(answers[i]);
+                    map[a.cardId] = a;
+                }
+                console.log('map loaded: ', map);
+                callback(map);
+            });
+        });
+    },
+
+    loadTeacherDialogs: function(teacherId, callback){
+        var q = new Parse.Query('PatientDialog');
+        q.equalTo('creatorId', teacherId);
+        q.limit(1000);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(d){
+                return self.transformDialog(d);
+            });
+            callback(arr);
+        });
+    },
+
+    deleteDialog: function(dialogId, callback){
+        var self = this;
+        this.loadDialogById(dialogId, function(d){
+            d.destroy({
+                success: function(){
+                    callback();
+                }
+            });
+        });
+    },
+
+    loadUserDialogScore: function(userId, dialogId, callback){
+        console.log('loadUserDialogScore: userId, dialogId = ', userId, dialogId);
+        var UserExerciseScore = Parse.Object.extend('UserExerciseScore');
+        var q = new Parse.Query(UserExerciseScore);
+        q.equalTo('userId', userId);
+        q.equalTo('dialogId', dialogId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                var score = new UserExerciseScore();
+                score.set('userId', userId);
+                score.set('dialogId', dialogId);
+                score.set('status', 'new');
+                score.save().then(function(sc){
+                    console.log('new dialog score created: ', sc);
+                    callback({
+                        scoreId: sc.id,
+                        teacherFeedback: sc.get('teacherFeedback'),
+                        feedback: sc.get('teacherFeedback'),
+                        status: sc.get('status'),
+                        userId: userId,
+                        dialogId: dialogId
+                    });
+                });
+            }else{
+                var sco = results[0];
+                console.log('user score found: ', sco);
+                callback({
+                    scoreId: sco.id,
+                    teacherFeedback: sco.get('teacherFeedback'),
+                    feedback: sco.get('teacherFeedback'),
+                    status: sco.get('status'),
+                    userId: userId,
+                    dialogId: dialogId
+                });
+            }
+        }.bind(this));
+    },
+
+    commentUserDialog: function(userId, dialogId, feedback, callback){
+        console.log('commentUserDialog occured: userId, dialogId, feedback = ', userId, dialogId, feedback);
+        var q = new Parse.Query('UserExerciseScore');
+        q.equalTo('userId', userId);
+        q.equalTo('dialogId', dialogId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback();
+                return;
+            }
+            var score = results[0];
+            if (feedback == undefined){
+                score.unset('teacherFeedback');
+            }else{
+                score.set('teacherFeedback', feedback);
+            }
+            score.save().then(function(sc){
+                console.log('saved feedback!! -->>> sc = ', sc);
+                callback({
+                    scoreId: sc.id,
+                    teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
+                    status: sc.get('status'),
+                    userId: userId,
+                    dialogId: dialogId
+                });
+            });
+        });
+    },
+
+    finishDialog: function(userId, dialogId, callback){
+        if (dialogId == undefined || userId == undefined){
+            callback();
+            return;
+        }
+        var q = new Parse.Query('UserExerciseScore');
+        q.equalTo('userId', userId);
+        q.equalTo('dialogId', dialogId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback();
+                return;
+            }
+            var score = results[0];
+            score.set('status', 'finished');
+            score.save().then(function(sc){
+                callback({
+                    scoreId: sc.id,
+                    teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
+                    status: sc.get('status'),
+                    userId: userId,
+                    dialogId: dialogId
+                });
+            });
+        });
+    }
+
+
+
+}
+
+module.exports = DialogMixin;
+
+},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./ExerciseMixin":832,"./FeedMixin":833,"./LoginMixin":837,"./UserMixin":846,"object-assign":34,"parse":35}],832:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -116349,6 +126086,7 @@ var ExerciseMixin = {
                     callback({
                         scoreId: sc.id,
                         teacherFeedback: sc.get('teacherFeedback'),
+                        feedback: sc.get('teacherFeedback'),
                         status: sc.get('status'),
                         userId: userId,
                         exerciseId: exerciseId
@@ -116359,6 +126097,7 @@ var ExerciseMixin = {
                 callback({
                     scoreId: sco.id,
                     teacherFeedback: sco.get('teacherFeedback'),
+                    feedback: sco.get('teacherFeedback'),
                     status: sco.get('status'),
                     userId: userId,
                     exerciseId: exerciseId
@@ -116434,6 +126173,7 @@ var ExerciseMixin = {
                 callback({
                     scoreId: sc.id,
                     teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
                     status: sc.get('status'),
                     userId: userId,
                     exerciseId: exerciseId
@@ -116499,6 +126239,7 @@ var ExerciseMixin = {
                 callback({
                     scoreId: sc.id,
                     teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
                     status: sc.get('status'),
                     userId: userId,
                     exerciseId: exerciseId
@@ -116523,6 +126264,7 @@ var ExerciseMixin = {
                     scoreId: sc.id,
                     userId: userId,
                     teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
                     status: sc.get('status'),
                     exerciseId: sc.get('exerciseId')
                 }
@@ -117091,7 +126833,7 @@ var ExerciseMixin = {
 
 module.exports = ExerciseMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],776:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],833:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -117133,7 +126875,9 @@ var FeedMixin = {
             information: f.get('information'),
             timestamp: (new Date(f.createdAt)).getTime(),
             exerciseId: f.get('exerciseId'),
+            dialogId: f.get('dialogId'),
             noteId: f.get('noteId'),
+            questionnaireId: f.get('questionnaireId'),
             materialIds: (f.get('materialIds') == undefined) ? [] : f.get('materialIds')
         };
     },
@@ -117182,7 +126926,8 @@ var FeedMixin = {
         });
     },
 
-    updateFeedItem: function(feedItemId, information, exerciseId, noteId, materialIds, callback){
+    updateFeedItem: function(feedItemId, information, exerciseId, noteId, materialIds,
+                             dialogId, questionnaireId, callback){
         var self = this;
         if (feedItemId == undefined){
             return;
@@ -117192,6 +126937,8 @@ var FeedMixin = {
                 {name: 'information', value: information},
                 {name: 'exerciseId', value: exerciseId},
                 {name: 'noteId', value: noteId},
+                {name: 'dialogId', value: dialogId},
+                {name: 'questionnaireId', value: questionnaireId},
                 {name: 'materialIds', value: materialIds}
             ]);
             item.save().then(function(updatedItem){
@@ -117200,7 +126947,7 @@ var FeedMixin = {
         });
     },
 
-    createFeedItem: function(feedId, information, exerciseId, noteId, materialIds, callback){
+    createFeedItem: function(feedId, information, exerciseId, noteId, materialIds, dialogId, questionnaireId, callback){
         if (feedId == undefined){
             return;
         }
@@ -117210,6 +126957,8 @@ var FeedMixin = {
         f = ParseMixin.safeSet(f, [{name: 'information', value: information},
             {name: 'exerciseId', value: exerciseId},
             {name: 'noteId', value: noteId},
+            {name: 'dialogId', value: dialogId},
+            {name: 'questionnaireId', value: questionnaireId},
             {name: 'materialIds', value: materialIds},
             {name: 'feedId', value: feedId}
         ]);
@@ -117316,7 +127065,7 @@ function migrateFeeds(){
     });
 }
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],777:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],834:[function(require,module,exports){
 /**
  * Created by sabir on 20.09.15.
  */
@@ -117355,7 +127104,7 @@ var FileUploadMixin = {
 
 module.exports = FileUploadMixin;
 
-},{}],778:[function(require,module,exports){
+},{}],835:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -117454,7 +127203,7 @@ module.exports = IdiomsMixin;
 //    });
 //})();
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"./MaterialsMixin":781,"./VocabularyMixin":790,"parse":35,"react":527}],779:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"./MaterialsMixin":838,"./VocabularyMixin":848,"parse":35,"react":527}],836:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -117638,7 +127387,7 @@ var KaraokeMixin = {
 
 module.exports = KaraokeMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"jquery":31,"parse":35}],780:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"jquery":31,"parse":35}],837:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -117759,7 +127508,7 @@ var LoginMixin = {
 
 module.exports = LoginMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"parse":35,"react":527}],781:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"parse":35,"react":527}],838:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -117791,6 +127540,7 @@ var MaterialsMixin = {
             approved: m.get('approved'),
             bbComment: m.get('bbComment'),
             duration: m.get('duration'),
+            mosesDurations: (m.get('mosesDurations') == undefined) ? [] : m.get('mosesDurations'),
             groups: (m.get('groups') == undefined) ? [] : m.get('groups'),
             createdTimestamp: (new Date(m.createdAt)).getTime(),
             updatedTimestamp: (new Date(m.updatedAt)).getTime()
@@ -117842,6 +127592,22 @@ var MaterialsMixin = {
         });
     },
 
+    loadMaterialByVimeoId: function(vimeoId, callback){
+        console.log('loadMaterialByVimeoId occured: vimeoId = ', vimeoId);
+        vimeoId = '' + vimeoId;
+        var q = new Parse.Query('PatientMaterial');
+        q.equalTo('vimeoId', vimeoId);
+        var self = this;
+        q.find(function(results){
+            console.log('loadMaterialByVimeoId: results = ', results);
+            if (results == undefined || results.length == 0){
+                callback();
+            }else{
+                callback(self.transformMaterialFromParseObject(results[0]));
+            }
+        });
+    },
+
     loadMaterial: function(materialId, callback){
         console.log('loadMaterial occured: materialId = ', materialId);
         var self = this;
@@ -117862,6 +127628,15 @@ var MaterialsMixin = {
         });
     },
 
+    updateMosesDurations: function(materialId, durations, callback){
+        var self = this;
+        this.loadMaterialById(materialId, function(m){
+            m.set('mosesDurations', durations);
+            m.save().then(function(uM){
+                callback(self.transformMaterialFromParseObject(uM));
+            });
+        });
+    },
 
     createMaterial: function(d, callback){
         console.log('createMaterial occured: materialId, d = ', d);
@@ -118366,7 +128141,7 @@ var MaterialsMixin = {
 
 module.exports = MaterialsMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"./TopicsMixin":786,"./UserMixin":788,"jquery":31,"parse":35}],782:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"./TopicsMixin":844,"./UserMixin":846,"jquery":31,"parse":35}],839:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -118454,7 +128229,7 @@ var MigrationMixin = {
 
 module.exports = MigrationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"../data/DataFactory":772,"./MaterialsMixin":781,"./VideoMixin":789,"parse":35}],783:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"../data/DataFactory":828,"./MaterialsMixin":838,"./VideoMixin":847,"parse":35}],840:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -118745,7 +128520,7 @@ var NotesMixin = {
 
 module.exports = NotesMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],784:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],841:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -118866,10 +128641,70 @@ var NotificationMixin = {
                 var patientClassName = cl.name;
                 var content = 'Пользователь <b>' + userName + '</b>' +
                     ' выполнил упражнение в классе ' +
-                    '<a target="_blank" href="/#/class/' + cl.id + '" >' + patientClassName + '</a>';
+                    '<a target="_blank" href="/app/#/class/' + cl.id + '" >' + patientClassName + '</a>';
                 var attachment = {
                     type: 'exercise',
                     exerciseId: exerciseId,
+                    userId: userId
+                };
+                self.createNotification(cl.ownerId, forRole, name, content, attachment, function(no){
+                    callback(no);
+                });
+            });
+        })
+    },
+
+    createStudentFinishedDialogNotification: function(userId, dialogId, classId, callback){
+        console.log('createStudentFinishedDialogNotification occured: ' +
+            'userId, dialogId, classId = ', userId, dialogId, classId);
+
+        var forRole = 'teacher';
+        var name = 'Пользователь выполнил упражнение (диалог)';
+        var self = this;
+        console.log('loading user: userId = ', userId);
+        UserMixin.loadUser(userId, function(u){
+            console.log('user loaded: ', u);
+            var userName = u.name;
+            console.log('loading class: classId = ', classId);
+            ClassMixin.loadClass(classId, function(cl){
+                console.log('class loaded: ', cl);
+                var patientClassName = cl.name;
+                var content = 'Пользователь <b>' + userName + '</b>' +
+                    ' выполнил упражнение (диалог) в классе ' +
+                    '<a target="_blank" href="/app/#/class/' + cl.id + '" >' + patientClassName + '</a>';
+                var attachment = {
+                    type: 'dialog',
+                    dialogId: dialogId,
+                    userId: userId
+                };
+                self.createNotification(cl.ownerId, forRole, name, content, attachment, function(no){
+                    callback(no);
+                });
+            });
+        })
+    },
+
+    createStudentFinishedQuestionnaireNotification: function(userId, questionnaireId, classId, callback){
+        console.log('createStudentFinishedQuestionnaireNotification occured: ' +
+            'userId, questionnaireId, classId = ', userId, questionnaireId, classId);
+
+        var forRole = 'teacher';
+        var name = 'Пользователь выполнил упражнение (опросник)';
+        var self = this;
+        console.log('loading user: userId = ', userId);
+        UserMixin.loadUser(userId, function(u){
+            console.log('user loaded: ', u);
+            var userName = u.name;
+            console.log('loading class: classId = ', classId);
+            ClassMixin.loadClass(classId, function(cl){
+                console.log('class loaded: ', cl);
+                var patientClassName = cl.name;
+                var content = 'Пользователь <b>' + userName + '</b>' +
+                    ' выполнил упражнение (опросник) в классе ' +
+                    '<a target="_blank" href="/app/#/class/' + cl.id + '" >' + patientClassName + '</a>';
+                var attachment = {
+                    type: 'questionnaire',
+                    questionnaireId: questionnaireId,
                     userId: userId
                 };
                 self.createNotification(cl.ownerId, forRole, name, content, attachment, function(no){
@@ -118885,7 +128720,7 @@ var NotificationMixin = {
 
 module.exports = NotificationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"./ClassMixin":774,"./UserMixin":788,"parse":35}],785:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"./ClassMixin":830,"./UserMixin":846,"parse":35}],842:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -119000,7 +128835,388 @@ var ProfileMixin = {
 
 module.exports = ProfileMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35}],786:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],843:[function(require,module,exports){
+/**
+ * Created by sabir on 21.12.15.
+ */
+
+var assign = require('object-assign');
+var Parse = require('parse').Parse;
+var FeedMixin = require('./FeedMixin');
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
+var UserMixin = require('./UserMixin');
+var ExerciseMixin = require('./ExerciseMixin');
+var LoginMixin = require('./LoginMixin');
+
+
+var QuestionnaireMixin = {
+
+    transformQuestionnaire: function(q){
+        return {
+            id: q.id,
+            questionnaireId: q.id,
+            creatorId: q.get('creatorId'),
+            name: q.get('name'),
+            task: q.get('task'),
+            description: q.get('description'),
+            avatar: q.get('avatar')
+        }
+    },
+
+    transformQuestionnaireQuestion: function(question){
+        return {
+            questionnaireId: question.get('questionnaireId'),
+            id: question.id,
+            questionId: question.id,
+            questionnaireQuestionId: question.id,
+            number: question.get('number'),
+            name: question.get('name'),
+            question: question.get('question'),
+            ruQuestion: question.get('ruQuestion'),
+            answers: (question.get('answers') == undefined) ? [] : question.get('answers'),
+            vimeoId: question.get('vimeoId')
+        }
+    },
+
+    transformAnswer: function(a){
+        return {
+            id: a.id,
+            answerId: a.id,
+            audioUrl: a.get('audioUrl'),
+            questionId: a.get('questionId'),
+            variant: a.get('variant')
+        }
+    },
+
+    transformScore: function(sc){
+        return {
+            scoreId: sc.id,
+            id: sc.id,
+            userId: sc.get('userId'),
+            teacherFeedback: sc.get('teacherFeedback'),
+            feedback: sc.get('teacherFeedback'),
+            status: sc.get('status'),
+            questionnaireId: sc.get('questionnaireId')
+        }
+    },
+
+    loadQuestionnaireById: function(id, callback){
+        if (id == undefined){
+            callback();
+            return;
+        }
+        var q = new Parse.Query('Questionnaire');
+        q.get(id, function(res){
+            callback(res);
+        });
+    },
+
+    loadQuestionnaire: function(id, callback){
+        console.log('loadQuestionnaire: id = ', id);
+        var self = this;
+        this.loadQuestionnaireById(id, function(q){
+            var res = self.transformQuestionnaire(q);
+            callback(res);
+        });
+    },
+
+    loadTeacherQuestionnaires: function(teacherId, callback){
+        var q = new Parse.Query('Questionnaire');
+        var self = this;
+        q.limit(1000);
+        q.addDescending('createdAt');
+        q.find(function(results){
+            var arr = results.map(function(r){return self.transformQuestionnaire(r)});
+            callback(arr);
+        });
+    },
+
+    createQuestionnaire: function(teacherId, name, description, avatar, task, callback){
+        if (teacherId == undefined){
+            return;
+        }
+        var self = this;
+        var Questionnaire = Parse.Object.extend('Questionnaire');
+        var q = new Questionnaire();
+        q.set('creatorId', teacherId);
+        q = ParseMixin.safeSet(q, [
+            {name: 'name', value: name},
+            {name: 'description', value: description},
+            {name: 'task', value: task},
+            {name: 'avatar', value: avatar}
+        ]);
+        q.save().then(function(updatedQuestionnaire){
+            callback(self.transformQuestionnaire(updatedQuestionnaire));
+        });
+    },
+
+    updateQuestionnaire: function(questionnaireId, name, description, avatar, task, callback){
+        var self = this;
+        this.loadQuestionnaireById(questionnaireId, function(q){
+            q = ParseMixin.safeSet(q, [
+                {name: 'name', value: name},
+                {name: 'description', value: description},
+                {name: 'task', value: task},
+                {name: 'avatar', value: avatar}
+            ]);
+            q.save().then(function(uQ){
+                callback(self.transformQuestionnaire(uQ));
+            });
+        });
+    },
+
+    deleteQuestionnaire: function(questionnaireId, callback){
+        if (questionnaireId == undefined){
+            return;
+        }
+        this.loadQuestionnaireById(questionnaireId, function(q){
+            q.destroy({
+                success: function(){
+                    callback();
+                }
+            });
+        })
+    },
+
+    loadQuestionnaireQuestions: function(questionnaireId, callback){
+        var q = new Parse.Query('QuestionnaireQuestion');
+        q.limit(1000);
+        q.addAscending('number');
+        q.equalTo('questionnaireId', questionnaireId);
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(qu){return self.transformQuestionnaireQuestion(qu)});
+            callback(arr);
+        });
+    },
+
+    loadQuestionnaireQuestionById: function(id, callback){
+        var q = new Parse.Query('QuestionnaireQuestion');
+        var self = this;
+        q.get(id, function(question){
+            callback(question);
+        });
+    },
+
+    loadQuestionnaireQuestion: function(questionId, callback){
+        var self = this;
+        this.loadQuestionnaireQuestionById(questionId, function(question){
+            callback(self.transformQuestionnaireQuestion(question));
+        });
+    },
+
+    //returns Parse Object
+    createQuestionnaireQuestion: function(questionnaireId, number, callback){
+        var QuestionnaireQuestion = Parse.Object.extend('QuestionnaireQuestion');
+        var q = new QuestionnaireQuestion();
+        q.set('questionnaireId', questionnaireId);
+        q.set('number', number);
+        q.save().then(function(question){
+            callback(question);
+        });
+    },
+
+    loadQuestionByQuestionnaireIdAndNumber: function(questionnaireId, number, callback){
+        var q = new Parse.Query('QuestionnaireQuestion');
+        var self = this;
+        q.equalTo('questionnaireId', questionnaireId);
+        q.equalTo('number', number);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                self.createQuestionnaireQuestion(questionnaireId, number, function(qu){
+                    callback(qu);
+                });
+            }else {
+                var qu = results[0];
+                callback(qu);
+            }
+        });
+    },
+
+    loadTransformedQuestionByQuestionnaireIdAndNumber: function(questionnaireId, number, callback){
+        var self = this;
+        this.loadQuestionByQuestionnaireIdAndNumber(questionnaireId, number, function(q){
+            callback(self.transformQuestionnaireQuestion(q));
+        });
+    },
+
+    updateQuestionnaireQuestion: function(questionnaireId, number, name, vimeoId, question, ruQuestion, answers, callback){
+        var self = this;
+        this.loadQuestionByQuestionnaireIdAndNumber(questionnaireId, number, function(que){
+            que = ParseMixin.safeSet(que, [
+                {name: 'question', value: question},
+                {name: 'ruQuestion', value: ruQuestion},
+                {name: 'vimeoId', value: vimeoId},
+                {name: 'name', value: name},
+                {name: 'answers', value: answers}
+            ]);
+            que.save().then(function(updatedQuestion){
+                callback(self.transformQuestionnaireQuestion(updatedQuestion));
+            });
+        });
+    },
+
+    deleteQuestionnaireQuestion: function(questionnaireQuestionId, callback){
+        this.loadQuestionnaireQuestionById(questionnaireQuestionId, function(qq){
+            qq.destroy({
+                success: function(){
+                    callback();
+                }
+            });
+        })
+    },
+
+    loadUserQuestionnaireAnswersMap: function(userId, questions, callback){
+        console.log('loadUserQuestionnaireAnswersMap occured: userId, questions', userId, questions);
+
+        if (userId == undefined || questions == undefined || questions.length == 0){
+            callback({});
+            return;
+        }
+
+        var ids = questions.map(function(q){return q.id});
+        var q = new Parse.Query('UserQuestionnaireAnswer');
+        q.limit(1000);
+        var self = this;
+        q.equalTo('userId', userId);
+        q.containedIn('questionId', ids);
+        q.find(function(results){
+            if (results == undefined){
+                callback([]);
+            }
+            var arr = results.map(function(a){
+                return self.transformAnswer(a);
+            });
+            var map = {};
+            for (var i in arr){
+                map[arr[i].questionId] = arr[i];
+            }
+            callback(map);
+        });
+    },
+
+    loadUserAnswer: function(userId, questionId, callback){
+        var UserQuestionnaireAnswer = Parse.Object.extend('UserQuestionnaireAnswer');
+        var q = new Parse.Query(UserQuestionnaireAnswer);
+        q.equalTo('userId', userId);
+        q.equalTo('questionId', questionId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                var a = new UserQuestionnaireAnswer();
+                a.set('userId', userId);
+                a.set('questionId', questionId);
+                a.save().then(function(savedA){
+                    callback(savedA);
+                });
+            }else{
+                callback(results[0]);
+            }
+        });
+    },
+
+    loadTransformedUserAnswer: function(userId, questionId, callback){
+        var self = this;
+        if (userId == undefined || questionId == undefined){
+            return;
+        }
+        var q = new Parse.Query('UserQuestionnaireAnswer');
+        q.equalTo('userId', userId);
+        q.equalTo('questionId', questionId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback(undefined);
+            }else{
+                callback(self.transformAnswer(results[0]));
+            }
+        });
+    },
+
+    saveUserAnswer: function(userId, questionId, variant, audioUrl, callback){
+        if (variant != undefined){
+            variant = +variant;
+        }
+        console.log('saveUserAnswer occured: userId, questionId, variant, audioUrl = ', userId, questionId, variant, audioUrl);
+        var self = this;
+        this.loadUserAnswer(userId, questionId, function(a){
+            a = ParseMixin.safeSet(a, [
+                {name: 'variant', value: variant},
+                {name: 'audioUrl', value: audioUrl}
+            ]);
+            a.save().then(function(savedA){
+                callback(self.transformAnswer(savedA));
+            });
+        });
+    },
+
+    loadLazyUserQuestionnaireScore: function(userId, questionnaireId, callback){
+        var UserExerciseScore = Parse.Object.extend('UserExerciseScore');
+        var q = new Parse.Query('UserExerciseScore');
+        q.equalTo('userId', userId);
+        q.equalTo('questionnaireId', questionnaireId);
+        q.find(function(results){
+            var score = undefined;
+            if (results == undefined || results.length == 0){
+                score = new UserExerciseScore();
+                score.set('userId', userId);
+                score.set('status', 'new');
+                score.set('questionnaireId', questionnaireId)
+                score.save().then(function(sc){
+                    callback(sc);
+                });
+            }else{
+                score = results[0];
+                callback(score);
+            }
+        });
+    },
+
+    onFinishQuestionnaire: function(userId, questionnaireId, callback){
+        if (userId == undefined || questionnaireId == undefined){
+            return;
+        }
+        var self = this;
+        this.loadLazyUserQuestionnaireScore(userId, questionnaireId, function(sc){
+            sc.set('status', 'finished');
+            sc.save().then(function(sco){
+                callback(self.transformScore(sco));
+            });
+        })
+    },
+
+    loadUserQuestionnaireScore: function(userId, questionnaireId, callback){
+        console.log('loadUserQuestionnaireScore: userId, questionnaireId = ', userId, questionnaireId);
+        this.loadLazyUserQuestionnaireScore(userId, questionnaireId, function(sc){
+            callback(this.transformScore(sc));
+        }.bind(this));
+    },
+
+
+    commentUserQuestionnaire: function(userId, questionnaireId, feedback, callback){
+        console.log('commentUserQuestionnaire occured: userId, questionnaireId, feedback = ', userId, questionnaireId, feedback);
+        if (userId == undefined || questionnaireId == undefined){
+            return;
+        }
+        var self = this;
+        this.loadLazyUserQuestionnaireScore(userId, questionnaireId, function(score){
+            if (feedback == undefined){
+                score.unset('teacherFeedback');
+            }else{
+                score.set('teacherFeedback', feedback);
+            }
+            score.save().then(function(sc) {
+                console.log('saved feedback!! -->>> sc = ', sc);
+                callback(self.transformScore(sc));
+            });
+        });
+    }
+
+
+};
+
+module.exports = QuestionnaireMixin;
+
+},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./ExerciseMixin":832,"./FeedMixin":833,"./LoginMixin":837,"./UserMixin":846,"object-assign":34,"parse":35}],844:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -119154,7 +129370,7 @@ var TopicsMixin = {
 
 module.exports = TopicsMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":793,"../../react/mixins/commonMixins/ParseMixin":794,"./FeedMixin":776,"parse":35}],787:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./FeedMixin":833,"parse":35}],845:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -119333,7 +129549,7 @@ var TranslateMixin = {
 
 module.exports = TranslateMixin;
 
-},{"./VocabularyMixin":790,"jquery":31}],788:[function(require,module,exports){
+},{"./VocabularyMixin":848,"jquery":31}],846:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -119429,7 +129645,7 @@ var UserMixin = {
 
 module.exports = UserMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"parse":35,"react":527}],789:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35,"react":527}],847:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -119501,7 +129717,7 @@ var VideoMixin = {
 
 module.exports = VideoMixin;
 
-},{"jquery":31,"moment":33}],790:[function(require,module,exports){
+},{"jquery":31,"moment":33}],848:[function(require,module,exports){
 
 var React = require('react');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
@@ -119622,7 +129838,7 @@ var VocabularyMixin = {
 
 module.exports = VocabularyMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"./MaterialsMixin":781,"parse":35,"react":527}],791:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"./MaterialsMixin":838,"parse":35,"react":527}],849:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -119647,7 +129863,7 @@ var YoutubeSearchMixin = {
 
 module.exports = YoutubeSearchMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":794,"./MaterialsMixin":781,"parse":35,"react":527}],792:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":852,"./MaterialsMixin":838,"parse":35,"react":527}],850:[function(require,module,exports){
 /**
  * Created by sabir on 26.08.15.
  */
@@ -119669,7 +129885,7 @@ var constants = {
 
 module.exports = constants;
 
-},{}],793:[function(require,module,exports){
+},{}],851:[function(require,module,exports){
 /**
  * Created by sabir on 29.07.15.
  */
@@ -119830,13 +130046,35 @@ var CommonMixin = {
         }
         history.pushState(null, null, url);
         window.location.reload();
+    },
+
+    printHtml: function(data, width, height){
+        if (width == undefined){
+            width == 400;
+        }
+        if (height == undefined){
+            height == 600;
+        }
+        var mywindow = window.open('', 'my div', 'height=' + height + ',width=' + width);
+        mywindow.document.write('<html><head><title>my div</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
     }
 
 }
 
 module.exports = CommonMixin;
 
-},{}],794:[function(require,module,exports){
+},{}],852:[function(require,module,exports){
 /**
  * Created by sabir on 15.08.15.
  */
@@ -119998,4 +130236,4 @@ var ParseMixin = {
 
 module.exports = ParseMixin;
 
-},{"../../../js/Constants":792,"jquery":31,"parse":35}]},{},[535]);
+},{"../../../js/Constants":850,"jquery":31,"parse":35}]},{},[535]);

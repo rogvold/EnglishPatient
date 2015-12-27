@@ -39,7 +39,7 @@ var PatientRecordComponent = React.createClass({
             //serverBaseUrl: 'http://beta.englishpatient.org/audio/',
             serverBaseUrl: 'https://www.englishpatientdrive.pw/audio/',
             //maxRecordTime: 10,
-            maxRecordTime: 15,
+            maxRecordTime: 30,
             userAnswer: undefined,
             number: undefined
         }
@@ -62,11 +62,28 @@ var PatientRecordComponent = React.createClass({
             initializing: false,
             time: 0,
             audioSrc: undefined,
+            //audioSrc: this.props.userAnswer,
             savingProgress: 0,
             needToSave: false,
             stopped: false,
             saved: false
         }
+    },
+
+    componentDidMount: function () {
+        console.log('PatientRecordComponent: componentDidMount occured');
+        this.init();
+
+        //added 19 dec
+        if (this.props.userAnswer != undefined){
+            this.setState({
+                stopped: true,
+                audioSrc: this.props.userAnswer,
+                needToSave: false,
+                saved: true
+            });
+        }
+        // -- end
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -290,10 +307,7 @@ var PatientRecordComponent = React.createClass({
 
 
 
-    componentDidMount: function () {
-        console.log('PatientRecordComponent: componentDidMount occured');
-        this.init();
-    },
+
 
     componentWillUnmount: function(){
         if (this.intervalId == undefined){
@@ -341,6 +355,8 @@ var PatientRecordComponent = React.createClass({
 
         var supported = this.webRTCisSupported();
         console.log('WEB SUPPORTED = ' + supported);
+
+        console.log('rendering PatientRecordComponent: this.state.audioSrc = ', this.state.audioSrc);
 
         return (
             <div style={this.componentStyle.placeholder}>

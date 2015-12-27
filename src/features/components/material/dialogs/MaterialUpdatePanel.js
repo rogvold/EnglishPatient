@@ -16,6 +16,8 @@ var DeleteButton = require('../../buttons/DeleteButton');
 
 var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
+var MosesEditorButton = require('../../moses/editor/MosesEditorButton');
+
 var MaterialUpdatePanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -121,6 +123,10 @@ var MaterialUpdatePanel = React.createClass({
             marginTop: 10,
             paddingTop: 10,
             borderTop: '1px solid #EFF0F1'
+        },
+
+        mosesButtonBlock: {
+            padding: 5
         }
     },
 
@@ -323,6 +329,12 @@ var MaterialUpdatePanel = React.createClass({
                             </div>
                         </div>
                     </div>
+
+                    {this.props.materialId == undefined ? null :
+                        <div style={this.componentStyle.mosesButtonBlock}>
+                            <MosesEditorButton materialId={this.props.materialId} />
+                        </div>
+                    }
 
                     <div style={this.componentStyle.saveBlock}>
                         <button disabled={!needToSave} className={'ui primary button'} onClick={this.onSave} >

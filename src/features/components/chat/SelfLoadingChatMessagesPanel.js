@@ -199,6 +199,7 @@ var SelfLoadingChatMessagesPanel = React.createClass({
                             <img style={{width: 200}} src={'https://www.englishpatient.org/app/assets/images/messages.png'} />
                         </div> :
                         <ChatMessagesPanel onSubmit={this.onSubmit}
+                                           userId={this.props.userId}
                                            sending={this.state.loading}
                                            refreshing={this.state.refreshing}
                                            friendId={this.props.friendId}

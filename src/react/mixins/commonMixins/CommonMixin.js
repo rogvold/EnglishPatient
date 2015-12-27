@@ -158,6 +158,28 @@ var CommonMixin = {
         }
         history.pushState(null, null, url);
         window.location.reload();
+    },
+
+    printHtml: function(data, width, height){
+        if (width == undefined){
+            width == 400;
+        }
+        if (height == undefined){
+            height == 600;
+        }
+        var mywindow = window.open('', 'my div', 'height=' + height + ',width=' + width);
+        mywindow.document.write('<html><head><title>my div</title>');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
     }
 
 }

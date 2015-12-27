@@ -39,7 +39,9 @@ var FeedMixin = {
             information: f.get('information'),
             timestamp: (new Date(f.createdAt)).getTime(),
             exerciseId: f.get('exerciseId'),
+            dialogId: f.get('dialogId'),
             noteId: f.get('noteId'),
+            questionnaireId: f.get('questionnaireId'),
             materialIds: (f.get('materialIds') == undefined) ? [] : f.get('materialIds')
         };
     },
@@ -88,7 +90,8 @@ var FeedMixin = {
         });
     },
 
-    updateFeedItem: function(feedItemId, information, exerciseId, noteId, materialIds, callback){
+    updateFeedItem: function(feedItemId, information, exerciseId, noteId, materialIds,
+                             dialogId, questionnaireId, callback){
         var self = this;
         if (feedItemId == undefined){
             return;
@@ -98,6 +101,8 @@ var FeedMixin = {
                 {name: 'information', value: information},
                 {name: 'exerciseId', value: exerciseId},
                 {name: 'noteId', value: noteId},
+                {name: 'dialogId', value: dialogId},
+                {name: 'questionnaireId', value: questionnaireId},
                 {name: 'materialIds', value: materialIds}
             ]);
             item.save().then(function(updatedItem){
@@ -106,7 +111,7 @@ var FeedMixin = {
         });
     },
 
-    createFeedItem: function(feedId, information, exerciseId, noteId, materialIds, callback){
+    createFeedItem: function(feedId, information, exerciseId, noteId, materialIds, dialogId, questionnaireId, callback){
         if (feedId == undefined){
             return;
         }
@@ -116,6 +121,8 @@ var FeedMixin = {
         f = ParseMixin.safeSet(f, [{name: 'information', value: information},
             {name: 'exerciseId', value: exerciseId},
             {name: 'noteId', value: noteId},
+            {name: 'dialogId', value: dialogId},
+            {name: 'questionnaireId', value: questionnaireId},
             {name: 'materialIds', value: materialIds},
             {name: 'feedId', value: feedId}
         ]);

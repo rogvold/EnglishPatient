@@ -22,6 +22,10 @@ var PatientPlayer = React.createClass({
             seekToValue: 0,
             paused: false,
 
+            abMode: false,
+
+            abPauseDuration: 500,
+
             onProgress: function(seconds){
 
             }
@@ -35,7 +39,8 @@ var PatientPlayer = React.createClass({
             loading: false,
             loaded: 0,
             played: 0,
-            playing: true,
+            //playing: true,
+            playing: false,
             duration: 0,
             name: undefined,
             imgSrc: undefined
@@ -43,6 +48,7 @@ var PatientPlayer = React.createClass({
     },
 
     componentWillReceiveProps: function (nextProps) {
+        console.log('PatientPlayer: componentWillReceiveProps occured: nextProps = ', nextProps);
         var vimeoId = nextProps.vimeoId;
         var youtubeId = nextProps.youtubeId;
 
@@ -54,12 +60,26 @@ var PatientPlayer = React.createClass({
             //return;
         }
 
+        var start = nextProps.start;
+        var end = nextProps.end;
+
         if (paused != this.props.paused){
             console.log('paused changed');
             this.setState({
                 playing: !paused
             });
         }
+
+        if (start != this.props.start || end != this.props.end){
+            console.log('-->>> !!! >>> PatientPlayer: new start or end: start, end = ', start, end);
+
+            console.log('start != this.props.start || end != this.props.end');
+            if (this.props.abMode == true){
+                this.abPlayPause();
+            }
+        }
+
+
 
         if (vimeoId == this.props.vimeoId && youtubeId == this.props.youtubeId){
             return;
@@ -120,6 +140,20 @@ var PatientPlayer = React.createClass({
         this.refs.player.seekTo(fraction);
     },
 
+    onEnded: function(){
+        console.log('onEnded occured');
+        if (this.props.abMode == true){
+            this.abPlayPause();
+        }
+    },
+
+    play: function(){
+        console.log('play occured');
+        //this.refs.player.play();
+        console.log('this.refs.player = ', this.refs.player);
+        //this.forceUpdate();
+    },
+
     load: function(youtubeId, vimeoId, callback){
         if (callback == undefined) callback = function(){};
         if (vimeoId != undefined){
@@ -169,6 +203,15 @@ var PatientPlayer = React.createClass({
         if (pos < start || pos > end ){
             this.seekTo( 1.0 * start / duration);
         }
+        if (this.props.abMode == true){
+            if (pos >= end){
+                //this.seekTo( 1.0 * start / duration);
+                //setTimeout(function(){
+                //    this.play();
+                //}.bind(this), 1000);
+                this.abPlayPause();
+            }
+        }
         this.props.onProgress(pos / 1000.0);
 
     },
@@ -177,7 +220,26 @@ var PatientPlayer = React.createClass({
 
     },
 
+    abPlayPause: function(){
+        console.log('abPlayPause occured');
+        this.setState({
+            playing: false
+        });
+        //var fraction =
+        var start = (this.props.start == undefined) ? 0 : this.props.start * 1000;
+        var duration = this.state.duration;
+        this.seekTo( 1.0 * start / duration);
+
+        setTimeout(function(){
+            this.setState({
+                playing: true
+            });
+        }.bind(this), this.props.abPauseDuration);
+    },
+
     render: function () {
+        console.log('PatientPlayer: render occured: playing = ', this.state.playing);
+
         var url = this.getUrl();
         var start = (this.props.start == undefined) ? 0 : this.props.start;
         var end = (this.props.end == undefined) ? 0 : this.props.end;
@@ -192,7 +254,8 @@ var PatientPlayer = React.createClass({
             badge: 0,
             byline: 0,
             portrait: 0,
-            title: 0
+            title: 0,
+            autoplay: !this.props.paused
         };
 
         return (
@@ -206,9 +269,10 @@ var PatientPlayer = React.createClass({
                                      onPlay={this.onPlay}
                                      playing={this.state.playing}
                                      onPause={this.onPause}
+                                     onEnded={this.onEnded}
                                      youtubeConfig={youtubeConfig}
                                      vimeoConfig={vimeoConfig}
-                            />
+                        />
                 }
 
 

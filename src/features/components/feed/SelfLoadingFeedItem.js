@@ -61,6 +61,8 @@ var SelfLoadingFeedItem = React.createClass({
                 information: item.information,
                 exerciseId: item.exerciseId,
                 noteId: item.noteId,
+                questionnaireId: item.questionnaireId,
+                dialogId: item.dialogId,
                 materialIds: item.materialIds
             });
         }.bind(this));
@@ -75,6 +77,7 @@ var SelfLoadingFeedItem = React.createClass({
                 <div style={this.componentStyle.contentPlaceholder}>
                     <FeedItem information={this.state.information} feedItemId={this.props.feedItemId}
                               exerciseId={this.state.exerciseId} noteId={this.state.noteId}
+                              questionnaireId={this.state.questionnaireId} dialogId={this.state.questionnaireId}
                               materialIds={this.state.materialIds} userId={this.props.userId}
                               teacherId={this.props.teacherId} editMode={this.props.editMode} />
                 </div>

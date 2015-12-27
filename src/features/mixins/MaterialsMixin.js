@@ -29,6 +29,7 @@ var MaterialsMixin = {
             approved: m.get('approved'),
             bbComment: m.get('bbComment'),
             duration: m.get('duration'),
+            mosesDurations: (m.get('mosesDurations') == undefined) ? [] : m.get('mosesDurations'),
             groups: (m.get('groups') == undefined) ? [] : m.get('groups'),
             createdTimestamp: (new Date(m.createdAt)).getTime(),
             updatedTimestamp: (new Date(m.updatedAt)).getTime()
@@ -80,6 +81,22 @@ var MaterialsMixin = {
         });
     },
 
+    loadMaterialByVimeoId: function(vimeoId, callback){
+        console.log('loadMaterialByVimeoId occured: vimeoId = ', vimeoId);
+        vimeoId = '' + vimeoId;
+        var q = new Parse.Query('PatientMaterial');
+        q.equalTo('vimeoId', vimeoId);
+        var self = this;
+        q.find(function(results){
+            console.log('loadMaterialByVimeoId: results = ', results);
+            if (results == undefined || results.length == 0){
+                callback();
+            }else{
+                callback(self.transformMaterialFromParseObject(results[0]));
+            }
+        });
+    },
+
     loadMaterial: function(materialId, callback){
         console.log('loadMaterial occured: materialId = ', materialId);
         var self = this;
@@ -100,6 +117,15 @@ var MaterialsMixin = {
         });
     },
 
+    updateMosesDurations: function(materialId, durations, callback){
+        var self = this;
+        this.loadMaterialById(materialId, function(m){
+            m.set('mosesDurations', durations);
+            m.save().then(function(uM){
+                callback(self.transformMaterialFromParseObject(uM));
+            });
+        });
+    },
 
     createMaterial: function(d, callback){
         console.log('createMaterial occured: materialId, d = ', d);

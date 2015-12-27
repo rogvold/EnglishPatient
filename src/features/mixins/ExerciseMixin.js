@@ -207,6 +207,7 @@ var ExerciseMixin = {
                     callback({
                         scoreId: sc.id,
                         teacherFeedback: sc.get('teacherFeedback'),
+                        feedback: sc.get('teacherFeedback'),
                         status: sc.get('status'),
                         userId: userId,
                         exerciseId: exerciseId
@@ -217,6 +218,7 @@ var ExerciseMixin = {
                 callback({
                     scoreId: sco.id,
                     teacherFeedback: sco.get('teacherFeedback'),
+                    feedback: sco.get('teacherFeedback'),
                     status: sco.get('status'),
                     userId: userId,
                     exerciseId: exerciseId
@@ -292,6 +294,7 @@ var ExerciseMixin = {
                 callback({
                     scoreId: sc.id,
                     teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
                     status: sc.get('status'),
                     userId: userId,
                     exerciseId: exerciseId
@@ -357,6 +360,7 @@ var ExerciseMixin = {
                 callback({
                     scoreId: sc.id,
                     teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
                     status: sc.get('status'),
                     userId: userId,
                     exerciseId: exerciseId
@@ -381,6 +385,7 @@ var ExerciseMixin = {
                     scoreId: sc.id,
                     userId: userId,
                     teacherFeedback: sc.get('teacherFeedback'),
+                    feedback: sc.get('teacherFeedback'),
                     status: sc.get('status'),
                     exerciseId: sc.get('exerciseId')
                 }

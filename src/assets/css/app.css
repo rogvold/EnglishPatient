@@ -16,3 +16,7 @@
 .patientMessageItem.notRead {
     background-color: #F0F0F0 !important;
 }
+
+.selectRolePanel .dialogCard:hover{
+    border-color: #FC636B !important;
+}

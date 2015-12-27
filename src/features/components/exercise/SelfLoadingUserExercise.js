@@ -269,14 +269,16 @@ var SelfLoadingUserExercise = React.createClass({
                 {readyToFinish ?
                     <div style={this.componentStyle.finishButtonBlock}>
                         <div style={{marginBottom: 10}}>Проверьте свои ответы и нажмите на кнопку</div>
-                        <button onClick={this.onFinishExercise} className={'ui inverted green button'}>завершить упражнение</button>
+                        <button onClick={this.onFinishExercise}
+                                className={'ui inverted green button'}>завершить упражнение</button>
                     </div>
                     : null
                 }
 
                 {this.props.teacherMode == false ? null :
                     <div style={this.componentStyle.teacherBlockPlaceholder}>
-                        <TeacherExerciseBlock onComment={this.onTeacherUpdate} teacherId={this.props.teacherId} score={this.state.score} />
+                        <TeacherExerciseBlock onComment={this.onTeacherUpdate}
+                                              teacherId={this.props.teacherId} score={this.state.score} />
                     </div>
                 }
 

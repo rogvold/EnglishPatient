@@ -13,7 +13,8 @@ var ExercisesProgressChart = React.createClass({
         return {
             userAnswers: [],
             daysNumber: 7,
-            ticksNumber: 7
+            ticksNumber: 7,
+            mode: 'diff'
         }
     },
 
@@ -120,6 +121,17 @@ var ExercisesProgressChart = React.createClass({
         step = Math.floor(n / ticksNumber);
         daysArray = this.getDataForLastNDays(n);
 
+        if (this.props.mode == 'integral'){
+            var sum = 0;
+            var array = [];
+            for (var i in daysArray){
+                var da = daysArray[i];
+                var sum = sum + da.number;
+                array.push({timestamp: da.timestamp, number: sum});
+            }
+            daysArray = array;
+        }
+
         var chartData = {
             //labels: daysArray.map(function(d){return d.timestamp}),
             labels: daysArray.map(function(d, k){
@@ -153,6 +165,8 @@ var ExercisesProgressChart = React.createClass({
         };
         return chartData;
     },
+
+
 
     chartIsEmpty: function(chartData){
         var list = chartData.datasets[0].data;

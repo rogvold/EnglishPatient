@@ -11,6 +11,10 @@ var SelfLoadingUserExercise = require('../exercise/SelfLoadingUserExercise');
 
 var moment = require('moment');
 
+var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogPanel');
+
+var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
+
 var NotificationItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -140,6 +144,26 @@ var NotificationItem = React.createClass({
                                                      teacherMode={true}
                                 />
                         </div> : null
+                        }
+
+                        {((att.type == 'dialog') && (forRole == 'teacher')  ) ?
+                            <div>
+                                <SelfLoadingDialogPanel  userId={att.userId}
+                                                         dialogId={att.dialogId}
+                                                         teacherId={this.props.userId}
+                                                         teacherMode={true}
+                                    />
+                            </div> : null
+                        }
+
+                        {((att.type == 'questionnaire') && (forRole == 'teacher')  ) ?
+                            <div>
+                                <SelfLoadingQuestionnairePanel  userId={att.userId}
+                                                                questionnaireId={att.questionnaireId}
+                                                                teacherId={this.props.userId}
+                                                                teacherMode={true}
+                                    />
+                            </div> : null
                         }
 
                     </div>

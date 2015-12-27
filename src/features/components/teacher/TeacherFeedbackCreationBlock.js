@@ -4,9 +4,13 @@
 var React = require('react');
 var ExerciseMixin = require('../../mixins/ExerciseMixin');
 
+var DialogMixin = require('../../mixins/DialogMixin');
+
 var PatientEditor = require('../../components/editor/PatientEditor');
 
 var CorrectorHelpButton = require('../corrector/CorrectorHelpButton');
+
+var QuestionnaireMixin = require('../../mixins/QuestionnaireMixin');
 
 var TeacherFeedbackCreationBlock = React.createClass({
     getDefaultProps: function () {
@@ -17,7 +21,11 @@ var TeacherFeedbackCreationBlock = React.createClass({
             onComment: function(score){
                 console.log(score);
             },
-            placeholder: 'Leave your feedback here'
+            placeholder: 'Leave your feedback here',
+
+            mode: 'exercise',
+            dialogId: undefined,
+            questionnaireId: undefined
         }
     },
 
@@ -33,6 +41,9 @@ var TeacherFeedbackCreationBlock = React.createClass({
 
     componentWillReceiveProps: function (nextProps) {
         var feedback = nextProps.feedback;
+        console.log('TeacherFeedbackCreationBlock: componentWillReceiveProps occured');
+        console.log('feedback = ', feedback);
+
         if (feedback != this.props.feedback){
             this.setState({
                 value: feedback,
@@ -87,9 +98,21 @@ var TeacherFeedbackCreationBlock = React.createClass({
     onComment: function(){
         var userId = this.props.userId;
         var exerciseId = this.props.exerciseId;
-        if (userId == undefined || exerciseId == undefined){
+        var dialogId = this.props.dialogId;
+        var questionnaireId = this.props.questionnaireId;
+
+        console.log('TeacherFeedbackCreationBlock: onComment: exerciseId, dialogId, questionnaireId = ', exerciseId, dialogId, questionnaireId);
+
+        //if (userId == undefined || exerciseId == undefined){
+        //    return;
+        //}
+        if (userId == undefined){
             return;
         }
+        if ((exerciseId == undefined) && (dialogId == undefined) && (questionnaireId == undefined)){
+            return;
+        }
+
         this.setState({
             loading: true
         });
@@ -97,13 +120,40 @@ var TeacherFeedbackCreationBlock = React.createClass({
         if (comment == undefined || comment == '' || comment.trim() == ''){
             comment = undefined;
         }
-        ExerciseMixin.commentUserExercise(userId, exerciseId, comment, function(score){
-            this.setState({
-                loading: false,
-                needToSave: false
-            });
-            this.props.onComment(score);
-        }.bind(this));
+
+        console.log('mode = ', this.props.mode);
+
+        if (this.props.mode == 'exercise'){
+            ExerciseMixin.commentUserExercise(userId, exerciseId, comment, function(score){
+                this.setState({
+                    loading: false,
+                    needToSave: false
+                });
+                this.props.onComment(score);
+            }.bind(this));
+        }
+
+        if (this.props.mode == 'dialog'){
+            DialogMixin.commentUserDialog(userId, dialogId, comment, function(score){
+                this.setState({
+                    loading: false,
+                    needToSave: false
+                });
+                this.props.onComment(score);
+            }.bind(this));
+        }
+
+        if (this.props.mode == 'questionnaire'){
+            console.log('commenting');
+            QuestionnaireMixin.commentUserQuestionnaire(userId, questionnaireId, comment, function(score){
+                this.setState({
+                    loading: false,
+                    needToSave: false
+                });
+                this.props.onComment(score);
+            }.bind(this))
+        }
+
     },
 
     onContentChange: function(content){

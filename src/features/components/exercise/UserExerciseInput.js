@@ -91,7 +91,8 @@ var UserExerciseInput = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
                 {this.props.type == 'speaking' ?
-                    <PatientRecordComponent number={this.props.number} userAnswer={ans} onSave={this.onRecordingSave} />
+                    <PatientRecordComponent number={this.props.number}
+                                            userAnswer={ans} onSave={this.onRecordingSave} />
                     : null
                 }
 

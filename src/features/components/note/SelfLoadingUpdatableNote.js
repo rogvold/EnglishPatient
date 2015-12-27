@@ -9,6 +9,7 @@ var SelfLoadingUpdateNotePanel = require('./SelfLoadingUpdateNotePanel');
 var Dialog = require('../../components/dialog/Dialog');
 var NotesMixin = require('../../mixins/NotesMixin');
 
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
 
 var SelfLoadingUpdatableNote = React.createClass({
     getDefaultProps: function () {
@@ -167,6 +168,13 @@ var SelfLoadingUpdatableNote = React.createClass({
         this.props.onNoteDelete();
     },
 
+    print: function(){
+        var data = '';
+        data = data + '<h3>' + this.state.name + '</h3>';
+        data = data + (this.state.content == undefined ? '' : this.state.content);
+        CommonMixin.printHtml(data);
+    },
+
     render: function () {
 
         return (
@@ -189,6 +197,11 @@ var SelfLoadingUpdatableNote = React.createClass({
                     <button style={this.componentStyle.editButton} className={'ui basic grey button'} onClick={this.showDialog} >
                         <i className={'pencil icon'} ></i>
                     </button>
+
+                    <button style={this.componentStyle.editButton} className={'ui basic grey button'} onClick={this.print} >
+                        <i className={'print icon'} ></i>
+                    </button>
+
                 </div>
 
                 <Dialog dialogPanelStyle={this.componentStyle.dialogContentStyle}

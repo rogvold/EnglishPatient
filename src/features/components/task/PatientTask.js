@@ -4,9 +4,11 @@
 var React = require('react');
 
 var VimeoPlayer = require('../player/VimeoPlayer');
+
 var PatientImg = require('../image/PatientImg');
 var PatientText = require('../text/PatientText');
 var PatientAudio = require('../audio/PatientAudio');
+var ExerciseVideo = require('../video/ExerciseVideo');
 
 var TranslatableText = require('../text/translatable/TranslatableText');
 
@@ -95,6 +97,7 @@ var PatientTask = React.createClass({
 
     },
 
+
     render: function () {
         var audio = this.getAudio();
         var video = this.getVideo();
@@ -106,7 +109,7 @@ var PatientTask = React.createClass({
 
                 {((video == undefined) || (video.vimeoId == undefined)) ? null :
                     <div style={this.componentStyle.videoPlaceholder}>
-                        <VimeoPlayer vimeoId={video.vimeoId} />
+                        <ExerciseVideo vimeoId={video.vimeoId} />
                     </div>
                 }
 

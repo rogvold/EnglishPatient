@@ -9,6 +9,8 @@ var moment = require('moment');
 var ProfileUpdateButton = require('../profile/ProfileUpdateButton');
 var ProfileStatButton = require('../profile/ProfileStatButton');
 
+var ChatButton = require('../chat/ChatButton');
+
 var UserCard = React.createClass({
     getDefaultProps: function () {
         return {
@@ -43,7 +45,7 @@ var UserCard = React.createClass({
 
     componentStyle: {
         placeholder: {
-
+            //padding: 10
         },
 
         header: {
@@ -59,6 +61,15 @@ var UserCard = React.createClass({
             fontSize: '12px',
             padding: '5px',
             paddingLeft: '7px'
+
+        },
+
+        avaDiv: {
+            width: 36,
+            height: 36,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat'
         }
     },
 
@@ -75,11 +86,17 @@ var UserCard = React.createClass({
         if (formattedDate != undefined){
             formattedDate = ' ' + formattedDate;
         }
+
+        var avaSt = assign({}, this.componentStyle.avaDiv, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+
         return (
             <div style={this.componentStyle.placeholder} className={'ui card'} onClick={this.onClick} >
 
-                <div className="content">
-                        <img className="right floated mini ui image" src={this.props.avatar} />
+                <div className="content" style={{padding: 10}} >
+
+                        <div className={'right floated'} style={avaSt}></div>
+
+
                         <div className="header" style={this.componentStyle.header} >
                             {this.props.name}
                         </div>
@@ -89,7 +106,7 @@ var UserCard = React.createClass({
                             </div>
                         }
 
-                    <div>
+                    <div style={{marginTop: 8}} >
                         {this.props.stasiMode == false ? null :
 
                                 <ProfileUpdateButton userId={this.props.userId}
@@ -97,12 +114,19 @@ var UserCard = React.createClass({
                                                      name={this.props.name}
                                                      avatar={this.props.avatar}
                                                      timestamp={this.props.timestamp}
+                                                     buttonName={'инфо'}
                                                      onUserDelete={this.onUserDelete} />
 
                         }
 
                         <ProfileStatButton userId={this.props.userId} name={this.props.name} />
 
+                        <ChatButton
+                            friendId={this.props.userId}
+                            style={this.componentStyle.buttonStyle}
+                            buttonClassName={'ui button mini grey basic'}
+                            icon={'icon comments'}
+                            buttonName={'сообщения'} />
 
 
 
