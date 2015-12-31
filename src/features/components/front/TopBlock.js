@@ -12,7 +12,7 @@ var TopBlock = React.createClass({
             logo: 'http://www.englishpatient.org/img/logo.png',
             cover: 'http://www.englishpatient.org/img/pavlova.jpg',
             opacity: 0.8,
-            height: 560,
+            height: 330,
             overlayColor: '#563d7c',
             logoText: 'English Patient',
 
@@ -97,11 +97,13 @@ var TopBlock = React.createClass({
             textAlign: 'center',
             margin: '0 auto',
             width: 912,
-            marginTop: 120
+            marginTop: 10
+            //marginTop: 120
         },
 
         firstLine: {
-            fontSize: '40px'
+            fontSize: '40px',
+            lineHeight: '40px'
         },
 
         secondLine: {
@@ -167,13 +169,13 @@ var TopBlock = React.createClass({
                     <div style={this.componentStyle.content}>
 
                         <div style={this.componentStyle.firstLine}>
-                            Уважаемые преподаватели английского языка!
+                            Материалы и инструменты для изучения английского языка.
                         </div>
 
                         <div style={this.componentStyle.secondLine}>
-                            Предлагаем материалы и удобные инструменты для развития всех видов речевой деятельности.
-                            <br/>
-                            Создавайте свои уроки.
+
+                            Учить лучше, тратить меньше.
+
                         </div>
 
                     </div>

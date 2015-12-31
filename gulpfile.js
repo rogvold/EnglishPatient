@@ -35,17 +35,17 @@ gulp.task('browserify', function(){
     //    .pipe(source('componentsApp.js'))
     //    .pipe(gulp.dest('features/js'));
 
-    browserify('./src/features/apps/patient/App.js')
-        .transform('reactify')
-        .bundle()
-        .pipe(source('app.js'))
-        .pipe(gulp.dest('features/js'));
-
-    //browserify('./src/features/apps/patient/front/App.js')
+    //browserify('./src/features/apps/patient/App.js')
     //    .transform('reactify')
     //    .bundle()
-    //    .pipe(source('frontApp.js'))
+    //    .pipe(source('app.js'))
     //    .pipe(gulp.dest('features/js'));
+
+    browserify('./src/features/apps/patient/front/App.js')
+        .transform('reactify')
+        .bundle()
+        .pipe(source('frontApp.js'))
+        .pipe(gulp.dest('features/js'));
 
     //gulp.src('./src/features/apps/patient/App.js')
     //    .pipe(browserify({

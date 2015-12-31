@@ -12,6 +12,7 @@ var UserMixin = require('./UserMixin');
 
 var moment = require('moment');
 
+var FeedMixin = require('./FeedMixin');
 
 var CourseMixin = {
 
@@ -26,6 +27,17 @@ var CourseMixin = {
             duration: c.get('duration'),
             timestamp: (new Date(c.createdAt)).getTime()
         }
+    },
+
+    transformLesson: function(l){
+          return {
+              id: l.id,
+              lessonId: l.id,
+              name: l.get('name'),
+              description: l.get('description'),
+              number: l.get('number'),
+              timestamp: (new Date(l.createdAt)).getTime()
+          }
     },
 
     loadCourseById: function(id, callback){
@@ -102,6 +114,77 @@ var CourseMixin = {
                 success: function(){
                     callback();
                 }
+            });
+        });
+    },
+
+    loadCourseLessons: function(courseId, callback){
+        var q = new Parse.Query('CourseLesson');
+        q.limit(1000);
+        q.addAscending('number');
+        q.limit(1000);
+        var self = this;
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback([]);
+                return;
+            }
+            var arr = results.map(function(l){
+                return self.transformLesson(l);
+            });
+            callback(arr);
+        });
+    },
+
+    loadLessonById: function(lessonId, callback){
+        if (lessonId == undefined){
+            return;
+        }
+        var q = new Parse.Query('CourseLesson');
+        q.get(lessonId, {
+            success: function(l){
+                callback(l);
+            }
+        });
+    },
+
+    loadLesson: function(lessonId, callback){
+        var self = this;
+        this.loadLessonById(lessonId, function(l){
+            callback(self.transformLesson(l));
+        });
+    },
+
+    createLesson: function(courseId, name, description, callback){
+        if (courseId == undefined){
+            return;
+        }
+        var self = this;
+        var CourseLesson = Parse.Object.extend('CourseLesson');
+        var l = new CourseLesson();
+        l.set('courseId', courseId);
+        l = ParseMixin.safeSet(l, [
+            {name: 'name', value: name},
+            {name: 'description', value: description}
+        ]);
+        this.loadCourseLessons(courseId, function(results){
+            var number = results.length;
+            l.set('number', number);
+            l.save().then(function(savedLesson){
+                callback(self.transformLesson(savedLesson));
+            });
+        });
+    },
+
+    updateLesson: function(lessonId, name, description, callback){
+        var self = this;
+        this.loadLessonById(lessonId, function(l){
+            l = ParseMixin.safeSet(l, [
+                {name: 'name', value: name},
+                {name: 'description', value: description}
+            ]);
+            l.save().then(function(savedLesson){
+                callback(self.transformLesson(savedLesson));
             });
         });
     }
