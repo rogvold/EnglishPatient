@@ -52,6 +52,7 @@ var SelfLoadingExerciseInfoCard = React.createClass({
                 avatar: ex.avatar,
                 description: ex.description,
                 access: ex.access,
+                timestamp: ex.timestamp,
                 task: ex.task,
                 loading: false
             });
@@ -68,7 +69,9 @@ var SelfLoadingExerciseInfoCard = React.createClass({
             <div style={this.componentStyle.placeholder}>
 
                 <ExerciseInfoCard name={this.state.name} description={this.state.name}
-                                  avatar={this.state.avatar} task={this.state.task} access={this.state.access} />
+                                  avatar={this.state.avatar}
+                                  timestamp={this.state.timestamp}
+                                  task={this.state.task} access={this.state.access} />
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
                     <div className="ui indeterminate text loader">{'Загрузка...'}</div>

@@ -64,6 +64,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({
                 avatar: ex.avatar,
                 description: ex.description,
                 access: ex.access,
+                timestamp: ex.timestamp,
                 task: ex.task,
                 groups: ex.groups,
                 loading: false
@@ -111,6 +112,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({
                 <UpdateExerciseInfoTab name={this.state.name} access={this.state.access}
                                        description={this.state.description} groups={this.state.groups}
                                        teacherId={this.props.teacherId}
+                                       timestamp={this.state.timestamp}
                                        avatar={this.state.avatar} exerciseId={this.props.exerciseId}
                                        task={this.state.task} onSave={this.updateExercise} onDelete={this.onDelete} />
 

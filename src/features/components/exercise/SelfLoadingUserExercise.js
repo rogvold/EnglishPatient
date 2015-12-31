@@ -182,7 +182,6 @@ var SelfLoadingUserExercise = React.createClass({
                 <div style={{textAlign: 'center', marginTop: 10, marginBottom: 5}}>
                     <AuthButton buttonClassName={'ui blue basic button'} />
                 </div>
-
             </div>
 
         );
@@ -205,6 +204,33 @@ var SelfLoadingUserExercise = React.createClass({
           this.setState({
               score: score
           });
+    },
+
+    onRatingChange: function(uA, rating){
+        console.log('onRatingChange: uA, rating = ', uA, rating);
+        if (uA == undefined){
+            return;
+        }
+        this.setState({
+            loading: true,
+            saving: true
+        });
+        var cardId = uA.cardId;
+        var userId = this.props.userId;
+        ExerciseMixin.rateUserAnswer(userId, cardId, rating, function(userAnswer){
+            var usa = (userAnswer == undefined) ? {} : userAnswer;
+            var list = (this.state.answers == undefined) ? [] : this.state.answers;
+            for (var i in list){
+                if (list[i].id == usa.id){
+                    list[i] = usa;
+                }
+            }
+            this.setState({
+                loading: false,
+                saving: false,
+                answers: list
+            });
+        }.bind(this));
     },
 
     render: function () {
@@ -235,6 +261,8 @@ var SelfLoadingUserExercise = React.createClass({
 
         readyToFinish = readyToFinish && (this.state.cards != undefined) && (this.state.cards.length > 0);
 
+        var isFinished = (status == 'finished');
+
         console.log('rendering exercise: teacherMode = ', this.props.teacherMode);
 
 
@@ -253,6 +281,8 @@ var SelfLoadingUserExercise = React.createClass({
                                       customBottomBlock={customBottomBlock} showAnswerBlock={showAnswerBlock}
                                       userId={this.props.userId} teacherMode={this.props.teacherMode}
                                       autoNext={this.props.autoNext} canAnswer={!waitingForFeedback}
+                                      onRatingChange={this.onRatingChange}
+                                      isFinished={isFinished}
                     />
                 </div>
 

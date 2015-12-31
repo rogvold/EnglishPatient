@@ -56,6 +56,7 @@ var IndexApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Микс';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         //this.loadMaterials(this.state.user.id);

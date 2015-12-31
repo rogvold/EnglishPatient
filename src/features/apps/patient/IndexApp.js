@@ -56,6 +56,7 @@ var IndexApp = React.createClass({
             });
         }
         console.log('Exercises App mounted');
+        document.title = 'Главная';
         console.log(this.props.params);
 
     },

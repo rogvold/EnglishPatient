@@ -72,6 +72,7 @@ var NotesApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Тексты';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         //this.loadNotes(function(notes){

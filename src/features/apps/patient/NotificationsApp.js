@@ -55,6 +55,7 @@ var NotificationsApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Уведомления';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 

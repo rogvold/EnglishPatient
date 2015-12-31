@@ -318,8 +318,9 @@ var PatientRecordComponent = React.createClass({
 
     componentStyle: {
         placeholder: {
-            border: '1px solid lightgrey',
+            border: '1px solid #EFF0F1',
             padding: 10,
+            borderRadius: 4,
             position: 'relative',
             width: 600
         },

@@ -68,6 +68,7 @@ var TopicsApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Топики';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 

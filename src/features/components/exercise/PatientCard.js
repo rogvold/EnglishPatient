@@ -9,6 +9,8 @@ var ToggledText = require('../text/ToggledText');
 
 var TranslatableText = require('../../components/text/translatable/TranslatableText');
 
+var StarRating = require('../star/StarRating');
+
 var PatientCard = React.createClass({
     getDefaultProps: function () {
         return {
@@ -19,6 +21,8 @@ var PatientCard = React.createClass({
             onAnswer: function(type, ans){
 
             },
+
+
             number: undefined,
             comment: undefined,
             hint: undefined,
@@ -28,7 +32,15 @@ var PatientCard = React.createClass({
 
             showAnswerBlock: true,
             teacherMode: false,
-            canAnswer: true
+            canAnswer: true,
+
+            exercisesIsFinished: false,
+
+            onRatingChange: function(rating){
+
+            }
+
+
         }
     },
 
@@ -65,11 +77,23 @@ var PatientCard = React.createClass({
 
         customBottomBlock: {
 
+        },
+
+        starsPlaceholder: {
+            textAlign: 'right',
+            paddingTop: 10,
+            paddingBottom: 10,
+            borderTop: '1px dotted #EFF0F1'
         }
     },
 
     onAnswer: function(type, ans){
         this.props.onAnswer(type, ans);
+    },
+
+    onRatingChange: function(rating){
+        console.log('onRatingChange occured: rating = ', rating);
+        this.props.onRatingChange(rating);
     },
 
     render: function () {
@@ -121,6 +145,19 @@ var PatientCard = React.createClass({
                     </div>
                     : null
                 }
+
+                {this.props.userAnswer == undefined ? null :
+                    <div>
+                        {this.props.exercisesIsFinished == false ? null :
+                            <div style={this.componentStyle.starsPlaceholder}>
+                                Оценка:
+                                <StarRating rating={this.props.userAnswer.rating}
+                                            editable={this.props.teacherMode} onChange={this.onRatingChange} />
+                            </div>
+                        }
+                    </div>
+                }
+
 
             </div>
         );

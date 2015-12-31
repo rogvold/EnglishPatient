@@ -54,6 +54,7 @@ var IdiomsApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Идиомы';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 

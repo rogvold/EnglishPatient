@@ -96,6 +96,13 @@ var LoginForm = React.createClass({
         });
     },
 
+    onKeyUp: function(event){
+        if(event.keyCode == 13){
+            var val = event.target.value;
+            this.logIn();
+        }
+    },
+
     logIn: function(){
         var email = this.state.email;
         var password = this.state.password;
@@ -134,7 +141,8 @@ var LoginForm = React.createClass({
                         <input type="text" placeholder={this.props.emailPlaceholder} onChange={this.onEmailChange} autofocus={'1'} value={this.state.email} />
                     </div>
                     <div style={this.componentStyle.passwordPlaceholder}>
-                        <input type={'password'} placeholder={this.props.passwordPlaceholder} onChange={this.onPasswordChange} value={this.state.password} />
+                        <input type={'password'} placeholder={this.props.passwordPlaceholder} onKeyUp={this.onKeyUp}
+                               onChange={this.onPasswordChange} value={this.state.password} />
                     </div>
                 </div>
 

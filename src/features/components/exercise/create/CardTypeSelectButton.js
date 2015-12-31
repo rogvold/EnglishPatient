@@ -66,7 +66,11 @@ var CardTypeSelectButton = React.createClass({
                         var boundClick = this.onSelect.bind(this, item.name);
                         var isActive = (item.name == this.props.activeName);
                         return (
-                            <button key={key} onClick={boundClick} style={this.componentStyle.button} className={'ui mini button ' + (isActive == true ? ' positive active ' : ' ')}>{item.displayName}</button>
+                            <button key={key} onClick={boundClick}
+                                    style={this.componentStyle.button}
+                                    className={'ui mini button ' + (isActive == true ? ' positive active ' : ' ')}>
+                                {item.displayName}
+                            </button>
                         );
                     }, this)}
                 </div>

@@ -177,8 +177,7 @@ var ExercisesBunch = React.createClass({
                     <EditBunchDialog groupId={this.props.bunchId} name={this.props.name} bunchId={this.props.bunchId}
                                      onGroupUpdate={this.onGroupUpdate} description={this.props.description}
                                      visible={this.state.editDialogVisible} onClose={this.onModalClose}
-
-                        />
+                    />
                 }
 
 

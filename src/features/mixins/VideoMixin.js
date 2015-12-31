@@ -24,6 +24,7 @@ var VideoMixin = {
                 callback({
                     vimeoId: vimeoId,
                     imgSrc: data.thumbnail_medium,
+                    avatar: data.thumbnail_medium,
                     duration: data.duration,
                     title: data.title
                 });
@@ -51,11 +52,28 @@ var VideoMixin = {
             var description = data.items[0].snippet.localized.description;
             var thumbnails = data.items[0].snippet.thumbnails;
             var d = {name: name, description: description, title: name, duration: duration,
+                avatar: 'https://i.ytimg.com/vi/' + youtubeId + '/default.jpg',
                 youtubeId: youtubeId, thumbnails: thumbnails, imgSrc: 'https://i.ytimg.com/vi/' + youtubeId + '/default.jpg'};
             console.log(data);
             console.log(d);
             callback(d);
         });
+    },
+
+    loadVideoInfo: function(videoId, videoType, callback, errorCallback){
+        if (videoType == 'youtube'){
+            this.loadYoutubeInfo(videoId, function(data){
+                callback(data);
+            })
+            return;
+        }
+        if (videoType == 'vimeo'){
+            this.loadVimeoInfo(videoId, function(data){
+                callback(data);
+            })
+            return;
+        }
+
     },
 
     loadCaptions: function(youtubeId, callback){

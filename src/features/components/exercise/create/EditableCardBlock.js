@@ -20,6 +20,8 @@ var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
 var MaterialSearchButton = require('../../material/search/MaterialSearchButton');
 
+var CardComplexitySelectButton = require('./CardComplexitySelectButton');
+
 var EditableCardBlock = React.createClass({
     getDefaultProps: function () {
         return {
@@ -32,11 +34,14 @@ var EditableCardBlock = React.createClass({
             teacherId: undefined,
 
 
+
             //audioUrl: undefined,
             //vimeoUrl: undefined,
             //text: undefined,
             deletable: false,
             answerTypeName: undefined,
+            level: undefined,
+
             onSave: function(taskData){
                 console.log('onSave: ', taskData);
             },
@@ -92,6 +97,7 @@ var EditableCardBlock = React.createClass({
             vimeoUrl: vimeoUrl,
             text: text,
             transcript: this.getSafeString(this.props.transcript),
+            level: this.props.level,
             correctAnswer: this.getSafeString(this.props.correctAnswer),
             answerTypeName: this.props.answerTypeName,
             needToSave: false,
@@ -121,6 +127,7 @@ var EditableCardBlock = React.createClass({
             vimeoUrl: vimeoUrl,
             text: text,
             answerTypeName: np.answerTypeName,
+            level: np.level,
             needToSave: false,
             loading: false
         });
@@ -333,6 +340,13 @@ var EditableCardBlock = React.createClass({
         });
     },
 
+    onLevelSelect: function(level){
+        this.setState({
+            level: level,
+            needToSave: true
+        });
+    },
+
     getPatientTaskItems: function(){
         console.log('getPatientTaskItems occured');
         var arr =[];
@@ -360,6 +374,7 @@ var EditableCardBlock = React.createClass({
             items: this.getPatientTaskItems(),
             comment: this.state.comment,
             hint: this.state.hint,
+            level: this.state.level,
             correctAnswer: this.state.correctAnswer,
             transcript: this.state.transcript,
             answerType: this.state.answerTypeName
@@ -494,6 +509,11 @@ var EditableCardBlock = React.createClass({
                                 <div>
                                     <div style={this.componentStyle.label} >Задание для ученика</div>
                                     <CardTypeSelectButton activeName={this.state.answerTypeName} onSelect={this.onTypeSelect} />
+                                </div>
+
+                                <div>
+                                    <div style={this.componentStyle.label} >Сложность</div>
+                                    <CardComplexitySelectButton level={this.state.level} onSelect={this.onLevelSelect} />
                                 </div>
 
                                 {this.state.answerTypeName == 'typing' ?

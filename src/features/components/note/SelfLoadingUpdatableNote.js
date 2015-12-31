@@ -88,7 +88,7 @@ var SelfLoadingUpdatableNote = React.createClass({
             fontSize: '16px',
             padding: 5,
             width: '100%',
-            paddingRight: 40,
+            paddingRight: 70,
             //paddingBottom: 15,
             paddingBottom: 5,
             fontWeight: 'bold',
@@ -115,7 +115,6 @@ var SelfLoadingUpdatableNote = React.createClass({
             paddingLeft: 10,
             paddingRight: 0
         }
-
 
     },
 

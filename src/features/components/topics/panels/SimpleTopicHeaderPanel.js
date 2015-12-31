@@ -17,6 +17,8 @@ var SimpleTopicHeaderPanel = React.createClass({
 
             dialogLevel: 10,
 
+            customContent: null,
+
             onTopicUpdated: function(topic){
 
             },
@@ -90,6 +92,7 @@ var SimpleTopicHeaderPanel = React.createClass({
 
     render: function () {
         var topPanelStyle = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url("' + this.props.avatar + '")'});
+        var customContent = this.props.customContent;
 
         return (
             <div style={topPanelStyle}>
@@ -105,6 +108,8 @@ var SimpleTopicHeaderPanel = React.createClass({
                     <div style={this.componentStyle.descriptionPlaceholder}>
                         {this.props.description}
                     </div>
+
+                    { customContent == undefined ? null : customContent }
 
 
                 </div>

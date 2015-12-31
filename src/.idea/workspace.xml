@@ -2,96 +2,78 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0e8074b-5b04-42d5-8254-f5266585aeb4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/AnswersList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/edit/CreateDialogButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/card/DialogCard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/edit/DialogEditInfoPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/DialogEditableViewPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/list/DialogItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/DialogMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogOneReplicPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogPreparePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogReplicsPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/list/DialogSearchButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogTaskCard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogTaskPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogViewButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/DialogViewPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/list/DialogsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/player/DurationsBar.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/card/ExerciseDialogCard.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/card/ExerciseDialogCardsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/video/ExerciseVideo.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/editor/MosesEditorButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/player/MosesPlayer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/editor/adjust/MosesTimeInput.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/editor/adjust/MosesTimePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/prepare/PreparePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/prepare/PrepareSinglePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/answer/QuestionAnswerPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/answer/QuestionAnswerPanelsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/QuestionnaireEditPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/QuestionnaireEditViewDialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/QuestionnaireMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/QuestionnairePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/question/QuestionnaireQuestionPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/list/QuestionnaireSearchButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/list/QuestionnaireSearchList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/QuestionnaireSinglePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/test/QuestionnaireTestPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/QuestionnaireViewPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/SelectRolePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/SelectedUserRolePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/SelfLoadingAnswersList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/edit/SelfLoadingDialogEditPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/SelfLoadingDialogViewPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/list/SelfLoadingDialogsList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/list/SelfLoadingDialogsSearchList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/editor/SelfLoadingMosesEditor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/moses/player/SelfLoadingMosesPlayer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/prepare/SelfLoadingPrepareSinglePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/question/SelfLoadingQuestionnaireEditInfoPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/SelfLoadingQuestionnairePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/question/SelfLoadingQuestionsEditPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/test/SelfLoadingTestPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/question/SelfLoadingUpdateQuestionPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/list/TeacherQuestionnairesList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/questionnaire/panels/view/test/TestPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js" afterPath="$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/exercise/create/CardComplexitySelectButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/course/list/CourseItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/CourseMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/course/list/CoursesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/course/update/CreateCourseButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/update/CreateJungleButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/exercise/group/ExerciseGroupsCardsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/JungleMaterial.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/JungleMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/update/JungleUpdatePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/list/JunglesItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/list/JunglesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/JunglesPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/like/LikeButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/LikeMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/LinkMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/link/MaterialLink.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/link/NoteLink.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/list/PagedJunglesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/link/PatientLink.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/course/list/SelfLoadingCoursesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/SelfLoadingJungleMaterial.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/update/SelfLoadingJungleUpdatePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/list/SelfLoadingJunglesList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/like/SelfLoadingLikeButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/course/update/SelfLoadingUpdateCoursePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/star/StarItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/star/StarRating.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/jungle/text/TranslatableTextBlock.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/course/update/UpdateCoursePanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/create/CardTypeSelectButton.js" afterPath="$PROJECT_DIR$/features/components/exercise/create/CardTypeSelectButton.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/ClassApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/ClassApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/DevApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/DevApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/dialog_exercise/card/DialogCard.js" afterPath="$PROJECT_DIR$/features/components/dialog_exercise/card/DialogCard.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/DictionaryApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/DictionaryApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/create/EditableCardBlock.js" afterPath="$PROJECT_DIR$/features/components/exercise/create/EditableCardBlock.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/info/ExerciseInfoCard.js" afterPath="$PROJECT_DIR$/features/components/exercise/info/ExerciseInfoCard.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/ExerciseMixin.js" afterPath="$PROJECT_DIR$/features/mixins/ExerciseMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/create/ExerciseUpdatableCards.js" afterPath="$PROJECT_DIR$/features/components/exercise/create/ExerciseUpdatableCards.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/ExercisesApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/ExercisesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/chart/ExercisesProgressChart.js" afterPath="$PROJECT_DIR$/features/components/chart/ExercisesProgressChart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/bunch/exercise/ExercisesBunch.js" afterPath="$PROJECT_DIR$/features/components/bunch/exercise/ExercisesBunch.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/feed/FeedItem.js" afterPath="$PROJECT_DIR$/features/components/feed/FeedItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/feed/FeedItemsList.js" afterPath="$PROJECT_DIR$/features/components/feed/FeedItemsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/FeedMixin.js" afterPath="$PROJECT_DIR$/features/mixins/FeedMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/material/dialogs/MaterialUpdatePanel.js" afterPath="$PROJECT_DIR$/features/components/material/dialogs/MaterialUpdatePanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/file/FileUploadButton.js" afterPath="$PROJECT_DIR$/features/components/file/FileUploadButton.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/GrammarApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/GrammarApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/IdiomsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/IdiomsApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/IndexApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/IndexApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/LoginApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/LoginApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/user/LoginForm.js" afterPath="$PROJECT_DIR$/features/components/user/LoginForm.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/MaterialsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/MaterialsApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/MaterialsMixin.js" afterPath="$PROJECT_DIR$/features/mixins/MaterialsMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/notification/NotificationItem.js" afterPath="$PROJECT_DIR$/features/components/notification/NotificationItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/NotificationMixin.js" afterPath="$PROJECT_DIR$/features/mixins/NotificationMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/note/list/NoteListItem.js" afterPath="$PROJECT_DIR$/features/components/note/list/NoteListItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/NotesApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/NotesApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/NotificationsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/NotificationsApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/PatientCard.js" afterPath="$PROJECT_DIR$/features/components/exercise/PatientCard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/player/PatientPlayer.js" afterPath="$PROJECT_DIR$/features/components/player/PatientPlayer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/PatientExercise.js" afterPath="$PROJECT_DIR$/features/components/exercise/PatientExercise.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/record/PatientRecordComponent.js" afterPath="$PROJECT_DIR$/features/components/record/PatientRecordComponent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/task/PatientTask.js" afterPath="$PROJECT_DIR$/features/components/task/PatientTask.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.js" afterPath="$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.min.js" afterPath="$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/chat/SelfLoadingChatMessagesPanel.js" afterPath="$PROJECT_DIR$/features/components/chat/SelfLoadingChatMessagesPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/feed/SelfLoadingFeedItem.js" afterPath="$PROJECT_DIR$/features/components/feed/SelfLoadingFeedItem.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js" afterPath="$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/user/SeflLoadingUserSpan.js" afterPath="$PROJECT_DIR$/features/components/user/SeflLoadingUserSpan.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/info/SelfLoadingExerciseInfoCard.js" afterPath="$PROJECT_DIR$/features/components/exercise/info/SelfLoadingExerciseInfoCard.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/note/SelfLoadingUpdatableNote.js" afterPath="$PROJECT_DIR$/features/components/note/SelfLoadingUpdatableNote.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/feed/SelfLoadingUpdateFeedItem.js" afterPath="$PROJECT_DIR$/features/components/feed/SelfLoadingUpdateFeedItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/info/SelfLoadingUpdateExerciseInfoTab.js" afterPath="$PROJECT_DIR$/features/components/exercise/info/SelfLoadingUpdateExerciseInfoTab.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/SelfLoadingUserExercise.js" afterPath="$PROJECT_DIR$/features/components/exercise/SelfLoadingUserExercise.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/teacher/TeacherFeedbackCreationBlock.js" afterPath="$PROJECT_DIR$/features/components/teacher/TeacherFeedbackCreationBlock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/card/UserCard.js" afterPath="$PROJECT_DIR$/features/components/card/UserCard.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/UserExerciseInput.js" afterPath="$PROJECT_DIR$/features/components/exercise/UserExerciseInput.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../node_modules/react-vimeo/lib/Vimeo.js" afterPath="$PROJECT_DIR$/../node_modules/react-vimeo/lib/Vimeo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../node_modules/react-vimeo/src/Vimeo.jsx" afterPath="$PROJECT_DIR$/../node_modules/react-vimeo/src/Vimeo.jsx" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/topics/panels/SimpleTopicHeaderPanel.js" afterPath="$PROJECT_DIR$/features/components/topics/panels/SimpleTopicHeaderPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/student/StudentClassApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/student/StudentClassApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/student/StudentIndexApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/student/StudentIndexApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/TopicsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/TopicsApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/create/UpdatableCardBlock.js" afterPath="$PROJECT_DIR$/features/components/exercise/create/UpdatableCardBlock.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/info/UpdateExerciseInfoTab.js" afterPath="$PROJECT_DIR$/features/components/exercise/info/UpdateExerciseInfoTab.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/VideoMixin.js" afterPath="$PROJECT_DIR$/features/mixins/VideoMixin.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/assets/css/app.css" afterPath="$PROJECT_DIR$/../features/assets/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/app.css" afterPath="$PROJECT_DIR$/assets/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/js/app.js" afterPath="$PROJECT_DIR$/../features/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/index.html" afterPath="$PROJECT_DIR$/../features/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -114,84 +96,92 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PatientPlayer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/components/player/PatientPlayer.js">
+      <file leaf-file-name="CourseMixin.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/mixins/CourseMixin.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="7" column="36" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="VimeoPlayer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/components/player/VimeoPlayer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SelfLoadingMaterialsList.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.888889">
-              <caret line="275" column="0" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Vimeo.jsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/src/Vimeo.jsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.444445">
-              <caret line="222" column="24" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ReactVimeo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.777779">
-              <caret line="296" column="29" selection-start-line="296" selection-start-column="14" selection-end-line="296" selection-end-column="29" />
+              <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#0#40#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Vimeo.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/lib/Vimeo.js">
+      <file leaf-file-name="CreateCourseButton.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/course/update/CreateCourseButton.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="273" column="25" selection-start-line="273" selection-start-column="25" selection-end-line="273" selection-end-column="25" />
+              <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TopicPanel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/topics/panels/TopicPanel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ReactPlayer.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-player/lib/ReactPlayer.js">
+      <file leaf-file-name="TopicHeaderPanel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/topics/panels/TopicHeaderPanel.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-player/lib/App.js">
+      <file leaf-file-name="SimpleTopicHeaderPanel.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/features/components/topics/panels/SimpleTopicHeaderPanel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.73039216">
+              <caret line="116" column="18" selection-start-line="116" selection-start-column="18" selection-end-line="116" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CourseItem.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/course/list/CourseItem.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
-              <folding />
+              <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SelfLoadingCoursesList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/course/list/SelfLoadingCoursesList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SelfLoadingUpdateCoursePanel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/course/update/SelfLoadingUpdateCoursePanel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="32" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -200,17 +190,7 @@
         <entry file="file://$PROJECT_DIR$/features/apps/patient/DevApp.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="323" column="47" selection-start-line="323" selection-start-column="47" selection-end-line="323" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DialogSearchButton.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/list/DialogSearchButton.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5588235">
-              <caret line="85" column="79" selection-start-line="85" selection-start-column="79" selection-end-line="85" selection-end-column="79" />
+              <caret line="148" column="80" selection-start-line="148" selection-start-column="80" selection-end-line="148" selection-end-column="80" />
               <folding />
             </state>
           </provider>
@@ -232,57 +212,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/view/prepare/PrepareSinglePanel.js" />
-        <option value="$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/note/SelfLoadingUpdatableNote.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/list/QuestionnaireSearchList.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/list/QuestionnaireSearchButton.js" />
-        <option value="$PROJECT_DIR$/features/components/feed/SelfLoadingUpdateFeedItem.js" />
-        <option value="$PROJECT_DIR$/features/mixins/FeedMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/feed/SelfLoadingFeedItem.js" />
-        <option value="$PROJECT_DIR$/features/components/feed/FeedItemsList.js" />
+        <option value="$PROJECT_DIR$/features/components/jungle/SelfLoadingJungleMaterial.js" />
+        <option value="$PROJECT_DIR$/features/components/user/SeflLoadingUserSpan.js" />
+        <option value="$PROJECT_DIR$/features/components/jungle/JungleMaterial.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/group/ExerciseGroupsCardsList.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/IndexApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/DictionaryApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/GrammarApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/IdiomsApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/LoginApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/MaterialsApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/NotesApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/NotificationsApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/TopicsApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentClassApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentIndexApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/ClassApp.js" />
+        <option value="$PROJECT_DIR$/features/components/user/LoginForm.js" />
         <option value="$PROJECT_DIR$/features/apps/patient/ExercisesApp.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList.js" />
-        <option value="$PROJECT_DIR$/features/mixins/NotificationMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/view/prepare/PreparePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/feed/FeedItem.js" />
-        <option value="$PROJECT_DIR$/features/components/notification/NotificationItem.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/view/SelfLoadingAnswersList.js" />
-        <option value="$PROJECT_DIR$/features/components/teacher/TeacherFeedbackCreationBlock.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/view/SelfLoadingQuestionnairePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/question/SelfLoadingQuestionnaireEditInfoPanel.js" />
-        <option value="$PROJECT_DIR$/features/mixins/QuestionnaireMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/questionnaire/panels/view/QuestionnairePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog_exercise/DialogEditableViewPanel.js" />
-        <option value="$PROJECT_DIR$/features/mixins/DialogMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog_exercise/edit/SelfLoadingDialogEditPanel.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog_exercise/edit/DialogEditInfoPanel.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogPreparePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog_exercise/view/DialogTaskPanel.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/player/MosesVimeoPlayer.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/player/SelfLoadingMosesPlayer.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/player/DurationsBar.js" />
+        <option value="$PROJECT_DIR$/features/mixins/LinkMixin.js" />
+        <option value="$PROJECT_DIR$/features/components/link/MaterialLink.js" />
+        <option value="$PROJECT_DIR$/features/components/link/NoteLink.js" />
+        <option value="$PROJECT_DIR$/features/components/link/PatientLink.js" />
+        <option value="$PROJECT_DIR$/features/components/star/StarsList.js" />
+        <option value="$PROJECT_DIR$/features/components/star/StarItem.js" />
+        <option value="$PROJECT_DIR$/features/components/star/StarRating.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/PatientExercise.js" />
         <option value="$PROJECT_DIR$/features/components/exercise/PatientCard.js" />
-        <option value="$PROJECT_DIR$/features/components/task/PatientTask.js" />
-        <option value="$PROJECT_DIR$/features/components/video/ExerciseVideo.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/editor/adjust/MosesTimeInput.js" />
-        <option value="$PROJECT_DIR$/features/components/player/PatientPlayer.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/editor/adjust/MosesTimePanel.js" />
-        <option value="$PROJECT_DIR$/features/mixins/MaterialsMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/record/PatientRecordComponent.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/player/MosesPlayer.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/editor/SelfLoadingMosesEditor.js" />
-        <option value="$PROJECT_DIR$/features/components/material/dialogs/MaterialUpdatePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/moses/editor/MosesEditorButton.js" />
-        <option value="$PROJECT_DIR$/../node_modules/react-vimeo/lib/Vimeo.js" />
-        <option value="$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.js" />
-        <option value="$PROJECT_DIR$/../node_modules/react-vimeo/src/Vimeo.jsx" />
-        <option value="$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.min.js" />
-        <option value="$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js" />
-        <option value="$PROJECT_DIR$/features/components/canva/CanvaButton.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/SelfLoadingUserExercise.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/create/CardTypeSelectButton.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/create/EditableCardBlock.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/create/ExerciseUpdatableCards.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/create/UpdatableCardBlock.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/create/CardComplexitySelectButton.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/info/SelfLoadingExerciseInfoCard.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/info/SelfLoadingUpdateExerciseInfoTab.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/info/ExerciseInfoCard.js" />
+        <option value="$PROJECT_DIR$/features/mixins/ExerciseMixin.js" />
+        <option value="$PROJECT_DIR$/features/components/course/update/SelfLoadingCourseUpdatePanel.js" />
+        <option value="$PROJECT_DIR$/features/components/exercise/info/UpdateExerciseInfoTab.js" />
+        <option value="$PROJECT_DIR$/features/components/course/list/CoursesList.js" />
+        <option value="$PROJECT_DIR$/features/components/course/CourseViewButton.js" />
+        <option value="$PROJECT_DIR$/features/components/course/view/CourseViewPanel.js" />
         <option value="$PROJECT_DIR$/features/apps/patient/DevApp.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog_exercise/list/DialogSearchButton.js" />
+        <option value="$PROJECT_DIR$/features/components/file/FileUploadButton.js" />
+        <option value="$PROJECT_DIR$/features/components/course/update/UpdateCoursePanel.js" />
+        <option value="$PROJECT_DIR$/features/mixins/CourseMixin.js" />
+        <option value="$PROJECT_DIR$/features/components/course/update/SelfLoadingUpdateCoursePanel.js" />
+        <option value="$PROJECT_DIR$/features/components/course/update/CreateCourseButton.js" />
+        <option value="$PROJECT_DIR$/features/components/course/list/SelfLoadingCoursesList.js" />
+        <option value="$PROJECT_DIR$/features/components/course/list/CourseItem.js" />
+        <option value="$PROJECT_DIR$/features/components/topics/panels/SimpleTopicHeaderPanel.js" />
       </list>
     </option>
   </component>
@@ -407,7 +387,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="video" />
+              <option name="myItemId" value="topics" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -429,73 +409,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sidebar" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="record" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
+              <option name="myItemId" value="topics" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -521,15 +435,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
+              <option name="myItemId" value="star" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -551,217 +457,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="view" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="prepare" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="question" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="questionnaire" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="answer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="numbers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="moses" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="player" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="moses" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="editor" />
+              <option name="myItemId" value="note" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -831,7 +527,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="image" />
+              <option name="myItemId" value="link" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -853,7 +549,37 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="exercise" />
+              <option name="myItemId" value="course" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="update" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="features" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="components" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="course" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="list" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -875,42 +601,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="assets" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="css" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -918,7 +612,7 @@
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptLanguageLevel" value="JSX" />
-    <property name="SearchEverywhereHistoryKey" value="dialogbu&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/list/DialogSearchButton.js&#10;dea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;SelfLoadingMaterialsList&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/SelfLoadingMaterialsList.js&#10;moses&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/moses/editor/MosesEditorButton.js&#10;devap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;patientre&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/record/PatientRecordComponent.js&#10;patientp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js&#10;materials&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;deva&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;self&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/moses/player/SelfLoadingMosesPlayer.js&#10;patientpla&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js&#10;dialogmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;dialogmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;questionnairemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/QuestionnaireMixin.js&#10;selfloadingdialog&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js&#10;notificationa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/NotificationsApp.js&#10;classa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ClassApp.js&#10;questionnairem&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/QuestionnaireMixin.js&#10;exercise&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/apps/exercisesApp.js&#10;exerciseap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/apps/exercisesApp.js&#10;feedmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/FeedMixin.js&#10;feed&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/FeedMixin.js&#10;common&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/mixins/commonMixins/CommonMixin.js&#10;notificationmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/NotificationMixin.js&#10;question&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/QuestionnaireMixin.js&#10;selflo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/questionnaire/panels/view/SelfLoadingQuestionnairePanel.js&#10;questionna&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/QuestionnaireMixin.js&#10;selfload&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/notification/SelfLoadingNotificationsList.js&#10;feedi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/feed/FeedItem.js&#10;exercisemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ExerciseMixin.js&#10;dialog&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;task&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/view/DialogTaskPanel.js&#10;finishe&#9;null&#9;null&#10;feedite&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/feed/FeedItem.js&#10;exercisea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ExercisesApp.js&#10;selfloa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/list/SelfLoadingDialogsList.js&#10;dialo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/list/DialogsList.js&#10;devapp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;input&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/exercise/UserExerciseInput.js&#10;patientin&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/input/PatientExerciseInput.js&#10;dialogcard&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/card/DialogCard.js&#10;patient&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/exercise/PatientCard.js&#10;transla&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/text/translatable/TranslatableText.js&#10;dialogmixi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;exercisemix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ExerciseMixin.js&#10;materia&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/MaterialCard.js&#10;chatpa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/chat/ChatPanel.js&#10;material&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/MaterialCard.js&#10;userc&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/card/UserCard.js&#10;usermix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/UserMixin.js" />
+    <property name="SearchEverywhereHistoryKey" value="deva&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;coursem&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/CourseMixin.js&#10;fileup&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/file/FileUploadButton.js&#10;selfloa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/exercise/info/SelfLoadingUpdateExerciseInfoTab.js&#10;search&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/search/youtube/SearchResultsPanel.js&#10;editable&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/exercise/create/EditableCardBlock.js&#10;level: &#9;null&#9;null&#10;exercisemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ExerciseMixin.js&#10;chat&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/chat/input/ChatInput.js&#10;jun&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/jungle/JungleMaterial.js&#10;jungl&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/JungleMixin.js&#10;junglem&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/jungle/JungleMaterial.js&#10;feedite&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/feed/FeedItem.js&#10;selfload&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/like/SelfLoadingLikeButton.js&#10;likemix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/LikeMixin.js&#10;selflod&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/edit/SelfLoadingDialogEditPanel.js&#10;materialmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;materia&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/jungle/JungleMaterial.js&#10;likemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/LikeMixin.js&#10;junglemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/JungleMixin.js&#10;videomi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/VideoMixin.js&#10;selflo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/jungle/update/SelfLoadingJungleUpdatePanel.js&#10;dialogcar&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/card/DialogCard.js&#10;materialup&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/dialogs/MaterialUpdatePanel.js&#10;notesap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/NotesApp.js&#10;record&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/record/PatientRecordComponent.js&#10;feedi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/feed/FeedItem.js&#10;dialogbu&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/list/DialogSearchButton.js&#10;dea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;SelfLoadingMaterialsList&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/SelfLoadingMaterialsList.js&#10;moses&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/moses/editor/MosesEditorButton.js&#10;devap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;patientre&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/record/PatientRecordComponent.js&#10;patientp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js&#10;materials&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;self&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/moses/player/SelfLoadingMosesPlayer.js&#10;patientpla&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js&#10;dialogmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;dialogmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/DialogMixin.js&#10;questionnairemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/QuestionnaireMixin.js&#10;selfloadingdialog&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js&#10;notificationa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/NotificationsApp.js&#10;classa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ClassApp.js&#10;questionnairem&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/QuestionnaireMixin.js&#10;exercise&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/apps/exercisesApp.js&#10;exerciseap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/apps/exercisesApp.js&#10;feedmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/FeedMixin.js&#10;feed&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/FeedMixin.js&#10;common&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/mixins/commonMixins/CommonMixin.js&#10;notificationmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/NotificationMixin.js" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="109" />
@@ -975,7 +669,7 @@
     <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
       <option name="cucumberJsArguments" value="" />
       <option name="executablePath" />
-      <option name="filePath" value="$PROJECT_DIR$/features/components/canva" />
+      <option name="filePath" value="$PROJECT_DIR$/features/components/course" />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -1007,10 +701,11 @@
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2714055" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29159936" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1019,10 +714,9 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31347963" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1041,398 +735,403 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/view/DialogTaskCard.js">
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/LoginApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="80" column="4" selection-start-line="80" selection-start-column="4" selection-end-line="84" selection-end-column="6" />
+          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/view/prepare/PreparePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/user/AuthForm.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
+          <caret line="5" column="35" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/mixins/NotificationMixin.js">
+    <entry file="file://$PROJECT_DIR$/features/components/user/LoginForm.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="163" column="50" selection-start-line="163" selection-start-column="4" selection-end-line="163" selection-end-column="50" />
+          <caret line="96" column="6" selection-start-line="96" selection-start-column="6" selection-end-line="96" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/ExercisesApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="319" column="0" selection-start-line="319" selection-start-column="0" selection-end-line="319" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/NotificationsApp.js">
+    <entry file="file://$PROJECT_DIR$/features/components/material/dialogs/MaterialPanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="91" selection-start-line="22" selection-start-column="91" selection-end-line="22" selection-end-column="91" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/notification/SelfLoadingNotificationsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="8" column="59" selection-start-line="8" selection-start-column="59" selection-end-line="8" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/notification/PagedNotificationsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="51" selection-start-line="7" selection-start-column="51" selection-end-line="7" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/view/SelfLoadingAnswersList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="22" selection-start-line="111" selection-start-column="22" selection-end-line="111" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/notification/NotificationItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="32" selection-start-line="160" selection-start-column="32" selection-end-line="160" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/QuestionnaireViewPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="103" column="50" selection-start-line="103" selection-start-column="50" selection-end-line="103" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/feed/FeedItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="92" selection-start-line="22" selection-start-column="92" selection-end-line="22" selection-end-column="92" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/notification/NotificationsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="45" selection-start-line="7" selection-start-column="45" selection-end-line="7" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/teacher/TeacherFeedbackCreationBlock.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="41" selection-start-line="111" selection-start-column="41" selection-end-line="111" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/question/SelfLoadingQuestionsEditPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.2941175">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/question/SelfLoadingQuestionnaireEditInfoPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="249" column="51" selection-start-line="249" selection-start-column="51" selection-end-line="249" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/edit/SelfLoadingDialogEditPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="54" selection-start-line="7" selection-start-column="54" selection-end-line="7" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/edit/DialogEditInfoPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="316" column="33" selection-start-line="316" selection-start-column="33" selection-end-line="316" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/mixins/QuestionnaireMixin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.827869">
-          <caret line="115" column="94" selection-start-line="115" selection-start-column="94" selection-end-line="115" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/mixins/DialogMixin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/view/QuestionnairePanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4622951">
-          <caret line="75" column="43" selection-start-line="75" selection-start-column="43" selection-end-line="75" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/DialogEditableViewPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2704918">
-          <caret line="11" column="58" selection-start-line="11" selection-start-column="58" selection-end-line="11" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/view/DialogPreparePanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8039216">
-          <caret line="191" column="21" selection-start-line="191" selection-start-column="21" selection-end-line="191" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/view/DialogTaskPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="10" selection-start-line="56" selection-start-column="10" selection-end-line="56" selection-end-column="10" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60655737">
-          <caret line="312" column="16" selection-start-line="312" selection-start-column="16" selection-end-line="314" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/questionnaire/panels/view/SelfLoadingQuestionnairePanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="284" column="83" selection-start-line="284" selection-start-column="83" selection-end-line="284" selection-end-column="83" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/player/DurationsBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="20" selection-start-line="55" selection-start-column="20" selection-end-line="55" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/exercise/PatientExercise.js">
+    <entry file="file://$PROJECT_DIR$/features/components/note/SelfLoadingNote.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/material/dialogs/MaterialDialog.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="147" column="48" selection-start-line="147" selection-start-column="48" selection-end-line="147" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/link/MaterialLink.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="69" column="21" selection-start-line="69" selection-start-column="21" selection-end-line="69" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/mixins/LinkMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/link/NoteLink.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="17" selection-start-line="87" selection-start-column="17" selection-end-line="87" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/star/StarItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="53" column="57" selection-start-line="53" selection-start-column="57" selection-end-line="53" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/link/PatientLink.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/star/StarRating.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="91" column="33" selection-start-line="91" selection-start-column="33" selection-end-line="91" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/components/exercise/PatientCard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+          <caret line="149" column="25" selection-start-line="149" selection-start-column="25" selection-end-line="149" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/task/PatientTask.js">
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/CardTypeSelectButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="38" selection-start-line="111" selection-start-column="38" selection-end-line="111" selection-end-column="38" />
+          <caret line="48" column="22" selection-start-line="47" selection-start-column="12" selection-end-line="48" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/video/ExerciseVideo.js">
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/CardComplexitySelectButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="28" selection-start-line="41" selection-start-column="28" selection-end-line="41" selection-end-column="28" />
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/editor/adjust/MosesTimeInput.js">
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/SelfLoadingUserExercise.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.5">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/PatientExercise.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/editor/adjust/MosesTimePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/SelfLoadingExerciseUpdatableCardsList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="88" column="22" selection-start-line="88" selection-start-column="22" selection-end-line="88" selection-end-column="22" />
+          <caret line="12" column="41" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/player/MosesPlayer.js">
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/ExerciseUpdateTabs.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="102" column="3" selection-start-line="102" selection-start-column="3" selection-end-line="102" selection-end-column="3" />
+          <caret line="14" column="22" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/editor/SelfLoadingMosesEditor.js">
+    <entry file="file://$PROJECT_DIR$/features/components/dialog/exercise/ExerciseDialogViewer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="9" selection-start-line="109" selection-start-column="9" selection-end-line="109" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
+          <caret line="18" column="24" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/record/PatientRecordComponent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.75980395">
-          <caret line="41" column="29" selection-start-line="41" selection-start-column="29" selection-end-line="41" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/material/dialogs/SelfLoadingMaterialUpdatePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/card/ExerciseCard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="128" column="33" selection-start-line="128" selection-start-column="33" selection-end-line="128" selection-end-column="33" />
+          <caret line="249" column="22" selection-start-line="249" selection-start-column="22" selection-end-line="249" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/ExerciseUpdatableCards.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="223" column="0" selection-start-line="223" selection-start-column="0" selection-end-line="223" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/search/youtube/SearchResultsPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="43" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/search/ExercisesSearchPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="59" selection-start-line="82" selection-start-column="59" selection-end-line="82" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/mixins/DialogMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="191" column="70" selection-start-line="191" selection-start-column="70" selection-end-line="191" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/EditableCardBlock.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="526" column="50" selection-start-line="526" selection-start-column="50" selection-end-line="526" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/UpdatableCardBlock.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/SelfLoadingCurrentUserExercise.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.44607842">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/info/SelfLoadingExerciseInfoCard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="70" column="16" selection-start-line="70" selection-start-column="16" selection-end-line="70" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/info/ExerciseInfoCard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="174" column="21" selection-start-line="174" selection-start-column="21" selection-end-line="174" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/ListOfSelfLoadingCurrentUserExercises.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="66" selection-start-line="4" selection-start-column="66" selection-end-line="4" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/mixins/ExerciseMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/mixins/FeedMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/mixins/MaterialsMixin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5882353">
-          <caret line="116" column="11" selection-start-line="116" selection-start-column="11" selection-end-line="116" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="8" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/player/SelfLoadingMosesPlayer.js">
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/info/SelfLoadingUpdateExerciseInfoTab.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.65686274">
+          <caret line="120" column="22" selection-start-line="118" selection-start-column="16" selection-end-line="120" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/exercise/info/UpdateExerciseInfoTab.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/course/list/CoursesList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="54" column="98" selection-start-line="54" selection-start-column="98" selection-end-line="54" selection-end-column="98" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/material/dialogs/MaterialUpdatePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/file/FileUploadButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="331" column="0" selection-start-line="331" selection-start-column="0" selection-end-line="331" selection-end-column="0" />
+          <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/moses/editor/MosesEditorButton.js">
+    <entry file="file://$PROJECT_DIR$/features/components/course/update/UpdateCoursePanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="9" selection-start-line="56" selection-start-column="9" selection-end-line="56" selection-end-column="9" />
+          <caret line="188" column="90" selection-start-line="188" selection-start-column="90" selection-end-line="188" selection-end-column="90" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-player/lib/ReactPlayer.js">
+    <entry file="file://$PROJECT_DIR$/features/mixins/CourseMixin.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="45" selection-start-line="57" selection-start-column="45" selection-end-line="57" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-player/lib/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="41" selection-start-line="125" selection-start-column="41" selection-end-line="125" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/player/PatientPlayer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="36" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36021507">
-          <caret line="7" column="3841" selection-start-line="7" selection-start-column="3841" selection-end-line="7" selection-end-column="3841" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/lib/Vimeo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="273" column="25" selection-start-line="273" selection-start-column="25" selection-end-line="273" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/lib/umd/ReactVimeo.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.777779">
-          <caret line="296" column="29" selection-start-line="296" selection-start-column="14" selection-end-line="296" selection-end-column="29" />
+          <caret line="46" column="11" selection-start-line="46" selection-start-column="11" selection-end-line="46" selection-end-column="11" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-vimeo/src/Vimeo.jsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.444445">
-          <caret line="222" column="24" selection-start-line="222" selection-start-column="24" selection-end-line="222" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/player/VimeoPlayer.js">
+    <entry file="file://$PROJECT_DIR$/features/components/course/update/SelfLoadingUpdateCoursePanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.888889">
-          <caret line="275" column="0" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
-          <folding />
+          <caret line="13" column="32" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/apps/patient/DevApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="323" column="47" selection-start-line="323" selection-start-column="47" selection-end-line="323" selection-end-column="47" />
+          <caret line="148" column="80" selection-start-line="148" selection-start-column="80" selection-end-line="148" selection-end-column="80" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/list/DialogSearchButton.js">
+    <entry file="file://$PROJECT_DIR$/features/components/course/list/SelfLoadingCoursesList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5588235">
-          <caret line="85" column="79" selection-start-line="85" selection-start-column="79" selection-end-line="85" selection-end-column="79" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/card/DialogCard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/course/list/CourseItem.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="28" selection-start-line="55" selection-start-column="28" selection-end-line="55" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/course/update/CreateCourseButton.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="67" column="16" selection-start-line="67" selection-start-column="16" selection-end-line="67" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/topics/panels/TopicPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/topics/panels/TopicHeaderPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/topics/panels/SimpleTopicHeaderPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.73039216">
+          <caret line="116" column="18" selection-start-line="116" selection-start-column="18" selection-end-line="116" selection-end-column="18" />
           <folding />
         </state>
       </provider>

@@ -118,6 +118,7 @@ var StudentClassApp = React.createClass({
                 patientClass: result,
                 loading: false
             });
+            if (result.patientClass != undefined){ if (result.patientClass.name != undefined) document.title = result.patientClass.name}
             callback(result);
         }.bind(this));
     },

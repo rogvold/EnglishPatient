@@ -50,6 +50,8 @@ var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/Self
 
 var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
 
+var ExerciseGroupsCardsList = require('../../components/exercise/group/ExerciseGroupsCardsList');
+
 var ExercisesApp = React.createClass({
     getDefaultProps: function () {
         return {}
@@ -81,6 +83,7 @@ var ExercisesApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Упражнения';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -303,9 +306,18 @@ var ExercisesApp = React.createClass({
                     <CreateNewExerciseGroupButton style={{float: 'right'}} teacherId={this.state.user.id} onGroupCreate={this.onGroupCreate} />
                 </div>
 
-                <ExercisesGroupsList onGroupUpdate={this.onGroupUpdate}
-                                     onExerciseUpdate={this.onExerciseUpdate}
-                                     pageSize={6} userId={this.state.user.id} groups={this.state.groups} />
+                <div style={{display: 'block'}} >
+                    <ExercisesGroupsList onGroupUpdate={this.onGroupUpdate}
+                                         onExerciseUpdate={this.onExerciseUpdate}
+                                         pageSize={6} userId={this.state.user.id} groups={this.state.groups} />
+                </div>
+
+                <div style={{display: 'none'}} >
+                    <ExerciseGroupsCardsList
+                        userId={this.state.user.id}
+                        groups={this.state.groups} />
+                </div>
+
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : ' ') }>
                     <div className="ui text loader">Загрузка...</div>

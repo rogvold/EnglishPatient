@@ -63,7 +63,17 @@ var MaterialsMixin = {
             var arr = results.map(function(r){
                 return self.transformMaterialFromParseObject(r);
             });
-            callback(arr);
+            var map = {};
+            for (var i in arr){
+                map[arr[i].id] = arr[i];
+            }
+            var res = [];
+            for (var i in idsList){
+                res.push(map[idsList[i]]);
+            }
+
+            //callback(arr);
+            callback(res);
         });
     },
 

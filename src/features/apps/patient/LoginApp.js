@@ -28,7 +28,7 @@ var LoginApp = React.createClass({
     },
 
     componentDidMount: function () {
-
+        document.title = 'Вход';
     },
 
     onLogin: function(){

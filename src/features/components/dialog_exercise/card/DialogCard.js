@@ -6,7 +6,6 @@ var React = require('react');
 var assign = require('object-assign');
 
 
-
 var DialogCard = React.createClass({
     getDefaultProps: function () {
         return {

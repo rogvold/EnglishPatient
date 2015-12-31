@@ -1,0 +1,112 @@
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var assign = require('object-assign');
+
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+
+var TopicsMixin = require('./TopicsMixin');
+var UserMixin = require('./UserMixin');
+
+var moment = require('moment');
+
+
+var CourseMixin = {
+
+    transformCourse: function(c){
+        return {
+            id: c.id,
+            courseId: c.id,
+            name: c.get('name'),
+            avatar: c.get('avatar'),
+            creatorId: c.get('creatorId'),
+            description: c.get('description'),
+            duration: c.get('duration'),
+            timestamp: (new Date(c.createdAt)).getTime()
+        }
+    },
+
+    loadCourseById: function(id, callback){
+        if (id == undefined){
+            return;
+        }
+        var q = new Parse.Query('PatientCourse');
+        q.get(id, {
+            success: function(c){
+                callback(c);
+            }
+        });
+    },
+
+    loadCourse: function(id, callback){
+        var self = this;
+        this.loadCourseById(id, function(c){
+            callback(self.transformCourse(c));
+        });
+    },
+
+    loadTeacherCourses: function(teacherId, callback){
+        var q = new Parse.Query('PatientCourse');
+        q.limit(1000);
+        var self = this;
+        q.equalTo('creatorId', teacherId);
+        q.find(function(results){
+            var arr = results.map(function(c){return self.transformCourse(c)});
+            callback(arr);
+        }.bind(this));
+    },
+
+    createCourse: function(userId, data, callback){
+        console.log('CourseMixin: createCourse: userId, data = ', userId, data);
+        if (userId == undefined){
+            return;
+        }
+        var PatientCourse = Parse.Object.extend('PatientCourse');
+        var p = new PatientCourse();
+        p.set('creatorId', userId);
+        p = ParseMixin.safeSet(p, [
+            {name: 'name', value: data.name},
+            {name: 'description', value: data.description},
+            {name: 'duration', value: data.duration},
+            {name: 'avatar', value: data.avatar}
+        ]);
+        var self = this;
+        p.save().then(function(savedP){
+            callback(self.transformCourse(savedP));
+        });
+    },
+
+    updateCourse: function(courseId, data, callback){
+        var self = this;
+        this.loadCourseById(courseId, function(p){
+            p = ParseMixin.safeSet(p, [
+                {name: 'name', value: data.name},
+                {name: 'description', value: data.description},
+                {name: 'duration', value: data.duration},
+                {name: 'avatar', value: data.avatar}
+            ]);
+            p.save().then(function(savedP){
+                callback(self.transformCourse(savedP));
+            });
+        });
+    },
+
+    deleteCourse: function(courseId, callback){
+        if (courseId == undefined){
+            return;
+        }
+        this.loadCourseById(courseId, function(c){
+            c.destroy(c, {
+                success: function(){
+                    callback();
+                }
+            });
+        });
+    }
+
+
+};
+
+module.exports = CourseMixin;

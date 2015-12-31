@@ -107,6 +107,7 @@ var ClassApp = React.createClass({
             });
         }
         console.log('ClassApp mounted');
+        document.title = 'Класс';
         console.log(this.props.params);
         var classId = this.props.params.classId;
         if (classId == undefined){
@@ -135,6 +136,7 @@ var ClassApp = React.createClass({
                 users: result.users,
                 loading: false
             });
+            if (result.patientClass != undefined){ if (result.patientClass.name != undefined) document.title = result.patientClass.name}
             callback(result);
         }.bind(this));
     },

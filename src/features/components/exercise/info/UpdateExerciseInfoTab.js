@@ -15,12 +15,14 @@ var SelfLoadingExerciseGroupsSelect = require('../../select/exerciseGroup/SelfLo
 
 var DeleteButton = require('../../buttons/DeleteButton');
 
+
 var UpdateExerciseInfoTab = React.createClass({
     getDefaultProps: function () {
         return {
             teacherId: undefined,
             name: undefined,
             avatar: undefined,
+            timestamp: undefined,
             description: undefined,
             task: undefined,
             groups: [],
@@ -228,6 +230,7 @@ var UpdateExerciseInfoTab = React.createClass({
                 <div style={this.componentStyle.leftBlock}>
 
                     <ExerciseInfoCard name={this.state.name} description={this.state.description}
+                                      timestamp={this.props.timestamp}
                                       task={this.state.task} avatar={this.state.avatar} access={this.state.access} />
 
                 </div>

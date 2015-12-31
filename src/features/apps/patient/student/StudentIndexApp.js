@@ -58,6 +58,7 @@ var StudentIndexApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Главная';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         this.loadClasses(function(classes){

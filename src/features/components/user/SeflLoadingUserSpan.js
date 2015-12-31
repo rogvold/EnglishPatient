@@ -26,7 +26,7 @@ var SelfLoadingUserSpan = React.createClass({
     },
 
     componentDidMount: function () {
-
+        this.load();
     },
 
     load: function(){

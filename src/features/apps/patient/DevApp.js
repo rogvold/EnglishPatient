@@ -140,6 +140,13 @@ var SelfLoadingMosesPlayer = require('../../components/moses/player/SelfLoadingM
 var SelfLoadingMosesEditor = require('../../components/moses/editor/SelfLoadingMosesEditor');
 var MosesEditorButton = require('../../components/moses/editor/MosesEditorButton');
 
+var JunglesPanel = require('../../components/jungle/JunglesPanel');
+
+var PatientLink = require('../../components/link/PatientLink');
+
+var StarRating = require('../../components/star/StarRating');
+
+var SelfLoadingCoursesList = require('../../components/course/list/SelfLoadingCoursesList');
 
 var DevApp = React.createClass({
     getDefaultProps: function () {
@@ -302,11 +309,15 @@ var DevApp = React.createClass({
         var dialogId = 'c0zx8Ip83A';
         var questionnaireId = 'lpN66i903P';
 
+        var linkText = '[[material|WUtKUKWSb0|видео-материал]]';
+        var linkText2 = '[[note|8i0KhqWv2n|заметка]]';
+
         return (
             <div style={{padding: 10}} >
 
+                <JunglesPanel userId={userId} />
 
-
+                <SelfLoadingCoursesList teacherId={userId} />
 
             </div>
 

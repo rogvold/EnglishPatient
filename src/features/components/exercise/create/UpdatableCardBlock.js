@@ -25,6 +25,8 @@ var UpdatableCardBlock = React.createClass({
             comment: undefined,
             correctAnswer: undefined,
 
+            level: undefined,
+
             hint: undefined,
             transcript: undefined,
             deletable: false,
@@ -65,6 +67,7 @@ var UpdatableCardBlock = React.createClass({
     },
 
     onSave: function(data){
+        console.log('UpdatableCardBlock: onSave: data = ', data);
         console.log(data);
         console.log('this.props.number = ', this.props.number);
         if (this.props.exerciseId == undefined || this.props.number == undefined){
@@ -77,7 +80,7 @@ var UpdatableCardBlock = React.createClass({
         ExerciseMixin.updateCard(this.props.exerciseId, this.props.number,
                                     data.items, data.comment, data.hint,
                                     data.transcript, data.answerType,
-                                    data.correctAnswer,
+                                    data.correctAnswer, data.level,
             function(updatedCard){
                 self.props.onUpdate(updatedCard);
                 self.setState({
@@ -101,6 +104,7 @@ var UpdatableCardBlock = React.createClass({
                                        comment={this.props.comment}
                                        correctAnswer={this.props.correctAnswer}
                                        teacherId={this.props.teacherId}
+                                       level={this.props.level}
                                        hint={this.props.hint} deletable={this.props.deletable}
                                        answerTypeName={this.props.answerType}
                                        onSave={this.onSave} onDelete={this.onDelete} />

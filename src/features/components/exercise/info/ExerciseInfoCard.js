@@ -5,6 +5,8 @@
 var React = require('react');
 var assign = require('object-assign');
 
+var moment = require('moment');
+
 var ExerciseInfoCard = React.createClass({
     getDefaultProps: function () {
         return {
@@ -16,6 +18,7 @@ var ExerciseInfoCard = React.createClass({
             description: undefined,
             task: undefined,
 
+            timestamp: undefined,
             //task: 'veritatis et quasi architecto beatae  uam est, qui dolorem ipsum quia dolor sit amet,',
             //access: 'private'
             access: undefined
@@ -106,6 +109,7 @@ var ExerciseInfoCard = React.createClass({
 
     render: function () {
         var avaSt = assign(this.componentStyle.avatarPlaceholder,  {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+        var sDate = moment(this.props.timestamp).format('DD.MM.YYYY HH:mm');
 
         return (
             <div style={this.componentStyle.placeholder} className={'ui card'} >
@@ -130,6 +134,13 @@ var ExerciseInfoCard = React.createClass({
                             </div>
                             <div>
                                 {this.props.description}
+                            </div>
+
+                            <div style={this.componentStyle.label} >
+                                Дата создания
+                            </div>
+                            <div>
+                                {sDate}
                             </div>
                         </div>
                     }
@@ -162,7 +173,6 @@ var ExerciseInfoCard = React.createClass({
                             </div>
                         </div>
                     }
-
 
                 </div>
 

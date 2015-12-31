@@ -54,6 +54,7 @@ var DictionaryApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Словарь';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 

@@ -179,6 +179,7 @@ var ExerciseUpdatableCards = React.createClass({
                                 number={car.number} exerciseId={this.props.exerciseId} cardId={car.cardId}
                                 comment={car.comment} hint={car.hint} transcript={car.transcript}
                                 answerType={car.answerType}
+                                level={car.level}
                                 teacherId={this.props.teacherId}
                                 correctAnswer={car.correctAnswer}
                                 materials={car.materials} deletable={deletable} />

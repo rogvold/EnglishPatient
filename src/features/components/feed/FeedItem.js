@@ -118,6 +118,8 @@ var FeedItem = React.createClass({
         },
 
         infoPlaceholder: {
+            paddingTop: 5,
+            paddingBottom: 5,
             borderBottom: '1px solid #EFF0F1'
         },
 

@@ -51,9 +51,10 @@ var FileUploadButton = React.createClass({
     },
 
     render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
 
         return (
-            <div style={this.componentStyle.placeholder} className={this.props.className} >
+            <div style={st} className={this.props.className} >
                 {this.props.icon == undefined ? null :
                     <i className={this.props.icon} ></i>
                 }

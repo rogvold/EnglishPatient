@@ -20,3 +20,7 @@
 .selectRolePanel .dialogCard:hover{
     border-color: #FC636B !important;
 }
+
+.ui.segment{
+    border: 1px solid #EFF0F1 !important;
+}

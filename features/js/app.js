@@ -81291,7 +81291,7 @@ React.render((React.createElement(App, null)
 
 ), document.getElementById('main'));
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../mixins/LoginMixin":837,"./ClassApp":536,"./DevApp":537,"./DictionaryApp":538,"./ExercisesApp":539,"./GrammarApp":540,"./IdiomsApp":541,"./IndexApp":542,"./LoginApp":543,"./MaterialsApp":544,"./NoMatchApp":545,"./NotesApp":546,"./NotificationsApp":547,"./SimpleDev":548,"./ToolsApp":549,"./TopicsApp":550,"./shared/SharedClassApp":551,"./student/StudentClassApp":552,"./student/StudentIndexApp":553,"history":17,"object-assign":34,"react":527,"react-router":307}],536:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../mixins/LoginMixin":867,"./ClassApp":536,"./DevApp":537,"./DictionaryApp":538,"./ExercisesApp":539,"./GrammarApp":540,"./IdiomsApp":541,"./IndexApp":542,"./LoginApp":543,"./MaterialsApp":544,"./NoMatchApp":545,"./NotesApp":546,"./NotificationsApp":547,"./SimpleDev":548,"./ToolsApp":549,"./TopicsApp":550,"./shared/SharedClassApp":551,"./student/StudentClassApp":552,"./student/StudentIndexApp":553,"history":17,"object-assign":34,"react":527,"react-router":307}],536:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -81401,6 +81401,7 @@ var ClassApp = React.createClass({displayName: "ClassApp",
             });
         }
         console.log('ClassApp mounted');
+        document.title = 'Класс';
         console.log(this.props.params);
         var classId = this.props.params.classId;
         if (classId == undefined){
@@ -81429,6 +81430,7 @@ var ClassApp = React.createClass({displayName: "ClassApp",
                 users: result.users,
                 loading: false
             });
+            if (result.patientClass != undefined){ if (result.patientClass.name != undefined) document.title = result.patientClass.name}
             callback(result);
         }.bind(this));
     },
@@ -81701,7 +81703,7 @@ var ClassApp = React.createClass({displayName: "ClassApp",
 
 module.exports = ClassApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/card/UsersCardsList":565,"../../components/class/buttons/EditClassButton":581,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/class/tasks/TaskPanel":596,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/feed/SelfLoadingClassFeed":661,"../../components/header/teacher/TeacherHeader":672,"../../components/help/GifInstruction":673,"../../components/help/IconMessage":674,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527,"react-router":307}],537:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/card/UsersCardsList":565,"../../components/class/buttons/EditClassButton":581,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/class/tasks/TaskPanel":596,"../../components/dialog/exercise/ExerciseDialogClickableArea":615,"../../components/dialog/exercise/ExerciseDialogViewer":617,"../../components/feed/SelfLoadingClassFeed":669,"../../components/header/teacher/TeacherHeader":680,"../../components/help/GifInstruction":681,"../../components/help/IconMessage":682,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527,"react-router":307}],537:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -81844,6 +81846,13 @@ var SelfLoadingMosesPlayer = require('../../components/moses/player/SelfLoadingM
 var SelfLoadingMosesEditor = require('../../components/moses/editor/SelfLoadingMosesEditor');
 var MosesEditorButton = require('../../components/moses/editor/MosesEditorButton');
 
+var JunglesPanel = require('../../components/jungle/JunglesPanel');
+
+var PatientLink = require('../../components/link/PatientLink');
+
+var StarRating = require('../../components/star/StarRating');
+
+var SelfLoadingCoursesList = require('../../components/course/list/SelfLoadingCoursesList');
 
 var DevApp = React.createClass({displayName: "DevApp",
     getDefaultProps: function () {
@@ -82006,11 +82015,15 @@ var DevApp = React.createClass({displayName: "DevApp",
         var dialogId = 'c0zx8Ip83A';
         var questionnaireId = 'lpN66i903P';
 
+        var linkText = '[[material|WUtKUKWSb0|видео-материал]]';
+        var linkText2 = '[[note|8i0KhqWv2n|заметка]]';
+
         return (
-            React.createElement("div", {style: {padding: 10}}
+            React.createElement("div", {style: {padding: 10}}, 
 
+                React.createElement(JunglesPanel, {userId: userId}), 
 
-
+                React.createElement(SelfLoadingCoursesList, {teacherId: userId})
 
             )
 
@@ -82039,7 +82052,7 @@ var DevApp = React.createClass({displayName: "DevApp",
 
 module.exports = DevApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/chart/SelfLoadingUserProgressPanel":567,"../../components/chat/ChatButton":568,"../../components/chat/ChatPanel":570,"../../components/chat/messages/MessagesList":575,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/dialog_exercise/card/ExerciseDialogCard":616,"../../components/dialog_exercise/edit/DialogEditInfoPanel":619,"../../components/dialog_exercise/edit/SelfLoadingDialogEditPanel":620,"../../components/dialog_exercise/list/SelfLoadingDialogsList":624,"../../components/dialog_exercise/list/SelfLoadingDialogsSearchList":625,"../../components/dialog_exercise/view/SelfLoadingDialogPanel":634,"../../components/exercise/diff/RightTextAnswerDiff":650,"../../components/exercise/search/ExercisesSearchButton":656,"../../components/exercise/search/ExercisesSearchPanel":657,"../../components/feed/FeedItem":658,"../../components/feed/SelfLoadingClassFeed":661,"../../components/feed/SelfLoadingFeedItem":662,"../../components/feed/SelfLoadingUpdateFeedItem":663,"../../components/feed/button/EditFeedItemButton":665,"../../components/feed/video/SelfLoadingVideosList":666,"../../components/file/FileUploadButton":667,"../../components/grammar/GrammarPanel":669,"../../components/header/teacher/TeacherHeader":672,"../../components/karaoke/KaraokeGroupsPanel":681,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":684,"../../components/material/MaterialTags":689,"../../components/material/buttons/MaterialCreateButton":690,"../../components/material/dialogs/MaterialDialog":692,"../../components/material/groups/MaterialGroupCard":698,"../../components/material/search/MaterialSearchButton":708,"../../components/material/search/MaterialsSearchPanel":709,"../../components/moses/editor/MosesEditorButton":710,"../../components/moses/editor/SelfLoadingMosesEditor":711,"../../components/moses/player/DurationsBar":714,"../../components/moses/player/SelfLoadingMosesPlayer":716,"../../components/notification/SelfLoadingNotificationsList":733,"../../components/player/VimeoPlayer":737,"../../components/profile/UserProfilePanel":744,"../../components/questionnaire/panels/QuestionnaireEditPanel":746,"../../components/questionnaire/panels/list/QuestionnaireSearchButton":750,"../../components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList":752,"../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList":753,"../../components/questionnaire/panels/question/QuestionnaireQuestionPanel":755,"../../components/questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"../../components/sausage/FirstLevelPanelsList":773,"../../components/search/youtube/YoutubeSearchPanel":779,"../../components/search/youtube/checkbox/CategoryCheckboxesList":781,"../../components/segment/LoadingSegment":782,"../../components/templates/LeftSidebarTemplate":792,"../../components/text/translatable/WordItem":797,"../../components/translate/TranslateButton":810,"../../components/user/RoleSelector":817,"../../components/video/youtube/YoutubeEmbedPlayer":823,"../../components/vocabulary/VocabularyPanel":827,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"../../mixins/MaterialsMixin":838,"../../mixins/MigrationMixin":839,"../../mixins/TranslateMixin":845,"../../mixins/UserMixin":846,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],538:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/chart/SelfLoadingUserProgressPanel":567,"../../components/chat/ChatButton":568,"../../components/chat/ChatPanel":570,"../../components/chat/messages/MessagesList":575,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/course/list/SelfLoadingCoursesList":606,"../../components/dialog_exercise/card/ExerciseDialogCard":622,"../../components/dialog_exercise/edit/DialogEditInfoPanel":625,"../../components/dialog_exercise/edit/SelfLoadingDialogEditPanel":626,"../../components/dialog_exercise/list/SelfLoadingDialogsList":630,"../../components/dialog_exercise/list/SelfLoadingDialogsSearchList":631,"../../components/dialog_exercise/view/SelfLoadingDialogPanel":640,"../../components/exercise/diff/RightTextAnswerDiff":657,"../../components/exercise/search/ExercisesSearchButton":664,"../../components/exercise/search/ExercisesSearchPanel":665,"../../components/feed/FeedItem":666,"../../components/feed/SelfLoadingClassFeed":669,"../../components/feed/SelfLoadingFeedItem":670,"../../components/feed/SelfLoadingUpdateFeedItem":671,"../../components/feed/button/EditFeedItemButton":673,"../../components/feed/video/SelfLoadingVideosList":674,"../../components/file/FileUploadButton":675,"../../components/grammar/GrammarPanel":677,"../../components/header/teacher/TeacherHeader":680,"../../components/jungle/JunglesPanel":687,"../../components/karaoke/KaraokeGroupsPanel":700,"../../components/karaoke/SelfLoadingKaraokePlayerPanel":703,"../../components/link/PatientLink":712,"../../components/material/MaterialTags":713,"../../components/material/buttons/MaterialCreateButton":714,"../../components/material/dialogs/MaterialDialog":716,"../../components/material/groups/MaterialGroupCard":722,"../../components/material/search/MaterialSearchButton":732,"../../components/material/search/MaterialsSearchPanel":733,"../../components/moses/editor/MosesEditorButton":734,"../../components/moses/editor/SelfLoadingMosesEditor":735,"../../components/moses/player/DurationsBar":738,"../../components/moses/player/SelfLoadingMosesPlayer":740,"../../components/notification/SelfLoadingNotificationsList":757,"../../components/player/VimeoPlayer":761,"../../components/profile/UserProfilePanel":768,"../../components/questionnaire/panels/QuestionnaireEditPanel":770,"../../components/questionnaire/panels/list/QuestionnaireSearchButton":774,"../../components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList":776,"../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList":777,"../../components/questionnaire/panels/question/QuestionnaireQuestionPanel":779,"../../components/questionnaire/panels/view/SelfLoadingQuestionnairePanel":787,"../../components/sausage/FirstLevelPanelsList":797,"../../components/search/youtube/YoutubeSearchPanel":803,"../../components/search/youtube/checkbox/CategoryCheckboxesList":805,"../../components/segment/LoadingSegment":806,"../../components/star/StarRating":811,"../../components/templates/LeftSidebarTemplate":818,"../../components/text/translatable/WordItem":823,"../../components/translate/TranslateButton":836,"../../components/user/RoleSelector":843,"../../components/video/youtube/YoutubeEmbedPlayer":849,"../../components/vocabulary/VocabularyPanel":853,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"../../mixins/MaterialsMixin":868,"../../mixins/MigrationMixin":869,"../../mixins/TranslateMixin":875,"../../mixins/UserMixin":876,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],538:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82096,6 +82109,7 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
                 loggedIn: true
             });
         }
+        document.title = 'Словарь';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -82182,7 +82196,7 @@ var DictionaryApp = React.createClass({displayName: "DictionaryApp",
 
 module.exports = DictionaryApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../components/vocabulary/VocabularyPanel":827,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],539:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../components/vocabulary/VocabularyPanel":853,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],539:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82235,6 +82249,8 @@ var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/Self
 
 var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
 
+var ExerciseGroupsCardsList = require('../../components/exercise/group/ExerciseGroupsCardsList');
+
 var ExercisesApp = React.createClass({displayName: "ExercisesApp",
     getDefaultProps: function () {
         return {}
@@ -82266,6 +82282,7 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
                 loggedIn: true
             });
         }
+        document.title = 'Упражнения';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -82488,9 +82505,18 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
                     React.createElement(CreateNewExerciseGroupButton, {style: {float: 'right'}, teacherId: this.state.user.id, onGroupCreate: this.onGroupCreate})
                 ), 
 
-                React.createElement(ExercisesGroupsList, {onGroupUpdate: this.onGroupUpdate, 
-                                     onExerciseUpdate: this.onExerciseUpdate, 
-                                     pageSize: 6, userId: this.state.user.id, groups: this.state.groups}), 
+                React.createElement("div", {style: {display: 'block'}}, 
+                    React.createElement(ExercisesGroupsList, {onGroupUpdate: this.onGroupUpdate, 
+                                         onExerciseUpdate: this.onExerciseUpdate, 
+                                         pageSize: 6, userId: this.state.user.id, groups: this.state.groups})
+                ), 
+
+                React.createElement("div", {style: {display: 'none'}}, 
+                    React.createElement(ExerciseGroupsCardsList, {
+                        userId: this.state.user.id, 
+                        groups: this.state.groups})
+                ), 
+
 
                 React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : ' ') }, 
                     React.createElement("div", {className: "ui text loader"}, "Загрузка...")
@@ -82542,7 +82568,7 @@ var ExercisesApp = React.createClass({displayName: "ExercisesApp",
 
 module.exports = ExercisesApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/bunch/exercise/CreateNewExerciseGroupButton":556,"../../components/bunch/exercise/ExercisesBunch":557,"../../components/bunch/exercise/ExercisesGroupsList":558,"../../components/card/ExerciseCard":561,"../../components/card/ExercisesPagedCardsList":563,"../../components/card/UsersCardsList":565,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../components/dialog/exercise/ExerciseDialogViewer":611,"../../components/dialog_exercise/list/SelfLoadingDialogsList":624,"../../components/exercise/create/button/CreateNewExerciseButton":649,"../../components/header/teacher/TeacherHeader":672,"../../components/help/GifInstruction":673,"../../components/help/IconMessage":674,"../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList":753,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/ExerciseMixin":832,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],540:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/bunch/exercise/CreateNewExerciseGroupButton":556,"../../components/bunch/exercise/ExercisesBunch":557,"../../components/bunch/exercise/ExercisesGroupsList":558,"../../components/card/ExerciseCard":561,"../../components/card/ExercisesPagedCardsList":563,"../../components/card/UsersCardsList":565,"../../components/class/check/CheckUsersListDashboard":585,"../../components/class/header/ClassHeader":588,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/class/tabs/ClassTab":593,"../../components/class/tabs/ClassTabsNamePanel":594,"../../components/dialog/exercise/ExerciseDialogClickableArea":615,"../../components/dialog/exercise/ExerciseDialogViewer":617,"../../components/dialog_exercise/list/SelfLoadingDialogsList":630,"../../components/exercise/create/button/CreateNewExerciseButton":656,"../../components/exercise/group/ExerciseGroupsCardsList":658,"../../components/header/teacher/TeacherHeader":680,"../../components/help/GifInstruction":681,"../../components/help/IconMessage":682,"../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList":777,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/ExerciseMixin":859,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],540:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82599,6 +82625,7 @@ var GrammarApp = React.createClass({displayName: "GrammarApp",
                 loggedIn: true
             });
         }
+        document.title = 'Грамматика';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -82684,7 +82711,7 @@ var GrammarApp = React.createClass({displayName: "GrammarApp",
 
 module.exports = GrammarApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/grammar/GrammarPanel":669,"../../components/header/teacher/TeacherHeader":672,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],541:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/grammar/GrammarPanel":677,"../../components/header/teacher/TeacherHeader":680,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],541:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82741,6 +82768,7 @@ var IdiomsApp = React.createClass({displayName: "IdiomsApp",
                 loggedIn: true
             });
         }
+        document.title = 'Идиомы';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -82826,7 +82854,7 @@ var IdiomsApp = React.createClass({displayName: "IdiomsApp",
 
 module.exports = IdiomsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/idioms/IdiomsPanel":675,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],542:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/idioms/IdiomsPanel":683,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],542:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -82885,6 +82913,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
             });
         }
         console.log('Exercises App mounted');
+        document.title = 'Главная';
         console.log(this.props.params);
 
     },
@@ -82969,7 +82998,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/sausage/Sausage":774,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],543:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/sausage/Sausage":798,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],543:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -83000,7 +83029,7 @@ var LoginApp = React.createClass({displayName: "LoginApp",
     },
 
     componentDidMount: function () {
-
+        document.title = 'Вход';
     },
 
     onLogin: function(){
@@ -83049,7 +83078,7 @@ var LoginApp = React.createClass({displayName: "LoginApp",
 
 module.exports = LoginApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../components/user/AuthForm":814,"../../mixins/LoginMixin":837,"object-assign":34,"react":527}],544:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../components/user/AuthForm":840,"../../mixins/LoginMixin":867,"object-assign":34,"react":527}],544:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -83108,6 +83137,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
                 loggedIn: true
             });
         }
+        document.title = 'Микс';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         //this.loadMaterials(this.state.user.id);
@@ -83206,7 +83236,7 @@ var IndexApp = React.createClass({displayName: "IndexApp",
 
 module.exports = IndexApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/material/list/MaterialCard":703,"../../components/material/list/PagedCardsList":706,"../../components/material/list/SelfLoadingMaterialsList":707,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/LoginMixin":837,"../../mixins/MaterialsMixin":838,"./LoginApp":543,"object-assign":34,"react":527}],545:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/material/list/MaterialCard":727,"../../components/material/list/PagedCardsList":730,"../../components/material/list/SelfLoadingMaterialsList":731,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/LoginMixin":867,"../../mixins/MaterialsMixin":868,"./LoginApp":543,"object-assign":34,"react":527}],545:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -83285,7 +83315,7 @@ var NoMatchApp = React.createClass({displayName: "NoMatchApp",
 
 module.exports = NoMatchApp;
 
-},{"../../components/templates/LeftSidebarTemplate":792,"../../mixins/LoginMixin":837,"object-assign":34,"react/addons":354}],546:[function(require,module,exports){
+},{"../../components/templates/LeftSidebarTemplate":818,"../../mixins/LoginMixin":867,"object-assign":34,"react/addons":354}],546:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -83360,6 +83390,7 @@ var NotesApp = React.createClass({displayName: "NotesApp",
                 loggedIn: true
             });
         }
+        document.title = 'Тексты';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         //this.loadNotes(function(notes){
@@ -83791,7 +83822,7 @@ var NotesApp = React.createClass({displayName: "NotesApp",
 
 module.exports = NotesApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/buttons/DeleteButton":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/help/GifInstruction":673,"../../components/note/CreateNewNoteButton":717,"../../components/note/CreateNewNotesGroupButton":718,"../../components/note/SelfLoadingUpdatableNote":721,"../../components/note/SelfLoadingUpdateNotePanel":722,"../../components/note/UpdateGroupButton":723,"../../components/note/list/NotesGroupsList":726,"../../components/note/list/NotesList":727,"../../components/note/select/NotesGroupSelect":728,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"../../mixins/NotesMixin":840,"./LoginApp":543,"object-assign":34,"react":527}],547:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/buttons/DeleteButton":559,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/help/GifInstruction":681,"../../components/note/CreateNewNoteButton":741,"../../components/note/CreateNewNotesGroupButton":742,"../../components/note/SelfLoadingUpdatableNote":745,"../../components/note/SelfLoadingUpdateNotePanel":746,"../../components/note/UpdateGroupButton":747,"../../components/note/list/NotesGroupsList":750,"../../components/note/list/NotesList":751,"../../components/note/select/NotesGroupSelect":752,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"../../mixins/NotesMixin":870,"./LoginApp":543,"object-assign":34,"react":527}],547:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -83849,6 +83880,7 @@ var NotificationsApp = React.createClass({displayName: "NotificationsApp",
                 loggedIn: true
             });
         }
+        document.title = 'Уведомления';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -83932,7 +83964,7 @@ var NotificationsApp = React.createClass({displayName: "NotificationsApp",
 
 module.exports = NotificationsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/notification/SelfLoadingNotificationsList":733,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],548:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/notification/SelfLoadingNotificationsList":757,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],548:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -84066,7 +84098,7 @@ var SimpleDev = React.createClass({displayName: "SimpleDev",
 
 module.exports = SimpleDev;
 
-},{"../../components/background/video/VideoBackground":555,"../../components/class/share/SharedClassPanel":592,"../../components/exercise/create/CardTypeSelectButton":642,"../../components/player/PatientPlayer":736,"../../components/player/VimeoPlayer":737,"../../components/templates/LeftSidebarTemplate":792,"../../components/text/translatable/TranslatableText":796,"../../components/text/translatable/WordItem":797,"../../components/vocabulary/VocabularyPanel":827,"../../mixins/LoginMixin":837,"../../mixins/MigrationMixin":839,"object-assign":34,"react-tooltip":343,"react/addons":354}],549:[function(require,module,exports){
+},{"../../components/background/video/VideoBackground":555,"../../components/class/share/SharedClassPanel":592,"../../components/exercise/create/CardTypeSelectButton":649,"../../components/player/PatientPlayer":760,"../../components/player/VimeoPlayer":761,"../../components/templates/LeftSidebarTemplate":818,"../../components/text/translatable/TranslatableText":822,"../../components/text/translatable/WordItem":823,"../../components/vocabulary/VocabularyPanel":853,"../../mixins/LoginMixin":867,"../../mixins/MigrationMixin":869,"object-assign":34,"react-tooltip":343,"react/addons":354}],549:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -84308,7 +84340,7 @@ var ToolsApp = React.createClass({displayName: "ToolsApp",
 
 module.exports = ToolsApp;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":650,"../../components/exercise/search/ExercisesSearchButton":656,"../../components/exercise/search/ExercisesSearchPanel":657,"../../components/feed/FeedItem":658,"../../components/feed/SelfLoadingClassFeed":661,"../../components/feed/SelfLoadingFeedItem":662,"../../components/feed/SelfLoadingUpdateFeedItem":663,"../../components/feed/button/EditFeedItemButton":665,"../../components/feed/video/SelfLoadingVideosList":666,"../../components/header/teacher/TeacherHeader":672,"../../components/material/MaterialTags":689,"../../components/material/buttons/MaterialCreateButton":690,"../../components/material/dialogs/MaterialDialog":692,"../../components/material/search/MaterialSearchButton":708,"../../components/material/search/MaterialsSearchPanel":709,"../../components/notification/SelfLoadingNotificationsList":733,"../../components/player/VimeoPlayer":737,"../../components/sausage/FirstLevelPanelsList":773,"../../components/segment/LoadingSegment":782,"../../components/templates/LeftSidebarTemplate":792,"../../components/text/translatable/TranslatableText":796,"../../components/translate/TranslateButton":810,"../../components/user/RoleSelector":817,"../../components/video/youtube/YoutubeEmbedPlayer":823,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"../../mixins/MaterialsMixin":838,"../../mixins/MigrationMixin":839,"../../mixins/UserMixin":846,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],550:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/buttons/student/AddClassPlusButton":583,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/corrector/CorrectorHelpButton":598,"../../components/corrector/CorrectorPanel":599,"../../components/corrector/sounds/SoundsList":601,"../../components/corrector/sounds/SoundsPanel":602,"../../components/corrector/words/WordsPanel":603,"../../components/exercise/diff/RightTextAnswerDiff":657,"../../components/exercise/search/ExercisesSearchButton":664,"../../components/exercise/search/ExercisesSearchPanel":665,"../../components/feed/FeedItem":666,"../../components/feed/SelfLoadingClassFeed":669,"../../components/feed/SelfLoadingFeedItem":670,"../../components/feed/SelfLoadingUpdateFeedItem":671,"../../components/feed/button/EditFeedItemButton":673,"../../components/feed/video/SelfLoadingVideosList":674,"../../components/header/teacher/TeacherHeader":680,"../../components/material/MaterialTags":713,"../../components/material/buttons/MaterialCreateButton":714,"../../components/material/dialogs/MaterialDialog":716,"../../components/material/search/MaterialSearchButton":732,"../../components/material/search/MaterialsSearchPanel":733,"../../components/notification/SelfLoadingNotificationsList":757,"../../components/player/VimeoPlayer":761,"../../components/sausage/FirstLevelPanelsList":797,"../../components/segment/LoadingSegment":806,"../../components/templates/LeftSidebarTemplate":818,"../../components/text/translatable/TranslatableText":822,"../../components/translate/TranslateButton":836,"../../components/user/RoleSelector":843,"../../components/video/youtube/YoutubeEmbedPlayer":849,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"../../mixins/MaterialsMixin":868,"../../mixins/MigrationMixin":869,"../../mixins/UserMixin":876,"./LoginApp":543,"object-assign":34,"react-diff":119,"react-player":270,"react-speech":341,"react/addons":354}],550:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -84379,6 +84411,7 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
                 loggedIn: true
             });
         }
+        document.title = 'Топики';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -84534,7 +84567,7 @@ var TopicsApp = React.createClass({displayName: "TopicsApp",
 
 module.exports = TopicsApp;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":672,"../../components/karaoke/KaraokeGroupsPanel":681,"../../components/material/list/SelfLoadingMaterialsList":707,"../../components/segment/LoadingSegment":782,"../../components/sidebar/SidebarChatButton":785,"../../components/templates/LeftSidebarTemplate":792,"../../components/topics/SelfLoadingTopicsList":801,"../../components/topics/TopicsList":803,"../../components/topics/dialog/SelfLoadingTopicDialog":804,"../../components/topics/dialog/TopicDialog":805,"../../components/topics/panels/TopicPanel":809,"../../mixins/ClassMixin":830,"../../mixins/LoginMixin":837,"./LoginApp":543,"object-assign":34,"react":527}],551:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../components/header/teacher/TeacherHeader":680,"../../components/karaoke/KaraokeGroupsPanel":700,"../../components/material/list/SelfLoadingMaterialsList":731,"../../components/segment/LoadingSegment":806,"../../components/sidebar/SidebarChatButton":809,"../../components/templates/LeftSidebarTemplate":818,"../../components/topics/SelfLoadingTopicsList":827,"../../components/topics/TopicsList":829,"../../components/topics/dialog/SelfLoadingTopicDialog":830,"../../components/topics/dialog/TopicDialog":831,"../../components/topics/panels/TopicPanel":835,"../../mixins/ClassMixin":856,"../../mixins/LoginMixin":867,"./LoginApp":543,"object-assign":34,"react":527}],551:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -84611,7 +84644,7 @@ var SharedClassApp = React.createClass({displayName: "SharedClassApp",
 
 module.exports = SharedClassApp;
 
-},{"../../../components/class/share/SharedClassPanel":592,"../../../mixins/LoginMixin":837,"object-assign":34,"react/addons":354}],552:[function(require,module,exports){
+},{"../../../components/class/share/SharedClassPanel":592,"../../../mixins/LoginMixin":867,"object-assign":34,"react/addons":354}],552:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -84732,6 +84765,7 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
                 patientClass: result,
                 loading: false
             });
+            if (result.patientClass != undefined){ if (result.patientClass.name != undefined) document.title = result.patientClass.name}
             callback(result);
         }.bind(this));
     },
@@ -84865,7 +84899,7 @@ var StudentClassApp = React.createClass({displayName: "StudentClassApp",
 
 module.exports = StudentClassApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../components/card/UsersCardsList":565,"../../../components/class/SilentAddToClassComponent":578,"../../../components/class/buttons/student/LeaveClassButton":584,"../../../components/class/check/CheckUsersListDashboard":585,"../../../components/class/header/ClassHeader":588,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/class/tabs/ClassTab":593,"../../../components/class/tabs/ClassTabsNamePanel":594,"../../../components/class/tasks/TaskPanel":596,"../../../components/dialog/exercise/ExerciseDialogClickableArea":609,"../../../components/dialog/exercise/ExerciseDialogViewer":611,"../../../components/feed/SelfLoadingClassFeed":661,"../../../components/header/student/StudentHeader":671,"../../../components/help/GifInstruction":673,"../../../components/help/IconMessage":674,"../../../components/segment/LoadingSegment":782,"../../../components/sidebar/SidebarChatButton":785,"../../../components/templates/LeftSidebarTemplate":792,"../../../mixins/ClassMixin":830,"../../../mixins/LoginMixin":837,"../LoginApp":543,"object-assign":34,"react":527,"react-router":307}],553:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../components/card/UsersCardsList":565,"../../../components/class/SilentAddToClassComponent":578,"../../../components/class/buttons/student/LeaveClassButton":584,"../../../components/class/check/CheckUsersListDashboard":585,"../../../components/class/header/ClassHeader":588,"../../../components/class/list/SelfLoadingLeftSidebarClassesList":590,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/class/tabs/ClassTab":593,"../../../components/class/tabs/ClassTabsNamePanel":594,"../../../components/class/tasks/TaskPanel":596,"../../../components/dialog/exercise/ExerciseDialogClickableArea":615,"../../../components/dialog/exercise/ExerciseDialogViewer":617,"../../../components/feed/SelfLoadingClassFeed":669,"../../../components/header/student/StudentHeader":679,"../../../components/help/GifInstruction":681,"../../../components/help/IconMessage":682,"../../../components/segment/LoadingSegment":806,"../../../components/sidebar/SidebarChatButton":809,"../../../components/templates/LeftSidebarTemplate":818,"../../../mixins/ClassMixin":856,"../../../mixins/LoginMixin":867,"../LoginApp":543,"object-assign":34,"react":527,"react-router":307}],553:[function(require,module,exports){
 
 var React = require('react');
 var assign = require('object-assign');
@@ -84926,6 +84960,7 @@ var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
                 loggedIn: true
             });
         }
+        document.title = 'Главная';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         this.loadClasses(function(classes){
@@ -85055,7 +85090,7 @@ var StudentIndexApp = React.createClass({displayName: "StudentIndexApp",
 
 module.exports = StudentIndexApp;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../components/class/buttons/student/AddClassButton":582,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/header/student/StudentHeader":671,"../../../components/segment/LoadingSegment":782,"../../../components/sidebar/SidebarChatButton":785,"../../../components/templates/LeftSidebarTemplate":792,"../../../mixins/ClassMixin":830,"../../../mixins/LoginMixin":837,"object-assign":34,"react":527}],554:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../components/class/buttons/student/AddClassButton":582,"../../../components/class/list/StudentSelfLoadingLeftSidebarClassesList":591,"../../../components/header/student/StudentHeader":679,"../../../components/segment/LoadingSegment":806,"../../../components/sidebar/SidebarChatButton":809,"../../../components/templates/LeftSidebarTemplate":818,"../../../mixins/ClassMixin":856,"../../../mixins/LoginMixin":867,"object-assign":34,"react":527}],554:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -85409,7 +85444,7 @@ var CreateNewExerciseGroupButton = React.createClass({displayName: "CreateNewExe
 
 module.exports = CreateNewExerciseGroupButton;
 
-},{"../../dialog/bunch/EditBunchDialog":608,"object-assign":34,"react":527}],557:[function(require,module,exports){
+},{"../../dialog/bunch/EditBunchDialog":614,"object-assign":34,"react":527}],557:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -85589,8 +85624,7 @@ var ExercisesBunch = React.createClass({displayName: "ExercisesBunch",
                     React.createElement(EditBunchDialog, {groupId: this.props.bunchId, name: this.props.name, bunchId: this.props.bunchId, 
                                      onGroupUpdate: this.onGroupUpdate, description: this.props.description, 
                                      visible: this.state.editDialogVisible, onClose: this.onModalClose}
-
-                        )
+                    )
                 
 
 
@@ -85602,7 +85636,7 @@ var ExercisesBunch = React.createClass({displayName: "ExercisesBunch",
 
 module.exports = ExercisesBunch;
 
-},{"../../card/ExercisesPagedCardsList":563,"../../dialog/bunch/EditBunchDialog":608,"object-assign":34,"react":527}],558:[function(require,module,exports){
+},{"../../card/ExercisesPagedCardsList":563,"../../dialog/bunch/EditBunchDialog":614,"object-assign":34,"react":527}],558:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -86178,7 +86212,7 @@ var ExerciseCard = React.createClass({displayName: "ExerciseCard",
 
 module.exports = ExerciseCard;
 
-},{"../dialog/exercise/ExerciseDialogViewer":611,"object-assign":34,"react":527}],562:[function(require,module,exports){
+},{"../dialog/exercise/ExerciseDialogViewer":617,"object-assign":34,"react":527}],562:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -86428,7 +86462,7 @@ var ExercisesPagedCardsList = React.createClass({displayName: "ExercisesPagedCar
 
 module.exports = ExercisesPagedCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"./ExercisesCardsList":562,"object-assign":34,"react":527}],564:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"./ExercisesCardsList":562,"object-assign":34,"react":527}],564:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -86577,7 +86611,7 @@ var UserCard = React.createClass({displayName: "UserCard",
 
 module.exports = UserCard;
 
-},{"../chat/ChatButton":568,"../profile/ProfileStatButton":740,"../profile/ProfileUpdateButton":741,"moment":33,"object-assign":34,"react":527}],565:[function(require,module,exports){
+},{"../chat/ChatButton":568,"../profile/ProfileStatButton":764,"../profile/ProfileUpdateButton":765,"moment":33,"object-assign":34,"react":527}],565:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -86656,7 +86690,7 @@ var UsersCardsList = React.createClass({displayName: "UsersCardsList",
 
 module.exports = UsersCardsList;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"./UserCard":564,"object-assign":34,"react":527}],566:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"./UserCard":564,"object-assign":34,"react":527}],566:[function(require,module,exports){
 /**
  * Created by sabir on 14.12.15.
  */
@@ -87025,7 +87059,7 @@ var SelfLoadingUserProgressPanel = React.createClass({displayName: "SelfLoadingU
 
 module.exports = SelfLoadingUserProgressPanel;
 
-},{"../../mixins/ExerciseMixin":832,"./ExercisesProgressChart":566,"object-assign":34,"react":527}],568:[function(require,module,exports){
+},{"../../mixins/ExerciseMixin":859,"./ExercisesProgressChart":566,"object-assign":34,"react":527}],568:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -87136,7 +87170,7 @@ var ChatButton = React.createClass({displayName: "ChatButton",
 
 module.exports = ChatButton;
 
-},{"../chat/ChatPanel":570,"../dialog/Dialog":604,"./SelfLoadingChatMessagesPanel":572,"object-assign":34,"react":527}],569:[function(require,module,exports){
+},{"../chat/ChatPanel":570,"../dialog/Dialog":610,"./SelfLoadingChatMessagesPanel":572,"object-assign":34,"react":527}],569:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -87290,7 +87324,7 @@ var ChatMessagesPanel = React.createClass({displayName: "ChatMessagesPanel",
 
 module.exports = ChatMessagesPanel;
 
-},{"../user/SeflLoadingUserSpan":818,"./input/ChatInput":573,"./messages/MessagesList":575,"object-assign":34,"react":527}],570:[function(require,module,exports){
+},{"../user/SeflLoadingUserSpan":844,"./input/ChatInput":573,"./messages/MessagesList":575,"object-assign":34,"react":527}],570:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -87416,7 +87450,7 @@ var ChatPanel = React.createClass({displayName: "ChatPanel",
 
 module.exports = ChatPanel;
 
-},{"../../mixins/LoginMixin":837,"../chat/input/ChatInput":573,"./SelfLoadingChatMessagesPanel":572,"./messages/MessagesList":575,"./sidebar/SelfLoadingFriendsList":577,"object-assign":34,"react":527}],571:[function(require,module,exports){
+},{"../../mixins/LoginMixin":867,"../chat/input/ChatInput":573,"./SelfLoadingChatMessagesPanel":572,"./messages/MessagesList":575,"./sidebar/SelfLoadingFriendsList":577,"object-assign":34,"react":527}],571:[function(require,module,exports){
 /**
  * Created by sabir on 17.12.15.
  */
@@ -87514,7 +87548,7 @@ var NotReadChatSpan = React.createClass({displayName: "NotReadChatSpan",
 
 module.exports = NotReadChatSpan;
 
-},{"../../mixins/ChatMixin":829,"object-assign":34,"react":527}],572:[function(require,module,exports){
+},{"../../mixins/ChatMixin":855,"object-assign":34,"react":527}],572:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -87739,7 +87773,7 @@ var SelfLoadingChatMessagesPanel = React.createClass({displayName: "SelfLoadingC
 
 module.exports = SelfLoadingChatMessagesPanel;
 
-},{"../../mixins/ChatMixin":829,"./ChatMessagesPanel":569,"object-assign":34,"react":527}],573:[function(require,module,exports){
+},{"../../mixins/ChatMixin":855,"./ChatMessagesPanel":569,"object-assign":34,"react":527}],573:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -87918,7 +87952,7 @@ var ChatInput = React.createClass({displayName: "ChatInput",
 
 module.exports = ChatInput;
 
-},{"../../file/FileUploadButton":667,"../../file/FileUploader":668,"object-assign":34,"react":527}],574:[function(require,module,exports){
+},{"../../file/FileUploadButton":675,"../../file/FileUploader":676,"object-assign":34,"react":527}],574:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -88528,7 +88562,7 @@ var SelfLoadingFriendsList = React.createClass({displayName: "SelfLoadingFriends
 
 module.exports = SelfLoadingFriendsList;
 
-},{"../../../mixins/ChatMixin":829,"../../../mixins/ClassMixin":830,"./FriendsList":576,"object-assign":34,"react":527}],578:[function(require,module,exports){
+},{"../../../mixins/ChatMixin":855,"../../../mixins/ClassMixin":856,"./FriendsList":576,"object-assign":34,"react":527}],578:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -88599,7 +88633,7 @@ var SilentAddToClassComponent = React.createClass({displayName: "SilentAddToClas
 
 module.exports = SilentAddToClassComponent;
 
-},{"../../mixins/ClassMixin":830,"object-assign":34,"react":527}],579:[function(require,module,exports){
+},{"../../mixins/ClassMixin":856,"object-assign":34,"react":527}],579:[function(require,module,exports){
 /**
  * Created by sabir on 02.11.15.
  */
@@ -88794,7 +88828,7 @@ var AddNewClassButton = React.createClass({displayName: "AddNewClassButton",
 
 module.exports = AddNewClassButton;
 
-},{"../../../mixins/ClassMixin":830,"../../dialog/Dialog":604,"object-assign":34,"react":527}],580:[function(require,module,exports){
+},{"../../../mixins/ClassMixin":856,"../../dialog/Dialog":610,"object-assign":34,"react":527}],580:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -89204,7 +89238,7 @@ var EditClassButton = React.createClass({displayName: "EditClassButton",
 
 module.exports = EditClassButton;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/ClassMixin":830,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"../../editor/PatientEditor":635,"./ArchiveClassButton":580,"object-assign":34,"react":527}],582:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../mixins/ClassMixin":856,"../../buttons/DeleteButton":559,"../../dialog/Dialog":610,"../../editor/PatientEditor":641,"./ArchiveClassButton":580,"object-assign":34,"react":527}],582:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -89415,7 +89449,7 @@ var AddClassButton = React.createClass({displayName: "AddClassButton",
 
 module.exports = AddClassButton;
 
-},{"../../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../mixins/ClassMixin":830,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],583:[function(require,module,exports){
+},{"../../../../../react/mixins/commonMixins/CommonMixin":881,"../../../../mixins/ClassMixin":856,"../../../dialog/Dialog":610,"object-assign":34,"react":527}],583:[function(require,module,exports){
 /**
  * Created by sabir on 07.11.15.
  */
@@ -89634,7 +89668,7 @@ var LeaveClassButton = React.createClass({displayName: "LeaveClassButton",
 
 module.exports = LeaveClassButton;
 
-},{"../../../../mixins/ClassMixin":830,"../../../buttons/DeleteButton":559,"../../../dialog/Dialog":604,"object-assign":34,"react":527}],585:[function(require,module,exports){
+},{"../../../../mixins/ClassMixin":856,"../../../buttons/DeleteButton":559,"../../../dialog/Dialog":610,"object-assign":34,"react":527}],585:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -89794,7 +89828,7 @@ var CheckUsersListDashboard = React.createClass({displayName: "CheckUsersListDas
 
 module.exports = CheckUsersListDashboard;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/ExerciseMixin":832,"../../exercise/ListOfSelfLoadingUserExercises":636,"../../feed/SelfLoadingClassFeed":661,"../../help/GifInstruction":673,"./VerticalUsersList":586,"object-assign":34,"react":527}],586:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../mixins/ExerciseMixin":859,"../../exercise/ListOfSelfLoadingUserExercises":642,"../../feed/SelfLoadingClassFeed":669,"../../help/GifInstruction":681,"./VerticalUsersList":586,"object-assign":34,"react":527}],586:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -90393,7 +90427,7 @@ var SelfLoadingLeftSidebarClassesList = React.createClass({displayName: "SelfLoa
 
 module.exports = SelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ClassMixin":830,"../../class/buttons/AddNewClassButton":579,"./LeftSidebarClassesList":589,"react":527}],591:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ClassMixin":856,"../../class/buttons/AddNewClassButton":579,"./LeftSidebarClassesList":589,"react":527}],591:[function(require,module,exports){
 /**
  * Created by sabir on 04.11.15.
  */
@@ -90552,7 +90586,7 @@ var StudentSelfLoadingLeftSidebarClassesList = React.createClass({displayName: "
 
 module.exports = StudentSelfLoadingLeftSidebarClassesList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ClassMixin":830,"../../class/buttons/AddNewClassButton":579,"../../class/buttons/student/AddClassPlusButton":583,"./LeftSidebarClassesList":589,"react":527}],592:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ClassMixin":856,"../../class/buttons/AddNewClassButton":579,"../../class/buttons/student/AddClassPlusButton":583,"./LeftSidebarClassesList":589,"react":527}],592:[function(require,module,exports){
 /**
  * Created by sabir on 02.12.15.
  */
@@ -90685,7 +90719,7 @@ var SharedClassPanel = React.createClass({displayName: "SharedClassPanel",
 
 module.exports = SharedClassPanel;
 
-},{"../../../components/header/SelfInitHeader":670,"../../../mixins/ClassMixin":830,"../../containers/TopBrandContainer":597,"../../feed/SelfLoadingClassFeed":661,"object-assign":34,"react":527}],593:[function(require,module,exports){
+},{"../../../components/header/SelfInitHeader":678,"../../../mixins/ClassMixin":856,"../../containers/TopBrandContainer":597,"../../feed/SelfLoadingClassFeed":669,"object-assign":34,"react":527}],593:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -91077,7 +91111,7 @@ var CreateNewFeedItemPanel = React.createClass({displayName: "CreateNewFeedItemP
 
 module.exports = CreateNewFeedItemPanel;
 
-},{"../../editor/PatientEditor":635,"../../feed/FeedItem":658,"object-assign":34,"react":527}],596:[function(require,module,exports){
+},{"../../editor/PatientEditor":641,"../../feed/FeedItem":666,"object-assign":34,"react":527}],596:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -91257,7 +91291,7 @@ var TaskPanel = React.createClass({displayName: "TaskPanel",
 
 module.exports = TaskPanel;
 
-},{"../../../mixins/FeedMixin":833,"../../editor/PatientEditor":635,"../../feed/PagedFeedItemsList":660,"../../feed/SelfLoadingClassFeed":661,"../../feed/button/CreateFeedItemButton":664,"./CreateNewFeedItemPanel":595,"object-assign":34,"react":527}],597:[function(require,module,exports){
+},{"../../../mixins/FeedMixin":860,"../../editor/PatientEditor":641,"../../feed/PagedFeedItemsList":668,"../../feed/SelfLoadingClassFeed":669,"../../feed/button/CreateFeedItemButton":672,"./CreateNewFeedItemPanel":595,"object-assign":34,"react":527}],597:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -91457,7 +91491,7 @@ var CorrectorHelpButton = React.createClass({displayName: "CorrectorHelpButton",
 
 module.exports = CorrectorHelpButton;
 
-},{"../../components/dialog/Dialog":604,"./CorrectorPanel":599,"object-assign":34,"react":527}],599:[function(require,module,exports){
+},{"../../components/dialog/Dialog":610,"./CorrectorPanel":599,"object-assign":34,"react":527}],599:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -91984,7 +92018,7 @@ var SoundsPanel = React.createClass({displayName: "SoundsPanel",
 
 module.exports = SoundsPanel;
 
-},{"../../editor/PatientEditor":635,"./SoundsList":601,"object-assign":34,"react":527}],603:[function(require,module,exports){
+},{"../../editor/PatientEditor":641,"./SoundsList":601,"object-assign":34,"react":527}],603:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -92098,7 +92132,774 @@ var WordsPanel = React.createClass({displayName: "WordsPanel",
 
 module.exports = WordsPanel;
 
-},{"../../editor/PatientEditor":635,"object-assign":34,"react":527}],604:[function(require,module,exports){
+},{"../../editor/PatientEditor":641,"object-assign":34,"react":527}],604:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../../dialog_exercise/card/DialogCard');
+
+var CourseItem = React.createClass({displayName: "CourseItem",
+    getDefaultProps: function () {
+        return {
+            name: undefined,
+            description: undefined,
+            avatar: undefined,
+
+            onClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 820,
+            padding: 10,
+            backgroundColor: 'white',
+            border: '1px solid #EFF0F1',
+            borderRadius: 3
+        },
+
+        left: {
+            width: 160,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        right: {
+            width: 638,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            paddingLeft: 10,
+            paddingRight: 10
+        },
+
+        avatarPlaceholder: {
+            width: '100%',
+            height: 120
+        },
+
+        avatar: {
+
+        },
+
+
+
+        namePlaceholder: {
+            fontSize: 18,
+            fontWeight: 'bold'
+        },
+
+        descriptionPlaceholder: {
+
+        }
+
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, onClick: this.props.onClick}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+                    React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+                        React.createElement(DialogCard, {style: this.componentStyle.avatar, 
+                            avatar: this.props.avatar})
+                    )
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+                    React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                        this.props.name
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.descriptionPlaceholder}, 
+                        this.props.description
+                    )
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = CourseItem;
+
+},{"../../dialog_exercise/card/DialogCard":621,"object-assign":34,"react":527}],605:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CourseItem = require('./CourseItem');
+
+var CoursesList = React.createClass({displayName: "CoursesList",
+    getDefaultProps: function () {
+        return {
+            courses: []
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        item: {
+            marginBottom: 5
+        }
+    },
+
+    onItemClick: function(course){
+        this.setState({
+            selectedCourse: course
+        });
+    },
+
+    render: function () {
+        var list = this.props.courses;
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(c, k){
+                    var key = 'course_' + k;
+                    var onClick = this.onItemClick.bind(this, c);
+                    return (
+                        React.createElement("div", {key: key, style: this.componentStyle.item}, 
+                            React.createElement(CourseItem, {name: c.name, description: c.description, avatar: c.avatar, 
+                                onClick: onClick})
+                        )
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = CoursesList;
+
+},{"./CourseItem":604,"object-assign":34,"react":527}],606:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CreateCourseButton = require('../update/CreateCourseButton');
+
+var CourseMixin = require('../../../mixins/CourseMixin');
+
+var CoursesList = require('./CoursesList');
+
+var SelfLoadingCoursesList = React.createClass({displayName: "SelfLoadingCoursesList",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 820,
+            margin: '0 auto'
+        },
+
+        createCourseButtonPlaceholder: {
+            padding: 5,
+            textAlign: 'right'
+        },
+
+        listPlaceholder: {
+
+        }
+    },
+
+    load: function(){
+        var teacherId = this.props.teacherId;
+        if (teacherId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        CourseMixin.loadTeacherCourses(teacherId, function(courses){
+            this.setState({
+                loading: false,
+                courses: courses
+            });
+        }.bind(this))
+    },
+
+    onCourseCreated: function(course){
+        this.load();
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.createCourseButtonPlaceholder}, 
+                    React.createElement(CreateCourseButton, {
+                        userId: this.props.teacherId, 
+                        onCourseCreated: this.onCourseCreated})
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                    React.createElement(CoursesList, {courses: this.state.courses})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingCoursesList;
+
+},{"../../../mixins/CourseMixin":857,"../update/CreateCourseButton":607,"./CoursesList":605,"object-assign":34,"react":527}],607:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingUpdateCoursePanel = require('./SelfLoadingUpdateCoursePanel');
+
+var Dialog = require('../../dialog/Dialog');
+
+var CreateCoursePanel = React.createClass({displayName: "CreateCoursePanel",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+
+            buttonName: 'Создать курс',
+            icon: 'icon plus',
+            buttonClassName: 'ui basic button',
+
+            onCourseCreated: function(course){
+                console.log('onCourseCreated : default: course = ', course);
+            },
+
+            style: {
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        buttonStyle: {
+
+        },
+
+        dialogPanelStyle: {
+            width: 820
+        }
+    },
+
+    onCourseCreated: function(course){
+        this.props.onCourseCreated(course);
+        this.onClose();
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingUpdateCoursePanel, {
+                    userId: this.props.userId, 
+                    onCourseCreated: this.onCourseCreated})
+            )
+        );
+    },
+
+    show: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.buttonStyle, this.props.style);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, style: st, onClick: this.show}, 
+                    React.createElement("i", {className: this.props.icon}), " ", this.props.buttonName
+                ), 
+
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {visible: true, dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                            content: this.getDialogContent(), onClose: this.onClose})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = CreateCoursePanel;
+
+},{"../../dialog/Dialog":610,"./SelfLoadingUpdateCoursePanel":608,"object-assign":34,"react":527}],608:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CourseMixin = require('../../../mixins/CourseMixin');
+
+var UpdateCoursePanel = require('./UpdateCoursePanel');
+
+var CreateCourseButton = require('./CreateCourseButton');
+
+var SelfLoadingUpdateCoursePanel = React.createClass({displayName: "SelfLoadingUpdateCoursePanel",
+    getDefaultProps: function () {
+        return {
+            courseId: undefined,
+            userId: undefined,
+
+            onCourseUpdated: function(course){
+
+            },
+
+            onCourseCreated: function(course){
+
+            },
+
+            onCourseDeleted: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            course: undefined,
+            loading: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            margin: '0 auto',
+            width: 820
+        },
+
+        createCourseButtonPlaceholder: {
+            padding: 5,
+            textAlign: 'right'
+        }
+
+
+    },
+
+    load: function(){
+        var courseId = this.props.courseId;
+        if (courseId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        CourseMixin.loadCourse(courseId, function(course){
+            this.setState({
+                loading: false,
+                course: course
+            });
+        }.bind(this))
+    },
+
+    onSave: function(data){
+        var courseId = this.props.courseId;
+        var userId = this.props.userId;
+        if (userId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        if (courseId == undefined){
+            CourseMixin.createCourse(userId, data, function(course){
+                this.setState({
+                    loading: false,
+                    course: course
+                });
+                this.props.onCourseCreated(course);
+            }.bind(this));
+        }else {
+            CourseMixin.updateCourse(courseId, data, function(course){
+                this.setState({
+                    loading: false,
+                    course: course
+                });
+                this.props.onCourseUpdated(course);
+            }.bind(this));
+        }
+    },
+
+    onDelete: function(){
+        var courseId = this.props.courseId;
+        CourseMixin.deleteCourse(courseId, function(){
+            this.setState({
+                loading: false
+            });
+            this.props.onCourseDeleted();
+        }.bind(this));
+    },
+
+
+
+    render: function () {
+        var c = this.state.course;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                c != undefined ?
+                    React.createElement(UpdateCoursePanel, {
+                        courseId: this.props.courseId, 
+                        name: c.name, description: c.description, 
+                        avatar: c.avatar, duration: c.duration, 
+                        courseId: this.props.courseId, 
+                        onSave: this.onSave, 
+                        onDelete: this.onDelete}
+                        ) :
+                    React.createElement(UpdateCoursePanel, {teacherId: this.props.userId, 
+                            onSave: this.onSave}
+                        ), 
+                
+
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка...')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingUpdateCoursePanel;
+
+},{"../../../mixins/CourseMixin":857,"./CreateCourseButton":607,"./UpdateCoursePanel":609,"object-assign":34,"react":527}],609:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var FileUploadButton = require('../../file/FileUploadButton');
+
+var DialogCard = require('../../dialog_exercise/card/DialogCard');
+
+var DeleteButton = require('../../buttons/DeleteButton');
+
+var UpdateCoursePanel = React.createClass({displayName: "UpdateCoursePanel",
+    getDefaultProps: function () {
+        return {
+            teacherId: undefined,
+
+            courseId: undefined,
+
+            name: undefined,
+            description: undefined,
+            avatar: undefined,
+            duration: undefined,
+
+            onSave: function(data){
+                console.log('UpdateCoursePanel: onSave default: data =  ', data);
+            },
+
+            onDelete: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            name: this.props.name,
+            description: this.props.description,
+            avatar: this.props.avatar,
+            duration: this.props.duration
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 820,
+            textAlign: 'left',
+            padding: 10
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 5,
+            width: 250
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 5,
+            width: 550
+        },
+
+        avatarPlaceholder: {
+            width: '100%',
+            height: 160
+        },
+
+
+        uploadPlaceholder: {
+
+        },
+
+        saveButtonPlaceholder: {
+            textAlign: 'right',
+            paddig: 5
+        },
+
+        deleteButtonPlaceholder: {
+            textAlign: 'right',
+            paddig: 5
+        }
+    },
+
+    getValFromEvt: function(evt){
+        var val = evt.target.value;
+        if (val == undefined || val.trim() == ''){
+            return undefined;
+        }
+        return val;
+    },
+
+    onNameChange: function(evt){
+        var name = this.getValFromEvt(evt);
+        this.setState({
+            name: name
+        });
+    },
+
+    onDescriptionChange: function(evt){
+        var description = this.getValFromEvt(evt);
+        this.setState({
+            description: description
+        });
+    },
+
+    onAvatarChange: function(url){
+        this.setState({
+            avatar: url
+        });
+    },
+
+    onDurationChange: function(evt){
+        var duration = this.getValFromEvt(evt);
+        if (duration != undefined){
+            duration = +duration;
+        }
+        this.setState({
+            duration: duration
+        });
+    },
+
+    deleteAvatar: function(){
+        this.setState({
+            avatar: undefined
+        });
+    },
+
+    getData: function(){
+        return {
+            name: this.state.name,
+            description: this.state.description,
+            avatar: this.state.avatar,
+            duration: this.state.duration
+        }
+    },
+
+    onSave: function(){
+        var data = this.getData();
+        this.props.onSave(data);
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+                        React.createElement(DialogCard, {
+                            name: this.state.name, 
+                            avatar: this.state.avatar, style: {width: '100%', height: '100%'}})
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.uploadPlaceholder}, 
+
+                        this.state.avatar == undefined ?
+                            React.createElement("div", null, 
+                                React.createElement(FileUploadButton, {buttonName: 'Загрузить аватар курса', 
+                                    icon: 'icon cloud upload', 
+                                    style: {width: '100%', marginTop: 5}, 
+                                    onFileUploaded: this.onAvatarChange})
+                            )
+                            :
+                            React.createElement("div", {className: 'ui red message', style: {padding: 10, marginTop: 5}, 
+                                 onClick: this.deleteAvatar}, 
+                                React.createElement("i", {className: 'icon close'}), " Удалить аватар"
+                            )
+                        
+
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+                    React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                        React.createElement("input", {value: this.state.name, placeholder: 'Название курса', onChange: this.onNameChange})
+                    ), 
+
+                    React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                        React.createElement("textarea", {value: this.state.description, 
+                                  placeholder: 'Описание курса', 
+                                  onChange: this.onDescriptionChange})
+                    ), 
+
+                    React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                        React.createElement("input", {value: this.state.duration, 
+                               onChange: this.onDurationChange, placeholder: 'Длительность курса (в часах)'})
+                    ), 
+
+
+                    React.createElement("div", {style: this.componentStyle.saveButtonPlaceholder}, 
+                        React.createElement("button", {className: 'ui primary button', onClick: this.onSave}, 
+                            React.createElement("i", {className: 'icon save'}), " Сохранить"
+                        )
+                    ), 
+
+                    this.props.courseId == undefined ? null :
+                        React.createElement("div", {style: this.componentStyle.deleteButtonPlaceholder}, 
+                            React.createElement(DeleteButton, {onDelete: this.props.onDelete})
+                        )
+                    
+
+
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = UpdateCoursePanel;
+
+},{"../../buttons/DeleteButton":559,"../../dialog_exercise/card/DialogCard":621,"../../file/FileUploadButton":675,"object-assign":34,"react":527}],610:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -92187,7 +92988,7 @@ var Dialog = React.createClass({displayName: "Dialog",
 
 module.exports = Dialog;
 
-},{"./DialogOverlay":606,"./DialogPanel":607,"object-assign":34,"react":527}],605:[function(require,module,exports){
+},{"./DialogOverlay":612,"./DialogPanel":613,"object-assign":34,"react":527}],611:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -92272,7 +93073,7 @@ var DialogClickableArea = React.createClass({displayName: "DialogClickableArea",
 
 module.exports = DialogClickableArea;
 
-},{"../dialog/Dialog":604,"object-assign":34,"react":527}],606:[function(require,module,exports){
+},{"../dialog/Dialog":610,"object-assign":34,"react":527}],612:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -92374,7 +93175,7 @@ var DialogOverlay = React.createClass({displayName: "DialogOverlay",
 });
 module.exports = DialogOverlay;
 
-},{"object-assign":34,"react":527}],607:[function(require,module,exports){
+},{"object-assign":34,"react":527}],613:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -92588,7 +93389,7 @@ var DialogPanel = React.createClass({displayName: "DialogPanel",
 
 module.exports = DialogPanel;
 
-},{"object-assign":34,"react":527}],608:[function(require,module,exports){
+},{"object-assign":34,"react":527}],614:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -92804,7 +93605,7 @@ var EditBunchDialog = React.createClass({displayName: "EditBunchDialog",
 
 module.exports = EditBunchDialog;
 
-},{"../../../mixins/ExerciseMixin":832,"../../buttons/DeleteButton":559,"../../dialog/Dialog":604,"object-assign":34,"react":527}],609:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":859,"../../buttons/DeleteButton":559,"../../dialog/Dialog":610,"object-assign":34,"react":527}],615:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -92881,7 +93682,7 @@ var ExerciseDialogClickableArea = React.createClass({displayName: "ExerciseDialo
 
 module.exports = ExerciseDialogClickableArea;
 
-},{"../../exercise/SelfLoadingUserExercise":640,"../DialogClickableArea":605,"object-assign":34,"react":527}],610:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":646,"../DialogClickableArea":611,"object-assign":34,"react":527}],616:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -92973,7 +93774,7 @@ var ExerciseDialogInfoBlock = React.createClass({displayName: "ExerciseDialogInf
 
 module.exports = ExerciseDialogInfoBlock;
 
-},{"../../exercise/SelfLoadingUserExercise":640,"../../exercise/info/SelfLoadingExerciseInfoCard":653,"object-assign":34,"react":527}],611:[function(require,module,exports){
+},{"../../exercise/SelfLoadingUserExercise":646,"../../exercise/info/SelfLoadingExerciseInfoCard":661,"object-assign":34,"react":527}],617:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -93158,7 +93959,7 @@ var ExerciseDialogViewer = React.createClass({displayName: "ExerciseDialogViewer
 
 module.exports = ExerciseDialogViewer;
 
-},{"../../../mixins/ExerciseMixin":832,"../../dialog/Dialog":604,"../../exercise/SelfLoadingUserExercise":640,"../../exercise/create/ExerciseUpdateTabs":645,"../../exercise/info/ExerciseInfoCard":652,"./ExerciseDialogInfoBlock":610,"object-assign":34,"react":527}],612:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":859,"../../dialog/Dialog":610,"../../exercise/SelfLoadingUserExercise":646,"../../exercise/create/ExerciseUpdateTabs":652,"../../exercise/info/ExerciseInfoCard":660,"./ExerciseDialogInfoBlock":616,"object-assign":34,"react":527}],618:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -93294,7 +94095,7 @@ var DialogEditableViewPanel = React.createClass({displayName: "DialogEditableVie
 
 module.exports = DialogEditableViewPanel;
 
-},{"./DialogViewPanel":613,"./SelfLoadingDialogViewPanel":614,"./edit/SelfLoadingDialogEditPanel":620,"object-assign":34,"react":527}],613:[function(require,module,exports){
+},{"./DialogViewPanel":619,"./SelfLoadingDialogViewPanel":620,"./edit/SelfLoadingDialogEditPanel":626,"object-assign":34,"react":527}],619:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -93401,7 +94202,7 @@ var DialogViewPanel = React.createClass({displayName: "DialogViewPanel",
 
 module.exports = DialogViewPanel;
 
-},{"./card/DialogCard":615,"./view/SelfLoadingDialogPanel":634,"moment":33,"object-assign":34,"react":527}],614:[function(require,module,exports){
+},{"./card/DialogCard":621,"./view/SelfLoadingDialogPanel":640,"moment":33,"object-assign":34,"react":527}],620:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -93477,14 +94278,13 @@ var SelfLoadingDialogViewPanel = React.createClass({displayName: "SelfLoadingDia
 
 module.exports = SelfLoadingDialogViewPanel;
 
-},{"../../mixins/DialogMixin":831,"./DialogViewPanel":613,"object-assign":34,"react":527}],615:[function(require,module,exports){
+},{"../../mixins/DialogMixin":858,"./DialogViewPanel":619,"object-assign":34,"react":527}],621:[function(require,module,exports){
 /**
  * Created by sabir on 17.12.15.
  */
 
 var React = require('react');
 var assign = require('object-assign');
-
 
 
 var DialogCard = React.createClass({displayName: "DialogCard",
@@ -93600,7 +94400,7 @@ var DialogCard = React.createClass({displayName: "DialogCard",
 
 module.exports = DialogCard;
 
-},{"object-assign":34,"react":527}],616:[function(require,module,exports){
+},{"object-assign":34,"react":527}],622:[function(require,module,exports){
 /**
  * Created by sabir on 17.12.15.
  */
@@ -93780,7 +94580,7 @@ var ExerciseDialogCard = React.createClass({displayName: "ExerciseDialogCard",
 
 module.exports = ExerciseDialogCard;
 
-},{"../../file/FileUploadButton":667,"object-assign":34,"react":527}],617:[function(require,module,exports){
+},{"../../file/FileUploadButton":675,"object-assign":34,"react":527}],623:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -93878,7 +94678,7 @@ var ExerciseDialogCardsList = React.createClass({displayName: "ExerciseDialogCar
 
 module.exports = ExerciseDialogCardsList;
 
-},{"./ExerciseDialogCard":616,"object-assign":34,"react":527}],618:[function(require,module,exports){
+},{"./ExerciseDialogCard":622,"object-assign":34,"react":527}],624:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -93994,7 +94794,7 @@ var CreateDialogButton = React.createClass({displayName: "CreateDialogButton",
 
 module.exports = CreateDialogButton;
 
-},{"../../../mixins/DialogMixin":831,"../../dialog/Dialog":604,"./DialogEditInfoPanel":619,"object-assign":34,"react":527}],619:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../../dialog/Dialog":610,"./DialogEditInfoPanel":625,"object-assign":34,"react":527}],625:[function(require,module,exports){
 /**
  * Created by sabir on 17.12.15.
  */
@@ -94531,7 +95331,7 @@ var DialogEditInfoButton = React.createClass({displayName: "DialogEditInfoButton
 
 module.exports = DialogEditInfoButton;
 
-},{"../../../mixins/DialogMixin":831,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":635,"../../file/FileUploadButton":667,"../../file/FileUploader":668,"../../player/VimeoPlayer":737,"../card/DialogCard":615,"../card/ExerciseDialogCardsList":617,"object-assign":34,"react":527}],620:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":641,"../../file/FileUploadButton":675,"../../file/FileUploader":676,"../../player/VimeoPlayer":761,"../card/DialogCard":621,"../card/ExerciseDialogCardsList":623,"object-assign":34,"react":527}],626:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -94674,7 +95474,7 @@ var SelfLoadingDialogEditPanel = React.createClass({displayName: "SelfLoadingDia
 
 module.exports = SelfLoadingDialogEditPanel;
 
-},{"../../../mixins/DialogMixin":831,"./DialogEditInfoPanel":619,"object-assign":34,"react":527}],621:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"./DialogEditInfoPanel":625,"object-assign":34,"react":527}],627:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -94742,7 +95542,7 @@ var DialogItem = React.createClass({displayName: "DialogItem",
 
 module.exports = DialogItem;
 
-},{"../card/DialogCard":615,"object-assign":34,"react":527}],622:[function(require,module,exports){
+},{"../card/DialogCard":621,"object-assign":34,"react":527}],628:[function(require,module,exports){
 /**
  * Created by sabir on 20.12.15.
  */
@@ -94842,7 +95642,7 @@ var DialogSearchButton = React.createClass({displayName: "DialogSearchButton",
 
 module.exports = DialogSearchButton;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingDialogsSearchList":625,"object-assign":34,"react":527}],623:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./SelfLoadingDialogsSearchList":631,"object-assign":34,"react":527}],629:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -94912,7 +95712,7 @@ var DialogsList = React.createClass({displayName: "DialogsList",
 
 module.exports = DialogsList;
 
-},{"./DialogItem":621,"object-assign":34,"react":527}],624:[function(require,module,exports){
+},{"./DialogItem":627,"object-assign":34,"react":527}],630:[function(require,module,exports){
 /**
  * Created by sabir on 19.12.15.
  */
@@ -95077,7 +95877,7 @@ var SelfLoadingDialogsList = React.createClass({displayName: "SelfLoadingDialogs
 
 module.exports = SelfLoadingDialogsList;
 
-},{"../../../mixins/DialogMixin":831,"../../dialog/Dialog":604,"../DialogEditableViewPanel":612,"../DialogViewPanel":613,"../edit/CreateDialogButton":618,"../view/SelfLoadingDialogPanel":634,"./DialogsList":623,"object-assign":34,"react":527}],625:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../../dialog/Dialog":610,"../DialogEditableViewPanel":618,"../DialogViewPanel":619,"../edit/CreateDialogButton":624,"../view/SelfLoadingDialogPanel":640,"./DialogsList":629,"object-assign":34,"react":527}],631:[function(require,module,exports){
 /**
  * Created by sabir on 20.12.15.
  */
@@ -95238,7 +96038,7 @@ var SelfLoadingDialogsSearchList = React.createClass({displayName: "SelfLoadingD
 
 module.exports = SelfLoadingDialogsSearchList;
 
-},{"../../../mixins/DialogMixin":831,"../card/DialogCard":615,"../view/DialogViewButton":631,"object-assign":34,"react":527}],626:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../card/DialogCard":621,"../view/DialogViewButton":637,"object-assign":34,"react":527}],632:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -95347,7 +96147,7 @@ var DialogOneReplicPanel = React.createClass({displayName: "DialogOneReplicPanel
 
 module.exports = DialogOneReplicPanel;
 
-},{"../../text/translatable/TranslatableText":796,"../card/DialogCard":615,"object-assign":34,"react":527}],627:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":822,"../card/DialogCard":621,"object-assign":34,"react":527}],633:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -95473,7 +96273,7 @@ var DialoPreparePanel = React.createClass({displayName: "DialoPreparePanel",
 
 module.exports = DialoPreparePanel;
 
-},{"../../player/VimeoPlayer":737,"./DialogReplicsPanel":628,"./SelectRolePanel":632,"object-assign":34,"react":527}],628:[function(require,module,exports){
+},{"../../player/VimeoPlayer":761,"./DialogReplicsPanel":634,"./SelectRolePanel":638,"object-assign":34,"react":527}],634:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -95544,7 +96344,7 @@ var DialogReplicsPanel = React.createClass({displayName: "DialogReplicsPanel",
 
 module.exports = DialogReplicsPanel;
 
-},{"./DialogOneReplicPanel":626,"object-assign":34,"react":527}],629:[function(require,module,exports){
+},{"./DialogOneReplicPanel":632,"object-assign":34,"react":527}],635:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -95696,7 +96496,7 @@ var DialogTaskCard = React.createClass({displayName: "DialogTaskCard",
 
 module.exports = DialogTaskCard;
 
-},{"../../../mixins/DialogMixin":831,"../../exercise/UserExerciseInput":641,"../card/DialogCard":615,"object-assign":34,"react":527}],630:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../../exercise/UserExerciseInput":647,"../card/DialogCard":621,"object-assign":34,"react":527}],636:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -95905,7 +96705,7 @@ var DialogTaskPanel = React.createClass({displayName: "DialogTaskPanel",
 
 module.exports = DialogTaskPanel;
 
-},{"../../../mixins/DialogMixin":831,"../../numbers/NumbersBlock":735,"./DialogTaskCard":629,"./SelectedUserRolePanel":633,"object-assign":34,"react":527}],631:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../../numbers/NumbersBlock":759,"./DialogTaskCard":635,"./SelectedUserRolePanel":639,"object-assign":34,"react":527}],637:[function(require,module,exports){
 /**
  * Created by sabir on 20.12.15.
  */
@@ -96007,7 +96807,7 @@ var DialogViewButton = React.createClass({displayName: "DialogViewButton",
 
 module.exports = DialogViewButton;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingDialogPanel":634,"object-assign":34,"react":527}],632:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./SelfLoadingDialogPanel":640,"object-assign":34,"react":527}],638:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -96138,7 +96938,7 @@ var SelectRolePanel = React.createClass({displayName: "SelectRolePanel",
 
 module.exports = SelectRolePanel;
 
-},{"../card/DialogCard":615,"object-assign":34,"react":527}],633:[function(require,module,exports){
+},{"../card/DialogCard":621,"object-assign":34,"react":527}],639:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -96251,7 +97051,7 @@ var SelectedUserRolePanel = React.createClass({displayName: "SelectedUserRolePan
 
 module.exports = SelectedUserRolePanel;
 
-},{"../card/DialogCard":615,"object-assign":34,"react":527}],634:[function(require,module,exports){
+},{"../card/DialogCard":621,"object-assign":34,"react":527}],640:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -96576,7 +97376,7 @@ var SelfLoadingDialogPanel = React.createClass({displayName: "SelfLoadingDialogP
 
 module.exports = SelfLoadingDialogPanel;
 
-},{"../../../mixins/DialogMixin":831,"../../teacher/TeacherFeedbackCreationBlock":788,"./DialogPreparePanel":627,"./DialogReplicsPanel":628,"./DialogTaskPanel":630,"object-assign":34,"react":527}],635:[function(require,module,exports){
+},{"../../../mixins/DialogMixin":858,"../../teacher/TeacherFeedbackCreationBlock":814,"./DialogPreparePanel":633,"./DialogReplicsPanel":634,"./DialogTaskPanel":636,"object-assign":34,"react":527}],641:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -96804,7 +97604,7 @@ var PatientEditor = React.createClass({displayName: "PatientEditor",
 
 module.exports = PatientEditor;
 
-},{"../file/FileUploader":668,"object-assign":34,"react":527,"react-quill":285}],636:[function(require,module,exports){
+},{"../file/FileUploader":676,"object-assign":34,"react":527,"react-quill":285}],642:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -96911,7 +97711,7 @@ var ListOfSelfLoadingUserExercises = React.createClass({displayName: "ListOfSelf
 
 module.exports = ListOfSelfLoadingUserExercises;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"./SelfLoadingUserExercise":640,"react":527}],637:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"./SelfLoadingUserExercise":646,"react":527}],643:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -96923,6 +97723,8 @@ var ToggledText = require('../text/ToggledText');
 
 var TranslatableText = require('../../components/text/translatable/TranslatableText');
 
+var StarRating = require('../star/StarRating');
+
 var PatientCard = React.createClass({displayName: "PatientCard",
     getDefaultProps: function () {
         return {
@@ -96933,6 +97735,8 @@ var PatientCard = React.createClass({displayName: "PatientCard",
             onAnswer: function(type, ans){
 
             },
+
+
             number: undefined,
             comment: undefined,
             hint: undefined,
@@ -96942,7 +97746,15 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
             showAnswerBlock: true,
             teacherMode: false,
-            canAnswer: true
+            canAnswer: true,
+
+            exercisesIsFinished: false,
+
+            onRatingChange: function(rating){
+
+            }
+
+
         }
     },
 
@@ -96979,11 +97791,23 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
         customBottomBlock: {
 
+        },
+
+        starsPlaceholder: {
+            textAlign: 'right',
+            paddingTop: 10,
+            paddingBottom: 10,
+            borderTop: '1px dotted #EFF0F1'
         }
     },
 
     onAnswer: function(type, ans){
         this.props.onAnswer(type, ans);
+    },
+
+    onRatingChange: function(rating){
+        console.log('onRatingChange occured: rating = ', rating);
+        this.props.onRatingChange(rating);
     },
 
     render: function () {
@@ -97033,8 +97857,21 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
                                            onAnswer: this.onAnswer})
                     )
-                    : null
+                    : null, 
                 
+
+                this.props.userAnswer == undefined ? null :
+                    React.createElement("div", null, 
+                        this.props.exercisesIsFinished == false ? null :
+                            React.createElement("div", {style: this.componentStyle.starsPlaceholder}, 
+                                "Оценка:", 
+                                React.createElement(StarRating, {rating: this.props.userAnswer.rating, 
+                                            editable: this.props.teacherMode, onChange: this.onRatingChange})
+                            )
+                        
+                    )
+                
+
 
             )
         );
@@ -97044,7 +97881,7 @@ var PatientCard = React.createClass({displayName: "PatientCard",
 
 module.exports = PatientCard;
 
-},{"../../components/text/translatable/TranslatableText":796,"../task/PatientTask":786,"../text/ToggledText":795,"./UserExerciseInput":641,"object-assign":34,"react":527}],638:[function(require,module,exports){
+},{"../../components/text/translatable/TranslatableText":822,"../star/StarRating":811,"../task/PatientTask":812,"../text/ToggledText":821,"./UserExerciseInput":647,"object-assign":34,"react":527}],644:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -97067,6 +97904,11 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
             onAnswer: function(cardId, type, ans){
                 console.log('onAnswer: ', cardId, type, ans);
             },
+
+            onRatingChange: function(uA, rating){
+                console.log('onRatingChange: ', uA, rating);
+            },
+
             showDescription: false,
             showTask: true,
             showAnswerBlock: true,
@@ -97074,6 +97916,9 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
             autoNext: true,
             canAnswer: true,
             teacherMode: false,
+
+            isFinished: false,
+
             noCardsImg: 'https://d3ki9tyy5l5ruj.cloudfront.net/obj/c06fded71d4261a939460e0f0e02d4385c2ffe1d/empty_inbox.svg'
         }
     },
@@ -97227,6 +98072,11 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
         }
     },
 
+    onRatingChange: function(rating){
+        var uA = this.getSelectedUserAnswer();
+        this.props.onRatingChange(uA, rating);
+    },
+
     render: function () {
         var card = this.getSelectedCard();
         var userAnswer = this.getSelectedUserAnswer();
@@ -97288,8 +98138,9 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
                                                  canAnswer: this.props.canAnswer, 
                                                  showAnswerBlock: this.props.showAnswerBlock, 
                                                  answerType: card.answerType, 
-                                                 teacherMode: this.props.teacherMode}
-
+                                                 teacherMode: this.props.teacherMode, 
+                                                 onRatingChange: this.onRatingChange, 
+                                                 exercisesIsFinished: this.props.isFinished}
                                         )
                                 
                             )
@@ -97312,7 +98163,7 @@ var PatientExercise = React.createClass({displayName: "PatientExercise",
 
 module.exports = PatientExercise;
 
-},{"../numbers/NumbersBlock":735,"./PatientCard":637,"react":527}],639:[function(require,module,exports){
+},{"../numbers/NumbersBlock":759,"./PatientCard":643,"react":527}],645:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -97368,7 +98219,7 @@ var SelfLoadingCurrentUserExercise = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingCurrentUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":852,"./SelfLoadingUserExercise":640,"parse":35,"react":527}],640:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":882,"./SelfLoadingUserExercise":646,"parse":35,"react":527}],646:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -97553,7 +98404,6 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
                 React.createElement("div", {style: {textAlign: 'center', marginTop: 10, marginBottom: 5}}, 
                     React.createElement(AuthButton, {buttonClassName: 'ui blue basic button'})
                 )
-
             )
 
         );
@@ -97576,6 +98426,33 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
           this.setState({
               score: score
           });
+    },
+
+    onRatingChange: function(uA, rating){
+        console.log('onRatingChange: uA, rating = ', uA, rating);
+        if (uA == undefined){
+            return;
+        }
+        this.setState({
+            loading: true,
+            saving: true
+        });
+        var cardId = uA.cardId;
+        var userId = this.props.userId;
+        ExerciseMixin.rateUserAnswer(userId, cardId, rating, function(userAnswer){
+            var usa = (userAnswer == undefined) ? {} : userAnswer;
+            var list = (this.state.answers == undefined) ? [] : this.state.answers;
+            for (var i in list){
+                if (list[i].id == usa.id){
+                    list[i] = usa;
+                }
+            }
+            this.setState({
+                loading: false,
+                saving: false,
+                answers: list
+            });
+        }.bind(this));
     },
 
     render: function () {
@@ -97606,6 +98483,8 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
 
         readyToFinish = readyToFinish && (this.state.cards != undefined) && (this.state.cards.length > 0);
 
+        var isFinished = (status == 'finished');
+
         console.log('rendering exercise: teacherMode = ', this.props.teacherMode);
 
 
@@ -97623,7 +98502,9 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
                                       exercise: this.state.exercise, cards: this.state.cards, 
                                       customBottomBlock: customBottomBlock, showAnswerBlock: showAnswerBlock, 
                                       userId: this.props.userId, teacherMode: this.props.teacherMode, 
-                                      autoNext: this.props.autoNext, canAnswer: !waitingForFeedback}
+                                      autoNext: this.props.autoNext, canAnswer: !waitingForFeedback, 
+                                      onRatingChange: this.onRatingChange, 
+                                      isFinished: isFinished}
                     )
                 ), 
 
@@ -97667,7 +98548,7 @@ var SelfLoadingUserExercise = React.createClass({displayName: "SelfLoadingUserEx
 
 module.exports = SelfLoadingUserExercise;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../mixins/ExerciseMixin":832,"../exercise/PatientExercise":638,"../preloader/PatientPreloader":738,"../teacher/TeacherExerciseBlock":787,"../user/AuthButton":813,"object-assign":34,"react":527}],641:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":882,"../../mixins/ExerciseMixin":859,"../exercise/PatientExercise":644,"../preloader/PatientPreloader":762,"../teacher/TeacherExerciseBlock":813,"../user/AuthButton":839,"object-assign":34,"react":527}],647:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -97795,7 +98676,99 @@ var UserExerciseInput = React.createClass({displayName: "UserExerciseInput",
 
 module.exports = UserExerciseInput;
 
-},{"../input/PatientExerciseInput":677,"../recognition/SpeechRecognitionArea":770,"../record/PatientRecordComponent":771,"./diff/RightTextAnswerDiff":650,"react":527}],642:[function(require,module,exports){
+},{"../input/PatientExerciseInput":685,"../recognition/SpeechRecognitionArea":794,"../record/PatientRecordComponent":795,"./diff/RightTextAnswerDiff":657,"react":527}],648:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var CardComplexitySelectButton = React.createClass({displayName: "CardComplexitySelectButton",
+    getDefaultProps: function () {
+        return {
+            onSelect: function(level){
+                console.log('selected level = ' + level);
+            },
+            level: undefined,
+            list: [{
+                    level: 1,
+                    name: 'легко'
+                },
+                {
+                    level: 2,
+                    name: 'средне'
+                },
+                {
+                    level: 3,
+                    name: 'сложно'
+                },
+                {
+                    level: 4,
+                    name: 'очень сложно'
+                }
+            ]
+
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        button: {
+            fontSize: '13px',
+            padding: 5
+        }
+    },
+
+    onSelect: function(level){
+        this.props.onSelect(level);
+    },
+
+    render: function () {
+        var list = this.props.list;
+        console.log('rendering CardComplexitySelectButton: this.props.level = ', this.props.level);
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                React.createElement("div", {className: "ui buttons"}, 
+                    list.map(function(c, k){
+                        var key = 'compl_' + k;
+                        var onClick = this.onSelect.bind(this, c.level);
+                        var isActive = (this.props.level == c.level);
+                        return (
+                            React.createElement("button", {className: 'ui mini button ' + (isActive == true ? ' positive active ' : ' '), 
+                                    style: this.componentStyle.button, 
+                                    onClick: onClick}, 
+                                c.name
+                            )
+                        );
+
+                    }, this)
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = CardComplexitySelectButton;
+
+},{"object-assign":34,"react":527}],649:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -97864,7 +98837,11 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
                         var boundClick = this.onSelect.bind(this, item.name);
                         var isActive = (item.name == this.props.activeName);
                         return (
-                            React.createElement("button", {key: key, onClick: boundClick, style: this.componentStyle.button, className: 'ui mini button ' + (isActive == true ? ' positive active ' : ' ')}, item.displayName)
+                            React.createElement("button", {key: key, onClick: boundClick, 
+                                    style: this.componentStyle.button, 
+                                    className: 'ui mini button ' + (isActive == true ? ' positive active ' : ' ')}, 
+                                item.displayName
+                            )
                         );
                     }, this)
                 )
@@ -97876,7 +98853,7 @@ var CardTypeSelectButton = React.createClass({displayName: "CardTypeSelectButton
 
 module.exports = CardTypeSelectButton;
 
-},{"object-assign":34,"react":527}],643:[function(require,module,exports){
+},{"object-assign":34,"react":527}],650:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -97899,6 +98876,8 @@ var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
 var MaterialSearchButton = require('../../material/search/MaterialSearchButton');
 
+var CardComplexitySelectButton = require('./CardComplexitySelectButton');
+
 var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
     getDefaultProps: function () {
         return {
@@ -97911,11 +98890,14 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
             teacherId: undefined,
 
 
+
             //audioUrl: undefined,
             //vimeoUrl: undefined,
             //text: undefined,
             deletable: false,
             answerTypeName: undefined,
+            level: undefined,
+
             onSave: function(taskData){
                 console.log('onSave: ', taskData);
             },
@@ -97971,6 +98953,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
             vimeoUrl: vimeoUrl,
             text: text,
             transcript: this.getSafeString(this.props.transcript),
+            level: this.props.level,
             correctAnswer: this.getSafeString(this.props.correctAnswer),
             answerTypeName: this.props.answerTypeName,
             needToSave: false,
@@ -98000,6 +98983,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
             vimeoUrl: vimeoUrl,
             text: text,
             answerTypeName: np.answerTypeName,
+            level: np.level,
             needToSave: false,
             loading: false
         });
@@ -98212,6 +99196,13 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
         });
     },
 
+    onLevelSelect: function(level){
+        this.setState({
+            level: level,
+            needToSave: true
+        });
+    },
+
     getPatientTaskItems: function(){
         console.log('getPatientTaskItems occured');
         var arr =[];
@@ -98239,6 +99230,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
             items: this.getPatientTaskItems(),
             comment: this.state.comment,
             hint: this.state.hint,
+            level: this.state.level,
             correctAnswer: this.state.correctAnswer,
             transcript: this.state.transcript,
             answerType: this.state.answerTypeName
@@ -98375,6 +99367,11 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
                                     React.createElement(CardTypeSelectButton, {activeName: this.state.answerTypeName, onSelect: this.onTypeSelect})
                                 ), 
 
+                                React.createElement("div", null, 
+                                    React.createElement("div", {style: this.componentStyle.label}, "Сложность"), 
+                                    React.createElement(CardComplexitySelectButton, {level: this.state.level, onSelect: this.onLevelSelect})
+                                ), 
+
                                 this.state.answerTypeName == 'typing' ?
                                         React.createElement("div", {className: 'ui form', style: this.componentStyle.vimeoRightBlock}, 
                                             React.createElement("div", {style: this.componentStyle.label}, "Правильный ответ"), 
@@ -98442,7 +99439,7 @@ var EditableCardBlock = React.createClass({displayName: "EditableCardBlock",
 
 module.exports = EditableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/MaterialsMixin":838,"../../audio/PatientAudio":554,"../../file/FileUploader":668,"../../material/search/MaterialSearchButton":708,"../../player/VimeoPlayer":737,"../../task/PatientTask":786,"../../text/ToggledText":795,"./CardTypeSelectButton":642,"./UserAnswerTypeDemo":648,"object-assign":34,"react":527}],644:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../mixins/MaterialsMixin":868,"../../audio/PatientAudio":554,"../../file/FileUploader":676,"../../material/search/MaterialSearchButton":732,"../../player/VimeoPlayer":761,"../../task/PatientTask":812,"../../text/ToggledText":821,"./CardComplexitySelectButton":648,"./CardTypeSelectButton":649,"./UserAnswerTypeDemo":655,"object-assign":34,"react":527}],651:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -98624,6 +99621,7 @@ var ExerciseUpdatableCards = React.createClass({displayName: "ExerciseUpdatableC
                                 number: car.number, exerciseId: this.props.exerciseId, cardId: car.cardId, 
                                 comment: car.comment, hint: car.hint, transcript: car.transcript, 
                                 answerType: car.answerType, 
+                                level: car.level, 
                                 teacherId: this.props.teacherId, 
                                 correctAnswer: car.correctAnswer, 
                                 materials: car.materials, deletable: deletable})
@@ -98703,7 +99701,7 @@ var ExerciseUpdatableCards = React.createClass({displayName: "ExerciseUpdatableC
 
 module.exports = ExerciseUpdatableCards;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/ExerciseMixin":832,"../../numbers/NumbersBlock":735,"./UpdatableCardBlock":647,"object-assign":34,"react":527}],645:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../mixins/ExerciseMixin":859,"../../numbers/NumbersBlock":759,"./UpdatableCardBlock":654,"object-assign":34,"react":527}],652:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -98847,7 +99845,7 @@ var ExerciseUpdateTabs = React.createClass({displayName: "ExerciseUpdateTabs",
 
 module.exports = ExerciseUpdateTabs;
 
-},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":646,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":654,"../../exercise/info/UpdateExerciseInfoTab":655,"object-assign":34,"react":527}],646:[function(require,module,exports){
+},{"../../exercise/create/SelfLoadingExerciseUpdatableCardsList":653,"../../exercise/info/SelfLoadingUpdateExerciseInfoTab":662,"../../exercise/info/UpdateExerciseInfoTab":663,"object-assign":34,"react":527}],653:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -98960,7 +99958,7 @@ var SelfLoadingExerciseUpdatableCardsList = React.createClass({displayName: "Sel
 
 module.exports = SelfLoadingExerciseUpdatableCardsList;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./ExerciseUpdatableCards":644,"object-assign":34,"react":527}],647:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ExerciseMixin":859,"./ExerciseUpdatableCards":651,"object-assign":34,"react":527}],654:[function(require,module,exports){
 /**
  * Created by sabir on 15.10.15.
  */
@@ -98987,6 +99985,8 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
 
             comment: undefined,
             correctAnswer: undefined,
+
+            level: undefined,
 
             hint: undefined,
             transcript: undefined,
@@ -99028,6 +100028,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
     },
 
     onSave: function(data){
+        console.log('UpdatableCardBlock: onSave: data = ', data);
         console.log(data);
         console.log('this.props.number = ', this.props.number);
         if (this.props.exerciseId == undefined || this.props.number == undefined){
@@ -99040,7 +100041,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
         ExerciseMixin.updateCard(this.props.exerciseId, this.props.number,
                                     data.items, data.comment, data.hint,
                                     data.transcript, data.answerType,
-                                    data.correctAnswer,
+                                    data.correctAnswer, data.level,
             function(updatedCard){
                 self.props.onUpdate(updatedCard);
                 self.setState({
@@ -99064,6 +100065,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
                                        comment: this.props.comment, 
                                        correctAnswer: this.props.correctAnswer, 
                                        teacherId: this.props.teacherId, 
+                                       level: this.props.level, 
                                        hint: this.props.hint, deletable: this.props.deletable, 
                                        answerTypeName: this.props.answerType, 
                                        onSave: this.onSave, onDelete: this.onDelete})
@@ -99082,7 +100084,7 @@ var UpdatableCardBlock = React.createClass({displayName: "UpdatableCardBlock",
 
 module.exports = UpdatableCardBlock;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./EditableCardBlock":643,"object-assign":34,"react":527}],648:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ExerciseMixin":859,"./EditableCardBlock":650,"object-assign":34,"react":527}],655:[function(require,module,exports){
 /**
  * Created by sabir on 14.10.15.
  */
@@ -99138,7 +100140,7 @@ var UserAnswerTypeDemo = React.createClass({displayName: "UserAnswerTypeDemo",
 
 module.exports = UserAnswerTypeDemo;
 
-},{"object-assign":34,"react":527}],649:[function(require,module,exports){
+},{"object-assign":34,"react":527}],656:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -99230,7 +100232,7 @@ var CreateNewExerciseButton = React.createClass({displayName: "CreateNewExercise
 
 module.exports = CreateNewExerciseButton;
 
-},{"../../../dialog/exercise/ExerciseDialogViewer":611,"object-assign":34,"react":527}],650:[function(require,module,exports){
+},{"../../../dialog/exercise/ExerciseDialogViewer":617,"object-assign":34,"react":527}],657:[function(require,module,exports){
 /**
  * Created by sabir on 09.11.15.
  */
@@ -99330,7 +100332,94 @@ var RightTextAnswerDiff = React.createClass({displayName: "RightTextAnswerDiff",
 
 module.exports = RightTextAnswerDiff;
 
-},{"object-assign":34,"react":527,"react-diff":119}],651:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-diff":119}],658:[function(require,module,exports){
+/**
+ * Created by sabir on 29.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var DialogCard = require('../../dialog_exercise/card/DialogCard');
+
+var ExercisesGroupsCardsList = React.createClass({displayName: "ExercisesGroupsCardsList",
+    getDefaultProps: function () {
+        return {
+            groups: []
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: '100%',
+            padding: 5,
+            backgroundColor: 'white',
+            margin: '0 auto'
+        },
+
+        list: {
+
+        },
+
+        itemStyle: {
+            display: 'inline-block',
+            margin: 5,
+            width: 210,
+            height: 160
+        }
+
+    },
+
+    onCardClick: function(group){
+        console.log('group clicked: ', group);
+    },
+
+    render: function () {
+        var list = this.props.groups;
+        console.log('ExercisesGroupsCardsList: list = ', list);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.list}, 
+
+                    list.map(function(g, k){
+                        var key = 'group_' + k;
+                        var gr = g.group;
+                        var id = (gr == undefined) ? undefined : gr.id;
+                        var name = (gr == undefined) ? 'Unsorted' : gr.name;
+                        var onClick = this.onCardClick.bind(this, gr);
+                        return (
+                            React.createElement("div", {key: key, style: this.componentStyle.itemStyle, onClick: onClick}, 
+                                React.createElement(DialogCard, {bunchId: id, groupId: id, name: name})
+                            )
+                        );
+
+                    }, this)
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = ExercisesGroupsCardsList;
+
+},{"../../dialog_exercise/card/DialogCard":621,"object-assign":34,"react":527}],659:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -99432,13 +100521,15 @@ var AccessSwitcher = React.createClass({displayName: "AccessSwitcher",
 
 module.exports = AccessSwitcher;
 
-},{"object-assign":34,"react":527}],652:[function(require,module,exports){
+},{"object-assign":34,"react":527}],660:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
 
 var React = require('react');
 var assign = require('object-assign');
+
+var moment = require('moment');
 
 var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
     getDefaultProps: function () {
@@ -99451,6 +100542,7 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
             description: undefined,
             task: undefined,
 
+            timestamp: undefined,
             //task: 'veritatis et quasi architecto beatae  uam est, qui dolorem ipsum quia dolor sit amet,',
             //access: 'private'
             access: undefined
@@ -99541,6 +100633,7 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
 
     render: function () {
         var avaSt = assign(this.componentStyle.avatarPlaceholder,  {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+        var sDate = moment(this.props.timestamp).format('DD.MM.YYYY HH:mm');
 
         return (
             React.createElement("div", {style: this.componentStyle.placeholder, className: 'ui card'}, 
@@ -99565,6 +100658,13 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
                             ), 
                             React.createElement("div", null, 
                                 this.props.description
+                            ), 
+
+                            React.createElement("div", {style: this.componentStyle.label}, 
+                                "Дата создания"
+                            ), 
+                            React.createElement("div", null, 
+                                sDate
                             )
                         ), 
                     
@@ -99598,7 +100698,6 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
                         )
                     
 
-
                 )
 
 
@@ -99610,7 +100709,7 @@ var ExerciseInfoCard = React.createClass({displayName: "ExerciseInfoCard",
 
 module.exports = ExerciseInfoCard;
 
-},{"object-assign":34,"react":527}],653:[function(require,module,exports){
+},{"moment":33,"object-assign":34,"react":527}],661:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -99665,6 +100764,7 @@ var SelfLoadingExerciseInfoCard = React.createClass({displayName: "SelfLoadingEx
                 avatar: ex.avatar,
                 description: ex.description,
                 access: ex.access,
+                timestamp: ex.timestamp,
                 task: ex.task,
                 loading: false
             });
@@ -99681,7 +100781,9 @@ var SelfLoadingExerciseInfoCard = React.createClass({displayName: "SelfLoadingEx
             React.createElement("div", {style: this.componentStyle.placeholder}, 
 
                 React.createElement(ExerciseInfoCard, {name: this.state.name, description: this.state.name, 
-                                  avatar: this.state.avatar, task: this.state.task, access: this.state.access}), 
+                                  avatar: this.state.avatar, 
+                                  timestamp: this.state.timestamp, 
+                                  task: this.state.task, access: this.state.access}), 
 
                 React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
                     React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка...')
@@ -99695,7 +100797,7 @@ var SelfLoadingExerciseInfoCard = React.createClass({displayName: "SelfLoadingEx
 
 module.exports = SelfLoadingExerciseInfoCard;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./ExerciseInfoCard":652,"object-assign":34,"react":527}],654:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ExerciseMixin":859,"./ExerciseInfoCard":660,"object-assign":34,"react":527}],662:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -99762,6 +100864,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({displayName: "SelfLoad
                 avatar: ex.avatar,
                 description: ex.description,
                 access: ex.access,
+                timestamp: ex.timestamp,
                 task: ex.task,
                 groups: ex.groups,
                 loading: false
@@ -99809,6 +100912,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({displayName: "SelfLoad
                 React.createElement(UpdateExerciseInfoTab, {name: this.state.name, access: this.state.access, 
                                        description: this.state.description, groups: this.state.groups, 
                                        teacherId: this.props.teacherId, 
+                                       timestamp: this.state.timestamp, 
                                        avatar: this.state.avatar, exerciseId: this.props.exerciseId, 
                                        task: this.state.task, onSave: this.updateExercise, onDelete: this.onDelete}), 
 
@@ -99824,7 +100928,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({displayName: "SelfLoad
 
 module.exports = SelfLoadingUpdateExerciseInfoTab;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"../info/UpdateExerciseInfoTab":655,"object-assign":34,"react":527}],655:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ExerciseMixin":859,"../info/UpdateExerciseInfoTab":663,"object-assign":34,"react":527}],663:[function(require,module,exports){
 /**
  * Created by sabir on 16.10.15.
  */
@@ -99842,12 +100946,14 @@ var SelfLoadingExerciseGroupsSelect = require('../../select/exerciseGroup/SelfLo
 
 var DeleteButton = require('../../buttons/DeleteButton');
 
+
 var UpdateExerciseInfoTab = React.createClass({displayName: "UpdateExerciseInfoTab",
     getDefaultProps: function () {
         return {
             teacherId: undefined,
             name: undefined,
             avatar: undefined,
+            timestamp: undefined,
             description: undefined,
             task: undefined,
             groups: [],
@@ -100055,6 +101161,7 @@ var UpdateExerciseInfoTab = React.createClass({displayName: "UpdateExerciseInfoT
                 React.createElement("div", {style: this.componentStyle.leftBlock}, 
 
                     React.createElement(ExerciseInfoCard, {name: this.state.name, description: this.state.description, 
+                                      timestamp: this.props.timestamp, 
                                       task: this.state.task, avatar: this.state.avatar, access: this.state.access})
 
                 ), 
@@ -100139,7 +101246,7 @@ var UpdateExerciseInfoTab = React.createClass({displayName: "UpdateExerciseInfoT
 
 module.exports = UpdateExerciseInfoTab;
 
-},{"../../buttons/DeleteButton":559,"../../file/FileUploader":668,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":784,"../info/ExerciseInfoCard":652,"./AccessSwitcher":651,"object-assign":34,"react":527}],656:[function(require,module,exports){
+},{"../../buttons/DeleteButton":559,"../../file/FileUploader":676,"../../select/exerciseGroup/SelfLoadingExerciseGroupsSelect":808,"../info/ExerciseInfoCard":660,"./AccessSwitcher":659,"object-assign":34,"react":527}],664:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -100242,7 +101349,7 @@ var ExercisesSearchButton = React.createClass({displayName: "ExercisesSearchButt
 
 module.exports = ExercisesSearchButton;
 
-},{"../../dialog/Dialog":604,"./ExercisesSearchPanel":657,"object-assign":34,"react":527}],657:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./ExercisesSearchPanel":665,"object-assign":34,"react":527}],665:[function(require,module,exports){
 /**
  * Created by sabir on 31.10.15.
  */
@@ -100412,7 +101519,7 @@ var ExercisesSearchPanel = React.createClass({displayName: "ExercisesSearchPanel
 
 module.exports = ExercisesSearchPanel;
 
-},{"../../../mixins/ExerciseMixin":832,"../../bunch/exercise/ExercisesGroupsList":558,"object-assign":34,"react":527}],658:[function(require,module,exports){
+},{"../../../mixins/ExerciseMixin":859,"../../bunch/exercise/ExercisesGroupsList":558,"object-assign":34,"react":527}],666:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -100533,6 +101640,8 @@ var FeedItem = React.createClass({displayName: "FeedItem",
         },
 
         infoPlaceholder: {
+            paddingTop: 5,
+            paddingBottom: 5,
             borderBottom: '1px solid #EFF0F1'
         },
 
@@ -100693,7 +101802,7 @@ var FeedItem = React.createClass({displayName: "FeedItem",
 
 module.exports = FeedItem;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../mixins/NotificationMixin":841,"../dialog_exercise/view/SelfLoadingDialogPanel":634,"../exercise/SelfLoadingCurrentUserExercise":639,"../exercise/SelfLoadingUserExercise":640,"../note/SelfLoadingNote":720,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"./button/EditFeedItemButton":665,"./video/SelfLoadingVideosList":666,"moment":33,"object-assign":34,"react":527}],659:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../mixins/NotificationMixin":871,"../dialog_exercise/view/SelfLoadingDialogPanel":640,"../exercise/SelfLoadingCurrentUserExercise":645,"../exercise/SelfLoadingUserExercise":646,"../note/SelfLoadingNote":744,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":787,"./button/EditFeedItemButton":673,"./video/SelfLoadingVideosList":674,"moment":33,"object-assign":34,"react":527}],667:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -100794,7 +101903,7 @@ var FeedItemsList = React.createClass({displayName: "FeedItemsList",
 
 module.exports = FeedItemsList;
 
-},{"./FeedItem":658,"object-assign":34,"react":527}],660:[function(require,module,exports){
+},{"./FeedItem":666,"object-assign":34,"react":527}],668:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -100916,7 +102025,7 @@ var PagedFeedItemsList = React.createClass({displayName: "PagedFeedItemsList",
 
 module.exports = PagedFeedItemsList;
 
-},{"./FeedItemsList":659,"object-assign":34,"react":527}],661:[function(require,module,exports){
+},{"./FeedItemsList":667,"object-assign":34,"react":527}],669:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -101027,7 +102136,7 @@ var SelfLoadingClassFeed = React.createClass({displayName: "SelfLoadingClassFeed
 
 module.exports = SelfLoadingClassFeed;
 
-},{"../../mixins/FeedMixin":833,"./PagedFeedItemsList":660,"object-assign":34,"react":527}],662:[function(require,module,exports){
+},{"../../mixins/FeedMixin":860,"./PagedFeedItemsList":668,"object-assign":34,"react":527}],670:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -101124,7 +102233,7 @@ var SelfLoadingFeedItem = React.createClass({displayName: "SelfLoadingFeedItem",
 
 module.exports = SelfLoadingFeedItem;
 
-},{"../../mixins/FeedMixin":833,"./FeedItem":658,"object-assign":34,"react":527}],663:[function(require,module,exports){
+},{"../../mixins/FeedMixin":860,"./FeedItem":666,"object-assign":34,"react":527}],671:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -101611,7 +102720,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({displayName: "SelfLoadingUpda
 
 module.exports = SelfLoadingUpdateFeedItem;
 
-},{"../../mixins/FeedMixin":833,"../buttons/DeleteButton":559,"../dialog_exercise/list/DialogSearchButton":622,"../dialog_exercise/view/SelfLoadingDialogPanel":634,"../editor/PatientEditor":635,"../exercise/SelfLoadingCurrentUserExercise":639,"../exercise/SelfLoadingUserExercise":640,"../exercise/search/ExercisesSearchButton":656,"../feed/FeedItem":658,"../material/search/MaterialSearchButton":708,"../note/SelfLoadingNote":720,"../questionnaire/panels/list/QuestionnaireSearchButton":750,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"./video/SelfLoadingVideosList":666,"moment":33,"object-assign":34,"react":527}],664:[function(require,module,exports){
+},{"../../mixins/FeedMixin":860,"../buttons/DeleteButton":559,"../dialog_exercise/list/DialogSearchButton":628,"../dialog_exercise/view/SelfLoadingDialogPanel":640,"../editor/PatientEditor":641,"../exercise/SelfLoadingCurrentUserExercise":645,"../exercise/SelfLoadingUserExercise":646,"../exercise/search/ExercisesSearchButton":664,"../feed/FeedItem":666,"../material/search/MaterialSearchButton":732,"../note/SelfLoadingNote":744,"../questionnaire/panels/list/QuestionnaireSearchButton":774,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":787,"./video/SelfLoadingVideosList":674,"moment":33,"object-assign":34,"react":527}],672:[function(require,module,exports){
 /**
  * Created by sabir on 01.11.15.
  */
@@ -101717,7 +102826,7 @@ var CreateFeedItemButton = React.createClass({displayName: "CreateFeedItemButton
 
 module.exports = CreateFeedItemButton;
 
-},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":663,"object-assign":34,"react":527}],665:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"../SelfLoadingUpdateFeedItem":671,"object-assign":34,"react":527}],673:[function(require,module,exports){
 /**
  * Created by sabir on 28.10.15.
  */
@@ -101839,7 +102948,7 @@ var EditFeedItemButton = React.createClass({displayName: "EditFeedItemButton",
 
 module.exports = EditFeedItemButton;
 
-},{"../../dialog/Dialog":604,"../SelfLoadingUpdateFeedItem":663,"object-assign":34,"react":527}],666:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"../SelfLoadingUpdateFeedItem":671,"object-assign":34,"react":527}],674:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -101966,7 +103075,7 @@ var SelfLoadingVideosList = React.createClass({displayName: "SelfLoadingVideosLi
 
 module.exports = SelfLoadingVideosList;
 
-},{"../../../../react/mixins/commonMixins/CommonMixin":851,"../../../mixins/MaterialsMixin":838,"../../material/list/CardsList":702,"object-assign":34,"react":527}],667:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/CommonMixin":881,"../../../mixins/MaterialsMixin":868,"../../material/list/CardsList":726,"object-assign":34,"react":527}],675:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -102020,9 +103129,10 @@ var FileUploadButton = React.createClass({displayName: "FileUploadButton",
     },
 
     render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
 
         return (
-            React.createElement("div", {style: this.componentStyle.placeholder, className: this.props.className}, 
+            React.createElement("div", {style: st, className: this.props.className}, 
                 this.props.icon == undefined ? null :
                     React.createElement("i", {className: this.props.icon}), 
                 
@@ -102042,7 +103152,7 @@ var FileUploadButton = React.createClass({displayName: "FileUploadButton",
 
 module.exports = FileUploadButton;
 
-},{"./FileUploader":668,"object-assign":34,"react":527}],668:[function(require,module,exports){
+},{"./FileUploader":676,"object-assign":34,"react":527}],676:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -102315,7 +103425,7 @@ var FileUploader = React.createClass({displayName: "FileUploader",
 
 module.exports = FileUploader;
 
-},{"object-assign":34,"react":527,"react-dropzone-component":265}],669:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-dropzone-component":265}],677:[function(require,module,exports){
 /**
  * Created by sabir on 03.12.15.
  */
@@ -102366,7 +103476,7 @@ var GrammarPanel = React.createClass({displayName: "GrammarPanel",
 
 module.exports = GrammarPanel;
 
-},{"../topics/SelfLoadingTopicsList":801,"object-assign":34,"react":527}],670:[function(require,module,exports){
+},{"../topics/SelfLoadingTopicsList":827,"object-assign":34,"react":527}],678:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -102475,7 +103585,7 @@ var SelfInitHeader = React.createClass({displayName: "SelfInitHeader",
 
 module.exports = SelfInitHeader;
 
-},{"../../../../react/commonComponents/headers/HeaderPanel":534,"../../../react/mixins/commonMixins/ParseMixin":852,"../user/AuthButton":813,"parse":35,"react":527}],671:[function(require,module,exports){
+},{"../../../../react/commonComponents/headers/HeaderPanel":534,"../../../react/mixins/commonMixins/ParseMixin":882,"../user/AuthButton":839,"parse":35,"react":527}],679:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -102609,7 +103719,7 @@ var StudentHeader = React.createClass({displayName: "StudentHeader",
 
 module.exports = StudentHeader;
 
-},{"../../../mixins/LoginMixin":837,"../../profile/UserProfileButton":743,"../../templates/CurrentUserMenuItem":789,"../../templates/HeaderLeftLinks":790,"../../templates/HeaderTemplate":791,"object-assign":34,"react":527,"react-router":307}],672:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":867,"../../profile/UserProfileButton":767,"../../templates/CurrentUserMenuItem":815,"../../templates/HeaderLeftLinks":816,"../../templates/HeaderTemplate":817,"object-assign":34,"react":527,"react-router":307}],680:[function(require,module,exports){
 /**
  * Created by sabir on 12.10.15.
  */
@@ -102822,7 +103932,7 @@ var TeacherHeader = React.createClass({displayName: "TeacherHeader",
 
 module.exports = TeacherHeader;
 
-},{"../../../mixins/LoginMixin":837,"../../notification/NotificationsNumberSpan":731,"../../profile/UserProfileButton":743,"../../templates/CurrentUserMenuItem":789,"../../templates/HeaderLeftLinks":790,"../../templates/HeaderTemplate":791,"object-assign":34,"react":527,"react-router":307}],673:[function(require,module,exports){
+},{"../../../mixins/LoginMixin":867,"../../notification/NotificationsNumberSpan":755,"../../profile/UserProfileButton":767,"../../templates/CurrentUserMenuItem":815,"../../templates/HeaderLeftLinks":816,"../../templates/HeaderTemplate":817,"object-assign":34,"react":527,"react-router":307}],681:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -102901,7 +104011,7 @@ var GifInstruction = React.createClass({displayName: "GifInstruction",
 
 module.exports = GifInstruction;
 
-},{"object-assign":34,"react":527}],674:[function(require,module,exports){
+},{"object-assign":34,"react":527}],682:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -102962,7 +104072,7 @@ var IconMessage = React.createClass({displayName: "IconMessage",
 
 module.exports = IconMessage;
 
-},{"object-assign":34,"react":527}],675:[function(require,module,exports){
+},{"object-assign":34,"react":527}],683:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -103204,7 +104314,7 @@ var IdiomsPanel = React.createClass({displayName: "IdiomsPanel",
 
 module.exports = IdiomsPanel;
 
-},{"../../mixins/IdiomsMixin":835,"../material/list/CardsList":702,"object-assign":34,"react":527}],676:[function(require,module,exports){
+},{"../../mixins/IdiomsMixin":862,"../material/list/CardsList":726,"object-assign":34,"react":527}],684:[function(require,module,exports){
 /**
  * Created by sabir on 27.09.15.
  */
@@ -103259,7 +104369,7 @@ var PatientImg = React.createClass({displayName: "PatientImg",
 
 module.exports = PatientImg;
 
-},{"legit-image":32,"object-assign":34,"react":527}],677:[function(require,module,exports){
+},{"legit-image":32,"object-assign":34,"react":527}],685:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -103381,7 +104491,1390 @@ var PatientExerciseInput = React.createClass({displayName: "PatientExerciseInput
 
 module.exports = PatientExerciseInput;
 
-},{"react":527}],678:[function(require,module,exports){
+},{"react":527}],686:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var PatientPlayer = require('../player/PatientPlayer');
+
+var TranslatableTextBlock = require('./text/TranslatableTextBlock');
+
+var SelfLoadingLikeButton = require('../like/SelfLoadingLikeButton');
+
+var moment = require('moment');
+
+var SelfLoadingUserSpan = require('../user/SeflLoadingUserSpan');
+
+var JungleMaterial = React.createClass({displayName: "JungleMaterial",
+    getDefaultProps: function () {
+        return {
+            name: undefined,
+            materialId: undefined,
+            timestamp: undefined,
+
+            creatorId: undefined,
+            userId: undefined,
+
+            content: {
+
+            },
+
+            transcriptText: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 920,
+            margin: '0 auto',
+            padding: 10,
+            height: '100%'
+            //backgroundColor: 'white'
+        },
+
+        left: {
+            position: 'absolute',
+            //top: 50,
+            top: 0,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 440
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 440,
+            marginLeft: 440,
+            paddingLeft: 10,
+            maxHeight: '100%',
+            overflowY: 'auto'
+        },
+
+        content: {
+
+        },
+
+        playerPlaceholder: {
+            width: '100%',
+            height: 300,
+            paddingBottom: 10,
+            borderBottom: '1px dotted #EFF0F1'
+        },
+
+        audioPlaceholder: {
+
+        },
+
+        namePlaceholder: {
+            paddingBottom: 10,
+            paddingTop: 10,
+            fontSize: 18,
+            lineHeight: '24px',
+            fontWeight: 'bold'
+        },
+
+        likePlaceholder: {
+            paddingTop: 10,
+            opacity: 0.7,
+            paddingBottom: 10
+        },
+
+        aboutPlaceholder: {
+            paddingTop: 10,
+            opacity: 0.7,
+            paddingBottom: 10,
+            borderTop: '1px dotted #EFF0F1'
+        }
+    },
+
+    getWordsNumber: function(){
+        var k = 0;
+        var text = this.props.transcriptText;
+        if (text == undefined){
+            text = '';
+        }
+        var arr = text.match(/("[^"]+"|[^"\s]+)/g);
+        arr = arr.map(function(w){return w.toLowerCase()});
+        var map = {};
+        for (var i in arr){
+            var w = arr[i];
+            map[w] = 1;
+        }
+        for (var key in map){
+            k++;
+        }
+        return k;
+    },
+
+    render: function () {
+        var text = this.props.transcriptText;
+        var content = this.props.content;
+        if (content == undefined){
+            content = {};
+        }
+        moment.locale('ru');
+        var sDate = moment(this.props.timestamp).format('DD.MM.YYYY HH:mm');
+        var wordsNumber = this.getWordsNumber();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+                    React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                        this.props.name
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.content}, 
+
+                        content.contentType == 'youtube' ?
+                            React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                                React.createElement(PatientPlayer, {youtubeId: content.youtubeId})
+                            ) : null, 
+                        
+
+                        content.contentType == 'vimeo' ?
+                            React.createElement("div", {style: this.componentStyle.playerPlaceholder}, 
+                                React.createElement(PatientPlayer, {vimeoId: content.vimeoId})
+                            ) : null, 
+                        
+
+                        content.contentType == 'audio' ?
+                            React.createElement("div", {style: this.componentStyle.audioPlaceholder}, 
+                                React.createElement("audio", {controls: true, src: content.audioUrl})
+                            ) : null
+                        
+
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.likePlaceholder}, 
+                        React.createElement(SelfLoadingLikeButton, {
+                            objectClassName: 'JungleMaterial', userId: this.props.userId, 
+                            objectId: this.props.materialId})
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.aboutPlaceholder}, 
+                        React.createElement("div", {style: {marginBottom: 10}}, 
+                            React.createElement("span", {style: {borderBottom: '1px dotted #606060', fontSize: 16,
+                                            fontWeight: 'bold', paddingBottom: 1}}, "О материале")
+                        ), 
+                        React.createElement("div", null, 
+                            "Опубликовано: ", sDate
+                        ), 
+                        React.createElement("div", null, 
+                            "Количество слов: ", wordsNumber
+                        ), 
+                        React.createElement("div", null, 
+                            "Автор: ", React.createElement(SelfLoadingUserSpan, {userId: this.props.creatorId})
+                        )
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+                    React.createElement(TranslatableTextBlock, {text: this.props.transcriptText})
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = JungleMaterial;
+
+},{"../like/SelfLoadingLikeButton":709,"../player/PatientPlayer":760,"../user/SeflLoadingUserSpan":844,"./text/TranslatableTextBlock":693,"moment":33,"object-assign":34,"react":527}],687:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingJunglesList = require('./list/SelfLoadingJunglesList');
+
+var JunglesPanel = React.createClass({displayName: "JunglesPanel",
+    getDefaultProps: function () {
+        return {
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 820,
+            margin: '0 auto'
+        }
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                React.createElement(SelfLoadingJunglesList, {userId: this.props.userId})
+            )
+        );
+    }
+
+});
+
+module.exports = JunglesPanel;
+
+},{"./list/SelfLoadingJunglesList":692,"object-assign":34,"react":527}],688:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var JungleMaterial = require('./JungleMaterial');
+
+var JungleMixin = require('../../mixins/JungleMixin');
+
+var SelfLoadingJungleMaterial = React.createClass({displayName: "SelfLoadingJungleMaterial",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined,
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            material: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 900,
+            margin: '0 auto'
+        }
+    },
+
+    load: function(){
+        var materialId = this.props.materialId;
+        if (materialId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        JungleMixin.loadJungleMaterial(materialId, function(m){
+            this.setState({
+                loading: false,
+                material: m
+            });
+        }.bind(this));
+    },
+
+    getContent: function(){
+        var m = this.state.material;
+        if (m == undefined){
+            return undefined;
+        }
+        var contentType = undefined;
+        var content = {};
+        if (m.youtubeId != undefined){
+            content.contentType = 'youtube';
+            content.youtubeId = m.youtubeId;
+        }
+        if (m.vimdeoId != undefined){
+            content.contentType = 'vimeo';
+            content.vimeoId = m.vimeoId;
+        }
+        if (m.audioUrl != undefined){
+            content.contentType = 'audio';
+            content.audioUrl = m.audioUrl;
+        }
+        return content;
+    },
+
+    render: function () {
+        var m = this.state.material;
+        var content = this.getContent();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                m == undefined ? null :
+                    React.createElement(JungleMaterial, {
+                        creatorId: m.creatorId, 
+                        userId: this.props.userId, 
+                        timestamp: m.timestamp, 
+                        materialId: m.id, name: m.name, content: content, transcriptText: m.text}), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingJungleMaterial;
+
+},{"../../mixins/JungleMixin":863,"./JungleMaterial":686,"object-assign":34,"react":527}],689:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var JunglesItem = React.createClass({displayName: "JunglesItem",
+    getDefaultProps: function () {
+        return {
+            name: undefined,
+            description: undefined,
+            avatar: 'http://www.unoosa.org/res/timeline/index_html/space-2.jpg',
+            materialId: undefined,
+            onItemClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 820,
+            padding: 4,
+            cursor: 'pointer',
+            backgroundColor: 'white',
+            borderRadius: 4,
+            border: '1px solid #EFF0F1'
+        },
+
+        avatarPlaceholder: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 130,
+            padding: 5
+        },
+
+        avatar: {
+            width: 120,
+            height: 120,
+            borderRadius: 4,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat'
+        },
+
+        content: {
+            width: 680,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        namePlaceholder: {
+            fontSize: 18,
+            fontWeignt: 'bold'
+        },
+
+        descriptionPlaceholder: {
+            fontSize: 14
+        }
+
+
+    },
+
+    render: function () {
+        var avatarStyle = assign({}, this.componentStyle.avatar, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, onClick: this.props.onItemClick}, 
+
+                React.createElement("div", {style: this.componentStyle.avatarPlaceholder}, 
+                    React.createElement("div", {style: this.componentStyle.avatar})
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.content}, 
+
+                    React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
+                        this.props.name
+                    ), 
+
+                    React.createElement("div", {style: this.componentStyle.descriptionPlaceholder}, 
+                        this.props.description
+                    )
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = JunglesItem;
+
+},{"object-assign":34,"react":527}],690:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var JunglesItem = require('./JunglesItem');
+
+var TopicDialog = require('../../topics/dialog/TopicDialog');
+
+var SelfLoadingJungleMaterial = require('../SelfLoadingJungleMaterial');
+
+var JunglesList = React.createClass({displayName: "JunglesList",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            materials: []
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            selectedMaterial: undefined,
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        listPlaceholder: {
+
+        }
+    },
+
+    onItemClick: function(m){
+        this.setState({
+            selectedMaterial: m,
+            dialogVisible: true
+        });
+    },
+
+    getDialogContent: function(){
+        var m = this.state.selectedMaterial;
+        if (m == undefined){
+            return null;
+        }
+        return (
+            React.createElement(SelfLoadingJungleMaterial, {
+                userId: this.props.userId, 
+                materialId: m.id})
+        );
+
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    render: function () {
+        var list = this.props.materials;
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+
+                    list.map(function(m, k){
+                        var key = 'j_material_' + k;
+                        var onItemClick = this.onItemClick.bind(this, m);
+                        return (
+                            React.createElement("div", {key: key, style: {marginBottom: 5}}, 
+                                React.createElement(JunglesItem, {name: m.name, 
+                                             onItemClick: onItemClick, 
+                                             materialId: m.id, 
+                                             userId: this.props.userId, 
+                                             description: m.description, avatar: m.avatar})
+                            )
+                        );
+
+                    }, this)
+
+                ), 
+
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(TopicDialog, {content: this.getDialogContent(), onClose: this.onClose})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = JunglesList;
+
+},{"../../topics/dialog/TopicDialog":831,"../SelfLoadingJungleMaterial":688,"./JunglesItem":689,"object-assign":34,"react":527}],691:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var JunglesList = require('./JunglesList');
+
+var PagedJunglesList = React.createClass({displayName: "PagedJunglesList",
+    getDefaultProps: function () {
+        return {
+            userId: undefined,
+            materials: [],
+            pageSize: 10
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            visibleNumber: this.props.pageSize
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 820,
+            margin: '0 auto'
+            //backgroundColor: 'white'
+        },
+
+        listPlaceholder: {
+
+        },
+
+        morePlaceholder: {
+            padding: 5,
+            textAlign: 'center'
+        }
+    },
+
+    getMaterials: function(){
+        var n = this.state.visibleNumber;
+        var list = this.props.materials;
+        if (list == undefined || list.length == 0){
+            return [];
+        }
+        return list.slice(0, n);
+    },
+
+    canAddMore: function(){
+        var n = this.state.visibleNumber;
+        var list = (this.props.materials == undefined) ? [] : this.props.materials;
+        if (n >= list.length){
+            return false;
+        }
+        return true;
+    },
+
+    loadMore: function(){
+        var n = this.state.visibleNumber;
+        n+= this.props.pageSize;
+        this.setState({
+            visibleNumber: n
+        });
+    },
+
+    render: function () {
+        var materials = this.getMaterials();
+        var canAddMore = this.canAddMore();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                    React.createElement(JunglesList, {
+                        userId: this.props.userId, 
+                        materials: materials})
+                ), 
+
+
+                canAddMore == false ? null :
+                    React.createElement("div", {style: this.componentStyle.morePlaceholder}, 
+                        React.createElement("button", {className: 'ui basic button', onClick: this.loadMore}, 
+                            "Загрузить еще ", this.props.pageSize
+                        )
+                    )
+                
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = PagedJunglesList;
+
+},{"./JunglesList":690,"object-assign":34,"react":527}],692:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var JungleMixin = require('../../../mixins/JungleMixin');
+
+var PagedJunglesList = require('./PagedJunglesList');
+
+var CreateJungleButton = require('../update/CreateJungleButton');
+
+var SelfLoadingJunglesList = React.createClass({displayName: "SelfLoadingJunglesList",
+    getDefaultProps: function () {
+        return {
+            userId: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            materials: []
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        var userId = this.props.userId;
+        this.load(userId);
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        listPlaceholder: {
+
+        },
+
+        addNewButtonPlaceholder: {
+            width: '100%',
+            padding: 5,
+            textAlign: 'right'
+        }
+    },
+
+    load: function(userId){
+        if (userId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        JungleMixin.loadUserJungleMaterials(userId, function(materials){
+            this.setState({
+                loading: false,
+                materials: materials
+            });
+        }.bind(this))
+    },
+
+    onCreated: function(){
+        var userId = this.props.userId;
+        this.load(userId);
+    },
+
+    render: function () {
+        var materials = this.state.materials;
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.addNewButtonPlaceholder}, 
+                    React.createElement(CreateJungleButton, {userId: this.props.userId, onCreated: this.onCreated})
+                ), 
+
+                materials.length == 0 ? null :
+                    React.createElement("div", {style: this.componentStyle.listPlaceholder}, 
+                        React.createElement(PagedJunglesList, {
+                            userId: this.props.userId, 
+                            materials: materials})
+                    ), 
+                
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingJunglesList;
+
+},{"../../../mixins/JungleMixin":863,"../update/CreateJungleButton":694,"./PagedJunglesList":691,"object-assign":34,"react":527}],693:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var TranslatableText = require('../../text/translatable/TranslatableText');
+
+var TranslatableTextBlock = React.createClass({displayName: "TranslatableTextBlock",
+    getDefaultProps: function () {
+        return {
+            text: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        blankLine: {
+            height: 20
+        },
+
+        textStyle: {
+            lineHeight: '30px'
+        }
+    },
+
+    getComponentsList: function(){
+        var text = this.props.text;
+        if (text == undefined){
+            text = '';
+        }
+        var list = text.split('\n');
+        var arr = [];
+        for (var i in list){
+            var s = list[i];
+            s = s.trim();
+            if (s == ''){
+                arr.push(
+                    React.createElement("div", {style: this.componentStyle.blankLine})
+                );
+                continue;
+            }
+            arr.push(
+                React.createElement(TranslatableText, {stlyle: this.componentStyle.textStyle, text: s})
+            );
+        }
+        return arr;
+    },
+
+    render: function () {
+        var list = this.getComponentsList();
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+                list.map(function(a, k){
+                    var key = 'text_' + k;
+                    return (
+                        React.createElement("div", {key: key, style: {lineHeight: '30px'}}, 
+                            a
+                        )
+                    );
+                })
+            )
+        );
+    }
+
+});
+
+module.exports = TranslatableTextBlock;
+
+},{"../../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],694:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingJungleUpdatePanel = require('./SelfLoadingJungleUpdatePanel');
+
+var Dialog = require('../../dialog/Dialog');
+
+var CreateJungleButton = React.createClass({displayName: "CreateJungleButton",
+    getDefaultProps: function () {
+        return {
+            buttonName: 'Добавить материал',
+            icon: 'icon plus',
+            buttonClassName: 'ui basic button',
+            userId: undefined,
+            onCreated: function(m){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        dialogPanelStyle: {
+            width: 900
+        }
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    show: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    onCreated: function(m){
+        this.props.onCreated(m);
+        this.onClose();
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement("div", null, 
+                React.createElement(SelfLoadingJungleUpdatePanel, {
+                    userId: this.props.userId, 
+                    onCreated: this.onCreated})
+            )
+        );
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("button", {className: this.props.buttonClassName, onClick: this.show}, 
+                    React.createElement("i", {className: this.props.icon}), " ", this.props.buttonName
+                ), 
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {content: this.getDialogContent(), 
+                            dialogPanelStyle: this.dialogPanelStyle, 
+                            level: 10, visible: true, onClose: this.onClose})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = CreateJungleButton;
+
+},{"../../dialog/Dialog":610,"./SelfLoadingJungleUpdatePanel":696,"object-assign":34,"react":527}],695:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var PatientPlayer = require('../../player/PatientPlayer');
+
+var JungleUpdatePanel = React.createClass({displayName: "JungleUpdatePanel",
+    getDefaultProps: function () {
+        return {
+            audioUrl: undefined,
+            vimeoId: undefined,
+            text: undefined,
+            youtubeId: undefined,
+            name: undefined,
+
+            onChange: function(data){
+
+            },
+
+            onSave: function(data){
+                console.log('JungleUpdatePanel: default: onSave: data = ', data);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            audioUrl: this.props.audioUrl,
+            text: this.props.text,
+            vimeoId: this.props.vimeoId,
+            youtubeId: this.props.youtubeId,
+            name: this.props.name,
+            description: this.props.description
+        }
+    },
+
+    getData: function(){
+        return {
+            name: this.state.name,
+            text: this.state.text,
+            vimeoId: this.state.vimeoId,
+            youtubeId: this.state.youtubeId,
+            description: this.state.description
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({
+            audioUrl: nextProps.audioUrl,
+            text: nextProps.text,
+            vimeoId: nextProps.vimeoId,
+            youtubeId: nextProps.youtubeId,
+            name: nextProps.name,
+            description: nextProps.description
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    getValFromEvt: function(evt){
+        var val = evt.target.value;
+        if (val == undefined || val.trim() == ''){
+            return undefined;
+        }
+        return val;
+    },
+
+    onTextChange: function(evt){
+        var text = this.getValFromEvt(evt);
+        this.setState({
+            text: text
+        });
+        this.onChange({text: text});
+    },
+
+    onVimeoIdChange: function(evt){
+        var vimeoId = this.getValFromEvt(evt);
+        if (vimeoId != undefined){
+            if (vimeoId.indexOf('vimeo') > -1){
+                var arr = vimeoId.split('/');
+                vimeoId = arr[arr.length - 1];
+            }
+        }
+        this.setState({
+            vimeoId: vimeoId,
+            youtubeId: undefined
+        });
+        this.onChange({vimeoId: vimeoId});
+    },
+
+    onYoutubeIdChange: function(evt){
+        var youtubeId = this.getValFromEvt(evt);
+        if (youtubeId != undefined){
+            if (youtubeId.indexOf('youtube') > -1){
+                var video_id = youtubeId.split('v=')[1];
+                var ampersandPosition = video_id.indexOf('&');
+                if(ampersandPosition != -1) {
+                    video_id = video_id.substring(0, ampersandPosition);
+                }
+                youtubeId = video_id;
+            }
+        }
+        this.setState({
+            youtubeId: youtubeId,
+            vimeoId: undefined
+        });
+        this.onChange({youtubeId: youtubeId});
+    },
+
+    onNameChange: function(evt){
+        var name = this.getValFromEvt(evt);
+        this.setState({
+            name: name
+        });
+        this.onChange({name: name});
+    },
+
+    onDescriptionChange: function(evt){
+        var description = this.getValFromEvt(evt);
+        this.setState({
+            description: description
+        });
+        this.onChange({description: description});
+    },
+
+    onChange: function(aData){
+        var data = this.getData();
+        data = assign({}, data, aData);
+        this.props.onChange(data);
+    },
+
+    componentStyle: {
+        placeholder: {
+            width: 900,
+            padding: 5,
+            margin: '0 auto'
+        },
+
+        left: {
+            width: 300,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            padding: 5,
+            paddingLeft: 0,
+            height: '100%',
+            borderRight: '1px solid #EFF0F1'
+        },
+
+        right: {
+            width: 580,
+            padding: 5,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            height: '100%',
+            overflowY: 'auto'
+        },
+
+        descriptionInput: {
+            minHeight: 0,
+            height: '5em'
+        },
+
+        textInput: {
+            minHeight: '20em'
+        },
+
+        saveButtonPlaceholder: {
+            padding: 5,
+            textAlign: 'right'
+        }
+
+    },
+
+    canSave: function(){
+        var data = this.getData();
+        if (data.youtubeId == undefined && data.vimeoId == undefined){
+            return false;
+        }
+        if (data.name == undefined){
+            return false;
+        }
+        return true;
+    },
+
+    save: function(){
+        var data = this.getData();
+        this.props.onSave(data);
+    },
+
+    render: function () {
+        var vimeoId = this.state.vimeoId;
+        var youtubeId = this.state.youtubeId;
+        var videoExists = (vimeoId != undefined || youtubeId != undefined);
+        var canSave = this.canSave();
+
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.left}, 
+
+
+                    videoExists == false ? null
+                        :
+                        React.createElement("div", {style: this.componentStyle.videoPlaceholder}, 
+                            vimeoId == undefined ?
+                                React.createElement(PatientPlayer, {youtubeId: youtubeId})
+                                : null, 
+                            youtubeId == undefined ?
+                                React.createElement(PatientPlayer, {vimeoId: vimeoId})
+                                : null
+                            
+                        ), 
+                    
+
+                    React.createElement("div", {style: {}}, 
+                        React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                            React.createElement("input", {value: vimeoId, onChange: this.onVimeoIdChange, placeholder: 'Ссылка на Вимео'})
+                        ), 
+
+                        React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                            React.createElement("input", {value: youtubeId, onChange: this.onYoutubeIdChange, placeholder: 'Ссылка на Youtube'})
+                        )
+                    )
+
+
+                ), 
+
+
+                React.createElement("div", {style: this.componentStyle.right}, 
+
+                    React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                        React.createElement("input", {value: this.state.name, placeholder: 'Название', onChange: this.onNameChange})
+                    ), 
+
+                    React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                        React.createElement("textarea", {style: this.componentStyle.descriptionInput, 
+                                  placeholder: 'Описание', 
+                            value: this.state.description, onChange: this.onDescriptionChange})
+                    ), 
+                    
+                    React.createElement("div", {className: 'ui form', style: {marginBottom: 5}}, 
+                        React.createElement("textarea", {placeholder: 'Транскрипт видео', 
+                            style: this.componentStyle.textInput, 
+                            onChange: this.onTextChange, value: this.state.text
+                            })
+                    )
+
+                ), 
+
+                React.createElement("div", {style: this.componentStyle.saveButtonPlaceholder}, 
+
+                    React.createElement("button", {className: 'ui primary button', disabled: !canSave, onClick: this.save}, 
+                        React.createElement("i", {className: 'icon save'}), " Сохранить"
+                    )
+
+                )
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = JungleUpdatePanel;
+
+},{"../../player/PatientPlayer":760,"object-assign":34,"react":527}],696:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var JungleUpdatePanel = require('./JungleUpdatePanel');
+
+var JungleMixin = require('../../../mixins/JungleMixin');
+
+var SelfLoadingJungleUpdatePanel = React.createClass({displayName: "SelfLoadingJungleUpdatePanel",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined,
+            userId: undefined,
+
+            onUpdated: function(m){
+
+            },
+
+            onCreated: function(m){
+
+            },
+
+            onDeleted: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            material: undefined
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {}
+    },
+
+    onSave: function(data){
+        if (data == undefined){
+            return;
+        }
+        var materialId = this.props.materialId;
+        var userId = this.props.userId;
+        this.setState({
+            loading: true
+        });
+        if (materialId == undefined){
+            JungleMixin.createJungleMaterial(userId, data, function(m){
+                this.setState({
+                    loading: false,
+                    material: m
+                });
+                this.props.onCreated(m);
+            }.bind(this))
+        }else{
+            JungleMixin.updateJungleMaterial(materialId, data, function(m){
+                this.setState({
+                    loading: false,
+                    material: m
+                });
+                this.props.onUpdated(m);
+            }.bind(this))
+        }
+    },
+
+
+    load: function(){
+        var materialId = this.props.materialId;
+        if (materialId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        JungleMixin.loadJungleMaterial(materialId, function(m){
+            this.setState({
+                loading: false,
+                material: m
+            });
+        }.bind(this));
+    },
+
+    render: function () {
+        var m = this.state.material;
+        if (m == undefined){
+            m = {};
+        }
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+
+                React.createElement(JungleUpdatePanel, {
+                        name: m.name, 
+                        description: m.description, 
+                        text: m.text, 
+                        audioUrl: m.audioUrl, 
+                        vimeoId: m.vimeoId, 
+                        youtubeId: m.youtubeId, 
+                        onSave: this.onSave}
+                        ), 
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate text loader"}, 'Загрузка')
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingJungleUpdatePanel;
+
+},{"../../../mixins/JungleMixin":863,"./JungleUpdatePanel":695,"object-assign":34,"react":527}],697:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -103457,7 +105950,7 @@ var GroupsListItem = React.createClass({displayName: "GroupsListItem",
 
 module.exports = GroupsListItem;
 
-},{"object-assign":34,"react":527}],679:[function(require,module,exports){
+},{"object-assign":34,"react":527}],698:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -103550,7 +106043,7 @@ var KaraokeCard = React.createClass({displayName: "KaraokeCard",
 
 module.exports = KaraokeCard;
 
-},{"object-assign":34,"react":527}],680:[function(require,module,exports){
+},{"object-assign":34,"react":527}],699:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -103664,7 +106157,7 @@ var KaraokeCardsList = React.createClass({displayName: "KaraokeCardsList",
 
 module.exports = KaraokeCardsList;
 
-},{"../dialog/Dialog":604,"./KaraokeCard":679,"./SelfLoadingKaraokePlayerPanel":684,"object-assign":34,"react":527}],681:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./KaraokeCard":698,"./SelfLoadingKaraokePlayerPanel":703,"object-assign":34,"react":527}],700:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -103800,7 +106293,7 @@ var KaraokeGroupsPanel = React.createClass({displayName: "KaraokeGroupsPanel",
 
 module.exports = KaraokeGroupsPanel;
 
-},{"../../mixins/KaraokeMixin":836,"../topics/dialog/TopicDialog":805,"./GroupsListItem":678,"./SelfLoadingCategoryKaraokeCardsList":683,"object-assign":34,"react":527}],682:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":864,"../topics/dialog/TopicDialog":831,"./GroupsListItem":697,"./SelfLoadingCategoryKaraokeCardsList":702,"object-assign":34,"react":527}],701:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -103959,7 +106452,7 @@ var KaraokePlayerPanel = React.createClass({displayName: "KaraokePlayerPanel",
 
 module.exports = KaraokePlayerPanel;
 
-},{"../../mixins/KaraokeMixin":836,"../player/PatientPlayer":736,"./subtitles/MainSubtitlesBlock":686,"./subtitles/SubtitlesList":687,"object-assign":34,"react":527}],683:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":864,"../player/PatientPlayer":760,"./subtitles/MainSubtitlesBlock":705,"./subtitles/SubtitlesList":706,"object-assign":34,"react":527}],702:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -104050,7 +106543,7 @@ var SelfLoadingCategoryKaraokeCardsList = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingCategoryKaraokeCardsList;
 
-},{"../../mixins/KaraokeMixin":836,"./KaraokeCardsList":680,"object-assign":34,"react":527}],684:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":864,"./KaraokeCardsList":699,"object-assign":34,"react":527}],703:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -104139,7 +106632,7 @@ var SelfLoadingKaraokePlayerPanel = React.createClass({displayName: "SelfLoading
 
 module.exports = SelfLoadingKaraokePlayerPanel;
 
-},{"../../mixins/KaraokeMixin":836,"./KaraokePlayerPanel":682,"object-assign":34,"react":527}],685:[function(require,module,exports){
+},{"../../mixins/KaraokeMixin":864,"./KaraokePlayerPanel":701,"object-assign":34,"react":527}],704:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -104193,7 +106686,7 @@ var MainSubtitle = React.createClass({displayName: "MainSubtitle",
 
 module.exports = MainSubtitle;
 
-},{"../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],686:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],705:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -104281,7 +106774,7 @@ var MainSubtitlesBlock = React.createClass({displayName: "MainSubtitlesBlock",
 
 module.exports = MainSubtitlesBlock;
 
-},{"./MainSubtitle":685,"object-assign":34,"react":527}],687:[function(require,module,exports){
+},{"./MainSubtitle":704,"object-assign":34,"react":527}],706:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -104399,7 +106892,7 @@ var SubtitlesList = React.createClass({displayName: "SubtitlesList",
 
 module.exports = SubtitlesList;
 
-},{"../../../mixins/KaraokeMixin":836,"./SubtitlesListItem":688,"object-assign":34,"react":527}],688:[function(require,module,exports){
+},{"../../../mixins/KaraokeMixin":864,"./SubtitlesListItem":707,"object-assign":34,"react":527}],707:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -104474,7 +106967,475 @@ var SubtitlesListItem = React.createClass({displayName: "SubtitlesListItem",
 
 module.exports = SubtitlesListItem;
 
-},{"../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],689:[function(require,module,exports){
+},{"../../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],708:[function(require,module,exports){
+/**
+ * Created by sabir on 29.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+//todo: add icon classNames
+
+var LikeButton = React.createClass({displayName: "LikeButton",
+    getDefaultProps: function () {
+        return {
+            liked: false,
+            loading: false,
+
+            //likedClassName: 'icon thumbs up',
+            likedClassName: 'icon star',
+            //notLikedClassName: 'icon thumbs outline up',
+            notLikedClassName: 'icon empty star',
+
+            onLikeClick: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block',
+            cursor: 'pointer',
+            lineHeight: '36px',
+            fontSize: 28
+        }
+    },
+
+    onLikeClick: function(){
+        if (this.props.loading == true){
+            return;
+        }
+        this.props.onLikeClick();
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder, onClick: this.onLikeClick}, 
+
+                this.props.loading == true ?
+                    React.createElement("i", {className: 'icon spinner'}) :
+                    React.createElement("span", null, 
+                        this.props.liked == true ?
+                            React.createElement("i", {className: this.props.likedClassName}) :
+                            React.createElement("i", {className: this.props.notLikedClassName})
+                        
+                    )
+                
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = LikeButton;
+
+},{"object-assign":34,"react":527}],709:[function(require,module,exports){
+/**
+ * Created by sabir on 29.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var LikeMixin = require('../../mixins/LikeMixin');
+
+var LikeButton = require('./LikeButton');
+
+var SelfLoadingLikeButton = React.createClass({displayName: "SelfLoadingLikeButton",
+    getDefaultProps: function () {
+        return {
+
+            objectClassName: undefined,
+            userId: undefined,
+            objectId: undefined
+
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            loading: false,
+            liked: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+        this.load();
+    },
+
+    componentStyle: {
+        placeholder: {
+            position: 'relative',
+            display: 'inline-block'
+        }
+    },
+
+    load: function(){
+        var userId = this.props.userId;
+        var className = this.props.objectClassName;
+        var objectId = this.props.objectId;
+        if (userId == undefined || className == undefined || objectId == undefined){
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        LikeMixin.loadUserLike(userId, objectId, className, function(m){
+            var liked = (m != undefined);
+            this.setState({
+                liked: liked,
+                loading: false
+            });
+        }.bind(this));
+    },
+
+    likeIt: function(f){
+        console.log('likeIt occured: f = ', f);
+        if (f == undefined){
+            f = true;
+        }
+        var userId = this.props.userId;
+        var className = this.props.objectClassName;
+        var objectId = this.props.objectId;
+        console.log('userId, className, objectId = ', userId, className, objectId);
+        if (userId == undefined || className == undefined || objectId == undefined){
+            console.log('userId == undefined || className == undefined || objectId == undefined');
+            return;
+        }
+        this.setState({
+            loading: true
+        });
+        if (f == true){
+            LikeMixin.likeObject(userId, objectId, className, function(m){
+                this.load();
+            }.bind(this));
+        }else {
+            LikeMixin.unLikeObject(userId, objectId, className, function(m){
+                this.load();
+            }.bind(this));
+        }
+    },
+
+
+
+    onLikeClick: function(){
+        var f = !this.state.liked;
+        this.likeIt(f);
+    },
+
+    render: function () {
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement(LikeButton, {liked: this.state.liked, loading: this.state.loading, onLikeClick: this.onLikeClick}), 
+
+
+                React.createElement("div", {className: 'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }, 
+                    React.createElement("div", {className: "ui indeterminate loader"})
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SelfLoadingLikeButton;
+
+},{"../../mixins/LikeMixin":865,"./LikeButton":708,"object-assign":34,"react":527}],710:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var MaterialDialog = require('../material/dialogs/MaterialDialog');
+
+var PatientPlayer = require('../player/PatientPlayer');
+
+var MaterialLink = React.createClass({displayName: "MaterialLink",
+    getDefaultProps: function () {
+        return {
+            materialId: undefined,
+            name: undefined,
+
+            style: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        linkStyle: {
+            display: 'inline-block',
+            cursor: 'pointer'
+        }
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    show: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+
+    render: function () {
+        var st = assign({}, this.props.linkStyle);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: this.componentStyle.linkStyle, onClick: this.show}, 
+                   this.props.name
+               ), 
+
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(MaterialDialog, {visible: true, 
+                        materialId: this.props.materialId, onClose: this.onClose})
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = MaterialLink;
+
+},{"../material/dialogs/MaterialDialog":716,"../player/PatientPlayer":760,"object-assign":34,"react":527}],711:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SelfLoadingNote = require('../note/SelfLoadingNote');
+
+var Dialog = require('../dialog/Dialog');
+
+var NoteLink = React.createClass({displayName: "NoteLink",
+    getDefaultProps: function () {
+        return {
+            noteId: undefined,
+            name: undefined,
+
+            style: {
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            dialogVisible: false
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        linkStyle: {
+            display: 'inline-block',
+            cursor: 'pointer'
+        },
+
+        dialogPanelStyle: {
+            width: 800,
+            padding: 10
+        }
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    show: function(){
+        this.setState({
+            dialogVisible: true
+        });
+    },
+
+    getDialogContent: function(){
+        return (
+            React.createElement(SelfLoadingNote, {noteId: this.props.noteId})
+        );
+    },
+
+    render: function () {
+        var st = assign({}, this.props.linkStyle, this.props.style);
+
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                React.createElement("div", {style: st, onClick: this.show}, 
+                    this.props.name
+                ), 
+
+
+                this.state.dialogVisible == false ? null :
+                    React.createElement(Dialog, {visible: true, 
+                            content: this.getDialogContent(), 
+                            dialogPanelStyle: this.componentStyle.dialogPanelStyle, 
+                            onClose: this.onClose})
+                
+
+
+            )
+        );
+    }
+
+});
+
+module.exports = NoteLink;
+
+},{"../dialog/Dialog":610,"../note/SelfLoadingNote":744,"object-assign":34,"react":527}],712:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var NoteLink = require('./NoteLink');
+var MaterialLink = require('./MaterialLink');
+
+var LinkMixin = require('../../mixins/LinkMixin');
+
+var PatientLink = React.createClass({displayName: "PatientLink",
+    getDefaultProps: function () {
+        return {
+            linkText: undefined
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        },
+
+        linkStyle: {
+            display: 'inline-block'
+        }
+    },
+
+    getParsedData: function(){
+        return LinkMixin.parseLink(this.props.linkText);
+    },
+
+    getLink: function(){
+        var data = this.getParsedData();
+
+        console.log('PatientLink: getLink: fata = ', data);
+
+        if (data.linkType == 'material'){
+            return (
+                React.createElement(MaterialLink, {name: data.name, materialId: data.content})
+            );
+        }
+
+        if (data.linkType == 'note'){
+            return (
+                React.createElement(NoteLink, {name: data.name, noteId: data.content})
+            );
+        }
+
+        return null;
+
+    },
+
+    render: function () {
+        var link = this.getLink();
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                link == undefined ? null :
+                    React.createElement("div", {style: this.componentStyle.linkStyle}, 
+                        link
+                    )
+                
+
+            )
+        );
+    }
+
+});
+
+module.exports = PatientLink;
+
+},{"../../mixins/LinkMixin":866,"./MaterialLink":710,"./NoteLink":711,"object-assign":34,"react":527}],713:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -104543,7 +107504,7 @@ var MaterialTags = React.createClass({displayName: "MaterialTags",
 
 module.exports = MaterialTags;
 
-},{"object-assign":34,"react":527,"react-addons-linked-state-mixin":110,"react-tagsinput":342}],690:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-addons-linked-state-mixin":110,"react-tagsinput":342}],714:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -104644,7 +107605,7 @@ var MaterialCreateButton = React.createClass({displayName: "MaterialCreateButton
 
 module.exports = MaterialCreateButton;
 
-},{"../../dialog/Dialog":604,"../dialogs/SelfLoadingMaterialUpdatePanel":696,"object-assign":34,"react":527}],691:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"../dialogs/SelfLoadingMaterialUpdatePanel":720,"object-assign":34,"react":527}],715:[function(require,module,exports){
 /**
  * Created by sabir on 25.10.15.
  */
@@ -104786,7 +107747,7 @@ var MaterialGroupCreateButton = React.createClass({displayName: "MaterialGroupCr
 
 module.exports = MaterialGroupCreateButton;
 
-},{"../../dialog/Dialog":604,"../groups/SelfLoadingUpdateMaterialGroupPanel":699,"object-assign":34,"react":527}],692:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"../groups/SelfLoadingUpdateMaterialGroupPanel":723,"object-assign":34,"react":527}],716:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -104944,7 +107905,7 @@ var MaterialDialog = React.createClass({displayName: "MaterialDialog",
 
 module.exports = MaterialDialog;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingMaterialPanel":695,"./SelfLoadingMaterialUpdatePanel":696,"object-assign":34,"react":527}],693:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./SelfLoadingMaterialPanel":719,"./SelfLoadingMaterialUpdatePanel":720,"object-assign":34,"react":527}],717:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -105091,7 +108052,7 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
 
 module.exports = MaterialPanel;
 
-},{"../../player/VimeoPlayer":737,"../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],694:[function(require,module,exports){
+},{"../../player/VimeoPlayer":761,"../../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],718:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -105457,7 +108418,7 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
 
 module.exports = MaterialUpdatePanel;
 
-},{"../../../mixins/MaterialsMixin":838,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":635,"../../material/MaterialTags":689,"../../moses/editor/MosesEditorButton":710,"../../player/VimeoPlayer":737,"../groups/GroupsSelect":697,"object-assign":34,"react":527}],695:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":868,"../../buttons/DeleteButton":559,"../../editor/PatientEditor":641,"../../material/MaterialTags":713,"../../moses/editor/MosesEditorButton":734,"../../player/VimeoPlayer":761,"../groups/GroupsSelect":721,"object-assign":34,"react":527}],719:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -105555,7 +108516,7 @@ var SelfLoadingMaterialPanel = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialPanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/MaterialsMixin":838,"./MaterialPanel":693,"object-assign":34,"react":527}],696:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/MaterialsMixin":868,"./MaterialPanel":717,"object-assign":34,"react":527}],720:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -105703,7 +108664,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingMaterialUpdatePanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/MaterialsMixin":838,"./MaterialUpdatePanel":694,"object-assign":34,"react":527}],697:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/MaterialsMixin":868,"./MaterialUpdatePanel":718,"object-assign":34,"react":527}],721:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -105817,7 +108778,7 @@ var GroupsSelect = React.createClass({displayName: "GroupsSelect",
 
 module.exports = GroupsSelect;
 
-},{"object-assign":34,"react":527,"react-select":335}],698:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],722:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -105894,7 +108855,7 @@ var MaterialGroupCard = React.createClass({displayName: "MaterialGroupCard",
 
 module.exports = MaterialGroupCard;
 
-},{"object-assign":34,"react":527}],699:[function(require,module,exports){
+},{"object-assign":34,"react":527}],723:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -106014,7 +108975,7 @@ var SelfLoadingUpdateMaterialGroupPanel = React.createClass({displayName: "SelfL
 
 module.exports = SelfLoadingUpdateMaterialGroupPanel;
 
-},{"../../../mixins/MaterialsMixin":838,"./UpdateMaterialGroupPanel":701,"object-assign":34,"react":527}],700:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":868,"./UpdateMaterialGroupPanel":725,"object-assign":34,"react":527}],724:[function(require,module,exports){
 /**
  * Created by sabir on 21.07.15.
  */
@@ -106145,7 +109106,7 @@ var UpdateMaterialGroupButton = React.createClass({displayName: "UpdateMaterialG
 
 module.exports = UpdateMaterialGroupButton;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingUpdateMaterialGroupPanel":699,"object-assign":34,"react":527}],701:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./SelfLoadingUpdateMaterialGroupPanel":723,"object-assign":34,"react":527}],725:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -106277,7 +109238,7 @@ var UpdateMaterialGroupPanel = React.createClass({displayName: "UpdateMaterialGr
 
 module.exports = UpdateMaterialGroupPanel;
 
-},{"../../buttons/DeleteButton":559,"object-assign":34,"react":527}],702:[function(require,module,exports){
+},{"../../buttons/DeleteButton":559,"object-assign":34,"react":527}],726:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -106392,7 +109353,7 @@ var CardsList = React.createClass({displayName: "CardsList",
 
 module.exports = CardsList;
 
-},{"./MaterialCard":703,"object-assign":34,"react":527}],703:[function(require,module,exports){
+},{"./MaterialCard":727,"object-assign":34,"react":527}],727:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -106651,7 +109612,7 @@ var MaterialCard = React.createClass({displayName: "MaterialCard",
 
 module.exports = MaterialCard;
 
-},{"../dialogs/MaterialDialog":692,"./MaterialHoverPanel":704,"object-assign":34,"react":527}],704:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":716,"./MaterialHoverPanel":728,"object-assign":34,"react":527}],728:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -106783,7 +109744,7 @@ var MaterialHoverPanel = React.createClass({displayName: "MaterialHoverPanel",
 
 module.exports = MaterialHoverPanel;
 
-},{"../dialogs/MaterialDialog":692,"object-assign":34,"react":527}],705:[function(require,module,exports){
+},{"../dialogs/MaterialDialog":716,"object-assign":34,"react":527}],729:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -106980,7 +109941,7 @@ var MaterialsBunch = React.createClass({displayName: "MaterialsBunch",
 
 module.exports = MaterialsBunch;
 
-},{"../groups/UpdateMaterialGroupButton":700,"../list/PagedCardsList":706,"object-assign":34,"react":527}],706:[function(require,module,exports){
+},{"../groups/UpdateMaterialGroupButton":724,"../list/PagedCardsList":730,"object-assign":34,"react":527}],730:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -107160,7 +110121,7 @@ var PagedCardsList = React.createClass({displayName: "PagedCardsList",
 
 module.exports = PagedCardsList;
 
-},{"./CardsList":702,"object-assign":34,"react":527}],707:[function(require,module,exports){
+},{"./CardsList":726,"object-assign":34,"react":527}],731:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -107455,7 +110416,7 @@ var SelfLoadingMaterialsList = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialsList;
 
-},{"../../../mixins/MaterialsMixin":838,"../buttons/MaterialCreateButton":690,"../buttons/MaterialGroupCreateButton":691,"./MaterialsBunch":705,"./PagedCardsList":706,"object-assign":34,"react":527}],708:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":868,"../buttons/MaterialCreateButton":714,"../buttons/MaterialGroupCreateButton":715,"./MaterialsBunch":729,"./PagedCardsList":730,"object-assign":34,"react":527}],732:[function(require,module,exports){
 /**
  * Created by sabir on 30.10.15.
  */
@@ -107575,7 +110536,7 @@ var MaterialSearchButton = React.createClass({displayName: "MaterialSearchButton
 
 module.exports = MaterialSearchButton;
 
-},{"../../dialog/Dialog":604,"./MaterialsSearchPanel":709,"object-assign":34,"react":527}],709:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./MaterialsSearchPanel":733,"object-assign":34,"react":527}],733:[function(require,module,exports){
 /**
  * Created by sabir on 29.10.15.
  */
@@ -108004,7 +110965,7 @@ var MaterialsSearchPanel = React.createClass({displayName: "MaterialsSearchPanel
 
 module.exports = MaterialsSearchPanel;
 
-},{"../../../mixins/MaterialsMixin":838,"../../material/list/MaterialCard":703,"../../material/list/MaterialsBunch":705,"object-assign":34,"react":527}],710:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":868,"../../material/list/MaterialCard":727,"../../material/list/MaterialsBunch":729,"object-assign":34,"react":527}],734:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -108116,7 +111077,7 @@ var MosesEditorButton = React.createClass({displayName: "MosesEditorButton",
 
 module.exports = MosesEditorButton;
 
-},{"../../dialog/Dialog":604,"./SelfLoadingMosesEditor":711,"object-assign":34,"react":527}],711:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./SelfLoadingMosesEditor":735,"object-assign":34,"react":527}],735:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -108459,7 +111420,7 @@ var SelfLoadingMosesEditor = React.createClass({displayName: "SelfLoadingMosesEd
 
 module.exports = SelfLoadingMosesEditor;
 
-},{"../../../mixins/MaterialsMixin":838,"../../player/PatientPlayer":736,"./adjust/MosesTimePanel":713,"object-assign":34,"react":527}],712:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":868,"../../player/PatientPlayer":760,"./adjust/MosesTimePanel":737,"object-assign":34,"react":527}],736:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -108593,7 +111554,7 @@ var MosesTimeInput = React.createClass({displayName: "MosesTimeInput",
 
 module.exports = MosesTimeInput;
 
-},{"object-assign":34,"react":527}],713:[function(require,module,exports){
+},{"object-assign":34,"react":527}],737:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -108780,7 +111741,7 @@ var MosesTimePanel = React.createClass({displayName: "MosesTimePanel",
 
 module.exports = MosesTimePanel;
 
-},{"./MosesTimeInput":712,"object-assign":34,"react":527}],714:[function(require,module,exports){
+},{"./MosesTimeInput":736,"object-assign":34,"react":527}],738:[function(require,module,exports){
 /**
  * Created by sabir on 26.12.15.
  */
@@ -108905,7 +111866,7 @@ var DurationsBar = React.createClass({displayName: "DurationsBar",
 
 module.exports = DurationsBar;
 
-},{"object-assign":34,"react":527}],715:[function(require,module,exports){
+},{"object-assign":34,"react":527}],739:[function(require,module,exports){
 /**
  * Created by sabir on 26.12.15.
  */
@@ -109012,7 +111973,7 @@ var MosesPlayer = React.createClass({displayName: "MosesPlayer",
 
 module.exports = MosesPlayer;
 
-},{"../../player/PatientPlayer":736,"./DurationsBar":714,"object-assign":34,"react":527}],716:[function(require,module,exports){
+},{"../../player/PatientPlayer":760,"./DurationsBar":738,"object-assign":34,"react":527}],740:[function(require,module,exports){
 /**
  * Created by sabir on 26.12.15.
  */
@@ -109099,7 +112060,7 @@ var SelfLoadingMosesPlayer = React.createClass({displayName: "SelfLoadingMosesPl
 
 module.exports = SelfLoadingMosesPlayer;
 
-},{"../../../mixins/MaterialsMixin":838,"./MosesPlayer":715,"object-assign":34,"react":527}],717:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":868,"./MosesPlayer":739,"object-assign":34,"react":527}],741:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -109204,7 +112165,7 @@ var CreateNewNoteButton = React.createClass({displayName: "CreateNewNoteButton",
 
 module.exports = CreateNewNoteButton;
 
-},{"../dialog/Dialog":604,"./SelfLoadingUpdateNotePanel":722,"object-assign":34,"react":527}],718:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./SelfLoadingUpdateNotePanel":746,"object-assign":34,"react":527}],742:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -109308,7 +112269,7 @@ var CreateNewNotesGroupButton = React.createClass({displayName: "CreateNewNotesG
 
 module.exports = CreateNewNotesGroupButton;
 
-},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":719,"object-assign":34,"react":527}],719:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./SelfLoadingGroupPanel":743,"object-assign":34,"react":527}],743:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -109465,7 +112426,7 @@ var SelfLoadingGroupPanel = React.createClass({displayName: "SelfLoadingGroupPan
 
 module.exports = SelfLoadingGroupPanel;
 
-},{"../../components/buttons/DeleteButton":559,"../../mixins/NotesMixin":840,"object-assign":34,"react":527}],720:[function(require,module,exports){
+},{"../../components/buttons/DeleteButton":559,"../../mixins/NotesMixin":870,"object-assign":34,"react":527}],744:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -109576,7 +112537,7 @@ var SelfLoadingNote = React.createClass({displayName: "SelfLoadingNote",
 
 module.exports = SelfLoadingNote;
 
-},{"../../mixins/NotesMixin":840,"object-assign":34,"react":527}],721:[function(require,module,exports){
+},{"../../mixins/NotesMixin":870,"object-assign":34,"react":527}],745:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -109667,7 +112628,7 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
             fontSize: '16px',
             padding: 5,
             width: '100%',
-            paddingRight: 40,
+            paddingRight: 70,
             //paddingBottom: 15,
             paddingBottom: 5,
             fontWeight: 'bold',
@@ -109694,7 +112655,6 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
             paddingLeft: 10,
             paddingRight: 0
         }
-
 
     },
 
@@ -109798,7 +112758,7 @@ var SelfLoadingUpdatableNote = React.createClass({displayName: "SelfLoadingUpdat
 
 module.exports = SelfLoadingUpdatableNote;
 
-},{"../../../react/mixins/commonMixins/CommonMixin":851,"../../components/dialog/Dialog":604,"../../mixins/NotesMixin":840,"./SelfLoadingUpdateNotePanel":722,"object-assign":34,"react":527}],722:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/CommonMixin":881,"../../components/dialog/Dialog":610,"../../mixins/NotesMixin":870,"./SelfLoadingUpdateNotePanel":746,"object-assign":34,"react":527}],746:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -110037,7 +112997,7 @@ var SelfLoadingUpdateNotePanel = React.createClass({displayName: "SelfLoadingUpd
 
 module.exports = SelfLoadingUpdateNotePanel;
 
-},{"../../../react/mixins/commonMixins/ParseMixin":852,"../../components/buttons/DeleteButton":559,"../../components/note/select/NotesGroupSelect":728,"../../mixins/NotesMixin":840,"../editor/PatientEditor":635,"object-assign":34,"react":527}],723:[function(require,module,exports){
+},{"../../../react/mixins/commonMixins/ParseMixin":882,"../../components/buttons/DeleteButton":559,"../../components/note/select/NotesGroupSelect":752,"../../mixins/NotesMixin":870,"../editor/PatientEditor":641,"object-assign":34,"react":527}],747:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -110157,7 +113117,7 @@ var UpdateGroupButton = React.createClass({displayName: "UpdateGroupButton",
 
 module.exports = UpdateGroupButton;
 
-},{"../dialog/Dialog":604,"./SelfLoadingGroupPanel":719,"object-assign":34,"react":527}],724:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./SelfLoadingGroupPanel":743,"object-assign":34,"react":527}],748:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -110197,7 +113157,7 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
             borderBottom: '1px solid #EFF0F1',
             padding: 5,
             width: '100%',
-            height: 60,
+            //height: 60,
             padding: 10,
             cursor: 'pointer'
         },
@@ -110210,9 +113170,9 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
         namePlaceholder:{
             display: 'block',
             width: '99%',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            //whiteSpace: 'nowrap',
+            //overflow: 'hidden',
+            //textOverflow: 'ellipsis',
             fontSize: '14px',
             fontWeight: 'bold',
             marginBottom: 5
@@ -110238,15 +113198,19 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
         if (this.props.selected == true){
             st = assign(st, this.componentStyle.selected);
         }
+        var name = (this.props.name == undefined) ? '' : this.props.name;
+        //if (name.length > 60){
+        //    name = name.substring(0, 60) + ' ...';
+        //}
 
         return (
             React.createElement("div", {style: st, onClick: this.onClick, className: 'noteListItem'}, 
 
                 React.createElement("div", {style: this.componentStyle.namePlaceholder}, 
-                    this.props.name
+                    name
                 ), 
 
-                React.createElement("div", {style: this.componentStyle.datePlaceholder}, 
+                React.createElement("div", {style: assign({}, this.componentStyle.datePlaceholder, {display: 'none'})}, 
                     React.createElement("b", null, dateString)
                 )
 
@@ -110258,7 +113222,7 @@ var NoteListItem = React.createClass({displayName: "NoteListItem",
 
 module.exports = NoteListItem;
 
-},{"moment":33,"object-assign":34,"react":527}],725:[function(require,module,exports){
+},{"moment":33,"object-assign":34,"react":527}],749:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -110341,7 +113305,7 @@ var NotesGroupListItem = React.createClass({displayName: "NotesGroupListItem",
 
 module.exports = NotesGroupListItem;
 
-},{"object-assign":34,"react":527}],726:[function(require,module,exports){
+},{"object-assign":34,"react":527}],750:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -110408,7 +113372,7 @@ var NotesGroupsList = React.createClass({displayName: "NotesGroupsList",
 
 module.exports = NotesGroupsList;
 
-},{"./NotesGroupListItem":725,"object-assign":34,"react":527}],727:[function(require,module,exports){
+},{"./NotesGroupListItem":749,"object-assign":34,"react":527}],751:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -110478,7 +113442,7 @@ var NotesList = React.createClass({displayName: "NotesList",
 
 module.exports = NotesList;
 
-},{"./NoteListItem":724,"object-assign":34,"react":527}],728:[function(require,module,exports){
+},{"./NoteListItem":748,"object-assign":34,"react":527}],752:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -110604,7 +113568,7 @@ var NotesGroupSelect = React.createClass({displayName: "NotesGroupSelect",
 
 module.exports = NotesGroupSelect;
 
-},{"object-assign":34,"react":527,"react-select":335}],729:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],753:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -110791,7 +113755,7 @@ var NotificationItem = React.createClass({displayName: "NotificationItem",
 
 module.exports = NotificationItem;
 
-},{"../../mixins/NotificationMixin":841,"../dialog_exercise/view/SelfLoadingDialogPanel":634,"../exercise/SelfLoadingUserExercise":640,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":763,"moment":33,"object-assign":34,"react":527}],730:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":871,"../dialog_exercise/view/SelfLoadingDialogPanel":640,"../exercise/SelfLoadingUserExercise":646,"../questionnaire/panels/view/SelfLoadingQuestionnairePanel":787,"moment":33,"object-assign":34,"react":527}],754:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -110878,7 +113842,7 @@ var NotificationsList = React.createClass({displayName: "NotificationsList",
 
 module.exports = NotificationsList;
 
-},{"./NotificationItem":729,"object-assign":34,"react":527}],731:[function(require,module,exports){
+},{"./NotificationItem":753,"object-assign":34,"react":527}],755:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -110956,7 +113920,7 @@ var NotificationsNumberSpan = React.createClass({displayName: "NotificationsNumb
 
 module.exports = NotificationsNumberSpan;
 
-},{"../../mixins/NotificationMixin":841,"object-assign":34,"react":527}],732:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":871,"object-assign":34,"react":527}],756:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -111051,7 +114015,7 @@ var PagedNotificationsList = React.createClass({displayName: "PagedNotifications
 
 module.exports = PagedNotificationsList;
 
-},{"./NotificationsList":730,"object-assign":34,"react":527}],733:[function(require,module,exports){
+},{"./NotificationsList":754,"object-assign":34,"react":527}],757:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -111186,7 +114150,7 @@ var SelfLoadingNotificationsList = React.createClass({displayName: "SelfLoadingN
 
 module.exports = SelfLoadingNotificationsList;
 
-},{"../../mixins/NotificationMixin":841,"./NotificationsList":730,"./PagedNotificationsList":732,"object-assign":34,"react":527}],734:[function(require,module,exports){
+},{"../../mixins/NotificationMixin":871,"./NotificationsList":754,"./PagedNotificationsList":756,"object-assign":34,"react":527}],758:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -111266,7 +114230,7 @@ var NumberItem = React.createClass({displayName: "NumberItem",
 
 module.exports = NumberItem;
 
-},{"object-assign":34,"react":527}],735:[function(require,module,exports){
+},{"object-assign":34,"react":527}],759:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -111357,7 +114321,7 @@ var NumbersBlock = React.createClass({displayName: "NumbersBlock",
 
 module.exports = NumbersBlock;
 
-},{"./NumberItem":734,"object-assign":34,"react":527}],736:[function(require,module,exports){
+},{"./NumberItem":758,"object-assign":34,"react":527}],760:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -111645,7 +114609,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
 module.exports = PatientPlayer;
 
-},{"../../mixins/VideoMixin":847,"object-assign":34,"react-player":270,"react/addons":354}],737:[function(require,module,exports){
+},{"../../mixins/VideoMixin":877,"object-assign":34,"react-player":270,"react/addons":354}],761:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -111740,7 +114704,7 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
 
 module.exports = VimeoPlayer;
 
-},{"object-assign":34,"react":527,"react-vimeo":348}],738:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-vimeo":348}],762:[function(require,module,exports){
 /**
  * Created by sabir on 01.10.15.
  */
@@ -111801,7 +114765,7 @@ var PatientPreloader = React.createClass({displayName: "PatientPreloader",
 
 module.exports = PatientPreloader;
 
-},{"object-assign":34,"react":527}],739:[function(require,module,exports){
+},{"object-assign":34,"react":527}],763:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -111965,7 +114929,7 @@ var ProfilePanel = React.createClass({displayName: "ProfilePanel",
 
 module.exports = ProfilePanel;
 
-},{"../editor/PatientEditor":635,"object-assign":34,"react":527}],740:[function(require,module,exports){
+},{"../editor/PatientEditor":641,"object-assign":34,"react":527}],764:[function(require,module,exports){
 /**
  * Created by sabir on 15.12.15.
  */
@@ -112081,7 +115045,7 @@ var ProfileStatButton = React.createClass({displayName: "ProfileStatButton",
 
 module.exports = ProfileStatButton;
 
-},{"../chart/SelfLoadingUserProgressPanel":567,"../dialog/Dialog":604,"object-assign":34,"react":527}],741:[function(require,module,exports){
+},{"../chart/SelfLoadingUserProgressPanel":567,"../dialog/Dialog":610,"object-assign":34,"react":527}],765:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -112247,7 +115211,7 @@ var ProfileUpdateButton = React.createClass({displayName: "ProfileUpdateButton",
 
 module.exports = ProfileUpdateButton;
 
-},{"../buttons/DeleteButton":559,"../dialog/Dialog":604,"./SelfLoadingProfilePanel":742,"moment":33,"object-assign":34,"react":527}],742:[function(require,module,exports){
+},{"../buttons/DeleteButton":559,"../dialog/Dialog":610,"./SelfLoadingProfilePanel":766,"moment":33,"object-assign":34,"react":527}],766:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -112373,7 +115337,7 @@ var SelfLoadingProfilePanel = React.createClass({displayName: "SelfLoadingProfil
 
 module.exports = SelfLoadingProfilePanel;
 
-},{"../../mixins/ProfileMixin":842,"./ProfilePanel":739,"object-assign":34,"react":527}],743:[function(require,module,exports){
+},{"../../mixins/ProfileMixin":872,"./ProfilePanel":763,"object-assign":34,"react":527}],767:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -112471,7 +115435,7 @@ var UserProfileButton = React.createClass({displayName: "UserProfileButton",
 
 module.exports = UserProfileButton;
 
-},{"../dialog/Dialog":604,"./UserProfilePanel":744,"object-assign":34,"react":527}],744:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./UserProfilePanel":768,"object-assign":34,"react":527}],768:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -112704,7 +115668,7 @@ var UserProfilePanel = React.createClass({displayName: "UserProfilePanel",
 
 module.exports = UserProfilePanel;
 
-},{"../../mixins/UserMixin":846,"../file/FileUploader":668,"object-assign":34,"react":527}],745:[function(require,module,exports){
+},{"../../mixins/UserMixin":876,"../file/FileUploader":676,"object-assign":34,"react":527}],769:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -112840,7 +115804,7 @@ var QuestionnaireEditViewDialog = React.createClass({displayName: "Questionnaire
 
 module.exports = QuestionnaireEditViewDialog;
 
-},{"../dialog/Dialog":604,"./panels/QuestionnaireEditPanel":746,"./panels/QuestionnaireViewPanel":747,"object-assign":34,"react":527}],746:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./panels/QuestionnaireEditPanel":770,"./panels/QuestionnaireViewPanel":771,"object-assign":34,"react":527}],770:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -112990,7 +115954,7 @@ var QuestionnaireEditPanel = React.createClass({displayName: "QuestionnaireEditP
 
 module.exports = QuestionnaireEditPanel;
 
-},{"./question/SelfLoadingQuestionnaireEditInfoPanel":756,"./question/SelfLoadingQuestionsEditPanel":757,"object-assign":34,"react":527}],747:[function(require,module,exports){
+},{"./question/SelfLoadingQuestionnaireEditInfoPanel":780,"./question/SelfLoadingQuestionsEditPanel":781,"object-assign":34,"react":527}],771:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -113112,7 +116076,7 @@ var QuestionnaireViewPanel = React.createClass({displayName: "QuestionnaireViewP
 
 module.exports = QuestionnaireViewPanel;
 
-},{"../../../mixins/QuestionnaireMixin":843,"../../dialog_exercise/card/DialogCard":615,"./view/SelfLoadingQuestionnairePanel":763,"object-assign":34,"react":527}],748:[function(require,module,exports){
+},{"../../../mixins/QuestionnaireMixin":873,"../../dialog_exercise/card/DialogCard":621,"./view/SelfLoadingQuestionnairePanel":787,"object-assign":34,"react":527}],772:[function(require,module,exports){
 /**
  * Created by sabir on 21.12.15.
  */
@@ -113286,7 +116250,7 @@ var QuestionAnswerPanel = React.createClass({displayName: "QuestionAnswerPanel",
 
 module.exports = QuestionAnswerPanel;
 
-},{"../../../file/FileUploadButton":667,"object-assign":34,"react":527}],749:[function(require,module,exports){
+},{"../../../file/FileUploadButton":675,"object-assign":34,"react":527}],773:[function(require,module,exports){
 /**
  * Created by sabir on 21.12.15.
  */
@@ -113374,7 +116338,7 @@ var QuestionAnswerPanelsList = React.createClass({displayName: "QuestionAnswerPa
 
 module.exports = QuestionAnswerPanelsList;
 
-},{"./QuestionAnswerPanel":748,"object-assign":34,"react":527}],750:[function(require,module,exports){
+},{"./QuestionAnswerPanel":772,"object-assign":34,"react":527}],774:[function(require,module,exports){
 /**
  * Created by sabir on 24.12.15.
  */
@@ -113490,7 +116454,7 @@ var QuestionnaireSearchButton = React.createClass({displayName: "QuestionnaireSe
 
 module.exports = QuestionnaireSearchButton;
 
-},{"../../../dialog/Dialog":604,"./SelfLoadingQuestionnaireSearchList":752,"object-assign":34,"react":527}],751:[function(require,module,exports){
+},{"../../../dialog/Dialog":610,"./SelfLoadingQuestionnaireSearchList":776,"object-assign":34,"react":527}],775:[function(require,module,exports){
 /**
  * Created by sabir on 24.12.15.
  */
@@ -113673,7 +116637,7 @@ var QuestionnaireSearchList = React.createClass({displayName: "QuestionnaireSear
 
 module.exports = QuestionnaireSearchList;
 
-},{"../../../dialog/Dialog":604,"../view/SelfLoadingQuestionnairePanel":763,"object-assign":34,"react":527}],752:[function(require,module,exports){
+},{"../../../dialog/Dialog":610,"../view/SelfLoadingQuestionnairePanel":787,"object-assign":34,"react":527}],776:[function(require,module,exports){
 /**
  * Created by sabir on 24.12.15.
  */
@@ -113765,7 +116729,7 @@ var SelfLoadingQuestionnaireSearchList = React.createClass({displayName: "SelfLo
 
 module.exports = SelfLoadingQuestionnaireSearchList;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"./QuestionnaireSearchList":751,"object-assign":34,"react":527}],753:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"./QuestionnaireSearchList":775,"object-assign":34,"react":527}],777:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -113927,7 +116891,7 @@ var SelfLoadingTeacherQuestionnairesList = React.createClass({displayName: "Self
 
 module.exports = SelfLoadingTeacherQuestionnairesList;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"../../../dialog/Dialog":604,"../QuestionnaireEditPanel":746,"./TeacherQuestionnairesList":754,"object-assign":34,"react":527}],754:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"../../../dialog/Dialog":610,"../QuestionnaireEditPanel":770,"./TeacherQuestionnairesList":778,"object-assign":34,"react":527}],778:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -114061,7 +117025,7 @@ var TeacherQuestionnairesList = React.createClass({displayName: "TeacherQuestion
 
 module.exports = TeacherQuestionnairesList;
 
-},{"../../../dialog/Dialog":604,"../../../dialog_exercise/card/DialogCard":615,"../../QuestionnaireEditViewDialog":745,"../QuestionnaireEditPanel":746,"object-assign":34,"react":527}],755:[function(require,module,exports){
+},{"../../../dialog/Dialog":610,"../../../dialog_exercise/card/DialogCard":621,"../../QuestionnaireEditViewDialog":769,"../QuestionnaireEditPanel":770,"object-assign":34,"react":527}],779:[function(require,module,exports){
 /**
  * Created by sabir on 21.12.15.
  */
@@ -114413,7 +117377,7 @@ var QuestionnaireQuestionPanel = React.createClass({displayName: "QuestionnaireQ
 
 module.exports = QuestionnaireQuestionPanel;
 
-},{"../../../buttons/DeleteButton":559,"../../../player/VimeoPlayer":737,"../answer/QuestionAnswerPanelsList":749,"object-assign":34,"react":527}],756:[function(require,module,exports){
+},{"../../../buttons/DeleteButton":559,"../../../player/VimeoPlayer":761,"../answer/QuestionAnswerPanelsList":773,"object-assign":34,"react":527}],780:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -114707,7 +117671,7 @@ var SelfLoadingQuestionnaireEditInfoPanel = React.createClass({displayName: "Sel
 
 module.exports = SelfLoadingQuestionnaireEditInfoPanel;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"../../../buttons/DeleteButton":559,"../../../dialog_exercise/card/DialogCard":615,"../../../file/FileUploadButton":667,"object-assign":34,"react":527}],757:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"../../../buttons/DeleteButton":559,"../../../dialog_exercise/card/DialogCard":621,"../../../file/FileUploadButton":675,"object-assign":34,"react":527}],781:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -114922,7 +117886,7 @@ var SelfLoadingQuestionsEditPanel = React.createClass({displayName: "SelfLoading
 
 module.exports = SelfLoadingQuestionsEditPanel;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"../../../numbers/NumbersBlock":735,"./SelfLoadingUpdateQuestionPanel":758,"object-assign":34,"react":527}],758:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"../../../numbers/NumbersBlock":759,"./SelfLoadingUpdateQuestionPanel":782,"object-assign":34,"react":527}],782:[function(require,module,exports){
 /**
  * Created by sabir on 22.12.15.
  */
@@ -115056,7 +118020,7 @@ var SelfLoadingUpdateQuestionPanel = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingUpdateQuestionPanel;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"./QuestionnaireQuestionPanel":755,"object-assign":34,"react":527}],759:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"./QuestionnaireQuestionPanel":779,"object-assign":34,"react":527}],783:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -115233,7 +118197,7 @@ var AnswersList = React.createClass({displayName: "AnswersList",
 
 module.exports = AnswersList;
 
-},{"../../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],760:[function(require,module,exports){
+},{"../../../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],784:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -115417,7 +118381,7 @@ var QuestionnairePanel = React.createClass({displayName: "QuestionnairePanel",
 
 module.exports = QuestionnairePanel;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"../../../numbers/NumbersBlock":735,"./QuestionnaireSinglePanel":761,"object-assign":34,"react":527}],761:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"../../../numbers/NumbersBlock":759,"./QuestionnaireSinglePanel":785,"object-assign":34,"react":527}],785:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -115532,7 +118496,7 @@ var QuestionnaireSinglePanel = React.createClass({displayName: "QuestionnaireSin
 
 module.exports = QuestionnaireSinglePanel;
 
-},{"../../../player/VimeoPlayer":737,"../../../text/translatable/TranslatableText":796,"./AnswersList":759,"./SelfLoadingAnswersList":762,"object-assign":34,"react":527}],762:[function(require,module,exports){
+},{"../../../player/VimeoPlayer":761,"../../../text/translatable/TranslatableText":822,"./AnswersList":783,"./SelfLoadingAnswersList":786,"object-assign":34,"react":527}],786:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -115654,7 +118618,7 @@ var SelfLoadingAnswersList = React.createClass({displayName: "SelfLoadingAnswers
 
 module.exports = SelfLoadingAnswersList;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"./AnswersList":759,"object-assign":34,"react":527}],763:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"./AnswersList":783,"object-assign":34,"react":527}],787:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -115982,7 +118946,7 @@ var SelfLoadingQuestionnairePanel = React.createClass({displayName: "SelfLoading
 
 module.exports = SelfLoadingQuestionnairePanel;
 
-},{"../../../../mixins/QuestionnaireMixin":843,"../../../teacher/TeacherFeedbackCreationBlock":788,"./QuestionnairePanel":760,"./prepare/PreparePanel":764,"./test/QuestionnaireTestPanel":767,"object-assign":34,"react":527}],764:[function(require,module,exports){
+},{"../../../../mixins/QuestionnaireMixin":873,"../../../teacher/TeacherFeedbackCreationBlock":814,"./QuestionnairePanel":784,"./prepare/PreparePanel":788,"./test/QuestionnaireTestPanel":791,"object-assign":34,"react":527}],788:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -116151,7 +119115,7 @@ var PreparePanel = React.createClass({displayName: "PreparePanel",
 
 module.exports = PreparePanel;
 
-},{"../../../../numbers/NumbersBlock":735,"./SelfLoadingPrepareSinglePanel":766,"object-assign":34,"react":527}],765:[function(require,module,exports){
+},{"../../../../numbers/NumbersBlock":759,"./SelfLoadingPrepareSinglePanel":790,"object-assign":34,"react":527}],789:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -116325,7 +119289,7 @@ var PrepareSinglePanel = React.createClass({displayName: "PrepareSinglePanel",
 
 module.exports = PrepareSinglePanel;
 
-},{"../../../../player/VimeoPlayer":737,"../../../../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],766:[function(require,module,exports){
+},{"../../../../player/VimeoPlayer":761,"../../../../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],790:[function(require,module,exports){
 /**
  * Created by sabir on 23.12.15.
  */
@@ -116445,7 +119409,7 @@ var SelfLoadingPrepareSinglePanel = React.createClass({displayName: "SelfLoading
 
 module.exports = SelfLoadingPrepareSinglePanel;
 
-},{"../../../../../mixins/QuestionnaireMixin":843,"./PrepareSinglePanel":765,"object-assign":34,"react":527}],767:[function(require,module,exports){
+},{"../../../../../mixins/QuestionnaireMixin":873,"./PrepareSinglePanel":789,"object-assign":34,"react":527}],791:[function(require,module,exports){
 /**
  * Created by sabir on 24.12.15.
  */
@@ -116615,7 +119579,7 @@ var QuestionnaireTestPanel = React.createClass({displayName: "QuestionnaireTestP
 
 module.exports = QuestionnaireTestPanel;
 
-},{"../../../../numbers/NumbersBlock":735,"./SelfLoadingTestPanel":768,"object-assign":34,"react":527}],768:[function(require,module,exports){
+},{"../../../../numbers/NumbersBlock":759,"./SelfLoadingTestPanel":792,"object-assign":34,"react":527}],792:[function(require,module,exports){
 /**
  * Created by sabir on 24.12.15.
  */
@@ -116733,7 +119697,7 @@ var SelfLoadingTestPanel = React.createClass({displayName: "SelfLoadingTestPanel
 
 module.exports = SelfLoadingTestPanel;
 
-},{"../../../../../mixins/QuestionnaireMixin":843,"./TestPanel":769,"object-assign":34,"react":527}],769:[function(require,module,exports){
+},{"../../../../../mixins/QuestionnaireMixin":873,"./TestPanel":793,"object-assign":34,"react":527}],793:[function(require,module,exports){
 /**
  * Created by sabir on 24.12.15.
  */
@@ -116855,7 +119819,7 @@ var TestPanel = React.createClass({displayName: "TestPanel",
 
 module.exports = TestPanel;
 
-},{"../../../../player/VimeoPlayer":737,"../../../../record/PatientRecordComponent":771,"object-assign":34,"react":527}],770:[function(require,module,exports){
+},{"../../../../player/VimeoPlayer":761,"../../../../record/PatientRecordComponent":795,"object-assign":34,"react":527}],794:[function(require,module,exports){
 /**
  * Created by sabir on 16.09.15.
  */
@@ -117126,7 +120090,7 @@ var SpeechRecognitionArea = React.createClass({displayName: "SpeechRecognitionAr
 
 module.exports = SpeechRecognitionArea;
 
-},{"react":527}],771:[function(require,module,exports){
+},{"react":527}],795:[function(require,module,exports){
 /**
  * Created by sabir on 17.09.15.
  */
@@ -117447,8 +120411,9 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
     componentStyle: {
         placeholder: {
-            border: '1px solid lightgrey',
+            border: '1px solid #EFF0F1',
             padding: 10,
+            borderRadius: 4,
             position: 'relative',
             width: 600
         },
@@ -117542,7 +120507,7 @@ var PatientRecordComponent = React.createClass({displayName: "PatientRecordCompo
 
 module.exports = PatientRecordComponent;
 
-},{"../../mixins/FileUploadMixin":834,"../buttons/RecordStopButton":560,"object-assign":34,"react":527,"recordrtc":528}],772:[function(require,module,exports){
+},{"../../mixins/FileUploadMixin":861,"../buttons/RecordStopButton":560,"object-assign":34,"react":527,"recordrtc":528}],796:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -117614,7 +120579,7 @@ var FirstLevelPanelItem = React.createClass({displayName: "FirstLevelPanelItem",
 
 module.exports = FirstLevelPanelItem;
 
-},{"object-assign":34,"react":527}],773:[function(require,module,exports){
+},{"object-assign":34,"react":527}],797:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -117685,7 +120650,7 @@ var FirstLevelPanelsList = React.createClass({displayName: "FirstLevelPanelsList
 
 module.exports = FirstLevelPanelsList;
 
-},{"../../data/DataFactory":828,"./FirstLevelPanelItem":772,"object-assign":34,"react":527}],774:[function(require,module,exports){
+},{"../../data/DataFactory":854,"./FirstLevelPanelItem":796,"object-assign":34,"react":527}],798:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -117803,7 +120768,7 @@ var Sausage = React.createClass({displayName: "Sausage",
 
 module.exports = Sausage;
 
-},{"./FirstLevelPanelsList":773,"./dialog/SausageDialog":776,"object-assign":34,"react":527}],775:[function(require,module,exports){
+},{"./FirstLevelPanelsList":797,"./dialog/SausageDialog":800,"object-assign":34,"react":527}],799:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -117942,7 +120907,7 @@ var SecondLevelPanelItem = React.createClass({displayName: "SecondLevelPanelItem
 
 module.exports = SecondLevelPanelItem;
 
-},{"../video/dialog/VideoDialog":821,"object-assign":34,"react":527}],776:[function(require,module,exports){
+},{"../video/dialog/VideoDialog":847,"object-assign":34,"react":527}],800:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -118083,7 +121048,7 @@ var SausageDialog = React.createClass({displayName: "SausageDialog",
 
 module.exports = SausageDialog;
 
-},{"../../topics/dialog/TopicDialog":805,"../SecondLevelPanelItem":775,"object-assign":34,"react":527}],777:[function(require,module,exports){
+},{"../../topics/dialog/TopicDialog":831,"../SecondLevelPanelItem":799,"object-assign":34,"react":527}],801:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -118264,7 +121229,7 @@ var ResultsItemPanel = React.createClass({displayName: "ResultsItemPanel",
 
 module.exports = ResultsItemPanel;
 
-},{"object-assign":34,"react":527}],778:[function(require,module,exports){
+},{"object-assign":34,"react":527}],802:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -118341,7 +121306,7 @@ var SearchResultsPanel = React.createClass({displayName: "SearchResultsPanel",
 
 module.exports = SearchResultsPanel;
 
-},{"./ResultsItemPanel":777,"object-assign":34,"react":527}],779:[function(require,module,exports){
+},{"./ResultsItemPanel":801,"object-assign":34,"react":527}],803:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -118652,7 +121617,7 @@ var YoutubeSearchPanel = React.createClass({displayName: "YoutubeSearchPanel",
 
 module.exports = YoutubeSearchPanel;
 
-},{"../../../mixins/YoutubeSearchMixin":849,"../../player/PatientPlayer":736,"../../text/translatable/TranslatableText":796,"./SearchResultsPanel":778,"./checkbox/CategoryCheckboxesList":781,"object-assign":34,"react":527}],780:[function(require,module,exports){
+},{"../../../mixins/YoutubeSearchMixin":879,"../../player/PatientPlayer":760,"../../text/translatable/TranslatableText":822,"./SearchResultsPanel":802,"./checkbox/CategoryCheckboxesList":805,"object-assign":34,"react":527}],804:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -118732,7 +121697,7 @@ var CategoryCheckbox = React.createClass({displayName: "CategoryCheckbox",
 
 module.exports = CategoryCheckbox;
 
-},{"object-assign":34,"react":527}],781:[function(require,module,exports){
+},{"object-assign":34,"react":527}],805:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -118814,7 +121779,7 @@ var CategoryCheckboxesList = React.createClass({displayName: "CategoryCheckboxes
 
 module.exports = CategoryCheckboxesList;
 
-},{"./CategoryCheckbox":780,"object-assign":34,"react":527}],782:[function(require,module,exports){
+},{"./CategoryCheckbox":804,"object-assign":34,"react":527}],806:[function(require,module,exports){
 /**
  * Created by sabir on 11.10.15.
  */
@@ -118880,7 +121845,7 @@ var LoadingSegment = React.createClass({displayName: "LoadingSegment",
 
 module.exports = LoadingSegment;
 
-},{"object-assign":34,"react":527}],783:[function(require,module,exports){
+},{"object-assign":34,"react":527}],807:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -118993,7 +121958,7 @@ var ExerciseGroupSelect = React.createClass({displayName: "ExerciseGroupSelect",
 
 module.exports = ExerciseGroupSelect;
 
-},{"object-assign":34,"react":527,"react-select":335}],784:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-select":335}],808:[function(require,module,exports){
 /**
  * Created by sabir on 17.10.15.
  */
@@ -119085,7 +122050,7 @@ var SelfLoadingExerciseGroupsSelect = React.createClass({displayName: "SelfLoadi
 
 module.exports = SelfLoadingExerciseGroupsSelect;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":852,"../../../mixins/ExerciseMixin":832,"./ExerciseGroupSelect":783,"object-assign":34,"react":527}],785:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":882,"../../../mixins/ExerciseMixin":859,"./ExerciseGroupSelect":807,"object-assign":34,"react":527}],809:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -119163,7 +122128,176 @@ var SidebarChatButton = React.createClass({displayName: "SidebarChatButton",
 
 module.exports = SidebarChatButton;
 
-},{"../../mixins/LoginMixin":837,"../chat/ChatButton":568,"../chat/NotReadChatSpan":571,"object-assign":34,"react":527}],786:[function(require,module,exports){
+},{"../../mixins/LoginMixin":867,"../chat/ChatButton":568,"../chat/NotReadChatSpan":571,"object-assign":34,"react":527}],810:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var StarItem = React.createClass({displayName: "StarItem",
+    getDefaultProps: function () {
+        return {
+            active: false,
+
+            style: {
+                cursor: 'pointer',
+                color: '#EBB109'
+            },
+
+            onClick: function(){
+
+            }
+
+        }
+    },
+
+    getInitialState: function () {
+        return {}
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        }
+    },
+
+    onClick: function(){
+        this.props.onClick();
+    },
+
+    render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
+
+        return (
+            React.createElement("div", {style: st, onClick: this.onClick}, 
+                this.props.active == true ?
+                    React.createElement("i", {className: 'icon star'}):
+                    React.createElement("i", {className: 'icon empty star'})
+                
+            )
+        );
+    }
+
+});
+
+module.exports = StarItem;
+
+},{"object-assign":34,"react":527}],811:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var StarItem = require('./StarItem');
+
+var StarRating = React.createClass({displayName: "StarRating",
+    getDefaultProps: function () {
+        return {
+            maxRating: 5,
+            rating: 0,
+            editable: true,
+
+            onChange: function(rating){
+                console.log('StarRating: default: rating = ', rating);
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+            rating: this.props.rating
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+        var rating = nextProps.rating;
+        //if (this.props.rating != rating){
+        //    this.setState({
+        //        rating: rating
+        //    });
+        //}
+        this.setState({
+            rating: rating
+        });
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+            display: 'inline-block'
+        }
+    },
+
+    getStarsList: function(){
+        var arr = [];
+        var n = this.props.maxRating;
+        var rating = (this.state.rating == undefined) ? null : this.state.rating;
+        for (var i=0; i < n; i++){
+            arr.push({
+                active: false,
+                number: i
+            });
+        }
+        for (var i in arr){
+            if (i < rating){
+                arr[i].active = true;
+            }
+        }
+        return arr;
+    },
+
+    onStarClick: function(star){
+        if (this.props.editable == false){
+            return;
+        }
+        var rating = +star.number + 1;
+        if (rating == 1 && this.state.rating == 1){
+            rating = 0;
+        }
+        this.setState({
+            rating: rating
+        });
+        this.props.onChange(rating);
+    },
+
+    render: function () {
+        var list = this.getStarsList();
+        return (
+            React.createElement("div", {style: this.componentStyle.placeholder}, 
+
+                list.map(function(star, k){
+                    var key = '_star_' + k;
+                    var onClick = this.onStarClick.bind(this, star);
+                    return (
+                        React.createElement(StarItem, {key: key, active: star.active, onClick: onClick})
+                    );
+
+                }, this)
+
+            )
+        );
+    }
+
+});
+
+module.exports = StarRating;
+
+},{"./StarItem":810,"object-assign":34,"react":527}],812:[function(require,module,exports){
 /**
  * Created by sabir on 29.09.15.
  */
@@ -119308,7 +122442,7 @@ var PatientTask = React.createClass({displayName: "PatientTask",
 
 module.exports = PatientTask;
 
-},{"../audio/PatientAudio":554,"../image/PatientImg":676,"../player/VimeoPlayer":737,"../text/PatientText":794,"../text/translatable/TranslatableText":796,"../video/ExerciseVideo":820,"react":527}],787:[function(require,module,exports){
+},{"../audio/PatientAudio":554,"../image/PatientImg":684,"../player/VimeoPlayer":761,"../text/PatientText":820,"../text/translatable/TranslatableText":822,"../video/ExerciseVideo":846,"react":527}],813:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -119384,7 +122518,7 @@ var TeacherExerciseBlock = React.createClass({displayName: "TeacherExerciseBlock
 
 module.exports = TeacherExerciseBlock;
 
-},{"./TeacherFeedbackCreationBlock":788,"react":527}],788:[function(require,module,exports){
+},{"./TeacherFeedbackCreationBlock":814,"react":527}],814:[function(require,module,exports){
 /**
  * Created by sabir on 06.10.15.
  */
@@ -119584,7 +122718,7 @@ var TeacherFeedbackCreationBlock = React.createClass({displayName: "TeacherFeedb
 
 module.exports = TeacherFeedbackCreationBlock;
 
-},{"../../components/editor/PatientEditor":635,"../../mixins/DialogMixin":831,"../../mixins/ExerciseMixin":832,"../../mixins/QuestionnaireMixin":843,"../corrector/CorrectorHelpButton":598,"react":527}],789:[function(require,module,exports){
+},{"../../components/editor/PatientEditor":641,"../../mixins/DialogMixin":858,"../../mixins/ExerciseMixin":859,"../../mixins/QuestionnaireMixin":873,"../corrector/CorrectorHelpButton":598,"react":527}],815:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -119708,7 +122842,7 @@ var CurrentUserMenuItem = React.createClass({displayName: "CurrentUserMenuItem",
 
 module.exports = CurrentUserMenuItem;
 
-},{"./TopbarSettingsMenu":793,"object-assign":34,"react":527}],790:[function(require,module,exports){
+},{"./TopbarSettingsMenu":819,"object-assign":34,"react":527}],816:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -119819,7 +122953,7 @@ var HeaderLeftLinks = React.createClass({displayName: "HeaderLeftLinks",
 
 module.exports = HeaderLeftLinks;
 
-},{"object-assign":34,"react":527,"react-router":307}],791:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],817:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -119893,7 +123027,7 @@ var HeaderTemplate = React.createClass({displayName: "HeaderTemplate",
 
 module.exports = HeaderTemplate;
 
-},{"react":527}],792:[function(require,module,exports){
+},{"react":527}],818:[function(require,module,exports){
 /**
  * Created by sabir on 09.10.15.
  */
@@ -120177,7 +123311,7 @@ var LeftSidebarTemplate = React.createClass({displayName: "LeftSidebarTemplate",
 
 module.exports = LeftSidebarTemplate;
 
-},{"object-assign":34,"react":527,"react-router":307}],793:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-router":307}],819:[function(require,module,exports){
 /**
  * Created by sabir on 10.10.15.
  */
@@ -120293,7 +123427,7 @@ var TopbarSettingsMenu = React.createClass({displayName: "TopbarSettingsMenu",
 
 module.exports = TopbarSettingsMenu;
 
-},{"object-assign":34,"react":527,"react-onclickoutside":269}],794:[function(require,module,exports){
+},{"object-assign":34,"react":527,"react-onclickoutside":269}],820:[function(require,module,exports){
 /**
  * Created by sabir on 28.09.15.
  */
@@ -120359,7 +123493,7 @@ var PatientText = React.createClass({displayName: "PatientText",
 
 module.exports = PatientText;
 
-},{"../text/translatable/TranslatableText":796,"object-assign":34,"react":527}],795:[function(require,module,exports){
+},{"../text/translatable/TranslatableText":822,"object-assign":34,"react":527}],821:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -120478,7 +123612,7 @@ var ToggledText = React.createClass({displayName: "ToggledText",
 
 module.exports = ToggledText;
 
-},{"object-assign":34,"react":527}],796:[function(require,module,exports){
+},{"object-assign":34,"react":527}],822:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -120565,7 +123699,7 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
 
 module.exports = TranslatableText;
 
-},{"../../../mixins/TranslateMixin":845,"../../translate/TranslateDialog":811,"./WordsList":798,"object-assign":34,"react":527}],797:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":875,"../../translate/TranslateDialog":837,"./WordsList":824,"object-assign":34,"react":527}],823:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -120693,7 +123827,7 @@ var WordItem = React.createClass({displayName: "WordItem",
 
 module.exports = WordItem;
 
-},{"../../../mixins/TranslateMixin":845,"object-assign":34,"react":527}],798:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":875,"object-assign":34,"react":527}],824:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -120751,7 +123885,7 @@ var WordsList = React.createClass({displayName: "WordsList",
 
 module.exports = WordsList;
 
-},{"./WordItem":797,"object-assign":34,"react":527}],799:[function(require,module,exports){
+},{"./WordItem":823,"object-assign":34,"react":527}],825:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -120869,7 +124003,7 @@ var AddTopicButton = React.createClass({displayName: "AddTopicButton",
 
 module.exports = AddTopicButton;
 
-},{"./dialog/UpdateTopicDialog":806,"object-assign":34,"react":527}],800:[function(require,module,exports){
+},{"./dialog/UpdateTopicDialog":832,"object-assign":34,"react":527}],826:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -120977,7 +124111,7 @@ var EditTopicButton = React.createClass({displayName: "EditTopicButton",
 
 module.exports = EditTopicButton;
 
-},{"../buttons/DeleteButton":559,"./dialog/UpdateTopicDialog":806,"object-assign":34,"react":527}],801:[function(require,module,exports){
+},{"../buttons/DeleteButton":559,"./dialog/UpdateTopicDialog":832,"object-assign":34,"react":527}],827:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121141,7 +124275,7 @@ var SelfLoadingTopicsList = React.createClass({displayName: "SelfLoadingTopicsLi
 
 module.exports = SelfLoadingTopicsList;
 
-},{"../../mixins/TopicsMixin":844,"./AddTopicButton":799,"./TopicsList":803,"./dialog/SelfLoadingTopicDialog":804,"object-assign":34,"react":527}],802:[function(require,module,exports){
+},{"../../mixins/TopicsMixin":874,"./AddTopicButton":825,"./TopicsList":829,"./dialog/SelfLoadingTopicDialog":830,"object-assign":34,"react":527}],828:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121253,7 +124387,7 @@ var TopicItem = React.createClass({displayName: "TopicItem",
 
 module.exports = TopicItem;
 
-},{"object-assign":34,"react":527}],803:[function(require,module,exports){
+},{"object-assign":34,"react":527}],829:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121338,7 +124472,7 @@ var TopicsList = React.createClass({displayName: "TopicsList",
 
 module.exports = TopicsList;
 
-},{"./TopicItem":802,"object-assign":34,"react":527}],804:[function(require,module,exports){
+},{"./TopicItem":828,"object-assign":34,"react":527}],830:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121453,7 +124587,7 @@ var SelfLoadingTopicDialog = React.createClass({displayName: "SelfLoadingTopicDi
 
 module.exports = SelfLoadingTopicDialog;
 
-},{"../panels/TopicPanel":809,"./TopicDialog":805,"object-assign":34,"react":527}],805:[function(require,module,exports){
+},{"../panels/TopicPanel":835,"./TopicDialog":831,"object-assign":34,"react":527}],831:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121598,7 +124732,7 @@ var TopicDialog = React.createClass({displayName: "TopicDialog",
 
 module.exports = TopicDialog;
 
-},{"object-assign":34,"react":527}],806:[function(require,module,exports){
+},{"object-assign":34,"react":527}],832:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121938,7 +125072,7 @@ var UpdateTopicDialog = React.createClass({displayName: "UpdateTopicDialog",
 
 module.exports = UpdateTopicDialog;
 
-},{"../../../mixins/TopicsMixin":844,"../../buttons/DeleteButton":559,"../../exercise/info/AccessSwitcher":651,"../../file/FileUploader":668,"../TopicItem":802,"../panels/SimpleTopicHeaderPanel":807,"../panels/TopicHeaderPanel":808,"./TopicDialog":805,"object-assign":34,"react":527}],807:[function(require,module,exports){
+},{"../../../mixins/TopicsMixin":874,"../../buttons/DeleteButton":559,"../../exercise/info/AccessSwitcher":659,"../../file/FileUploader":676,"../TopicItem":828,"../panels/SimpleTopicHeaderPanel":833,"../panels/TopicHeaderPanel":834,"./TopicDialog":831,"object-assign":34,"react":527}],833:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -121957,6 +125091,8 @@ var SimpleTopicHeaderPanel = React.createClass({displayName: "SimpleTopicHeaderP
             topicId: undefined,
 
             dialogLevel: 10,
+
+            customContent: null,
 
             onTopicUpdated: function(topic){
 
@@ -122045,7 +125181,10 @@ var SimpleTopicHeaderPanel = React.createClass({displayName: "SimpleTopicHeaderP
 
                     React.createElement("div", {style: this.componentStyle.descriptionPlaceholder}, 
                         this.props.description
-                    )
+                    ), 
+
+                    customContent == undefined ? null : customContent
+                    
 
 
                 )
@@ -122058,7 +125197,7 @@ var SimpleTopicHeaderPanel = React.createClass({displayName: "SimpleTopicHeaderP
 
 module.exports = SimpleTopicHeaderPanel;
 
-},{"../EditTopicButton":800,"object-assign":34,"react":527}],808:[function(require,module,exports){
+},{"../EditTopicButton":826,"object-assign":34,"react":527}],834:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -122210,7 +125349,7 @@ var TopicHeaderPanel = React.createClass({displayName: "TopicHeaderPanel",
 
 module.exports = TopicHeaderPanel;
 
-},{"../EditTopicButton":800,"object-assign":34,"react":527}],809:[function(require,module,exports){
+},{"../EditTopicButton":826,"object-assign":34,"react":527}],835:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -122355,7 +125494,7 @@ var TopicPanel = React.createClass({displayName: "TopicPanel",
 
 module.exports = TopicPanel;
 
-},{"../../material/list/SelfLoadingMaterialsList":707,"./TopicHeaderPanel":808,"object-assign":34,"react":527}],810:[function(require,module,exports){
+},{"../../material/list/SelfLoadingMaterialsList":731,"./TopicHeaderPanel":834,"object-assign":34,"react":527}],836:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -122427,7 +125566,7 @@ var TranslateButton = React.createClass({displayName: "TranslateButton",
 
 module.exports = TranslateButton;
 
-},{"./TranslateDialog":811,"object-assign":34,"react":527}],811:[function(require,module,exports){
+},{"./TranslateDialog":837,"object-assign":34,"react":527}],837:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -122501,7 +125640,7 @@ var TranslateDialog = React.createClass({displayName: "TranslateDialog",
 
 module.exports = TranslateDialog;
 
-},{"../dialog/Dialog":604,"./panel/TranslatePanel":812,"object-assign":34,"react":527}],812:[function(require,module,exports){
+},{"../dialog/Dialog":610,"./panel/TranslatePanel":838,"object-assign":34,"react":527}],838:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -122674,7 +125813,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
 
 module.exports = TranslatePanel;
 
-},{"../../../mixins/TranslateMixin":845,"object-assign":34,"react-speech":341,"react/addons":354}],813:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":875,"object-assign":34,"react-speech":341,"react/addons":354}],839:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -122746,7 +125885,7 @@ var AuthButton = React.createClass({displayName: "AuthButton",
 
 module.exports = AuthButton;
 
-},{"./AuthOverlay":815,"react":527}],814:[function(require,module,exports){
+},{"./AuthOverlay":841,"react":527}],840:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -122888,7 +126027,7 @@ var AuthForm = React.createClass({displayName: "AuthForm",
 
 module.exports = AuthForm;
 
-},{"./LoginForm":816,"./SignupForm":819,"react":527}],815:[function(require,module,exports){
+},{"./LoginForm":842,"./SignupForm":845,"react":527}],841:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -122987,7 +126126,7 @@ var AuthOverlay = React.createClass({displayName: "AuthOverlay",
 
 module.exports = AuthOverlay;
 
-},{"./AuthForm":814,"object-assign":34,"react":527}],816:[function(require,module,exports){
+},{"./AuthForm":840,"object-assign":34,"react":527}],842:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -123086,6 +126225,13 @@ var LoginForm = React.createClass({displayName: "LoginForm",
         });
     },
 
+    onKeyUp: function(event){
+        if(event.keyCode == 13){
+            var val = event.target.value;
+            this.logIn();
+        }
+    },
+
     logIn: function(){
         var email = this.state.email;
         var password = this.state.password;
@@ -123124,7 +126270,8 @@ var LoginForm = React.createClass({displayName: "LoginForm",
                         React.createElement("input", {type: "text", placeholder: this.props.emailPlaceholder, onChange: this.onEmailChange, autofocus: '1', value: this.state.email})
                     ), 
                     React.createElement("div", {style: this.componentStyle.passwordPlaceholder}, 
-                        React.createElement("input", {type: 'password', placeholder: this.props.passwordPlaceholder, onChange: this.onPasswordChange, value: this.state.password})
+                        React.createElement("input", {type: 'password', placeholder: this.props.passwordPlaceholder, onKeyUp: this.onKeyUp, 
+                               onChange: this.onPasswordChange, value: this.state.password})
                     )
                 ), 
 
@@ -123149,7 +126296,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../../mixins/LoginMixin":837,"react":527}],817:[function(require,module,exports){
+},{"../../mixins/LoginMixin":867,"react":527}],843:[function(require,module,exports){
 /**
  * Created by sabir on 05.11.15.
  */
@@ -123225,7 +126372,7 @@ var RoleSelector = React.createClass({displayName: "RoleSelector",
 
 module.exports = RoleSelector;
 
-},{"object-assign":34,"react":527}],818:[function(require,module,exports){
+},{"object-assign":34,"react":527}],844:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -123254,7 +126401,7 @@ var SelfLoadingUserSpan = React.createClass({displayName: "SelfLoadingUserSpan",
     },
 
     componentDidMount: function () {
-
+        this.load();
     },
 
     load: function(){
@@ -123294,7 +126441,7 @@ var SelfLoadingUserSpan = React.createClass({displayName: "SelfLoadingUserSpan",
 
 module.exports = SelfLoadingUserSpan;
 
-},{"../../mixins/UserMixin":846,"object-assign":34,"react":527}],819:[function(require,module,exports){
+},{"../../mixins/UserMixin":876,"object-assign":34,"react":527}],845:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -123544,7 +126691,7 @@ var SignupForm = React.createClass({displayName: "SignupForm",
 
 module.exports = SignupForm;
 
-},{"../../mixins/LoginMixin":837,"../user/RoleSelector":817,"react":527}],820:[function(require,module,exports){
+},{"../../mixins/LoginMixin":867,"../user/RoleSelector":843,"react":527}],846:[function(require,module,exports){
 /**
  * Created by sabir on 26.12.15.
  */
@@ -123628,7 +126775,7 @@ var ExerciseVideo = React.createClass({displayName: "ExerciseVideo",
 
 module.exports = ExerciseVideo;
 
-},{"../../mixins/MaterialsMixin":838,"../moses/player/MosesPlayer":715,"../player/VimeoPlayer":737,"object-assign":34,"react":527}],821:[function(require,module,exports){
+},{"../../mixins/MaterialsMixin":868,"../moses/player/MosesPlayer":739,"../player/VimeoPlayer":761,"object-assign":34,"react":527}],847:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -123715,7 +126862,7 @@ var VideoDialog = React.createClass({displayName: "VideoDialog",
 
 module.exports = VideoDialog;
 
-},{"../../dialog/Dialog":604,"./VideoPanel":822,"object-assign":34,"react":527}],822:[function(require,module,exports){
+},{"../../dialog/Dialog":610,"./VideoPanel":848,"object-assign":34,"react":527}],848:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -123812,7 +126959,7 @@ var VideoPanel = React.createClass({displayName: "VideoPanel",
 
 module.exports = VideoPanel;
 
-},{"../../player/VimeoPlayer":737,"object-assign":34,"react":527}],823:[function(require,module,exports){
+},{"../../player/VimeoPlayer":761,"object-assign":34,"react":527}],849:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -123876,7 +127023,7 @@ var YoutubeEmbedPlayer = React.createClass({displayName: "YoutubeEmbedPlayer",
 
 module.exports = YoutubeEmbedPlayer;
 
-},{"object-assign":34,"react":527}],824:[function(require,module,exports){
+},{"object-assign":34,"react":527}],850:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -123957,7 +127104,7 @@ var VocabularyItem = React.createClass({displayName: "VocabularyItem",
 
 module.exports = VocabularyItem;
 
-},{"object-assign":34,"react":527}],825:[function(require,module,exports){
+},{"object-assign":34,"react":527}],851:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -124025,7 +127172,7 @@ var VocabularyItemsList = React.createClass({displayName: "VocabularyItemsList",
 
 module.exports = VocabularyItemsList;
 
-},{"./VocabularyItem":824,"object-assign":34,"react":527}],826:[function(require,module,exports){
+},{"./VocabularyItem":850,"object-assign":34,"react":527}],852:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -124108,7 +127255,7 @@ var VocabularyNavigationPanel = React.createClass({displayName: "VocabularyNavig
 
 module.exports = VocabularyNavigationPanel;
 
-},{"object-assign":34,"react":527}],827:[function(require,module,exports){
+},{"object-assign":34,"react":527}],853:[function(require,module,exports){
 /**
  * Created by sabir on 27.11.15.
  */
@@ -124412,7 +127559,7 @@ var VocabularyPanel = React.createClass({displayName: "VocabularyPanel",
 
 module.exports = VocabularyPanel;
 
-},{"../../mixins/VocabularyMixin":848,"../material/list/CardsList":702,"../topics/dialog/TopicDialog":805,"../translate/panel/TranslatePanel":812,"./VocabularyItemsList":825,"./VocabularyNavigationPanel":826,"object-assign":34,"react":527}],828:[function(require,module,exports){
+},{"../../mixins/VocabularyMixin":878,"../material/list/CardsList":726,"../topics/dialog/TopicDialog":831,"../translate/panel/TranslatePanel":838,"./VocabularyItemsList":851,"./VocabularyNavigationPanel":852,"object-assign":34,"react":527}],854:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -124731,7 +127878,7 @@ var DataFactory = {
 
 module.exports = DataFactory;
 
-},{}],829:[function(require,module,exports){
+},{}],855:[function(require,module,exports){
 /**
  * Created by sabir on 16.12.15.
  */
@@ -124927,7 +128074,7 @@ var ChatMixin = {
 
 module.exports = ChatMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./ClassMixin":830,"./UserMixin":846,"object-assign":34,"parse":35}],830:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":881,"../../react/mixins/commonMixins/ParseMixin":882,"./ClassMixin":856,"./UserMixin":876,"object-assign":34,"parse":35}],856:[function(require,module,exports){
 /**
  * Created by sabir on 05.10.15.
  */
@@ -125390,7 +128537,121 @@ var ClassMixin = {
 
 module.exports = ClassMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./FeedMixin":833,"./UserMixin":846,"parse":35}],831:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":881,"../../react/mixins/commonMixins/ParseMixin":882,"./FeedMixin":860,"./UserMixin":876,"parse":35}],857:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var assign = require('object-assign');
+
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+
+var TopicsMixin = require('./TopicsMixin');
+var UserMixin = require('./UserMixin');
+
+var moment = require('moment');
+
+
+var CourseMixin = {
+
+    transformCourse: function(c){
+        return {
+            id: c.id,
+            courseId: c.id,
+            name: c.get('name'),
+            avatar: c.get('avatar'),
+            creatorId: c.get('creatorId'),
+            description: c.get('description'),
+            duration: c.get('duration'),
+            timestamp: (new Date(c.createdAt)).getTime()
+        }
+    },
+
+    loadCourseById: function(id, callback){
+        if (id == undefined){
+            return;
+        }
+        var q = new Parse.Query('PatientCourse');
+        q.get(id, {
+            success: function(c){
+                callback(c);
+            }
+        });
+    },
+
+    loadCourse: function(id, callback){
+        var self = this;
+        this.loadCourseById(id, function(c){
+            callback(self.transformCourse(c));
+        });
+    },
+
+    loadTeacherCourses: function(teacherId, callback){
+        var q = new Parse.Query('PatientCourse');
+        q.limit(1000);
+        var self = this;
+        q.equalTo('creatorId', teacherId);
+        q.find(function(results){
+            var arr = results.map(function(c){return self.transformCourse(c)});
+            callback(arr);
+        }.bind(this));
+    },
+
+    createCourse: function(userId, data, callback){
+        console.log('CourseMixin: createCourse: userId, data = ', userId, data);
+        if (userId == undefined){
+            return;
+        }
+        var PatientCourse = Parse.Object.extend('PatientCourse');
+        var p = new PatientCourse();
+        p.set('creatorId', userId);
+        p = ParseMixin.safeSet(p, [
+            {name: 'name', value: data.name},
+            {name: 'description', value: data.description},
+            {name: 'duration', value: data.duration},
+            {name: 'avatar', value: data.avatar}
+        ]);
+        var self = this;
+        p.save().then(function(savedP){
+            callback(self.transformCourse(savedP));
+        });
+    },
+
+    updateCourse: function(courseId, data, callback){
+        var self = this;
+        this.loadCourseById(courseId, function(p){
+            p = ParseMixin.safeSet(p, [
+                {name: 'name', value: data.name},
+                {name: 'description', value: data.description},
+                {name: 'duration', value: data.duration},
+                {name: 'avatar', value: data.avatar}
+            ]);
+            p.save().then(function(savedP){
+                callback(self.transformCourse(savedP));
+            });
+        });
+    },
+
+    deleteCourse: function(courseId, callback){
+        if (courseId == undefined){
+            return;
+        }
+        this.loadCourseById(courseId, function(c){
+            c.destroy(c, {
+                success: function(){
+                    callback();
+                }
+            });
+        });
+    }
+
+
+};
+
+module.exports = CourseMixin;
+
+},{"../../react/mixins/commonMixins/ParseMixin":882,"./TopicsMixin":874,"./UserMixin":876,"moment":33,"object-assign":34,"parse":35}],858:[function(require,module,exports){
 /**
  * Created by sabir on 18.12.15.
  */
@@ -125876,7 +129137,7 @@ var DialogMixin = {
 
 module.exports = DialogMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./ExerciseMixin":832,"./FeedMixin":833,"./LoginMixin":837,"./UserMixin":846,"object-assign":34,"parse":35}],832:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":881,"../../react/mixins/commonMixins/ParseMixin":882,"./ExerciseMixin":859,"./FeedMixin":860,"./LoginMixin":867,"./UserMixin":876,"object-assign":34,"parse":35}],859:[function(require,module,exports){
 /**
  * Created by sabir on 30.09.15.
  */
@@ -125885,6 +129146,39 @@ var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 
 
 var ExerciseMixin = {
+
+    transformUserAnswer: function(a){
+          return {
+              id: a.id,
+              answerId: a.id,
+              cardId: a.get('cardId'),
+              text: a.get('answerText'),
+              url: a.get('answerUrl'),
+              status: a.get('status'),
+              rating: a.get('rating'),
+              userId: a.get('userId'),
+              t: (new Date(a.createdAt)).getTime(),
+              timestamp: (new Date(a.createdAt)).getTime()
+          }
+    },
+
+    transformExerciseCard: function(c){
+        return {
+            id: c.id,
+            cardId: c.id,
+            number: c.get('number'),
+            exerciseId: c.get('exerciseId'),
+            comment: c.get('comment'),
+            hint: c.get('hint'),
+            level: (c.get('level') == undefined) ? 1 : c.get('level'),
+            correctAnswer: c.get('correctAnswer'),
+            transcript: c.get('transcript'),
+            materials: this.getCorrectlyTransformedMaterialsForRendering(c.get('materials')),
+            answerType: c.get('answerType'),
+            timestamp: (new Date(c.createdAt)).getTime()
+        }
+    },
+
     loadExerciseById: function(id, callback){
         console.log('loadExerciseById: id = ', id);
         ParseMixin.loadClassItem('Exercise', id, function(ex){
@@ -125916,6 +129210,7 @@ var ExerciseMixin = {
                 description: ex.get('description'),
                 task: ex.get('task'),
                 avatar: ex.get('imageUrl'),
+                timestamp: (new Date(ex.createdAt)).getTime(),
                 imageUrl: ex.get('imageUrl')
             };
             callback(ex);
@@ -125997,21 +129292,12 @@ var ExerciseMixin = {
                 var cards = [];
                 for (var i in list){
                     var item = list[i];
-                    var card = {
-                        materials: self.getCorrectlyTransformedMaterialsForRendering(item.get('materials')),
-                        comment: item.get('comment'),
-                        transcript: item.get('transcript'),
-                        correctAnswer: item.get('correctAnswer'),
-                        hint: item.get('hint'),
-                        number: item.get('number'),
-                        cardId: item.id,
-                        id: item.id,
-                        answerType: (item.get('answerType') == undefined) ? ex.get('exerciseType') : item.get('answerType')
-                    };
+                    var card = self.transformExerciseCard(item);
                     //console.log('one of loaded cards: ', card);
                     cards.push(card);
                 }
                 res.cards = cards;
+                console.log('cards loaded: ', cards);
                 callback(res);
             }.bind(this));
         }.bind(this));
@@ -126037,16 +129323,12 @@ var ExerciseMixin = {
         q.equalTo('userId', userId);
         q.equalTo('exerciseId', exerciseId);
         q.limit(1000);
+        var self = this;
         q.find(function(list){
             var arr = [];
             for (var i in list){
                 var a = list[i];
-                arr.push({
-                    cardId: a.get('cardId'),
-                    text: a.get('answerText'),
-                    url: a.get('answerUrl'),
-                    status: a.get('status')
-                });
+                arr.push(self.transformUserAnswer(a));
             }
             callback(arr);
         }.bind(this));
@@ -126056,16 +129338,10 @@ var ExerciseMixin = {
         var q = new Parse.Query('UserAnswer');
         q.equalTo('userId', userId);
         q.limit(1000);
+        var self = this;
         ParseMixin.loadAllDataFromParse(q, function(list){
             var arr = list.map(function(a){
-                return {
-                    cardId: a.get('cardId'),
-                    text: a.get('answerText'),
-                    url: a.get('answerUrl'),
-                    status: a.get('status'),
-                    t: (new Date(a.createdAt)).getTime(),
-                    timestamp: (new Date(a.createdAt)).getTime()
-                }
+                return self.transformUserAnswer(a)
             });
             callback(arr);
         });
@@ -126112,12 +129388,14 @@ var ExerciseMixin = {
         var q = new Parse.Query(UserAnswer);
         q.equalTo('cardId', cardId);
         q.equalTo('userId', userId);
+        var self = this;
         q.find(function(results){
             var answer = (results == undefined || results.length == 0) ? undefined : results[0];
             if (answer == undefined){
                 answer = new UserAnswer();
                 answer.set('cardId', cardId);
                 answer.set('userId', userId);
+                answer.set('rating', 0);
                 answer.set('exerciseId', exerciseId);
                 if (type == 'url'){
                     answer.set('answerUrl', answ);
@@ -126127,12 +129405,7 @@ var ExerciseMixin = {
                 }
                 answer.save().then(function(ans){
                     console.log('saved: ', ans);
-                    callback({
-                        cardId: ans.get('cardId'),
-                        text: ans.get('answerText'),
-                        url: ans.get('answerUrl'),
-                        status: ans.get('status')
-                    });
+                    callback(self.transformUserAnswer(ans));
                 });
             }else{
                 if (type == 'url'){
@@ -126143,15 +129416,44 @@ var ExerciseMixin = {
                 }
                 answer.save().then(function(ans){
                     console.log('saved: ', ans);
-                    callback({
-                        cardId: ans.get('cardId'),
-                        text: ans.get('answerText'),
-                        url: ans.get('answerUrl'),
-                        status: ans.get('status')
-                    });
+                    callback(self.transformUserAnswer(ans));
                 });
             }
         }.bind(this));
+    },
+
+    loadUserAnswerByUserIdAndCardId: function(userId, cardId, callback){
+        console.log('loadUserAnswerByUserIdAndCardId: userId, cardId = ', userId, cardId);
+        if (userId == undefined || cardId == undefined){
+            callback(undefined);
+            return;
+        }
+        var UserAnswer = Parse.Object.extend('UserAnswer');
+        var q = new Parse.Query(UserAnswer);
+        q.equalTo('cardId', cardId);
+        q.equalTo('userId', userId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback(undefined);
+                return;
+            }
+            callback(results[0]);
+        });
+    },
+
+    rateUserAnswer: function(userId, cardId, rating, callback){
+        var self = this;
+        this.loadUserAnswerByUserIdAndCardId(userId, cardId, function(a){
+            if (a == undefined){
+                console.log('answer with userId = ' + userId + ' and cardId = ' + cardId + ' is not found');
+                callback(undefined);
+                return;
+            }
+            a.set('rating', rating);
+            a.save().then(function(savedAnswer){
+                callback(self.transformUserAnswer(savedAnswer));
+            });
+        });
     },
 
     finishExercise: function(userId, exerciseId, callback){
@@ -126395,6 +129697,7 @@ var ExerciseMixin = {
                 });
             }
         });
+
     },
 
     loadExercisesFromGroup: function(groupId, callback){
@@ -126592,21 +129895,6 @@ var ExerciseMixin = {
         return arr;
     },
 
-    getCardByParseCard: function(c){
-        return {
-            id: c.id,
-            cardId: c.id,
-            number: c.get('number'),
-            exerciseId: c.get('exerciseId'),
-            comment: c.get('comment'),
-            hint: c.get('hint'),
-            correctAnswer: c.get('correctAnswer'),
-            transcript: c.get('transcript'),
-            materials: this.getCorrectlyTransformedMaterialsForRendering(c.get('materials')),
-            answerType: c.get('answerType')
-        }
-    },
-
     /*
      * materials: video
      *
@@ -126614,17 +129902,18 @@ var ExerciseMixin = {
      *
     */
     updateCard: function(exerciseId, number, materials, comment, hint, transcript, answerType,
-                         correctAnswer,
+                         correctAnswer, level,
                          callback){
 
         console.log('ExerciseMixin: updateCard occured: materials = ', materials);
-        console.log('updateCard occured: ', exerciseId, number, materials, comment, hint, transcript, answerType,
-            correctAnswer
+        console.log('updateCard occured: exerciseId, number, materials, comment, hint, transcript, answerType, correctAnswer, level = ', exerciseId, number, materials, comment, hint, transcript, answerType,
+            correctAnswer, level
         );
 
-        if (exerciseId == undefined || number == undefined){
+        if (exerciseId == undefined || number == undefined || answerType == undefined){
             return;
         }
+
         var materials = this.getCorrectlyTransformedMaterialsForSaving(materials);
         var ExerciseCard = Parse.Object.extend('ExerciseCard');
         var q = new Parse.Query(ExerciseCard);
@@ -126642,10 +129931,11 @@ var ExerciseMixin = {
                     hint: hint,
                     answerType: answerType,
                     correctAnswer: correctAnswer,
+                    level: level,
                     materials: materials
                 }, {
                     success: function(savedCard){
-                        callback(self.getCardByParseCard(savedCard));
+                        callback(self.transformExerciseCard(savedCard));
                     }
 
                 });
@@ -126658,13 +129948,14 @@ var ExerciseMixin = {
                     {name: 'comment', value: comment},
                     {name: 'transcript', value: transcript},
                     {name: 'correctAnswer', value: correctAnswer},
+                    {name: 'level', value: level},
                     {name: 'answerType', value: answerType},
                     {name: 'materials', value: self.getCorrectlyTransformedMaterialsForSaving(materials)}
                 ]);
 
 
                 c.save().then(function(sCard){
-                    callback(self.getCardByParseCard(sCard));
+                    callback(self.transformExerciseCard(sCard));
                 });
             }
         });
@@ -126805,8 +130096,10 @@ var ExerciseMixin = {
         var name = (ex.name == undefined) ? '' : (ex.name.toLowerCase());
         var description = (ex.description == undefined) ? '' : (ex.description.toLowerCase());
         var task = (ex.task == undefined) ? '' : (ex.task.toLowerCase());
+        var vimeoId = (ex.vimeoId == undefined) ? '' : (ex.vimeoId);
 
-        return ((name.indexOf(text) > -1) || (description.indexOf(text) > -1) || (task.indexOf(text) > -1));
+        return ((name.indexOf(text) > -1) || (description.indexOf(text) > -1)
+                    || (task.indexOf(text) > -1) || (vimeoId.indexOf(text) > -1));
 
     },
 
@@ -126833,7 +130126,7 @@ var ExerciseMixin = {
 
 module.exports = ExerciseMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],833:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"parse":35}],860:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -127065,7 +130358,7 @@ function migrateFeeds(){
     });
 }
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],834:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"parse":35}],861:[function(require,module,exports){
 /**
  * Created by sabir on 20.09.15.
  */
@@ -127104,7 +130397,7 @@ var FileUploadMixin = {
 
 module.exports = FileUploadMixin;
 
-},{}],835:[function(require,module,exports){
+},{}],862:[function(require,module,exports){
 /**
  * Created by sabir on 28.11.15.
  */
@@ -127203,7 +130496,125 @@ module.exports = IdiomsMixin;
 //    });
 //})();
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"./MaterialsMixin":838,"./VocabularyMixin":848,"parse":35,"react":527}],836:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"./MaterialsMixin":868,"./VocabularyMixin":878,"parse":35,"react":527}],863:[function(require,module,exports){
+/**
+ * Created by sabir on 28.12.15.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+
+
+var JungleMixin = {
+
+    transformJungle: function(m){
+        return {
+            id: m.id,
+            jungleMaterialId: m.id,
+            creatorId: m.get('creatorId'),
+            name: m.get('name'),
+            text: m.get('text'),
+            description: m.get('description'),
+            youtubeId: m.get('youtubeId'),
+            vimeoId: m.get('vimeoId'),
+            audioUrl: m.get('audioUrl'),
+            timestamp: (new Date(m.createdAt)).getTime(),
+            materialType: m.get('materialType')
+        }
+    },
+
+    loadUserJungleMaterials: function(userId, callback){
+        var q = new Parse.Query('JungleMaterial');
+        q.equalTo('creatorId', userId);
+        q.addDescending('createdAt');
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformJungle(m);
+            });
+            callback(arr);
+        });
+    },
+
+    loadJungleMaterialById: function(materialId, callback){
+        var q = new Parse.Query('JungleMaterial');
+        if (materialId == undefined){
+            return;
+        }
+        q.get(materialId, {
+            success: function(m){
+                callback(m);
+            }
+        });
+    },
+
+    loadJungleMaterial: function(materialId, callback){
+        var self = this;
+        this.loadJungleMaterialById(materialId, function(m){
+            callback(self.transformJungle(m));
+        });
+    },
+
+    createJungleMaterial: function(userId, data, callback){
+        console.log('JungleMixin: createJungleMaterial: userId, data = ', userId, data);
+        if (userId == undefined){
+            return;
+        }
+        var self = this;
+        var JungleMaterial = Parse.Object.extend('JungleMaterial');
+        var m = new JungleMaterial();
+        m.set('creatorId', userId);
+        m = ParseMixin.safeSet(m, [
+            {name: 'name', value: data.name},
+            {name: 'description', value: data.description},
+            {name: 'vimeoId', value: data.vimeoId},
+            {name: 'youtubeId', value: data.youtubeId},
+            {name: 'audioUrl', value: data.audioUrl},
+            {name: 'text', value: data.text},
+            {name: 'materialType', value: data.materialType}
+        ]);
+        m.save().then(function(savedMaterial){
+            callback(self.transformJungle(savedMaterial));
+        });
+    },
+
+    updateJungleMaterial: function(materialId, data, callback){
+        console.log('JungleMixin: updateJungleMaterial: materialId, data = ', materialId, data);
+        var self = this;
+        this.loadJungleMaterialById(materialId, function(m){
+            m = ParseMixin.safeSet(m, [
+                {name: 'name', value: data.name},
+                {name: 'description', value: data.description},
+                {name: 'vimeoId', value: data.vimeoId},
+                {name: 'youtubeId', value: data.youtubeId},
+                {name: 'audioUrl', value: data.audioUrl},
+                {name: 'text', value: data.text},
+                {name: 'materialType', value: data.materialType}
+            ]);
+            m.save().then(function(updatedMaterial){
+                callback(self.transformJungle(updatedMaterial));
+            });
+        });
+    },
+
+    deleteJungleMaterial: function(materialId, callback){
+        this.loadJungleMaterialById(materialId, function(m){
+            m.destroy({
+                success: function(){
+                    callback();
+                }
+            });
+        })
+    }
+
+
+}
+
+module.exports = JungleMixin;
+
+},{"../../react/mixins/commonMixins/ParseMixin":882,"object-assign":34,"parse":35,"react":527}],864:[function(require,module,exports){
 /**
  * Created by sabir on 01.12.15.
  */
@@ -127387,7 +130798,189 @@ var KaraokeMixin = {
 
 module.exports = KaraokeMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"jquery":31,"parse":35}],837:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"jquery":31,"parse":35}],865:[function(require,module,exports){
+/**
+ * Created by sabir on 29.12.15.
+ */
+
+
+var React = require('react');
+var assign = require('object-assign');
+
+var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
+var Parse = require('parse').Parse;
+
+var LikeMixin = {
+
+    transformLike: function(m){
+        return {
+            id: m.id,
+            className: m.get('relatedClassName'),
+            userId: m.get('userId'),
+            relatedObjectId: m.get('relatedObjectId')
+        }
+    },
+
+
+    loadLikeById: function(id, callback){
+        var q = new Parse.Query('PatientLike');
+        q.get(id, {
+            success: function(m){
+                callback(m);
+            }
+        });
+    },
+
+    loadLike: function(id, callback){
+        var self = this;
+        this.loadLikeById(id, function(m){
+            callback(self.transformLike(m));
+        })
+    },
+
+    loadAllObjectLikes: function(objectId, className, callback){
+        var q = new Parse.Query('PatientLike');
+        var self = this;
+        q.equalTo('relatedObjectId', objectId);
+        q.equalTo('relatedClassName', className);
+        q.limit(1000);
+        q.find(function(results){
+            var arr = results.map(function(r){
+                return self.transformLike(r);
+            });
+            callback(arr);
+        });
+    },
+
+    loadAllUserLikes: function(userId, className, callback){
+        if (userId == undefined){
+            return;
+        }
+        var self = this;
+        var q = new Parse.Query('PatientLike');
+        q.limit(1000);
+        if (className != undefined){
+            q.equalTo('relatedClassName', className);
+        }
+        q.equalTo('userId', userId);
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformLike(m);
+            });
+            callback(arr);
+        });
+    },
+
+    loadUserLike: function(userId, objectId, className, callback){
+        console.log('loadUserLike: userId, objectId, className = ', userId, objectId, className);
+        if (userId == undefined || objectId == undefined || className == undefined){
+            console.log('userId == undefined || objectId == undefined || className == undefined');
+            return;
+        }
+        var q = new Parse.Query('PatientLike');
+        q.equalTo('userId', userId);
+        q.equalTo('relatedObjectId', objectId);
+        q.equalTo('relatedClassName', className);
+        var self = this;
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback(undefined);
+                return;
+            }
+            var m = results[0];
+            callback(self.transformLike(m));
+        });
+    },
+
+    likeObject: function(userId, objectId, className, callback){
+        console.log('likeObject: userId, objectId, className = ', userId, objectId, className);
+        if (userId == undefined || objectId == undefined || className == undefined){
+            return;
+        }
+        var self = this;
+        var PatientLike = Parse.Object.extend('PatientLike');
+        this.loadUserLike(userId, objectId, className, function(m){
+            if (m != undefined){
+                console.log('object is liked by this user');
+                callback(m);
+                return;
+            }
+            var like = new PatientLike();
+            like.set('userId', userId);
+            like.set('relatedClassName', className);
+            like.set('relatedObjectId', objectId);
+            like.save().then(function(savedLike){
+
+                callback(self.transformLike(savedLike));
+            });
+        });
+    },
+
+    unLikeObject: function(userId, objectId, className, callback){
+        console.log('unLikeObject: userId, objectId, className = ', userId, objectId, className);
+        if (userId == undefined || objectId == undefined || className == undefined){
+            return;
+        }
+        var q = new Parse.Query('PatientLike');
+        q.equalTo('userId', userId);
+        q.equalTo('relatedObjectId', objectId);
+        q.equalTo('relatedClassName', className);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                console.log('this obj has already been unliked');
+                callback();
+                return;
+            }
+            var m = results[0];
+            m.destroy({
+                success: function(){
+                    callback();
+                }
+            });
+        });
+    }
+
+}
+
+module.exports = LikeMixin;
+
+},{"../../react/mixins/commonMixins/ParseMixin":882,"object-assign":34,"parse":35,"react":527}],866:[function(require,module,exports){
+/**
+ * Created by sabir on 30.12.15.
+ */
+
+var assign = require('object-assign');
+
+var LinkMixin = {
+
+    parseLink: function(linkText){
+        var data = {
+            content: undefined,
+            linkType: undefined,
+            name: undefined
+        }
+        if (linkText == undefined){
+            return undefined;
+        }
+        var text = linkText.replace(/\[/g, '').replace(/\]/g, '');
+        var arr = text.split('|');
+        if (arr.length < 2){
+            return;
+        }
+        data.linkType = arr[0];
+        data.content = arr[1];
+        data.name = data.conent;
+        if (arr.length > 2){
+            data.name = arr[2];
+        }
+        return data;
+    }
+
+}
+
+module.exports = LinkMixin;
+
+},{"object-assign":34}],867:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -127508,7 +131101,7 @@ var LoginMixin = {
 
 module.exports = LoginMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"parse":35,"react":527}],838:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":881,"../../react/mixins/commonMixins/ParseMixin":882,"parse":35,"react":527}],868:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -127574,7 +131167,17 @@ var MaterialsMixin = {
             var arr = results.map(function(r){
                 return self.transformMaterialFromParseObject(r);
             });
-            callback(arr);
+            var map = {};
+            for (var i in arr){
+                map[arr[i].id] = arr[i];
+            }
+            var res = [];
+            for (var i in idsList){
+                res.push(map[idsList[i]]);
+            }
+
+            //callback(arr);
+            callback(res);
         });
     },
 
@@ -128141,7 +131744,7 @@ var MaterialsMixin = {
 
 module.exports = MaterialsMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"./TopicsMixin":844,"./UserMixin":846,"jquery":31,"parse":35}],839:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"./TopicsMixin":874,"./UserMixin":876,"jquery":31,"parse":35}],869:[function(require,module,exports){
 /**
  * Created by sabir on 08.11.15.
  */
@@ -128229,7 +131832,7 @@ var MigrationMixin = {
 
 module.exports = MigrationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"../data/DataFactory":828,"./MaterialsMixin":838,"./VideoMixin":847,"parse":35}],840:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"../data/DataFactory":854,"./MaterialsMixin":868,"./VideoMixin":877,"parse":35}],870:[function(require,module,exports){
 /**
  * Created by sabir on 20.10.15.
  */
@@ -128520,7 +132123,7 @@ var NotesMixin = {
 
 module.exports = NotesMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],841:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"parse":35}],871:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -128720,7 +132323,7 @@ var NotificationMixin = {
 
 module.exports = NotificationMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"./ClassMixin":830,"./UserMixin":846,"parse":35}],842:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"./ClassMixin":856,"./UserMixin":876,"parse":35}],872:[function(require,module,exports){
 /**
  * Created by sabir on 26.10.15.
  */
@@ -128835,7 +132438,7 @@ var ProfileMixin = {
 
 module.exports = ProfileMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35}],843:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"parse":35}],873:[function(require,module,exports){
 /**
  * Created by sabir on 21.12.15.
  */
@@ -129216,7 +132819,7 @@ var QuestionnaireMixin = {
 
 module.exports = QuestionnaireMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./ExerciseMixin":832,"./FeedMixin":833,"./LoginMixin":837,"./UserMixin":846,"object-assign":34,"parse":35}],844:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":881,"../../react/mixins/commonMixins/ParseMixin":882,"./ExerciseMixin":859,"./FeedMixin":860,"./LoginMixin":867,"./UserMixin":876,"object-assign":34,"parse":35}],874:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -129370,7 +132973,7 @@ var TopicsMixin = {
 
 module.exports = TopicsMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":851,"../../react/mixins/commonMixins/ParseMixin":852,"./FeedMixin":833,"parse":35}],845:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":881,"../../react/mixins/commonMixins/ParseMixin":882,"./FeedMixin":860,"parse":35}],875:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -129549,7 +133152,7 @@ var TranslateMixin = {
 
 module.exports = TranslateMixin;
 
-},{"./VocabularyMixin":848,"jquery":31}],846:[function(require,module,exports){
+},{"./VocabularyMixin":878,"jquery":31}],876:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -129645,7 +133248,7 @@ var UserMixin = {
 
 module.exports = UserMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"parse":35,"react":527}],847:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"parse":35,"react":527}],877:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -129672,6 +133275,7 @@ var VideoMixin = {
                 callback({
                     vimeoId: vimeoId,
                     imgSrc: data.thumbnail_medium,
+                    avatar: data.thumbnail_medium,
                     duration: data.duration,
                     title: data.title
                 });
@@ -129699,11 +133303,28 @@ var VideoMixin = {
             var description = data.items[0].snippet.localized.description;
             var thumbnails = data.items[0].snippet.thumbnails;
             var d = {name: name, description: description, title: name, duration: duration,
+                avatar: 'https://i.ytimg.com/vi/' + youtubeId + '/default.jpg',
                 youtubeId: youtubeId, thumbnails: thumbnails, imgSrc: 'https://i.ytimg.com/vi/' + youtubeId + '/default.jpg'};
             console.log(data);
             console.log(d);
             callback(d);
         });
+    },
+
+    loadVideoInfo: function(videoId, videoType, callback, errorCallback){
+        if (videoType == 'youtube'){
+            this.loadYoutubeInfo(videoId, function(data){
+                callback(data);
+            })
+            return;
+        }
+        if (videoType == 'vimeo'){
+            this.loadVimeoInfo(videoId, function(data){
+                callback(data);
+            })
+            return;
+        }
+
     },
 
     loadCaptions: function(youtubeId, callback){
@@ -129717,7 +133338,7 @@ var VideoMixin = {
 
 module.exports = VideoMixin;
 
-},{"jquery":31,"moment":33}],848:[function(require,module,exports){
+},{"jquery":31,"moment":33}],878:[function(require,module,exports){
 
 var React = require('react');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
@@ -129838,7 +133459,7 @@ var VocabularyMixin = {
 
 module.exports = VocabularyMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"./MaterialsMixin":838,"parse":35,"react":527}],849:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"./MaterialsMixin":868,"parse":35,"react":527}],879:[function(require,module,exports){
 /**
  * Created by sabir on 29.11.15.
  */
@@ -129863,7 +133484,7 @@ var YoutubeSearchMixin = {
 
 module.exports = YoutubeSearchMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":852,"./MaterialsMixin":838,"parse":35,"react":527}],850:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":882,"./MaterialsMixin":868,"parse":35,"react":527}],880:[function(require,module,exports){
 /**
  * Created by sabir on 26.08.15.
  */
@@ -129885,7 +133506,7 @@ var constants = {
 
 module.exports = constants;
 
-},{}],851:[function(require,module,exports){
+},{}],881:[function(require,module,exports){
 /**
  * Created by sabir on 29.07.15.
  */
@@ -130074,7 +133695,7 @@ var CommonMixin = {
 
 module.exports = CommonMixin;
 
-},{}],852:[function(require,module,exports){
+},{}],882:[function(require,module,exports){
 /**
  * Created by sabir on 15.08.15.
  */
@@ -130236,4 +133857,4 @@ var ParseMixin = {
 
 module.exports = ParseMixin;
 
-},{"../../../js/Constants":850,"jquery":31,"parse":35}]},{},[535]);
+},{"../../../js/Constants":880,"jquery":31,"parse":35}]},{},[535]);

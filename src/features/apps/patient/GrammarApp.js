@@ -54,6 +54,7 @@ var GrammarApp = React.createClass({
                 loggedIn: true
             });
         }
+        document.title = 'Грамматика';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 

@@ -6,6 +6,39 @@ var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 
 
 var ExerciseMixin = {
+
+    transformUserAnswer: function(a){
+          return {
+              id: a.id,
+              answerId: a.id,
+              cardId: a.get('cardId'),
+              text: a.get('answerText'),
+              url: a.get('answerUrl'),
+              status: a.get('status'),
+              rating: a.get('rating'),
+              userId: a.get('userId'),
+              t: (new Date(a.createdAt)).getTime(),
+              timestamp: (new Date(a.createdAt)).getTime()
+          }
+    },
+
+    transformExerciseCard: function(c){
+        return {
+            id: c.id,
+            cardId: c.id,
+            number: c.get('number'),
+            exerciseId: c.get('exerciseId'),
+            comment: c.get('comment'),
+            hint: c.get('hint'),
+            level: (c.get('level') == undefined) ? 1 : c.get('level'),
+            correctAnswer: c.get('correctAnswer'),
+            transcript: c.get('transcript'),
+            materials: this.getCorrectlyTransformedMaterialsForRendering(c.get('materials')),
+            answerType: c.get('answerType'),
+            timestamp: (new Date(c.createdAt)).getTime()
+        }
+    },
+
     loadExerciseById: function(id, callback){
         console.log('loadExerciseById: id = ', id);
         ParseMixin.loadClassItem('Exercise', id, function(ex){
@@ -37,6 +70,7 @@ var ExerciseMixin = {
                 description: ex.get('description'),
                 task: ex.get('task'),
                 avatar: ex.get('imageUrl'),
+                timestamp: (new Date(ex.createdAt)).getTime(),
                 imageUrl: ex.get('imageUrl')
             };
             callback(ex);
@@ -118,21 +152,12 @@ var ExerciseMixin = {
                 var cards = [];
                 for (var i in list){
                     var item = list[i];
-                    var card = {
-                        materials: self.getCorrectlyTransformedMaterialsForRendering(item.get('materials')),
-                        comment: item.get('comment'),
-                        transcript: item.get('transcript'),
-                        correctAnswer: item.get('correctAnswer'),
-                        hint: item.get('hint'),
-                        number: item.get('number'),
-                        cardId: item.id,
-                        id: item.id,
-                        answerType: (item.get('answerType') == undefined) ? ex.get('exerciseType') : item.get('answerType')
-                    };
+                    var card = self.transformExerciseCard(item);
                     //console.log('one of loaded cards: ', card);
                     cards.push(card);
                 }
                 res.cards = cards;
+                console.log('cards loaded: ', cards);
                 callback(res);
             }.bind(this));
         }.bind(this));
@@ -158,16 +183,12 @@ var ExerciseMixin = {
         q.equalTo('userId', userId);
         q.equalTo('exerciseId', exerciseId);
         q.limit(1000);
+        var self = this;
         q.find(function(list){
             var arr = [];
             for (var i in list){
                 var a = list[i];
-                arr.push({
-                    cardId: a.get('cardId'),
-                    text: a.get('answerText'),
-                    url: a.get('answerUrl'),
-                    status: a.get('status')
-                });
+                arr.push(self.transformUserAnswer(a));
             }
             callback(arr);
         }.bind(this));
@@ -177,16 +198,10 @@ var ExerciseMixin = {
         var q = new Parse.Query('UserAnswer');
         q.equalTo('userId', userId);
         q.limit(1000);
+        var self = this;
         ParseMixin.loadAllDataFromParse(q, function(list){
             var arr = list.map(function(a){
-                return {
-                    cardId: a.get('cardId'),
-                    text: a.get('answerText'),
-                    url: a.get('answerUrl'),
-                    status: a.get('status'),
-                    t: (new Date(a.createdAt)).getTime(),
-                    timestamp: (new Date(a.createdAt)).getTime()
-                }
+                return self.transformUserAnswer(a)
             });
             callback(arr);
         });
@@ -233,12 +248,14 @@ var ExerciseMixin = {
         var q = new Parse.Query(UserAnswer);
         q.equalTo('cardId', cardId);
         q.equalTo('userId', userId);
+        var self = this;
         q.find(function(results){
             var answer = (results == undefined || results.length == 0) ? undefined : results[0];
             if (answer == undefined){
                 answer = new UserAnswer();
                 answer.set('cardId', cardId);
                 answer.set('userId', userId);
+                answer.set('rating', 0);
                 answer.set('exerciseId', exerciseId);
                 if (type == 'url'){
                     answer.set('answerUrl', answ);
@@ -248,12 +265,7 @@ var ExerciseMixin = {
                 }
                 answer.save().then(function(ans){
                     console.log('saved: ', ans);
-                    callback({
-                        cardId: ans.get('cardId'),
-                        text: ans.get('answerText'),
-                        url: ans.get('answerUrl'),
-                        status: ans.get('status')
-                    });
+                    callback(self.transformUserAnswer(ans));
                 });
             }else{
                 if (type == 'url'){
@@ -264,15 +276,44 @@ var ExerciseMixin = {
                 }
                 answer.save().then(function(ans){
                     console.log('saved: ', ans);
-                    callback({
-                        cardId: ans.get('cardId'),
-                        text: ans.get('answerText'),
-                        url: ans.get('answerUrl'),
-                        status: ans.get('status')
-                    });
+                    callback(self.transformUserAnswer(ans));
                 });
             }
         }.bind(this));
+    },
+
+    loadUserAnswerByUserIdAndCardId: function(userId, cardId, callback){
+        console.log('loadUserAnswerByUserIdAndCardId: userId, cardId = ', userId, cardId);
+        if (userId == undefined || cardId == undefined){
+            callback(undefined);
+            return;
+        }
+        var UserAnswer = Parse.Object.extend('UserAnswer');
+        var q = new Parse.Query(UserAnswer);
+        q.equalTo('cardId', cardId);
+        q.equalTo('userId', userId);
+        q.find(function(results){
+            if (results == undefined || results.length == 0){
+                callback(undefined);
+                return;
+            }
+            callback(results[0]);
+        });
+    },
+
+    rateUserAnswer: function(userId, cardId, rating, callback){
+        var self = this;
+        this.loadUserAnswerByUserIdAndCardId(userId, cardId, function(a){
+            if (a == undefined){
+                console.log('answer with userId = ' + userId + ' and cardId = ' + cardId + ' is not found');
+                callback(undefined);
+                return;
+            }
+            a.set('rating', rating);
+            a.save().then(function(savedAnswer){
+                callback(self.transformUserAnswer(savedAnswer));
+            });
+        });
     },
 
     finishExercise: function(userId, exerciseId, callback){
@@ -516,6 +557,7 @@ var ExerciseMixin = {
                 });
             }
         });
+
     },
 
     loadExercisesFromGroup: function(groupId, callback){
@@ -713,21 +755,6 @@ var ExerciseMixin = {
         return arr;
     },
 
-    getCardByParseCard: function(c){
-        return {
-            id: c.id,
-            cardId: c.id,
-            number: c.get('number'),
-            exerciseId: c.get('exerciseId'),
-            comment: c.get('comment'),
-            hint: c.get('hint'),
-            correctAnswer: c.get('correctAnswer'),
-            transcript: c.get('transcript'),
-            materials: this.getCorrectlyTransformedMaterialsForRendering(c.get('materials')),
-            answerType: c.get('answerType')
-        }
-    },
-
     /*
      * materials: video
      *
@@ -735,17 +762,18 @@ var ExerciseMixin = {
      *
     */
     updateCard: function(exerciseId, number, materials, comment, hint, transcript, answerType,
-                         correctAnswer,
+                         correctAnswer, level,
                          callback){
 
         console.log('ExerciseMixin: updateCard occured: materials = ', materials);
-        console.log('updateCard occured: ', exerciseId, number, materials, comment, hint, transcript, answerType,
-            correctAnswer
+        console.log('updateCard occured: exerciseId, number, materials, comment, hint, transcript, answerType, correctAnswer, level = ', exerciseId, number, materials, comment, hint, transcript, answerType,
+            correctAnswer, level
         );
 
-        if (exerciseId == undefined || number == undefined){
+        if (exerciseId == undefined || number == undefined || answerType == undefined){
             return;
         }
+
         var materials = this.getCorrectlyTransformedMaterialsForSaving(materials);
         var ExerciseCard = Parse.Object.extend('ExerciseCard');
         var q = new Parse.Query(ExerciseCard);
@@ -763,10 +791,11 @@ var ExerciseMixin = {
                     hint: hint,
                     answerType: answerType,
                     correctAnswer: correctAnswer,
+                    level: level,
                     materials: materials
                 }, {
                     success: function(savedCard){
-                        callback(self.getCardByParseCard(savedCard));
+                        callback(self.transformExerciseCard(savedCard));
                     }
 
                 });
@@ -779,13 +808,14 @@ var ExerciseMixin = {
                     {name: 'comment', value: comment},
                     {name: 'transcript', value: transcript},
                     {name: 'correctAnswer', value: correctAnswer},
+                    {name: 'level', value: level},
                     {name: 'answerType', value: answerType},
                     {name: 'materials', value: self.getCorrectlyTransformedMaterialsForSaving(materials)}
                 ]);
 
 
                 c.save().then(function(sCard){
-                    callback(self.getCardByParseCard(sCard));
+                    callback(self.transformExerciseCard(sCard));
                 });
             }
         });
@@ -926,8 +956,10 @@ var ExerciseMixin = {
         var name = (ex.name == undefined) ? '' : (ex.name.toLowerCase());
         var description = (ex.description == undefined) ? '' : (ex.description.toLowerCase());
         var task = (ex.task == undefined) ? '' : (ex.task.toLowerCase());
+        var vimeoId = (ex.vimeoId == undefined) ? '' : (ex.vimeoId);
 
-        return ((name.indexOf(text) > -1) || (description.indexOf(text) > -1) || (task.indexOf(text) > -1));
+        return ((name.indexOf(text) > -1) || (description.indexOf(text) > -1)
+                    || (task.indexOf(text) > -1) || (vimeoId.indexOf(text) > -1));
 
     },
 

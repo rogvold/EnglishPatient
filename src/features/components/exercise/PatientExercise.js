@@ -20,6 +20,11 @@ var PatientExercise = React.createClass({
             onAnswer: function(cardId, type, ans){
                 console.log('onAnswer: ', cardId, type, ans);
             },
+
+            onRatingChange: function(uA, rating){
+                console.log('onRatingChange: ', uA, rating);
+            },
+
             showDescription: false,
             showTask: true,
             showAnswerBlock: true,
@@ -27,6 +32,9 @@ var PatientExercise = React.createClass({
             autoNext: true,
             canAnswer: true,
             teacherMode: false,
+
+            isFinished: false,
+
             noCardsImg: 'https://d3ki9tyy5l5ruj.cloudfront.net/obj/c06fded71d4261a939460e0f0e02d4385c2ffe1d/empty_inbox.svg'
         }
     },
@@ -180,6 +188,11 @@ var PatientExercise = React.createClass({
         }
     },
 
+    onRatingChange: function(rating){
+        var uA = this.getSelectedUserAnswer();
+        this.props.onRatingChange(uA, rating);
+    },
+
     render: function () {
         var card = this.getSelectedCard();
         var userAnswer = this.getSelectedUserAnswer();
@@ -242,7 +255,8 @@ var PatientExercise = React.createClass({
                                                  showAnswerBlock={this.props.showAnswerBlock}
                                                  answerType={card.answerType}
                                                  teacherMode={this.props.teacherMode}
-
+                                                 onRatingChange={this.onRatingChange}
+                                                 exercisesIsFinished={this.props.isFinished}
                                         />
                                 }
                             </div>

@@ -37,7 +37,7 @@ var NoteListItem = React.createClass({
             borderBottom: '1px solid #EFF0F1',
             padding: 5,
             width: '100%',
-            height: 60,
+            //height: 60,
             padding: 10,
             cursor: 'pointer'
         },
@@ -50,9 +50,9 @@ var NoteListItem = React.createClass({
         namePlaceholder:{
             display: 'block',
             width: '99%',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
+            //whiteSpace: 'nowrap',
+            //overflow: 'hidden',
+            //textOverflow: 'ellipsis',
             fontSize: '14px',
             fontWeight: 'bold',
             marginBottom: 5
@@ -78,15 +78,19 @@ var NoteListItem = React.createClass({
         if (this.props.selected == true){
             st = assign(st, this.componentStyle.selected);
         }
+        var name = (this.props.name == undefined) ? '' : this.props.name;
+        //if (name.length > 60){
+        //    name = name.substring(0, 60) + ' ...';
+        //}
 
         return (
             <div style={st} onClick={this.onClick} className={'noteListItem'} >
 
                 <div style={this.componentStyle.namePlaceholder}>
-                    {this.props.name}
+                    {name}
                 </div>
 
-                <div style={this.componentStyle.datePlaceholder}>
+                <div style={assign({}, this.componentStyle.datePlaceholder, {display: 'none'})}>
                     <b>{dateString}</b>
                 </div>
 
