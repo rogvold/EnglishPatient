@@ -315,9 +315,13 @@ var DevApp = React.createClass({
         return (
             <div style={{padding: 10}} >
 
-                <JunglesPanel userId={userId} />
+                <SelfLoadingCoursesList
 
-                <SelfLoadingCoursesList teacherId={userId} />
+                    teacherId={userId}
+                    userId={userId}
+                    editMode={true}
+
+                    />
 
             </div>
 

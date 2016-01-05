@@ -7,6 +7,10 @@ var assign = require('object-assign');
 
 var VimeoPlayer = require('../../components/player/VimeoPlayer');
 
+var MaterialLink = require('../../components/link/MaterialLink');
+
+
+
 var TextImagePanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -16,7 +20,8 @@ var TextImagePanel = React.createClass({
             image: undefined,
             width: 900,
             //vimeoId: undefined
-            vimeoId: '146204986'
+            //vimeoId: '146204986'
+            vimeoId: '150484936'
         }
     },
 
@@ -85,12 +90,19 @@ var TextImagePanel = React.createClass({
                 {this.props.content == undefined ?
 
                     <div>
-                        Двадцать лет мы собирали <b>короткие аутентичные</b> видео материалы.
+                        Более двадцати лет мы собирали
+                        <b style={{marginRight: 10, textDecoration: 'underline'}} >
+                            <MaterialLink materialId={'tIKbXDSVx1'} name={' короткие аутентичные '} />
+                        </b>
+                        видео материалы.
+
+
+
                         Накоплен большой опыт использования их в вузах, языковых школах и на олимпиадах.
 
                         <br/><br/>
 
-                        Этот <b>уникальный  ресурс</b> учит понимать реальную речь,
+                        Этот уникальный  ресурс учит понимать реальную речь,
                         заставляет говорить, помогает легко запоминать слова и фразы.
 
 
@@ -121,7 +133,6 @@ var TextImagePanel = React.createClass({
         return (
 
             <div style={this.componentStyle.imagePlaceholder}>
-
 
                 <img src={this.props.image} style={this.componentStyle.image} />
 
@@ -171,7 +182,6 @@ var TextImagePanel = React.createClass({
                         </div>
 
                     </div>:
-
 
                     <div>
 

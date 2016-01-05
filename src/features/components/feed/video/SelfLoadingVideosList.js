@@ -58,7 +58,21 @@ var SelfLoadingVideosList = React.createClass({
     },
 
     needToLoad: function(materialIds){
-        var list = this.state.materials.map(function(m){return m.id});
+
+
+        console.log('!! ---->>>>> !!! -->> SelfLoadingVideosList: needToLoad: this.state.materials = ', this.state.materials);
+        var arr = [];
+        var list = this.state.materials;
+        for (var i in list){
+            if (list[i] == undefined){
+                continue;
+            }
+            arr.push(list[i].id);
+        }
+        list = arr;
+
+        //var list = this.state.materials.map(function(m){return m.id});
+
         var eq = CommonMixin.stringArraysAreMaplyEqual(materialIds, list);
         return !eq;
     },
@@ -73,13 +87,36 @@ var SelfLoadingVideosList = React.createClass({
     load: function(list, callback){
         console.log('SelfLoadingVideosList: load occured: list = ', list);
         var self = this;
+        if (list == undefined){
+            list = [];
+        }
+        //var arr = [];
+        //for (var i in list){
+        //    if (list[i] == undefined){
+        //        continue;
+        //    }
+        //    arr.push(list[i]);
+        //}
+        //list = arr;
+        //console.log('list after filtration: ', list);
         this.setState({
             loading: true
         });
         MaterialsMixin.loadMaterialsByIds(list, function(arr){
+            var arr2 = [];
+            if (arr == undefined){
+                arr = [];
+            }
+            for (var i in arr){
+                if (arr[i] == undefined){
+                    continue;
+                }
+                arr2.push(arr[i]);
+            }
+
             self.setState({
                 loading: false,
-                materials: arr
+                materials: arr2
             });
             callback(arr);
         });
@@ -101,6 +138,7 @@ var SelfLoadingVideosList = React.createClass({
     render: function () {
 
         console.log('rendering SelfLoadingVideosList: materials = ', this.state.materials);
+
 
         return (
             <div style={this.componentStyle.placeholder}>

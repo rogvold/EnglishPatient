@@ -17,6 +17,8 @@ var DictionaryApp = require('./DictionaryApp');
 var IdiomsApp = require('./IdiomsApp');
 var GrammarApp = require('./GrammarApp');
 
+var CoursesApp = require('./CoursesApp');
+
 var NoMatchApp = require('./NoMatchApp');
 var SharedClassApp = require('./shared/SharedClassApp');
 
@@ -103,6 +105,10 @@ var App = React.createClass({
                 </Route>
                 <Route path="/dictionary" component={DictionaryApp}>
                     <IndexRoute component={DictionaryApp} />
+                </Route>
+
+                <Route path="/courses" component={CoursesApp}>
+                    <IndexRoute component={CoursesApp} />
                 </Route>
 
                 <Route path="/grammar" component={GrammarApp}>

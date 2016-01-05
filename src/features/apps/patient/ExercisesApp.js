@@ -306,13 +306,13 @@ var ExercisesApp = React.createClass({
                     <CreateNewExerciseGroupButton style={{float: 'right'}} teacherId={this.state.user.id} onGroupCreate={this.onGroupCreate} />
                 </div>
 
-                <div style={{display: 'none'}} >
+                <div style={{display: 'block'}} >
                     <ExercisesGroupsList onGroupUpdate={this.onGroupUpdate}
                                          onExerciseUpdate={this.onExerciseUpdate}
                                          pageSize={6} userId={this.state.user.id} groups={this.state.groups} />
                 </div>
 
-                <div style={{display: 'block'}} >
+                <div style={{display: 'none'}} >
                     <ExerciseGroupsCardsList
                         userId={this.state.user.id}
                         groups={this.state.groups} />

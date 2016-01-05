@@ -41,6 +41,7 @@ var MaterialLink = React.createClass({
         },
 
         linkStyle: {
+            textDecoration: 'underline',
             display: 'inline-block',
             cursor: 'pointer'
         }
@@ -71,7 +72,7 @@ var MaterialLink = React.createClass({
 
 
                 {this.state.dialogVisible == false ? null :
-                    <MaterialDialog visible={true}
+                    <MaterialDialog visible={true}  editMode={false}
                         materialId={this.props.materialId} onClose={this.onClose} />
                 }
 

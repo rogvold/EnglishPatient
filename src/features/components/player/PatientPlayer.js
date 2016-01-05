@@ -22,6 +22,8 @@ var PatientPlayer = React.createClass({
             seekToValue: 0,
             paused: false,
 
+            playerId: undefined,
+
             abMode: false,
 
             abPauseDuration: 500,
@@ -115,7 +117,8 @@ var PatientPlayer = React.createClass({
     onProgress: function(data){
         var played = data.played;
         var loaded = data.loaded;
-        console.log('onProgress: played/loaded = ', played, loaded);
+        var ref = this.getPlayerRef();
+        console.log('onProgress: played/loaded = ', played, loaded, ', ref = ' + ref);
         if (played != undefined){
             this.checkBounds(played);
         }
@@ -133,11 +136,19 @@ var PatientPlayer = React.createClass({
         console.log('onPause occured');
     },
 
+    getPlayerRef: function(){
+        var refer = (this.props.playerId == undefined) ? 'player' : ('player_' + this.props.playerId);
+        return refer;
+    },
+
     seekTo: function(fraction){
-        var player = this.refs.player;
+        //var player = this.refs.player; !!! it's working
+        var refer = this.getPlayerRef();
+        var player = this.refs[refer];
         console.log('seekTo occured: fraction = ', fraction );
         console.log('player = ', player);
-        this.refs.player.seekTo(fraction);
+        //this.refs.player.seekTo(fraction); // it's working
+        player.seekTo(fraction);
     },
 
     onEnded: function(){
@@ -149,8 +160,11 @@ var PatientPlayer = React.createClass({
 
     play: function(){
         console.log('play occured');
+        var refer = this.getPlayerRef();
+        var player = this.refs[refer];
         //this.refs.player.play();
-        console.log('this.refs.player = ', this.refs.player);
+        //console.log('this.refs.player = ', this.refs.player); // it's working
+        console.log('player = ', player);
         //this.forceUpdate();
     },
 
@@ -238,7 +252,11 @@ var PatientPlayer = React.createClass({
     },
 
     render: function () {
+        var refer = this.getPlayerRef();
+        var vimeoId = this.props.vimeoId;
         console.log('PatientPlayer: render occured: playing = ', this.state.playing);
+        console.log('ref = ' + refer);
+        console.log('vimeoId = ' + vimeoId);
 
         var url = this.getUrl();
         var start = (this.props.start == undefined) ? 0 : this.props.start;
@@ -254,15 +272,16 @@ var PatientPlayer = React.createClass({
             badge: 0,
             byline: 0,
             portrait: 0,
-            title: 0,
-            autoplay: !this.props.paused
+            title: 0
+            //autoplay: !this.props.paused
+            //autoplay: false
         };
 
         return (
             <div style={this.componentStyle.placeholder}>
 
                 {this.state.loading == true ? null :
-                        <ReactPlayer url={url} ref="player"
+                        <ReactPlayer url={url} ref={refer}
                                      width="100%"
                                      height="100%"
                                      onProgress={this.onProgress}

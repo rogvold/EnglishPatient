@@ -6,6 +6,8 @@ var React = require('react');
 var LoginMixin = require('../../mixins/LoginMixin');
 var RoleSelector = require('../user/RoleSelector');
 
+var assign = require('object-assign');
+
 var SignupForm = React.createClass({
     getDefaultProps: function () {
         return {
@@ -16,12 +18,26 @@ var SignupForm = React.createClass({
             firstNamePlaceholder: 'Имя',
             lastNamePlaceholder: 'Фамилия',
             formName: 'Регистрация',
+
+            loginMode: false,
+
             onSignUp: function(u){
                 console.log('onLogin occured: u = ', u);
             },
+
+            onLogin: function(u){
+
+            },
+
             userRole: 'student',
 
-            roleSelectorEnabled: false
+            confirmPasswordMode: true,
+
+            roleSelectorEnabled: false,
+
+            nameFormStyle: {
+
+            }
         }
     },
 
@@ -145,10 +161,21 @@ var SignupForm = React.createClass({
         });
     },
 
+    logIn: function(email, password, callback){
+        LoginMixin.logIn(email, password, function(u){
+            callback(u);
+        });
+    },
+
     signUp: function(){
         var email = this.state.email;
         var password = this.state.password;
         var confirmPassword = this.state.confirmPassword;
+
+
+        if (this.props.confirmPasswordMode == false){
+            confirmPassword = password;
+        }
 
         if (password != confirmPassword){
             this.setState({
@@ -164,11 +191,22 @@ var SignupForm = React.createClass({
         this.setState({
             loading: true
         });
+        var self = this;
         LoginMixin.signUp(email, password, firstName, lastName, this.state.userRole, undefined, function(u){
             this.props.onSignUp(u);
-            this.setState({
-                loading: false
+            if (this.props.loginMode == false){
+                this.setState({
+                    loading: false
+                });
+                return;
+            }
+            this.logIn(email, password, function(use){
+                self.setState({
+                    loading: false
+                });
+                self.props.onLogin(use);
             });
+
         }.bind(this), function(err){
             this.setState({
                 errorMessage: err,
@@ -190,10 +228,12 @@ var SignupForm = React.createClass({
     render: function () {
         var errorMessage = this.state.errorMessage;
 
+        var nameSt = assign({}, this.componentStyle.namePlaceholder, this.props.nameFormStyle);
+
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.namePlaceholder} >
+                <div style={nameSt} >
                     {this.props.formName}
                 </div>
 
@@ -205,9 +245,12 @@ var SignupForm = React.createClass({
                     <div style={this.componentStyle.passwordPlaceholder}>
                         <input type={'password'} placeholder={this.props.passwordPlaceholder} onChange={this.onPasswordChange} value={this.state.password} />
                     </div>
-                    <div style={this.componentStyle.confirmPasswordPlaceholder}>
-                        <input type={'password'} placeholder={this.props.passwordConfirmPlaceholder} onChange={this.onConfirmPasswordChange} value={this.state.confirmPassword} />
-                    </div>
+
+                    {this.props.confirmPasswordMode == false ? null :
+                        <div style={this.componentStyle.confirmPasswordPlaceholder}>
+                            <input type={'password'} placeholder={this.props.passwordConfirmPlaceholder} onChange={this.onConfirmPasswordChange} value={this.state.confirmPassword} />
+                        </div>
+                    }
 
                     <div style={this.componentStyle.firstNamePlaceholder} className={'field'}>
                         <input type="text" placeholder={this.props.firstNamePlaceholder} onChange={this.onFirstNameChange} value={this.state.firstName} />
@@ -222,7 +265,6 @@ var SignupForm = React.createClass({
                             <RoleSelector onChange={this.onRoleChange} />
                         </div>
                     }
-
 
                 </div>
 

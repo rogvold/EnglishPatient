@@ -320,6 +320,7 @@ var SelfLoadingUpdateFeedItem = React.createClass({
     },
 
     render: function () {
+        console.log('rendering SelfLoadingUpdateFeedItem');
         var videoButtonName = 'Видео';
         var materialIds = (this.state.materialIds == undefined) ? [] : this.state.materialIds;
         if (materialIds.length > 0){

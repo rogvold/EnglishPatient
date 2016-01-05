@@ -36,6 +36,8 @@ var CourseMixin = {
               name: l.get('name'),
               description: l.get('description'),
               number: l.get('number'),
+              duration: l.get('duration'),
+              avatar: l.get('avatar'),
               timestamp: (new Date(l.createdAt)).getTime()
           }
     },
@@ -86,7 +88,9 @@ var CourseMixin = {
         ]);
         var self = this;
         p.save().then(function(savedP){
-            callback(self.transformCourse(savedP));
+            var l = self.transformCourse(savedP);
+            callback(l);
+
         });
     },
 
@@ -119,9 +123,13 @@ var CourseMixin = {
     },
 
     loadCourseLessons: function(courseId, callback){
+        if (courseId == undefined){
+            return;
+        }
         var q = new Parse.Query('CourseLesson');
         q.limit(1000);
         q.addAscending('number');
+        q.equalTo('courseId', courseId);
         q.limit(1000);
         var self = this;
         q.find(function(results){
@@ -151,11 +159,15 @@ var CourseMixin = {
     loadLesson: function(lessonId, callback){
         var self = this;
         this.loadLessonById(lessonId, function(l){
-            callback(self.transformLesson(l));
+            FeedMixin.loadFeedByCourseLessonId(l.id, function(feed){
+                var le = self.transformLesson(l);
+                le.feedId = feed.id;
+                callback(le);
+            });
         });
     },
 
-    createLesson: function(courseId, name, description, callback){
+    createLesson: function(courseId, data, callback){
         if (courseId == undefined){
             return;
         }
@@ -164,27 +176,61 @@ var CourseMixin = {
         var l = new CourseLesson();
         l.set('courseId', courseId);
         l = ParseMixin.safeSet(l, [
-            {name: 'name', value: name},
-            {name: 'description', value: description}
+            {name: 'name', value: data.name},
+            {name: 'duration', value: data.duration},
+            {name: 'avatar', value: data.avatar},
+            {name: 'description', value: data.description}
         ]);
         this.loadCourseLessons(courseId, function(results){
             var number = results.length;
             l.set('number', number);
+            l.save().then(function(savedLesson){
+                FeedMixin.loadFeedByCourseLessonId(savedLesson.id, function(feed){
+                    var le = self.transformLesson(savedLesson);
+                    le.feedId = feed.id;
+                    callback(le);
+                });
+            });
+        });
+    },
+
+    updateLesson: function(lessonId, data, callback){
+        var self = this;
+        this.loadLessonById(lessonId, function(l){
+            l = ParseMixin.safeSet(l, [
+                {name: 'name', value: data.name},
+                {name: 'duration', value: data.duration},
+                {name: 'description', value: data.description},
+                {name: 'avatar', value: data.avatar}
+            ]);
             l.save().then(function(savedLesson){
                 callback(self.transformLesson(savedLesson));
             });
         });
     },
 
-    updateLesson: function(lessonId, name, description, callback){
+
+    deleteLesson: function(lessonId, callback){
         var self = this;
-        this.loadLessonById(lessonId, function(l){
-            l = ParseMixin.safeSet(l, [
-                {name: 'name', value: name},
-                {name: 'description', value: description}
-            ]);
-            l.save().then(function(savedLesson){
-                callback(self.transformLesson(savedLesson));
+        console.log('deleteLesson occured: lessonId = ', lessonId);
+        FeedMixin.loadFeedByCourseLessonId(lessonId, function(feed){
+            console.log('feed loaded: ', feed);
+            if (feed == undefined){
+                return;
+            }
+            feed.destroy({
+                success: function(){
+                    console.log('feed destroyed');
+                    self.loadLessonById(lessonId, function(lesson){
+                        console.log('lesson loaded: lesson = ', lesson);
+                        lesson.destroy({
+                            success: function(){
+                                console.log('lesson destroyed');
+                                callback();
+                            }
+                        });
+                    })
+                }
             });
         });
     }

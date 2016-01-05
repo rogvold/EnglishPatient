@@ -14,7 +14,11 @@ var CoursesList = require('./CoursesList');
 var SelfLoadingCoursesList = React.createClass({
     getDefaultProps: function () {
         return {
-            teacherId: undefined
+            teacherId: undefined,
+
+            userId: undefined,
+
+            editMode: true
         }
     },
 
@@ -33,12 +37,17 @@ var SelfLoadingCoursesList = React.createClass({
     componentStyle: {
         placeholder: {
             width: 820,
-            margin: '0 auto'
+            height: '100%',
+            overflowY: 'auto',
+            margin: '0 auto',
+            backgroundColor: 'white',
+            paddingBottom: 1
         },
 
         createCourseButtonPlaceholder: {
             padding: 5,
-            textAlign: 'right'
+            textAlign: 'right',
+            paddingRight: 0
         },
 
         listPlaceholder: {
@@ -66,6 +75,14 @@ var SelfLoadingCoursesList = React.createClass({
         this.load();
     },
 
+    onDeleted: function(){
+        this.load();
+    },
+
+    onUpdated: function(){
+        this.load();
+    },
+
     render: function () {
 
         return (
@@ -78,7 +95,16 @@ var SelfLoadingCoursesList = React.createClass({
                 </div>
 
                 <div style={this.componentStyle.listPlaceholder}>
-                    <CoursesList courses={this.state.courses} />
+                    <CoursesList
+                        userId={this.props.userId}
+                        teacherId={this.props.teacherId}
+                        editMode={this.props.editMode}
+                        courses={this.state.courses}
+
+                        onUpdated={this.onUpdated}
+                        onDeleted={this.onDeleted}
+
+                        />
                 </div>
 
             </div>

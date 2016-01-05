@@ -14,14 +14,18 @@ var AuthForm = React.createClass({
 
             },
 
-            roleSelectorEnabled: false
+            roleSelectorEnabled: false,
+
+            confirmPasswordMode: true,
+
+            loginFirst: true
 
         }
     },
 
     getInitialState: function () {
         return {
-            login: true
+            login: this.props.loginFirst
         }
     },
 
@@ -90,7 +94,9 @@ var AuthForm = React.createClass({
                     {this.state.login ?
                         <LoginForm onLogin={this.onLogin} />
                         :
-                        <SignupForm roleSelectorEnabled={this.props.roleSelectorEnabled} onSignUp={this.onLogin} />
+                        <SignupForm
+                            confirmPasswordMode={this.props.confirmPasswordMode}
+                            roleSelectorEnabled={this.props.roleSelectorEnabled} onSignUp={this.onLogin} />
                     }
 
                 </div>

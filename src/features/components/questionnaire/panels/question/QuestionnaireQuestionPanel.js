@@ -290,7 +290,7 @@ var QuestionnaireQuestionPanel = React.createClass({
 
                     <div style={this.componentStyle.right}>
                         <div className={'ui form'} >
-                            <input value={this.state.name} onChange={this.onNameChange} placeholder={'Название темы вопросы'} />
+                            <input value={this.state.name} onChange={this.onNameChange} placeholder={'Название темы вопроса'} />
                         </div>
                         <div className={'ui form'} style={{marginTop: 5}} >
                             <textarea onChange={this.onQuestionChange} placeholder={'Вопрос (по-английски)'}

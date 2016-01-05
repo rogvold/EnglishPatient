@@ -15,9 +15,6 @@ var VimeoPlayer = React.createClass({
         }
     },
 
-
-
-
     getInitialState: function(){
         return {
 

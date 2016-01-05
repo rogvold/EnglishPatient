@@ -43,8 +43,22 @@ var SelfLoadingUpdatableFeed = React.createClass({
 
         },
 
-        createButtonPlaceholder: {
+        createBlock: {
+            backgroundColor: 'white',
+            padding: 10,
+            margin: '0 auto',
+            width: 652,
+            marginTop: 10,
+            marginBottom: 10,
+            border: '1px solid #EFF0F1',
+            position: 'relative',
+            //paddingTop: 15,
+            //paddingBottom: 15,
+            textAlign: 'right'
+        },
 
+        createButtonPlaceholder: {
+            display: 'inline-block'
         },
 
         listPlaceholder: {
@@ -95,10 +109,23 @@ var SelfLoadingUpdatableFeed = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.createButtonPlaceholder}>
-                    <CreateFeedItemButton onFeedItemCreated={this.onFeedItemCreated}
-                                          teacherId={this.props.teacherId} feedId={this.props.feedId}
-                                          buttonClassName={'ui button basic'} />
+                <div style={this.componentStyle.createBlock}>
+                        <span style={{marginRight: 285}} >
+                            {items.length == 0 ?
+                                <span>Этот блок пуст</span> :
+                                <span>
+                                    Количество пакетов: <b>{items.length}</b>
+                                </span>
+                            }
+                        </span>
+
+                        <div style={this.componentStyle.createButtonPlaceholder}>
+
+                            <CreateFeedItemButton onFeedItemCreated={this.onFeedItemCreated}
+                                              teacherId={this.props.teacherId} feedId={this.props.feedId}
+                                              buttonClassName={'ui button basic'} />
+
+                        </div>
                 </div>
 
                 <div style={this.componentStyle.listPlaceholder}>

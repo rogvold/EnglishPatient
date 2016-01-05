@@ -84,6 +84,7 @@ var MosesPlayer = React.createClass({
 
                 <div style={this.componentStyle.playerPlaceholder}>
                     <PatientPlayer vimeoId={this.props.vimeoId}
+                                   playerId={this.props.vimeoId}
                                    end={dur.end}
                                    start={dur.start}
                                    abMode={true}

@@ -42,7 +42,7 @@ var PatientImg = React.createClass({
 
         return (
             <div style={this.componentStyle.placeholder}>
-                <Image src={this.props.url} style={style} />
+                <img src={this.props.url} style={style} />
             </div>
         );
     }

@@ -100,7 +100,7 @@ var MaterialDialog = React.createClass({
         }
 
         return (
-            <div>
+            <div style={{fontWeight: 'normal'}} >
                 {this.state.mode == 'view' ?
                     <div>
                         <SelfLoadingMaterialPanel materialId={this.props.materialId} />

@@ -37,6 +37,16 @@ var TeacherHeader = React.createClass({
                 },
                 url: '/topics'
             },
+
+                {
+                    displayName: 'Курсы',
+                    name: 'courses',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/courses'
+                },
+
                 {
                     displayName: 'Грамматика',
                     name: 'grammar',

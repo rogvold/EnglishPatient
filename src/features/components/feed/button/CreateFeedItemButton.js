@@ -45,7 +45,8 @@ var CreateFeedItemButton = React.createClass({
 
         dialogPanelStyle: {
             width: 720,
-            paddingTop: 10
+            paddingTop: 10,
+            textAlign: 'left'
         }
 
     },

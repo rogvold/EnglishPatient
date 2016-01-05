@@ -35,11 +35,13 @@ var CourseItem = React.createClass({
 
     componentStyle: {
         placeholder: {
-            width: 820,
+            width: 810,
             padding: 10,
+            margin: '0 auto',
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
-            borderRadius: 3
+            borderRadius: 3,
+            cursor: 'pointer'
         },
 
         left: {
@@ -49,7 +51,7 @@ var CourseItem = React.createClass({
         },
 
         right: {
-            width: 638,
+            width: 628,
             display: 'inline-block',
             verticalAlign: 'top',
             paddingLeft: 10,

@@ -23,17 +23,17 @@ var FeedMixin = {
         });
     },
 
-    loadFeedByCourseId: function(courseId, callback){
-        if (courseId == undefined){
+    loadFeedByCourseLessonId: function(lessonId, callback){
+        if (lessonId == undefined){
             return;
         }
         var q = new Parse.Query('Feed');
-        q.equalTo('courseId', courseId);
+        q.equalTo('lessonId', lessonId);
         q.find(function(results){
             if (results == undefined || results.length == 0 ){
                 var Feed = Parse.Object.extend('Feed');
                 var f = new Feed();
-                f.set('courseId', courseId);
+                f.set('lessonId', lessonId);
                 f.save().then(function(feed){
                     callback(feed);
                 });
@@ -102,10 +102,11 @@ var FeedMixin = {
             q.addDescending('createdAt');
             q.equalTo('feedId', feedId);
             q.find(function(items){
-                console.log('items found: ', items);
+
                 var arr = items.map(function(it){
                     return self.transformFeedItem(it);
                 });
+                console.log('items found: ', arr);
                 callback(arr);
             });
         });
@@ -113,6 +114,7 @@ var FeedMixin = {
 
 
     loadAllFeed: function(feedId, order, callback){
+        console.log('loadAllFeed occured: feedId = ' + feedId + ' , order = ' + order);
         if (feedId == undefined){
             return;
         }
@@ -122,6 +124,7 @@ var FeedMixin = {
         }
         var q = new Parse.Query('FeedItem');
         q.limit(1000);
+        q.equalTo('feedId', feedId);
         if (order == 'asc'){
             q.addAscending('createdAt');
         }else {

@@ -106,6 +106,9 @@ var SelfLoadingUpdateCoursePanel = React.createClass({
 
     onDelete: function(){
         var courseId = this.props.courseId;
+        this.setState({
+            loading: true
+        });
         CourseMixin.deleteCourse(courseId, function(){
             this.setState({
                 loading: false

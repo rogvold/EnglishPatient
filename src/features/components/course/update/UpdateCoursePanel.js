@@ -43,7 +43,12 @@ var UpdateCoursePanel = React.createClass({
     },
 
     componentWillReceiveProps: function (nextProps) {
-
+        this.setState({
+            name: nextProps.name,
+            description: nextProps.description,
+            avatar: nextProps.avatar,
+            duration: nextProps.duration
+        });
     },
 
     componentDidMount: function () {
@@ -87,8 +92,9 @@ var UpdateCoursePanel = React.createClass({
         },
 
         deleteButtonPlaceholder: {
-            textAlign: 'right',
-            paddig: 5
+            textAlign: 'left',
+            padding: 5,
+            marginTop: 5
         }
     },
 
@@ -173,7 +179,8 @@ var UpdateCoursePanel = React.createClass({
                                     onFileUploaded={this.onAvatarChange} />
                             </div>
                             :
-                            <div className={'ui red message'} style={{padding: 10, marginTop: 5}}
+                            <div className={'ui red message'} style={{padding: 10, marginTop: 5,
+                                                                        cursor: 'pointer'}}
                                  onClick={this.deleteAvatar} >
                                 <i className={'icon close'} ></i> Удалить аватар
                             </div>
@@ -207,14 +214,13 @@ var UpdateCoursePanel = React.createClass({
                         </button>
                     </div>
 
-                    {this.props.courseId == undefined ? null :
-                        <div style={this.componentStyle.deleteButtonPlaceholder}>
-                            <DeleteButton onDelete={this.props.onDelete} />
-                        </div>
-                    }
-
-
                 </div>
+
+                {this.props.courseId == undefined ? null :
+                    <div style={this.componentStyle.deleteButtonPlaceholder}>
+                        <DeleteButton onDelete={this.props.onDelete} />
+                    </div>
+                }
 
 
             </div>

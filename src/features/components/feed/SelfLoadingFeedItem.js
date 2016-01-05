@@ -56,6 +56,7 @@ var SelfLoadingFeedItem = React.createClass({
             loading: true
         });
         FeedMixin.loadFeedItem(feedItemId, function(item){
+            console.log('!!! --- !!! feed item loaded: ', item);
             this.setState({
                 loading: false,
                 information: item.information,

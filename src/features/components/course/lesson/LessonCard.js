@@ -7,14 +7,15 @@ var assign = require('object-assign');
 
 var moment = require('moment');
 
-
+var DialogCard = require('../../dialog_exercise/card/DialogCard');
 
 var LessonCard = React.createClass({
     getDefaultProps: function () {
         return {
             name: undefined,
             description: undefined,
-            duration: undefined
+            duration: undefined,
+            avatar: undefined
         }
     },
 
@@ -32,8 +33,11 @@ var LessonCard = React.createClass({
 
     componentStyle: {
         placeholder: {
-            width: 200,
-            height: 200,
+            cursor: 'pointer',
+            borderRadius: 4,
+            width: 180,
+            //height: 180,
+            height: 120,
             display: 'inline-block',
             position: 'relative',
             backgroundColor: 'white',
@@ -43,7 +47,7 @@ var LessonCard = React.createClass({
         namePlaceholder: {
             textAlign: 'center',
             padding: 5,
-            paddingTop: 40,
+            paddingTop: 60,
             fontSize: 16,
             fontWeight: 'bold'
         },
@@ -53,8 +57,10 @@ var LessonCard = React.createClass({
             top: 0,
             right: 0,
             padding: 5,
-            borderBottomLeft: '1px solid #EFF0F1',
+            borderLeft: '1px solid #EFF0F1',
             borderBottom: '1px solid #EFF0F1',
+            borderBottomLeftRadius: 4,
+            opacity: 0.7,
             backgroundColor: 'white'
         }
 
@@ -68,13 +74,15 @@ var LessonCard = React.createClass({
 
                 {dur == undefined ? null :
                     <div style={this.componentStyle.durationPlaceholder}>
-                        <i className={'icon wait'} ></i> {dur}
+                        <i className={'icon wait'} ></i> {dur} ч.
                     </div>
                 }
 
-                <div style={this.componentStyle.namePlaceholder}>
-                    {this.props.name}
+                <div style={{width: '100%', height: '100%'}} >
+                    <DialogCard name={this.props.name} avatar={this.props.avatar} />
                 </div>
+
+
 
             </div>
         );

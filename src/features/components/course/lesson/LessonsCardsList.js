@@ -9,10 +9,27 @@ var Dialog = require('../../dialog/Dialog');
 
 var LessonCard = require('./LessonCard');
 
+var TopicDialog = require('../../topics/dialog/TopicDialog');
+
+var SelfLoadingLessonPanel = require('./SelfLoadingLessonPanel');
+
 var LessonsCardsList = React.createClass({
     getDefaultProps: function () {
         return {
-            lessons: []
+            lessons: [],
+            courseName: undefined,
+
+            userId: undefined,
+            teacherId: undefined,
+            editMode: true,
+
+            onDeleted: function(){
+
+            },
+
+            onUpdated: function(){
+
+            }
         }
     },
 
@@ -58,7 +75,25 @@ var LessonsCardsList = React.createClass({
     },
 
     getDialogContent: function(){
-        return null;
+        var lesson = this.state.selectedLesson;
+        if (lesson == undefined){
+            return null;
+        }
+        return (
+            <div>
+                <SelfLoadingLessonPanel
+                    onDeleted={this.onDeleted}
+                    onUpdated={this.onUpdated}
+                    courseName={this.props.courseName}
+                    lessonId={lesson.id}
+
+                    editMode={this.props.editMode}
+                    userId={this.props.userId}
+                    teacherId={this.props.teacherId}
+
+                    />
+            </div>
+        );
     },
 
     onClose: function(){
@@ -68,6 +103,17 @@ var LessonsCardsList = React.createClass({
         });
     },
 
+    onDeleted: function(){
+        console.log('LessonsCardsList: onDeleted occured ');
+        this.onClose();
+        this.props.onDeleted();
+    },
+
+    onUpdated: function(){
+        console.log('LessonsCardsList: onUpdated occured ');
+        this.onClose();
+        this.props.onUpdated();
+    },
 
 
     render: function () {
@@ -84,6 +130,7 @@ var LessonsCardsList = React.createClass({
                         return (
                             <div key={key} style={this.componentStyle.lessonItem} onClick={onClick} >
                                 <LessonCard duration={lesson.duration}
+                                            avatar={lesson.avatar}
                                     name={lesson.name} description={lesson.description}
                                     />
                             </div>
@@ -94,9 +141,9 @@ var LessonsCardsList = React.createClass({
                 </div>
 
                 {this.state.dialogVisible == false ? null :
-                    <Dialog onClose={this.onClose}
+                    <TopicDialog onClose={this.onClose}
                         visible={true}
-                        dialogPanelStyle={this.componentStyle.dialogPanelStyle}
+                                 dialogLevel={101}
                         content={this.getDialogContent()}
                         />
                 }

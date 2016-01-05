@@ -94,7 +94,8 @@ var DialogPanel = React.createClass({
         closeButton: {
             cursor: 'pointer',
             fontSize: '18px',
-            opacity: 0.8
+            opacity: 0.8,
+            color: 'rgba(0, 0, 0, 0.870588)'
         },
 
         contentPlaceholder: {

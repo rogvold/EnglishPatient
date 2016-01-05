@@ -150,7 +150,7 @@ var AddNewClassButton = React.createClass({
                     </div>
 
                     <div className="field">
-                        <textarea type="text" value={this.state.description} placeholder="Название класса"
+                        <textarea type="text" value={this.state.description} placeholder="Описание класса"
                                onChange={this.onDescriptionChange} ></textarea>
                     </div>
                 </div>

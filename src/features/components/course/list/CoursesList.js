@@ -7,15 +7,36 @@ var assign = require('object-assign');
 
 var CourseItem = require('./CourseItem');
 
+var TopicDialog = require('../../topics/dialog/TopicDialog');
+
+var SelfLoadingCoursePanel = require('../SelfLoadingCoursePanel');
+
+
 var CoursesList = React.createClass({
     getDefaultProps: function () {
         return {
-            courses: []
+            courses: [],
+
+            userId: undefined,
+            teacherId: undefined,
+            editMode: true,
+
+            onDeleted: function(){
+
+            },
+
+            onUpdated: function(course){
+
+            }
+
         }
     },
 
     getInitialState: function () {
-        return {}
+        return {
+            dialogVisible: false,
+            selectedCourse: undefined
+        }
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -38,8 +59,45 @@ var CoursesList = React.createClass({
 
     onItemClick: function(course){
         this.setState({
-            selectedCourse: course
+            selectedCourse: course,
+            dialogVisible: true
         });
+    },
+
+    onClose: function(){
+        this.setState({
+            dialogVisible: false
+        });
+    },
+
+    onUpdated: function(course){
+        this.props.onUpdated(course);
+        this.onClose();
+    },
+
+    onDeleted: function(){
+        this.props.onDeleted();
+        this.onClose();
+    },
+
+    getDialogContent: function(){
+        var course = this.state.selectedCourse;
+        if (course == undefined){
+            return null;
+        }
+        return (
+            <div >
+                <SelfLoadingCoursePanel
+                                        userId={this.props.userId}
+                                        teacherId={this.props.teacherId}
+                                        editMode={this.props.editMode}
+                                        courseId={course.id}
+
+                                        onUpdated={this.onUpdated}
+                                        onDeleted={this.onDeleted}
+                    />
+            </div>
+        );
     },
 
     render: function () {
@@ -53,11 +111,18 @@ var CoursesList = React.createClass({
                     return (
                         <div key={key} style={this.componentStyle.item}>
                             <CourseItem name={c.name} description={c.description} avatar={c.avatar}
-                                onClick={onClick} />
+                                        onClick={onClick} />
                         </div>
                     );
 
                 }, this)}
+
+                {this.state.dialogVisible == false ? null :
+                    <TopicDialog content={this.getDialogContent()}
+                                 visible={true}
+                                 dialogLevel={100}
+                        onClose={this.onClose} />
+                }
 
             </div>
         );
