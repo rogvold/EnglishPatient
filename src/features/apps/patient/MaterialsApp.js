@@ -27,6 +27,8 @@ var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadi
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
+var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+
 var IndexApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -56,7 +58,7 @@ var IndexApp = React.createClass({
                 loggedIn: true
             });
         }
-        document.title = 'Микс';
+        document.title = 'Видеотека';
         console.log('Exercises App mounted');
         console.log(this.props.params);
         //this.loadMaterials(this.state.user.id);
@@ -84,7 +86,7 @@ var IndexApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton />
+                <SidebarChatButton /> <SidebarNotificationsButton />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />

@@ -13,6 +13,7 @@ var SimpleDev = require('./SimpleDev');
 var NotificationsApp = require('./NotificationsApp');
 var ToolsApp = require('./ToolsApp');
 var DictionaryApp = require('./DictionaryApp');
+var ArticlesApp = require('./ArticlesApp');
 
 var IdiomsApp = require('./IdiomsApp');
 var GrammarApp = require('./GrammarApp');
@@ -41,6 +42,9 @@ var LoginMixin = require('../../mixins/LoginMixin');
 
 var StudentIndexApp = require('./student/StudentIndexApp');
 var StudentClassApp = require('./student/StudentClassApp');
+var StudentDictionaryApp = require('./student/StudentDictionaryApp');
+var StudentIdiomsApp = require('./student/StudentIdiomsApp');
+
 
 var App = React.createClass({
     getDefaultProps: function () {
@@ -111,6 +115,10 @@ var App = React.createClass({
                     <IndexRoute component={CoursesApp} />
                 </Route>
 
+                <Route path="/articles" component={ArticlesApp}>
+                    <IndexRoute component={ArticlesApp} />
+                </Route>
+
                 <Route path="/grammar" component={GrammarApp}>
                     <IndexRoute component={GrammarApp} />
                 </Route>
@@ -139,10 +147,22 @@ var App = React.createClass({
                 <Route useAutoKeys={false} path="/" component={StudentIndexApp} >
                     <IndexRoute component={StudentIndexApp} />
                 </Route>
+
+                <Route useAutoKeys={false} path="/dictionary" component={StudentDictionaryApp} >
+                    <IndexRoute component={StudentDictionaryApp} />
+                </Route>
+
+                <Route useAutoKeys={false} path="/idioms" component={StudentIdiomsApp} >
+                    <IndexRoute component={StudentIdiomsApp} />
+                </Route>
+
+
                 <Route path="/dev" component={DevApp}>
                     <IndexRoute component={DevApp} />
                 </Route>
                 <Route path="/class/:classId" component={StudentClassApp}/>
+
+
             </Router>
         );
     },

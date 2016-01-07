@@ -114,7 +114,7 @@ var SelfLoadingNotificationsList = React.createClass({
 
                 <div style={this.componentStyle.notificationsPlaceholder}>
                     <PagedNotificationsList
-                        pageSize={2}
+                        pageSize={5}
                         notificationViewed={this.notificationViewed}
                         notifications={this.state.notifications}
                         userId={this.props.userId} />

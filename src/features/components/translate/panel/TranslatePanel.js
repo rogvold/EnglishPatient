@@ -2,7 +2,8 @@
  * Created by sabir on 19.11.15.
  */
 
-var React = require('react/addons');
+//var React = require('react/addons');
+var React = require('react');
 var assign = require('object-assign');
 
 var TranslateMixin = require('../../../mixins/TranslateMixin');

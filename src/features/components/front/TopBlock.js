@@ -5,15 +5,22 @@
 var React = require('react');
 var assign = require('object-assign');
 
+var SimpleVideoDialog = require('../dialog/SimpleVideoDialog');
 
 var TopBlock = React.createClass({
     getDefaultProps: function () {
         return {
             logo: 'http://www.englishpatient.org/img/logo.png',
-            cover: 'http://www.englishpatient.org/img/pavlova.jpg',
+            //cover: 'http://www.englishpatient.org/img/pavlova.jpg',
+            cover: 'https://www.englishpatient.org/app/assets/images/back_g.jpg',
+            miniCover: 'https://www.englishpatient.org/app/assets/images/back_g_mini.jpg',
+            miniMiniCover: 'https://www.englishpatient.org/app/assets/images/back_g_mini_mini.jpg',
+
             opacity: 0.8,
-            height: 330,
-            overlayColor: '#563d7c',
+            //height: 330,
+            height: 590,
+            //overlayColor: '#563d7c',
+            overlayColor: '#422700',
             logoText: 'English Patient',
 
             rightLinksEnabled: true
@@ -21,7 +28,9 @@ var TopBlock = React.createClass({
     },
 
     getInitialState: function () {
-        return {}
+        return {
+            mainVideoVisible: false
+        }
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -67,7 +76,8 @@ var TopBlock = React.createClass({
             height: 90,
             width: 912,
             margin: '0 auto',
-            marginTop: 10
+            marginTop: 30
+            //marginTop: 10
         },
 
         logoPlaceholder: {
@@ -97,17 +107,23 @@ var TopBlock = React.createClass({
             textAlign: 'center',
             margin: '0 auto',
             width: 912,
-            marginTop: 10
+            //marginTop: 10
+            //marginTop: 60
+            marginTop: 45
             //marginTop: 120
         },
 
         firstLine: {
-            fontSize: '40px',
-            lineHeight: '40px'
+            //fontSize: '60px',
+            fontSize: '56px',
+            fontWeight: 'bold',
+            //fontSize: '40px',
+            lineHeight: '80px'
         },
 
         secondLine: {
-            fontSize: '30px',
+            //fontSize: '30px',
+            fontSize: '35px',
             lineHeight: '40px',
             marginTop: 50
         },
@@ -117,15 +133,35 @@ var TopBlock = React.createClass({
         }
     },
 
+    showVideo: function(){
+        this.setState({
+            mainVideoVisible: true
+        });
+    },
+
+    closeVideo: function(){
+        this.setState({
+            mainVideoVisible: false
+        });
+    },
+
     render: function () {
         var overlay = assign({}, this.componentStyle.overlay, {opacity: this.props.opacity, backgroundColor: this.props.overlayColor});
+        overlay = assign({}, overlay, { backgroundImage: 'linear-gradient(to bottom right,rgba(35, 33, 32, 0.85),rgb(81, 47, 27));' });
+
+
         var overlayPanel = assign({}, this.componentStyle.overlayPanel);
-        var st = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url(\'' + this.props.cover + '\')', height: this.props.height});
+        var st = assign({}, this.componentStyle.placeholder,
+            {backgroundImage: 'url(\'' + this.props.cover + '\'), url(\'' + this.props.miniCover + '\'), url(\'' + this.props.miniMiniCover + '\')',
+                height: this.props.height});
 
 
         return (
             <div style={st}>
 
+                {this.state.mainVideoVisible == false ? null :
+                    <SimpleVideoDialog onClose={this.closeVideo} />
+                }
 
 
                 <div style={overlay}></div>
@@ -144,6 +180,17 @@ var TopBlock = React.createClass({
                                 {this.props.logoText}
                             </div>
 
+
+                        </div>
+
+                        <div style={{display: 'inline-block', textAlign: 'right', width: 625}} >
+                            <a href="#about" style={{marginRight: 35, color: 'white', fontSize: 16}}  >
+                                О ресурсе
+                            </a>
+
+                            <a href="/app" style={{marginRight: 20, color: 'white', fontSize: 16}}  >
+                                Регистрация
+                            </a>
 
                         </div>
 
@@ -169,12 +216,22 @@ var TopBlock = React.createClass({
                     <div style={this.componentStyle.content}>
 
                         <div style={this.componentStyle.firstLine}>
-                            Материалы и инструменты для изучения английского языка.
+                            Материалы и инструменты для изучения английского языка
                         </div>
 
                         <div style={this.componentStyle.secondLine}>
 
-                            Учить лучше, тратить меньше.
+                            Учить лучше, тратить меньше
+
+                        </div>
+
+                        <div style={{marginTop: 60, textAlign: 'center'}} >
+
+                            <span style={{margin: 15}} >
+                                <button className={'ui inverted circular button'} onClick={this.showVideo} style={{fontSize: 18}} >
+                                    <i className={'icon play video outline'} ></i> видео
+                                </button>
+                            </span>
 
                         </div>
 

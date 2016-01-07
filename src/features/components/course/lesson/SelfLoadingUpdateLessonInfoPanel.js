@@ -117,7 +117,9 @@ var SelfLoadingUpdateLessonInfoPanel = React.createClass({
                     </div> :
                     <div>
                         <UpdateLessonInfoPanel lessonId={this.props.lessonId}
-                                               name={l.name} description={l.description} duration={l.duration}
+                                               name={l.name} description={l.description}
+                                               avatar={l.avatar}
+                                               duration={l.duration}
                                                onDelete={this.onDelete}
                                                onSave={this.onSave} />
                     </div>

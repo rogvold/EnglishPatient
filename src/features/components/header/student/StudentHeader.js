@@ -20,6 +20,22 @@ var StudentHeader = React.createClass({
         return {
             userName: 'No User',
             items: [
+                {
+                    displayName: 'Словарь',
+                    name: 'dictionary',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/dictionary'
+                },
+                {
+                    displayName: 'Идиомы',
+                    name: 'idioms',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/idioms'
+                }
             //    {
             //    name: 'exercises',
             //    displayName: 'Упражнения',

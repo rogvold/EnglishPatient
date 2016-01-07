@@ -11,8 +11,6 @@ var CurrentUserMenuItem = require('../../templates/CurrentUserMenuItem');
 var LoginMixin = require('../../../mixins/LoginMixin');
 var History = require('react-router').History;
 
-var NotificationsNumberSpan = require('../../notification/NotificationsNumberSpan');
-
 var UserProfileButton = require('../../profile/UserProfileButton');
 
 var TeacherHeader = React.createClass({
@@ -22,14 +20,26 @@ var TeacherHeader = React.createClass({
         return {
             userName: 'No User',
             userId: undefined,
-            items: [{
-                name: 'exercises',
-                displayName: 'Упражнения',
-                icon: '',
-                onClick: function(){
+            items: [
+                {
+                    displayName: 'Курсы',
+                    name: 'courses',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/courses'
                 },
-                url: '/exercises'
-            }, {
+
+                {
+                    displayName: 'Модули',
+                    name: 'articles',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/articles'
+                },
+
+                {
                 displayName: 'Топики',
                 name: 'topics',
                 icon: '',
@@ -39,12 +49,23 @@ var TeacherHeader = React.createClass({
             },
 
                 {
-                    displayName: 'Курсы',
-                    name: 'courses',
+                    displayName: 'Тексты',
+                    name: 'notes',
+                    icon: '',
+                    onClick: function(){
+
+                    },
+                    url: '/notes'
+                },
+
+
+                {
+                    name: 'exercises',
+                    displayName: 'Упражнения',
                     icon: '',
                     onClick: function(){
                     },
-                    url: '/courses'
+                    url: '/exercises'
                 },
 
                 {
@@ -56,38 +77,32 @@ var TeacherHeader = React.createClass({
                     url: '/grammar'
                 },
                 {
-                displayName: 'Словарь',
-                name: 'dictionary',
-                icon: '',
-                onClick: function(){
+                    displayName: 'Словарь',
+                    name: 'dictionary',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/dictionary'
                 },
-                url: '/dictionary'
-            },
                 {
-                    displayName: 'Идиомы и пословицы',
+                    displayName: 'Идиомы',
                     name: 'idioms',
                     icon: '',
                     onClick: function(){
                     },
                     url: '/idioms'
                 },
-                {
-                    displayName: 'Тексты',
-                    name: 'notes',
-                    icon: '',
-                    onClick: function(){
 
-                    },
-                    url: '/notes'
-                },
                 {
-                    displayName: 'Микс',
+                    displayName: 'Видеотека',
                     name: 'materials',
                     icon: '',
                     onClick: function(){
                     },
                     url: '/materials'
                 }
+
+
             ],
             activeTab: undefined,
             onLogout: function(){
@@ -114,17 +129,6 @@ var TeacherHeader = React.createClass({
     componentStyle: {
         placeholder: {
 
-        },
-
-        notificationsItemPlaceholder: {
-            height: '100%',
-            boxSizing: 'borderBox',
-            display: 'inline-block',
-            marginRight: 25,
-            color: '#A1A4AA',
-            paddingTop: 10,
-            cursor: 'pointer',
-            verticalAlign: 'top'
         },
 
         active: {
@@ -156,9 +160,7 @@ var TeacherHeader = React.createClass({
         }
     },
 
-    onNotificationsClick: function(){
-        this.history.pushState(null, '/notifications');
-    },
+
 
 
     getRightBlock: function(){
@@ -179,25 +181,10 @@ var TeacherHeader = React.createClass({
                 }.bind(this)
             }];
         var user = (LoginMixin.getCurrentUser() == undefined ) ? {} : LoginMixin.getCurrentUser();
-        var st = assign({}, this.componentStyle.notificationsItemPlaceholder);
-        if (this.props.activeTab == 'notifications'){
-            st = assign(st, this.componentStyle.active);
-        }
 
         return (
 
             <div style={{display: 'inline-block'}} >
-                <div style={st} onClick={this.onNotificationsClick} >
-                    Уведомления
-                    {this.props.activeTab == 'notifications' ? null :
-                    <span>
-                        <NotificationsNumberSpan spanStyle={{padding: '3px 5px', color: 'white',
-                                                             backgroundColor: '#FC636B', marginLeft: 3}}
-                            spanClassName={' ui label'}
-                            userId={user.id} />
-                    </span>
-                    }
-                </div>
 
                 <CurrentUserMenuItem dropdownItems={dropdownItems}
                                      userName={user.name} avatar={user.avatar} />

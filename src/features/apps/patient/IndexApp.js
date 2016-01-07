@@ -24,6 +24,9 @@ var Sausage = require('../../components/sausage/Sausage');
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
+var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+
+
 var IndexApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -83,7 +86,7 @@ var IndexApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton />
+                <SidebarChatButton /> <SidebarNotificationsButton />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     addClassMode={true} selectedClassId={this.props.params.classId} />

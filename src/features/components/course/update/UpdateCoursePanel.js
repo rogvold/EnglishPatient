@@ -174,6 +174,7 @@ var UpdateCoursePanel = React.createClass({
                         {this.state.avatar == undefined ?
                             <div>
                                 <FileUploadButton buttonName={'Загрузить аватар курса'}
+                                                  className={'ui basic fluid button'}
                                     icon={'icon cloud upload'}
                                     style={{width: '100%', marginTop: 5}}
                                     onFileUploaded={this.onAvatarChange} />

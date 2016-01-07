@@ -47,7 +47,7 @@ var UpdateLessonInfoPanel = React.createClass({
             name: p.name,
             description: p.description,
             avatar: p.avatar,
-            duration: p.avatar
+            duration: p.duration
         });
     },
 
@@ -173,7 +173,7 @@ var UpdateLessonInfoPanel = React.createClass({
                                 <FileUploadButton
                                     buttonName={'Загрузить аватар'}
                                     icon={'icon upload'}
-                                    className={'ui basic mini button'}
+                                    className={'ui basic fluid button'}
                                     onFileUploaded={this.onAvatarUploaded} />
                             </div>
                             :

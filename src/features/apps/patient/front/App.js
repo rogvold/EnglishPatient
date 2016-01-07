@@ -22,13 +22,17 @@ var MaterialLink = require('../../../components/link/MaterialLink');
 
 var ParseMixin = require('../../../../react/mixins/commonMixins/ParseMixin');
 
+
+
 var App = React.createClass({
     getDefaultProps: function () {
         return {}
     },
 
     getInitialState: function () {
-        return {}
+        return {
+
+        }
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -115,28 +119,32 @@ var App = React.createClass({
 
 
                 <div style={this.componentStyle.top}>
-                    <TopBlock />
+                    <TopBlock  />
                 </div>
 
                 <div style={this.componentStyle.main}>
 
 
+                    <div style={{textAlign: 'center', fontSize: '50px',
+                                    padding: 10, marginTop: 30, marginBottom: 30 }}>
+                        Уважаемые преподаватели!
+                    </div>
+
                     <TextMediaPanel />
 
 
-                    <div style={assign({}, chSt, {height: 450})}>
+                    <div style={assign({}, chSt, {height: 270})}>
 
                         <div style={{width: 900, margin: '0 auto', color: 'white', padding: 10, textAlign: 'right'}} >
                             <div style={{display: 'inline-block', width: 400,
-                                            fontSize: 22, lineHeight: '36px', marginTop: 50,
+                                            fontSize: 22, lineHeight: '36px', marginTop: 10,
                                             paddingRight: 50
                                             }} >
 
                                 «Язык - это факт не научный, <br/> а художественный.
-                                <br/><br/>
+                                <br/>
                                 Его изобрели воины и охотники,  <br/> и он гораздо древнее науки.»
 
-                                <br/><br/>
                                 <br/><br/>
                                 Г.К. Честертон
 
@@ -153,7 +161,7 @@ var App = React.createClass({
 
                     </div>
 
-                    <div style={{textAlign: 'center', fontSize: 50, padding: 20}} >
+                    <div id="about" style={{textAlign: 'center', fontSize: 50, padding: 20}} >
                         Мы предлагаем
                     </div>
 
@@ -227,7 +235,7 @@ var App = React.createClass({
                                 Чревата глупостью решений
                             </div>
 
-                            <div style={{display: 'inline-block', verticalAlign: 'top', width: '40%'}} >
+                            <div id="register" style={{display: 'inline-block', verticalAlign: 'top', width: '40%'}} >
 
                                 <div style={{width: 270, padding: 10, display: 'inline-block', float: 'right',
                                             borderRadius: 4, border: '1px solid #EFF0F1'}} >

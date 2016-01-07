@@ -24,3 +24,31 @@
 .ui.segment{
     border: 1px solid #EFF0F1 !important;
 }
+
+.patientArticle p{
+    padding: 10px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 16px;
+    text-align: justify;
+    max-width: 100%;
+    white-space: normal !important;
+    word-break: normal !important;
+}
+
+.patientArticle pre{
+    font-size: 16px;
+    white-space: normal !important;
+    word-break: normal !important;
+    margin-top: 0px;
+    padding: 10px;
+    color: #59595a;
+    background-color: #EFF2F5;
+    borderBottom: 1px solid #e3e6f3;
+    max-width: 100%;
+}
+
+.patientArticle p img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}

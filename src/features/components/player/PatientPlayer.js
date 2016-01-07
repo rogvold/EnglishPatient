@@ -2,7 +2,8 @@
  * Created by sabir on 26.11.15.
  */
 
-var React = require('react/addons');
+//var React = require('react/addons');
+var React = require('react');
 var assign = require('object-assign');
 
 var ReactPlayer = require('react-player');
@@ -31,7 +32,6 @@ var PatientPlayer = React.createClass({
             onProgress: function(seconds){
 
             }
-
 
         }
     },
@@ -122,10 +122,11 @@ var PatientPlayer = React.createClass({
         if (played != undefined){
             this.checkBounds(played);
         }
-        this.setState({
-            loaded: (loaded == undefined) ? this.state.loaded : loaded,
-            played: (played == undefined) ? this.state.played : played
-        });
+        //! be careful
+        //this.setState({
+        //    loaded: (loaded == undefined) ? this.state.loaded : loaded,
+        //    played: (played == undefined) ? this.state.played : played
+        //});
     },
 
     onPlay: function(){
@@ -151,11 +152,11 @@ var PatientPlayer = React.createClass({
         player.seekTo(fraction);
     },
 
-    onEnded: function(){
-        console.log('onEnded occured');
-        if (this.props.abMode == true){
-            this.abPlayPause();
-        }
+    onEnded: function(vimeoId){
+        console.log('onEnded occured, vimeoId = ', vimeoId);
+        //if (this.props.abMode == true){
+        //    this.abPlayPause();
+        //}
     },
 
     play: function(){
@@ -288,7 +289,7 @@ var PatientPlayer = React.createClass({
                                      onPlay={this.onPlay}
                                      playing={this.state.playing}
                                      onPause={this.onPause}
-                                     onEnded={this.onEnded}
+                                     onEnded={this.onEnded.bind(this, vimeoId)}
                                      youtubeConfig={youtubeConfig}
                                      vimeoConfig={vimeoConfig}
                         />

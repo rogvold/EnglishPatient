@@ -41,9 +41,9 @@ var SidebarChatButton = React.createClass({
             fontSize: 14,
             lineHeight: '16px',
             //color: '#8897A3',
-            color: '#B3BCC4',
+            color: '#B3BCC4'
 
-            marginBottom: 20
+            //marginBottom: 20
         },
 
         buttonStyle: {

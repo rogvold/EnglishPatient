@@ -86,7 +86,7 @@ var NotReadChatSpan = React.createClass({
 
         return (
             <div style={st}>
-                {k}
+                +{k}
             </div>
         );
     }

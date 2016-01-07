@@ -142,6 +142,18 @@ var CommonMixin = {
             }
     },
 
+    extractYoutubeIdFromUrl: function(url){
+        if (url == undefined){
+            return undefined;
+        }
+        var video_id = url.split('v=')[1];
+        var ampersandPosition = video_id.indexOf('&');
+        if(ampersandPosition != -1) {
+            video_id = video_id.substring(0, ampersandPosition);
+        }
+        return video_id;
+    },
+
     isLocalhost: function(){
         var url = window.location.href;
         if (url.indexOf('0.0.0.0') > -1){

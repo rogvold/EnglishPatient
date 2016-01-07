@@ -2,7 +2,7 @@
  * Created by sabir on 12.10.15.
  */
 
-var React = require('react/addons');
+var React = require('react');
 var assign = require('object-assign');
 
 var LoginMixin = require('../../mixins/LoginMixin');
@@ -18,92 +18,12 @@ var LoginApp = require('./LoginApp');
 
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
-var MaterialCreateButton = require('../../components/material/buttons/MaterialCreateButton');
-
-var VimeoPlayer = require('../../components/player/VimeoPlayer');
-
-var MaterialTags = require('../../components/material/MaterialTags');
-
-var MaterialDialog = require('../../components/material/dialogs/MaterialDialog');
-
-var SoundsList = require('../../components/corrector/sounds/SoundsList');
-
-var SoundsPanel = require('../../components/corrector/sounds/SoundsPanel');
-var WordsPanel = require('../../components/corrector/words/WordsPanel');
-
-var CorrectorPanel = require('../../components/corrector/CorrectorPanel');
-var CorrectorHelpButton = require('../../components/corrector/CorrectorHelpButton');
-
-var SelfLoadingVideosList = require('../../components/feed/video/SelfLoadingVideosList');
-var FeedItem = require('../../components/feed/FeedItem');
-var SelfLoadingClassFeed = require('../../components/feed/SelfLoadingClassFeed');
-
-var SelfLoadingFeedItem = require('../../components/feed/SelfLoadingFeedItem');
-
-var MaterialsSearchPanel = require('../../components/material/search/MaterialsSearchPanel');
-
-var MaterialSearchButton = require('../../components/material/search/MaterialSearchButton');
-
-var SelfLoadingUpdateFeedItem = require('../../components/feed/SelfLoadingUpdateFeedItem');
-
-var ExercisesSearchPanel = require('../../components/exercise/search/ExercisesSearchPanel');
-var ExercisesSearchButton = require('../../components/exercise/search/ExercisesSearchButton');
-
-var EditFeedItemButton = require('../../components/feed/button/EditFeedItemButton');
-
-var RoleSelector = require('../../components/user/RoleSelector');
-
-var AddClassPlusButton = require('../../components/class/buttons/student/AddClassPlusButton');
-
-var MigrationMixin = require('../../mixins/MigrationMixin');
-
-var Diff = require('react-diff');
-
-var RightTextAnswerDiff = require('../../components/exercise/diff/RightTextAnswerDiff');
 
 var MaterialsMixin = require('../../mixins/MaterialsMixin');
 
 var UserMixin = require('../../mixins/UserMixin');
 
-var SelfLoadingNotificationsList = require('../../components/notification/SelfLoadingNotificationsList');
 
-var YoutubeEmbedPlayer = require('../../components/video/youtube/YoutubeEmbedPlayer');
-
-var FirstLevelPanelsList = require('../../components/sausage/FirstLevelPanelsList');
-
-var ReactPlayer = require('react-player');
-
-var Speech = require('react-speech');
-
-var TranslateMixin = require('../../mixins/TranslateMixin');
-
-//var TranslatePanel = require('../../components/translate/panel/TranslatePanel');
-var TranslateButton = require('../../components/translate/TranslateButton');
-
-var WordItem = require('../../components/text/translatable/WordItem');
-
-var UserProfilePanel = require('../../components/profile/UserProfilePanel');
-
-var VocabularyPanel = require('../../components/vocabulary/VocabularyPanel');
-
-var MaterialGroupCard = require('../../components/material/groups/MaterialGroupCard');
-
-var CategoryCheckboxesList = require('../../components/search/youtube/checkbox/CategoryCheckboxesList');
-
-var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchPanel');
-
-var SelfLoadingKaraokePlayerPanel = require('../../components/karaoke/SelfLoadingKaraokePlayerPanel');
-
-var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
-
-var GrammarPanel = require('../../components/grammar/GrammarPanel');
-
-var SelfLoadingUserProgressPanel = require('../../components/chart/SelfLoadingUserProgressPanel');
-
-var MessagesList = require('../../components/chat/messages/MessagesList');
-
-var ChatPanel = require('../../components/chat/ChatPanel');
-var ChatButton = require('../../components/chat/ChatButton');
 
 var FileUploadButton = require('../../components/file/FileUploadButton');
 
@@ -111,42 +31,15 @@ var DialogEditInfoPanel = require('../../components/dialog_exercise/edit/DialogE
 
 var ExerciseDialogCard = require('../../components/dialog_exercise/card/ExerciseDialogCard');
 
+var ArticlesMixin = require('../../mixins/ArticleMixin');
 
-var SelfLoadingDialogEditPanel = require('../../components/dialog_exercise/edit/SelfLoadingDialogEditPanel');
+var MigratePanel = require('../../components/articles/migrate/MigratePanel');
 
-var SelfLoadingDialogPanel = require('../../components/dialog_exercise/view/SelfLoadingDialogPanel');
+var VideoEmbedButton = require('../../components/editor/VideoEmbedButton');
 
-var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
+var PatientEditor = require('../../components/editor/PatientEditor');
 
-var SelfLoadingDialogsSearchList = require('../../components/dialog_exercise/list/SelfLoadingDialogsSearchList');
-
-//var QuestionAnswerPanelsList = require('../../components/questionnaire/panels/answer/QuestionAnswerPanelsList');
-
-var QuestionnaireQuestionPanel = require('../../components/questionnaire/panels/question/QuestionnaireQuestionPanel');
-//var SelfLoadingUpdateQuestionPanel = require('../../components/questionnaire/panels/question/SelfLoadingUpdateQuestionPanel');
-var QuestionnaireEditPanel = require('../../components/questionnaire/panels/QuestionnaireEditPanel');
-
-var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
-
-var SelfLoadingQuestionnairePanel = require('../../components/questionnaire/panels/view/SelfLoadingQuestionnairePanel');
-
-var SelfLoadingQuestionnaireSearchList = require('../../components/questionnaire/panels/list/SelfLoadingQuestionnaireSearchList');
-
-var QuestionnaireSearchButton = require('../../components/questionnaire/panels/list/QuestionnaireSearchButton');
-
-var DurationsBar = require('../../components/moses/player/DurationsBar');
-var SelfLoadingMosesPlayer = require('../../components/moses/player/SelfLoadingMosesPlayer');
-
-var SelfLoadingMosesEditor = require('../../components/moses/editor/SelfLoadingMosesEditor');
-var MosesEditorButton = require('../../components/moses/editor/MosesEditorButton');
-
-var JunglesPanel = require('../../components/jungle/JunglesPanel');
-
-var PatientLink = require('../../components/link/PatientLink');
-
-var StarRating = require('../../components/star/StarRating');
-
-var SelfLoadingCoursesList = require('../../components/course/list/SelfLoadingCoursesList');
+var MediumEditor = require('../../components/editor/MediumEditor');
 
 var DevApp = React.createClass({
     getDefaultProps: function () {
@@ -301,6 +194,11 @@ var DevApp = React.createClass({
         });
     },
 
+    migrateArticles: function(){
+
+    },
+
+
     getContent: function(){
         var userId = this.state.user.id;
         var messages = [];
@@ -312,16 +210,15 @@ var DevApp = React.createClass({
         var linkText = '[[material|WUtKUKWSb0|видео-материал]]';
         var linkText2 = '[[note|8i0KhqWv2n|заметка]]';
 
+        var articleId = 'ljVkawu3Zx';
+
+
+
         return (
             <div style={{padding: 10}} >
 
-                <SelfLoadingCoursesList
 
-                    teacherId={userId}
-                    userId={userId}
-                    editMode={true}
-
-                    />
+                
 
             </div>
 

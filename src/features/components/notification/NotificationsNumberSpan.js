@@ -14,7 +14,9 @@ var NotificationsNumberSpan = React.createClass({
             userId: undefined,
             spanStyle: {
 
-            }
+            },
+
+            interval: 30 * 1000
 
         }
     },
@@ -29,10 +31,25 @@ var NotificationsNumberSpan = React.createClass({
 
     },
 
+    componentWillUnmount: function(){
+        this.destroyTimer();
+    },
+
+    initTimer: function(){
+        this.intervalId = setInterval(function(){
+            this.load(function(map){});
+        }.bind(this), this.props.interval);
+    },
+
+    destroyTimer: function(){
+        clearInterval(this.intervalId);
+    },
+
     componentDidMount: function () {
         this.load(function(list){
             console.log('notifications loaded', list);
         });
+        this.initTimer();
     },
 
 

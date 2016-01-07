@@ -22,6 +22,7 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
 
 var SelfLoadingCoursesList = require('../../components/course/list/SelfLoadingCoursesList');
 
@@ -55,7 +56,7 @@ var CoursesApp = React.createClass({
                 loggedIn: true
             });
         }
-        document.title = 'Идиомы';
+        document.title = 'Курсы';
         console.log('Exercises App mounted');
         console.log(this.props.params);
 
@@ -85,7 +86,7 @@ var CoursesApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton />
+                <SidebarChatButton /> <SidebarNotificationsButton />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />

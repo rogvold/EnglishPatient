@@ -9,6 +9,8 @@ var assign = require('object-assign');
 var ReactQuill = require('react-quill');
 var FileUploader = require('../file/FileUploader');
 
+var VideoEmbedButton = require('./VideoEmbedButton');
+
 var PatientEditor = React.createClass({
     getDefaultProps: function () {
         return {
@@ -20,7 +22,8 @@ var PatientEditor = React.createClass({
             onContentChange: function(content){
 
             },
-            fileMode: true
+            fileMode: true,
+            videoMode: false
         }
     },
 
@@ -121,6 +124,7 @@ var PatientEditor = React.createClass({
             });
             this.props.onContentChange(val);
         }.bind(this), 200);
+        //}.bind(this), 1000);
     },
 
     onImageUploaded: function(url){
@@ -147,6 +151,15 @@ var PatientEditor = React.createClass({
         }
     },
 
+    onVideoEmbedSubmit: function(embedHtml){
+        console.log('onVideoEmbedSubmit: embedHtml = ', embedHtml);
+        var val = this.state.value;
+        if (val == undefined){
+            val = '';
+        }
+        var st = val + ' <br/><br/> <div contentEditable="false" readonly="readonly" > ' +  embedHtml + ' </div> <br/> ';
+        this.updateValue(st);
+    },
 
     render: function () {
 
@@ -163,18 +176,26 @@ var PatientEditor = React.createClass({
 
                     <div>
 
-                        {this.props.fileMode == false ? null :
-                            <div style={this.componentStyle.customBlock}  >
-                                <div style={this.componentStyle.imageUploader}>
-                                    <FileUploader onFileUploaded={this.onImageUploaded} iconFiletypes={[]} containerClassName={'PatientEditorUploader'} style={this.componentStyle.fileUploaderStyle} />
-                                </div>
+                        <div style={this.componentStyle.customBlock}  >
+                            {this.props.fileMode == false ? null :
+                                <div style={{display: 'inline-block'}} >
+                                    <div style={this.componentStyle.imageUploader}>
+                                        <FileUploader onFileUploaded={this.onImageUploaded} iconFiletypes={[]} containerClassName={'PatientEditorUploader'} style={this.componentStyle.fileUploaderStyle} />
+                                    </div>
 
-                                <div style={this.componentStyle.attachmentUploader}>
-                                    <FileUploader customIconClassName={'icon attach'} onFileUploaded={this.onAttachmentUploaded} iconFiletypes={[]} containerClassName={'PatientEditorUploader'} style={this.componentStyle.fileUploaderStyle} />
+                                    <div style={this.componentStyle.attachmentUploader}>
+                                        <FileUploader customIconClassName={'icon attach'} onFileUploaded={this.onAttachmentUploaded} iconFiletypes={[]} containerClassName={'PatientEditorUploader'} style={this.componentStyle.fileUploaderStyle} />
+                                    </div>
                                 </div>
-                            </div>
-                        }
+                            }
 
+                            {this.props.videoMode == false ? null :
+                                <div style={{display: 'inline-block'}} >
+                                    <VideoEmbedButton onSubmit={this.onVideoEmbedSubmit} />
+                                </div>
+                            }
+
+                        </div>
 
                         <div style={this.componentStyle.quillPlaceholder}>
                             {this.state.updatingValue == true ?

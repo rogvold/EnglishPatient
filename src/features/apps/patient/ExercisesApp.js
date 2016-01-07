@@ -46,11 +46,15 @@ var CreateNewExerciseGroupButton = require('../../components/bunch/exercise/Crea
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
+var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+
 var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
 
 var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnaire/panels/list/SelfLoadingTeacherQuestionnairesList');
 
 var ExerciseGroupsCardsList = require('../../components/exercise/group/ExerciseGroupsCardsList');
+
+
 
 var ExercisesApp = React.createClass({
     getDefaultProps: function () {
@@ -188,7 +192,7 @@ var ExercisesApp = React.createClass({
         return (
             <div style={this.componentStyle.exercisesListPlaceholder}>
 
-                <SidebarChatButton />
+                <SidebarChatButton /> <SidebarNotificationsButton />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />

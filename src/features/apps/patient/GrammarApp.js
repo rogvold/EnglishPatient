@@ -24,6 +24,8 @@ var GrammarPanel = require('../../components/grammar/GrammarPanel');
 
 var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
+var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+
 var GrammarApp = React.createClass({
     getDefaultProps: function () {
         return {
@@ -82,7 +84,7 @@ var GrammarApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton />
+                <SidebarChatButton /> <SidebarNotificationsButton />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />

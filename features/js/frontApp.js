@@ -56715,8 +56715,10 @@ exports['default'] = _react2['default'].createClass({
 
     var dats = JSON.parse(e.data);
 
+    var ref = this.getPlayerRef();
     if (dats.event === 'ready') {
-      var player = _react2['default'].findDOMNode(this.refs.player);
+      //var player = _react2['default'].findDOMNode(this.refs.player);
+      var player = _react2['default'].findDOMNode(this.refs[ref]);
       debug('player ready');
       this.onReady(player, playerOrigin === '*' ? e.origin : playerOrigin);
       return onReady(dats);
@@ -56727,6 +56729,15 @@ exports['default'] = _react2['default'].createClass({
     if (typeof potentialFunc === 'function') {
       potentialFunc(dats);
     }
+  },
+
+  getPlayerRef: function(){
+      var ref = 'player';
+      var videoId = this.props.videoId;
+      if (videoId != undefined){
+        ref = ref + '_' + videoId;
+      }
+    return ref;
   },
 
   onReady: function onReady(player, playerOrigin) {
@@ -56832,6 +56843,9 @@ exports['default'] = _react2['default'].createClass({
       width: '100%'
     };
 
+    var ref = this.getPlayerRef();
+    console.log('rendering player iframe: ref = ' + ref);
+
     return _react2['default'].createElement(
       'div',
       {
@@ -56841,7 +56855,7 @@ exports['default'] = _react2['default'].createClass({
       _react2['default'].createElement('iframe', {
         frameBorder: '0',
         style: {width: '100%', height: '100%'},
-        ref: 'player',
+        ref: ref,
           webkitAllowFullScreen: 'true',
           mozAllowFullScreen: 'true',
           allowFullScreen: 'allowfullscreen',
@@ -60717,13 +60731,17 @@ var MaterialLink = require('../../../components/link/MaterialLink');
 
 var ParseMixin = require('../../../../react/mixins/commonMixins/ParseMixin');
 
+
+
 var App = React.createClass({displayName: "App",
     getDefaultProps: function () {
         return {}
     },
 
     getInitialState: function () {
-        return {}
+        return {
+
+        }
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -60816,22 +60834,26 @@ var App = React.createClass({displayName: "App",
                 React.createElement("div", {style: this.componentStyle.main}, 
 
 
+                    React.createElement("div", {style: {textAlign: 'center', fontSize: '50px',
+                                    padding: 10, marginTop: 30, marginBottom: 30}}, 
+                        "Уважаемые преподаватели!"
+                    ), 
+
                     React.createElement(TextMediaPanel, null), 
 
 
-                    React.createElement("div", {style: assign({}, chSt, {height: 450})}, 
+                    React.createElement("div", {style: assign({}, chSt, {height: 270})}, 
 
                         React.createElement("div", {style: {width: 900, margin: '0 auto', color: 'white', padding: 10, textAlign: 'right'}}, 
                             React.createElement("div", {style: {display: 'inline-block', width: 400,
-                                            fontSize: 22, lineHeight: '36px', marginTop: 50,
+                                            fontSize: 22, lineHeight: '36px', marginTop: 10,
                                             paddingRight: 50
                                             }}, 
 
                                 "«Язык - это факт не научный, ", React.createElement("br", null), " а художественный.", 
-                                React.createElement("br", null), React.createElement("br", null), 
+                                React.createElement("br", null), 
                                 "Его изобрели воины и охотники,  ", React.createElement("br", null), " и он гораздо древнее науки.»", 
 
-                                React.createElement("br", null), React.createElement("br", null), 
                                 React.createElement("br", null), React.createElement("br", null), 
                                 "Г.К. Честертон"
 
@@ -60848,7 +60870,7 @@ var App = React.createClass({displayName: "App",
 
                     ), 
 
-                    React.createElement("div", {style: {textAlign: 'center', fontSize: 50, padding: 20}}, 
+                    React.createElement("div", {id: "about", style: {textAlign: 'center', fontSize: 50, padding: 20}}, 
                         "Мы предлагаем"
                     ), 
 
@@ -60922,7 +60944,7 @@ var App = React.createClass({displayName: "App",
                                 "Чревата глупостью решений"
                             ), 
 
-                            React.createElement("div", {style: {display: 'inline-block', verticalAlign: 'top', width: '40%'}}, 
+                            React.createElement("div", {id: "register", style: {display: 'inline-block', verticalAlign: 'top', width: '40%'}}, 
 
                                 React.createElement("div", {style: {width: 270, padding: 10, display: 'inline-block', float: 'right',
                                             borderRadius: 4, border: '1px solid #EFF0F1'}}, 
@@ -60953,7 +60975,7 @@ React.render((React.createElement(App, null)
 
 ), document.getElementById('main'));
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":493,"../../../components/front/TestimonialsPanel":446,"../../../components/front/TextImagePanel":447,"../../../components/front/TextMediaPanel":448,"../../../components/front/TopBlock":449,"../../../components/link/MaterialLink":451,"../../../components/sausage/Sausage":467,"../../../components/user/AuthForm":476,"../../../components/user/SignupForm":479,"object-assign":4,"react/addons":263}],438:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":494,"../../../components/front/TestimonialsPanel":447,"../../../components/front/TextImagePanel":448,"../../../components/front/TextMediaPanel":449,"../../../components/front/TopBlock":450,"../../../components/link/MaterialLink":452,"../../../components/sausage/Sausage":468,"../../../components/user/AuthForm":477,"../../../components/user/SignupForm":480,"object-assign":4,"react/addons":263}],438:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -61473,6 +61495,144 @@ module.exports = DialogPanel;
 
 },{"object-assign":4,"react":436}],442:[function(require,module,exports){
 /**
+ * Created by sabir on 05.01.16.
+ */
+
+var React = require('react');
+var assign = require('object-assign');
+
+var SimbleVideoDialog = React.createClass({displayName: "SimbleVideoDialog",
+    getDefaultProps: function () {
+        return {
+            videoType: 'vimeo',
+            videoId: '150484936',
+
+            level: 100,
+
+            autoplay: true,
+
+            onClose: function(){
+
+            }
+        }
+    },
+
+    getInitialState: function () {
+        return {
+
+        }
+    },
+
+    componentWillReceiveProps: function (nextProps) {
+
+    },
+
+    componentDidMount: function () {
+
+    },
+
+    componentStyle: {
+        placeholder: {
+
+        },
+
+        overlay: {
+            backgroundColor: 'black',
+            opacity: 0.92,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0
+        },
+
+        overlayPanel: {
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0,
+            //padding: 50,
+            //width: '100%',
+            //height: '100%',
+            //border: '3px solid white',
+            borderRadius: 4,
+            margin: '0 auto',
+            marginTop: 62
+        },
+
+        closeButtonPlaceholder: {
+            position: 'absolute',
+            top: 0,
+            right: 0,
+            padding: 15,
+            fontSize: 30
+        },
+
+        content: {
+            //backgroundColor: 'white'
+        }
+
+    },
+
+    onClose: function(){
+        this.props.onClose();
+    },
+
+    render: function () {
+        var z = this.props.level;
+
+        var w = window.innerWidth - 126;
+        var h = Math.min(window.innerHeight, 590) - 126;
+
+        var src = '';
+        if (this.props.videoType == 'vimeo'){
+            src = 'https://player.vimeo.com/video/' + this.props.videoId + '?title=0&byline=0&portrait=0';
+            if (this.props.autoplay == true){
+                src = src + '&autoplay=1'
+            }
+        }
+
+        var st = assign({}, this.componentStyle.placeholder, {zIndex: z});
+        var overlaySt = assign({}, this.componentStyle.overlay, {zIndex: z});
+
+        var panelSt = assign({}, this.componentStyle.overlayPanel,
+                                    {zIndex: +z+1, width: w, height: h});
+
+        var closeSt = assign({}, this.componentStyle.closeButtonPlaceholder, {zIndex: +z + 2});
+
+
+        return (
+            React.createElement("div", {style: st}, 
+
+                React.createElement("div", {style: overlaySt}), 
+
+                React.createElement("div", {style: closeSt}, 
+                    React.createElement("button", {className: 'ui button icon inverted circular ', onClick: this.onClose}, 
+                        React.createElement("i", {className: "icon remove"})
+                    )
+                ), 
+
+                React.createElement("div", {style: panelSt}, 
+
+                    React.createElement("div", {style: this.componentStyle.content}, 
+                        React.createElement("iframe", {src: src, style: {border: 'none'}, 
+                                width: w, height: h, 
+                                frameborder: "0", webkitallowfullscreen: true, mozallowfullscreen: true, allowfullscreen: true})
+                    )
+
+                )
+
+            )
+        );
+    }
+
+});
+
+module.exports = SimbleVideoDialog;
+
+},{"object-assign":4,"react":436}],443:[function(require,module,exports){
+/**
  * Created by sabir on 17.12.15.
  */
 
@@ -61593,7 +61753,7 @@ var DialogCard = React.createClass({displayName: "DialogCard",
 
 module.exports = DialogCard;
 
-},{"object-assign":4,"react":436}],443:[function(require,module,exports){
+},{"object-assign":4,"react":436}],444:[function(require,module,exports){
 /**
  * Created by sabir on 19.10.15.
  */
@@ -61821,7 +61981,7 @@ var PatientEditor = React.createClass({displayName: "PatientEditor",
 
 module.exports = PatientEditor;
 
-},{"../file/FileUploader":444,"object-assign":4,"react":436,"react-quill":244}],444:[function(require,module,exports){
+},{"../file/FileUploader":445,"object-assign":4,"react":436,"react-quill":244}],445:[function(require,module,exports){
 /**
  * Created by sabir on 13.10.15.
  */
@@ -62094,7 +62254,7 @@ var FileUploader = React.createClass({displayName: "FileUploader",
 
 module.exports = FileUploader;
 
-},{"object-assign":4,"react":436,"react-dropzone-component":225}],445:[function(require,module,exports){
+},{"object-assign":4,"react":436,"react-dropzone-component":225}],446:[function(require,module,exports){
 /**
  * Created by sabir on 31.12.15.
  */
@@ -62280,7 +62440,7 @@ var TestimonialCard = React.createClass({displayName: "TestimonialCard",
 
 module.exports = TestimonialCard;
 
-},{"../dialog_exercise/card/DialogCard":442,"object-assign":4,"react":436}],446:[function(require,module,exports){
+},{"../dialog_exercise/card/DialogCard":443,"object-assign":4,"react":436}],447:[function(require,module,exports){
 /**
  * Created by sabir on 31.12.15.
  */
@@ -62502,7 +62662,7 @@ var TestimonialsPanel = React.createClass({displayName: "TestimonialsPanel",
 
 module.exports = TestimonialsPanel;
 
-},{"../dialog_exercise/card/DialogCard":442,"../front/carousel/PatientCarousel":450,"./TestimonialCard":445,"object-assign":4,"react/addons":263}],447:[function(require,module,exports){
+},{"../dialog_exercise/card/DialogCard":443,"../front/carousel/PatientCarousel":451,"./TestimonialCard":446,"object-assign":4,"react/addons":263}],448:[function(require,module,exports){
 /**
  * Created by sabir on 31.12.15.
  */
@@ -62617,7 +62777,7 @@ var TextImagePanel = React.createClass({displayName: "TextImagePanel",
 
 module.exports = TextImagePanel;
 
-},{"object-assign":4,"react":436}],448:[function(require,module,exports){
+},{"object-assign":4,"react":436}],449:[function(require,module,exports){
 /**
  * Created by sabir on 18.11.15.
  */
@@ -62709,21 +62869,31 @@ var TextImagePanel = React.createClass({displayName: "TextImagePanel",
 
                 this.props.content == undefined ?
 
-                    React.createElement("div", null, 
-                        "Более двадцати лет мы собирали", 
-                        React.createElement("b", {style: {marginRight: 10, textDecoration: 'underline'}}, 
+
+
+                    React.createElement("div", {style: {fontSize: 19, lineHeight: '26px'}}, 
+
+                        "Много лет мы собирали", 
+                        React.createElement("b", {style: {marginRight: 10, marginLeft: 4, textDecoration: 'underline'}}, 
                             React.createElement(MaterialLink, {materialId: 'tIKbXDSVx1', name: ' короткие аутентичные '})
                         ), 
                         "видео материалы." + ' ' +
 
-
-
-                        "Накоплен большой опыт использования их в вузах, языковых школах и на олимпиадах.", 
+                        "Накоплен большой опыт использования их в вузах, языковых школах и" + ' ' +
+                        "на олимпиадах.", 
 
                         React.createElement("br", null), React.createElement("br", null), 
 
-                        "Этот уникальный  ресурс учит понимать реальную речь," + ' ' +
-                        "заставляет говорить, помогает легко запоминать слова и фразы."
+                        "Мы объединили все наши наработки для более эффективного обучения" + ' ' +
+                        "английскому языку." + ' ' +
+
+                        "Предлагаем вам нашу онлайн-платформу." + ' ' +
+
+                        "Работа станет легче и интереснее. Наверняка это оценят и ваши ученики." + ' ' +
+
+                        "Ведь наш ресурс учит понимать реальную речь, заставляет" + ' ' +
+                        "говорить, помогает легко запоминать слова и фразы."
+
 
 
                     ) :
@@ -62825,7 +62995,7 @@ var TextImagePanel = React.createClass({displayName: "TextImagePanel",
 
 module.exports = TextImagePanel;
 
-},{"../../components/link/MaterialLink":451,"../../components/player/VimeoPlayer":464,"object-assign":4,"react":436}],449:[function(require,module,exports){
+},{"../../components/link/MaterialLink":452,"../../components/player/VimeoPlayer":465,"object-assign":4,"react":436}],450:[function(require,module,exports){
 /**
  * Created by sabir on 18.11.15.
  */
@@ -62833,15 +63003,22 @@ module.exports = TextImagePanel;
 var React = require('react');
 var assign = require('object-assign');
 
+var SimpleVideoDialog = require('../dialog/SimpleVideoDialog');
 
 var TopBlock = React.createClass({displayName: "TopBlock",
     getDefaultProps: function () {
         return {
             logo: 'http://www.englishpatient.org/img/logo.png',
-            cover: 'http://www.englishpatient.org/img/pavlova.jpg',
+            //cover: 'http://www.englishpatient.org/img/pavlova.jpg',
+            cover: 'https://www.englishpatient.org/app/assets/images/back_g.jpg',
+            miniCover: 'https://www.englishpatient.org/app/assets/images/back_g_mini.jpg',
+            miniMiniCover: 'https://www.englishpatient.org/app/assets/images/back_g_mini_mini.jpg',
+
             opacity: 0.8,
-            height: 330,
-            overlayColor: '#563d7c',
+            //height: 330,
+            height: 590,
+            //overlayColor: '#563d7c',
+            overlayColor: '#422700',
             logoText: 'English Patient',
 
             rightLinksEnabled: true
@@ -62849,7 +63026,9 @@ var TopBlock = React.createClass({displayName: "TopBlock",
     },
 
     getInitialState: function () {
-        return {}
+        return {
+            mainVideoVisible: false
+        }
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -62895,7 +63074,8 @@ var TopBlock = React.createClass({displayName: "TopBlock",
             height: 90,
             width: 912,
             margin: '0 auto',
-            marginTop: 10
+            marginTop: 30
+            //marginTop: 10
         },
 
         logoPlaceholder: {
@@ -62925,17 +63105,23 @@ var TopBlock = React.createClass({displayName: "TopBlock",
             textAlign: 'center',
             margin: '0 auto',
             width: 912,
-            marginTop: 10
+            //marginTop: 10
+            //marginTop: 60
+            marginTop: 45
             //marginTop: 120
         },
 
         firstLine: {
-            fontSize: '40px',
-            lineHeight: '40px'
+            //fontSize: '60px',
+            fontSize: '56px',
+            fontWeight: 'bold',
+            //fontSize: '40px',
+            lineHeight: '80px'
         },
 
         secondLine: {
-            fontSize: '30px',
+            //fontSize: '30px',
+            fontSize: '35px',
             lineHeight: '40px',
             marginTop: 50
         },
@@ -62945,15 +63131,35 @@ var TopBlock = React.createClass({displayName: "TopBlock",
         }
     },
 
+    showVideo: function(){
+        this.setState({
+            mainVideoVisible: true
+        });
+    },
+
+    closeVideo: function(){
+        this.setState({
+            mainVideoVisible: false
+        });
+    },
+
     render: function () {
         var overlay = assign({}, this.componentStyle.overlay, {opacity: this.props.opacity, backgroundColor: this.props.overlayColor});
+        overlay = assign({}, overlay, { backgroundImage: 'linear-gradient(to bottom right,rgba(35, 33, 32, 0.85),rgb(81, 47, 27));' });
+
+
         var overlayPanel = assign({}, this.componentStyle.overlayPanel);
-        var st = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url(\'' + this.props.cover + '\')', height: this.props.height});
+        var st = assign({}, this.componentStyle.placeholder,
+            {backgroundImage: 'url(\'' + this.props.cover + '\'), url(\'' + this.props.miniCover + '\'), url(\'' + this.props.miniMiniCover + '\')',
+                height: this.props.height});
 
 
         return (
             React.createElement("div", {style: st}, 
 
+                this.state.mainVideoVisible == false ? null :
+                    React.createElement(SimpleVideoDialog, {onClose: this.closeVideo}), 
+                
 
 
                 React.createElement("div", {style: overlay}), 
@@ -62972,6 +63178,17 @@ var TopBlock = React.createClass({displayName: "TopBlock",
                                 this.props.logoText
                             )
 
+
+                        ), 
+
+                        React.createElement("div", {style: {display: 'inline-block', textAlign: 'right', width: 625}}, 
+                            React.createElement("a", {href: "#about", style: {marginRight: 35, color: 'white', fontSize: 16}}, 
+                                "О ресурсе"
+                            ), 
+
+                            React.createElement("a", {href: "/app", style: {marginRight: 20, color: 'white', fontSize: 16}}, 
+                                "Регистрация"
+                            )
 
                         ), 
 
@@ -62997,12 +63214,22 @@ var TopBlock = React.createClass({displayName: "TopBlock",
                     React.createElement("div", {style: this.componentStyle.content}, 
 
                         React.createElement("div", {style: this.componentStyle.firstLine}, 
-                            "Материалы и инструменты для изучения английского языка."
+                            "Материалы и инструменты для изучения английского языка"
                         ), 
 
                         React.createElement("div", {style: this.componentStyle.secondLine}, 
 
-                            "Учить лучше, тратить меньше."
+                            "Учить лучше, тратить меньше"
+
+                        ), 
+
+                        React.createElement("div", {style: {marginTop: 60, textAlign: 'center'}}, 
+
+                            React.createElement("span", {style: {margin: 15}}, 
+                                React.createElement("button", {className: 'ui inverted circular button', onClick: this.showVideo, style: {fontSize: 18}}, 
+                                    React.createElement("i", {className: 'icon play video outline'}), " видео"
+                                )
+                            )
 
                         )
 
@@ -63018,7 +63245,7 @@ var TopBlock = React.createClass({displayName: "TopBlock",
 
 module.exports = TopBlock;
 
-},{"object-assign":4,"react":436}],450:[function(require,module,exports){
+},{"../dialog/SimpleVideoDialog":442,"object-assign":4,"react":436}],451:[function(require,module,exports){
 /**
  * Created by sabir on 01.01.16.
  */
@@ -63176,7 +63403,7 @@ var PatientCarousel = React.createClass({displayName: "PatientCarousel",
 
 module.exports = PatientCarousel;
 
-},{"object-assign":4,"react":436}],451:[function(require,module,exports){
+},{"object-assign":4,"react":436}],452:[function(require,module,exports){
 /**
  * Created by sabir on 30.12.15.
  */
@@ -63263,7 +63490,7 @@ var MaterialLink = React.createClass({displayName: "MaterialLink",
 
 module.exports = MaterialLink;
 
-},{"../material/dialogs/MaterialDialog":453,"../player/PatientPlayer":463,"object-assign":4,"react":436}],452:[function(require,module,exports){
+},{"../material/dialogs/MaterialDialog":454,"../player/PatientPlayer":464,"object-assign":4,"react":436}],453:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -63332,7 +63559,7 @@ var MaterialTags = React.createClass({displayName: "MaterialTags",
 
 module.exports = MaterialTags;
 
-},{"object-assign":4,"react":436,"react-addons-linked-state-mixin":80,"react-tagsinput":254}],453:[function(require,module,exports){
+},{"object-assign":4,"react":436,"react-addons-linked-state-mixin":80,"react-tagsinput":254}],454:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -63490,7 +63717,7 @@ var MaterialDialog = React.createClass({displayName: "MaterialDialog",
 
 module.exports = MaterialDialog;
 
-},{"../../dialog/Dialog":439,"./SelfLoadingMaterialPanel":456,"./SelfLoadingMaterialUpdatePanel":457,"object-assign":4,"react":436}],454:[function(require,module,exports){
+},{"../../dialog/Dialog":439,"./SelfLoadingMaterialPanel":457,"./SelfLoadingMaterialUpdatePanel":458,"object-assign":4,"react":436}],455:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -63637,7 +63864,7 @@ var MaterialPanel = React.createClass({displayName: "MaterialPanel",
 
 module.exports = MaterialPanel;
 
-},{"../../player/VimeoPlayer":464,"../../text/translatable/TranslatableText":470,"object-assign":4,"react":436}],455:[function(require,module,exports){
+},{"../../player/VimeoPlayer":465,"../../text/translatable/TranslatableText":471,"object-assign":4,"react":436}],456:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -64003,7 +64230,7 @@ var MaterialUpdatePanel = React.createClass({displayName: "MaterialUpdatePanel",
 
 module.exports = MaterialUpdatePanel;
 
-},{"../../../mixins/MaterialsMixin":485,"../../buttons/DeleteButton":438,"../../editor/PatientEditor":443,"../../material/MaterialTags":452,"../../moses/editor/MosesEditorButton":459,"../../player/VimeoPlayer":464,"../groups/GroupsSelect":458,"object-assign":4,"react":436}],456:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":486,"../../buttons/DeleteButton":438,"../../editor/PatientEditor":444,"../../material/MaterialTags":453,"../../moses/editor/MosesEditorButton":460,"../../player/VimeoPlayer":465,"../groups/GroupsSelect":459,"object-assign":4,"react":436}],457:[function(require,module,exports){
 /**
  * Created by sabir on 23.10.15.
  */
@@ -64101,7 +64328,7 @@ var SelfLoadingMaterialPanel = React.createClass({displayName: "SelfLoadingMater
 
 module.exports = SelfLoadingMaterialPanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":493,"../../../mixins/MaterialsMixin":485,"./MaterialPanel":454,"object-assign":4,"react":436}],457:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":494,"../../../mixins/MaterialsMixin":486,"./MaterialPanel":455,"object-assign":4,"react":436}],458:[function(require,module,exports){
 /**
  * Created by sabir on 22.10.15.
  */
@@ -64249,7 +64476,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({displayName: "SelfLoadin
 
 module.exports = SelfLoadingMaterialUpdatePanel;
 
-},{"../../../../react/mixins/commonMixins/ParseMixin":493,"../../../mixins/MaterialsMixin":485,"./MaterialUpdatePanel":455,"object-assign":4,"react":436}],458:[function(require,module,exports){
+},{"../../../../react/mixins/commonMixins/ParseMixin":494,"../../../mixins/MaterialsMixin":486,"./MaterialUpdatePanel":456,"object-assign":4,"react":436}],459:[function(require,module,exports){
 /**
  * Created by sabir on 24.10.15.
  */
@@ -64363,7 +64590,7 @@ var GroupsSelect = React.createClass({displayName: "GroupsSelect",
 
 module.exports = GroupsSelect;
 
-},{"object-assign":4,"react":436,"react-select":248}],459:[function(require,module,exports){
+},{"object-assign":4,"react":436,"react-select":248}],460:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -64475,7 +64702,7 @@ var MosesEditorButton = React.createClass({displayName: "MosesEditorButton",
 
 module.exports = MosesEditorButton;
 
-},{"../../dialog/Dialog":439,"./SelfLoadingMosesEditor":460,"object-assign":4,"react":436}],460:[function(require,module,exports){
+},{"../../dialog/Dialog":439,"./SelfLoadingMosesEditor":461,"object-assign":4,"react":436}],461:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -64818,7 +65045,7 @@ var SelfLoadingMosesEditor = React.createClass({displayName: "SelfLoadingMosesEd
 
 module.exports = SelfLoadingMosesEditor;
 
-},{"../../../mixins/MaterialsMixin":485,"../../player/PatientPlayer":463,"./adjust/MosesTimePanel":462,"object-assign":4,"react":436}],461:[function(require,module,exports){
+},{"../../../mixins/MaterialsMixin":486,"../../player/PatientPlayer":464,"./adjust/MosesTimePanel":463,"object-assign":4,"react":436}],462:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -64952,7 +65179,7 @@ var MosesTimeInput = React.createClass({displayName: "MosesTimeInput",
 
 module.exports = MosesTimeInput;
 
-},{"object-assign":4,"react":436}],462:[function(require,module,exports){
+},{"object-assign":4,"react":436}],463:[function(require,module,exports){
 /**
  * Created by sabir on 27.12.15.
  */
@@ -65139,7 +65366,7 @@ var MosesTimePanel = React.createClass({displayName: "MosesTimePanel",
 
 module.exports = MosesTimePanel;
 
-},{"./MosesTimeInput":461,"object-assign":4,"react":436}],463:[function(require,module,exports){
+},{"./MosesTimeInput":462,"object-assign":4,"react":436}],464:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -65259,7 +65486,8 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
     onProgress: function(data){
         var played = data.played;
         var loaded = data.loaded;
-        //console.log('onProgress: played/loaded = ', played, loaded);
+        var ref = this.getPlayerRef();
+        console.log('onProgress: played/loaded = ', played, loaded, ', ref = ' + ref);
         if (played != undefined){
             this.checkBounds(played);
         }
@@ -65445,7 +65673,7 @@ var PatientPlayer = React.createClass({displayName: "PatientPlayer",
 
 module.exports = PatientPlayer;
 
-},{"../../mixins/VideoMixin":489,"object-assign":4,"react-player":229,"react/addons":263}],464:[function(require,module,exports){
+},{"../../mixins/VideoMixin":490,"object-assign":4,"react-player":229,"react/addons":263}],465:[function(require,module,exports){
 /**
  * Created by sabir on 23.09.15.
  */
@@ -65462,9 +65690,6 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
             }
         }
     },
-
-
-
 
     getInitialState: function(){
         return {
@@ -65489,7 +65714,7 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
     },
 
     onPlayProgress: function(p){
-        //console.log('onPlayProgress occured', p);
+        console.log('onPlayProgress occured', p);
     },
 
     onReady: function(){
@@ -65540,7 +65765,7 @@ var VimeoPlayer = React.createClass({displayName: "VimeoPlayer",
 
 module.exports = VimeoPlayer;
 
-},{"object-assign":4,"react":436,"react-vimeo":257}],465:[function(require,module,exports){
+},{"object-assign":4,"react":436,"react-vimeo":257}],466:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -65612,7 +65837,7 @@ var FirstLevelPanelItem = React.createClass({displayName: "FirstLevelPanelItem",
 
 module.exports = FirstLevelPanelItem;
 
-},{"object-assign":4,"react":436}],466:[function(require,module,exports){
+},{"object-assign":4,"react":436}],467:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -65683,7 +65908,7 @@ var FirstLevelPanelsList = React.createClass({displayName: "FirstLevelPanelsList
 
 module.exports = FirstLevelPanelsList;
 
-},{"../../data/DataFactory":482,"./FirstLevelPanelItem":465,"object-assign":4,"react":436}],467:[function(require,module,exports){
+},{"../../data/DataFactory":483,"./FirstLevelPanelItem":466,"object-assign":4,"react":436}],468:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -65801,7 +66026,7 @@ var Sausage = React.createClass({displayName: "Sausage",
 
 module.exports = Sausage;
 
-},{"./FirstLevelPanelsList":466,"./dialog/SausageDialog":469,"object-assign":4,"react":436}],468:[function(require,module,exports){
+},{"./FirstLevelPanelsList":467,"./dialog/SausageDialog":470,"object-assign":4,"react":436}],469:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -65940,7 +66165,7 @@ var SecondLevelPanelItem = React.createClass({displayName: "SecondLevelPanelItem
 
 module.exports = SecondLevelPanelItem;
 
-},{"../video/dialog/VideoDialog":480,"object-assign":4,"react":436}],469:[function(require,module,exports){
+},{"../video/dialog/VideoDialog":481,"object-assign":4,"react":436}],470:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -66081,7 +66306,7 @@ var SausageDialog = React.createClass({displayName: "SausageDialog",
 
 module.exports = SausageDialog;
 
-},{"../../topics/dialog/TopicDialog":473,"../SecondLevelPanelItem":468,"object-assign":4,"react":436}],470:[function(require,module,exports){
+},{"../../topics/dialog/TopicDialog":474,"../SecondLevelPanelItem":469,"object-assign":4,"react":436}],471:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -66168,7 +66393,7 @@ var TranslatableText = React.createClass({displayName: "TranslatableText",
 
 module.exports = TranslatableText;
 
-},{"../../../mixins/TranslateMixin":487,"../../translate/TranslateDialog":474,"./WordsList":472,"object-assign":4,"react":436}],471:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":488,"../../translate/TranslateDialog":475,"./WordsList":473,"object-assign":4,"react":436}],472:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -66296,7 +66521,7 @@ var WordItem = React.createClass({displayName: "WordItem",
 
 module.exports = WordItem;
 
-},{"../../../mixins/TranslateMixin":487,"object-assign":4,"react":436}],472:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":488,"object-assign":4,"react":436}],473:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -66354,7 +66579,7 @@ var WordsList = React.createClass({displayName: "WordsList",
 
 module.exports = WordsList;
 
-},{"./WordItem":471,"object-assign":4,"react":436}],473:[function(require,module,exports){
+},{"./WordItem":472,"object-assign":4,"react":436}],474:[function(require,module,exports){
 /**
  * Created by sabir on 13.11.15.
  */
@@ -66499,7 +66724,7 @@ var TopicDialog = React.createClass({displayName: "TopicDialog",
 
 module.exports = TopicDialog;
 
-},{"object-assign":4,"react":436}],474:[function(require,module,exports){
+},{"object-assign":4,"react":436}],475:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -66573,7 +66798,7 @@ var TranslateDialog = React.createClass({displayName: "TranslateDialog",
 
 module.exports = TranslateDialog;
 
-},{"../dialog/Dialog":439,"./panel/TranslatePanel":475,"object-assign":4,"react":436}],475:[function(require,module,exports){
+},{"../dialog/Dialog":439,"./panel/TranslatePanel":476,"object-assign":4,"react":436}],476:[function(require,module,exports){
 /**
  * Created by sabir on 19.11.15.
  */
@@ -66746,7 +66971,7 @@ var TranslatePanel = React.createClass({displayName: "TranslatePanel",
 
 module.exports = TranslatePanel;
 
-},{"../../../mixins/TranslateMixin":487,"object-assign":4,"react-speech":253,"react/addons":263}],476:[function(require,module,exports){
+},{"../../../mixins/TranslateMixin":488,"object-assign":4,"react-speech":253,"react/addons":263}],477:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -66894,7 +67119,7 @@ var AuthForm = React.createClass({displayName: "AuthForm",
 
 module.exports = AuthForm;
 
-},{"./LoginForm":477,"./SignupForm":479,"react":436}],477:[function(require,module,exports){
+},{"./LoginForm":478,"./SignupForm":480,"react":436}],478:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -67064,7 +67289,7 @@ var LoginForm = React.createClass({displayName: "LoginForm",
 
 module.exports = LoginForm;
 
-},{"../../mixins/LoginMixin":484,"react":436}],478:[function(require,module,exports){
+},{"../../mixins/LoginMixin":485,"react":436}],479:[function(require,module,exports){
 /**
  * Created by sabir on 05.11.15.
  */
@@ -67140,7 +67365,7 @@ var RoleSelector = React.createClass({displayName: "RoleSelector",
 
 module.exports = RoleSelector;
 
-},{"object-assign":4,"react":436}],479:[function(require,module,exports){
+},{"object-assign":4,"react":436}],480:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -67432,7 +67657,7 @@ var SignupForm = React.createClass({displayName: "SignupForm",
 
 module.exports = SignupForm;
 
-},{"../../mixins/LoginMixin":484,"../user/RoleSelector":478,"object-assign":4,"react":436}],480:[function(require,module,exports){
+},{"../../mixins/LoginMixin":485,"../user/RoleSelector":479,"object-assign":4,"react":436}],481:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -67519,7 +67744,7 @@ var VideoDialog = React.createClass({displayName: "VideoDialog",
 
 module.exports = VideoDialog;
 
-},{"../../dialog/Dialog":439,"./VideoPanel":481,"object-assign":4,"react":436}],481:[function(require,module,exports){
+},{"../../dialog/Dialog":439,"./VideoPanel":482,"object-assign":4,"react":436}],482:[function(require,module,exports){
 /**
  * Created by sabir on 17.11.15.
  */
@@ -67616,7 +67841,7 @@ var VideoPanel = React.createClass({displayName: "VideoPanel",
 
 module.exports = VideoPanel;
 
-},{"../../player/VimeoPlayer":464,"object-assign":4,"react":436}],482:[function(require,module,exports){
+},{"../../player/VimeoPlayer":465,"object-assign":4,"react":436}],483:[function(require,module,exports){
 /**
  * Created by sabir on 03.10.15.
  */
@@ -67935,7 +68160,7 @@ var DataFactory = {
 
 module.exports = DataFactory;
 
-},{}],483:[function(require,module,exports){
+},{}],484:[function(require,module,exports){
 /**
  * Created by sabir on 27.10.15.
  */
@@ -68121,7 +68346,7 @@ var FeedMixin = {
 
 module.exports = FeedMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":493,"parse":5}],484:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":494,"parse":5}],485:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -68242,7 +68467,7 @@ var LoginMixin = {
 
 module.exports = LoginMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":492,"../../react/mixins/commonMixins/ParseMixin":493,"parse":5,"react":436}],485:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":493,"../../react/mixins/commonMixins/ParseMixin":494,"parse":5,"react":436}],486:[function(require,module,exports){
 /**
  * Created by sabir on 21.10.15.
  */
@@ -68885,7 +69110,7 @@ var MaterialsMixin = {
 
 module.exports = MaterialsMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":493,"./TopicsMixin":486,"./UserMixin":488,"jquery":2,"parse":5}],486:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":494,"./TopicsMixin":487,"./UserMixin":489,"jquery":2,"parse":5}],487:[function(require,module,exports){
 /**
  * Created by sabir on 12.11.15.
  */
@@ -69039,7 +69264,7 @@ var TopicsMixin = {
 
 module.exports = TopicsMixin;
 
-},{"../../react/mixins/commonMixins/CommonMixin":492,"../../react/mixins/commonMixins/ParseMixin":493,"./FeedMixin":483,"parse":5}],487:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/CommonMixin":493,"../../react/mixins/commonMixins/ParseMixin":494,"./FeedMixin":484,"parse":5}],488:[function(require,module,exports){
 /**
  * Created by sabir on 02.10.15.
  */
@@ -69218,7 +69443,7 @@ var TranslateMixin = {
 
 module.exports = TranslateMixin;
 
-},{"./VocabularyMixin":490,"jquery":2}],488:[function(require,module,exports){
+},{"./VocabularyMixin":491,"jquery":2}],489:[function(require,module,exports){
 /**
  * Created by sabir on 16.11.15.
  */
@@ -69314,7 +69539,7 @@ var UserMixin = {
 
 module.exports = UserMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":493,"parse":5,"react":436}],489:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":494,"parse":5,"react":436}],490:[function(require,module,exports){
 /**
  * Created by sabir on 26.11.15.
  */
@@ -69404,7 +69629,7 @@ var VideoMixin = {
 
 module.exports = VideoMixin;
 
-},{"jquery":2,"moment":3}],490:[function(require,module,exports){
+},{"jquery":2,"moment":3}],491:[function(require,module,exports){
 
 var React = require('react');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
@@ -69525,7 +69750,7 @@ var VocabularyMixin = {
 
 module.exports = VocabularyMixin;
 
-},{"../../react/mixins/commonMixins/ParseMixin":493,"./MaterialsMixin":485,"parse":5,"react":436}],491:[function(require,module,exports){
+},{"../../react/mixins/commonMixins/ParseMixin":494,"./MaterialsMixin":486,"parse":5,"react":436}],492:[function(require,module,exports){
 /**
  * Created by sabir on 26.08.15.
  */
@@ -69547,7 +69772,7 @@ var constants = {
 
 module.exports = constants;
 
-},{}],492:[function(require,module,exports){
+},{}],493:[function(require,module,exports){
 /**
  * Created by sabir on 29.07.15.
  */
@@ -69736,7 +69961,7 @@ var CommonMixin = {
 
 module.exports = CommonMixin;
 
-},{}],493:[function(require,module,exports){
+},{}],494:[function(require,module,exports){
 /**
  * Created by sabir on 15.08.15.
  */
@@ -69898,4 +70123,4 @@ var ParseMixin = {
 
 module.exports = ParseMixin;
 
-},{"../../../js/Constants":491,"jquery":2,"parse":5}]},{},[437]);
+},{"../../../js/Constants":492,"jquery":2,"parse":5}]},{},[437]);
