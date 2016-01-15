@@ -39,7 +39,11 @@ var PatientRecordComponent = React.createClass({
             //serverBaseUrl: 'http://beta.englishpatient.org/audio/',
             serverBaseUrl: 'https://www.englishpatientdrive.pw/audio/',
             //maxRecordTime: 10,
-            maxRecordTime: 30,
+
+            //maxRecordTime: 30,
+            maxRecordTime: 300,
+
+
             userAnswer: undefined,
             number: undefined
         }

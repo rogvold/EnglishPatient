@@ -7,6 +7,8 @@ var FeedMixin = require('./FeedMixin');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
 
+var MaterialsMixin = require('./MaterialsMixin');
+
 var TopicsMixin = {
 
     transformTopic: function(p){
@@ -143,6 +145,45 @@ var TopicsMixin = {
                     console.log('firing the callback');
                     callback();
                 }
+            });
+        });
+    },
+
+    loadTopicMaterialGroups: function(topicId, callback){
+        var q = new Parse.Query('MaterialGroup');
+        if (topicId != undefined){
+            q.equalTo('topicId', topicId);
+        }
+        q.limit(1000);
+        q.find(function(results){
+            var arr = (results == undefined) ? [] : results.map(function(r){
+                return MaterialsMixin.transformGroup(r);
+            });
+            callback(arr);
+        });
+    },
+
+    loadTopicGroupsAndMaterials: function(topicId, callback){
+        var self = this;
+        var MM = MaterialsMixin;
+        this.loadTopicMaterialGroups(topicId, function(groups){
+            console.log('--->>>> GROUPS LOADED: ', groups);
+            var ids = groups.map(function(g){return g.id});
+            //var q = new Parse.Query('PatientMaterial');
+            //q.limit(1000);
+            //q.containedIn('groups', ids);
+            //var self = this;
+            //ParseMixin.loadAllDataFromParse(q, function(list){
+            //    var materials = list.map(function(m){
+            //        return MM.transformMaterialFromParseObject(m);
+            //    });
+            //    var res = MaterialsMixin.getGroupsFactoryList(groups, materials, false);
+            //    callback(res);
+            //});
+
+            MM.loadMaterialsInGroupsList(ids, function(materials){
+                var res = MaterialsMixin.getGroupsFactoryList(groups, materials, false);
+                callback(res);
             });
         });
     }

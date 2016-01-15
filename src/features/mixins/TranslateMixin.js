@@ -157,7 +157,7 @@ var TranslateMixin = {
             return false;
         }
         text = text.replace(/[ ,\\-]/g, '');
-        var re = /[a-zA-Z'`\\?\\.\\!]+/;
+        var re = /[a-zA-Z'`:"\\?\\.\\!]+/;
         var res = re.exec(text);
         if (res == undefined || res.length == 0){
             //console.log('no');

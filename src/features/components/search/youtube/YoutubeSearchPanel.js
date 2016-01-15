@@ -214,6 +214,13 @@ var YoutubeSearchPanel = React.createClass({
         });
     },
 
+    onKeyUp: function(event){
+        if(event.keyCode == 13){
+            var val = event.target.value;
+            this.onSearchClick();
+        }
+    },
+
     render: function () {
         var checkboxes = this.getCheckboxesForRendering();
         var materialSelected = (this.state.selectedItem != undefined);
@@ -232,7 +239,7 @@ var YoutubeSearchPanel = React.createClass({
                 <div style={this.componentStyle.searchInputPlaceholder}>
                     <div className={'ui form'} >
                         <div className="ui action input">
-                            <input type="text" placeholder={'Поиск ...'}
+                            <input type="text" placeholder={'Поиск ...'} onKeyUp={this.onKeyUp}
                                    value={this.state.text} onChange={this.onTextChange}  />
                             <button className={'ui basic button'} onClick={this.onSearchClick} >
                                 <i className={'icon search'} ></i> Поиск

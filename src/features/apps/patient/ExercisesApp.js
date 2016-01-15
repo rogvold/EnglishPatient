@@ -54,7 +54,7 @@ var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnai
 
 var ExerciseGroupsCardsList = require('../../components/exercise/group/ExerciseGroupsCardsList');
 
-
+var SelfLoadingExercisesRegistryPanel = require('../../components/exercise/SelfLoadingExercisesRegistryPanel');
 
 var ExercisesApp = React.createClass({
     getDefaultProps: function () {
@@ -272,7 +272,7 @@ var ExercisesApp = React.createClass({
 
                     {mode == 'exercise' ?
                         <div>
-                            {this.getExerciseSubApp()}
+                            {this.getExercisesSubApp2()}
                         </div> : null
                     }
 
@@ -297,6 +297,14 @@ var ExercisesApp = React.createClass({
         );
     },
 
+    getExercisesSubApp2: function(){
+        return (
+            <div>
+                <SelfLoadingExercisesRegistryPanel teacherId={this.state.user.id} />
+            </div>
+        );
+    },
+
 
     getExerciseSubApp: function(){
         return (
@@ -310,13 +318,13 @@ var ExercisesApp = React.createClass({
                     <CreateNewExerciseGroupButton style={{float: 'right'}} teacherId={this.state.user.id} onGroupCreate={this.onGroupCreate} />
                 </div>
 
-                <div style={{display: 'block'}} >
+                <div style={{display: 'none'}} >
                     <ExercisesGroupsList onGroupUpdate={this.onGroupUpdate}
                                          onExerciseUpdate={this.onExerciseUpdate}
                                          pageSize={6} userId={this.state.user.id} groups={this.state.groups} />
                 </div>
 
-                <div style={{display: 'none'}} >
+                <div style={{display: 'block'}} >
                     <ExerciseGroupsCardsList
                         userId={this.state.user.id}
                         groups={this.state.groups} />

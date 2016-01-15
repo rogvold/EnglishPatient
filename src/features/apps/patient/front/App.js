@@ -2,7 +2,8 @@
  * Created by sabir on 18.11.15.
  */
 
-var React = require('react/addons');
+//var React = require('react/addons'); // it works with that
+var React = require('react');
 var assign = require('object-assign');
 
 var TopBlock = require('../../../components/front/TopBlock');
@@ -22,7 +23,13 @@ var MaterialLink = require('../../../components/link/MaterialLink');
 
 var ParseMixin = require('../../../../react/mixins/commonMixins/ParseMixin');
 
+var PricingPanel = require('../../../components/pricing/PricingPanel');
 
+var TextCardPanel = require('../../../components/front/TextCardPanel');
+
+var SignUpNowBlock = require('../../../components/front/SignUpNowBlock');
+
+var LicenseButton = require('../../../components/front/LicenseButton');
 
 var App = React.createClass({
     getDefaultProps: function () {
@@ -87,6 +94,10 @@ var App = React.createClass({
         logosPlaceholder: {
             width: '100%',
             height: 500
+        },
+
+        footerLink: {
+            color: '#2E3C54'
         }
 
     },
@@ -104,6 +115,7 @@ var App = React.createClass({
         var lec = 'https://www.englishpatient.org/app/assets/images/front/lec.jpg';
         var spe = 'https://www.englishpatient.org/app/assets/images/front/spe.jpg';
         var gal = 'https://www.englishpatient.org/app/assets/images/front/gal.jpg';
+        var cla = 'https://www.englishpatient.org/app/assets/images/front/cla.jpg';
         var trusted = 'https://www.englishpatient.org/assets/images/front/logos.jpg';
 
         var galSt = assign({}, this.componentStyle.cover,
@@ -123,7 +135,6 @@ var App = React.createClass({
                 </div>
 
                 <div style={this.componentStyle.main}>
-
 
                     <div style={{textAlign: 'center', fontSize: '50px',
                                     padding: 10, marginTop: 30, marginBottom: 30 }}>
@@ -168,28 +179,45 @@ var App = React.createClass({
 
                     <div style={{width: 900, paddingTop: 40, margin: '0 auto'}} >
 
-                        <TextImagePanel
-                            imageText={'Аудирование'}
+                        <TextCardPanel
+                            cardName={'listening'}
+                            textAlign={'right'}
+                            name={'Аудирование'}
+                            image={aud}
                             text={'Набор инструментов и видео материалов для обучения пониманию реальной речи.'}
-                            textAlign={'right'} image={aud} />
+                            />
 
-                        <TextImagePanel
-                            imageText={'Говорение'}
+                        <TextCardPanel
+                            cardName={'speaking'}
+                            textAlign={'left'}
+                            name={'Говорение'}
+                            image={spe}
                             text={'Тренажеры для выработки навыков говорения на основе аутентичных видео материалов.'}
-                            image={spe} />
+                            />
 
-                        <TextImagePanel
+                        <TextCardPanel
+                            cardName={'grammar'}
+
                             imageText={'Грамматика'}
                             text={'Набор аутентичных видео фрагментов с грамматическими комментариями'}
                             textAlign={'right'}
                             image={gra} />
 
-                        <TextImagePanel
+                        <TextCardPanel
+                            cardName={'lecsics'}
                             imageText={'Лексика'}
                             text={'Коллекция коротких видео с комментариями для запоминания слов, пословиц и идиом.'}
                             image={lec} />
 
+                        <TextCardPanel
+                            cardName={'classes'}
+                            imageText={'Управление обучения'}
+                            textAlign={'right'}
+                            text={'Инструментарий эффективного управления процессом обучения'}
+                            image={cla} />
+
                     </div>
+
 
                     <div style={{textAlign: 'center', fontSize: 50, padding: 20, marginTop: 50}} >
                         Ресурс в работе
@@ -208,6 +236,17 @@ var App = React.createClass({
 
                     </div>
 
+
+                    <div style={{margin: '0 auto', marginTop: 80, marginBottom: 80}} >
+
+                        <div style={{textAlign: 'center', marginBottom: 50, fontSize: 50, padding: 20}} >
+                            Цены и предложения
+                        </div>
+
+                        <PricingPanel />
+
+                    </div>
+
                     <div style={{marginTop: 80}} >
                         <div style={{textAlign: 'center', marginBottom: 50, fontSize: 50, padding: 20}} >
                             Trusted by
@@ -215,8 +254,10 @@ var App = React.createClass({
 
                         <div style={logosSt} >
                         </div>
-
                     </div>
+
+
+
 
                     <div style={{margin: '0 auto', marginTop: 80, marginBottom: 80, width: 700}} >
 
@@ -243,7 +284,6 @@ var App = React.createClass({
                                         nameFormStyle={{fontSize: 25}} confirmPasswordMode={false} />
                                 </div>
 
-
                             </div>
 
                         </div>
@@ -253,6 +293,35 @@ var App = React.createClass({
 
                 </div>
 
+
+                <div className={'patientFrontFooter'} style={{backgroundColor: '#EFF0F1'}} >
+                    <div style={{width: 900, margin: '0 auto', padding: 30, fontSize: 16, textAlign: 'center'}} >
+
+                        <div style={{width: 250, display: 'inline-block', verticalAlign: 'top'}} >
+
+                            <LicenseButton />
+
+                            <br/>
+                            <a style={this.componentStyle.footerLink} target="_blank" href='https://www.facebook.com/groups/361416784047004' >
+                                <i className={'icon facebook'} ></i> Facebook
+                            </a>
+                        </div>
+
+                        <div style={{width: 250, display: 'inline-block', verticalAlign: 'top'}} >
+                            <div style={{marginBottom: 15, fontSize: 20}}>Контакты</div>
+                            <a href='javascript: void(0)' style={this.componentStyle.footerLink} >
+                                <i className={'icon phone'} ></i> +7 (913) 8207808
+                            </a>
+                            <br/>
+                            <a href='mailto: lirmakym@mail.ru' style={this.componentStyle.footerLink} >
+                                lirmakym@mail.ru
+                                <br/>
+                                sha-sabir@yandex.ru
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
 
             </div>
         );

@@ -12,8 +12,18 @@ var AddNewClassButton = React.createClass({
     getDefaultProps: function () {
         return {
             teacherId: undefined,
+            icon: 'icon plus',
+            buttonClassName: 'ui circular inverted white mini button',
             onClassCreated: function(cl){
 
+            },
+
+            style: {
+                width: 18,
+                height: 18,
+                padding: 0,
+                opacity: 0.8,
+                marginRight: 2
             }
         }
     },
@@ -49,11 +59,7 @@ var AddNewClassButton = React.createClass({
         },
 
         plusButtonStyle: {
-            width: 18,
-            height: 18,
-            padding: 0,
-            opacity: 0.8,
-            marginRight: 2
+
         },
 
         iconStyle: {
@@ -174,15 +180,19 @@ var AddNewClassButton = React.createClass({
 
         return (
             <div style={this.componentStyle.placeholder}>
-                <div style={this.componentStyle.plusButtonStyle} onClick={this.showDialog}
-                        className={'ui circular inverted white mini button'}>
-                        <i className={'icon plus'} style={this.componentStyle.iconStyle} ></i>
+                <div style={this.props.style} onClick={this.showDialog}
+                        className={this.props.buttonClassName}>
+                        {this.props.icon == undefined ? null :
+                            <i className={this.props.icon} style={this.componentStyle.iconStyle} ></i>
+                        }
                 </div>
 
-                <Dialog content={this.getDialogContent()} visible={this.state.dialogVisible}
-                        dialogPanelStyle={this.componentStyle.dialogPanelStyle}
-                        onClose={this.hideDialog} dialogPanelStyle={this.componentStyle.dialogPanelStyle} />
+                {this.state.dialogVisible == false ? null :
+                    <Dialog content={this.getDialogContent()} visible={true}
+                            dialogPanelStyle={this.componentStyle.dialogPanelStyle}
+                            onClose={this.hideDialog} dialogPanelStyle={this.componentStyle.dialogPanelStyle} />
 
+                }
 
             </div>
         );

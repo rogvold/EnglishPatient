@@ -3,7 +3,8 @@
  */
 
 
-var React = require('react/addons');
+//var React = require('react/addons');
+var React = require('react');
 var assign = require('object-assign');
 
 var LoginMixin = require('../../../mixins/LoginMixin');

@@ -7,6 +7,8 @@ var assign = require('object-assign');
 
 var moment = require('moment');
 
+var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
+
 var MessageItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -112,6 +114,10 @@ var MessageItem = React.createClass({
         var avaSt = assign({}, this.componentStyle.avatarPlaceholder, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
         var list = this.props.attachments;
 
+        var content = (this.props.content == undefined) ? '' : this.props.content;
+        //content = CommonMixin.wrapURLs(content, true);
+
+
         var isNotRead = ((this.props.userId == this.props.toId) && (this.props.status == 'new'))
 
         return (
@@ -133,7 +139,7 @@ var MessageItem = React.createClass({
                     </div>
                     
                     <div style={this.componentStyle.messagePlaceholder}>
-                        <div dangerouslySetInnerHTML={{__html: this.props.content}} ></div>
+                        <div dangerouslySetInnerHTML={{__html: content}} ></div>
 
                         {list.length == 0 ? null :
                             <div style={this.componentStyle.attachmentsPlaceholder}>

@@ -52,3 +52,55 @@
     margin: 0 auto;
     max-width: 100%;
 }
+
+.ui.button.patientPrimary {
+    /*background-color: #2E3C54;*/
+    background-color: #424F64;
+    color: white;
+}
+
+.ui.button.patientPrimary:hover{
+    background-color: #2E3C54;
+}
+
+pre.diff-result{
+    white-space: normal;
+}
+
+.PatientPricingItem{
+    -webkit-transition: all .25s;
+    -moz-transition: all .25s;
+    -ms-transition: all .25s;
+    -o-transition: all .25s;
+    transition: all .25s;
+}
+
+.PatientPricingItem:hover{
+    -webkit-transform: scale(1.04);
+    -moz-transform: scale(1.04);
+    -ms-transform: scale(1.04);
+    -o-transform: scale(1.04);
+    transform: scale(1.04);
+}
+
+.patientAirCard{
+    -webkit-transition: all .25s;
+    -moz-transition: all .25s;
+    -ms-transition: all .25s;
+    -o-transition: all .25s;
+    transition: all .25s;
+}
+
+.patientAirCard:hover{
+    -webkit-transform: scale(1.03);
+    -moz-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    -o-transform: scale(1.03);
+    transform: scale(1.03);
+}
+
+.patientHoverBorderCard:hover{
+    border: 1px solid #2E3C54;
+}
+
+/*#2E3C54*/

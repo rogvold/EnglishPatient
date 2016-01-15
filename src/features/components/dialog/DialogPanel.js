@@ -61,7 +61,8 @@ var DialogPanel = React.createClass({
             backgroundColor: 'white',
             borderTopLeftRadius: 3,
             borderTopRightRadius: 3,
-            overflowY: 'auto'
+            overflowY: 'auto',
+            textAlign: 'left'
         },
 
         headerPlaceholder: {

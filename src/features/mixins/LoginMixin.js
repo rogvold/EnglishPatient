@@ -39,7 +39,8 @@ var LoginMixin = {
 
     signUp: function(email, password, firstName, lastName, userRole, avatar, callback, errorCallback){
         if (avatar == undefined){
-            avatar = 'http://beta.englishpatient.org/img/profile.png';
+            //avatar = 'http://beta.englishpatient.org/img/profile.png';
+            avatar = 'https://www.englishpatientdrive.pw/dropzone/uploads/kbJGdXWAVH64c7OSuM7M.png';
         }
         ParseMixin.initParse();
         if (this.validateEmail(email) == false){

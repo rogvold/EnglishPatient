@@ -18,26 +18,32 @@ var LoginApp = require('./LoginApp');
 
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
-
 var MaterialsMixin = require('../../mixins/MaterialsMixin');
 
 var UserMixin = require('../../mixins/UserMixin');
 
-
-
-var FileUploadButton = require('../../components/file/FileUploadButton');
-
-var DialogEditInfoPanel = require('../../components/dialog_exercise/edit/DialogEditInfoPanel');
-
-var ExerciseDialogCard = require('../../components/dialog_exercise/card/ExerciseDialogCard');
-
-var ArticlesMixin = require('../../mixins/ArticleMixin');
-
 var MigratePanel = require('../../components/articles/migrate/MigratePanel');
 
-var VideoEmbedButton = require('../../components/editor/VideoEmbedButton');
 
-var PatientEditor = require('../../components/editor/PatientEditor');
+var SelfLoadingExercisesRegistryPanel = require('../../components/exercise/SelfLoadingExercisesRegistryPanel');
+
+var UpdateFeedItemPanel = require('../../components/social_networks/feed/UpdateFeedItemPanel');
+
+var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchPanel');
+
+var SelfLoadingPostsList = require('../../components/social_networks/feed/SelfLoadingPostsList');
+
+var PricingPanel = require('../../components/pricing/PricingPanel');
+
+var SausageCard = require('../../components/sausage/new/SausageCard');
+
+//var Tooltip = require('react-si');
+
+var YouHaveNoClassesPanel = require('../../components/interface_manuals/classes/YouHaveNoClassesPanel');
+
+var ButtonCard = require('../../components/interface_manuals/index/ButtonCard');
+
+var IndexPanel = require('../../components/interface_manuals/index/IndexPanel');
 
 var MediumEditor = require('../../components/editor/MediumEditor');
 
@@ -212,13 +218,10 @@ var DevApp = React.createClass({
 
         var articleId = 'ljVkawu3Zx';
 
-
-
         return (
             <div style={{padding: 10}} >
 
-
-                
+                <MediumEditor />
 
             </div>
 
@@ -232,7 +235,7 @@ var DevApp = React.createClass({
     render: function () {
 
         return (
-            <div style={this.componentStyle.placeholder}>
+            <div style={this.componentStyle.placeholder} >
                 {this.state.loggedIn == false ?
                     <div>
                         <LoginApp />

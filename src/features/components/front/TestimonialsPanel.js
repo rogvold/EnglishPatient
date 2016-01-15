@@ -2,7 +2,8 @@
  * Created by sabir on 31.12.15.
  */
 
-var React = require('react/addons');
+//var React = require('react/addons'); // it works with that
+var React = require('react');
 var assign = require('object-assign');
 
 var DialogCard = require('../dialog_exercise/card/DialogCard');

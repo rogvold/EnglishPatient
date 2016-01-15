@@ -2,57 +2,81 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b0e8074b-5b04-42d5-8254-f5266585aeb4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/back_g.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/back_g_mini.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/back_g_mini_mini.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/articles/ArticleItem.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/ArticleMixin.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/apps/patient/ArticlesApp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/articles/ArticlesList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/editor/MediumEditor.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/articles/migrate/MigratePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/articles/SelfLoadingArticlePanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/articles/SelfLoadingArticlesList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/sidebar/SidebarNotificationsButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/dialog/SimpleVideoDialog.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/apps/patient/student/StudentDictionaryApp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/apps/patient/student/StudentIdiomsApp.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/editor/VideoEmbedButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/front/cla.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/front/license/lic1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/front/license/lic2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/front/license/lic3.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/new_course.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/new_ex.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/smile_pc.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/smile_pc2.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/sssmile.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/front/license/tov1.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/front/license/tov2.jpg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../features/assets/images/write_smth.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/class/buttons/AddNewClassWrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/image/BackgroundImageContainer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/index/ButtonCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/preloader/CoolPreloader.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassAreaWrapper.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassCardButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/courses/CreateCourseCardButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/exercises/CreateExerciseCardButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/CreatePostButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/index/IndexPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/front/LicenseButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/PostsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/pricing/PricingItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/pricing/PricingPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/sausage/new/SausageCard.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/exercise/SelfLoadingExercisePanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/exercise/SelfLoadingExercisesRegistryPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/SelfLoadingPostsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/SelfLoadingSocialFeedItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/SelfLoadingUpdatablePost.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/front/SignUpNowBlock.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/apps/patient/SocialApp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/SocialFeedItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/mixins/SocialMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/front/TextCardPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/apps/patient/TrashApp.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/UpdateFeedItemPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/social_networks/feed/UpdatePostButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/components/interface_manuals/classes/YouHaveNoClassesPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/class/buttons/AddNewClassButton.js" afterPath="$PROJECT_DIR$/features/components/class/buttons/AddNewClassButton.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/App.js" afterPath="$PROJECT_DIR$/features/apps/patient/App.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/front/App.js" afterPath="$PROJECT_DIR$/features/apps/patient/front/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/ClassApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/ClassApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/ArticlesApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/ArticlesApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js" afterPath="$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/CoursesApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/CoursesApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/data/DataFactory.js" afterPath="$PROJECT_DIR$/features/data/DataFactory.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/DevApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/DevApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/DictionaryApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/DictionaryApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/dialog/DialogPanel.js" afterPath="$PROJECT_DIR$/features/components/dialog/DialogPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/exercise/group/ExerciseGroupsCardsList.js" afterPath="$PROJECT_DIR$/features/components/exercise/group/ExerciseGroupsCardsList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/ExerciseMixin.js" afterPath="$PROJECT_DIR$/features/mixins/ExerciseMixin.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/ExercisesApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/ExercisesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/GrammarApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/GrammarApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/IdiomsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/IdiomsApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/IndexApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/IndexApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/MaterialsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/MaterialsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/chat/NotReadChatSpan.js" afterPath="$PROJECT_DIR$/features/components/chat/NotReadChatSpan.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/NotesApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/NotesApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/NotificationsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/NotificationsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/notification/NotificationsNumberSpan.js" afterPath="$PROJECT_DIR$/features/components/notification/NotificationsNumberSpan.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/editor/PatientEditor.js" afterPath="$PROJECT_DIR$/features/components/editor/PatientEditor.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/LoginMixin.js" afterPath="$PROJECT_DIR$/features/mixins/LoginMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/MaterialsMixin.js" afterPath="$PROJECT_DIR$/features/mixins/MaterialsMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/chat/messages/MessageItem.js" afterPath="$PROJECT_DIR$/features/components/chat/messages/MessageItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/NoMatchApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/NoMatchApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/player/PatientPlayer.js" afterPath="$PROJECT_DIR$/features/components/player/PatientPlayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/notification/SelfLoadingNotificationsList.js" afterPath="$PROJECT_DIR$/features/components/notification/SelfLoadingNotificationsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/course/lesson/SelfLoadingUpdateLessonInfoPanel.js" afterPath="$PROJECT_DIR$/features/components/course/lesson/SelfLoadingUpdateLessonInfoPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/sidebar/SidebarChatButton.js" afterPath="$PROJECT_DIR$/features/components/sidebar/SidebarChatButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/header/student/StudentHeader.js" afterPath="$PROJECT_DIR$/features/components/header/student/StudentHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/header/teacher/TeacherHeader.js" afterPath="$PROJECT_DIR$/features/components/header/teacher/TeacherHeader.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/front/TextMediaPanel.js" afterPath="$PROJECT_DIR$/features/components/front/TextMediaPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/front/TopBlock.js" afterPath="$PROJECT_DIR$/features/components/front/TopBlock.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/TopicsApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/TopicsApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/translate/panel/TranslatePanel.js" afterPath="$PROJECT_DIR$/features/components/translate/panel/TranslatePanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/course/update/UpdateCoursePanel.js" afterPath="$PROJECT_DIR$/features/components/course/update/UpdateCoursePanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/course/lesson/UpdateLessonInfoPanel.js" afterPath="$PROJECT_DIR$/features/components/course/lesson/UpdateLessonInfoPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/record/PatientRecordComponent.js" afterPath="$PROJECT_DIR$/features/components/record/PatientRecordComponent.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js" afterPath="$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/feed/SelfLoadingUpdatableFeed.js" afterPath="$PROJECT_DIR$/features/components/feed/SelfLoadingUpdatableFeed.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/patient/shared/SharedClassApp.js" afterPath="$PROJECT_DIR$/features/apps/patient/shared/SharedClassApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/front/TestimonialsPanel.js" afterPath="$PROJECT_DIR$/features/components/front/TestimonialsPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/topics/panels/TopicHeaderPanel.js" afterPath="$PROJECT_DIR$/features/components/topics/panels/TopicHeaderPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/TopicsMixin.js" afterPath="$PROJECT_DIR$/features/mixins/TopicsMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/mixins/TranslateMixin.js" afterPath="$PROJECT_DIR$/features/mixins/TranslateMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/components/search/youtube/YoutubeSearchPanel.js" afterPath="$PROJECT_DIR$/features/components/search/youtube/YoutubeSearchPanel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/assets/css/app.css" afterPath="$PROJECT_DIR$/../features/assets/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/css/app.css" afterPath="$PROJECT_DIR$/assets/css/app.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/js/app.js" afterPath="$PROJECT_DIR$/../features/js/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/js/componentsApp.js" afterPath="$PROJECT_DIR$/../features/js/componentsApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/js/frontApp.js" afterPath="$PROJECT_DIR$/../features/js/frontApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../index.html" afterPath="$PROJECT_DIR$/../index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../gulpfile.js" afterPath="$PROJECT_DIR$/../gulpfile.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../features/index.html" afterPath="$PROJECT_DIR$/../features/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/apps/speechApp.js" afterPath="$PROJECT_DIR$/features/apps/speechApp.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -79,84 +103,7 @@
         <entry file="file://$PROJECT_DIR$/features/components/player/PatientPlayer.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DevApp.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/features/apps/patient/DevApp.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5588235">
-              <caret line="220" column="16" selection-start-line="220" selection-start-column="16" selection-end-line="220" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PatientEditor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/components/editor/PatientEditor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-              <folding>
-                <marker date="1452100504000" expanded="true" signature="3184:3220" placeholder="..." />
-                <marker date="1452100504000" expanded="true" signature="3235:3251" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="component.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/component.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="mixin.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/mixin.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MediumEditor.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/components/editor/MediumEditor.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
-              <folding>
-                <element signature="e#0#40#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NoMatchApp.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/apps/patient/NoMatchApp.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+              <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -166,17 +113,89 @@
         <entry file="file://$PROJECT_DIR$/features/components/front/TestimonialsPanel.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="33" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="33" />
+              <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TranslatePanel.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/features/components/translate/panel/TranslatePanel.js">
+      <file leaf-file-name="SharedClassApp.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/apps/patient/shared/SharedClassApp.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+              <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DevApp.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/apps/patient/DevApp.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="232" column="6" selection-start-line="232" selection-start-column="6" selection-end-line="232" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MediumEditor.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/editor/MediumEditor.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IndexPanel.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/index/IndexPanel.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="75" column="20" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="App.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/apps/patient/front/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NoMatchApp.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/apps/patient/NoMatchApp.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="speechApp.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/features/apps/speechApp.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.1142132">
+              <caret line="3" column="60" selection-start-line="3" selection-start-column="60" selection-end-line="3" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginMixin.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/features/mixins/LoginMixin.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -199,57 +218,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/features/components/course/list/CourseItem.js" />
-        <option value="$PROJECT_DIR$/features/components/course/list/SelfLoadingCoursesList.js" />
-        <option value="$PROJECT_DIR$/features/components/course/update/UpdateCoursePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/course/lesson/SelfLoadingUpdateLessonInfoPanel.js" />
-        <option value="$PROJECT_DIR$/features/components/course/lesson/UpdateLessonInfoPanel.js" />
-        <option value="$PROJECT_DIR$/features/components/sidebar/SidebarChatButton.js" />
-        <option value="$PROJECT_DIR$/features/components/chat/NotReadChatSpan.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentIndexApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentClassApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/TopicsApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/NotificationsApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/NotesApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/IndexApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/IdiomsApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/GrammarApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/ExercisesApp.js" />
-        <option value="$PROJECT_DIR$/features/components/notification/NotificationsNumberSpan.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/ClassApp.js" />
-        <option value="$PROJECT_DIR$/features/components/sidebar/SidebarNotificationsButton.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/CoursesApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/DictionaryApp.js" />
-        <option value="$PROJECT_DIR$/features/components/front/TextMediaPanel.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/front/App.js" />
-        <option value="$PROJECT_DIR$/features/components/dialog/SimpleVideoDialog.js" />
-        <option value="$PROJECT_DIR$/features/components/front/TopBlock.js" />
-        <option value="$PROJECT_DIR$/features/components/notification/SelfLoadingNotificationsList.js" />
-        <option value="$PROJECT_DIR$/features/components/articles/ArticleItem.js" />
-        <option value="$PROJECT_DIR$/features/components/articles/ArticlePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/articles/SelfLoadingArticlesList.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/ArticlesApp.js" />
-        <option value="$PROJECT_DIR$/features/components/articles/ArticlesList.js" />
-        <option value="$PROJECT_DIR$/features/components/articles/SelfLoadingArticlePanel.js" />
-        <option value="$PROJECT_DIR$/assets/css/app.css" />
-        <option value="$PROJECT_DIR$/features/components/header/teacher/TeacherHeader.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentDiactionaryApp.js" />
-        <option value="$PROJECT_DIR$/features/components/header/student/StudentHeader.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentDictionaryApp.js" />
         <option value="$PROJECT_DIR$/features/apps/patient/App.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/student/StudentIdiomsApp.js" />
-        <option value="$PROJECT_DIR$/features/apps/patient/MaterialsApp.js" />
-        <option value="$PROJECT_DIR$/features/components/articles/migrate/MigratePanel.js" />
-        <option value="$PROJECT_DIR$/features/mixins/ArticleMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/exercise/create/EditableCardBlock.js" />
-        <option value="$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js" />
-        <option value="$PROJECT_DIR$/features/components/editor/VideoEmbedButton.js" />
-        <option value="$PROJECT_DIR$/features/components/editor/PatientEditor.js" />
-        <option value="$PROJECT_DIR$/features/components/editor/MediumEditor.js" />
-        <option value="$PROJECT_DIR$/features/components/front/TestimonialsPanel.js" />
-        <option value="$PROJECT_DIR$/features/components/translate/panel/TranslatePanel.js" />
-        <option value="$PROJECT_DIR$/features/components/player/PatientPlayer.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/UpdateFeedItemPanel.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/SelfLoadingUpdatablePost.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/UpdatePostButton.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/SelfLoadingPostsList.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/SocialApp.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/PostsList.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/SelfLoadingSocialFeedItem.js" />
+        <option value="$PROJECT_DIR$/features/mixins/SocialMixin.js" />
+        <option value="$PROJECT_DIR$/features/components/social_networks/feed/SocialFeedItem.js" />
+        <option value="$PROJECT_DIR$/features/components/record/PatientRecordComponent.js" />
+        <option value="$PROJECT_DIR$/features/components/pricing/PricingTable.js" />
+        <option value="$PROJECT_DIR$/features/components/feed/SelfLoadingUpdatableFeed.js" />
+        <option value="$PROJECT_DIR$/features/components/front/CardImagePanel.js" />
+        <option value="$PROJECT_DIR$/features/components/front/TextCardPanel.js" />
+        <option value="$PROJECT_DIR$/features/components/pricing/CoolPanel.js" />
+        <option value="$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js" />
+        <option value="$PROJECT_DIR$/features/mixins/MaterialsMixin.js" />
+        <option value="$PROJECT_DIR$/features/mixins/TopicsMixin.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/CoursesApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/ArticlesApp.js" />
+        <option value="$PROJECT_DIR$/features/components/pricing/PricingPanel.js" />
+        <option value="$PROJECT_DIR$/features/components/front/SignUpNowBlock.js" />
+        <option value="$PROJECT_DIR$/features/components/sausage/new/SausageCard.js" />
+        <option value="$PROJECT_DIR$/features/components/pricing/PricingItem.js" />
+        <option value="$PROJECT_DIR$/features/components/front/LicenseButton.js" />
+        <option value="$PROJECT_DIR$/features/data/DataFactory.js" />
+        <option value="$PROJECT_DIR$/features/mixins/ExerciseMixin.js" />
+        <option value="$PROJECT_DIR$/features/components/image/BackgroundImageContainer.js" />
+        <option value="$PROJECT_DIR$/assets/css/app.css" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/index/IndexPanrl.js" />
+        <option value="$PROJECT_DIR$/features/components/class/buttons/AddNewClassButton.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/IndexApp.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/exercises/CreateExerciseCardButton.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/courses/CreateCourseCardButton.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassAreWrapper.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassAreaWrapper.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassCardButton.js" />
+        <option value="$PROJECT_DIR$/features/components/preloader/CoolPreloader.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/classes/YouHaveNoClassesPanel.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/index/ButtonCard.js" />
+        <option value="$PROJECT_DIR$/features/components/class/buttons/AddNewClassWrapper.js" />
+        <option value="$PROJECT_DIR$/features/components/interface_manuals/index/IndexPanel.js" />
+        <option value="$PROJECT_DIR$/features/mixins/LoginMixin.js" />
         <option value="$PROJECT_DIR$/features/apps/patient/DevApp.js" />
+        <option value="$PROJECT_DIR$/features/components/player/PatientPlayer.js" />
+        <option value="$PROJECT_DIR$/features/components/front/TestimonialsPanel.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/shared/SharedClassApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/front/App.js" />
+        <option value="$PROJECT_DIR$/features/apps/patient/NoMatchApp.js" />
+        <option value="$PROJECT_DIR$/features/apps/speechApp.js" />
       </list>
     </option>
   </component>
@@ -263,7 +282,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="730" />
+    <option name="height" value="726" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -288,7 +307,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -375,7 +394,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="topics" />
+              <option name="myItemId" value="preloader" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -397,33 +416,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="topics" />
+              <option name="myItemId" value="interface_manuals" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="panels" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sidebar" />
+              <option name="myItemId" value="index" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -445,7 +442,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="notification" />
+              <option name="myItemId" value="interface_manuals" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="exercises" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -467,7 +468,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
+              <option name="myItemId" value="interface_manuals" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="courses" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -489,33 +494,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="front" />
+              <option name="myItemId" value="interface_manuals" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="carousel" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="feed" />
+              <option name="myItemId" value="classes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -537,7 +520,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="exercise" />
+              <option name="myItemId" value="image" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -581,7 +564,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dialog" />
+              <option name="myItemId" value="class" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -603,107 +586,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="course" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
+              <option name="myItemId" value="class" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="course" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="update" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="course" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="course" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lesson" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="components" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="articles" />
+              <option name="myItemId" value="buttons" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -722,54 +609,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="patient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="features" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="apps" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="patient" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="student" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -807,15 +646,15 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../sibnut.com" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../EnglishPatientRu" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
     <property name="JavaScriptLanguageLevel" value="JSX" />
-    <property name="SearchEverywhereHistoryKey" value="deva&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;devap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;devapp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;videom&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/VideoMixin.js&#10;patientpla&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js&#10;articlemix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ArticleMixin.js&#10;materialsa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/MaterialsApp.js&#10;student&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/student/StudentIdiomsApp.js&#10;idiomsa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/IdiomsApp.js&#10;teacherh&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/header/teacher/TeacherHeader.js&#10;dictionar&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DictionaryApp.js&#10;teac&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/header/teacher/TeacherHeader.js&#10;articles&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ArticlesApp.js&#10;articlemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ArticleMixin.js&#10;selflo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/notification/SelfLoadingNotificationsList.js&#10;materialsmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;patientpl&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js&#10;vimeopla&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/VimeoPlayer.js&#10;classa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ClassApp.js&#10;materiall&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/link/MaterialLink.js&#10;patientl&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/link/PatientLink.js&#10;dictiona&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DictionaryApp.js&#10;topheader&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/topics/panels/TopicHeaderPanel.js&#10;indexa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/IndexApp.js&#10;coursesa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/CoursesApp.js&#10;coursemixi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/CourseMixin.js&#10;coursea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/CoursesApp.js&#10;app.&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/App.js&#10;course&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/course/list/CourseItem.js&#10;teacherhea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/header/teacher/TeacherHeader.js&#10;courses&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/CoursesApp.js&#10;idioms&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/IdiomsApp.js&#10;notesa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/NotesApp.js&#10;coursemix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/CourseMixin.js&#10;coursemi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/CourseMixin.js&#10;taskpane&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/class/tasks/TaskPanel.js&#10;dialog&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog/Dialog.js&#10;topicdialo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/topics/dialog/TopicDialog.js&#10;moses&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/moses/player/MosesPlayer.js&#10;exercisea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ExercisesApp.js&#10;exercisesa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ExercisesApp.js&#10;SelfLoadingVideosList&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/feed/video/SelfLoadingVideosList.js&#10;create&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/course/lesson/CreateLessonButton.js&#10;exercises&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ExercisesApp.js&#10;addclass&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/class/buttons/AddNewClassButton.js&#10;selfloading&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/feed/SelfLoadingFeedItem.js&#10;feedmixi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/FeedMixin.js&#10;material&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/link/MaterialLink.js&#10;test&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/front/TestimonialsPanel.js&#10;Login&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/user/LoginForm.js" />
+    <property name="SearchEverywhereHistoryKey" value="devap&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;loginmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/LoginMixin.js&#10;indexpa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/interface_manuals/index/IndexPanel.js&#10;ButtonCar&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/interface_manuals/index/ButtonCard.js&#10;selfloadi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/material/list/SelfLoadingMaterialsList.js&#10;Vimeo&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/VimeoPlayer.js&#10;indexa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/IndexApp.js&#10;addclass&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/class/buttons/student/AddClassPlusButton.js&#10;createclass&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/interface_manuals/classes/CreateClassCardButton.js&#10;exercisemixi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/ExerciseMixin.js&#10;dialogcard&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/card/DialogCard.js&#10;dialogcar&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/card/DialogCard.js&#10;deva&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;card&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/dialog_exercise/card/DialogCard.js&#10;sausa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/sausage/new/SausageCard.js&#10;app.&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/front/App.js&#10;datafa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/data/DataFactory.js&#10;materialsmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;sausage&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/sausage/new/SausageCard.js&#10;sidebar&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/templates/LeftSidebarTemplate.js&#10;datafact&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/data/DataFactory.js&#10;articles&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ArticlesApp.js&#10;coursea&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/CoursesApp.js&#10;topicm&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/TopicsMixin.js&#10;topics&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/TopicsApp.js&#10;data&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/data/DataFactory.js&#10;feedmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/FeedMixin.js&#10;patientre&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/record/PatientRecordComponent.js&#10;socialmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/SocialMixin.js&#10;socialA&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/SocialApp.js&#10;sociala&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/SocialApp.js&#10;trash&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/TrashApp.js&#10;social&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/SocialMixin.js&#10;socia&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/SocialMixin.js&#10;commonmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/mixins/commonMixins/CommonMixin.js&#10;common&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/react/mixins/commonMixins/CommonMixin.js&#10;selfload&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/exercise/SelfLoadingExercisesRegistryPanel.js&#10;TopicHeaderPanel&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/topics/panels/TopicHeaderPanel.js&#10;authform&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/user/AuthForm.js&#10;exercisesa&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ExercisesApp.js&#10;materialsmix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;translatemix&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/TranslateMixin.js&#10;translatable&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/text/translatable/TranslatableText.js&#10;exercisesbun&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/bunch/exercise/ExercisesBunch.js&#10;exerciseA&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/ExercisesApp.js&#10;materials&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/MaterialsMixin.js&#10;topicmi&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/TopicsMixin.js&#10;devapp&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/apps/patient/DevApp.js&#10;videom&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/mixins/VideoMixin.js&#10;patientpla&#9;FILE&#9;file:///Users/sabir/Documents/GitHub/EnglishPatientOrg/EnglishPatient/src/features/components/player/PatientPlayer.js" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="109" />
@@ -847,9 +686,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Node.js.TopBlock.js">
-    <configuration default="false" name="TopBlock.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="/usr/local/bin/node" path-to-js-file="TopBlock.js" working-dir="$PROJECT_DIR$/features/components/front">
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <method />
     </configuration>
@@ -876,7 +712,7 @@
     <configuration default="true" type="cucumber.js" factoryName="Cucumber.js">
       <option name="cucumberJsArguments" value="" />
       <option name="executablePath" />
-      <option name="filePath" value="$PROJECT_DIR$/features/components/editor" />
+      <option name="filePath" value="$PROJECT_DIR$/features/components/preloader" />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -888,14 +724,12 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="false" name="TopBlock.js" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="TopBlock.js" working-dir="$PROJECT_DIR$/features/components/front">
+      <method />
+    </configuration>
     <list size="1">
       <item index="0" class="java.lang.String" itemvalue="Node.js.TopBlock.js" />
     </list>
-    <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Node.js.TopBlock.js" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration">
@@ -911,28 +745,48 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="730" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="726" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30625" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.336478" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3231018" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3473344" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291536" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286385" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3051643" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291536" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3279483" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -950,322 +804,215 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/features/components/sidebar/SidebarNotificationsButton.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46166396">
-          <caret line="97" column="0" selection-start-line="97" selection-start-column="0" selection-end-line="97" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/chat/NotReadChatSpan.js">
+    <entry file="file://$PROJECT_DIR$/features/components/topics/dialog/SelfLoadingTopicDialog.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="8" selection-start-line="31" selection-start-column="8" selection-end-line="31" selection-end-column="25" />
+          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/sidebar/SidebarChatButton.js">
+    <entry file="file://$PROJECT_DIR$/features/components/topics/panels/TopicPanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="48" selection-start-line="9" selection-start-column="48" selection-end-line="9" selection-end-column="48" />
+          <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/link/PatientLink.js">
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/TopicsApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="58" column="47" selection-start-line="58" selection-start-column="47" selection-end-line="58" selection-end-column="47" />
+          <caret line="23" column="69" selection-start-line="23" selection-start-column="69" selection-end-line="23" selection-end-column="69" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/link/MaterialLink.js">
+    <entry file="file://$PROJECT_DIR$/features/mixins/TopicsMixin.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <caret line="183" column="66" selection-start-line="183" selection-start-column="66" selection-end-line="183" selection-end-column="66" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/ClassApp.js">
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/CoursesApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63235295">
-          <caret line="401" column="40" selection-start-line="401" selection-start-column="21" selection-end-line="401" selection-end-column="40" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="55" column="30" selection-start-line="55" selection-start-column="30" selection-end-line="55" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/front/TextCardPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="50" selection-start-line="7" selection-start-column="50" selection-end-line="7" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/components/templates/LeftSidebarTemplate.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6754808">
-          <caret line="164" column="38" selection-start-line="164" selection-start-column="20" selection-end-line="164" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/componentsApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33173078">
-          <caret line="23" column="64" selection-start-line="23" selection-start-column="64" selection-end-line="23" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/dialog/SimpleVideoDialog.js">
-      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="117" column="22" selection-start-line="117" selection-start-column="22" selection-end-line="117" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/front/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="117" column="57" selection-start-line="117" selection-start-column="57" selection-end-line="117" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/player/VimeoPlayer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/mixins/ChatMixin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="9" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/mixins/MaterialsMixin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15384616">
-          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/notification/SelfLoadingNotificationsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60784316">
-          <caret line="122" column="16" selection-start-line="122" selection-start-column="16" selection-end-line="124" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/front/TopBlock.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="235" column="30" selection-start-line="235" selection-start-column="30" selection-end-line="235" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/front/TextMediaPanel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="93" column="45" selection-start-line="93" selection-start-column="45" selection-end-line="93" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/articles/ArticleItem.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
+          <caret line="53" column="43" selection-start-line="53" selection-start-column="37" selection-end-line="53" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/apps/patient/ArticlesApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="58" selection-start-line="118" selection-start-column="58" selection-end-line="118" selection-end-column="58" />
+          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/custom.css">
+    <entry file="file://$PROJECT_DIR$/features/mixins/MaterialsMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="283" column="40" selection-start-line="283" selection-start-column="40" selection-end-line="283" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/front/TextMediaPanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/articles/SelfLoadingArticlesList.js">
+    <entry file="file://$PROJECT_DIR$/features/components/dialog/SimpleVideoDialog.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+          <caret line="93" column="19" selection-start-line="93" selection-start-column="19" selection-end-line="93" selection-end-column="104" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/articles/ArticlesList.js">
+    <entry file="file://$PROJECT_DIR$/features/components/background/video/VideoBackground.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="56" column="29" selection-start-line="56" selection-start-column="29" selection-end-line="56" selection-end-column="29" />
+          <caret line="173" column="28" selection-start-line="173" selection-start-column="28" selection-end-line="173" selection-end-column="28" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/articles/SelfLoadingArticlePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/front/SignUpNowBlock.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="37" column="26" selection-start-line="37" selection-start-column="26" selection-end-line="37" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.4819079">
+          <caret line="37" column="12" selection-start-line="37" selection-start-column="12" selection-end-line="37" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/css/app.css">
+    <entry file="file://$PROJECT_DIR$/features/components/sausage/new/SausageCard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="0" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <caret line="165" column="26" selection-start-line="165" selection-start-column="26" selection-end-line="165" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/student/StudentClassApp.js">
+    <entry file="file://$PROJECT_DIR$/features/components/pricing/PricingPanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <caret line="49" column="124" selection-start-line="49" selection-start-column="124" selection-end-line="49" selection-end-column="124" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/header/teacher/TeacherHeader.js">
+    <entry file="file://$PROJECT_DIR$/features/components/pricing/PricingItem.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
+          <caret line="129" column="23" selection-start-line="129" selection-start-column="23" selection-end-line="129" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/header/student/StudentHeader.js">
+    <entry file="file://$PROJECT_DIR$/features/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="22" column="17" selection-start-line="22" selection-start-column="17" selection-end-line="22" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/templates/HeaderTemplate.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/student/StudentDictionaryApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="216" column="6" selection-start-line="216" selection-start-column="6" selection-end-line="216" selection-end-column="6" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="203" column="9" selection-start-line="203" selection-start-column="9" selection-end-line="203" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/IdiomsApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="115" column="31" selection-start-line="115" selection-start-column="31" selection-end-line="115" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/DictionaryApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="115" column="16" selection-start-line="115" selection-start-column="16" selection-end-line="115" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/student/StudentIdiomsApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="215" column="31" selection-start-line="215" selection-start-column="31" selection-end-line="215" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/MaterialsApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="35" selection-start-line="60" selection-start-column="35" selection-end-line="60" selection-end-column="35" />
-          <folding />
+          <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/features/mixins/ArticleMixin.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="107" column="0" selection-start-line="107" selection-start-column="0" selection-end-line="107" selection-end-column="0" />
+          <caret line="80" column="57" selection-start-line="80" selection-start-column="57" selection-end-line="80" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/image/PatientImg.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/data/DataFactory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="12.310855">
+          <caret line="499" column="18" selection-start-line="499" selection-start-column="18" selection-end-line="499" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/articles/migrate/MigratePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/front/LicenseButton.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.35855263">
+          <caret line="137" column="57" selection-start-line="137" selection-start-column="57" selection-end-line="137" selection-end-column="57" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/lib/webstorm.jar!/resources/html5-schema/html5/common.rnc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="194" column="18" selection-start-line="194" selection-start-column="18" selection-end-line="194" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/exercise/create/EditableCardBlock.js">
+    <entry file="file://$PROJECT_DIR$/features/components/dialog_exercise/card/DialogCard.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="353" column="72" selection-start-line="353" selection-start-column="72" selection-end-line="353" selection-end-column="72" />
-          <folding />
+          <caret line="93" column="12" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/mixins/VideoMixin.js">
+    <entry file="file://$PROJECT_DIR$/features/mixins/ExerciseMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49342105">
+          <caret line="905" column="21" selection-start-line="905" selection-start-column="21" selection-end-line="905" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/image/BackgroundImageContainer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="27" selection-start-line="19" selection-start-column="27" selection-end-line="19" selection-end-column="27" />
-          <folding />
+          <caret line="11" column="76" selection-start-line="11" selection-start-column="76" selection-end-line="11" selection-end-column="77" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/react/mixins/commonMixins/CommonMixin.js">
+    <entry file="file://$PROJECT_DIR$/assets/css/app.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="154" column="6" selection-start-line="154" selection-start-column="6" selection-end-line="154" selection-end-column="6" />
-          <folding />
+          <caret line="96" column="31" selection-start-line="96" selection-start-column="31" selection-end-line="96" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/editor/VideoEmbedButton.js">
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/IndexApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-          </folding>
+          <caret line="125" column="34" selection-start-line="125" selection-start-column="34" selection-end-line="125" selection-end-column="34" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/index.js">
+    <entry file="file://$PROJECT_DIR$/features/components/class/buttons/student/AddClassButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+          <caret line="12" column="18" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/toolbar.js">
+    <entry file="file://$PROJECT_DIR$/features/components/class/buttons/student/AddClassPlusButton.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.4555922">
+          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/exercises/CreateExerciseCardButton.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="117" column="3" selection-start-line="117" selection-start-column="3" selection-end-line="117" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/player/VimeoPlayer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1273,55 +1020,137 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/component.js">
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/courses/CreateCourseCardButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="31" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../node_modules/react-quill/src/mixin.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="34" selection-start-line="16" selection-start-column="34" selection-end-line="16" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/editor/PatientEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
-          <folding>
-            <marker date="1452100504000" expanded="true" signature="3184:3220" placeholder="..." />
-            <marker date="1452100504000" expanded="true" signature="3235:3251" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/editor/MediumEditor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="26" selection-start-line="4" selection-start-column="26" selection-end-line="4" selection-end-column="26" />
+          <caret line="71" column="23" selection-start-line="71" selection-start-column="23" selection-end-line="71" selection-end-column="23" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/NoMatchApp.js">
+    <entry file="file://$PROJECT_DIR$/features/components/class/buttons/AddNewClassButton.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <caret line="10" column="21" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/front/TestimonialsPanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/class/list/SelfLoadingLeftSidebarClassesList.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="33" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="33" />
+          <caret line="181" column="12" selection-start-line="181" selection-start-column="12" selection-end-line="181" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassAreaWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="117" column="40" selection-start-line="117" selection-start-column="40" selection-end-line="117" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/preloader/PatientPreloader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="20" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/material/list/SelfLoadingMaterialsList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6052632">
+          <caret line="297" column="16" selection-start-line="297" selection-start-column="16" selection-end-line="299" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/preloader/CoolPreloader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/classes/CreateClassCardButton.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/classes/YouHaveNoClassesPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/index/ButtonCard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="91" column="68" selection-start-line="91" selection-start-column="68" selection-end-line="91" selection-end-column="68" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/class/buttons/AddNewClassWrapper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="177" column="71" selection-start-line="177" selection-start-column="71" selection-end-line="177" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/interface_manuals/index/IndexPanel.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="75" column="20" selection-start-line="75" selection-start-column="20" selection-end-line="75" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/mixins/LoginMixin.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/components/editor/MediumEditor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/DevApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="232" column="6" selection-start-line="232" selection-start-column="6" selection-end-line="232" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1329,23 +1158,47 @@
     <entry file="file://$PROJECT_DIR$/features/components/player/PatientPlayer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="32" selection-start-line="6" selection-start-column="32" selection-end-line="6" selection-end-column="32" />
+          <caret line="20" column="31" selection-start-line="20" selection-start-column="31" selection-end-line="20" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/components/translate/panel/TranslatePanel.js">
+    <entry file="file://$PROJECT_DIR$/features/components/front/TestimonialsPanel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="29" selection-end-line="5" selection-end-column="29" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/features/apps/patient/DevApp.js">
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/shared/SharedClassApp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5588235">
-          <caret line="220" column="16" selection-start-line="220" selection-start-column="16" selection-end-line="220" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="26" selection-start-line="6" selection-start-column="26" selection-end-line="6" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/front/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/apps/patient/NoMatchApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/features/apps/speechApp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.1142132">
+          <caret line="3" column="60" selection-start-line="3" selection-start-column="60" selection-end-line="3" selection-end-column="60" />
           <folding />
         </state>
       </provider>

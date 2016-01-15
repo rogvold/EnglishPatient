@@ -109,7 +109,8 @@ var SelfLoadingUpdatableFeed = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.createBlock}>
+                {this.props.editMode == false ? null :
+                    <div style={this.componentStyle.createBlock}>
                         <span style={{marginRight: 285}} >
                             {items.length == 0 ?
                                 <span>Этот блок пуст</span> :
@@ -122,11 +123,14 @@ var SelfLoadingUpdatableFeed = React.createClass({
                         <div style={this.componentStyle.createButtonPlaceholder}>
 
                             <CreateFeedItemButton onFeedItemCreated={this.onFeedItemCreated}
-                                              teacherId={this.props.teacherId} feedId={this.props.feedId}
-                                              buttonClassName={'ui button basic'} />
+                                                  teacherId={this.props.teacherId} feedId={this.props.feedId}
+                                                  buttonClassName={'ui button basic'} />
 
                         </div>
-                </div>
+                    </div>
+                }
+
+
 
                 <div style={this.componentStyle.listPlaceholder}>
 

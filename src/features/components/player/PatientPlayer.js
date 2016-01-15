@@ -2,7 +2,7 @@
  * Created by sabir on 26.11.15.
  */
 
-//var React = require('react/addons');
+//var React = require('react/addons'); // it works with that
 var React = require('react');
 var assign = require('object-assign');
 

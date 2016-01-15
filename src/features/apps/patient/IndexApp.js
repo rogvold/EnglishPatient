@@ -26,6 +26,7 @@ var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
 
 var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
 
+var IndexPanel = require('../../components/interface_manuals/index/IndexPanel');
 
 var IndexApp = React.createClass({
     getDefaultProps: function () {
@@ -115,7 +116,17 @@ var IndexApp = React.createClass({
         return (
             <div>
 
-                <Sausage />
+                <div style={{display: 'none'}} >
+                    <Sausage />
+                </div>
+
+
+                <div>
+
+                    <IndexPanel />
+
+                </div>
+
 
             </div>
 

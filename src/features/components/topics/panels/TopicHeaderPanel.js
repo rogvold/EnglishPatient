@@ -128,7 +128,7 @@ var TopicHeaderPanel = React.createClass({
                     </div>
 
 
-                    {this.props.editMode == false ? null :
+                    {this.props.editMode == 'true' ?
                         <div style={this.componentStyle.editButtonPlaceholder}>
                             <EditTopicButton
                                 dialogLevel={this.props.dialogLevel}
@@ -136,7 +136,7 @@ var TopicHeaderPanel = React.createClass({
                                 onTopicUpdated={this.onTopicUpdated}
                                 topicId={this.props.topicId}
                                 />
-                        </div>
+                        </div> : null
                     }
 
                 </div>

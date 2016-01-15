@@ -7,6 +7,8 @@ var assign = require('object-assign');
 
 var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
+var TopicsMixin = require('../../../mixins/TopicsMixin');
+
 var PagedCardsList = require('./PagedCardsList');
 
 var MaterialsBunch = require('./MaterialsBunch');
@@ -66,15 +68,28 @@ var SelfLoadingMaterialsList = React.createClass({
             loading: true
         });
         var self = this;
-        MaterialsMixin.loadGroupsAndMaterials(teacherId, topicId, function(arr){
-            self.setState({
-                loading: false,
-                query: '',
-                groupsFactoryList: arr,
-                searchGroupsFactoryList: arr,
+        if (topicId != undefined){
+            TopicsMixin.loadTopicGroupsAndMaterials(topicId, function(arr){
+                self.setState({
+                    loading: false,
+                    query: '',
+                    groupsFactoryList: arr,
+                    searchGroupsFactoryList: arr,
+                });
+                callback(arr);
             });
-            callback(arr);
-        });
+        }else {
+            MaterialsMixin.loadGroupsAndMaterials(teacherId, topicId, function(arr){
+                self.setState({
+                    loading: false,
+                    query: '',
+                    groupsFactoryList: arr,
+                    searchGroupsFactoryList: arr,
+                });
+                callback(arr);
+            });
+        }
+
     },
 
     getSearchNumber: function(){

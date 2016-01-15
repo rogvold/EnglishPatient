@@ -5,7 +5,7 @@ var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var Parse = require('parse').Parse;
 var $ = require('jquery');
 
-var TopicsMixin = require('./TopicsMixin');
+//var TopicsMixin = require('./TopicsMixin');
 var UserMixin = require('./UserMixin');
 
 var MaterialsMixin = {
@@ -36,8 +36,40 @@ var MaterialsMixin = {
         }
     },
 
+    transformTopic: function(p){
+        if (p == undefined){
+            return undefined;
+        }
+        return {
+            id: p.id,
+            topicId: p.id,
+            name: p.get('name'),
+            creatorId: p.get('creatorId'),
+            description: p.get('description'),
+            avatar: p.get('avatar'),
+            access: p.get('access'),
+            topicType: p.get('topicType')
+        }
+    },
 
     loadTeacherMaterials: function(teacherId, callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.equalTo('creatorId', teacherId);
+        q.addDescending('createdAt');
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformMaterialFromParseObject(m);
+            });
+            callback(arr);
+        });
+    },
+
+    loadOptimizedTeacherMaterials: function(teacherId, topicId, callback){
+        if (topicId == undefined){
+            this.loadTeacherMaterials(teacherId, callback);
+            return;
+        }
         var q = new Parse.Query('PatientMaterial');
         q.equalTo('creatorId', teacherId);
         q.addDescending('createdAt');
@@ -246,6 +278,7 @@ var MaterialsMixin = {
 
 
     loadMaterialsInGroupsList: function(groups, callback){
+        console.log('MaterialsMixin: loadMaterialsInGroupsList occured: groups = ', groups);
         var q = new Parse.Query('PatientMaterial');
         q.limit(1000);
         q.containedIn('groups', groups);
@@ -476,8 +509,12 @@ var MaterialsMixin = {
     loadGroupsAndMaterials: function(teacherId, topicId, callback){
         console.log('loadGroupsAndMaterials occured: teacherId = ',  teacherId,  ' , topicId = ', topicId);
         var self = this;
+        console.log('starting loading teacher groups');
         this.loadTeacherGroups(teacherId, topicId, function(groups){
+            console.log('teacher groups loaded: groups = ', groups);
+            console.log('starting loading teacher materials');
             self.loadTeacherMaterials(teacherId, function(materials){
+                console.log('teacher materials loaded: materials = ', materials);
                 var arr = self.getGroupsFactoryList(groups, materials);
                 console.log('loading not mine groups factory list');
                 self.loadNotMineGroupsFactoryList(teacherId, function(notMineArr){
@@ -600,7 +637,7 @@ var MaterialsMixin = {
         q.notEqualTo('creatorId', userId);
         q.find(function(results){
             var arr = results.map(function(t){
-                return TopicsMixin.transformTopic(t);
+                return self.transformTopic(t);
             });
             var usersIds = arr.map(function(a){return a.creatorId});
             UserMixin.loadUsersByIdsList(usersIds, function(users){

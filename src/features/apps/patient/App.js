@@ -15,6 +15,10 @@ var ToolsApp = require('./ToolsApp');
 var DictionaryApp = require('./DictionaryApp');
 var ArticlesApp = require('./ArticlesApp');
 
+var TrashApp = require('./TrashApp');
+
+var SocialApp = require('./SocialApp');
+
 var IdiomsApp = require('./IdiomsApp');
 var GrammarApp = require('./GrammarApp');
 
@@ -127,12 +131,20 @@ var App = React.createClass({
                     <IndexRoute component={IdiomsApp} />
                 </Route>
 
+                <Route path="/social" component={SocialApp}>
+                    <IndexRoute component={SocialApp} />
+                </Route>
+
                 <Route path="/dev" component={DevApp}>
                     <IndexRoute component={DevApp} />
                 </Route>
 
                 <Route path="/dev2" component={SimpleDev}>
                     <IndexRoute component={SimpleDev} />
+                </Route>
+
+                <Route path="/trash" component={TrashApp}>
+                    <IndexRoute component={TrashApp} />
                 </Route>
 
                 <Route path="*" component={NoMatchApp}/>
@@ -161,7 +173,6 @@ var App = React.createClass({
                     <IndexRoute component={DevApp} />
                 </Route>
                 <Route path="/class/:classId" component={StudentClassApp}/>
-
 
             </Router>
         );

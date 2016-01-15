@@ -871,6 +871,7 @@ var ExerciseMixin = {
             callback();
             return;
         }
+        var self = this;
         var q = new Parse.Query('ExercisesGroup');
         q.get(groupId, {
             success: function(g){
@@ -878,11 +879,47 @@ var ExerciseMixin = {
                     callback();
                     return;
                 }
-                g.destroy({
-                    success: function(g){
-                        callback();
+
+                console.log('trying to find exercises in group with groupId = ', groupId);
+                //self.loadExercisesFromGroup()
+                var q2 = new Parse.Query('Exercise');
+                q2.equalTo('groups', groupId);
+                q2.limit(1000);
+                q2.find(function(exercises){
+                    console.log('exercises found: ', exercises);
+                    if (exercises == null) {
+                        exercises = [];
                     }
+                    var saveArr = [];
+                    for (var i in exercises){
+                        var ex = exercises[i];
+                        var groups = ex.get('groups');
+                        var arr = [];
+                        for (var j in groups){
+                            if (groups[j] == groupId){
+                                continue;
+                            }
+                            arr.push(groups[j]);
+                        }
+                        ex.set('groups', arr);
+                        saveArr.push(ex);
+                    }
+                    console.log('saving exercises: saveArr = ', saveArr);
+                    Parse.Object.saveAll(saveArr, {
+                        success: function(){
+                            g.destroy({
+                                success: function(g){
+                                    callback();
+                                }
+                            });
+                        }
+                    });
+
                 });
+
+
+
+
             }
         });
     },
@@ -953,6 +990,7 @@ var ExerciseMixin = {
         if (text == undefined || text.trim() == ''){
             return true;
         }
+        text = text.toLowerCase();
         var name = (ex.name == undefined) ? '' : (ex.name.toLowerCase());
         var description = (ex.description == undefined) ? '' : (ex.description.toLowerCase());
         var task = (ex.task == undefined) ? '' : (ex.task.toLowerCase());

@@ -154,6 +154,34 @@ var CommonMixin = {
         return video_id;
     },
 
+    wrapURLs: function(text, new_window) {
+        var urlRegex =
+            new RegExp(
+                '((https?://)' +
+                '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?' + //user@
+                '(([0-9]{1,3}\.){3}[0-9]{1,3}' + // IP- 199.194.52.184
+                '|' + // allows either IP or domain
+                '([0-9a-z_!~*\'()-]+\.)*' + // tertiary domain(s)- www.
+                '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\.' + // second level domain
+                '[a-z]{2,6})' + // first level domain- .com or .museum
+                '(:[0-9]{1,4})?' + // port number- :80
+                '((/?)|' + // a slash isn't required if there is no file name
+                '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?))',
+                "gi");
+        text = text.replace(urlRegex, "<a href='$1'>$1</a>");
+        return text;
+
+        //var url_pattern = /(http|ftp|https:\/\/[\w\-_]+\.{1}[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/gi;
+        //var target = (new_window === true || new_window == null) ? '_blank' : '';
+        //
+        //return text.replace(url_pattern, function (url) {
+        //    var protocol_pattern = /^(?:(?:https?|ftp):\/\/)/i;
+        //    var href = protocol_pattern.test(url) ? url : 'http://' + url;
+        //    return '<a href="' + href + '" target="' + target + '">' + url + '</a>';
+        //});
+
+    },
+
     isLocalhost: function(){
         var url = window.location.href;
         if (url.indexOf('0.0.0.0') > -1){

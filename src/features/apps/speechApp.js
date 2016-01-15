@@ -1,7 +1,9 @@
 /**
  * Created by sabir on 16.09.15.
  */
-var React = require('react/addons');
+//var React = require('react/addons'); // it works with that
+var React = require('react');
+
 var Speech = require('react-speech');
 var SpeechRecognitionArea = require('../components/recognition/SpeechRecognitionArea');
 
