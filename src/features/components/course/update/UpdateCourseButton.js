@@ -82,7 +82,7 @@ var UpdateCourseButton = React.createClass({
     },
 
     onDeleted: function(){
-        this.props.onDeleted(course);
+        this.props.onDeleted();
         this.onClose();
     },
 

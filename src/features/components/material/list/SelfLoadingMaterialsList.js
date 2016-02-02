@@ -17,11 +17,20 @@ var MaterialCreateButton = require('../buttons/MaterialCreateButton');
 
 var MaterialGroupCreateButton = require('../buttons/MaterialGroupCreateButton');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
+var LoginMixin = require('../../../mixins/LoginMixin');
+
 var SelfLoadingMaterialsList = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('MaterialsStore', 'UsersStore', 'TopicsStore')],
+
     getDefaultProps: function(){
         return {
             teacherId: undefined,
             topicId: undefined,
+
             editMode: true,
 
             searchMode: false,
@@ -34,9 +43,30 @@ var SelfLoadingMaterialsList = React.createClass({
         }
     },
 
+    getStateFromFlux: function(){
+        var flux = this.getFlux();
+        if (flux == undefined){
+            console.log('!!!---!!!--- SelfLoadingMaterialsList: getStateFromFlux: flux is undefined');
+            return;
+        }
+        var usersStore = flux.store('UsersStore');
+        var topicsStore = flux.store('TopicsStore');
+        var usersLoading = usersStore.loading;
+        var store = flux.store('MaterialsStore');
+        var state = flux.store('MaterialsStore').getState();
+        var topicId = this.props.topicId;
+        var loading = (store.groupsLoading || store.materialsLoading || usersLoading || topicsStore.loading);
+        return {
+            fluxGroupsFactoryList: store.getTopicGroupsFactoryList(topicId, this.props.teacherId),
+            //groupsLoading: store.groupsLoading,
+            //materialsLoading: store.materialsLoading,
+            loading: loading
+        }
+    },
+
     getInitialState: function () {
         return {
-            loading: false,
+            //loading: false,
             materials: [],
             groupsFactoryList: [],
             query: '',
@@ -52,15 +82,17 @@ var SelfLoadingMaterialsList = React.createClass({
             return;
         }
 
-        this.load(teacherId, topicId, function(materials){
-            console.log('materials loaded: ', materials);
-        });
+        //this.load(teacherId, topicId, function(materials){
+        //    console.log('materials loaded: ', materials);
+        //});
+        this.resetSearch();
     },
 
     componentDidMount: function () {
-        this.load(this.props.teacherId, this.props.topicId, function(arr){
-            console.log('data loaded: ', arr);
-        }.bind(this));
+        //this.load(this.props.teacherId, this.props.topicId, function(arr){
+        //    console.log('data loaded: ', arr);
+        //}.bind(this));
+        this.resetSearch();
     },
 
     load: function(teacherId, topicId, callback){
@@ -92,6 +124,15 @@ var SelfLoadingMaterialsList = React.createClass({
 
     },
 
+    resetSearch: function(){
+        setTimeout(function(){
+            this.setState({
+                query: '',
+                searchGroupsFactoryList: this.state.fluxGroupsFactoryList
+            });
+        }.bind(this), 300);
+    },
+
     getSearchNumber: function(){
         var map = {};
         var gList = this.state.searchGroupsFactoryList;
@@ -111,14 +152,18 @@ var SelfLoadingMaterialsList = React.createClass({
     search: function(q){
         if (q == undefined || q.trim() == ''){
             this.setState({
-                searchGroupsFactoryList: this.state.groupsFactoryList,
+                //searchGroupsFactoryList: this.state.groupsFactoryList,
+                searchGroupsFactoryList: this.state.fluxGroupsFactoryList, //!!!
                 query: q
             });
             return;
         }
 
         var qq = q.trim().toLowerCase();
-        var l = MaterialsMixin.searchInGroupsFactoryList(this.state.groupsFactoryList, qq);
+        console.log('[SEARCH]: ', qq);
+        var showEmptyGroups = (qq == undefined || qq == '');
+        //var l = MaterialsMixin.searchInGroupsFactoryList(this.state.groupsFactoryList, qq);
+        var l = MaterialsMixin.searchInGroupsFactoryList(this.state.fluxGroupsFactoryList, qq, showEmptyGroups); //!!!
         this.setState({
             searchGroupsFactoryList: l,
             query: q
@@ -126,7 +171,8 @@ var SelfLoadingMaterialsList = React.createClass({
     },
 
     onMaterialUpdated: function(data){
-        var arr = MaterialsMixin.updateGroupsFactoryListWithMaterial(this.state.groupsFactoryList, data);
+        //var arr = MaterialsMixin.updateGroupsFactoryListWithMaterial(this.state.groupsFactoryList, data);
+        var arr = MaterialsMixin.updateGroupsFactoryListWithMaterial(this.state.fluxGroupsFactoryList, data); //!!!
         var l = MaterialsMixin.searchInGroupsFactoryList(arr, this.state.query);
         this.setState({
             groupsFactoryList: arr,
@@ -135,9 +181,10 @@ var SelfLoadingMaterialsList = React.createClass({
     },
 
     onMaterialDeleted: function(){
-        this.load(this.props.teacherId, this.props.topicId, function(data){
-            console.log('loaded: ', data);
-        });
+        //this.load(this.props.teacherId, this.props.topicId, function(data){
+        //    console.log('loaded: ', data);
+        //});
+        this.resetSearch();
     },
 
     onMaterialCreated: function(data){
@@ -171,15 +218,19 @@ var SelfLoadingMaterialsList = React.createClass({
     },
 
     onGroupDeleted: function(groupId){
-        this.load(this.props.teacherId, this.props.topicId, function(data){
-            console.log('loaded: ', data);
-        });
+        this.resetSearch();
+        //this.load(this.props.teacherId, this.props.topicId, function(data){
+        //    console.log('loaded: ', data);
+        //});
+
         //window.location.reload();
     },
 
     getAllGroupsList: function(){
-        var list = this.state.groupsFactoryList;
+        //var list = this.state.groupsFactoryList;
+        var list = this.state.fluxGroupsFactoryList;
         var arr = list.map(function(item){return item.group});
+        console.log('all groups: ', arr);
         return arr;
     },
 
@@ -192,6 +243,8 @@ var SelfLoadingMaterialsList = React.createClass({
     getBunchesContent: function(){
         //var list = this.state.groupsFactoryList;
         var list = this.state.searchGroupsFactoryList;
+        var query = this.state.query;
+        var showEmptyGroup = (query == undefined || query.trim() == '');
         console.log('SelfLoadingMaterialsList: getBunchesContent occured: groupsFactoryList = ', list);
         var c = list.map(function(g, k){
             var key = 'bunch_' + k + '_' + g.group.id;
@@ -204,14 +257,18 @@ var SelfLoadingMaterialsList = React.createClass({
                 return null;
             }
 
-            if (g.materials == undefined || g.materials.length == 0){
-                return null;
+            if ((g.materials == undefined) || ((g.materials.length == 0))){
+                if (showEmptyGroup == false){
+                    return null;
+                }
             }
 
             return (
-                <MaterialsBunch allGroupsList={allGroupsList} key={key} onGroupUpdated={this.onGroupUpdated} onGroupDeleted={this.onGroupDeleted}
+                <MaterialsBunch allGroupsList={allGroupsList} key={key}
+                                onGroupUpdated={this.onGroupUpdated} onGroupDeleted={this.onGroupDeleted}
                                 onMaterialUpdated={this.onMaterialUpdated} onMaterialDeleted={this.onMaterialDeleted}
                                 materials={g.materials}
+                                showEmptyGroup={showEmptyGroup}
                                 groupId={group.id} teacherId={this.props.teacherId} name={group.name}
                                 description={group.description} editMode={this.props.editMode} />
             );
@@ -226,6 +283,7 @@ var SelfLoadingMaterialsList = React.createClass({
         placeholder: {
             //width: 865,
             width: 870,
+            position: 'relative',
             //paddingLeft: 8,
             margin: '0 auto',
             backgroundColor: 'white'
@@ -253,29 +311,46 @@ var SelfLoadingMaterialsList = React.createClass({
         }
     },
 
+    componentWillUpdate: function(nextProps, nextState){
+        var oldLoading = this.state.loading;
+        var newLoading = nextState.loading;
+        if (newLoading == false && oldLoading == true){
+            this.resetSearch();
+        }
+    },
+
 
     render: function () {
         var bunches = this.getBunchesContent();
         console.log('rendering SelfLoadingMaterialsList: topicId = ', this.props.topicId);
+        var editMode = false;
+        var user = LoginMixin.getCurrentUser();
+        var currentUserId = (user == undefined) ? undefined : user.id;
+        if (currentUserId == this.props.teacherId){
+            editMode = true;
+        }
 
         return (
             <div style={this.componentStyle.placeholder}>
 
                 <div style={this.componentStyle.createNewBlock}>
-                    <div style={this.componentStyle.buttonsPlaceholder}>
 
-                        <MaterialCreateButton onMaterialCreated={this.onMaterialCreated}
-                                              teacherId={this.props.teacherId}
-                                              topicId={this.props.topicId}
-                                              allGroupsList={this.getAllGroupsList()}
-                            />
+                    {editMode == false ? null :
+                        <div style={this.componentStyle.buttonsPlaceholder}>
 
-                        <MaterialGroupCreateButton teacherId={this.props.teacherId}
-                                                   topicId={this.props.topicId}
-                                                   onGroupCreated={this.onGroupCreated}
-                            />
+                            <MaterialCreateButton onMaterialCreated={this.onMaterialCreated}
+                                                  teacherId={this.props.teacherId}
+                                                  topicId={this.props.topicId}
+                                                  allGroupsList={this.getAllGroupsList()}
+                                />
 
-                    </div>
+                            <MaterialGroupCreateButton teacherId={this.props.teacherId}
+                                                       topicId={this.props.topicId}
+                                                       onGroupCreated={this.onGroupCreated}
+                                />
+
+                        </div>
+                    }
 
                     {this.props.searchMode == false ? null :
                         <div style={this.componentStyle.searchPlaceholder}>

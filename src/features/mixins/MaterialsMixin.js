@@ -32,6 +32,7 @@ var MaterialsMixin = {
             mosesDurations: (m.get('mosesDurations') == undefined) ? [] : m.get('mosesDurations'),
             groups: (m.get('groups') == undefined) ? [] : m.get('groups'),
             createdTimestamp: (new Date(m.createdAt)).getTime(),
+            timestamp: (new Date(m.createdAt)).getTime(),
             updatedTimestamp: (new Date(m.updatedAt)).getTime()
         }
     },
@@ -302,7 +303,8 @@ var MaterialsMixin = {
             topicId: g.get('topicId'),
             ownerId: g.get('ownerId'),
             creatorId: g.get('ownerId'),
-            materialId: g.id
+            materialId: g.id,
+            timestamp: (new Date(g.createdAt)).getTime()
         }
     },
 
@@ -351,6 +353,53 @@ var MaterialsMixin = {
         }
         var q = new Parse.Query('MaterialGroup');
         q.containedIn('topicId', topicsList.map(function(t){return t.id}));
+        q.limit(1000);
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(t){
+                return self.transformGroup(t);
+            });
+            callback(arr);
+        });
+    },
+
+    loadGroupsByTopicsIdsList: function(topicsIdsList, callback){
+        if (topicsIdsList == undefined || topicsIdsList.length == 0){
+            callback([]);
+            return;
+        }
+        var q = new Parse.Query('MaterialGroup');
+        q.containedIn('topicId', topicsIdsList);
+        q.limit(1000);
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(t){
+                return self.transformGroup(t);
+            });
+            callback(arr);
+        });
+    },
+
+    loadGroupsByIdsList: function(groupsIds, callback){
+        if (groupsIds == undefined || groupsIds.length == 0){
+            callback([]);
+            return;
+        }
+        var q = new Parse.Query('MaterialGroup');
+        q.containedIn('objectId', groupsIds);
+        q.limit(1000);
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(t){
+                return self.transformGroup(t);
+            });
+            callback(arr);
+        });
+    },
+
+    loadGroupsByTopicId: function(topicId, callback){
+        var q = new Parse.Query('MaterialGroup');
+        q.equalTo('topicId', topicId);
         q.limit(1000);
         var self = this;
         q.find(function(results){
@@ -436,6 +485,7 @@ var MaterialsMixin = {
 
 
     getGroupsFactoryList: function(groups, materials, makeUnsorted){
+        console.log('MaterialsMixin: getGroupsFactoryList: groups, materials = ', groups, materials);
         var arr = [];
         if (makeUnsorted == undefined){
             makeUnsorted = true;
@@ -474,6 +524,7 @@ var MaterialsMixin = {
             gr.materials = ms;
             arr.push(gr);
         }
+        console.log('returning ', arr);
         return arr;
     },
 
@@ -579,9 +630,11 @@ var MaterialsMixin = {
 
     },
 
-    searchInGroupsFactoryList: function(groupsFactoryList, text){
+    searchInGroupsFactoryList: function(groupsFactoryList, text, showEmptyGroups){
+        console.log('MaterialsMixin: searchInGroupsFactoryList: text = ', text);
         var groups = this.getGroupsListFromGroupsFactoryList(groupsFactoryList);
         var materials = this.getMaterialsListFromGroupsFactoryList(groupsFactoryList);
+        console.log('groups = ', groups);
         var arr = [];
         if (text == undefined || text.trim() == ''){
             return groupsFactoryList;

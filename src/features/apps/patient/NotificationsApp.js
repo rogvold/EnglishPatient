@@ -22,11 +22,14 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var SelfLoadingNotificationsList = require('../../components/notification/SelfLoadingNotificationsList');
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
 
 var NotificationsApp = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
 
@@ -85,7 +88,7 @@ var NotificationsApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />

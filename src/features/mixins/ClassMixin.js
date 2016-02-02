@@ -68,6 +68,16 @@ var ClassMixin = {
         });
     },
 
+    loadTeacherClassesCount: function(teacherId, callback){
+        var q = new Parse.Query('PatientClass');
+        q.equalTo('ownerId', teacherId);
+        q.count({
+            success: function(n){
+                callback(n);
+            }
+        });
+    },
+
     loadUserClasses: function(userId, callback){
         console.log('loadUserClasses occured: userId = ', userId);
         var q = new Parse.Query('StudentClassLink');

@@ -104,7 +104,7 @@ var SelfLoadingCoursePanel = React.createClass({
                             <SimpleTopicHeaderPanel name={c.name}
                                                description={c.description} avatar={c.avatar}
                                                 customContent={
-                                                    <div style={{textAlign: 'right'}} >
+                                                    <div style={{textAlign: 'right', marginTop: 15}} >
                                                         <UpdateCourseButton
                                                              buttonClassName={'ui inverted button'}
                                                              courseId={this.props.courseId}

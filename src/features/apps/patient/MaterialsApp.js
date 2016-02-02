@@ -25,11 +25,14 @@ var PagedCardsList = require('../../components/material/list/PagedCardsList');
 
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
 
 var IndexApp = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             teacherId: 'jnM2pCK62I'
@@ -86,7 +89,7 @@ var IndexApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />

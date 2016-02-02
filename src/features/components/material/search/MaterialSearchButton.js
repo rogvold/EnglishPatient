@@ -8,7 +8,12 @@ var assign = require('object-assign');
 var Dialog = require('../../dialog/Dialog');
 var MaterialSearchPanel = require('./MaterialsSearchPanel');
 
+//var Fluxxor = require('fluxxor');
+//var FluxMixin = Fluxxor.FluxMixin(React);
+
 var MaterialSearchButton = React.createClass({
+    //mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
 

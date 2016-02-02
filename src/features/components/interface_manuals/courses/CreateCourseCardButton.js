@@ -15,7 +15,7 @@ var PatientPlayer = require('../../player/PatientPlayer');
 var CreateCourseCardButton = React.createClass({
     getDefaultProps: function () {
         return {
-            description: 'todo: change video and this text'
+            description: ''
         }
     },
 

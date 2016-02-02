@@ -8,7 +8,14 @@ var PagedCardsList = require('../list/PagedCardsList');
 
 var UpdateMaterialGroupButton = require('../groups/UpdateMaterialGroupButton');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var LoginMixin = require('../../../mixins/LoginMixin');
+
+
 var MaterialsBunch = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             groupId: undefined,
@@ -22,6 +29,8 @@ var MaterialsBunch = React.createClass({
             allGroupsList: [],
 
             dialogLevel: 10,
+
+            showEmptyGroup: true,
 
             onMaterialUpdated: function(data){
 
@@ -141,6 +150,13 @@ var MaterialsBunch = React.createClass({
 
         var st = assign({}, this.componentStyle.placeholder);
 
+        var groupId = this.props.groupId;
+        var group = this.getFlux().store('MaterialsStore').getGroupsMap()[groupId];
+        var ownerId = (group == undefined) ? undefined : group.ownerId;
+        var currentUser = LoginMixin.getCurrentUser();
+        var currentUserId = (currentUser == undefined) ? undefined : currentUser.id;
+        var editMode = (currentUserId == ownerId);
+
 
         return (
             <div style={st} className={'materials_bunch'} >
@@ -159,7 +175,7 @@ var MaterialsBunch = React.createClass({
                     </div>
 
 
-                    {(this.props.editMode == false || this.props.groupId == undefined) ? null :
+                    {(editMode == false || this.props.groupId == undefined) ? null :
                         <div style={this.componentStyle.editPlaceholder}>
                             <UpdateMaterialGroupButton style={this.componentStyle.updateButtonStyle}
                                                        buttonName={''} allGroupsList={this.props.allGroupsList}
@@ -174,7 +190,15 @@ var MaterialsBunch = React.createClass({
 
 
 
-                {cards.length == 0 ? null :
+                {cards.length == 0 ?
+                    <div>
+                        {this.props.showEmptyGroup == false ? null :
+                            <div>
+                                В этой группе еще нет материалов
+                            </div>
+                        }
+                    </div>
+                    :
                     <div style={this.componentStyle.cardsPlaceholder}>
                         <PagedCardsList cards={cards} editMode={this.props.editMode} pageSize={8} allGroupsList={this.props.allGroupsList}
                                         onMaterialUpdated={this.onMaterialUpdated} hoverMode={this.props.hoverMode}

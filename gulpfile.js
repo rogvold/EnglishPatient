@@ -22,11 +22,11 @@ gulp.task('browserify', function(){
         .pipe(source('app.js'))
         .pipe(gulp.dest('features/js'));
 
-    browserify('./src/features/apps/patient/front/App.js')
-        .transform('reactify')
-        .bundle()
-        .pipe(source('frontApp.js'))
-        .pipe(gulp.dest('features/js'));
+    //browserify('./src/features/apps/patient/front/App.js')
+    //    .transform('reactify')
+    //    .bundle()
+    //    .pipe(source('frontApp.js'))
+    //    .pipe(gulp.dest('features/js'));
 
 });
 

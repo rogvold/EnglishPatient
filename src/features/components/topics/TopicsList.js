@@ -10,7 +10,7 @@ var TopicItem = require('./TopicItem');
 var TopicsList = React.createClass({
     getDefaultProps: function () {
         return {
-            topicId: undefined,
+            teacherId: undefined,
 
             topics: [
                 {
@@ -47,7 +47,7 @@ var TopicsList = React.createClass({
 
     componentStyle: {
         placeholder: {
-            textAlign: 'center'
+            //textAlign: 'center'
         }
     },
 

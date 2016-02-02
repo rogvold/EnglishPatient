@@ -22,6 +22,7 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var TopicsList = require('../../components/topics/TopicsList');
 var SelfLoadingTopicsList = require('../../components/topics/SelfLoadingTopicsList');
+var CommunityTopicsList = require('../../components/topics/CommunityTopicsList');
 
 var TopicDialog = require('../../components/topics/dialog/TopicDialog');
 
@@ -32,9 +33,7 @@ var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadi
 
 var KaraokeGroupsPanel = require('../../components/karaoke/KaraokeGroupsPanel');
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 
 var TopicsApp = React.createClass({
@@ -121,7 +120,7 @@ var TopicsApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
@@ -184,7 +183,14 @@ var TopicsApp = React.createClass({
                 {this.getModesPanel()}
 
                 {mode == 'topics' ?
-                    <SelfLoadingTopicsList teacherId={this.state.user.id} />
+                    <div>
+
+                        <SelfLoadingTopicsList teacherId={this.state.user.id} />
+
+                        <CommunityTopicsList teacherId={this.state.user.id} />
+
+                    </div>
+
                     :
                     <KaraokeGroupsPanel />
                 }

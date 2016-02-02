@@ -7,6 +7,55 @@ var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 
 var ExerciseMixin = {
 
+    transformExercise: function(ex){
+        if (ex == undefined){
+            return undefined;
+        }
+        return {
+            name: ex.get('name'),
+            description: ex.get('description'),
+            creatorId: ex.get('creatorId'),
+            timestamp: (new Date(ex.createdAt)).getTime(),
+            access: ex.get('access'),
+            exerciseType: ex.get('type'),
+            warmUpVimeoId: ex.get('warmUpVimeoId'),
+            tags: ex.get('tags'),
+            task: ex.get('task'),
+            image: ex.get('imageUrl'),
+            avatar: ex.get('imageUrl'),
+            exerciseId: ex.id,
+            id: ex.id,
+            groups: (ex.get('groups') == undefined) ? [] : ex.get('groups')
+        }
+    },
+
+    transformExerciseGroup: function(group){
+      return {
+          id: group.id,
+          groupId: group.id,
+          description: group.get('description'),
+          name: group.get('name'),
+          avatar: group.get('avatar'),
+          tags: group.get('tags'),
+          teacherId: group.get('creatorId'),
+          creatorId: group.get('creatorId'),
+          timestamp: (new Date(group.createdAt)).getTime(),
+      }
+    },
+
+    //transformParseExerciseToNormalOne: function(parseEx){
+    //    return {
+    //        name: parseEx.get('name'),
+    //        id: parseEx.id,
+    //        groups: (parseEx.get('groups') == undefined) ? [] : parseEx.get('groups'),
+    //        exerciseId: parseEx.id,
+    //        description: parseEx.get('description'),
+    //        task: parseEx.get('task'),
+    //        avatar: parseEx.get('imageUrl'),
+    //        imageUrl: parseEx.get('imageUrl')
+    //    }
+    //},
+
     transformUserAnswer: function(a){
           return {
               id: a.id,
@@ -38,6 +87,7 @@ var ExerciseMixin = {
             timestamp: (new Date(c.createdAt)).getTime()
         }
     },
+
 
     loadExerciseById: function(id, callback){
         console.log('loadExerciseById: id = ', id);
@@ -77,6 +127,42 @@ var ExerciseMixin = {
         });
     },
 
+    loadTeacherExercisesCount: function(teacherId, callback){
+        var q = new Parse.Query('Exercise');
+        q.equalTo('creatorId', teacherId);
+        q.count({
+            success: function(count){
+                callback(count);
+            }
+        });
+    },
+
+    loadTeacherExercises: function(teacherId, callback){
+        var q = new Parse.Query('Exercise');
+        q.equalTo('creatorId', teacherId);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(ex){
+                return self.transformExercise(ex)
+            });
+            callback(arr);
+        });
+    },
+
+    loadCommunityExercises: function(teacherId, callback){
+        var q = new Parse.Query('Exercise');
+        var self = this;
+        q.limit(1000);
+        q.notEqualTo('creatorId', teacherId);
+        q.equalTo('access', 'public');
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(ex){
+                return self.transformExercise(ex)
+            });
+            callback(arr);
+        });
+    },
+
     getUpdateParseExercise: function(ex, teacherId, name, description, avatar, task, access, groups){
         ex = ParseMixin.safeSet(ex, [
             {name: 'name', value: name},
@@ -91,18 +177,6 @@ var ExerciseMixin = {
         return ex;
     },
 
-    transformParseExerciseToNormalOne: function(parseEx){
-        return {
-            name: parseEx.get('name'),
-            id: parseEx.id,
-            groups: (parseEx.get('groups') == undefined) ? [] : parseEx.get('groups'),
-            exerciseId: parseEx.id,
-            description: parseEx.get('description'),
-            task: parseEx.get('task'),
-            avatar: parseEx.get('imageUrl'),
-            imageUrl: parseEx.get('imageUrl')
-        }
-    },
 
     updateExercise: function(exerciseId, teacherId, name, description, avatar, task, access, groups, callback){
         console.log('ExerciseMixin: updateExercise occured: exerciseId, teacherId, name, description, avatar, task, access, groups =', exerciseId, teacherId, name, description, avatar, task, access, groups);
@@ -113,7 +187,7 @@ var ExerciseMixin = {
             ex = self.getUpdateParseExercise(ex, teacherId, name, description, avatar, task, access, groups);
             ex.save().then(function(uex){
                 console.log('ExerciseMixin: new exercise created: uex = ', uex);
-                callback(self.transformParseExerciseToNormalOne(uex));
+                callback(self.transformExercise(uex));
             });
             return;
         }
@@ -127,9 +201,17 @@ var ExerciseMixin = {
                 ex = self.getUpdateParseExercise(ex, teacherId, name, description, avatar, task, access, groups);
                 ex.save().then(function(uex){
                     console.log('ExerciseMixin: updateExercise: exercise updated: ', uex);
-                    callback(self.transformParseExerciseToNormalOne(uex));
+                    callback(self.transformExercise(uex));
                 });
             }
+        });
+    },
+
+    loadPureExercise: function(exerciseId, callback){
+        var self = this;
+        this.loadExerciseById(exerciseId, function(ex){
+            var exercise = self.transformExercise(ex);
+            callback(exercise);
         });
     },
 
@@ -138,16 +220,17 @@ var ExerciseMixin = {
         var res = {};
         var self = this;
         this.loadExerciseById(exerciseId, function(ex){
-            res.exercise = {
-                name: ex.get('name'),
-                id: ex.id,
-                groups: (ex.get('groups') == undefined) ? [] : ex.get('groups'),
-                exerciseId: ex.id,
-                description: ex.get('description'),
-                task: ex.get('task'),
-                avatar: ex.get('imageUrl'),
-                imageUrl: ex.get('imageUrl')
-            };
+            //res.exercise = {
+            //    name: ex.get('name'),
+            //    id: ex.id,
+            //    groups: (ex.get('groups') == undefined) ? [] : ex.get('groups'),
+            //    exerciseId: ex.id,
+            //    description: ex.get('description'),
+            //    task: ex.get('task'),
+            //    avatar: ex.get('imageUrl'),
+            //    imageUrl: ex.get('imageUrl')
+            //};
+            res.exercise = self.transformExercise(ex);
             this.loadExerciseCards(exerciseId, function(list){
                 var cards = [];
                 for (var i in list){
@@ -161,6 +244,23 @@ var ExerciseMixin = {
                 callback(res);
             }.bind(this));
         }.bind(this));
+    },
+
+    loadExercisesByIds: function(idsList, callback){
+        if (idsList == undefined || idsList.length == 0){
+            callback([]);
+            return;
+        }
+        var q = new Parse.Query('Exercise');
+        q.limit(1000);
+        q.containedIn('objectId', idsList);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(ex){
+                return self.transformExercise(ex)
+            });
+            callback(arr);
+        });
     },
 
     loadUserExerciseAnswer: function(userId, exerciseId, callback){
@@ -359,22 +459,10 @@ var ExerciseMixin = {
         q.equalTo('creatorId', teacherId);
         q.limit(1000);
         q.addDescending('createdAt');
+        var self = this;
         q.find(function(results){
             var list = results.map(function(ex){
-                return {
-                    name: ex.get('name'),
-                    description: ex.get('description'),
-                    access: ex.get('access'),
-                    exerciseType: ex.get('type'),
-                    warmUpVimeoId: ex.get('warmUpVimeoId'),
-                    tags: ex.get('tags'),
-                    task: ex.get('task'),
-                    image: ex.get('imageUrl'),
-                    avatar: ex.get('imageUrl'),
-                    exerciseId: ex.id,
-                    id: ex.id,
-                    groups: (ex.get('groups') == undefined) ? [] : ex.get('groups')
-                }
+                return self.transformExercise(ex);
             });
             console.log('exercises loaded', list);
             callback(list);
@@ -508,7 +596,7 @@ var ExerciseMixin = {
         console.log('updateExerciseGroup occured: groupId = ', groupId);
         var ExerciseGroup = Parse.Object.extend('ExercisesGroup');
         var q = new Parse.Query('ExercisesGroup');
-
+        var self = this;
         if (groupId == undefined){
             console.log('creating new group');
             var gr = new ExerciseGroup();
@@ -521,16 +609,17 @@ var ExerciseMixin = {
             ]);
             gr.save().then(function(group){
                 console.log('--->>> group saved! --->> ', group);
-                callback({
-                    id: group.id,
-                    groupId: group.id,
-                    description: group.get('description'),
-                    name: group.get('name'),
-                    avatar: group.get('avatar'),
-                    tags: group.get('tags'),
-                    teacherId: group.get('creatorId'),
-                    creatorId: group.get('creatorId')
-                });
+                callback(
+                    self.transformExerciseGroup(group)
+                    //id: group.id,
+                    //groupId: group.id,
+                    //description: group.get('description'),
+                    //name: group.get('name'),
+                    //avatar: group.get('avatar'),
+                    //tags: group.get('tags'),
+                    //teacherId: group.get('creatorId'),
+                    //creatorId: group.get('creatorId')
+                );
             });
             return;
         }
@@ -546,14 +635,15 @@ var ExerciseMixin = {
 
                 g.save().then(function(group){
                     console.log('group updated: ', group);
-                    callback({
-                        id: group.id,
-                        groupId: group.id,
-                        description: group.get('description'),
-                        name: group.get('name'),
-                        avatar: group.get('avatar'),
-                        tags: group.get('tags')
-                    });
+                    callback(
+                        self.transformExerciseGroup(group)
+                        //id: group.id,
+                        //groupId: group.id,
+                        //description: group.get('description'),
+                        //name: group.get('name'),
+                        //avatar: group.get('avatar'),
+                        //tags: group.get('tags')
+                    );
                 });
             }
         });
@@ -565,22 +655,24 @@ var ExerciseMixin = {
         q.limit(1000);
         q.contains('groups', groupId);
         q.addDescending('createdAt');
+        var self = this;
         q.find(function(results){
             var list = results.map(function(ex){
-                return {
-                    name: ex.get('name'),
-                    description: ex.get('description'),
-                    access: ex.get('access'),
-                    exerciseType: ex.get('type'),
-                    warmUpVimeoId: ex.get('warmUpVimeoId'),
-                    tags: ex.get('tags'),
-                    task: ex.get('task'),
-                    image: ex.get('imageUrl'),
-                    avatar: ex.get('imageUrl'),
-                    exerciseId: ex.id,
-                    id: ex.id,
-                    groups: (ex.get('groups') == undefined) ? [] : ex.get('groups')
-                }
+                return self.transformExercise(ex);
+                //{
+                //    name: ex.get('name'),
+                //    description: ex.get('description'),
+                //    access: ex.get('access'),
+                //    exerciseType: ex.get('type'),
+                //    warmUpVimeoId: ex.get('warmUpVimeoId'),
+                //    tags: ex.get('tags'),
+                //    task: ex.get('task'),
+                //    image: ex.get('imageUrl'),
+                //    avatar: ex.get('imageUrl'),
+                //    exerciseId: ex.id,
+                //    id: ex.id,
+                //    groups: (ex.get('groups') == undefined) ? [] : ex.get('groups')
+                //}
             });
             console.log('exercises loaded', list);
             callback(list);
@@ -593,18 +685,28 @@ var ExerciseMixin = {
         q.equalTo('creatorId', teacherId);
         q.limit(1000);
         q.addDescending('createdAt');
+        var self = this;
         q.find(function(results){
             var list = results.map(function(g){
-                return {
-                    id: g.id,
-                    groupId: g.id,
-                    name: g.get('name'),
-                    description: g.get('description'),
-                    avatar: g.get('avatar'),
-                    tags: g.get('tags')
-                }
+                return self.transformExerciseGroup(g);
             });
             callback(list);
+        });
+    },
+
+    loadExercisesGroupsByIds: function(groupsIds, callback){
+        if (groupsIds == undefined || groupsIds.length == 0){
+            callback([]);
+            return;
+        }
+        var q = new Parse.Query('ExercisesGroup');
+        q.containedIn('objectId', groupsIds);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(g){
+                return self.transformExerciseGroup(g)
+            });
+            callback(arr);
         });
     },
 

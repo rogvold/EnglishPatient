@@ -6,6 +6,7 @@ var React = require('react');
 var assign = require('object-assign');
 
 var ExercisesSearchPanel = require('./ExercisesSearchPanel');
+var ExerciseGlobalSearchPanel = require('./ExerciseGlobalSearchPanel');
 
 var Dialog = require('../../dialog/Dialog');
 
@@ -73,7 +74,9 @@ var ExercisesSearchButton = React.createClass({
             return null;
         }
         return (
-            <ExercisesSearchPanel teacherId={this.props.teacherId} onSelect={this.onSelect} />
+            <ExerciseGlobalSearchPanel
+                teacherId={this.props.teacherId}
+                onSelect={this.onSelect} />
         );
     },
 

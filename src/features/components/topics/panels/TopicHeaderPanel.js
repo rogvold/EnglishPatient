@@ -6,8 +6,17 @@ var React = require('react');
 var assign = require('object-assign');
 
 var EditTopicButton = require('../EditTopicButton');
+var EditTopicButton2 = require('../EditTopicButton2');
+
+var LoginMixin = require('../../../mixins/LoginMixin');
+
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
 
 var TopicHeaderPanel = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             name: undefined,
@@ -112,6 +121,17 @@ var TopicHeaderPanel = React.createClass({
     render: function () {
         var topPanelStyle = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url("' + this.props.avatar + '")'});
 
+        var user = LoginMixin.getCurrentUser();
+        var userId = (user == undefined) ? undefined : user.id;
+        var topic = this.getFlux().store('TopicsStore').topicsMap[this.props.topicId];
+        var editMode = false;
+        if (topic != undefined){
+            if (topic.creatorId == userId){
+                editMode = true;
+            }
+        }
+
+
         return (
             <div style={topPanelStyle}>
 
@@ -128,9 +148,9 @@ var TopicHeaderPanel = React.createClass({
                     </div>
 
 
-                    {this.props.editMode == 'true' ?
+                    {editMode == true ?
                         <div style={this.componentStyle.editButtonPlaceholder}>
-                            <EditTopicButton
+                            <EditTopicButton2
                                 dialogLevel={this.props.dialogLevel}
                                 onTopicDeleted={this.onTopicDeleted}
                                 onTopicUpdated={this.onTopicUpdated}

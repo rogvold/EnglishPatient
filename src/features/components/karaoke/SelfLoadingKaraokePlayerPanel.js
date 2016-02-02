@@ -39,7 +39,6 @@ var SelfLoadingKaraokePlayerPanel = React.createClass({
         this.load(materialId, function(data){
             console.log('material loaded: ', data);
         });
-
     },
 
     componentStyle: {
@@ -61,8 +60,6 @@ var SelfLoadingKaraokePlayerPanel = React.createClass({
             });
             callback(data);
         }.bind(this));
-
-
     },
 
     render: function () {

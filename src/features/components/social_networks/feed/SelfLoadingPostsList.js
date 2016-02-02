@@ -11,6 +11,10 @@ var SocialMixin = require('../../../mixins/SocialMixin');
 
 var CreatePostButton = require('./CreatePostButton');
 
+var LoginMixin = require('../../../mixins/LoginMixin');
+
+var UserMixin = require('../../../mixins/UserMixin');
+
 var SelfLoadingPostsList = React.createClass({
     getDefaultProps: function () {
         return {
@@ -21,7 +25,8 @@ var SelfLoadingPostsList = React.createClass({
     getInitialState: function () {
         return {
             posts: [],
-            loading: false
+            loading: false,
+            user: undefined
         }
     },
 
@@ -35,7 +40,8 @@ var SelfLoadingPostsList = React.createClass({
 
     componentStyle: {
         placeholder: {
-            width: 520,
+            width: 500,
+            //width: 520,
             margin: '0 auto'
         },
 
@@ -44,9 +50,11 @@ var SelfLoadingPostsList = React.createClass({
         },
 
         createButtonPlaceholder: {
-            padding: 5,
-            textAlign: 'right',
-            borderBottom: '1px solid #EFF0F1',
+            padding: 7,
+            //paddingBottom: 5,
+            backgroundColor: 'white',
+            //textAlign: 'right',
+            border: '1px solid #EFF0F1',
             marginBottom: 10
         }
     },
@@ -63,10 +71,17 @@ var SelfLoadingPostsList = React.createClass({
         this.setState({
             loading: true
         });
+        var self = this;
         SocialMixin.loadTeacherPosts(teacherId, function(posts){
-            this.setState({
-                loading: false,
-                posts: posts
+            UserMixin.loadUser(teacherId, function(us){
+                var arr = [];
+                for (var i in posts){
+                    arr.push(assign({}, posts[i], {user: us}));
+                }
+                self.setState({
+                    loading: false,
+                    posts: arr
+                });
             });
         }.bind(this))
     },
@@ -87,12 +102,26 @@ var SelfLoadingPostsList = React.createClass({
 
     render: function () {
         var posts = this.state.posts;
+        var currentUser = LoginMixin.getCurrentUser();
+        var currentUserId = (currentUser == undefined) ? undefined : currentUser.id;
+        var canAddPost = (currentUserId == this.props.teacherId);
+
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.createButtonPlaceholder}>
-                    <CreatePostButton onCreated={this.onCreated} teacherId={this.props.teacherId} />
-                </div>
+                {canAddPost == false ? null :
+                    <div style={this.componentStyle.createButtonPlaceholder}>
+                        <CreatePostButton
+                            buttonClassName={'ui basic mini button'}
+                            onCreated={this.onCreated} teacherId={this.props.teacherId} />
+                    </div>
+                }
+
+                {posts.length == 0 ?
+                    <div style={{textAlign: 'center', padding: 10, opacity: 0.8}} >
+                        В этой ленте еще нет ни одной записи
+                    </div> : null
+                }
 
                 <div style={this.componentStyle.listPlaceholder}>
                     <PostsList

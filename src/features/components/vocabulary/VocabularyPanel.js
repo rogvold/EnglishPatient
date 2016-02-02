@@ -17,7 +17,14 @@ var CardsList = require('../material/list/CardsList');
 
 var VocabularyNavigationPanel = require('./VocabularyNavigationPanel');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var VocabularyPanel = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('MaterialsStore')],
+
     getDefaultProps: function () {
         return {
             searchInputVisible: true
@@ -26,12 +33,20 @@ var VocabularyPanel = React.createClass({
 
     getInitialState: function () {
         return {
-            words: [],
+            //words: [],
             searchWords: [],
-            loading: false,
+            loading: true,
             text: '',
             dialogVisible: false,
             selectedWord: undefined
+        }
+    },
+
+    getStateFromFlux: function(){
+        var materialsStore = this.getFlux().store('MaterialsStore');
+        var words = materialsStore.getVocabularyWords();
+        return {
+            words: words
         }
     },
 
@@ -40,13 +55,15 @@ var VocabularyPanel = React.createClass({
     },
 
     componentDidMount: function () {
-        this.load(function(words){
-            console.log('words loaded: ', words);
-        });
+        this.resetSearch(this.state.words);
+        //this.load(function(words){
+        //    console.log('words loaded: ', words);
+        //});
     },
 
     componentStyle: {
         placeholder: {
+            position: 'relative',
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
             margin: '0 auto',
@@ -116,21 +133,21 @@ var VocabularyPanel = React.createClass({
     },
 
     load: function(callback){
-        this.setState({
-            loading: true
-        });
-        VocabularyMixin.loadWords(function(words){
-            //console.log('loaded words: ', words);
-            //console.log('words.length = ', words.length);
-            this.setState({
-                loading: false,
-                words: words,
-                searchWords: words
-            });
-            if (callback != undefined){
-                callback(words);
-            }
-        }.bind(this));
+        //this.setState({
+        //    loading: true
+        //});
+        //VocabularyMixin.loadWords(function(words){
+        //    //console.log('loaded words: ', words);
+        //    //console.log('words.length = ', words.length);
+        //    this.setState({
+        //        loading: false,
+        //        words: words,
+        //        searchWords: words
+        //    });
+        //    if (callback != undefined){
+        //        callback(words);
+        //    }
+        //}.bind(this));
     },
 
     onItemClick: function(word){
@@ -154,6 +171,57 @@ var VocabularyPanel = React.createClass({
             }
         }
         return [];
+    },
+
+    resetSearch: function(words){
+        if (words == undefined){
+            words = [];
+        }
+        console.log('resetSearch occured');
+        if (words.length > 0){
+            setTimeout(function(){
+                this.setState({
+                    loading: false,
+                    searchWords: words,
+                    text: ''
+                });
+            }.bind(this), 300);
+        }
+    },
+
+    componentWillUpdate: function(nextProps, nextState){
+        var nextWords = nextState.words;
+        var prevWords = this.state.words;
+        if (prevWords.length == 0 && nextWords.length > 0){
+            this.resetSearch(nextWords);
+        }
+
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState){
+        var oldWords = this.state.words;
+        var newWords = nextState.words;
+        var oldText = this.state.text;
+        var newText = nextState.text;
+        var oldLoading = this.state.loading;
+        var newLoading = nextState.loading;
+
+        var oldDialogVisible = this.state.dialogVisible;
+        var newDialogVisible = nextState.dialogVisible;
+        var newSelectedWord = nextState.selectedWord;
+        var oldSelectedWord = this.state.selectedWord;
+
+        //selectedWord: word,
+        //    dialogVisible: true
+
+        if ((oldText != newText)
+            || (oldDialogVisible != newDialogVisible)
+            || (newSelectedWord != oldSelectedWord)
+            || (newWords.length > oldWords.length) || (newLoading != oldLoading)){
+            return true;
+        }
+
+        return false;
     },
 
     search: function(text){
@@ -221,6 +289,8 @@ var VocabularyPanel = React.createClass({
 
         var lettersList = VocabularyMixin.getAlphabetList(this.state.searchWords);
         var letters = lettersList.map(function(l){return l.letter;});
+
+        console.log('VocabularyPanel: render: wordsList = ', wordsList);
 
         return (
             <div style={this.componentStyle.placeholder}>

@@ -44,9 +44,7 @@ var CreateNewExerciseButton = require('../../components/exercise/create/button/C
 
 var CreateNewExerciseGroupButton = require('../../components/bunch/exercise/CreateNewExerciseGroupButton');
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 var SelfLoadingDialogsList = require('../../components/dialog_exercise/list/SelfLoadingDialogsList');
 
@@ -55,6 +53,10 @@ var SelfLoadingTeacherQuestionnairesList = require('../../components/questionnai
 var ExerciseGroupsCardsList = require('../../components/exercise/group/ExerciseGroupsCardsList');
 
 var SelfLoadingExercisesRegistryPanel = require('../../components/exercise/SelfLoadingExercisesRegistryPanel');
+
+var ExerciseSearchRegistryPanel = require('../../components/exercise/ExerciseSearchRegistryPanel');
+
+var CommunityDialogsList = require('../../components/dialog_exercise/list/CommunityDialogsList');
 
 var ExercisesApp = React.createClass({
     getDefaultProps: function () {
@@ -192,7 +194,7 @@ var ExercisesApp = React.createClass({
         return (
             <div style={this.componentStyle.exercisesListPlaceholder}>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />
@@ -300,7 +302,9 @@ var ExercisesApp = React.createClass({
     getExercisesSubApp2: function(){
         return (
             <div>
-                <SelfLoadingExercisesRegistryPanel teacherId={this.state.user.id} />
+
+                <ExerciseSearchRegistryPanel />
+
             </div>
         );
     },
@@ -344,6 +348,9 @@ var ExercisesApp = React.createClass({
         return (
             <div>
                 <SelfLoadingDialogsList teacherId={userId} />
+
+                <CommunityDialogsList teacherId={userId} />
+
             </div>
         );
     },
@@ -353,6 +360,7 @@ var ExercisesApp = React.createClass({
         return (
             <div>
                 <SelfLoadingTeacherQuestionnairesList teacherId={userId} />
+
             </div>
         );
     },

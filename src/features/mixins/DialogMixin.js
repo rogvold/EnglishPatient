@@ -69,6 +69,19 @@ var DialogMixin = {
         })
     },
 
+    loadDialogsByIds: function(dialogsIds, callback){
+        var q = new Parse.Query('PatientDialog');
+        q.limit(1000);
+        q.containedIn('objectId', dialogsIds);
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(r){
+                return self.transformDialog(r)
+            });
+            callback(arr);
+        });
+    },
+
 
     loadDialogCards: function(dialogId, callback){
         var q = new Parse.Query('ExerciseCard');
@@ -360,6 +373,32 @@ var DialogMixin = {
     loadTeacherDialogs: function(teacherId, callback){
         var q = new Parse.Query('PatientDialog');
         q.equalTo('creatorId', teacherId);
+        q.limit(1000);
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(d){
+                return self.transformDialog(d);
+            });
+            callback(arr);
+        });
+    },
+
+    loadTeacherDialogsCount: function(teacherId, callback){
+        var q = new Parse.Query('PatientDialog');
+        q.equalTo('creatorId', teacherId);
+        q.count({
+            success: function(n){
+                callback(n);
+            }
+        });
+    },
+
+    loadCommunityDialogs: function(teacherId, callback){
+        if (teacherId == undefined){
+            return;
+        }
+        var q = new Parse.Query('PatientDialog');
+        q.notEqualTo('creatorId', teacherId);
         q.limit(1000);
         var self = this;
         ParseMixin.loadAllDataFromParse(q, function(list){

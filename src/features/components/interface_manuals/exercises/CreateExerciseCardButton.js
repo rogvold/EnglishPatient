@@ -15,7 +15,7 @@ var PatientPlayer = require('../../player/PatientPlayer');
 var CreateExerciseCardButton = React.createClass({
     getDefaultProps: function () {
         return {
-            description: 'todo: change video and this text'
+            description: ''
         }
     },
 
@@ -58,6 +58,7 @@ var CreateExerciseCardButton = React.createClass({
     },
 
     show: function(){
+        console.log('show CreateExerciseCardButton');
         this.setState({
             dialogVisible: true
         });
@@ -74,6 +75,7 @@ var CreateExerciseCardButton = React.createClass({
     },
 
     getDialogContent: function(){
+
         return (
             <div>
                 <div style={this.componentStyle.playerPlaceholder}>
@@ -95,6 +97,7 @@ var CreateExerciseCardButton = React.createClass({
     },
 
     render: function () {
+        console.log('CreateExerciseCardButton: render occured');
 
         return (
             <div style={this.componentStyle.placeholder}  >

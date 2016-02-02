@@ -110,7 +110,24 @@ var LoginMixin = {
         }
     },
 
+    recoverPassword: function(email, successCallback, errorCallback){
+        if (this.validateEmail(email) == false){
+            return;
+        }
+        Parse.User.requestPasswordReset(email, {
+            success: function(){
+                successCallback();
+            },
+            error: function(err){
+                errorCallback(err.message);
+            }
+        });
+    },
+
     validateEmail: function(email){
+        if (email == undefined){
+            return false;
+        }
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }

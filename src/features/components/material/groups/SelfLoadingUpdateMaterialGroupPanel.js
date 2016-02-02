@@ -8,7 +8,11 @@ var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
 var UpdateMaterialGroupPanel = require('./UpdateMaterialGroupPanel');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var SelfLoadingUpdateMaterialGroupPanel = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             groupId: undefined,
@@ -78,8 +82,10 @@ var SelfLoadingUpdateMaterialGroupPanel = React.createClass({
             });
             if (this.props.groupId == undefined){
                 this.props.onGroupCreated(data);
+                this.getFlux().actions.refreshMaterialGroup(data.id);
             }else{
                 this.props.onGroupUpdated(data);
+                this.getFlux().actions.refreshMaterialGroup(this.props.groupId);
             }
         }.bind(this));
     },
@@ -93,6 +99,7 @@ var SelfLoadingUpdateMaterialGroupPanel = React.createClass({
                 loading: false
             });
             this.props.onGroupDeleted();
+            this.getFlux().actions.deleteMaterialGroup(this.props.groupId);
         }.bind(this));
     },
 

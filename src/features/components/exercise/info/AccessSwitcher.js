@@ -11,10 +11,12 @@ var AccessSwitcher = React.createClass({
             items: [
                 {
                     name: 'private',
+                    icon: undefined,
                     displayName: 'Приватный'
                 },
                 {
                     name: 'public',
+                    icon: undefined,
                     displayName: 'Публичный'
                 }
             ],
@@ -72,12 +74,16 @@ var AccessSwitcher = React.createClass({
                 <div className={'accessButtonsPlaceholder'} >
                     {list.map(function(item, n){
                         var name = item.name;
+                        var icon = item.icon;
                         var displayName = item.displayName;
                         var key = name + '-' + n;
                         var active = (this.state.activeName == name);
                         var boundClick = this.onClick.bind(this, name);
                         return (
                             <div key={key} onClick={boundClick} className={'ui button ' + (active == true ? ' teal active ' : ' ')}>
+                                {icon == undefined ? null :
+                                    <i className={icon} ></i>
+                                }
                                 {displayName}
                             </div>
                         );

@@ -11,6 +11,10 @@ var ExerciseMixin = require('../../../mixins/ExerciseMixin');
 
 var DeleteButton = require('../../buttons/DeleteButton');
 
+var FileUploadButton = require('../../file/FileUploadButton');
+
+var DialogCard = require('../../dialog_exercise/card/DialogCard');
+
 var EditBunchDialog = React.createClass({
     getDefaultProps: function () {
         return {
@@ -20,6 +24,7 @@ var EditBunchDialog = React.createClass({
             groupId: undefined,
             name: undefined,
             description: undefined,
+            avatar: undefined,
             access: undefined,
             onClose: function(){
 
@@ -34,6 +39,7 @@ var EditBunchDialog = React.createClass({
         return {
             bunchId: this.props.bunchId,
             name: this.props.name,
+            avatar: this.props.avatar,
             description: this.props.description,
             access: this.props.access,
             needToSave: false
@@ -45,6 +51,7 @@ var EditBunchDialog = React.createClass({
             bunchId: np.bunchId,
             name: np.name,
             description: np.description,
+            avatar: np.avatar,
             access: np.access,
             needToSave: false,
             loading: false
@@ -86,7 +93,38 @@ var EditBunchDialog = React.createClass({
             marginTop: 30,
             paddingTop: 30,
             borderTop: '1px solid #EFF0F1',
+        },
+
+        left: {
+            width: 250,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        cardPlaceholder: {
+            height: 160,
+            width: '100%'
+        },
+
+        removeAvatarPlaceholder: {
+            padding: 7,
+            marginTop: 5,
+            cursor: 'pointer'
+        },
+
+        right: {
+            paddingLeft: 10,
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 650
         }
+    },
+
+    onAvatarUploaded: function(url){
+        this.setState({
+            avatar: url,
+            needToSave: true
+        });
     },
 
     getValueFromEvt: function(evt){
@@ -110,7 +148,7 @@ var EditBunchDialog = React.createClass({
             loading: true
         });
         var self = this;
-        ExerciseMixin.updateExerciseGroup(groupId, this.props.teacherId, this.state.name, this.state.description, undefined, [],
+        ExerciseMixin.updateExerciseGroup(groupId, this.props.teacherId, this.state.name, this.state.description, this.state.avatar, [],
             function(g){
                 self.setState({
                     loading: false,
@@ -165,28 +203,56 @@ var EditBunchDialog = React.createClass({
         return (
             <div style={this.componentStyle.contentPlaceholder} className={'ui form'} >
 
-                <div className="field">
-                    <span style={this.componentStyle.label}>Название группы</span>
-                    <input type="text" value={name} onChange={this.onNameChange}  placeholder="Название группы" />
-                </div>
+                <div style={this.componentStyle.left}>
 
-                <div className="field">
-                    <span style={this.componentStyle.label} >Описание группы</span>
-                    <textarea value={description} onChange={this.onDescriptionChange} placeholder="Описание группы" ></textarea>
-                </div>
-
-                <div style={this.componentStyle.saveButtonPlaceholder}>
-                    <button disabled={!this.state.needToSave} className={'ui primary button'} onClick={this.onSave} >
-                        <i className={'icon save'} ></i> Сохранить
-                    </button>
-                </div>
-
-
-                {this.props.groupId == undefined ? null :
-                    <div style={this.componentStyle.deleteButtonPlaceholder}>
-                        <DeleteButton onDelete={this.onDelete} />
+                    <div style={this.componentStyle.cardPlaceholder}>
+                        <DialogCard avatar={this.state.avatar} name={this.state.name} />
                     </div>
-                }
+
+
+
+                    {this.state.avatar == undefined ?
+                        <div style={{marginTop: 5}} >
+                            <FileUploadButton
+                                icon={'icon cloud upload'}
+                                buttonName={'загрузить аватар'}
+                                className={'ui fluid basic button'}
+                                onFileUploaded={this.onAvatarUploaded} />
+                        </div>
+                        :
+                        <div className={'ui red message'} style={this.componentStyle.removeAvatarPlaceholder}>
+                            <i className={'icon trash'} ></i> Удалить аватар
+                        </div>
+                    }
+
+                </div>
+
+                <div style={this.componentStyle.right}>
+                    <div className="field">
+                        <span style={this.componentStyle.label}>Название группы</span>
+                        <input type="text" value={name} onChange={this.onNameChange}  placeholder="Название группы" />
+                    </div>
+
+                    <div className="field">
+                        <span style={this.componentStyle.label} >Описание группы</span>
+                        <textarea value={description} onChange={this.onDescriptionChange} placeholder="Описание группы" ></textarea>
+                    </div>
+
+                    <div style={this.componentStyle.saveButtonPlaceholder}>
+                        <button disabled={!this.state.needToSave} className={'ui primary button'} onClick={this.onSave} >
+                            <i className={'icon save'} ></i> Сохранить
+                        </button>
+                    </div>
+
+
+                    {this.props.groupId == undefined ? null :
+                        <div style={this.componentStyle.deleteButtonPlaceholder}>
+                            <DeleteButton onDelete={this.onDelete} />
+                        </div>
+                    }
+                </div>
+
+
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
                     <div className="ui indeterminate text loader">{'Загрузка...'}</div>
@@ -203,7 +269,9 @@ var EditBunchDialog = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <Dialog content={this.getContent()} onClose={this.props.onClose} visible={this.props.visible} />
+                <Dialog content={this.getContent()}
+                        dialogPanelStyle={{width: 922}}
+                        onClose={this.props.onClose} visible={this.props.visible} />
 
             </div>
         );

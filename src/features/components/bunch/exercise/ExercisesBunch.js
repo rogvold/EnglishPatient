@@ -9,11 +9,20 @@ var ExercisesPagedCardsList = require('../../card/ExercisesPagedCardsList');
 
 var EditBunchDialog = require('../../dialog/bunch/EditBunchDialog');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
+var LoginMixin = require('../../../mixins/LoginMixin');
+
 var ExercisesBunch = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             exercises: [],
             name: 'Unsorted',
+            avatar: undefined,
             description: 'Упражнения вне категорий',
             noExercisesText: 'В этой категирии пока еще нет упражнений',
             userId: undefined,
@@ -128,6 +137,9 @@ var ExercisesBunch = React.createClass({
 
     render: function () {
         var noExercises = (this.props.exercises == undefined || this.props.exercises.length == 0);
+        var user = LoginMixin.getCurrentUser();
+        var currentUserId = (user == undefined) ? undefined : user.id;
+        var editMode = (currentUserId == this.props.userId);
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -165,7 +177,7 @@ var ExercisesBunch = React.createClass({
                     </div>
                 }
 
-                {this.props.editMode == false ? null :
+                {editMode == false ? null :
                     <div style={this.componentStyle.editButtonPlaceholder}>
                         <button className={'ui basic grey button'} style={this.componentStyle.editButton} onClick={this.onEditClick} >
                             <i className={'pencil icon'} style={{marginRight: 0}} ></i>
@@ -173,8 +185,10 @@ var ExercisesBunch = React.createClass({
                     </div>
                 }
 
-                {this.props.editMode == false ? null :
-                    <EditBunchDialog groupId={this.props.bunchId} name={this.props.name} bunchId={this.props.bunchId}
+                {editMode == false ? null :
+                    <EditBunchDialog groupId={this.props.bunchId}
+                                     avatar={this.props.avatar}
+                                     name={this.props.name} bunchId={this.props.bunchId}
                                      onGroupUpdate={this.onGroupUpdate} description={this.props.description}
                                      visible={this.state.editDialogVisible} onClose={this.onModalClose}
                     />

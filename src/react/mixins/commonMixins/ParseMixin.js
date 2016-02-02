@@ -11,6 +11,10 @@ var ParseMixin = {
         var jsKey = constants.PARSE_JS_KEY;
         //console.log('initParse: ', appId, jsKey);
         Parse.initialize(appId, jsKey);
+        var currentUser = Parse.User.current();
+        if (currentUser != undefined){
+            currentUser.fetch();
+        }
     },
 
     loadClassItem: function(classNameOrParseClass, objectId, callback, errorCallback){

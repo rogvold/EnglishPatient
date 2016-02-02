@@ -13,7 +13,7 @@ var CreateNewExerciseGroupButton = React.createClass({
             buttonClassName: 'ui basic grey button',
             teacherId: undefined,
             addGroupButtonName: 'Новая категория',
-            onGroupCreate: function(){
+            onGroupCreate: function(g){
 
             },
             style: {
@@ -64,7 +64,7 @@ var CreateNewExerciseGroupButton = React.createClass({
         this.setState({
             dialogVisible: false
         });
-        this.props.onGroupCreate();
+        this.props.onGroupCreate(g);
     },
 
     render: function () {

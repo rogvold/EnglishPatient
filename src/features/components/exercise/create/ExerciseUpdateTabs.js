@@ -90,7 +90,11 @@ var ExerciseUpdateTabs = React.createClass({
 
         if (this.state.currentTab == 'exercise'){
             return (
-                <div><SelfLoadingUpdateExerciseInfoTab onExerciseUpdate={this.onExerciseUpdate} teacherId={this.props.teacherId} exerciseId={this.props.exerciseId} /></div>
+                <div>
+                    <SelfLoadingUpdateExerciseInfoTab
+                        onExerciseUpdate={this.onExerciseUpdate}
+                        teacherId={this.props.teacherId} exerciseId={this.props.exerciseId} />
+                </div>
             );
         }
 

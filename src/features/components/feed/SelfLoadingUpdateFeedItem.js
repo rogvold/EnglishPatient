@@ -32,7 +32,15 @@ var QuestionnaireSearchButton = require('../questionnaire/panels/list/Questionna
 
 var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
 
+var RecTextAssignmentButton = require('../rectext/RecTextAssignmentButton');
+
+var SelfLoadingRecTextPanel = require('../rectext/SelfLoadingRecTextPanel');
+
+//var FluxMixin = require('fluxxor').FluxMixin(React);
+
 var SelfLoadingUpdateFeedItem = React.createClass({
+    //mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             feedItemId: undefined,
@@ -125,6 +133,10 @@ var SelfLoadingUpdateFeedItem = React.createClass({
         },
 
         exercisePlaceholder: {
+            paddingTop: 10
+        },
+
+        rectextPlaceholder: {
             paddingTop: 10
         },
 
@@ -319,6 +331,21 @@ var SelfLoadingUpdateFeedItem = React.createClass({
 
     },
 
+    onRecTextTaskSaved: function(recTextTask){
+        console.log('onRecTextTaskSaved occured: recTextTask = ', recTextTask);
+        console.log('onRecTextTaskSaved: setting state: needToSave to true');
+        this.setState({
+            needToSave: true
+        });
+    },
+
+    onRecTextTaskDeleted: function(){
+        console.log('onRecTextTaskDeleted: setting state: needToSave to true');
+        this.setState({
+            needToSave: true
+        });
+    },
+
     render: function () {
         console.log('rendering SelfLoadingUpdateFeedItem');
         var videoButtonName = 'Видео';
@@ -386,6 +413,15 @@ var SelfLoadingUpdateFeedItem = React.createClass({
                             <QuestionnaireSearchButton teacherId={this.props.teacherId} onSelect={this.onQuestionnaireSelect} />
                         </span>
 
+                        {this.props.feedItemId == undefined ? null :
+                            <span style={this.componentStyle.additionalLink}>
+                                <RecTextAssignmentButton
+                                    onSaved={this.onRecTextTaskSaved}
+                                    onDeleted={this.onRecTextTaskDeleted}
+                                    feedItemId={this.props.feedItemId} />
+                            </span>
+                        }
+
                     </div>
 
                     <div style={this.componentStyle.buttonsPlaceholder}>
@@ -426,6 +462,11 @@ var SelfLoadingUpdateFeedItem = React.createClass({
                                 </div>
                             }
 
+                            <div style={this.componentStyle.rectextPlaceholder}>
+                                <SelfLoadingRecTextPanel userId={this.props.teacherId}
+                                                         feedItemId={this.props.feedItemId} />
+                            </div>
+
                             {this.state.noteId == undefined ? null :
                                 <div style={this.componentStyle.notePlaceholder}>
                                     <SelfLoadingNote noteId={this.state.noteId} />
@@ -464,13 +505,8 @@ var SelfLoadingUpdateFeedItem = React.createClass({
                                 </div>
                             }
 
-
                         </div>
-
-
                     </div>
-
-
                 </div>
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>

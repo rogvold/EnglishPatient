@@ -36,7 +36,8 @@ var CourseItem = React.createClass({
     componentStyle: {
         placeholder: {
             width: 810,
-            padding: 10,
+            //padding: 10,
+            padding: 5,
             margin: '0 auto',
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
@@ -45,7 +46,8 @@ var CourseItem = React.createClass({
         },
 
         left: {
-            width: 160,
+            //width: 160,
+            width: 120,
             display: 'inline-block',
             verticalAlign: 'top'
         },
@@ -60,7 +62,8 @@ var CourseItem = React.createClass({
 
         avatarPlaceholder: {
             width: '100%',
-            height: 120
+            //height: 120
+            height: 80
         },
 
         avatar: {

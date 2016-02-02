@@ -6,6 +6,10 @@ var constants = {
     PARSE_JS_KEY: 'Ci34OXCgbv7TuVOiUJFOmoSwULbC7JRnxvFaT1ZI',
     PARSE_REST_API_KEY: '',
 
+    //MAILGUN_API_KEY: 'key-ad0b884bdf8f3a32a4c84eddd641c735', //mg.englishpatient.org
+    MAILGUN_API_KEY: 'key-ad0b884bdf8f3a32a4c84eddd641c735',
+    MAILGUN_DOMAIN: 'mg.englishpatient.org',
+
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
     FETCH_CURRENT_USER: 'FETCH_CURRENT_USER',

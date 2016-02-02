@@ -36,9 +36,15 @@ var TranslateMixin = {
     },
 
     extractWords: function(html){
+        console.log('TranslateMixin: extractWords occured: html = ', html);
+        if (html == undefined){
+            html = '';
+        }
+        html = html.replace(/\n/g, ' ');
         var text = html.split(/[ ]/),
             len = text.length,
             result = [];
+        console.log('splitted text = ', text);
         for( var i = 0; i < len; i++ ){
             text[i] = text[i].trim();
             if (text[i] == ''){
@@ -48,12 +54,14 @@ var TranslateMixin = {
                 result.push('<br/>');
             }
             var pret = text[i].replace(/[^A-Za-z,-\\' \\.]/g, '');
+            //pret = pret.replace(/\n/g, ' ');
             if (pret == '' || (this.isEmptyTag(pret) == true ) || /[a-zA-Z]+/.test(pret) == false ){
                 result.push(text[i]);
                 continue;
             }
             result.push(text[i]);
         }
+        console.log('returning result = ', result);
         return result;
     },
 

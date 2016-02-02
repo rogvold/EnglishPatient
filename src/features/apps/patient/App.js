@@ -15,6 +15,10 @@ var ToolsApp = require('./ToolsApp');
 var DictionaryApp = require('./DictionaryApp');
 var ArticlesApp = require('./ArticlesApp');
 
+var FluxApp = require('./FluxApp');
+
+var ProfileApp = require('./ProfileApp');
+
 var TrashApp = require('./TrashApp');
 
 var SocialApp = require('./SocialApp');
@@ -34,6 +38,7 @@ var Link = ReactRouter.Link;
 var IndexRoute = ReactRouter.IndexRoute;
 var createHashHistory = require('history').createHashHistory;
 
+
 var LoginApp = require('./LoginApp');
 
 var React = require('react');
@@ -49,8 +54,36 @@ var StudentClassApp = require('./student/StudentClassApp');
 var StudentDictionaryApp = require('./student/StudentDictionaryApp');
 var StudentIdiomsApp = require('./student/StudentIdiomsApp');
 
+var SoundComponent = require('../../components/sound/SoundComponent');
+var BootstrapComponent = require('../../components/bootstrap/BootstrapComponent');
+
+//flux
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var MaterialsStore = require('../../flux/stores/MaterialsStore');
+var SoundStore = require('../../flux/stores/SoundStore');
+var UsersStore = require('../../flux/stores/UsersStore');
+var DialogsStore = require('../../flux/stores/DialogsStore');
+var ExercisesStore = require('../../flux/stores/ExercisesStore');
+var TopicsStore = require('../../flux/stores/TopicsStore');
+var MaterialsActions = require('../../flux/actions/MaterialsActions');
+var TopicsActions = require('../../flux/actions/TopicsActions');
+var UsersActions = require('../../flux/actions/UsersActions');
+var DialogsActions = require('../../flux/actions/DialogsActions');
+var SoundActions = require('../../flux/actions/SoundActions');
+var ExercisesActions = require('../../flux/actions/ExercisesActions');
+var stores = {MaterialsStore: new MaterialsStore(), SoundStore: new SoundStore(), TopicsStore: new TopicsStore(), UsersStore: new UsersStore(), ExercisesStore: new ExercisesStore(), DialogsStore: new DialogsStore()};
+var actions = assign({}, MaterialsActions, SoundActions, TopicsActions, UsersActions, ExercisesActions, DialogsActions);
+var flux = new Fluxxor.Flux(stores, actions);
+
+flux.on("dispatch", function(type, payload) {
+    if (console && console.log) {
+        console.log("[Dispatch]", type, payload);
+    }
+});
 
 var App = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {}
     },
@@ -64,7 +97,7 @@ var App = React.createClass({
     },
 
     componentDidMount: function () {
-
+        console.log('MAIN APP: componentDidMount: props = ', this.props);
     },
 
     updateAuth: function(){
@@ -84,13 +117,23 @@ var App = React.createClass({
         placeholder: {}
     },
 
+    createFluxComponent: function(Component, props){
+        return (
+            <Component {...props} flux={flux} />
+        );
+    },
+
     getTeacherRouter: function(){
         return (
-            <Router history={createHashHistory({queryKey: false})}>
+            <Router createElement={this.createFluxComponent} history={createHashHistory({queryKey: false})}>
                 <Route useAutoKeys={false} path="/" component={IndexApp} >
                     <IndexRoute component={IndexApp} />
                 </Route>
+
                 <Route path="/class/:classId" component={ClassApp}/>
+
+                <Route path="/profile/:userId" component={ProfileApp}/>
+
                 <Route path="/exercises" component={ExercisesApp}>
                     <IndexRoute component={ExercisesApp} />
                 </Route>
@@ -147,6 +190,10 @@ var App = React.createClass({
                     <IndexRoute component={TrashApp} />
                 </Route>
 
+                <Route path="/flux"  component={FluxApp}>
+                    <IndexRoute  component={FluxApp} />
+                </Route>
+
                 <Route path="*" component={NoMatchApp}/>
 
             </Router>
@@ -155,7 +202,7 @@ var App = React.createClass({
 
     getStudentRouter: function(){
         return (
-            <Router history={createHashHistory({queryKey: false})}>
+            <Router createElement={this.createFluxComponent} history={createHashHistory({queryKey: false})}>
                 <Route useAutoKeys={false} path="/" component={StudentIndexApp} >
                     <IndexRoute component={StudentIndexApp} />
                 </Route>
@@ -215,7 +262,10 @@ var App = React.createClass({
         }
 
         return (
-            <div>
+            <div >
+                <SoundComponent flux={flux} />
+                <BootstrapComponent />
+
                 {content}
             </div>
         );
@@ -226,6 +276,6 @@ var App = React.createClass({
 module.exports = App;
 
 
-React.render((<App />
+React.render((<App flux={flux} />
 
 ), document.getElementById('main'));

@@ -191,42 +191,46 @@ var SelfLoadingUpdateNotePanel = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.namePlaceholder} className={'ui form'}>
-                    <div className="field">
-                        <label>Название заметки <sup style={{color: '#FC636B'}} >*</sup></label>
-                        <input type="text" placeholder={'Название заметки'} value={name} onChange={this.onNameChange} />
-                    </div>
-                </div>
 
-                <div style={this.componentStyle.contentPlaceholder}>
-                    <PatientEditor value={this.state.defaultContent}
-                                   onContentChange={this.onContentChange} />
-                </div>
-
-                {this.props.categoryMode == false ? null :
-                    <div style={this.componentStyle.notesGroupSelectPlaceholder}>
-                        <div>
-                            Категория заметки:
+                    <div>
+                        <div style={this.componentStyle.namePlaceholder} className={'ui form'}>
+                            <div className="field">
+                                <label>Название заметки <sup style={{color: '#FC636B'}} >*</sup></label>
+                                <input type="text" placeholder={'Название заметки'} value={name} onChange={this.onNameChange} />
+                            </div>
                         </div>
-                        <NotesGroupSelect onSelect={this.onSelect} selectedGroups={[this.state.groupId]} groups={this.props.groupsList} />
+
+                        <div style={this.componentStyle.contentPlaceholder}>
+                            <PatientEditor value={this.state.defaultContent}
+                                           onContentChange={this.onContentChange} />
+                        </div>
+
+                        {this.props.categoryMode == false ? null :
+                            <div style={this.componentStyle.notesGroupSelectPlaceholder}>
+                                <div>
+                                    Категория заметки:
+                                </div>
+                                <NotesGroupSelect onSelect={this.onSelect} selectedGroups={[this.state.groupId]} groups={this.props.groupsList} />
+                            </div>
+                        }
+
+                        <div style={this.componentStyle.saveButtonPlaceholder}>
+                            <button style={this.componentStyle.saveButton} disabled={saveDisabled} className={'ui primary button'} onClick={this.onSave} >
+                                <i className={'save icon'} ></i> Сохранить
+                            </button>
+                        </div>
+
+                        {this.props.noteId == undefined ? null :
+                            <div style={this.componentStyle.deleteBlock}>
+                                <DeleteButton onDelete={this.onDelete} />
+                            </div>
+                        }
                     </div>
-                }
 
-                <div style={this.componentStyle.saveButtonPlaceholder}>
-                    <button style={this.componentStyle.saveButton} disabled={saveDisabled} className={'ui primary button'} onClick={this.onSave} >
-                        <i className={'save icon'} ></i> Сохранить
-                    </button>
-                </div>
 
-                {this.props.noteId == undefined ? null :
-                    <div style={this.componentStyle.deleteBlock}>
-                        <DeleteButton onDelete={this.onDelete} />
+                    <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
+                        <div className="ui indeterminate text loader">{'Загрузка...'}</div>
                     </div>
-                }
-
-                <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
-                    <div className="ui indeterminate text loader">{'Загрузка...'}</div>
-                </div>
 
             </div>
         );

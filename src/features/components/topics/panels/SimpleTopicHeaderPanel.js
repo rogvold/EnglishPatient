@@ -12,7 +12,8 @@ var SimpleTopicHeaderPanel = React.createClass({
         return {
             name: undefined,
             description: undefined,
-            avatar: undefined,
+            avatar: 'http://www.englishpatient.org/app/assets/img/stars.jpg',
+            //avatar: undefined,
             topicId: undefined,
 
             dialogLevel: 10,

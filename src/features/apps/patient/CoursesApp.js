@@ -20,11 +20,13 @@ var LoginApp = require('./LoginApp');
 
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
-
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 var SelfLoadingCoursesList = require('../../components/course/list/SelfLoadingCoursesList');
+
+var CommunityCoursesList = require('../../components/course/list/CommunityCoursesList');
+
+
 
 var CoursesApp = React.createClass({
     getDefaultProps: function () {
@@ -86,7 +88,7 @@ var CoursesApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
@@ -117,12 +119,12 @@ var CoursesApp = React.createClass({
             width: 830, padding: 5, height: '100%', margin: '0 auto', marginTop: 0, paddingTop: 10}} >
 
                 <SelfLoadingCoursesList
-
                     teacherId={userId}
                     userId={userId}
                     editMode={true}
-
                     />
+
+                <CommunityCoursesList userId={userId} />
 
             </div>
 

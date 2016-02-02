@@ -9,12 +9,18 @@ var VimeoPlayer = require('../../player/VimeoPlayer');
 
 var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
 
+var BackgroundImageContainer = require('../../image/BackgroundImageContainer');
+
+var moment = require('moment');
+
 var SocialFeedItem = React.createClass({
     getDefaultProps: function () {
         return {
+            timestamp: undefined,
             text: undefined,
             imageUrl: undefined,
-            vimeoId: undefined
+            vimeoId: undefined,
+            user: undefined
         }
     },
 
@@ -63,7 +69,33 @@ var SocialFeedItem = React.createClass({
         playerPlaceholder: {
             width: '100%',
             height: 320
+        },
+
+        nameBlock: {
+            padding: 0,
+            width: '100%',
+            marginBottom: 10
+        },
+
+        avaPlaceholder: {
+            width: 40,
+            height: 40,
+            borderRadius: 5,
+            display: 'inline-block',
+            verticalAlign: 'top'
+        },
+
+        name: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            paddingLeft: 8
+        },
+
+        date: {
+            fontSize: 12,
+            opacity: 0.6
         }
+
     },
 
     render: function () {
@@ -76,8 +108,28 @@ var SocialFeedItem = React.createClass({
             st = assign({}, st, {display: 'none'});
         }
 
+        var sDate = moment(this.props.timestamp).format('DD.MM.YYYY hh:mm');
+
+        var user = this.props.user;
+
         return (
             <div style={st}>
+
+                {user == undefined ? null :
+                    <div style={this.componentStyle.nameBlock}>
+                        <div style={this.componentStyle.avaPlaceholder}>
+                            <BackgroundImageContainer style={{borderRadius: 2}} image={user.avatar} />
+                        </div>
+                        <div style={this.componentStyle.name}>
+                            <div style={{fontWeight: 'bold', color: '#2E3C54', fontSize: 14}} >
+                                {user.name}
+                            </div>
+                            <div style={this.componentStyle.date}>
+                                {sDate}
+                            </div>
+                        </div>
+                    </div>
+                }
 
                 {this.props.text == undefined ? null :
                     <div style={this.componentStyle.textPlaceholder}>

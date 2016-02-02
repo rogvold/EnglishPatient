@@ -13,7 +13,13 @@ var SimpleTopicHeaderPanel = require('../../topics/panels/SimpleTopicHeaderPanel
 
 var ExercisesBunch = require('../../bunch/exercise/ExercisesBunch');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
+
 var ExercisesGroupsCardsList = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             userId: undefined,
@@ -83,13 +89,20 @@ var ExercisesGroupsCardsList = React.createClass({
     getDialogContent: function(){
         var g = this.state.selectedGroup;
         var exercises = (this.state.selectedExercises == undefined) ? [] : this.state.selectedExercises;
+
+        if (g == undefined){
+            g = {
+                name: 'Unsorted',
+                description: undefined
+            }
+        }
+
         return (
             <div>
                 <SimpleTopicHeaderPanel name={g.name}
                                         description={g.description} avatar={g.avatar} />
 
                 <div style={this.componentStyle.exercisesList}>
-
                     {exercises.length == 0 ?
                         <div className={'ui message'} >
                             в этой категории еще нет упражнений
@@ -98,13 +111,11 @@ var ExercisesGroupsCardsList = React.createClass({
                             <ExercisesBunch exercises={exercises}
                                             userId={this.props.userId} bunchId={g.id}
                                             name={g.name} description={g.description}
-
+                                            avatar={g.avatar}
                                 />
                         </div>
                     }
-
                 </div>
-
             </div>
         );
     },
@@ -124,10 +135,11 @@ var ExercisesGroupsCardsList = React.createClass({
                         var exercises = g.exercises;
                         var id = (gr == undefined) ? undefined : gr.id;
                         var name = (gr == undefined) ? 'Unsorted' : gr.name;
+                        var avatar = (gr == undefined) ? 'http://www.englishpatient.org/app/assets/img/stars.jpg' : gr.avatar;
                         var onClick = this.onCardClick.bind(this, gr, exercises);
                         return (
                             <div key={key} style={this.componentStyle.itemStyle} onClick={onClick} >
-                                <DialogCard bunchId={id} groupId={id} name={name} />
+                                <DialogCard bunchId={id} groupId={id} avatar={avatar} name={name} />
                             </div>
                         );
 

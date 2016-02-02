@@ -10,7 +10,13 @@ var PagedNotificationsList = require('./PagedNotificationsList');
 
 var NotificationMixin = require('../../mixins/NotificationMixin');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var SelfLoadingNotificationsList = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             userId: undefined
@@ -52,8 +58,14 @@ var SelfLoadingNotificationsList = React.createClass({
         }.bind(this));
     },
 
+    playSound: function(){
+        //this.getFlux().actions.playSound('http://loudlinks.rocks/sounds/mp3/success.mp3');
+        this.getFlux().actions.playSound('http://loudlinks.rocks/sounds/mp3/yeah-baby.mp3');
+    },
+
     notificationViewed: function(no){
         console.log('SelfLoadingNotificationsList: notificationViewed occured: no = ', no);
+        this.playSound();
         var list = this.state.notifications;
         var arr = [];
         for (var i in list){

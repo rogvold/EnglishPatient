@@ -98,6 +98,20 @@ var SelfLoadingLessonPanel = React.createClass({
         console.log('SelfLoadingLessonPanel: this.props.  userId,  teacherId, editMode = ',
             this.props.userId, this.props.teacherId, this.props.editMode);
 
+        var updateButtonComponent = (this.props.editMode == false) ? null :
+            (   <div>
+                    {l == undefined ? null :
+                    <div style={{textAlign: 'right'}}>
+                        <UpdateLessonButton
+                            onUpdated={this.onLessonUpdated}
+                            onDeleted={this.onDeleted}
+                            buttonClassName={'ui button inverted'}
+                            lessonId={l.id} />
+                    </div>
+                    }
+                </div>
+            );
+
         return (
             <div style={this.componentStyle.placeholder}>
 
@@ -107,13 +121,7 @@ var SelfLoadingLessonPanel = React.createClass({
                                           editMode={false} avatar={l.avatar}
                                           name={lessonPanelName} description={l.description}
                                           customContent={
-                                                <div style={{textAlign: 'right'}}>
-                                                    <UpdateLessonButton
-                                                                onUpdated={this.onLessonUpdated}
-                                                                onDeleted={this.onDeleted}
-                                                                buttonClassName={'ui button inverted'}
-                                                                lessonId={l.id} />
-                                                </div>
+                                                updateButtonComponent
                                           }
                             />
 

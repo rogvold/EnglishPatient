@@ -57,6 +57,7 @@ var SelfLoadingLessonsCardsList = React.createClass({
 
     load: function(){
         var courseId = this.props.courseId;
+        console.log('SelfLoadingLessonsCardsList: load: courseId = ', courseId);
         if (courseId == undefined){
             return;
         }
@@ -64,6 +65,7 @@ var SelfLoadingLessonsCardsList = React.createClass({
             loading: true
         });
         CourseMixin.loadCourseLessons(courseId, function(lessons){
+            console.log('lessons loaded: ', lessons);
             this.setState({
                 loading: false,
                 lessons: lessons
@@ -91,11 +93,13 @@ var SelfLoadingLessonsCardsList = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.createCourseButtonPlaceholder}>
-                    <CreateLessonButton
-                        onCreated={this.onCreated}
-                        courseId={this.props.courseId} />
-                </div>
+                {this.props.editMode == false ? null :
+                    <div style={this.componentStyle.createCourseButtonPlaceholder}>
+                        <CreateLessonButton
+                            onCreated={this.onCreated}
+                            courseId={this.props.courseId} />
+                    </div>
+                }
 
                 <div style={this.componentStyle.listPlaceholder}>
                     <LessonsCardsList

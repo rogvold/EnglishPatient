@@ -228,7 +228,6 @@ var SelfLoadingExercisesRegistryPanel = React.createClass({
                     </div>
 
                 <div style={this.componentStyle.contentPlaceholder}>
-
                             {this.state.mode == 'extended' ?
                                 <div>
                                     <ExercisesGroupsList onGroupUpdate={this.onGroupUpdate}
@@ -244,7 +243,6 @@ var SelfLoadingExercisesRegistryPanel = React.createClass({
                                         groups={this.state.searchGroups}/>
                                 </div> : null
                             }
-
                 </div>
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : ' ') }>

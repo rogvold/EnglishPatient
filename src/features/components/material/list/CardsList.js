@@ -6,7 +6,13 @@ var React = require('react');
 var assign = require('object-assign');
 var MaterialCard = require('./MaterialCard');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
+
 var CardsList = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             cards: [],
@@ -67,6 +73,10 @@ var CardsList = React.createClass({
 
     onMaterialClick: function(card){
         console.log('onMaterialClick occured: ', card);
+        var m = this.getFlux().store('MaterialsStore').getMaterialsMap()[card.id];
+        if (m == undefined){
+            this.getFlux().actions.refreshMaterial(card.id);
+        }
         this.props.onMaterialClick(card);
     },
 

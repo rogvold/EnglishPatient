@@ -85,6 +85,7 @@ var SelfLoadingUpdateCoursePanel = React.createClass({
         this.setState({
             loading: true
         });
+        console.log('onSave: data = ', data);
         if (courseId == undefined){
             CourseMixin.createCourse(userId, data, function(course){
                 this.setState({
@@ -130,6 +131,7 @@ var SelfLoadingUpdateCoursePanel = React.createClass({
                         courseId={this.props.courseId}
                         name={c.name} description={c.description}
                         avatar={c.avatar} duration={c.duration}
+                        access={c.access}
                         courseId={this.props.courseId}
                         onSave={this.onSave}
                         onDelete={this.onDelete}

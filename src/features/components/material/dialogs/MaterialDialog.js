@@ -10,7 +10,16 @@ var SelfLoadingMaterialUpdatePanel = require('./SelfLoadingMaterialUpdatePanel')
 
 var Dialog = require('../../dialog/Dialog');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var LoginMixin = require('../../../mixins/LoginMixin');
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
+var CoolPreloader = require('../../preloader/CoolPreloader');
+
 var MaterialDialog = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('MaterialsStore')],
     getDefaultProps: function () {
         return {
             materialId: undefined,
@@ -41,12 +50,25 @@ var MaterialDialog = React.createClass({
         }
     },
 
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('MaterialsStore');
+        var loading = ( store.materialsLoading || store.groupsLoading );
+        var material = store.getMaterialsMap()[this.props.materialId];
+        return {
+            loading: loading,
+            material: material
+        }
+    },
+
     componentWillReceiveProps: function (nextProps) {
 
     },
 
     componentDidMount: function () {
-
+        var material = this.state.material;
+        if (material == undefined){
+            this.getFlux().actions.loadMaterial(this.props.materialId);
+        }
     },
 
 
@@ -55,7 +77,8 @@ var MaterialDialog = React.createClass({
 
         },
         dialogPanelStyle: {
-            width: 800
+            width: 800,
+            position: 'relative'
         },
 
         footerPlaceholder: {
@@ -101,25 +124,49 @@ var MaterialDialog = React.createClass({
 
         return (
             <div style={{fontWeight: 'normal'}} >
-                {this.state.mode == 'view' ?
+                {this.state.loading == true ?
+                    <CoolPreloader /> :
                     <div>
-                        <SelfLoadingMaterialPanel materialId={this.props.materialId} />
-                    </div>
-                    :
-                    <div>
-                        <SelfLoadingMaterialUpdatePanel onMaterialUpdated={this.onMaterialUpdated}
-                                                        onMaterialDeleted={this.onMaterialDeleted}
-                                                        materialId={this.props.materialId}
-                                                        allGroupsList={this.props.allGroupsList}
-                            />
+                        {this.state.mode == 'view' ?
+                            <div>
+                                <SelfLoadingMaterialPanel materialId={this.props.materialId} />
+                            </div>
+                            :
+                            <div>
+                                <SelfLoadingMaterialUpdatePanel onMaterialUpdated={this.onMaterialUpdated}
+                                                                onMaterialDeleted={this.onMaterialDeleted}
+                                                                materialId={this.props.materialId}
+                                                                allGroupsList={this.props.allGroupsList}
+                                    />
+                            </div>
+                        }
                     </div>
                 }
+
+
             </div>
         );
     },
 
     getFooter: function(){
-      if (this.props.visible == false || this.props.editMode == false){
+        var editMode = false;
+        var material = this.getFlux().store('MaterialsStore').getMaterialsMap()[this.props.materialId];
+        if (material == undefined){
+            return null;
+        }
+        var user = LoginMixin.getCurrentUser();
+        var currentUserId = (user == undefined) ? undefined : user.id;
+
+        console.log('MaterialDialog: getFooter: currentUserId, material = ', currentUserId, material);
+        console.log('material.creatorId == currentUserId : ', (material.creatorId == currentUserId));
+
+
+        if ((material != undefined) && (material.creatorId == currentUserId)){
+            editMode = true;
+        }
+        console.log('MaterialDialog: getFooter: this.props.visible, editMode = ', this.props.visible, editMode);
+
+      if (this.props.visible == false || editMode == false){
           return null;
       }
 
@@ -140,7 +187,7 @@ var MaterialDialog = React.createClass({
     },
 
     render: function () {
-        console.log('rendering material dialog');
+        console.log('rendering material dialog: materialId = ', this.props.materialId);
         return (
             <div style={this.componentStyle.placeholder}>
                 <Dialog footerStyle={this.componentStyle.footerStyle} dialogPanelStyle={this.componentStyle.dialogPanelStyle}

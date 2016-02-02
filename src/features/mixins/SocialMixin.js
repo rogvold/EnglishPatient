@@ -19,7 +19,8 @@ var SocialMixin = {
             postId: undefined,
             imageUrl: p.get('imageUrl'),
             text: p.get('text'),
-            vimeoId: p.get('vimeoId')
+            vimeoId: p.get('vimeoId'),
+            timestamp: (new Date(p.createdAt)).getTime()
         }
     },
 

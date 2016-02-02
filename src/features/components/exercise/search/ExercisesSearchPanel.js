@@ -149,6 +149,7 @@ var ExercisesSearchPanel = React.createClass({
                                              userId={this.props.teacherId} hoverMode={true}
                                              exitMode={false} onExerciseSelect={this.onExerciseSelect}
                             />
+
                     </div>
 
                 }

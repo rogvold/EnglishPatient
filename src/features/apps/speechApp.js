@@ -39,11 +39,9 @@ var SpeechApp = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-
                     <div style={this.componentStyle.speechBlock}>
                         <SpeechRecognitionArea />
                     </div>
-
 
             </div>
         );

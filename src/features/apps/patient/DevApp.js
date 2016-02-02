@@ -24,7 +24,6 @@ var UserMixin = require('../../mixins/UserMixin');
 
 var MigratePanel = require('../../components/articles/migrate/MigratePanel');
 
-
 var SelfLoadingExercisesRegistryPanel = require('../../components/exercise/SelfLoadingExercisesRegistryPanel');
 
 var UpdateFeedItemPanel = require('../../components/social_networks/feed/UpdateFeedItemPanel');
@@ -47,7 +46,43 @@ var IndexPanel = require('../../components/interface_manuals/index/IndexPanel');
 
 var MediumEditor = require('../../components/editor/MediumEditor');
 
+var UserProfilePanel = require('../../components/social_networks/profile/UserProfilePanel');
+
+var Parse = require('parse').Parse;
+
+var UpdatingPanel = require('../../components/panel/UpdatingPanel');
+
+var SelfLoadingMiracleKaraokePanel = require('../../components/karaoke/miracle/SelfLoadingMiracleKaraokePanel');
+
+var RecTextPanel = require('../../components/rectext/RecTextPanel');
+
+var RecoverPasswordButton = require('../../components/user/RecoverPasswordButton');
+
+var TestComponent = require('../../components/test/TestComponent');
+
+var Fluxxor = require('fluxxor');
+
+var FluxMixin = Fluxxor.FluxMixin(React);
+
+var SoundComponent = require('../../components/sound/SoundComponent');
+
+var UserCommunityHeaderPanel = require('../../components/user_interface/UserCommunityHeaderPanel');
+
+var ExerciseSearchRegistryPanel = require('../../components/exercise/ExerciseSearchRegistryPanel');
+
+var MailAPI = require('../../api/MailAPI');
+
+var PatientEditor = require('../../components/editor/PatientEditor');
+
+var ExerciseGlobalSearchPanel = require('../../components/exercise/search/ExerciseGlobalSearchPanel');
+
+var CommunityDialogsList = require('../../components/dialog_exercise/list/CommunityDialogsList');
+
+var SellLoadingDialogsTotalSearchList = require('../../components/dialog_exercise/list/SellLoadingDialogsTotalSearchList');
+
 var DevApp = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             teacherId: 'jnM2pCK62I'
@@ -204,6 +239,24 @@ var DevApp = React.createClass({
 
     },
 
+    onTextChange: function(evt){
+        var val = evt.target.value;
+
+
+    },
+
+    sendMail: function(){
+        var html = 'this is <b>test</b> message';
+        MailAPI.sendEmail('sha-sabir@yandex.ru', undefined, 'test', html,  function(m){
+            console.log(m);
+        }, function(err){
+
+        })
+    },
+
+    onContentChange: function(content){
+        console.log('content = ', content);
+    },
 
     getContent: function(){
         var userId = this.state.user.id;
@@ -213,15 +266,23 @@ var DevApp = React.createClass({
         var dialogId = 'c0zx8Ip83A';
         var questionnaireId = 'lpN66i903P';
 
+        var karaokeMaterialId = 'VC40ApYkk9';
+
         var linkText = '[[material|WUtKUKWSb0|видео-материал]]';
         var linkText2 = '[[note|8i0KhqWv2n|заметка]]';
 
         var articleId = 'ljVkawu3Zx';
 
-        return (
-            <div style={{padding: 10}} >
 
-                <MediumEditor />
+
+        return (
+            <div>
+
+                <button onClick={this.sendMail} >
+                    send
+                </button>
+
+                <SellLoadingDialogsTotalSearchList />
 
             </div>
 

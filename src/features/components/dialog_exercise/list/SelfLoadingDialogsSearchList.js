@@ -11,6 +11,8 @@ var DialogCard = require('../card/DialogCard');
 
 var DialogMixin = require('../../../mixins/DialogMixin');
 
+var SelectableDialogsList = require('./SelectableDialogsList');
+
 var SelfLoadingDialogsSearchList = React.createClass({
     getDefaultProps: function () {
         return {
@@ -107,41 +109,7 @@ var SelfLoadingDialogsSearchList = React.createClass({
 
                 <div style={this.componentStyle.listPlaceholder}>
 
-                    {list.map(function(dialog, k){
-                        var key = 'dialog_' + k + '_' + dialog.id;
-                        var onSelect = this.onSelect.bind(this, dialog);
-
-                        return (
-                            <div style={this.componentStyle.dialogItem} key={key} >
-                                <div style={this.componentStyle.dialogItemAvatar}>
-                                    <DialogCard avatar={dialog.avatar} />
-                                </div>
-
-                                <div style={this.componentStyle.dialogItemContent}>
-
-                                    <div style={this.componentStyle.dialogName}>
-                                        {dialog.name}
-                                    </div>
-                                    {dialog.description == undefined ? null :
-                                        <div style={this.componentStyle.dialogDescription}>
-                                            {dialog.description}
-                                        </div>
-                                    }
-                                </div>
-
-                                <div style={this.componentStyle.dialogControls}>
-                                    <DialogViewButton dialogId={dialog.id} userId={this.props.teacherId} />
-
-                                    <button style={{marginTop: 5}} className={'ui basic button mini'} onClick={onSelect} >
-                                        <i className={'icon checkmark'} ></i> выбрать
-                                    </button>
-
-                                </div>
-
-                            </div>
-                        );
-
-                    }, this)}
+                    <SelectableDialogsList dialogs={list} onSelect={this.onSelect} />
 
                 </div>
 

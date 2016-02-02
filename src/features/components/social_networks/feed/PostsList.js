@@ -33,7 +33,7 @@ var PostsList = React.createClass({
 
     componentStyle: {
         placeholder: {
-            width: 510,
+            width: 500,
             margin: '0 auto'
         },
 
@@ -63,6 +63,7 @@ var PostsList = React.createClass({
                         <div key={key} style={this.componentStyle.item} >
                             <SelfLoadingSocialFeedItem
                                 onDeleted={onDeleted}
+                                user={p.user}
                                 key={key} postId={p.id} />
                         </div>
                     );

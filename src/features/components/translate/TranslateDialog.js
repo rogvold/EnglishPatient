@@ -41,7 +41,8 @@ var TranslateDialog = React.createClass({
             width: 600,
             paddingRight: 25,
             paddingLeft: 25,
-            paddingTop: 25
+            paddingTop: 25,
+            color: '#1B2432'
         }
     },
 

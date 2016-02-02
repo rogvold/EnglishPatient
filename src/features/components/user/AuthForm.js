@@ -6,6 +6,8 @@ var React = require('react');
 var LoginForm = require('./LoginForm');
 var SignupForm = require('./SignupForm');
 
+var RecoverPasswordButton = require('./RecoverPasswordButton');
+
 var AuthForm = React.createClass({
     getDefaultProps: function () {
         return {
@@ -117,6 +119,13 @@ var AuthForm = React.createClass({
                                         Регистрация
                                     </button>
                                 </span>
+
+                                <br/>
+
+                                <div style={{marginTop: 10, paddingTop: 10, borderTop: '1px solid lightgrey'}}>
+                                    <RecoverPasswordButton style={{opacity: 0.6}} buttonName={'забыли пароль?'} />
+                                </div>
+
                             </div>
                             :
                             <div>

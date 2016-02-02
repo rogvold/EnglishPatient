@@ -22,9 +22,7 @@ var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var Sausage = require('../../components/sausage/Sausage');
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 var IndexPanel = require('../../components/interface_manuals/index/IndexPanel');
 
@@ -87,7 +85,7 @@ var IndexApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     addClassMode={true} selectedClassId={this.props.params.classId} />
@@ -115,10 +113,6 @@ var IndexApp = React.createClass({
 
         return (
             <div>
-
-                <div style={{display: 'none'}} >
-                    <Sausage />
-                </div>
 
 
                 <div>

@@ -94,6 +94,16 @@ var QuestionnaireMixin = {
         });
     },
 
+    loadTeacherQuestionnairesCount: function(teacherId, callback){
+        var q = new Parse.Query('Questionnaire');
+        var self = this;
+        q.count({
+            success: function(n){
+                callback(n);
+            }
+        });
+    },
+
     createQuestionnaire: function(teacherId, name, description, avatar, task, callback){
         if (teacherId == undefined){
             return;

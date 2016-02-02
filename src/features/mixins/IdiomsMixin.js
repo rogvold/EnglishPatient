@@ -60,6 +60,15 @@ var IdiomsMixin = {
             var idiomsList = self.prepareIdiomsList(materials);
             callback(self.getSortedIdioms(idiomsList));
         });
+    },
+
+    getIdiomsByMaterialsList: function(materials){
+        if (materials == undefined){
+            materials = [];
+        }
+        var idiomsList = this.prepareIdiomsList(materials);
+        idiomsList = this.getSortedIdioms(idiomsList);
+        return idiomsList;
     }
 
 }

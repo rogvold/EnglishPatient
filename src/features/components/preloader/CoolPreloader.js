@@ -7,7 +7,9 @@ var assign = require('object-assign');
 
 var CoolPreloader = React.createClass({
     getDefaultProps: function () {
-        return {}
+        return {
+            text: 'Загрузка'
+        }
     },
 
     getInitialState: function () {
@@ -32,7 +34,9 @@ var CoolPreloader = React.createClass({
             <div style={this.componentStyle.placeholder}>
 
                 <div className={'ui inverted dimmer active' }>
-                    <div className="ui indeterminate text loader">{'Загрузка'}</div>
+                    {this.props.text == undefined ? null :
+                        <div className="ui indeterminate text loader">{this.props.text}</div>
+                    }
                 </div>
 
             </div>

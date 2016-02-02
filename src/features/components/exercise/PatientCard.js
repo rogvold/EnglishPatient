@@ -101,6 +101,9 @@ var PatientCard = React.createClass({
         if (this.props.answerType == 'typing'){
             showTranscript = false;
         }
+
+
+
         //var showDiff = (this.props.teacherMode == true);
         var showDiff = true;
 

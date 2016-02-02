@@ -6,7 +6,7 @@ var React = require('react');
 var assign = require('object-assign');
 
 //var ReactQuill = require('react-quill');
-var ReactQuill = require('react-quill');
+var ReactQuill = require('react-quill'); //works with version 0.2.2
 var FileUploader = require('../file/FileUploader');
 
 var VideoEmbedButton = require('./VideoEmbedButton');
@@ -29,6 +29,7 @@ var PatientEditor = React.createClass({
 
     getInitialState: function () {
         console.log('PatientEditor: getInitialState occured');
+        console.log('this.props.value = ', this.props.value);
         return {
             value: this.props.value,
             updatingValue: false,
@@ -47,7 +48,12 @@ var PatientEditor = React.createClass({
     },
 
     componentDidMount: function () {
-
+        console.log('PatientEditor: componentDidMount occured: this.props.value = ', this.props.value);
+        this.setState({
+            value: this.props.value,
+            updatingValue: false,
+            mode: 'edit'
+        });
     },
 
     componentStyle: {
@@ -105,7 +111,7 @@ var PatientEditor = React.createClass({
     },
 
     onTextChange: function(value, delta, source){
-        //console.log('onChange occured', value, delta, source);
+        console.log('onChange occured', value, delta, source);
         //console.log('value = ', value);
         this.setState({
             value: value
@@ -163,10 +169,10 @@ var PatientEditor = React.createClass({
 
     render: function () {
 
-        var editorKey = 'patient_editor_' + this.props.noteId;
+        var editorKey = 'patient_editor_' + (this.props.noteId == undefined ? '0' : this.props.noteId);
         var toolbarKey = 'patient_editor_toolbar_' + this.props.noteId;
 
-        //console.log('PatientEditor render occured: value = ', this.state.value);
+        console.log('PatientEditor render occured: value = ', this.state.value);
 
         return (
             <div style={this.componentStyle.placeholder}>

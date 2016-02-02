@@ -66,6 +66,16 @@ var ArticleMixin = {
         });
     },
 
+    loadTeacherArticlesCount: function(teacherId, callback){
+        var q = new Parse.Query('PatientArticle');
+        q.equalTo('ownerId', teacherId);
+        q.count({
+            success: function(n){
+                callback(n);
+            }
+        });
+    },
+
     createArticle: function(ownerId, data, callback){
         if (ownerId == undefined){
             return;
@@ -106,6 +116,24 @@ var ArticleMixin = {
         });
     },
 
+    loadCommunityAuthors: function(userId, callback){ //loads authors except for userId
+        var q = new Parse.Query('PatientArticle');
+        q.limit(1000);
+        if (userId != undefined){
+            q.notEqualTo('ownerId', userId);
+        }
+        q.find(function(results){
+            var map = {};
+            for (var i in results){
+                map[results[i].get('ownerId')] = 1;
+            }
+            var ids = [];
+            for (var key in map){
+                ids.push(key);
+            }
+            callback(ids);
+        });
+    },
 
     //todo: remove this
     loadMigrationData: function(callback){

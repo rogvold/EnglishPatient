@@ -9,7 +9,15 @@ var IdiomsMixin = require('../../mixins/IdiomsMixin');
 
 var CardsList = require('../material/list/CardsList');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var IdiomsPanel = React.createClass({
+    //mixins: [FluxMixin, StoreWatchMixin('MaterialsStore', 'UsersStore', 'TopicsStore')],
+    mixins: [FluxMixin, StoreWatchMixin('MaterialsStore')],
+
     getDefaultProps: function () {
         return {
             searchInputVisible: true
@@ -18,10 +26,26 @@ var IdiomsPanel = React.createClass({
 
     getInitialState: function () {
         return {
-            idioms: [],
+            //idioms: [],
             searchIdioms: [],
-            loading: false,
+            loading: true,
             text: ''
+        }
+    },
+
+    getStateFromFlux: function(){
+        var materialsStore = this.getFlux().store('MaterialsStore');
+        var usersStore = this.getFlux().store('UsersStore');
+        var topicsStore = this.getFlux().store('TopicsStore');
+
+        var loading = (materialsStore.materialsLoading || materialsStore.groupsLoading
+        //|| topicsStore.loading || usersStore.loading
+        );
+        var idioms = materialsStore.getIdioms();
+
+        return {
+            //loading: loading,
+            idioms: idioms
         }
     },
 
@@ -30,27 +54,29 @@ var IdiomsPanel = React.createClass({
     },
 
     componentDidMount: function () {
-        this.load(function(idioms){
-            console.log('idioms loaded');
-        });
+        this.resetSearch(this.state.idioms);
+        //this.load(function(idioms){
+        //    console.log('idioms loaded');
+        //});
     },
 
     load: function(callback){
-        this.setState({
-            loading: true
-        });
-        IdiomsMixin.loadIdioms(function(idioms){
-            this.setState({
-                loading: false,
-                idioms: idioms,
-                searchIdioms: idioms
-            });
-            callback(idioms);
-        }.bind(this));
+        //this.setState({
+        //    loading: true
+        //});
+        //IdiomsMixin.loadIdioms(function(idioms){
+        //    this.setState({
+        //        loading: false,
+        //        idioms: idioms,
+        //        searchIdioms: idioms
+        //    });
+        //    callback(idioms);
+        //}.bind(this));
     },
 
     componentStyle: {
         placeholder: {
+            position: 'relative',
             backgroundColor: 'white',
             border: '1px solid #EFF0F1',
             margin: '0 auto',
@@ -118,6 +144,53 @@ var IdiomsPanel = React.createClass({
         }
     },
 
+    resetSearch: function(idioms){
+        if (idioms == undefined){
+            idioms = [];
+        }
+        //this.setState({
+        //    loading: true
+        //});
+        if (idioms.length > 0){
+            setTimeout(function(){
+                this.setState({
+                    text: '',
+                    searchIdioms: this.state.idioms,
+                    loading: false
+                });
+            }.bind(this), 300);
+        }
+    },
+
+    componentWillUpdate: function(nextProps, nextState){
+        var oldLoading = this.state.loading;
+        var newLoading = nextState.loading;
+        var prevIdioms = this.state.idioms;
+        var nextIdioms = nextState.idioms;
+        if (prevIdioms.length == 0 && nextIdioms.length > 0){
+            this.resetSearch(nextIdioms);
+        }
+    },
+
+    shouldComponentUpdate: function(nextProps, nextState){
+        var oldIdioms = this.state.idioms;
+        var newIdioms = nextState.idioms;
+        var oldText = this.state.text;
+        var newText = nextState.text;
+        var oldLoading = this.state.loading;
+        var newLoading = nextState.loading;
+        if (oldText != newText){
+            return true;
+        }
+        if (newIdioms.length > oldIdioms.length){
+            return true;
+        }
+        if (newLoading != oldLoading){
+            return true;
+        }
+        return false;
+    },
+
     search: function(text){
         if (text == undefined || text.trim() == ''){
             this.setState({
@@ -152,6 +225,8 @@ var IdiomsPanel = React.createClass({
     render: function () {
 
         var list = this.state.searchIdioms;
+
+        console.log('!!!---!!! IdiomsPanel: render: list = ', list);
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -221,10 +296,6 @@ var IdiomsPanel = React.createClass({
                         }, this)}
                     </div>
                 }
-
-
-
-
 
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>

@@ -42,8 +42,9 @@ var TopicItem = React.createClass({
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center center',
             fontSize: 20,
-            marginRight: 10,
-            marginBottom: 7,
+            //marginRight: 10,
+            //marginBottom: 7,
+            margin: 5,
             borderRadius: 3,
             cursor: 'pointer'
         },

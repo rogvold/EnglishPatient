@@ -128,9 +128,6 @@ var PatientTask = React.createClass({
                 {((text == undefined) || (text.text == undefined)) ? null :
                     <div style={this.componentStyle.textPlaceholder}>
                         <PatientText fontSize={20} text={text.text} />
-
-
-
                     </div>
                 }
 

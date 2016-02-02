@@ -11,6 +11,8 @@ var SelfLoadingDialogViewPanel = require('./SelfLoadingDialogViewPanel');
 
 var SelfLoadingDialogEditPanel = require('./edit/SelfLoadingDialogEditPanel');
 
+var LoginMixin = require('../../mixins/LoginMixin');
+
 var DialogEditableViewPanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -92,7 +94,17 @@ var DialogEditableViewPanel = React.createClass({
     },
 
     render: function () {
+        console.log('DialogEditableViewPanel: render occured');
         var mode = this.state.mode;
+        var currentUser = LoginMixin.getCurrentUser();
+        var dialog = this.props.dialog;
+        var editMode = false;
+        if ((currentUser != undefined) && (dialog != undefined) && (currentUser.id == dialog.creatorId)){
+            editMode = true;
+        }
+
+        console.log('editMode = ', editMode);
+
         return (
             <div style={this.componentStyle.placeholder}>
 
@@ -102,7 +114,7 @@ var DialogEditableViewPanel = React.createClass({
 
                 </div>
 
-                {this.props.editable == false ? null :
+                {editMode == false ? null :
 
                     <div style={this.componentStyle.footerPlaceholder}>
                         {mode == 'edit' ?

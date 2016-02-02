@@ -10,7 +10,13 @@ var MaterialsBunch = require('../../material/list/MaterialsBunch');
 
 var MaterialCard = require('../../material/list/MaterialCard');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var MaterialsSearchPanel = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('MaterialsStore')],
+
     getDefaultProps: function () {
         return {
             teacherId: undefined,
@@ -25,12 +31,28 @@ var MaterialsSearchPanel = React.createClass({
         }
     },
 
+    getStateFromFlux: function(){
+        var flux = this.getFlux();
+        if (flux == undefined){
+            console.log('!!!---!!!-- MaterialsSearchPanel: getStateFromFlux: flux is not defined');
+        }
+        var store = flux.store('MaterialsStore');
+        var state = flux.store('MaterialsStore').getState();
+        var loading = store.materialsLoading || store.groupsLoading;
+        var groupsFactoryList = store.getGroupsFactoryListForSearch();
+        return {
+            //loading: state.materialsLoading,
+            loading: loading,
+            groupsFactoryList: groupsFactoryList
+        }
+    },
+
     getInitialState: function () {
         return {
             query: '',
-            loading: false,
+            //loading: false,
             changed: false,
-            groupsFactoryList: [],
+            //groupsFactoryList: [],
             searchGroupsFactoryList: [],
             selectedMaterialIds: this.props.selectedMaterialIds
         }
@@ -43,16 +65,22 @@ var MaterialsSearchPanel = React.createClass({
                 selectedMaterialIds: selectedMaterialIds
             });
         }
-        this.load(nextProps.teacherId, function(groupsFactoryList){
-            console.log('loaded: ', groupsFactoryList);
-        });
+
+        //it works!:
+        //this.load(nextProps.teacherId, function(groupsFactoryList){
+        //    console.log('loaded: ', groupsFactoryList);
+        //});
+        this.resetSearch();
     },
 
     componentDidMount: function () {
         var teacherId = this.props.teacherId;
-        this.load(teacherId, function(groupsFactoryList){
-            console.log('loaded: ', groupsFactoryList);
-        });
+        //it works!
+        //this.load(teacherId, function(groupsFactoryList){
+        //    console.log('loaded: ', groupsFactoryList);
+        //});
+        //end of it works
+        this.resetSearch();
     },
 
     componentStyle: {
@@ -161,6 +189,15 @@ var MaterialsSearchPanel = React.createClass({
         });
     },
 
+    resetSearch: function(){
+        setTimeout(function(){
+            this.setState({
+                searchGroupsFactoryList: this.state.groupsFactoryList,
+                query: undefined
+            });
+        }.bind(this), 300);
+    },
+
     load: function(teacherId, callback){
         if (teacherId == undefined){
             return;
@@ -186,6 +223,11 @@ var MaterialsSearchPanel = React.createClass({
     getSearchNumber: function(){
         var map = {};
         var gList = this.state.searchGroupsFactoryList;
+        var query = this.state.query;
+        if (query == undefined || query.trim() == ''){
+            gList = this.state.groupsFactoryList;
+        }
+
         for (var i in gList){
             var materials = gList[i].materials;
             for (var j in materials){
@@ -238,7 +280,12 @@ var MaterialsSearchPanel = React.createClass({
     },
 
     getBunchesContent: function(){
+        var query = this.state.query;
         var list = this.state.searchGroupsFactoryList;
+        if (query == undefined || query.trim() == ''){
+            list = this.state.groupsFactoryList;
+        }
+
         var arr = [];
         for (var i in list){
             var materials = list[i].materials;

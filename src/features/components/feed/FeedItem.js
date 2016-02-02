@@ -22,6 +22,8 @@ var SelfLoadingDialogPanel = require('../dialog_exercise/view/SelfLoadingDialogP
 
 var SelfLoadingQuestionnairePanel = require('../questionnaire/panels/view/SelfLoadingQuestionnairePanel');
 
+var SelfLoadingRecTextPanel = require('../rectext/SelfLoadingRecTextPanel');
+
 var FeedItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -50,6 +52,8 @@ var FeedItem = React.createClass({
 
             teacherMode: false,
             editMode: false,
+
+            dateEnabled: true,
 
             onFeedItemUpdated: function(item){
 
@@ -106,6 +110,10 @@ var FeedItem = React.createClass({
         },
 
         exercisePlaceholder: {
+            paddingTop: 10
+        },
+
+        rectextPlaceholder: {
             paddingTop: 10
         },
 
@@ -210,9 +218,11 @@ var FeedItem = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <div style={this.componentStyle.dateBlock}>
-                    <b>{dateString}</b>
-                </div>
+                {this.props.dateEnabled == false ? null :
+                    <div style={this.componentStyle.dateBlock}>
+                        <b>{dateString}</b>
+                    </div>
+                }
 
                 {editMode == false ? null :
                     <div style={this.componentStyle.editBlock}>
@@ -223,11 +233,16 @@ var FeedItem = React.createClass({
 
 
                 {information == '' ? null :
-                    <div style={this.componentStyle.infoPlaceholder}
+                    <div style={this.componentStyle.infoPlaceholder} className={'patientFeedItemInfo'}
                          dangerouslySetInnerHTML={{__html: this.props.information}}
                         >
                     </div>
                 }
+
+                <div style={this.componentStyle.rectextPlaceholder}>
+                    <SelfLoadingRecTextPanel userId={this.props.userId}
+                                             feedItemId={this.props.feedItemId} />
+                </div>
 
                 {this.props.noteId == undefined ? null :
                     <div style={this.componentStyle.notePlaceholder}>

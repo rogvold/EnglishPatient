@@ -6,7 +6,12 @@ var React = require('react');
 var assign = require('object-assign');
 var ChatMixin = require('../../mixins/ChatMixin');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var NotReadChatSpan = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             userId: undefined,
@@ -36,8 +41,21 @@ var NotReadChatSpan = React.createClass({
         this.destroyTimer();
     },
 
+    playSound: function(){
+        this.getFlux().actions.playSound();
+    },
+
     load: function(callback){
+        var isFirstLoading = (this.intervalId == undefined);
         ChatMixin.loadNotReadMessagesUsersMap(this.props.userId, function(map){
+            var oldK = this.getNotReadNumberByMap(this.state.map);
+            var newK = this.getNotReadNumberByMap(map);
+            if (newK > oldK){
+                if (isFirstLoading == false){
+                    this.playSound();
+                }
+            }
+
             this.setState({
                 map: map
             });
@@ -68,13 +86,20 @@ var NotReadChatSpan = React.createClass({
         }
     },
 
-    getNotReadNumber: function(){
-        var map = this.state.map;
+    getNotReadNumberByMap: function(map){
+        if (map == undefined){
+            map = {};
+        }
         var k = 0;
         for (var key in map){
             k+= map[key].messagesNumber;
         }
         return k;
+    },
+
+    getNotReadNumber: function(){
+        var map = this.state.map;
+        return this.getNotReadNumberByMap(map);
     },
 
     render: function () {

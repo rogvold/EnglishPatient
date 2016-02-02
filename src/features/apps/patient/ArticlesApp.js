@@ -21,10 +21,11 @@ var LoginApp = require('./LoginApp');
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 var SelfLoadingArticlesList = require('../../components/articles/SelfLoadingArticlesList');
+
+var CommunityArticlesPanel = require('../../components/articles/CommunityArticlesPanel');
 
 var ArticlesApp = React.createClass({
     getDefaultProps: function () {
@@ -86,7 +87,7 @@ var ArticlesApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                                                     addClassMode={true} selectedClassId={this.props.params.classId} />
@@ -114,9 +115,11 @@ var ArticlesApp = React.createClass({
         var userId = this.state.user.id;
         return (
             <div style={{padding: 5,
-            width: 830, padding: 5, height: '100%', margin: '0 auto', marginTop: 0, paddingTop: 10}} >
+            width: 840, padding: 0, height: '100%', margin: '0 auto', marginTop: 0, paddingTop: 10}} >
 
                 <SelfLoadingArticlesList teacherId={userId} />
+
+                <CommunityArticlesPanel userId={userId} />
 
             </div>
 

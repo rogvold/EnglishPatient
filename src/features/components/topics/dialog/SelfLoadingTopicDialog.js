@@ -19,6 +19,8 @@ var SelfLoadingTopicDialog = React.createClass({
             description: undefined,
             avatar: undefined,
 
+            editMode: true,
+
             onClose: function(){
 
             },
@@ -82,6 +84,7 @@ var SelfLoadingTopicDialog = React.createClass({
                                 topicId={this.props.topicId}
                                 description={this.props.description}
                                 avatar={this.props.avatar}
+
 
                                 onTopicUpdated={this.onTopicUpdated}
                                 onTopicDeleted={this.onTopicDeleted}

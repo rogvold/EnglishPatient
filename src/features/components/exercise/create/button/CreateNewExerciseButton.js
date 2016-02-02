@@ -16,7 +16,7 @@ var CreateNewExerciseButton = React.createClass({
 
             teacherId: undefined,
             onExerciseCreate: function(ex){
-                console.log('creatrd nex exercise: ', ex);
+                console.log('created nex exercise: ', ex);
             },
             buttonIcon: 'icon plus',
             style: {}
@@ -50,7 +50,9 @@ var CreateNewExerciseButton = React.createClass({
     },
 
     componentStyle: {
-        placeholder: {}
+        placeholder: {
+            display: 'inline-block'
+        }
     },
 
     onButtonClick: function(){

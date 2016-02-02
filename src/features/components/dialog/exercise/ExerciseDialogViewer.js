@@ -16,7 +16,14 @@ var ExerciseDialogInfoBlock = require('./ExerciseDialogInfoBlock');
 
 var ExerciseUpdateTabs = require('../../exercise/create/ExerciseUpdateTabs');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var LoginMixin = require('../../../mixins/LoginMixin');
+
 var ExerciseDialogViewer = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             exerciseId: undefined,
@@ -99,13 +106,16 @@ var ExerciseDialogViewer = React.createClass({
     },
 
     getFooter: function(){
-        if ((this.props.isEditable == false) || (this.props.exerciseId == undefined)){
+        var user = LoginMixin.getCurrentUser();
+        var currentUserId = (user == undefined) ? undefined : user.id;
+        var editMode = (currentUserId == this.props.userId);
+
+        if ((editMode == false) || (this.props.exerciseId == undefined)){
             return null;
         }
         return (
             <div style={this.componentStyle.footer}>
                 <button className={'ui button'} onClick={this.switchMode} >
-
 
                     {this.state.mode == 'view' ?
                         <span>
@@ -119,7 +129,6 @@ var ExerciseDialogViewer = React.createClass({
                         </span>
                     }
 
-
                 </button>
             </div>
         );
@@ -128,6 +137,7 @@ var ExerciseDialogViewer = React.createClass({
     onExerciseUpdate: function(ex){
         console.log('ExerciseDialogViewer: onExerciseUpdate:', ex);
         this.props.onExerciseUpdate(ex);
+        this.getFlux().actions.loadExercise(ex.id);
     },
 
     getContent: function(){

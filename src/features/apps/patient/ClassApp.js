@@ -42,11 +42,13 @@ var EditClassButton = require('../../components/class/buttons/EditClassButton');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
 
 var ClassApp = React.createClass({
-    mixins: [Router.Navigation],
+    mixins: [Router.Navigation, FluxMixin],
 
     getDefaultProps: function () {
         return {
@@ -81,6 +83,16 @@ var ClassApp = React.createClass({
                 console.log('class loaded: ', result);
             });
         }
+    },
+
+    fireLoadingMaterials: function(){
+        var flux = this.getFlux();
+        if (flux == undefined){
+            console.log('ClassApp: fireLoadingMaterials: flux is undefined ');
+            return;
+        }
+        console.log('ClassApp: fireLoadingMaterials: flux.actions.loadMaterialsAndGroups() occured');
+        //flux.actions.loadMaterialsAndGroups();
     },
 
     updateAuth: function(){
@@ -126,6 +138,7 @@ var ClassApp = React.createClass({
         if (classId == undefined){
             return;
         }
+        this.fireLoadingMaterials();
         this.setState({
             loading: true,
             patientClass: undefined,
@@ -241,7 +254,7 @@ var ClassApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList addClassMode={true} teacherId={this.state.user.id}
                                                    selectedClassId={this.props.params.classId}

@@ -240,7 +240,7 @@ var App = React.createClass({
                     <div style={{margin: '0 auto', marginTop: 80, marginBottom: 80}} >
 
                         <div style={{textAlign: 'center', marginBottom: 50, fontSize: 50, padding: 20}} >
-                            Цены и предложения
+                            Тарифы
                         </div>
 
                         <PricingPanel />

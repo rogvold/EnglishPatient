@@ -14,7 +14,25 @@ var AddTopicButton = React.createClass({
             topicType: 'basic',
             onTopicCreated: function(topic){
 
+            },
+
+            buttonClassName: '',
+            icon: undefined,
+            buttonName: 'Добавить топик',
+
+            style: {
+                backgroundImage: 'url("http://englishpatient.org/app/assets/img/newTopic.jpg")',
+                display: 'inline-block',
+                width: 160,
+                height: 160,
+                cursor: 'pointer',
+                color: 'white',
+                textAlign: 'center',
+                borderRadius: 3,
+                lineHeight: '24px',
+                paddingTop: 30
             }
+
         }
     },
 
@@ -38,16 +56,7 @@ var AddTopicButton = React.createClass({
         },
 
         buttonPlaceholder: {
-            backgroundImage: 'url("http://englishpatient.org/app/assets/img/newTopic.jpg")',
-            display: 'inline-block',
-            width: 160,
-            height: 160,
-            cursor: 'pointer',
-            color: 'white',
-            textAlign: 'center',
-            borderRadius: 3,
-            lineHeight: '24px',
-            paddingTop: 30
+
         },
 
         namePlaceholder: {
@@ -76,19 +85,18 @@ var AddTopicButton = React.createClass({
     },
 
     render: function () {
+        var buttonsSt = assign({}, this.componentStyle.buttonPlaceholder, this.props.style);
 
         return (
-            <div style={this.componentStyle.placeholder}>
+            <div style={this.componentStyle.placeholder} className={this.props.buttonClassName}>
 
-                <div style={this.componentStyle.buttonPlaceholder} onClick={this.onAddClick} >
+                <div style={buttonsSt} onClick={this.onAddClick} >
                     <div style={this.componentStyle.namePlaceholder}>
-                        <div style={{fontSize: 30}}>
+                        {this.props.icon == undefined ? null :
                             <i className={'plus icon'} ></i>
-                        </div>
+                        }
 
-                        <div style={{fontSize: 24}}>
-                            Добавить топик
-                        </div>
+                        {this.props.buttonName}
 
                     </div>
                 </div>

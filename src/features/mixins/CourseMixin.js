@@ -25,6 +25,7 @@ var CourseMixin = {
             creatorId: c.get('creatorId'),
             description: c.get('description'),
             duration: c.get('duration'),
+            access: c.get('access'),
             timestamp: (new Date(c.createdAt)).getTime()
         }
     },
@@ -72,11 +73,23 @@ var CourseMixin = {
         }.bind(this));
     },
 
+    loadTeacherCoursesCount: function(teacherId, callback){
+        var q = new Parse.Query('PatientCourse');
+        var self = this;
+        q.equalTo('creatorId', teacherId);
+        q.count({
+            success: function(n){
+                callback(n);
+            }
+        });
+    },
+
     createCourse: function(userId, data, callback){
         console.log('CourseMixin: createCourse: userId, data = ', userId, data);
         if (userId == undefined){
             return;
         }
+        var access = (data.access == undefined) ? 'private' : data.access;
         var PatientCourse = Parse.Object.extend('PatientCourse');
         var p = new PatientCourse();
         p.set('creatorId', userId);
@@ -84,21 +97,24 @@ var CourseMixin = {
             {name: 'name', value: data.name},
             {name: 'description', value: data.description},
             {name: 'duration', value: data.duration},
+            {name: 'access', value: access},
             {name: 'avatar', value: data.avatar}
         ]);
         var self = this;
         p.save().then(function(savedP){
             var l = self.transformCourse(savedP);
             callback(l);
-
         });
     },
 
     updateCourse: function(courseId, data, callback){
+        console.log('updateCourse occured: data = ', data);
         var self = this;
+        var access = (data.access == undefined) ? 'private' : data.access;
         this.loadCourseById(courseId, function(p){
             p = ParseMixin.safeSet(p, [
                 {name: 'name', value: data.name},
+                {name: 'access', value: access},
                 {name: 'description', value: data.description},
                 {name: 'duration', value: data.duration},
                 {name: 'avatar', value: data.avatar}
@@ -114,7 +130,7 @@ var CourseMixin = {
             return;
         }
         this.loadCourseById(courseId, function(c){
-            c.destroy(c, {
+            c.destroy({
                 success: function(){
                     callback();
                 }
@@ -123,6 +139,7 @@ var CourseMixin = {
     },
 
     loadCourseLessons: function(courseId, callback){
+        console.log('loadCourseLessons occured: courseId = ', courseId);
         if (courseId == undefined){
             return;
         }
@@ -133,6 +150,7 @@ var CourseMixin = {
         q.limit(1000);
         var self = this;
         q.find(function(results){
+            console.log('lessons loaded: results = ', results);
             if (results == undefined || results.length == 0){
                 callback([]);
                 return;
@@ -140,6 +158,7 @@ var CourseMixin = {
             var arr = results.map(function(l){
                 return self.transformLesson(l);
             });
+            console.log('lessons loaded: ', arr);
             callback(arr);
         });
     },
@@ -232,6 +251,26 @@ var CourseMixin = {
                     })
                 }
             });
+        });
+    },
+
+    loadOtherCourseCreators: function(userId, callback){
+        var q = new Parse.Query('PatientCourse');
+        if (userId != undefined){
+            q.notEqualTo('creatorId', userId);
+        }
+        q.equalTo('access', 'public');
+        q.limit(1000);
+        q.find(function(results){
+            var map = {};
+            for (var i in results){
+                map[results[i].get('creatorId')] = 1;
+            }
+            var arr = [];
+            for (var key in map){
+                arr.push(key);
+            }
+            callback(arr);
         });
     }
 

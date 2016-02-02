@@ -9,7 +9,12 @@ var MaterialUpdatePanel = require('./MaterialUpdatePanel');;
 var ParseMixin = require('../../../../react/mixins/commonMixins/ParseMixin');
 var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var SelfLoadingMaterialUpdatePanel = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             materialId: undefined,
@@ -100,8 +105,10 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
             //material.id = this.props.materialId;
             if (this.props.materialId != undefined){
                 this.props.onMaterialUpdated(material);
+                this.getFlux().actions.refreshMaterial(this.props.materialId); // !!!
             }else{
                 this.props.onMaterialCreated(material);
+                this.getFlux().actions.refreshMaterial(material.id); // !!!
             }
 
         }.bind(this));
@@ -117,6 +124,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
         //this.props.onMaterialDeleted();
         MaterialsMixin.deleteMaterial(this.props.materialId, function(){
             this.props.onMaterialDeleted();
+            this.getFlux().actions.deleteMaterial(this.props.materialId);
         }.bind(this));
     },
 

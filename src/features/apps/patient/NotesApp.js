@@ -37,9 +37,7 @@ var NotesGroupsList = require('../../components/note/list/NotesGroupsList');
 
 var NotesGroupSelect = require('../../components/note/select/NotesGroupSelect');
 
-var SidebarChatButton = require('../../components/sidebar/SidebarChatButton');
-
-var SidebarNotificationsButton = require('../../components/sidebar/SidebarNotificationsButton');
+var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 var NotesApp = React.createClass({
     getDefaultProps: function () {
@@ -113,7 +111,8 @@ var NotesApp = React.createClass({
         groupsPlaceholder: {
             height: '100%',
             borderRight: '1px solid #EFF0F1',
-            width: 220,
+            //width: 220,
+            width: 216,
             //backgroundColor: 'green',
             display: 'inline-block',
             verticalAlign: 'top',
@@ -260,7 +259,7 @@ var NotesApp = React.createClass({
         return (
             <div>
 
-                <SidebarChatButton /> <SidebarNotificationsButton />
+                <TeacherSidebarButtons />
 
                 <SelfLoadingLeftSidebarClassesList  teacherId={this.state.user.id}
                     selectedClassId={this.props.params.classId} />
@@ -479,6 +478,8 @@ var NotesApp = React.createClass({
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
                     <div className="ui indeterminate text loader">{'Загрузка...'}</div>
                 </div>
+
+
             </div>
 
         );

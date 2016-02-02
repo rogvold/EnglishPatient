@@ -15,6 +15,7 @@ var SelfLoadingSocialFeedItem = React.createClass({
     getDefaultProps: function () {
         return {
             postId: undefined,
+            user: undefined,
 
             onDeleted: function(postId){
 
@@ -75,6 +76,7 @@ var SelfLoadingSocialFeedItem = React.createClass({
             this.setState({
                 loading: false,
                 vimeoId: post.vimeoId,
+                timestamp: post.timestamp,
                 text: post.text,
                 imageUrl: post.imageUrl
             });
@@ -96,7 +98,10 @@ var SelfLoadingSocialFeedItem = React.createClass({
             <div style={this.componentStyle.placeholder}>
 
                 <div style={this.componentStyle.content}>
-                    <SocialFeedItem text={this.state.text}
+                    <SocialFeedItem
+                                    user={this.props.user}
+                                    timestamp={this.state.timestamp}
+                                    text={this.state.text}
                                     vimeoId={this.state.vimeoId}
                                     imageUrl={this.state.imageUrl} />
                 </div>

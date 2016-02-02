@@ -7,7 +7,12 @@ var assign = require('object-assign');
 
 var NotificationMixin = require('../../mixins/NotificationMixin');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var NotificationsNumberSpan = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             spanClassName: '',
@@ -36,6 +41,7 @@ var NotificationsNumberSpan = React.createClass({
     },
 
     initTimer: function(){
+
         this.intervalId = setInterval(function(){
             this.load(function(map){});
         }.bind(this), this.props.interval);
@@ -52,13 +58,24 @@ var NotificationsNumberSpan = React.createClass({
         this.initTimer();
     },
 
+    playSound: function(){
+        this.getFlux().actions.playSound();
+    },
 
     load: function(callback){
         var userId = this.props.userId;
         if (userId == undefined){
             return;
         }
+        var isFirstLoading = (this.intervalId == undefined);
         NotificationMixin.loadUserNotifications(userId, 'new', function(list){
+            var oldList = (this.state.notifications == undefined) ? [] : this.state.notifications;
+            var newList = (list == undefined) ? [] : list;
+            if (oldList.length < newList.length){
+                if (isFirstLoading == false){
+                    this.playSound();
+                }
+            }
             this.setState({
                 notifications: list
             });

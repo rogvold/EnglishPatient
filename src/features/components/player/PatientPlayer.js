@@ -17,6 +17,7 @@ var PatientPlayer = React.createClass({
             //youtubeId: '8SbUC-UaAxE',
             //vimeoId: '70260646',
             vimeoId: undefined,
+
             start: 0,
             end: 1000 * 100000,
 
@@ -251,6 +252,7 @@ var PatientPlayer = React.createClass({
             });
         }.bind(this), this.props.abPauseDuration);
     },
+
 
     render: function () {
         var refer = this.getPlayerRef();

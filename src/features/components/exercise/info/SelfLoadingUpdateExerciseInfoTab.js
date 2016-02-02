@@ -9,7 +9,12 @@ var UpdateExerciseInfoTab = require('../info/UpdateExerciseInfoTab');
 var ExerciseMixin = require('../../../mixins/ExerciseMixin');
 var ParseMixin = require('../../../../react/mixins/commonMixins/ParseMixin');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var SelfLoadingUpdateExerciseInfoTab = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             //exerciseId: '5c4dk92L9Y',
@@ -84,6 +89,7 @@ var SelfLoadingUpdateExerciseInfoTab = React.createClass({
         var self = this;
         ExerciseMixin.updateExercise(exerciseId, teacherId, ex.name, ex.description, ex.avatar, ex.task, ex.access, ex.groups, function(exer){
             self.props.onExerciseUpdate(exer);
+            //self.getFlux().actions.loadExercise(exer.id);
             self.setState({
                 loading: false
             });

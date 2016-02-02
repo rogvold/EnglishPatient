@@ -11,6 +11,8 @@ var DialogCard = require('../../dialog_exercise/card/DialogCard');
 
 var DeleteButton = require('../../buttons/DeleteButton');
 
+var AccessSwitcher = require('../../exercise/info/AccessSwitcher');
+
 var UpdateCoursePanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -22,6 +24,7 @@ var UpdateCoursePanel = React.createClass({
             description: undefined,
             avatar: undefined,
             duration: undefined,
+            access: undefined,
 
             onSave: function(data){
                 console.log('UpdateCoursePanel: onSave default: data =  ', data);
@@ -38,7 +41,8 @@ var UpdateCoursePanel = React.createClass({
             name: this.props.name,
             description: this.props.description,
             avatar: this.props.avatar,
-            duration: this.props.duration
+            duration: this.props.duration,
+            access: (this.props.access == undefined) ? 'private' : this.props.access
         }
     },
 
@@ -47,7 +51,8 @@ var UpdateCoursePanel = React.createClass({
             name: nextProps.name,
             description: nextProps.description,
             avatar: nextProps.avatar,
-            duration: nextProps.duration
+            duration: nextProps.duration,
+            access: (nextProps.access == undefined) ? 'private' : nextProps.access
         });
     },
 
@@ -147,13 +152,21 @@ var UpdateCoursePanel = React.createClass({
             name: this.state.name,
             description: this.state.description,
             avatar: this.state.avatar,
-            duration: this.state.duration
+            duration: this.state.duration,
+            access: this.state.access
         }
     },
 
     onSave: function(){
         var data = this.getData();
         this.props.onSave(data);
+    },
+
+    onAccessChange: function(newAccess){
+        console.log('onAccessChange occured: newAccess = ', newAccess);
+        this.setState({
+            access: newAccess
+        });
     },
 
     render: function () {
@@ -206,6 +219,17 @@ var UpdateCoursePanel = React.createClass({
                     <div className={'ui form'} style={{marginBottom: 5}} >
                         <input value={this.state.duration}
                                onChange={this.onDurationChange} placeholder={'Длительность курса (в часах)'} />
+                    </div>
+
+                    <div style={{marginTop: 5}} >
+                        <div>
+                            Режим доступа
+                        </div>
+                        <AccessSwitcher
+                            publicAccessMessage={'Этот курс могут использовать другие преподаватели'}
+                            privateAccessMessage={'Этот курс доступен только Вам'}
+
+                            onAccessChange={this.onAccessChange} activeName={this.state.access} />
                     </div>
 
 

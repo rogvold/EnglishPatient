@@ -8,6 +8,7 @@ var assign = require('object-assign');
 var Dialog = require('../../dialog/Dialog');
 
 var SelfLoadingDialogsSearchList = require('./SelfLoadingDialogsSearchList');
+var SellLoadingDialogsTotalSearchList = require('./SellLoadingDialogsTotalSearchList');
 
 var DialogSearchButton = React.createClass({
     getDefaultProps: function () {
@@ -67,7 +68,7 @@ var DialogSearchButton = React.createClass({
 
     getDialogContent: function(){
         return (
-            <SelfLoadingDialogsSearchList teacherId={this.props.userId} onSelect={this.onSelect} />
+            <SellLoadingDialogsTotalSearchList onSelect={this.onSelect} />
         );
     },
 
