@@ -8,12 +8,18 @@ var assign = require('object-assign');
 var MaterialsMixin = require('../../mixins/MaterialsMixin');
 var VimeoPlayer = require('../player/VimeoPlayer');
 
+var PatientPlayer = require('../player/PatientPlayer');
+
 var MosesPlayer = require('../moses/player/MosesPlayer');
 
 var ExerciseVideo = React.createClass({
     getDefaultProps: function () {
         return {
-            vimeoId: undefined
+            vimeoId: undefined,
+
+            youtubeId: undefined,
+            start: undefined,
+            end: undefined
         }
     },
 
@@ -25,9 +31,17 @@ var ExerciseVideo = React.createClass({
 
     componentWillReceiveProps: function (nextProps) {
         var vimeoId = nextProps.vimeoId;
+        var youtubeId = nextProps.youtubeId;
+        var start = nextProps.start;
+        var end = nextProps.end;
+
+
         if (vimeoId != this.props.vimeoId){
             this.load(vimeoId);
         }
+
+
+
     },
 
     componentDidMount: function () {
@@ -36,7 +50,10 @@ var ExerciseVideo = React.createClass({
     },
 
     componentStyle: {
-        placeholder: {}
+        placeholder: {
+            width: '100%',
+            height: '100%'
+        }
     },
 
     load: function(vimeoId){
@@ -62,6 +79,10 @@ var ExerciseVideo = React.createClass({
 
     render: function () {
         var isMosesable = (this.state.durations != undefined && this.state.durations.length > 0);
+        console.log('Rendering ExerciseVideo: this.props.vimeoId, this.props.youtubeId, this.props.start, this.props.end = ',
+            this.props.vimeoId, this.props.youtubeId, this.props.start, this.props.end);
+
+
         return (
             <div style={this.componentStyle.placeholder}>
 
@@ -70,7 +91,13 @@ var ExerciseVideo = React.createClass({
                         <MosesPlayer vimeoId={this.props.vimeoId} durations={this.state.durations} />
                     </div>
                     :
-                    <VimeoPlayer vimeoId={this.props.vimeoId} />
+                    <div style={{width: '100%', height: '100%'}} >
+                            <PatientPlayer vimeoId={this.props.vimeoId} youtubeId={this.props.youtubeId}
+                                                                    start={this.props.start}
+                                                                    end={this.props.end}
+                            />
+                    </div>
+
                 }
 
             </div>

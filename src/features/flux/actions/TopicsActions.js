@@ -12,6 +12,7 @@ var constants = require('../constants');
 
 var TopicsActions = {
 
+
     loadTeacherTopics: function(teacherId, topicType, callback){
         if (teacherId == undefined){
             teacherId = LoginMixin.getCurrentUser().id;
@@ -76,6 +77,38 @@ var TopicsActions = {
         this.dispatch(constants.REFRESH_TOPIC_INFO, {topicId: topicId});
         TopicsMixin.loadTopic(topicId, function(topic){
             this.dispatch(constants.REFRESH_TOPIC_INFO_SUCCESS, {topic: topic});
+        }.bind(this));
+    },
+
+    deleteTopic: function(topicId){
+        if (topicId == undefined){
+            return;
+        }
+        this.dispatch(constants.DELETE_TOPIC, {topicId: topicId});
+        TopicsMixin.deleteTopic(topicId, function(){
+            this.dispatch(constants.DELETE_TOPIC_SUCCESS, {topicId: topicId});
+        }.bind(this));
+    },
+
+    updateTopic: function(topicId, data){
+        if (topicId == undefined){
+            return;
+        }
+        this.dispatch(constants.UPDATE_TOPIC, {topicId: topicId});
+        TopicsMixin.updateTopic(topicId, data.name, data.description, data.avatar, data.access, function(){
+            this.flux.actions.refreshTopic(topicId);
+        }.bind(this));
+    },
+
+    createTopic: function(data){
+        if (data == undefined){
+            return;
+        }
+        var creatorId = ( LoginMixin.getCurrentUser() == undefined ) ? undefined : LoginMixin.getCurrentUser().id;
+        this.dispatch(constants.CREATE_TOPIC, {creatorId: creatorId});
+        TopicsMixin.createTopic(creatorId, data.name, data.description,
+                                                      data.avatar, data.access, data.topicType, function(topic){
+            this.dispatch(constants.CREATE_TOPIC_SUCCESS, {topic: topic});
         }.bind(this));
     }
 

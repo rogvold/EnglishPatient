@@ -194,6 +194,10 @@ var ExercisesRegistryPanel = React.createClass({
         }
 
 
+        console.log('editMode = ', editMode);
+        console.log('ExercisesRegistryPanel: render: groups = ', groups);
+
+
         return (
             <div style={st} >
 
@@ -202,8 +206,6 @@ var ExercisesRegistryPanel = React.createClass({
                     <UserCommunityHeaderPanel
                         customInfoHtml={customInfoHtml}
                         userId={teacherId} />
-
-
 
                     {searchingMode == true ? null :
                         <div style={{display: 'inline-block', float: 'right'}} >

@@ -57,6 +57,9 @@ var SelfLoadingMaterialPanel = React.createClass({
                 loading: false,
                 name: m.name,
                 vimeoId: m.vimeoId,
+                youtubeId: m.youtubeId,
+                start: m.start,
+                end: m.end,
                 comment: m.comment,
                 transcript: m.transcript,
                 avatar: m.avatar,
@@ -78,10 +81,16 @@ var SelfLoadingMaterialPanel = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                <MaterialPanel vimeoId={this.state.vimeoId} name={this.state.name}
-                               tags={this.state.tags} comment={this.state.comment}
-                               transcript={this.state.transcript}
-                    />
+                {this.state.loading == true ? null :
+                    <MaterialPanel vimeoId={this.state.vimeoId} name={this.state.name}
+                                   youtubeId={this.state.youtubeId} start={this.state.start}
+                                   end={this.state.end}
+                                   tags={this.state.tags} comment={this.state.comment}
+                                   transcript={this.state.transcript}
+                        />
+                }
+
+
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
                     <div className="ui indeterminate text loader">{'Загрузка...'}</div>

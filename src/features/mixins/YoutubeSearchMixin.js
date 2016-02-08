@@ -10,8 +10,8 @@ var MaterialsMixin = require('./MaterialsMixin');
 
 var YoutubeSearchMixin = {
 
-    search: function(text, callback){
-        Parse.Cloud.run('searchPhrase', {query: text}, {
+    search: function(text, lang, callback){
+        Parse.Cloud.run('searchPhrase', {query: text, lang: lang}, {
             success: function(result){
                 callback(result);
             }

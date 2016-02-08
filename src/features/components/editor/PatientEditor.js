@@ -224,7 +224,7 @@ var PatientEditor = React.createClass({
                         </div>
                     </div>
                     :
-                    <div style={this.componentStyle.previewPlaceholder} className={'PatientNote'} >
+                    <div style={this.componentStyle.previewPlaceholder} className={'PatientNote patientEditorPreviewPlaceholder'} >
                          <div dangerouslySetInnerHTML={{__html:this.state.value}} ></div>
                     </div>
                 }

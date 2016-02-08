@@ -15,10 +15,25 @@ var PatientPlayer = require('../../player/PatientPlayer');
 
 var TranslatableText = require('../../text/translatable/TranslatableText');
 
+var MosesTimePanel = require('../../moses/editor/adjust/MosesTimePanel');
+
+var BackgroundImageContainer = require('../../image/BackgroundImageContainer');
+
+var AccessSwitcher = require('../../exercise/info/AccessSwitcher');
+
 var YoutubeSearchPanel = React.createClass({
     getDefaultProps: function () {
         return {
-            intervalSpan: 0.25
+            intervalSpan: 0.25,
+
+            onSubmit: function(data){
+                console.log('YoutubeSearchPanel: default onSubmit: data = ', data);
+            },
+
+            submitMode: false,
+            submitButtonName: 'OK',
+            submitButtonIcon: 'icon check circle '
+
         }
     },
 
@@ -33,7 +48,10 @@ var YoutubeSearchPanel = React.createClass({
             activeStart: undefined,
             activeDuration: undefined,
             text: '',
-            query: ''
+            query: '',
+            currentProgress: 0,
+            settingsVisible: false,
+            lang: 'en'
         }
     },
 
@@ -48,7 +66,7 @@ var YoutubeSearchPanel = React.createClass({
     componentStyle: {
         placeholder: {
             backgroundColor: 'white',
-            border: '1px solid #EFF0F1',
+            //border: '1px solid #EFF0F1',
             width: 850,
             position: 'relative',
             margin: '0 auto',
@@ -92,7 +110,18 @@ var YoutubeSearchPanel = React.createClass({
 
         playerPlaceholder: {
             widht: '100%',
-            height: 250
+            height: 250,
+            position: 'relative'
+        },
+
+        currentTimePlaceholder: {
+            padding: 5,
+            top: 0,
+            right: 0,
+            minWidth: 80,
+            textAlign: 'center',
+            position: 'absolute',
+            backgroundColor: 'white'
         },
 
         transcriptPlaceholder: {
@@ -102,7 +131,18 @@ var YoutubeSearchPanel = React.createClass({
 
         resultInfoPanel: {
             padding: 5
+        },
+
+        submitButtonPlaceholder: {
+            textAlign: 'center',
+            padding: 5,
+            marginTop: 10
+        },
+
+        settingsPlaceholder: {
+
         }
+
     },
 
     onTextChange: function(evt){
@@ -117,12 +157,19 @@ var YoutubeSearchPanel = React.createClass({
         });
     },
 
+    toggleSettings: function(){
+        this.setState({
+            settingsVisible: !this.state.settingsVisible
+        });
+    },
+
     search: function(text, callback){
         this.setState({
             loading: true,
             searchFinished: false
         });
-        YoutubeSearchMixin.search(text, function(data){
+        var lang = this.state.lang;
+        YoutubeSearchMixin.search(text, lang, function(data){
             this.setState({
                 loading: false,
                 query: text,
@@ -210,6 +257,8 @@ var YoutubeSearchPanel = React.createClass({
             activeYoutubeId: youtubeId,
             activeStart: item.start,
             activeDuration: item.duration,
+            start: item.start,
+            end: +item.start + +item.duration,
             selectedItem: item
         });
     },
@@ -221,17 +270,54 @@ var YoutubeSearchPanel = React.createClass({
         }
     },
 
+    onProgress: function(seconds){
+        console.log('onProgress occured');
+        this.setState({
+            currentProgress: seconds
+        });
+    },
+
+    onTimeSpanChange: function(data){
+        console.log('onTimeSpanChange: data = ', data);
+        var start = +data.start;
+        var end = +data.end;
+        this.setState({
+            start: start,
+            end: end
+        });
+    },
+
+    onSubmit: function(){
+        this.props.onSubmit({
+            start: this.state.start,
+            end: this.state.end,
+            youtubeId: this.state.activeYoutubeId,
+            text: this.state.selectedItem.text
+        });
+    },
+
+    onLangChange: function(lang){
+        this.setState({
+            lang: lang
+        });
+    },
+
     render: function () {
         var checkboxes = this.getCheckboxesForRendering();
         var materialSelected = (this.state.selectedItem != undefined);
         var start = 0, end = 0;
         if (this.state.selectedItem != undefined){
-            start = this.state.selectedItem.start;
-            end = +start + +this.state.activeDuration + this.props.intervalSpan;
-            start-= this.props.intervalSpan;
+            start = this.state.start;
+            //end = +start + +this.state.duration + this.props.intervalSpan;
+            end =  +this.state.end;
+            //start-= this.props.intervalSpan;
             console.log('rendering youtube search panel: start, end = ', start, end);
             console.log(this.state.selectedItem);
         }
+        var t = (this.state.currentProgress == undefined) ? 0 : this.state.currentProgress;
+        t = Math.floor(100.0 * t) / 100.0;
+
+        var langItems = [{name: 'en', displayName: 'Английский'}, {name: 'de', displayName: 'Немецкий'}];
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -240,15 +326,63 @@ var YoutubeSearchPanel = React.createClass({
                     <div className={'ui form'} >
                         <div className="ui action input">
                             <input type="text" placeholder={'Поиск ...'} onKeyUp={this.onKeyUp}
-                                   value={this.state.text} onChange={this.onTextChange}  />
+                                   value={this.state.text}
+                                   autoFocus={true}
+                                   onChange={this.onTextChange}  />
                             <button className={'ui basic button'} onClick={this.onSearchClick} >
                                 <i className={'icon search'} ></i> Поиск
                             </button>
                         </div>
                     </div>
+
+
+                    <div style={this.componentStyle.settingsPlaceholder}>
+
+                        <div style={{textAlign: 'right', opacity: 0.6, marginTop: 5}} >
+                            {this.state.settingsVisible == false ?
+                                <div>
+                                    <span style={{cursor: 'pointer'}} onClick={this.toggleSettings} >
+                                        <i className={'icon settings'} ></i> показать настройки
+                                    </span>
+                                </div> :
+                                <div>
+                                    <span style={{cursor: 'pointer'}} onClick={this.toggleSettings} >
+                                        <i className={'icon settings'} ></i> скрыть настройки
+                                    </span>
+                                </div>
+                            }
+                        </div>
+
+                        {this.state.settingsVisible == false ? null :
+                            <div  >
+                                <span style={{verticalAlign: 'top', lineHeight: '35px', marginRight: 10, fontSize: 16}} >
+                                    Язык поиска:
+                                </span>
+                                <span style={{verticalAlign: 'top'}} >
+                                    <AccessSwitcher items={langItems} onAccessChange={this.onLangChange} activeName={this.state.lang} />
+                                </span>
+
+                            </div>
+                        }
+
+
+                    </div>
+
                 </div>
 
-                {this.state.query.trim() == '' ? null :
+                {this.state.query.trim() == '' ?
+
+                    <div style={{textAlign: 'center'}} >
+                        <div style={{width: 300, height: 250, margin: '0 auto', marginTop: 15}} >
+                            <BackgroundImageContainer
+                                image={'http://www.englishpatient.org/app/assets/images/discover.png'} />
+                        </div>
+                        <div style={{opacity: 0.6, fontSize: 16, marginTop: 15}} >
+                            Введите слово в поиск
+                            <br/>
+                            и нажмите <b>Enter</b>
+                        </div>
+                    </div> :
                 <div>
                     {(this.state.searchResult.length == 0) ?
                         <div>
@@ -284,13 +418,36 @@ var YoutubeSearchPanel = React.createClass({
                                 {materialSelected == false ? null :
                                     <div>
                                         <div style={this.componentStyle.playerPlaceholder}>
-                                            <PatientPlayer youtubeId={this.state.activeYoutubeId} start={start} end={end} />
+                                            <PatientPlayer
+                                                abMode={true}
+                                                onProgress={this.onProgress}
+                                                youtubeId={this.state.activeYoutubeId}
+                                                start={start} end={end} />
+
+                                            <div style={this.componentStyle.currentTimePlaceholder}>
+                                                {t}
+                                            </div>
+
                                         </div>
 
                                         <div style={this.componentStyle.transcriptPlaceholder}>
                                             {this.state.selectedItem.text}
                                         </div>
 
+                                        <MosesTimePanel
+                                            start={start}
+                                            end={end}
+                                            onChange={this.onTimeSpanChange}
+                                            textEnabled={false} />
+
+                                        {(this.state.selectedItem == undefined || this.props.submitMode == false) ? null :
+                                            <div style={this.componentStyle.submitButtonPlaceholder} onClick={this.onSubmit} >
+                                                <button className={'patientPrimary ui button'} >
+                                                    <i className={this.props.submitButtonIcon} ></i>
+                                                    {this.props.submitButtonName}
+                                                </button>
+                                            </div>
+                                        }
 
                                     </div>
                                 }

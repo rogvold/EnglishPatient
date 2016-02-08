@@ -9,10 +9,21 @@ var SelfLoadingMaterialsList = require('../../material/list/SelfLoadingMaterials
 
 var TopicHeaderPanel = require('./TopicHeaderPanel');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
+var CoolPreloader = require('../../preloader/CoolPreloader');
+
+
 var TopicPanel = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('TopicsStore')],
+
     getDefaultProps: function () {
         return {
             topicId: undefined,
+
             teacherId: undefined,
             name: undefined,
             description: undefined,
@@ -30,6 +41,13 @@ var TopicPanel = React.createClass({
         }
     },
 
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('TopicsStore');
+        return {
+            loading: store.loading
+        }
+    },
+
     getInitialState: function () {
         return {}
     },
@@ -44,6 +62,7 @@ var TopicPanel = React.createClass({
 
     componentStyle: {
         placeholder: {
+            position: 'relative',
             width: '100%',
             height: '100%',
             overflowY: 'auto',
@@ -133,6 +152,10 @@ var TopicPanel = React.createClass({
                         />
 
                 </div>
+
+                {this.state.loading == false ? null :
+                    <CoolPreloader />
+                }
 
             </div>
         );

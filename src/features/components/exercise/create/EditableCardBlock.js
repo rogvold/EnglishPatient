@@ -9,6 +9,8 @@ var FileUploader = require('../../file/FileUploader');
 var PatientAudio = require('../../audio/PatientAudio');
 var VimeoPlayer = require('../../player/VimeoPlayer');
 
+var PatientPlayer = require('../../player/PatientPlayer');
+
 var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
 
 var PatientTask = require('../../task/PatientTask');
@@ -21,6 +23,8 @@ var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 var MaterialSearchButton = require('../../material/search/MaterialSearchButton');
 
 var CardComplexitySelectButton = require('./CardComplexitySelectButton');
+
+var AddVideoButton = require('../../video/AddVideoButton');
 
 var EditableCardBlock = React.createClass({
     getDefaultProps: function () {
@@ -89,12 +93,24 @@ var EditableCardBlock = React.createClass({
         var audioUrl = (this.getAudio(items) == undefined) ? undefined : this.getAudio(items).url;
         var text = (this.getText(items) == undefined) ? undefined : this.getText(items).text;
         var vimeoUrl = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).vimeoId;
+
+        var vimeoId = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).vimeoId;
+        var youtubeId = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).youtubeId;
+        var start = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).start;
+        var end = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).end;
+
         return {
             imageUrl: imageUrl,
             comment: this.getSafeString(this.props.comment),
             hint: this.getSafeString(this.props.hint),
             audioUrl: audioUrl,
             vimeoUrl: vimeoUrl,
+
+            vimeoId: vimeoId,
+            youtubeId: youtubeId,
+            start: start,
+            end: end,
+
             text: text,
             transcript: this.getSafeString(this.props.transcript),
             level: this.props.level,
@@ -113,6 +129,12 @@ var EditableCardBlock = React.createClass({
         var text = (this.getText(items) == undefined) ? undefined : this.getText(items).text;
         var vimeoUrl = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).vimeoId;
 
+
+        var vimeoId = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).vimeoId;
+        var youtubeId = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).youtubeId;
+        var start = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).start;
+        var end = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).end;
+
         //var vimeoUrl = (this.getVideo(items) == undefined) ? undefined : this.getVideo(items).vimeoId;
 
         console.log('EditableCardBlock: componentWillReceiveProps: nextProps = ', np);
@@ -125,6 +147,12 @@ var EditableCardBlock = React.createClass({
             hint: (np.hint == undefined) ? '' : np.hint,
             audioUrl: audioUrl,
             vimeoUrl: vimeoUrl,
+
+            vimeoId: vimeoId,
+            youtubeId: youtubeId,
+            start: start,
+            end: end,
+
             text: text,
             answerTypeName: np.answerTypeName,
             level: np.level,
@@ -287,11 +315,26 @@ var EditableCardBlock = React.createClass({
             vimeoUrl: val,
             needToSave: true
         });
-
-
     },
 
+    onVideoChange: function(data){
+        console.log('onVideoChange: data = ', data);
+        this.setState({
+            vimeoId: data.vimeoId,
+            youtubeId: data.youtubeId,
+            start: data.start,
+            end: data.end
+        });
+    },
 
+    isVideoSet: function(){
+        var vimeoId = this.state.vimeoId;
+        var youtubeId = this.state.youtubeId;
+        if (youtubeId == undefined && vimeoId == undefined){
+            return false;
+        }
+        return true;
+    },
 
     onTextChange: function(evt){
         var val = this.getValueFromEvt(evt);
@@ -350,8 +393,11 @@ var EditableCardBlock = React.createClass({
     getPatientTaskItems: function(){
         console.log('getPatientTaskItems occured');
         var arr =[];
-        if (this.state.vimeoUrl != undefined){
-            arr.push({ type: 'video', vimeoId: CommonMixin.extractVimeoIdFromUrl(this.state.vimeoUrl) });
+        if ((this.state.vimeoUrl != undefined) || (this.state.vimeoId != undefined) || (this.state.youtubeId != undefined)){
+            //arr.push({ type: 'video', vimeoId: CommonMixin.extractVimeoIdFromUrl(this.state.vimeoUrl) });
+            arr.push({ type: 'video', vimeoId: this.state.vimeoId, youtubeId: this.state.youtubeId,
+                                                                    start: this.state.start, end: this.state.end
+            });
         }
         if (this.state.audioUrl != undefined){
             arr.push({ type: 'audio', url: this.state.audioUrl });
@@ -390,15 +436,31 @@ var EditableCardBlock = React.createClass({
     },
 
     isNoData: function(){
-        return (this.state.text == undefined && this.state.vimeoUrl == undefined
-                && this.state.audioUrl == undefined && this.state.imageUrl == undefined);
+        //return (this.state.text == undefined && this.state.vimeoUrl == undefined
+        //        && this.state.audioUrl == undefined && this.state.imageUrl == undefined);
+
+        return ((this.state.text == undefined) && (this.state.vimeoId == undefined) && (this.state.youtubeId == undefined)
+        && (this.state.audioUrl == undefined) && (this.state.imageUrl == undefined));
     },
 
     onSearchMaterialSelect: function(m){
         console.log('onSearchMaterialSelect occured: m = ', m);
         this.setState({
             vimeoUrl: m[0].vimeoId,
+            vimeoId: m[0].vimeoId,
+            youtubeId: m[0].youtubeId,
+            start: m[0].start,
+            end: m[0].end,
             transcript: m[0].transcript
+        });
+    },
+
+    removeVideo: function(){
+        this.setState({
+            vimeoId: undefined,
+            youtubeId: undefined,
+            start: undefined,
+            end: undefined
         });
     },
 
@@ -408,6 +470,8 @@ var EditableCardBlock = React.createClass({
         if (this.state.needToSave == false){
             cannotSave = true;
         }
+        var isVideoSet = this.isVideoSet();
+
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -471,7 +535,26 @@ var EditableCardBlock = React.createClass({
                                 </span>
                             </div>
                             <div className="field">
-                                <input type="text" value={this.state.vimeoUrl} onChange={this.onVimeoChange} placeholder={'Ссылка на видео с vimeo.com'}  />
+                                <input type="text" value={this.state.vimeoUrl}
+                                       onChange={this.onVimeoChange}
+                                       style={{display: 'none'}}
+                                       placeholder={'Ссылка на видео на vimeo.com'}  />
+
+                                {isVideoSet == false ? <div>
+                                        <AddVideoButton youtubeId={this.state.youtubeId}
+                                                    vimeoId={this.state.vimeoId}
+                                                    start={this.state.start}
+                                                    end={this.state.end}
+                                                    buttonClassName={'ui button fluid basic'}
+                                                        style={{width: '100%'}}
+                                                    onChange={this.onVideoChange}
+                                        />
+                                    </div> :
+                                    <div className={'ui red message'} style={this.componentStyle.deleteImageBlock} onClick={this.removeVideo} >
+                                        <i className={'icon remove'} ></i> Удалить видео
+                                    </div>
+                                }
+
                             </div>
                         </div>
 

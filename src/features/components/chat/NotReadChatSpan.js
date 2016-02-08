@@ -42,7 +42,7 @@ var NotReadChatSpan = React.createClass({
     },
 
     playSound: function(){
-        this.getFlux().actions.playSound();
+        this.getFlux().actions.playSound('https://www.englishpatient.org/app/assets/sounds/all_eyes_sound.mp3');
     },
 
     load: function(callback){

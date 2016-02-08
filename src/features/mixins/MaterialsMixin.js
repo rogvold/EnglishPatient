@@ -8,6 +8,7 @@ var $ = require('jquery');
 //var TopicsMixin = require('./TopicsMixin');
 var UserMixin = require('./UserMixin');
 
+
 var MaterialsMixin = {
 
     transformMaterialFromParseObject: function(m){
@@ -18,12 +19,16 @@ var MaterialsMixin = {
             name: m.get('name'),
             status: m.get('status'),
             tags: m.get('tags'),
+            youtubeId: m.get('youtubeId'),
+            start: m.get('start'),
+            end: m.get('end'),
             transcript: m.get('transcript'),
             createdTimestamp: (new Date(m.createdAt)).getTime(),
             updatedTimestamp: (new Date(m.updatedAt)).getTime(),
             comment: m.get('comment'),
             creatorId: m.get('creatorId'),
             avatar: m.get('vimeoImgSrc'),
+            vimeoImgSrc: m.get('vimeoImgSrc'),
             teacherId: m.get('creatorId'),
             vimeoId: m.get('vimeoId'),
             approved: m.get('approved'),
@@ -174,12 +179,13 @@ var MaterialsMixin = {
         console.log('createMaterial occured: materialId, d = ', d);
         var PatientMaterial = Parse.Object.extend('PatientMaterial');
         var m = new PatientMaterial();
-        if (d.vimeoId == undefined || d.creatorId == undefined){
-            console.log('vimeoId or creatorId is undefined');
+        if (((d.vimeoId == undefined) && (d.youtubeId == undefined)) || d.creatorId == undefined){
+            console.log('vimeoId or youtubeId creatorId is undefined');
             return;
         }
         m = ParseMixin.safeSet(m, [
             {name: 'vimeoId', value: d.vimeoId},
+            {name: 'youtubeId', value: d.youtubeId},
             {name: 'name', value: d.name},
             {name: 'transcript', value: d.transcript},
             {name: 'comment', value: d.comment},
@@ -190,6 +196,8 @@ var MaterialsMixin = {
 
             {name: 'vimeoImgSrc', value: d.vimeoImgSrc},
             {name: 'duration', value: d.duration},
+            {name: 'start', value: d.start},
+            {name: 'end', value: d.end},
 
             {name: 'creatorId', value: d.creatorId},
             {name: 'approved', value: d.approved},
@@ -222,6 +230,7 @@ var MaterialsMixin = {
             console.log('material loaded', m);
             m = ParseMixin.safeSet(m, [
                 {name: 'vimeoId', value: d.vimeoId},
+                {name: 'youtubeId', value: d.youtubeId},
                 {name: 'name', value: d.name},
                 {name: 'transcript', value: d.transcript},
                 {name: 'comment', value: d.comment},
@@ -230,6 +239,8 @@ var MaterialsMixin = {
                 {name: 'groups', value: d.groups},
                 {name: 'status', value: d.status},
                 {name: 'vimeoImgSrc', value: d.vimeoImgSrc},
+                {name: 'start', value: d.start},
+                {name: 'end', value: d.end},
                 {name: 'duration', value: d.duration}
                 //{name: 'creatorId', value: d.creatorId},
                 //{name: 'approved', value: d.approved},
@@ -721,8 +732,6 @@ var MaterialsMixin = {
             });
         });
     }
-
-    //loadMaterialsInGroupsList
 
 
 }

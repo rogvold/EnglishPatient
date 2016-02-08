@@ -3,7 +3,7 @@
  */
 var Parse = require('parse').Parse;
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
-
+var assign = require('object-assign');
 
 var ExerciseMixin = {
 
@@ -535,7 +535,10 @@ var ExerciseMixin = {
             switch (t){
                 case 'video':
                     r.type = 'video';
-                    r.vimeoId = m.vimeoId;
+                    r.vimeoId = (m.vimeoId == undefined || m.vimeoId == 'undefined') ? undefined : m.vimeoId;
+                    r.youtubeId = (m.youtubeId == undefined || m.youtubeId == 'undefined') ? undefined : m.youtubeId;
+                    r.start = (m.start == undefined || m.start == 'undefined') ? undefined : m.start;
+                    r.end = (m.start == end || m.end == 'undefined') ? undefined : m.end;
                     break;
                 case 'text':
                     r.type = 'text';
@@ -828,7 +831,27 @@ var ExerciseMixin = {
                 arr.push({materialType: 'text', text: m.text});
             }
             if (m.type == 'video' || m.materialType == 'video'){
-                arr.push({materialType: 'video', vimeoId: m.vimeoId});
+                if (m.vimeoId == undefined && m.youtubeId == undefined){
+                    continue;
+                }
+                var ob = {materialType: 'video'};
+                if (m.vimeoId != undefined){
+                    ob = assign({}, ob, {vimeoId: m.vimeoId});
+                }
+                if (m.youtubeId != undefined){
+                    ob = assign({}, ob, {youtubeId: m.youtubeId});
+                }
+                if (m.start != undefined){
+                    ob = assign({}, ob, {start: m.start});
+                }
+                if (m.end != undefined){
+                    ob = assign({}, ob, {end: m.end});
+                }
+
+
+                //arr.push({materialType: 'video',
+                //    vimeoId: m.vimeoId, youtubeId: m.youtubeId, start: m.start, end: m.end});
+                arr.push(ob);
             }
             //m.materialType = (m.type == undefined) ? m.materialType : m.type;
             //arr.push(m);

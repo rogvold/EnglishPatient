@@ -134,6 +134,10 @@ var CommonMixin = {
         if (val == '' || val == undefined) {
             return undefined;
         }
+        if (val.indexOf('youtube') > -1){
+            return undefined;
+        }
+
             var matches = /(\d+)/.exec(val);
             if (matches != undefined && matches.length > 0){
                 return matches[0];
@@ -147,6 +151,9 @@ var CommonMixin = {
             return undefined;
         }
         var video_id = url.split('v=')[1];
+        if (video_id == undefined){
+            return undefined;
+        }
         var ampersandPosition = video_id.indexOf('&');
         if(ampersandPosition != -1) {
             video_id = video_id.substring(0, ampersandPosition);

@@ -2,7 +2,7 @@
  * Created by sabir on 12.10.15.
  */
 
-var React = require('react');
+var React = require('react/addons');
 var assign = require('object-assign');
 
 var LoginMixin = require('../../mixins/LoginMixin');
@@ -29,6 +29,7 @@ var SelfLoadingExercisesRegistryPanel = require('../../components/exercise/SelfL
 var UpdateFeedItemPanel = require('../../components/social_networks/feed/UpdateFeedItemPanel');
 
 var YoutubeSearchPanel = require('../../components/search/youtube/YoutubeSearchPanel');
+var YoutubeSearchButton = require('../../components/search/youtube/YoutubeSearchButton');
 
 var SelfLoadingPostsList = require('../../components/social_networks/feed/SelfLoadingPostsList');
 
@@ -79,6 +80,19 @@ var ExerciseGlobalSearchPanel = require('../../components/exercise/search/Exerci
 var CommunityDialogsList = require('../../components/dialog_exercise/list/CommunityDialogsList');
 
 var SellLoadingDialogsTotalSearchList = require('../../components/dialog_exercise/list/SellLoadingDialogsTotalSearchList');
+
+var VideoSelectPanel = require('../../components/video/VideoSelectPanel');
+var AddVideoButton = require('../../components/video/AddVideoButton');
+
+var PatientPlayer = require('../../components/player/PatientPlayer');
+var PatientVideoPlayer = require('../../components/player/PatientVideoPlayer');
+
+var ReactPlayer = require('react-player');
+
+var TeacherClassesList = require('../../components/class/list/TeacherClassesList');
+
+var SubtitlesExtractorPanel = require('../../components/tools/subtitles_extractor/SubtitlesExtractorPanel');
+
 
 var DevApp = React.createClass({
     mixins: [FluxMixin],
@@ -241,9 +255,9 @@ var DevApp = React.createClass({
 
     onTextChange: function(evt){
         var val = evt.target.value;
-
-
     },
+
+
 
     sendMail: function(){
         var html = 'this is <b>test</b> message';
@@ -257,6 +271,11 @@ var DevApp = React.createClass({
     onContentChange: function(content){
         console.log('content = ', content);
     },
+
+    onOk: function(data){
+        console.log('onOk: ', data);
+    },
+
 
     getContent: function(){
         var userId = this.state.user.id;
@@ -278,11 +297,8 @@ var DevApp = React.createClass({
         return (
             <div>
 
-                <button onClick={this.sendMail} >
-                    send
-                </button>
 
-                <SellLoadingDialogsTotalSearchList />
+                <SubtitlesExtractorPanel />
 
             </div>
 

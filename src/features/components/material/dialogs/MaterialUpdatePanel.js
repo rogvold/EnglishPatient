@@ -18,10 +18,25 @@ var MaterialsMixin = require('../../../mixins/MaterialsMixin');
 
 var MosesEditorButton = require('../../moses/editor/MosesEditorButton');
 
+var YoutubeSearchButton = require('../../search/youtube/YoutubeSearchButton');
+
+var AddVideoButton = require('../../video/AddVideoButton');
+
+var PatientPlayer = require('../../player/PatientPlayer');
+
+var BackgroundImageContainer = require('../../image/BackgroundImageContainer');
+
 var MaterialUpdatePanel = React.createClass({
     getDefaultProps: function () {
         return {
             vimeoId: undefined,
+            youtubeId: undefined,
+            start: undefined,
+            end: undefined,
+
+            avatar: undefined,
+            duration: undefined,
+
             name: undefined,
             transcript: undefined,
             comment: undefined,
@@ -42,6 +57,13 @@ var MaterialUpdatePanel = React.createClass({
     getInitialState: function () {
         return {
             vimeoId: this.props.vimeoId,
+            youtubeId: this.props.youtubeId,
+            start: this.props.start,
+            end: this.props.end,
+
+            avatar: this.props.avatar,
+            duration: this.props.duration,
+
             name: this.props.name,
             transcript: this.props.transcript,
             comment: this.props.comment,
@@ -53,8 +75,48 @@ var MaterialUpdatePanel = React.createClass({
     },
 
     componentWillReceiveProps: function (np) {
+        var state = this.state;
+        var st = {};
+        if (state.vimeoId == undefined){st = assign({}, st, {vimeoId: np.vimeoId})};
+        if (state.youtubeId == undefined){st = assign({}, st, {youtubeId: np.youtubeId})};
+        if (state.start == undefined){st = assign({}, st, {start: np.start})};
+        if (state.end == undefined){st = assign({}, st, {end: np.end})};
+
+        if (state.duration == undefined){st = assign({}, st, {duration: np.duration})};
+        if (state.avatar == undefined){st = assign({}, st, {avatar: np.avatar})};
+
+        if (state.youtubeId == undefined){st = assign({}, st, {youtubeId: np.youtubeId})};
+        if (state.name == undefined){st = assign({}, st, {name: np.name})};
+        if (state.transcript == undefined){st = assign({}, st, {transcript: np.transcript})};
+        if (state.comment == undefined){st = assign({}, st, {comment: np.comment})};
+        if (state.defaultComment == undefined){st = assign({}, st, {defaultComment: np.comment})};
+        if (state.tags == undefined){st = assign({}, st, {tags: np.tags})};
+        if (state.groups == undefined || state.groups.length == 0){st = assign({}, st, {groups: np.groups})};
+        this.setState(st);
+        //this.setState({
+        //    vimeoId: np.vimeoId,
+        //    youtubeId: np.youtubeId,
+        //    name: np.name,
+        //    transcript: np.transcript,
+        //    comment: np.comment,
+        //    defaultComment: np.comment,
+        //    tags: np.tags,
+        //    groups: np.groups,
+        //    needToSave: false
+        //});
+    },
+
+    componentDidMount: function () {
+        var np = this.props;
         this.setState({
             vimeoId: np.vimeoId,
+            youtubeId: np.youtubeId,
+            start: np.start,
+            end: np.end,
+
+            duration: np.duration,
+            avatar: np.avatar,
+
             name: np.name,
             transcript: np.transcript,
             comment: np.comment,
@@ -63,10 +125,6 @@ var MaterialUpdatePanel = React.createClass({
             groups: np.groups,
             needToSave: false
         });
-    },
-
-    componentDidMount: function () {
-
     },
 
     componentStyle: {
@@ -91,7 +149,7 @@ var MaterialUpdatePanel = React.createClass({
         videoBlockPlaceholder: {
             width: '100%',
             minHeight: 167,
-            backgroundColor: '#EFF0F1',
+            //backgroundColor: '#EFF0F1',
             padding: 5,
             borderRadius: 3
         },
@@ -108,7 +166,8 @@ var MaterialUpdatePanel = React.createClass({
 
         editorPlaceholder: {
             margin: '0 auto',
-            width: 780,
+            //width: 780,
+            //width: 780,
             marginTop: 10
         },
 
@@ -205,38 +264,48 @@ var MaterialUpdatePanel = React.createClass({
     onSave: function(){
         var data = {
             vimeoId: this.state.vimeoId,
+            youtubeId: this.state.youtubeId,
+            start: this.state.start,
+            end: this.state.end,
             name: this.state.name,
             transcript: this.state.transcript,
             comment: this.state.comment,
             tags: this.state.tags,
-            groups: this.state.groups
+            groups: this.state.groups,
+            vimeoImgSrc: this.state.avatar,
+            avatar: this.state.avatar,
+            duration: this.state.duration
         };
         console.log('MaterialUpdatePanel: onSave occured: data = ', data);
         var vimeoId = this.state.vimeoId;
-        if (vimeoId == undefined){
+        var youtubeId = this.state.youtubeId;
+        if ( (vimeoId == undefined) && (youtubeId == undefined) ){
             return;
         }
-        this.setState({
-            loading: true
-        });
 
-        var self = this;
-        MaterialsMixin.loadVimeoInfo(this.state.vimeoId, function(d){
-            self.setState({
-                loading: false
-            });
-            if (d != undefined){
-                data.vimeoImgSrc = d.imgSrc;
-                data.duration = d.duration;
-            }
-            self.props.onSave(data);
-        }, function(){
-            self.setState({
-                loading: false
-            });
-        });
+
+        //this.setState({
+        //    loading: true
+        //});
         //
-        //this.props.onSave(data);
+        //var self = this;
+        //MaterialsMixin.loadVimeoInfo(this.state.vimeoId, function(d){
+        //    self.setState({
+        //        loading: false
+        //    });
+        //    if (d != undefined){
+        //        data.vimeoImgSrc = d.imgSrc;
+        //        data.duration = d.duration;
+        //    }
+        //    self.props.onSave(data);
+        //}, function(){
+        //    self.setState({
+        //        loading: false
+        //    });
+        //});
+        //
+
+        this.props.onSave(data);
     },
 
     onDelete: function(){
@@ -251,14 +320,40 @@ var MaterialUpdatePanel = React.createClass({
         });
     },
 
+    onYoutubeSubmit: function(data){
+        console.log(data);
+    },
+
+    onVideoChange: function(data){
+        this.setState({
+            vimeoId: data.vimeoId,
+            youtubeId: data.youtubeId,
+            start: data.start,
+            end: data.end,
+            avatar: data.avatar,
+            duration: data.duration,
+            needToSave: true
+        });
+    },
+
     render: function () {
         var vimeoId = (this.state.vimeoId == undefined) ? '' : this.state.vimeoId;
+        var youtubeId = this.state.youtubeId;
         var name = (this.state.name == undefined) ? '' : this.state.name;
         var transcript = (this.state.transcript == undefined) ? '' : this.state.transcript;
         var needToSave = this.state.needToSave;
-        if (name == undefined || vimeoId == undefined || vimeoId == '' || name == ''){
+        var noVideoSpecified = ((vimeoId == undefined || vimeoId == '') && (youtubeId == undefined || youtubeId == ''));
+
+        if (name == undefined || noVideoSpecified == true || name == ''){
             needToSave = false
         }
+
+        var playerIsVisible = (this.state.vimeoId != undefined || this.state.youtubeId != undefined);
+
+        var videoButtonName = (playerIsVisible == true) ? 'Изменить видео' : 'Добавить видео';
+
+
+        console.log('rendering MaterialUpdatePanel: this.state.start, this.state.end = ', this.state.start, this.state.end);
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -272,21 +367,64 @@ var MaterialUpdatePanel = React.createClass({
 
                                 <div style={this.componentStyle.videoBlockPlaceholder}>
 
-                                    {this.state.vimeoId == undefined ?
-                                        <div style={{marginBottom: 15}}>
-                                            Введите ссылку на видео (с сайта vimeo.com) в поле ниже
-                                        </div>
-                                        :
-                                        <div style={this.componentStyle.videoPlaceholder}>
-                                            <VimeoPlayer style={this.componentStyle.style} vimeoId={this.state.vimeoId} />
+                                    <div style={{display: 'none'}} >
+                                        {this.state.vimeoId == undefined ?
+                                            <div style={{marginBottom: 15}}>
+                                                Введите ссылку на видео (с сайта vimeo.com) в поле ниже
+                                            </div>
+                                            :
+                                            <div style={this.componentStyle.videoPlaceholder}>
+                                                <VimeoPlayer style={this.componentStyle.style} vimeoId={this.state.vimeoId} />
+                                            </div>
+                                        }
+                                    </div>
+
+                                    {playerIsVisible == false ? null :
+                                        <div>
+                                            <PatientPlayer
+                                                youtubeId={this.state.youtubeId}
+                                                vimeoId={this.state.vimeoId}
+                                                start={this.state.start}
+                                                end={this.state.end}
+                                                />
+
                                         </div>
                                     }
 
-                                    <div className="field" style={{marginTop: 10}} >
+                                    <div className="field" style={{marginTop: 10, display: 'none'}} >
                                         <label>Ссылка на видео<sup style={{color: '#FC636B'}}>*</sup></label>
                                         <input onChange={this.onVimeoIdChange} value={vimeoId} type="text"
                                                placeholder="ссылка на видео на сайте vimeo.com" />
                                     </div>
+
+                                    {playerIsVisible == true ? null :
+                                        <div style={{textAlign: 'center'}}>
+                                            <div style={{width: 180, height: 180, margin: '0 auto'}} >
+                                                <BackgroundImageContainer
+                                                    image={'http://www.englishpatient.org/assets/images/video_pre_player.png'} />
+                                            </div>
+                                            <div style={{padding: 8, opacity: 0.6}} >
+                                                Добавьте видео
+                                            </div>
+                                        </div>
+                                    }
+
+
+                                    <div style={{padding: 5, borderRadius: 5, textAlign: 'center',
+                                                    backgroundColor: 'white'}} >
+                                        <AddVideoButton
+                                            youtubeId={this.state.youtubeId}
+                                            vimeoId={this.state.vimeoId}
+                                            start={this.state.start}
+                                            end={this.state.end}
+                                            duration={this.state.duration}
+                                            avatar={this.state.avatar}
+
+                                            buttonClassName={'ui basic fluid button'}
+                                            buttonName={videoButtonName}
+                                            onChange={this.onVideoChange} />
+                                    </div>
+
 
                                 </div>
 
@@ -314,7 +452,10 @@ var MaterialUpdatePanel = React.createClass({
                                     <MaterialTags tags={this.state.tags} />
                                 </div>
 
-                                <GroupsSelect onSelect={this.onGroupsSelect} selectedGroups={this.state.groups} groups={this.props.allGroupsList} />
+                                <label><b>Категория</b></label>
+                                <div style={{marginTop: 5}} >
+                                    <GroupsSelect onSelect={this.onGroupsSelect} selectedGroups={this.state.groups} groups={this.props.allGroupsList} />
+                                </div>
 
                             </div>
                         </div>

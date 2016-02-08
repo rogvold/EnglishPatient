@@ -12,6 +12,8 @@ var Dialog = require('../../dialog/Dialog');
 
 var PatientPlayer = require('../../player/PatientPlayer');
 
+var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
+
 var CreateCourseCardButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -70,7 +72,8 @@ var CreateCourseCardButton = React.createClass({
     },
 
     createCourseClicked: function(){
-        alert('UNDER CONSTRUCTION');
+        //alert('UNDER CONSTRUCTION');
+        CommonMixin.forceTransitionTo('/#/courses');
     },
 
     getDialogContent: function(){

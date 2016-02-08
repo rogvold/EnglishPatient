@@ -50,6 +50,7 @@ var BootstrapComponent = React.createClass({
             flux.actions.loadAllTopics();
             flux.actions.loadAllAvailableExercises();
             flux.actions.loadAllDialogs();
+            flux.actions.loadTeacherClasses(user.id);
         }
 
     },

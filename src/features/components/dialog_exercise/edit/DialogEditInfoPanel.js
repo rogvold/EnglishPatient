@@ -21,6 +21,8 @@ var DialogMixin = require('../../../mixins/DialogMixin');
 
 var DeleteButton = require('../../buttons/DeleteButton');
 
+var YoutubeSearchButton = require('../../search/youtube/YoutubeSearchButton');
+
 var DialogEditInfoButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -43,6 +45,10 @@ var DialogEditInfoButton = React.createClass({
             secondRoleName: undefined,
             vimeoId: undefined,
 
+            youtubeId: undefined,
+            start: undefined,
+            end: undefined,
+
             onUpdate: function(data){
 
             },
@@ -64,6 +70,10 @@ var DialogEditInfoButton = React.createClass({
             firstRoleName: this.props.firstRoleName,
             secondRoleName: this.props.secondRoleName,
             vimeoId: this.props.vimeoId,
+            youtubeId: this.props.youtubeId,
+
+            start: this.props.start,
+            end: this.props.end,
 
             cards: this.props.cards,
 
@@ -189,7 +199,11 @@ var DialogEditInfoButton = React.createClass({
 
         saveButtonPlaceholder: {
             padding: 5,
-            paddingLeft: 0
+            paddingLeft: 0,
+            position: 'absolute',
+            zIndex: 10000,
+            right: 5,
+            bottom: 0
         }
     },
 
@@ -343,6 +357,8 @@ var DialogEditInfoButton = React.createClass({
         this.props.onDelete();
     },
 
+
+
     render: function () {
         var vimeoId = (this.state.vimeoId == undefined) ? '' : this.state.vimeoId;
         var canAddCard = this.canAddCard();
@@ -391,6 +407,9 @@ var DialogEditInfoButton = React.createClass({
                             </div>
                         }
 
+
+
+
                         <div className={'ui form'}>
                             <div className="field" style={{marginTop: 10}} >
                                 <label>Ссылка на видео<sup style={{color: '#FC636B'}}>*</sup></label>
@@ -400,6 +419,8 @@ var DialogEditInfoButton = React.createClass({
                                        placeholder="ссылка на видео" />
                             </div>
                         </div>
+
+
 
                     </div>
 
@@ -421,15 +442,17 @@ var DialogEditInfoButton = React.createClass({
 
                     <div style={this.componentStyle.saveButtonPlaceholder}>
 
-                        <button disabled={!canSave} className={'ui primary tiny button'} onClick={this.updateDialog} >
-                            <i className={'icon save'} ></i> Сохранить
-                        </button>
-
                         {this.props.dialogId == undefined ? null :
-                            <div style={{marginTop: 5}}>
+                            <div style={{display: 'inline-block'}}>
                                 <DeleteButton onDelete={this.onDelete} />
                             </div>
                         }
+
+                        <button disabled={!canSave} className={'ui patientPrimary button'} onClick={this.updateDialog} >
+                            <i className={'icon save'} ></i> Сохранить
+                        </button>
+
+
 
                     </div>
 

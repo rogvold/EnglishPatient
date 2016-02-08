@@ -81,10 +81,16 @@ var EditTopicButton2 = React.createClass({
         }
     },
 
+
+
     render: function () {
+
+        var dialogLevel = (this.props.dialogLevel == undefined) ? 0 : this.props.dialogLevel;
+        dialogLevel = dialogLevel + 10000;
 
         return (
             <div style={this.componentStyle.placeholder}>
+
                 <button className={this.props.buttonClassName} onClick={this.onEditClick} >
                     <i className={this.props.buttonIcon} ></i> {this.props.buttonName}
                 </button>
@@ -92,14 +98,13 @@ var EditTopicButton2 = React.createClass({
                 {this.state.dialogVisible == false ? null :
                     <div>
                         <UpdateTopicDialog
-                            dialogLevel={this.props.dialogLevel + 10000}
+                            dialogLevel={dialogLevel}
                             topicId={this.props.topicId}
                             teacherId={this.props.teacherId}
                             onTopicDeleted={this.onTopicDeleted}
                             onClose={this.onClose}
                             onTopicUpdated={this.onTopicUpdated} />
                     </div>
-
                 }
             </div>
         );

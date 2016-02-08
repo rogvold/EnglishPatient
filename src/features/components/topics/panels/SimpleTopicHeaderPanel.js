@@ -92,11 +92,12 @@ var SimpleTopicHeaderPanel = React.createClass({
 
 
     render: function () {
-        var topPanelStyle = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url("' + this.props.avatar + '")'});
+        var topPanelStyle = assign({}, this.componentStyle.placeholder,
+            {backgroundImage: 'url("' + this.props.avatar + '")'});
         var customContent = this.props.customContent;
 
         return (
-            <div style={topPanelStyle}>
+            <div style={topPanelStyle} >
 
                 <div style={this.componentStyle.topPanelOverlay}></div>
 

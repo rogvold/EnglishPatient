@@ -7,12 +7,19 @@ var assign = require('object-assign');
 
 var VimeoPlayer = require('../../player/VimeoPlayer');
 
+var PatientPlayer = require('../../player/PatientPlayer');
+
 var TranslatableText = require('../../text/translatable/TranslatableText');
 
 var MaterialPanel = React.createClass({
     getDefaultProps: function () {
         return {
             vimeoId: undefined,
+
+            youtubeId: undefined,
+            start: undefined,
+            end: undefined,
+
             name: undefined,
             tags: [],
             transcript: undefined,
@@ -108,7 +115,14 @@ var MaterialPanel = React.createClass({
             <div style={this.componentStyle.placeholder}>
 
                 <div style={this.componentStyle.playerPlaceholder}>
-                    <VimeoPlayer vimeoId={this.props.vimeoId} style={this.componentStyle.playerStyle} />
+
+                    <PatientPlayer youtubeId={this.props.youtubeId}
+                                   abMode={false}
+                                   playOnce={true}
+                                   start={this.props.start} end={this.props.end}
+                                   vimeoId={this.props.vimeoId} style={this.componentStyle.playerStyle} />
+
+
                 </div>
 
 

@@ -96,6 +96,14 @@ var LoginMixin = {
         }
     },
 
+    getCurrentUserId: function(){
+        var u = this.getCurrentUser();
+        if (u == undefined){
+            return undefined;
+        }
+        return u.id;
+    },
+
     isLoggedIn: function(){
         return (Parse.User.current() != undefined);
     },

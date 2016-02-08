@@ -196,8 +196,6 @@ var SelfLoadingLeftSidebarClassesList = React.createClass({
     },
 
 
-
-
     render: function () {
         var items = this.state.classes.map(function(cl){
             return {
@@ -206,6 +204,7 @@ var SelfLoadingLeftSidebarClassesList = React.createClass({
                 classId: cl.id
             }
         });
+
         console.log('!!! selectedClassId = ', this.props.selectedClassId);
 
         return (

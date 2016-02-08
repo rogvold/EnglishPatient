@@ -21,8 +21,10 @@ var LoginApp = require('./LoginApp');
 var TeacherHeader = require('../../components/header/teacher/TeacherHeader');
 
 var GrammarPanel = require('../../components/grammar/GrammarPanel');
+var CommunityGrammarPanel = require('../../components/grammar/CommunityGrammarPanel');
 
 var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
+
 
 var GrammarApp = React.createClass({
     getDefaultProps: function () {
@@ -112,6 +114,8 @@ var GrammarApp = React.createClass({
             <div>
 
                 <GrammarPanel teacherId={this.state.user.id} />
+
+                <CommunityGrammarPanel />
 
             </div>
 

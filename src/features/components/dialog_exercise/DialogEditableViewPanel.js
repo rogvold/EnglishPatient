@@ -119,14 +119,14 @@ var DialogEditableViewPanel = React.createClass({
                     <div style={this.componentStyle.footerPlaceholder}>
                         {mode == 'edit' ?
                             <div>
-                                <button className={'ui button primary'} onClick={this.switchMode.bind(this, 'view')} >
+                                <button className={'ui button'} onClick={this.switchMode.bind(this, 'view')} >
                                     <i className={'icon reply'} ></i>
                                     просмотр
                                 </button>
                             </div>
                             :
                             <div>
-                                <button className={'ui button primary'} onClick={this.switchMode.bind(this, 'edit')} >
+                                <button className={'ui button patientPrimary'} onClick={this.switchMode.bind(this, 'edit')} >
                                     <i className={'icon pencil'} ></i>
                                     редактировать
                                 </button>

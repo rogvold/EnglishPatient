@@ -10,6 +10,8 @@ var constants = {
     MAILGUN_API_KEY: 'key-ad0b884bdf8f3a32a4c84eddd641c735',
     MAILGUN_DOMAIN: 'mg.englishpatient.org',
 
+    SLAASK_KEY: '6b676a51cfad68ec24ab3dc4c28fa094',
+
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
     FETCH_CURRENT_USER: 'FETCH_CURRENT_USER',

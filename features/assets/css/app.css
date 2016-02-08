@@ -146,7 +146,11 @@ div.vimeo .vimeo-embed iframe{
 }
 
 .patientFeedItemInfo div img{
-    width: 100%;
+    max-width: 100%;
+}
+
+.patientEditorPreviewPlaceholder img{
+    max-width: 100%;
 }
 
 /*#2E3C54*/

@@ -9,6 +9,13 @@
           </mappings>
         </serverdata>
       </paths>
+      <paths name="search.englishpatient.org">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/var/www/englishpatient.org" local="$PROJECT_DIR$/features" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
   </component>
 </project>

@@ -80,7 +80,8 @@ var PatientTask = React.createClass({
         },
 
         videoPlaceholder: {
-
+            width: '100%',
+            height: 350
         },
 
         textPlaceholder: {
@@ -104,12 +105,16 @@ var PatientTask = React.createClass({
         var text = this.getText();
         var image = this.getImage();
 
+        var videoIsEmpty = (video == undefined || ( (video.vimeoId == undefined) && (video.youtubeId == undefined)  ));
+
         return (
             <div style={this.componentStyle.placeholder}>
 
-                {((video == undefined) || (video.vimeoId == undefined)) ? null :
+                {(videoIsEmpty == true) ? null :
                     <div style={this.componentStyle.videoPlaceholder}>
-                        <ExerciseVideo vimeoId={video.vimeoId} />
+                        <ExerciseVideo vimeoId={video.vimeoId}
+                                       youtubeId={video.youtubeId}
+                                       start={video.start} end={video.end} />
                     </div>
                 }
 

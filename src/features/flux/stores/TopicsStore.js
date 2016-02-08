@@ -24,7 +24,17 @@ var TopicsStore = Fluxxor.createStore({
             constants.LOAD_ALL_TEACHER_TOPICS_SUCCESS, this.onLoadedAllTeacherTopics,
 
             constants.REFRESH_TOPIC_INFO, this.onRefreshTopicInfo,
-            constants.REFRESH_TOPIC_INFO_SUCCESS, this.onRefreshedTopicInfo
+            constants.REFRESH_TOPIC_INFO_SUCCESS, this.onRefreshedTopicInfo,
+
+            constants.DELETE_TOPIC, this.deleteTopic,
+            constants.DELETE_TOPIC_SUCCESS, this.deleteTopicSuccess,
+
+            constants.UPDATE_TOPIC, this.updateTopic,
+            constants.CREATE_TOPIC, this.createTopic,
+            constants.CREATE_TOPIC_SUCCESS, this.createTopicSuccess
+
+
+
         );
     },
 
@@ -88,11 +98,48 @@ var TopicsStore = Fluxxor.createStore({
         this.emit('change');
     },
 
+    deleteTopic: function(){
+        this.loading = true;
+        this.emit('change');
+    },
+
+    deleteTopicSuccess: function(payload){
+        this.loading = false;
+        var topicId = payload.topicId;
+        this.topicsMap[topicId] = undefined;
+        this.emit('change');
+    },
+
+    updateTopic: function(){
+        this.loading = true;
+        this.emit('change');
+    },
+
+    createTopic: function(){
+        this.loading = true;
+        this.emit('change');
+    },
+
+    createTopicSuccess: function(paylad){
+        var topic = payload.topic;
+        if (topic == undefined){
+            return;
+        }
+        this.loading = false;
+        this.topicsMap[topic.id] = topic;
+        this.emit('change');
+    },
+
     getTopicsByUserIdAndTopicType: function(userId, topicType){
+        console.log('getTopicsByUserIdAndTopicType occured: userId, topicType = ', userId, topicType);
+        console.log('topicsMap = ', this.topicsMap);
         var arr = [];
         var map = this.topicsMap;
         for (var key in map){
             var topic = map[key];
+            if (topic == undefined){
+                continue;
+            }
             if (topicType != undefined && topic.topicType != topicType){
                 continue;
             }
@@ -103,16 +150,33 @@ var TopicsStore = Fluxxor.createStore({
         return arr;
     },
 
-    getCommunityTopics: function(userId){
+    getCommunityTopics: function(userId, topicType){
+        if (topicType == undefined){
+            topicType = 'basic';
+        }
         var arr = [];
         var map = this.topicsMap;
         for (var key in map){
             var topic = map[key];
+            if (topic == undefined){
+                continue;
+            }
+            if (topic.topicType != topicType){
+                continue;
+            }
             if (topic.creatorId != userId){
                 arr.push(topic);
             }
         }
         return arr;
+    },
+
+    getTopic: function(topicId){
+        if (topicId == undefined){
+            return undefined;
+        }
+        var map = this.topicsMap;
+        return map[topicId];
     },
 
     getState: function(){

@@ -36,6 +36,10 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
         return {
             loading: false,
             vimeoId: undefined,
+            youtubeId: undefined,
+            start: undefined,
+            end: undefined,
+            duration: undefined,
             name: undefined,
             transcript: undefined,
             groups: [],
@@ -73,6 +77,10 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
                 loading: false,
                 name: m.name,
                 vimeoId: m.vimeoId,
+                youtubeId: m.youtubeId,
+                start: m.start,
+                end: m.end,
+                duration: m.duration,
                 comment: m.comment,
                 transcript: m.transcript,
                 avatar: m.avatar,
@@ -97,6 +105,12 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
                 name: material.name,
                 comment: material.comment,
                 vimeoId: material.vimeoId,
+                youtubeId: material.youtubeId,
+                start: material.start,
+                end: material.end,
+                duration: material.duration,
+                vimeoImgSrc: material.avatar,
+                avatar: material.avatar,
                 transcript: material.transcript,
                 tags: material.tags,
                 groups: material.tags
@@ -134,7 +148,12 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
 
         return (
             <div style={this.componentStyle.placeholder}>
-                <MaterialUpdatePanel vimeoId={this.state.vimeoId} name={this.state.name}
+                <MaterialUpdatePanel vimeoId={this.state.vimeoId}
+                                     youtubeId={this.state.youtubeId}
+                                     start={this.state.start} end={this.state.end}
+                                     duration={this.state.duration} avatar={this.state.avatar}
+
+                                     name={this.state.name}
                                      comment={this.state.comment} transcript={this.state.transcript}
                                      tags={this.state.tags} groups={this.state.groups}
                                      onSave={this.onUpdate} teacherId={this.props.teacherId}

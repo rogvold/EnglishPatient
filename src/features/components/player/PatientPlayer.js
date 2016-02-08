@@ -6,7 +6,7 @@
 var React = require('react');
 var assign = require('object-assign');
 
-var ReactPlayer = require('react-player');
+var ReactPlayer = require('react-player');//0.3.0
 
 var VideoMixin = require('../../mixins/VideoMixin');
 
@@ -17,7 +17,6 @@ var PatientPlayer = React.createClass({
             //youtubeId: '8SbUC-UaAxE',
             //vimeoId: '70260646',
             vimeoId: undefined,
-
             start: 0,
             end: 1000 * 100000,
 
@@ -30,7 +29,15 @@ var PatientPlayer = React.createClass({
 
             abPauseDuration: 500,
 
+            playOnce: false,
+
+
+
             onProgress: function(seconds){
+
+            },
+
+            style: {
 
             }
 
@@ -216,16 +223,34 @@ var PatientPlayer = React.createClass({
         var duration = this.state.duration;
         var pos = (playedFraction == undefined) ? 0 : (playedFraction * duration);
         console.log(pos);
-        if (pos < start || pos > end ){
-            this.seekTo( 1.0 * start / duration);
+
+        if (this.props.playOnce == true){
+            if (pos < start){
+                this.seekTo( 1.0 * start / duration);
+            }
+            if (pos >= end){
+                this.seekTo( 1.0 * start / duration);
+                //this.pause();
+                this.setState({
+                    playing: false
+                });
+            }
+        }else {
+            if (pos < start || pos > end ){
+                this.seekTo( 1.0 * start / duration);
+            }
         }
+
         if (this.props.abMode == true){
             if (pos >= end){
                 //this.seekTo( 1.0 * start / duration);
                 //setTimeout(function(){
                 //    this.play();
                 //}.bind(this), 1000);
-                this.abPlayPause();
+                if (this.props.playOnce == false){
+                    this.abPlayPause();
+                }
+
             }
         }
         this.props.onProgress(pos / 1000.0);
@@ -253,6 +278,18 @@ var PatientPlayer = React.createClass({
         }.bind(this), this.props.abPauseDuration);
     },
 
+    pause: function(){
+        //var player = this.refs.player; !!! it's working
+        var refer = this.getPlayerRef();
+        var player = this.refs[refer];
+        try{
+            console.log('trying to pause');
+            player.pauseVideo();
+        }catch(err){
+            console.log('failed to pause: err = ', err);
+        }
+
+    },
 
     render: function () {
         var refer = this.getPlayerRef();
@@ -280,8 +317,10 @@ var PatientPlayer = React.createClass({
             //autoplay: false
         };
 
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
+
         return (
-            <div style={this.componentStyle.placeholder}>
+            <div style={st}>
 
                 {this.state.loading == true ? null :
                         <ReactPlayer url={url} ref={refer}

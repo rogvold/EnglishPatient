@@ -81,11 +81,17 @@ var DialogViewPanel = React.createClass({
                     </div>
 
                     <div style={this.componentStyle.infoPlaceholder}>
-                        <b><i className={'icon calendar'} ></i> дата создания:</b>
+                        <span style={{marginRight: 5}} >
+                            <b><i className={'icon calendar'} ></i> дата создания:</b>
+                        </span>
                         {sDate}
+
                         <br/>
 
-                        <b><i className={'icon file'} ></i> описание:</b>
+                        <span style={{marginRight: 5}} >
+                            <b><i className={'icon file'} ></i> описание:</b>
+                        </span>
+
                         {dialog.description}
 
                     </div>

@@ -49,7 +49,7 @@ var UpdateTopicDialog = React.createClass({
 
     getInitialState: function () {
         return {
-            access: 'private',
+            access: 'public',
             topicType: this.props.topicType
         }
     },
@@ -303,7 +303,6 @@ var UpdateTopicDialog = React.createClass({
                         </div>
                     }
 
-
                 </div>
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
@@ -317,19 +316,10 @@ var UpdateTopicDialog = React.createClass({
     render: function () {
 
         return (
-            <div style={this.componentStyle.placeholder}>
-
                 <TopicDialog
                                 onClose={this.props.onClose}
                                 dialogLevel={this.props.dialogLevel}
-                                content={this.getDialogContent()
-
-
-                                }
-                />
-
-
-            </div>
+                                content={this.getDialogContent()} />
         );
     }
 

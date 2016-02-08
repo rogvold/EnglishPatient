@@ -8,7 +8,12 @@ var assign = require('object-assign');
 var Dialog = require('../../dialog/Dialog');
 var ClassMixin = require('../../../mixins/ClassMixin');
 
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var AddNewClassButton = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             teacherId: undefined,
@@ -125,6 +130,7 @@ var AddNewClassButton = React.createClass({
             self.setState({
                 loading: false
             });
+            self.getFlux().actions.loadClass(createdClass.id);
             self.props.onClassCreated(createdClass);
             self.hideDialog();
         });

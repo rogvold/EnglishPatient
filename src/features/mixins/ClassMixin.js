@@ -23,6 +23,7 @@ var ClassMixin = {
             id: p.id,
             ownerId: p.get('ownerId'),
             classId: p.classId,
+            timestamp: (new Date(p.createdAt)).getTime(),
             extendedDescription: p.get('extendedDescription')
         }
     },
@@ -76,6 +77,25 @@ var ClassMixin = {
                 callback(n);
             }
         });
+    },
+
+    loadStudentsIdsMapByClasses: function(classes, callback){
+        var ids = classes.map(function(c){return c.id;});
+        var q = new Parse.Query('StudentClassLink');
+        q.containedIn('classId', ids);
+        q.limit(1000);
+        q.find(function(results){
+            var map = {};
+            for (var i in results){
+                var classId = results[i].get('classId');
+                var studentId = results[i].get('studentId');
+                if (map[classId] == undefined){
+                    map[classId] = [];
+                }
+                map[classId].push(studentId);
+            }
+            callback(map);
+        }.bind(this));
     },
 
     loadUserClasses: function(userId, callback){

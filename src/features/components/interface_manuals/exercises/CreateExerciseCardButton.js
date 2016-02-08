@@ -12,6 +12,8 @@ var Dialog = require('../../dialog/Dialog');
 
 var PatientPlayer = require('../../player/PatientPlayer');
 
+var CommonMixin = require('../../../../react/mixins/commonMixins/CommonMixin');
+
 var CreateExerciseCardButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -71,7 +73,8 @@ var CreateExerciseCardButton = React.createClass({
     },
 
     createExerciseClicked: function(){
-        alert('UNDER CONSTRUCTION');
+        //alert('UNDER CONSTRUCTION');
+        CommonMixin.forceTransitionTo('/#/exercises');
     },
 
     getDialogContent: function(){

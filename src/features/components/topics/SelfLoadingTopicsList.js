@@ -173,16 +173,21 @@ var SelfLoadingTopicsList = React.createClass({
         //this.load(this.props.teacherId, function(topics){
         //
         //});
-        this.getFlux().actions.refreshTopic(topic.id);
+        var topicId = topic == undefined ? undefined : topic.id;
+        this.getFlux().actions.refreshTopic(topicId);
     },
 
     onTopicUpdated: function(topic){
         this.onTopicCreated(topic);
+
     },
 
     onTopicDeleted: function(){
         console.log('SelfLoadingTopicsList: onTopicDeleted occured');
-        this.onTopicCreated();
+        //this.onTopicCreated();
+        this.setState({
+            topicDialogVisible: false
+        });
     },
 
     render: function () {

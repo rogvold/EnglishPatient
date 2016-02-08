@@ -149,8 +149,15 @@ var MosesTimePanel = React.createClass({
             st = assign({}, st, this.componentStyle.active);
         }
 
+        var placeholderSt = assign({}, this.componentStyle.placeholder);
+        if (this.props.textEnabled == false){
+            placeholderSt = assign({}, placeholderSt, {width: 'auto', textAlign: 'center'});
+        }
+
+        placeholderSt = assign({}, st, placeholderSt);
+
         return (
-            <div style={st}>
+            <div style={placeholderSt}>
 
                 <div style={this.componentStyle.startPlaceholder}>
                     <MosesTimeInput placeholder={'Start'}

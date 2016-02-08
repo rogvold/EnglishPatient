@@ -190,7 +190,8 @@ var MaterialDialog = React.createClass({
         console.log('rendering material dialog: materialId = ', this.props.materialId);
         return (
             <div style={this.componentStyle.placeholder}>
-                <Dialog footerStyle={this.componentStyle.footerStyle} dialogPanelStyle={this.componentStyle.dialogPanelStyle}
+                <Dialog footerStyle={this.componentStyle.footerStyle}
+                        dialogPanelStyle={this.componentStyle.dialogPanelStyle}
                         visible={this.props.visible} onClose={this.props.onClose}
                         level={this.props.level}
                         content={this.getDialogContent()} footer={this.getFooter()}  />

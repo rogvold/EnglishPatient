@@ -6,16 +6,19 @@ var React = require('react');
 var assign = require('object-assign');
 
 var EditTopicButton = require('../EditTopicButton');
-var EditTopicButton2 = require('../EditTopicButton2');
+var EditTopicButton3 = require('../EditTopicButton3');
 
 var LoginMixin = require('../../../mixins/LoginMixin');
 
 
 var Fluxxor = require('fluxxor');
 var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
+var CoolPreloader = require('../../preloader/CoolPreloader');
 
 var TopicHeaderPanel = React.createClass({
-    mixins: [FluxMixin],
+    mixins: [FluxMixin, StoreWatchMixin('TopicsStore')],
 
     getDefaultProps: function () {
         return {
@@ -41,6 +44,13 @@ var TopicHeaderPanel = React.createClass({
 
     getInitialState: function () {
         return {}
+    },
+
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('TopicsStore');
+        return {
+            loading: store.loading
+        }
     },
 
     componentWillReceiveProps: function (nextProps) {
@@ -119,16 +129,21 @@ var TopicHeaderPanel = React.createClass({
     },
 
     render: function () {
-        var topPanelStyle = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url("' + this.props.avatar + '")'});
-
         var user = LoginMixin.getCurrentUser();
         var userId = (user == undefined) ? undefined : user.id;
         var topic = this.getFlux().store('TopicsStore').topicsMap[this.props.topicId];
+        var topPanelStyle = assign({}, this.componentStyle.placeholder, {backgroundImage: 'url("' + this.props.avatar + '")'});
+        var name = this.props.name;
+        var description = this.props.description;
+
         var editMode = false;
         if (topic != undefined){
             if (topic.creatorId == userId){
                 editMode = true;
             }
+            topPanelStyle = assign({}, topPanelStyle, {backgroundImage: 'url("' + topic.avatar + '")'});
+            name = topic.name;
+            description = topic.description;
         }
 
 
@@ -140,17 +155,17 @@ var TopicHeaderPanel = React.createClass({
                 <div style={this.componentStyle.topPanelOverlayPanel}>
 
                     <div style={this.componentStyle.namePlaceholder}>
-                        {this.props.name}
+                        {name}
                     </div>
 
                     <div style={this.componentStyle.descriptionPlaceholder}>
-                        {this.props.description}
+                        {description}
                     </div>
 
 
                     {editMode == true ?
                         <div style={this.componentStyle.editButtonPlaceholder}>
-                            <EditTopicButton2
+                            <EditTopicButton3
                                 dialogLevel={this.props.dialogLevel}
                                 onTopicDeleted={this.onTopicDeleted}
                                 onTopicUpdated={this.onTopicUpdated}
@@ -160,6 +175,10 @@ var TopicHeaderPanel = React.createClass({
                     }
 
                 </div>
+
+                {this.state.loading == false ? null :
+                    <CoolPreloader />
+                }
 
             </div>
         );

@@ -60,13 +60,19 @@ var TopicsMixin = {
             callback([]);
             return;
         }
-        if (topicType == undefined){
-            topicType = 'basic';
-        }
+
         var q = new Parse.Query('PatientTopic');
         q.limit(1000);
         q.addDescending('createdAt');
-        q.equalTo('topicType', topicType);
+
+        //if (topicType == undefined){
+        //    topicType = 'basic';
+        //}
+
+        if (topicType != undefined){
+            q.equalTo('topicType', topicType);
+        }
+
         q.equalTo('access', 'public');
         q.notEqualTo('creatorId', teacherId);
         var self = this;
@@ -93,6 +99,22 @@ var TopicsMixin = {
         });
     },
 
+    loadGrammarCommunityTopics: function(teacherId, callback){
+        var q = new Parse.Query('PatientTopic');
+        q.limit(1000);
+        q.equalTo('access', 'public');
+        q.notEqualTo('creatorId', teacherId);
+        q.equalTo('topicType', 'grammar');
+        var self = this;
+        q.find(function(results){
+            var arr = results.map(function(p){
+                return self.transformTopic(p)
+            });
+            callback(arr);
+        });
+    },
+
+
     loadTopicById: function(topicId, callback){
         if (topicId == undefined){
             return undefined;
@@ -118,6 +140,9 @@ var TopicsMixin = {
         if (teacherId == undefined){
             callback(undefined);
             return;
+        }
+        if (topicType == undefined){
+            topicType = 'basic';
         }
         var PatientTopic = Parse.Object.extend('PatientTopic');
         var p = new PatientTopic();

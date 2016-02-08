@@ -99,6 +99,7 @@ var ExercisesActions = {
     },
 
     loadGroupsOfExercises: function(exercises){
+        console.log('ExercisesActions: loadGroupsOfExercises: exercises = ', exercises);
         if (exercises == undefined){
             exercises = [];
         }
