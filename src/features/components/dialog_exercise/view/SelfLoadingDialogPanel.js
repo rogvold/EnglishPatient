@@ -15,7 +15,13 @@ var DialogTaskPanel = require('./DialogTaskPanel');
 var TeacherFeedbackCreationBlock = require('../../teacher/TeacherFeedbackCreationBlock');
 
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
+
 var SelfLoadingDialogPanel = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('UsersStore')],
     getDefaultProps: function () {
         return {
             dialogId: undefined,
@@ -42,6 +48,13 @@ var SelfLoadingDialogPanel = React.createClass({
             roleNumber: 0,
             answersMap: {}
 
+        }
+    },
+
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('UsersStore');
+        return {
+            usersLoading: store.loading
         }
     },
 
@@ -220,8 +233,12 @@ var SelfLoadingDialogPanel = React.createClass({
         var isFinished = this.isFinished();
         var feedback = this.getFeedback();
         var score = (this.state.score == undefined) ? {} : this.state.score;
+        var creatorId = dialog.creatorId;
+        var creator = this.getFlux().store('UsersStore').usersMap[creatorId];
+        var lang = (creator == undefined) ? 'en' : creator.lang;
 
         console.log('rednering SelfLoadingDialogPanel: canFinish = ', canFinish);
+        console.log('rednering SelfLoadingDialogPanel: lang = ', lang);
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -237,6 +254,7 @@ var SelfLoadingDialogPanel = React.createClass({
                     <div>
                         {this.state.mode == 'prepare' ?
                             <DialogPreparePanel
+                                lang={lang}
                                 onRoleSelect={this.onRoleSelect}
                                 dialog={dialog} cards={cards} />
                             :

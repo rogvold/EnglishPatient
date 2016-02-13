@@ -111,18 +111,21 @@ var ExerciseMixin = {
     },
 
     loadExerciseInfo: function(exerciseId, callback){
+        var self = this;
         this.loadExerciseById(exerciseId, function(ex) {
-            var ex = {
-                name: ex.get('name'),
-                id: ex.id,
-                exerciseId: ex.id,
-                groups: (ex.get('groups') == undefined) ? [] : ex.get('groups'),
-                description: ex.get('description'),
-                task: ex.get('task'),
-                avatar: ex.get('imageUrl'),
-                timestamp: (new Date(ex.createdAt)).getTime(),
-                imageUrl: ex.get('imageUrl')
-            };
+            var ex = self.transformExercise(ex);
+            //{
+            //    name: ex.get('name'),
+            //    id: ex.id,
+            //    access: ex.get('access'),
+            //    exerciseId: ex.id,
+            //    groups: (ex.get('groups') == undefined) ? [] : ex.get('groups'),
+            //    description: ex.get('description'),
+            //    task: ex.get('task'),
+            //    avatar: ex.get('imageUrl'),
+            //    timestamp: (new Date(ex.createdAt)).getTime(),
+            //    imageUrl: ex.get('imageUrl')
+            //};
             callback(ex);
         });
     },

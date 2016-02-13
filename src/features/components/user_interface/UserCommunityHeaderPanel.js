@@ -21,8 +21,20 @@ var UserCommunityHeaderPanel = React.createClass({
             userId: undefined,
             customName: undefined,
             customInfoHtml: undefined,
+            customInfo: undefined,
             style: {
 
+            },
+
+            infoStyle:{
+                fontSize: 12,
+                opacity: 0.6
+            },
+
+            userNameStyle: {
+                color: '#2E3C54',
+                fontSize: 14,
+                fontWeight: 'bold'
             }
         }
     },
@@ -50,6 +62,11 @@ var UserCommunityHeaderPanel = React.createClass({
 
     componentDidMount: function () {
         var userId = this.props.userId;
+        var width = React.findDOMNode(this).offsetWidth;
+        this.setState({
+            width: width
+        });
+
         if (userId != undefined){
             var user = this.getFlux().store('UsersStore').getUserById(userId);
             if (user != undefined){
@@ -69,6 +86,7 @@ var UserCommunityHeaderPanel = React.createClass({
         placeholder: {
             //padding: 5,
             //borderBottom: '1px solid #EFF0F1',
+            //width: '100%',
             display: 'inline-block',
             verticalAlign: 'top',
             position: 'relative'
@@ -90,14 +108,13 @@ var UserCommunityHeaderPanel = React.createClass({
         },
 
         userNamePlaceholder: {
-            color: '#2E3C54',
-            fontSize: 14,
-            fontWeight: 'bold'
+            //color: '#2E3C54',
+            //fontSize: 14,
+            //fontWeight: 'bold'
         },
 
         userTopicsInfoPlaceholder: {
-            fontSize: 12,
-            opacity: 0.6
+
         }
     },
 
@@ -105,7 +122,14 @@ var UserCommunityHeaderPanel = React.createClass({
         var userId = this.props.userId;
         var user = this.getFlux().store('UsersStore').getUserById(userId);
         var st = assign({}, this.componentStyle.placeholder, this.props.style);
+        var infoStyle = assign({}, this.componentStyle.userTopicsInfoPlaceholder, this.props.infoStyle);
 
+        var w = this.state.width;
+        var rightStyle = assign({}, this.componentStyle.userInfoRightBlockPlaceholder);
+        if (w != undefined){
+            rightStyle = assign({}, rightStyle, {width: w - 50});
+        }
+        var userNameStyle = assign({}, this.componentStyle.userNamePlaceholder, this.props.userNameStyle);
 
         return (
             <div style={st}>
@@ -117,15 +141,22 @@ var UserCommunityHeaderPanel = React.createClass({
                             <BackgroundImageContainer image={user.avatar} />
                         </div>
 
-                        <div style={this.componentStyle.userInfoRightBlockPlaceholder}>
-                            <div style={this.componentStyle.userNamePlaceholder}>
+                        <div style={rightStyle}>
+                            <div style={userNameStyle}>
                                 {this.props.customName == undefined ?
                                     <span>{user.name}</span> : <span>{this.props.customName}</span>
                                 }
                             </div>
+
                             {this.props.customInfoHtml == undefined ? null :
-                                <div style={this.componentStyle.userTopicsInfoPlaceholder}>
+                                <div style={infoStyle}>
                                     <div dangerouslySetInnerHTML={{__html: this.props.customInfoHtml}}></div>
+                                </div>
+                            }
+
+                            {this.props.customInfo == undefined ? null :
+                                <div style={infoStyle}>
+                                    {this.props.customInfo}
                                 </div>
                             }
 

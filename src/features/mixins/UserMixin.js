@@ -5,6 +5,7 @@
 var React = require('react');
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var Parse = require('parse').Parse;
+var LoginMixin = require('./LoginMixin');
 
 var UserMixin = {
 
@@ -27,7 +28,8 @@ var UserMixin = {
             email: u.get('email'),
             avatar: u.get('avatar'),
             timestamp: (new Date(u.createdAt)).getTime(),
-            id: u.id
+            id: u.id,
+            lang: (u.get('lang') == undefined) ? 'en' : u.get('lang')
         }
     },
 
@@ -65,6 +67,24 @@ var UserMixin = {
                 callback(self.transformUser(user));
             });
         });
+    },
+
+    updateUserWithData: function(data, callback){
+        if (data == undefined){
+            return;
+        }
+        var user = Parse.User.current();
+        if (user == undefined){
+            return;
+        }
+        for (var key in data){
+            user = ParseMixin.safeSet(user, [{name: key, value: data[key]}]);
+        }
+        var self = this;
+        user.save().then(function(u){
+            var us = self.transformUser(u);
+            callback(us);
+        }.bind(this));
     },
 
     loadUsersByIdsList: function(ids, callback){

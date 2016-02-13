@@ -38,7 +38,8 @@ var MaterialsMixin = {
             groups: (m.get('groups') == undefined) ? [] : m.get('groups'),
             createdTimestamp: (new Date(m.createdAt)).getTime(),
             timestamp: (new Date(m.createdAt)).getTime(),
-            updatedTimestamp: (new Date(m.updatedAt)).getTime()
+            updatedTimestamp: (new Date(m.updatedAt)).getTime(),
+            lang: (m.get('lang') == undefined) ? 'en' : m.get('lang')
         }
     },
 
@@ -202,7 +203,8 @@ var MaterialsMixin = {
             {name: 'creatorId', value: d.creatorId},
             {name: 'approved', value: d.approved},
             {name: 'bbComment', value: d.bbComment},
-            {name: 'duration', value: d.duration}
+            {name: 'duration', value: d.duration},
+            {name: 'lang', value: d.lang},
         ]);
         var self = this;
         //m.save(null, {
@@ -241,7 +243,8 @@ var MaterialsMixin = {
                 {name: 'vimeoImgSrc', value: d.vimeoImgSrc},
                 {name: 'start', value: d.start},
                 {name: 'end', value: d.end},
-                {name: 'duration', value: d.duration}
+                {name: 'duration', value: d.duration},
+                {name: 'lang', value: d.lang}
                 //{name: 'creatorId', value: d.creatorId},
                 //{name: 'approved', value: d.approved},
                 //{name: 'bbComment', value: d.bbComment},
@@ -731,6 +734,27 @@ var MaterialsMixin = {
                 });
             });
         });
+    },
+
+    migrateLang: function(){
+        var q = new Parse.Query('PatientMaterial');
+        q.limit(1000);
+        q.doesNotExist('lang');
+        q.find(function(results){
+            console.log('loaded videos: ', results);
+            for (var i in results){
+                results[i].set('lang', 'en');
+                results[i].set('access', 'private');
+            }
+            console.log('saving lang');
+            Parse.Object.saveAll(results, {
+                success: function(){
+                    alert('lang migrated!');
+                }
+            });
+
+        });
+
     }
 
 

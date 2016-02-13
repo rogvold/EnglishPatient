@@ -92,7 +92,8 @@ var LoginMixin = {
             role: u.get('userRole'),
             email: u.get('email'),
             avatar: u.get('avatar'),
-            id: u.id
+            id: u.id,
+            lang: (u.get('lang') == undefined) ? 'en' : u.get('lang')
         }
     },
 

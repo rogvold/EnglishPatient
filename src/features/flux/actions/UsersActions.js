@@ -39,6 +39,13 @@ var UsersActions = {
         UserMixin.loadUsersByIdsList(arrIds, function(users){
             this.dispatch(constants.LOAD_USERS_BY_IDS_SUCCESS, {users: users});
         }.bind(this));
+    },
+
+    updateUser: function(data){
+        this.dispatch(constants.UPDATE_USER, {data: data});
+        UserMixin.updateUserWithData(data, function(user){
+            this.dispatch(constants.UPDATE_USER_SUCCESS, {user: user});
+        }.bind(this));
     }
 
 }

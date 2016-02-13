@@ -12,7 +12,11 @@ var CorrectorHelpButton = require('../corrector/CorrectorHelpButton');
 
 var QuestionnaireMixin = require('../../mixins/QuestionnaireMixin');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var TeacherFeedbackCreationBlock = React.createClass({
+    mixins: [FluxMixin],
     getDefaultProps: function () {
         return {
             userId: undefined,
@@ -129,7 +133,7 @@ var TeacherFeedbackCreationBlock = React.createClass({
                     loading: false,
                     needToSave: false
                 });
-                this.props.onComment(score);
+                this.onCommented(score);
             }.bind(this));
         }
 
@@ -139,7 +143,7 @@ var TeacherFeedbackCreationBlock = React.createClass({
                     loading: false,
                     needToSave: false
                 });
-                this.props.onComment(score);
+                this.onCommented(score);
             }.bind(this));
         }
 
@@ -150,10 +154,21 @@ var TeacherFeedbackCreationBlock = React.createClass({
                     loading: false,
                     needToSave: false
                 });
-                this.props.onComment(score);
+                this.onCommented(score);
             }.bind(this))
         }
+    },
 
+    onCommented: function(score){
+        var userId = score.userId;
+        var message = score.teacherFeedback;
+        var subject = 'Ваше задание проверено';
+        this.getFlux().actions.showSendMailDialog({
+            toUsersIds: [userId],
+            subject: subject,
+            message: message
+        });
+        this.props.onComment(score);
     },
 
     onContentChange: function(content){

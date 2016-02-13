@@ -2,118 +2,56 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40dad2a3-a209-4109-bfc1-a42537237cac" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/discover.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/support_icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/support_icon2.jpg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/images/video_pre_player.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/video/AddVideoButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/actions/ClassesActions.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/stores/ClassesStore.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/grammar/CommunityGrammarPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/topics/EditTopicButton3.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/player/PatientVideoPlayer.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/helpers/support/SlaaskHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/tools/subtitles_extractor/SubtitlesExtractorPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/class/list/TeacherClassesList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/topics/panels/UpdateTopicPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/topics/panels/VerySimpleTopicHeaderPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/video/VideoSelectPanel.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/YoutubeSearchButton.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/helpers/subtitles/YoutubeSubtitlesHelper.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/assets/sounds/all_eyes_sound.mp3" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/node_modules/strict-uri-encode/package.json" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/features/js/slaask_chat.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/node_modules/strict-uri-encode/package.json" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/propTypes.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/props.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/.npmignore" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/.npmignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/.travis.yml" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/.travis.yml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/CHANGELOG.md" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/CHANGELOG.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/README.md" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/README.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/bower.json" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/bower.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/component.json" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/component.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/index.js" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/package.json" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/package.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/array.prototype.find/tests/test.js" afterPath="$PROJECT_DIR$/node_modules/array.prototype.find/tests/test.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/.npmignore" afterPath="$PROJECT_DIR$/node_modules/load-script/.npmignore" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/.zuul.yml" afterPath="$PROJECT_DIR$/node_modules/load-script/.zuul.yml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/Makefile" afterPath="$PROJECT_DIR$/node_modules/load-script/Makefile" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/Readme.md" afterPath="$PROJECT_DIR$/node_modules/load-script/Readme.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/component.json" afterPath="$PROJECT_DIR$/node_modules/load-script/component.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/index.js" afterPath="$PROJECT_DIR$/node_modules/load-script/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/package.json" afterPath="$PROJECT_DIR$/node_modules/load-script/package.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/test/hello.js" afterPath="$PROJECT_DIR$/node_modules/load-script/test/hello.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/test/index.js" afterPath="$PROJECT_DIR$/node_modules/load-script/test/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/load-script/test/throw.js" afterPath="$PROJECT_DIR$/node_modules/load-script/test/throw.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/index.js" afterPath="$PROJECT_DIR$/node_modules/query-string/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/license" afterPath="$PROJECT_DIR$/node_modules/query-string/license" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/node_modules/strict-uri-encode/index.js" afterPath="$PROJECT_DIR$/node_modules/strict-uri-encode/index.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/node_modules/strict-uri-encode/license" afterPath="$PROJECT_DIR$/node_modules/strict-uri-encode/license" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/node_modules/strict-uri-encode/readme.md" afterPath="$PROJECT_DIR$/node_modules/strict-uri-encode/readme.md" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/package.json" afterPath="$PROJECT_DIR$/node_modules/query-string/package.json" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/node_modules/react-player/node_modules/query-string/readme.md" afterPath="$PROJECT_DIR$/node_modules/query-string/readme.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/class/buttons/AddNewClassButton.js" afterPath="$PROJECT_DIR$/src/features/components/class/buttons/AddNewClassButton.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/css/fonts/notification.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/css/fonts/notification.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/css/fonts/notification.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/actions/AlertActions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/alert/AlertsComponent.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/stores/AlertsStore.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/comment/CommentItem.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/actions/CommentsActions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/comment/CommentsBlock.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/comment/CommentsList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/mixins/CommentsMixin.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/stores/CommentsStore.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/mail/ComposeEmailPanel.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/comment/CreateCommentBlock.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/actions/MailActions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/components/mail/MailComponent.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/stores/MailStore.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/actions/NotificationsActions.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/features/flux/stores/NotificationsStore.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/assets/css/fonts/notification.svg" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/info/AccessSwitcher.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/info/AccessSwitcher.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/App.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/App.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/players/Base.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/players/Base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/bootstrap/BootstrapComponent.js" afterPath="$PROJECT_DIR$/src/features/components/bootstrap/BootstrapComponent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/CHANGELOG.md" afterPath="$PROJECT_DIR$/node_modules/react-player/CHANGELOG.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/ClassMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/ClassMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/react/mixins/commonMixins/CommonMixin.js" afterPath="$PROJECT_DIR$/src/react/mixins/commonMixins/CommonMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/js/Constants.js" afterPath="$PROJECT_DIR$/src/js/Constants.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/interface_manuals/courses/CreateCourseCardButton.js" afterPath="$PROJECT_DIR$/src/features/components/interface_manuals/courses/CreateCourseCardButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/interface_manuals/exercises/CreateExerciseCardButton.js" afterPath="$PROJECT_DIR$/src/features/components/interface_manuals/exercises/CreateExerciseCardButton.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/data/DataFactory.js" afterPath="$PROJECT_DIR$/src/features/data/DataFactory.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/templates/CurrentUserMenuItem.js" afterPath="$PROJECT_DIR$/src/features/components/templates/CurrentUserMenuItem.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/DevApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/DevApp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/edit/DialogEditInfoPanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/edit/DialogEditInfoPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/DialogEditableViewPanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/DialogEditableViewPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/DialogViewPanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/DialogViewPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/EditTopicButton2.js" afterPath="$PROJECT_DIR$/src/features/components/topics/EditTopicButton2.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/create/EditableCardBlock.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/create/EditableCardBlock.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogOneReplicPanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogOneReplicPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogPreparePanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogPreparePanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogReplicsPanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/DialogReplicsPanel.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/ExerciseMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/ExerciseMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/video/ExerciseVideo.js" afterPath="$PROJECT_DIR$/src/features/components/video/ExerciseVideo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/actions/ExercisesActions.js" afterPath="$PROJECT_DIR$/src/features/flux/actions/ExercisesActions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/exercise/ExercisesRegistryPanel.js" afterPath="$PROJECT_DIR$/src/features/components/exercise/ExercisesRegistryPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/players/FilePlayer.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/players/FilePlayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/apps/patient/GrammarApp.js" afterPath="$PROJECT_DIR$/src/features/apps/patient/GrammarApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/feed/FeedItem.js" afterPath="$PROJECT_DIR$/src/features/components/feed/FeedItem.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/LoginMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/LoginMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialDialog.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialDialog.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialPanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialUpdatePanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/MaterialUpdatePanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/MaterialsMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/MaterialsMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/stores/MaterialsStore.js" afterPath="$PROJECT_DIR$/src/features/flux/stores/MaterialsStore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/moses/editor/adjust/MosesTimePanel.js" afterPath="$PROJECT_DIR$/src/features/components/moses/editor/adjust/MosesTimePanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/chat/NotReadChatSpan.js" afterPath="$PROJECT_DIR$/src/features/components/chat/NotReadChatSpan.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/notification/NotificationsNumberSpan.js" afterPath="$PROJECT_DIR$/src/features/components/notification/NotificationsNumberSpan.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/editor/PatientEditor.js" afterPath="$PROJECT_DIR$/src/features/components/editor/PatientEditor.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" afterPath="$PROJECT_DIR$/src/features/components/player/PatientPlayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/task/PatientTask.js" afterPath="$PROJECT_DIR$/src/features/components/task/PatientTask.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/README.md" afterPath="$PROJECT_DIR$/node_modules/react-player/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/ReactPlayer.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/ReactPlayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/test/ReactPlayer.js" afterPath="$PROJECT_DIR$/node_modules/react-player/test/ReactPlayer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/class/list/SelfLoadingLeftSidebarClassesList.js" afterPath="$PROJECT_DIR$/src/features/components/class/list/SelfLoadingLeftSidebarClassesList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/SelfLoadingMaterialPanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/SelfLoadingMaterialPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/material/dialogs/SelfLoadingMaterialUpdatePanel.js" afterPath="$PROJECT_DIR$/src/features/components/material/dialogs/SelfLoadingMaterialUpdatePanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/SelfLoadingTopicsList.js" afterPath="$PROJECT_DIR$/src/features/components/topics/SelfLoadingTopicsList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/panels/SimpleTopicHeaderPanel.js" afterPath="$PROJECT_DIR$/src/features/components/topics/panels/SimpleTopicHeaderPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/players/SoundCloud.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/players/SoundCloud.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/panels/TopicHeaderPanel.js" afterPath="$PROJECT_DIR$/src/features/components/topics/panels/TopicHeaderPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/panels/TopicPanel.js" afterPath="$PROJECT_DIR$/src/features/components/topics/panels/TopicPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/actions/TopicsActions.js" afterPath="$PROJECT_DIR$/src/features/flux/actions/TopicsActions.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/TopicsMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/TopicsMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/stores/TopicsStore.js" afterPath="$PROJECT_DIR$/src/features/flux/stores/TopicsStore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/topics/dialog/UpdateTopicDialog.js" afterPath="$PROJECT_DIR$/src/features/components/topics/dialog/UpdateTopicDialog.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/VideoMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/VideoMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/players/Vimeo.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/players/Vimeo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/lib/players/YouTube.js" afterPath="$PROJECT_DIR$/node_modules/react-player/lib/players/YouTube.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/YoutubeSearchMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/YoutubeSearchMixin.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/search/youtube/YoutubeSearchPanel.js" afterPath="$PROJECT_DIR$/src/features/components/search/youtube/YoutubeSearchPanel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/assets/css/app.css" afterPath="$PROJECT_DIR$/features/assets/css/app.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/app.css" afterPath="$PROJECT_DIR$/src/assets/css/app.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/api/MailAPI.js" afterPath="$PROJECT_DIR$/src/features/api/MailAPI.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/moses/player/MosesPlayer.js" afterPath="$PROJECT_DIR$/src/features/components/moses/player/MosesPlayer.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js" afterPath="$PROJECT_DIR$/src/features/components/dialog_exercise/view/SelfLoadingDialogPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/social_networks/feed/SelfLoadingSocialFeedItem.js" afterPath="$PROJECT_DIR$/src/features/components/social_networks/feed/SelfLoadingSocialFeedItem.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/teacher/TeacherFeedbackCreationBlock.js" afterPath="$PROJECT_DIR$/src/features/components/teacher/TeacherFeedbackCreationBlock.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/header/teacher/TeacherHeader.js" afterPath="$PROJECT_DIR$/src/features/components/header/teacher/TeacherHeader.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/text/translatable/TranslatableText.js" afterPath="$PROJECT_DIR$/src/features/components/text/translatable/TranslatableText.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/translate/TranslateDialog.js" afterPath="$PROJECT_DIR$/src/features/components/translate/TranslateDialog.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/TranslateMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" afterPath="$PROJECT_DIR$/src/features/components/translate/panel/TranslatePanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/user_interface/UserCommunityHeaderPanel.js" afterPath="$PROJECT_DIR$/src/features/components/user_interface/UserCommunityHeaderPanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/mixins/UserMixin.js" afterPath="$PROJECT_DIR$/src/features/mixins/UserMixin.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/components/profile/UserProfilePanel.js" afterPath="$PROJECT_DIR$/src/features/components/profile/UserProfilePanel.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/actions/UsersActions.js" afterPath="$PROJECT_DIR$/src/features/flux/actions/UsersActions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/stores/UsersStore.js" afterPath="$PROJECT_DIR$/src/features/flux/stores/UsersStore.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/js/app.js" afterPath="$PROJECT_DIR$/features/js/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/features/flux/constants.js" afterPath="$PROJECT_DIR$/src/features/flux/constants.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/deployment.xml" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/index.html" afterPath="$PROJECT_DIR$/features/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/features/assets/css/custom.css" afterPath="$PROJECT_DIR$/features/assets/css/custom.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/assets/css/custom.css" afterPath="$PROJECT_DIR$/src/assets/css/custom.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/cooltip/package.json" afterPath="$PROJECT_DIR$/node_modules/cooltip/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node_modules/react-player/package.json" afterPath="$PROJECT_DIR$/node_modules/react-player/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/.idea/workspace.xml" afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" />
     </list>
@@ -136,27 +74,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SelfLoadingMaterialsList.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SelfLoadingMaterialsList.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
+              <caret line="201" column="26" selection-start-line="201" selection-start-column="26" selection-end-line="201" selection-end-column="26" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/features/js/app.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="103.388885">
-              <caret line="114996" column="16" selection-start-line="114996" selection-start-column="16" selection-end-line="114996" selection-end-column="16" />
-              <folding>
-                <marker date="1454894718000" expanded="true" signature="443:3579455" placeholder="{...}" />
-                <marker date="1454894718000" expanded="true" signature="3579419:3579455" placeholder="[...]" />
-                <marker date="1454894718000" expanded="true" signature="3579452:3579455" placeholder="{...}" />
-                <marker date="1454894718000" expanded="true" signature="3579454:3579455" placeholder="/** Created by sabir on 12.08.15. ...*/" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -277,7 +200,7 @@
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1280" />
-    <option name="height" value="732" />
+    <option name="height" value="777" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -302,7 +225,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -332,7 +254,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
+              <option name="myItemId" value="features" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -346,12 +268,17 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="experiment" />
+              <option name="myItemId" value="features" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -440,17 +367,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="732" extended-state="6" />
+    <frame x="0" y="23" width="1280" height="777" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="File Transfer" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.53582555" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5342067" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3812601" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27544427" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -481,13 +408,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/react-chartist/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2198697">
-          <caret line="9" column="39" selection-start-line="9" selection-start-column="39" selection-end-line="9" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/features/mixins/VideoMixin.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -806,14 +726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="160" column="0" selection-start-line="160" selection-start-column="0" selection-end-line="160" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vocabulary/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.118644">
@@ -841,16 +753,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/react-notifications/dist/notifications.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="61" selection-start-line="0" selection-start-column="61" selection-end-line="0" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/features/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="103.388885">
-          <caret line="114996" column="16" selection-start-line="114996" selection-start-column="16" selection-end-line="114996" selection-end-column="16" />
-          <folding>
-            <marker date="1454894718000" expanded="true" signature="443:3579455" placeholder="{...}" />
-            <marker date="1454894718000" expanded="true" signature="3579419:3579455" placeholder="[...]" />
-            <marker date="1454894718000" expanded="true" signature="3579452:3579455" placeholder="{...}" />
-            <marker date="1454894718000" expanded="true" signature="3579454:3579455" placeholder="/** Created by sabir on 12.08.15. ...*/" />
-          </folding>
+        <state vertical-scroll-proportion="0.16666667">
+          <caret line="115018" column="30" selection-start-line="115018" selection-start-column="30" selection-end-line="115018" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/features/components/material/list/SelfLoadingMaterialsList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="201" column="26" selection-start-line="201" selection-start-column="26" selection-end-line="201" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>

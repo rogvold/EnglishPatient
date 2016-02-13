@@ -94,6 +94,8 @@ var TeacherClassesList = require('../../components/class/list/TeacherClassesList
 var SubtitlesExtractorPanel = require('../../components/tools/subtitles_extractor/SubtitlesExtractorPanel');
 
 
+var ComposeEmailPanel = require('../../components/mail/ComposeEmailPanel');
+
 var DevApp = React.createClass({
     mixins: [FluxMixin],
 
@@ -141,7 +143,6 @@ var DevApp = React.createClass({
         }
         console.log('Exercises App mounted');
         console.log(this.props.params);
-
     },
 
     componentStyle: {
@@ -187,8 +188,6 @@ var DevApp = React.createClass({
                         <TeacherHeader activeTab={'index'} onLogout={this.updateAuth}  />
                     </div>
                 }
-
-
             </div>
 
         );
@@ -276,6 +275,21 @@ var DevApp = React.createClass({
         console.log('onOk: ', data);
     },
 
+    showNotification: function(){
+        this.getFlux().actions.showAlertNotification('test', 'test message');
+    },
+
+    showMailDialog: function(){
+        this.getFlux().actions.showSendMailDialog({
+            toUsersIds: ['akkOJiYay9'],
+            subject: 'Pretty Girl',
+            message: 'isn`t she pretty? '
+        });
+    },
+
+    migrateLang: function(){
+        MaterialsMixin.migrateLang();
+    },
 
     getContent: function(){
         var userId = this.state.user.id;
@@ -292,13 +306,16 @@ var DevApp = React.createClass({
 
         var articleId = 'ljVkawu3Zx';
 
-
+        var toUsersIds = ['akkOJiYay9'];
 
         return (
             <div>
 
-
                 <SubtitlesExtractorPanel />
+
+                <button onClick={this.migrateLang}>
+                    mograte lang
+                </button>
 
             </div>
 

@@ -6,6 +6,8 @@ var Fluxxor = require('fluxxor');
 
 var constants = require('../constants');
 
+var LoginMixin = require('../../mixins/LoginMixin');
+
 var UsersStore = Fluxxor.createStore({
     self: this,
 
@@ -17,7 +19,10 @@ var UsersStore = Fluxxor.createStore({
             constants.LOAD_USER, this.loadUser,
             constants.LOAD_USER_SUCCESS, this.loadedUser,
             constants.LOAD_USERS_BY_IDS, this.loadUsersByIds,
-            constants.LOAD_USERS_BY_IDS_SUCCESS, this.loadedUsersByIds
+            constants.LOAD_USERS_BY_IDS_SUCCESS, this.loadedUsersByIds,
+
+            constants.UPDATE_USER, this.updateUser,
+            constants.UPDATE_USER_SUCCESS, this.updateUserSuccess
         );
     },
 
@@ -95,6 +100,22 @@ var UsersStore = Fluxxor.createStore({
         }
         console.log('this.usersMap = ', this.usersMap);
 
+        this.loading = false;
+        this.emit('change');
+    },
+
+    getCurrentUser: function(){
+        var id = LoginMixin.getCurrentUserId();
+        return this.usersMap[id];
+    },
+
+    updateUser: function(payload){
+        this.loading = true;
+        this.emit('change');
+    },
+
+    updateUserSuccess: function(payload){
+        this.usersMap[payload.user.id] = payload.user;
         this.loading = false;
         this.emit('change');
     }

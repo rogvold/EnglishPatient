@@ -68,6 +68,9 @@ var AccessSwitcher = React.createClass({
 
     render: function () {
         var list = this.props.items;
+
+        console.log('rendering AccessSwitcher: this.state.activeName = ', this.state.activeName);
+
         return (
             <div style={this.componentStyle.placeholder} className={'ui buttons'} >
 

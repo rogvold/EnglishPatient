@@ -13,6 +13,7 @@ var TranslateDialog = React.createClass({
     getDefaultProps: function () {
         return {
             text: undefined,
+            lang: 'en',
             onClose: function(){
 
             }
@@ -49,7 +50,7 @@ var TranslateDialog = React.createClass({
     getDialogContent: function(){
         return (
             <div>
-                <TranslatePanel text={this.props.text} />
+                <TranslatePanel lang={this.props.lang} text={this.props.text} />
             </div>
 
         );

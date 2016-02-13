@@ -14,6 +14,7 @@ var DialogOneReplicPanel = React.createClass({
         return {
             orientation: 'left',
             name: 'Sabir',
+            lang: 'en',
             avatar: undefined,
             text: undefined
         }
@@ -77,14 +78,14 @@ var DialogOneReplicPanel = React.createClass({
                         </div>
 
                         <div style={assign({}, this.componentStyle.contentPlaceholder, {textAlign: this.props.orientation})}>
-                            <TranslatableText text={this.props.text}
+                            <TranslatableText lang={this.props.lang} text={this.props.text}
                                               fontSize={this.componentStyle.contentPlaceholder.fontSize} />
                         </div>
                     </div>
                     :
                     <div>
                         <div style={assign({}, this.componentStyle.contentPlaceholder, {textAlign: this.props.orientation})}>
-                            <TranslatableText text={this.props.text}
+                            <TranslatableText lang={this.props.lang} text={this.props.text}
                                               fontSize={this.componentStyle.contentPlaceholder.fontSize} />
                         </div>
 

@@ -16,6 +16,7 @@ var TranslatableText = React.createClass({
         return {
             text: '',
             fontSize: '18px',
+            lang: 'en',
             style: {
 
             }
@@ -73,7 +74,7 @@ var TranslatableText = React.createClass({
                 <WordsList words={words} onWordClick={this.onWordClick} />
 
                 {this.state.dialogVisible == false ? null :
-                    <TranslateDialog text={this.state.selectedWord} onClose={this.onClose} />
+                    <TranslateDialog lang={this.props.lang} text={this.state.selectedWord} onClose={this.onClose} />
                 }
 
             </div>

@@ -161,8 +161,6 @@ var TeacherHeader = React.createClass({
     },
 
 
-
-
     getRightBlock: function(){
         var dropdownItems = [
             {

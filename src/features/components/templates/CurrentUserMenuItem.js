@@ -6,8 +6,12 @@ var assign = require('object-assign');
 
 var TopbarSettingsMenu = require('./TopbarSettingsMenu');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var CurrentUserMenuItem = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('UsersStore')],
     getDefaultProps: function () {
         return {
             userName: 'Test User',
@@ -35,6 +39,13 @@ var CurrentUserMenuItem = React.createClass({
     getInitialState: function () {
         return {
             dropdownVisible: false
+        }
+    },
+
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('UsersStore');
+        return {
+            user: store.getCurrentUser()
         }
     },
 
@@ -95,18 +106,28 @@ var CurrentUserMenuItem = React.createClass({
     },
 
     render: function () {
+        var user = this.state.user;
         var avaStyle = assign({}, this.componentStyle.avatarDiv);
-        var avaStyle = assign({}, avaStyle, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+        avaStyle = assign({}, avaStyle, {backgroundImage: 'url(\'' + this.props.avatar + '\')'});
+        if (user != undefined){
+            avaStyle = assign({}, avaStyle, {backgroundImage: 'url(\'' + user.avatar + '\')'});
+        }
 
         return (
             <div style={this.componentStyle.placeholder} onClick={this.onClick} >
-                <div style={this.componentStyle.userNamePlaceholder} >
-                    {this.props.userName}
-                </div>
 
-                <div style={this.componentStyle.avatarPlaceholder} >
-                    <div style={avaStyle}></div>
-                </div>
+                {user == undefined ? null :
+                    <div>
+                        <div style={this.componentStyle.userNamePlaceholder} >
+                            {user.name}
+                        </div>
+
+                        <div style={this.componentStyle.avatarPlaceholder} >
+                            <div style={avaStyle}></div>
+                        </div>
+
+                    </div>
+                }
 
                 {this.state.dropdownVisible == false ? null :
                     <TopbarSettingsMenu items={this.props.dropdownItems} onClose={this.onTopbarClose} />

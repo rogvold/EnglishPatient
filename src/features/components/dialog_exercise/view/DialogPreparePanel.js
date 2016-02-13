@@ -11,12 +11,13 @@ var VimeoPlayer = require('../../player/VimeoPlayer');
 
 var SelectRolePanel = require('./SelectRolePanel');
 
-var DialoPreparePanel = React.createClass({
+var DialogPreparePanel = React.createClass({
     getDefaultProps: function () {
         return {
             dialog: {
 
             },
+            lang: 'en',
             cards: [],
             onRoleSelect: function(number){
 
@@ -75,6 +76,8 @@ var DialoPreparePanel = React.createClass({
 
         var task = (dialog == undefined) ? undefined : dialog.task;
 
+        console.log('rendering DialogPreparePanel: this.props.lang = ', this.props.lang);
+
         return (
             <div style={this.componentStyle.placeholder}>
 
@@ -97,6 +100,7 @@ var DialoPreparePanel = React.createClass({
                     secondRoleName={dialog.secondRoleName}
                     firstRoleImg={dialog.firstRoleImg}
                     secondRoleImg={dialog.secondRoleImg}
+                    lang={this.props.lang}
                     cards={cards} />
 
                 <div style={this.componentStyle.selectRolePlaceholder}>
@@ -121,4 +125,4 @@ var DialoPreparePanel = React.createClass({
 
 });
 
-module.exports = DialoPreparePanel;
+module.exports = DialogPreparePanel;

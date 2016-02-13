@@ -55,6 +55,8 @@ var StudentDictionaryApp = require('./student/StudentDictionaryApp');
 var StudentIdiomsApp = require('./student/StudentIdiomsApp');
 
 var SoundComponent = require('../../components/sound/SoundComponent');
+var MailComponent = require('../../components/mail/MailComponent');
+var AlertsComponent = require('../../components/alert/AlertsComponent');
 var BootstrapComponent = require('../../components/bootstrap/BootstrapComponent');
 
 //flux
@@ -62,20 +64,26 @@ var Fluxxor = require('fluxxor');
 var FluxMixin = Fluxxor.FluxMixin(React);
 var MaterialsStore = require('../../flux/stores/MaterialsStore');
 var SoundStore = require('../../flux/stores/SoundStore');
+var AlertsStore = require('../../flux/stores/AlertsStore');
 var UsersStore = require('../../flux/stores/UsersStore');
 var ClassesStore = require('../../flux/stores/ClassesStore');
+var CommentsStore = require('../../flux/stores/CommentsStore');
 var DialogsStore = require('../../flux/stores/DialogsStore');
+var MailStore = require('../../flux/stores/MailStore');
 var ExercisesStore = require('../../flux/stores/ExercisesStore');
 var TopicsStore = require('../../flux/stores/TopicsStore');
 var MaterialsActions = require('../../flux/actions/MaterialsActions');
 var TopicsActions = require('../../flux/actions/TopicsActions');
 var UsersActions = require('../../flux/actions/UsersActions');
 var ClassesActions = require('../../flux/actions/ClassesActions');
+var MailActions = require('../../flux/actions/MailActions');
 var DialogsActions = require('../../flux/actions/DialogsActions');
+var CommentsActions = require('../../flux/actions/CommentsActions');
+var AlertActions = require('../../flux/actions/AlertActions');
 var SoundActions = require('../../flux/actions/SoundActions');
 var ExercisesActions = require('../../flux/actions/ExercisesActions');
-var stores = {MaterialsStore: new MaterialsStore(), SoundStore: new SoundStore(), TopicsStore: new TopicsStore(), UsersStore: new UsersStore(), ExercisesStore: new ExercisesStore(), DialogsStore: new DialogsStore(), ClassesStore: new ClassesStore()};
-var actions = assign({}, MaterialsActions, SoundActions, TopicsActions, UsersActions, ExercisesActions, DialogsActions, ClassesActions);
+var stores = {MaterialsStore: new MaterialsStore(), SoundStore: new SoundStore(), TopicsStore: new TopicsStore(), UsersStore: new UsersStore(), ExercisesStore: new ExercisesStore(), DialogsStore: new DialogsStore(), ClassesStore: new ClassesStore(), AlertsStore: new AlertsStore(), MailStore: new MailStore(), CommentsStore: new CommentsStore()};
+var actions = assign({}, MaterialsActions, SoundActions, TopicsActions, UsersActions, ExercisesActions, DialogsActions, ClassesActions, AlertActions, MailActions, CommentsActions);
 var flux = new Fluxxor.Flux(stores, actions);
 
 var SlaaskHelper = require('../../helpers/support/SlaaskHelper');
@@ -270,6 +278,8 @@ var App = React.createClass({
             <div >
                 <SoundComponent flux={flux} />
                 <BootstrapComponent />
+                <AlertsComponent />
+                <MailComponent />
 
                 {content}
             </div>

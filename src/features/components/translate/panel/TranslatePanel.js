@@ -14,7 +14,7 @@ var TranslatePanel = React.createClass({
     getDefaultProps: function () {
         return {
             text: undefined,
-
+            lang: 'en',
             searchInputVisible: true,
 
             topBlockEnabled: true
@@ -53,7 +53,7 @@ var TranslatePanel = React.createClass({
         }
         this.translate(text, function(tr){
            console.log('translated! ', tr);
-        }, this.props.topBlockEnabled);
+        }, this.props.topBlockEnabled, this.props.lang);
     },
 
     translate: function(text, callback){
@@ -71,7 +71,7 @@ var TranslatePanel = React.createClass({
                 loading: false
             });
             callback(html);
-        }.bind(this), this.props.topBlockEnabled);
+        }.bind(this), this.props.topBlockEnabled, this.props.lang);
     },
 
     onClick: function(){
@@ -125,11 +125,14 @@ var TranslatePanel = React.createClass({
         var textEmpty = (this.state.text == undefined || this.state.text.trim() == '');
         var htmlEmpty = (this.state.html == undefined || this.state.html.trim() == '');
 
-        var drawSound = (htmlEmpty == false && textEmpty == false)
+        var drawSound = (htmlEmpty == false && textEmpty == false);
+        if (this.props.lang != 'en'){
+            drawSound = false;
+        }
+        console.log('rendering TranslatePanel: this.props.lang = ', this.props.lang);
 
         return (
             <div style={this.componentStyle.placeholder}>
-
 
                 {this.props.searchInputVisible == false ? null :
                     <div style={this.componentStyle.inputBlock} className={'ui form'} >

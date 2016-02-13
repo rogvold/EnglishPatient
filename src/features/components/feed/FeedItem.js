@@ -214,7 +214,6 @@ var FeedItem = React.createClass({
 
         var information = (this.props.information == undefined ) ? '' : this.props.information;
 
-
         return (
             <div style={this.componentStyle.placeholder}>
 

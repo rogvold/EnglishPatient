@@ -4,10 +4,12 @@
 var $ = require('jquery');
 
 var VocabularyMixin = require('./VocabularyMixin');
+var LoginMixin = require('./LoginMixin');
 
 var TranslateMixin = {
 
-    lang: 'en-ru',
+    lang: 'en',
+    //lang: 'de-ru',
 
     wrapWordInHtml: function(html, className){
         if ((html.indexOf('<img') > -1) || (html.indexOf('<a') > -1) || (html.indexOf('<div') > -1) || (html.indexOf('<iframe') > -1) || html.indexOf('<audio') > -1){
@@ -96,14 +98,21 @@ var TranslateMixin = {
         return s;
     },
 
-    translate: function(text, callback, enableTranslation){
+    translate: function(text, callback, enableTranslation, lang){
+        if (lang == undefined){
+            lang = this.lang;
+        }
+        if (lang.length == 2){
+            lang = lang + '-ru';
+        }
         var self = this;
         if (enableTranslation == undefined){
             enableTranslation = true;
         }
         text = text.split("’")[0];
         text = VocabularyMixin.getClearWord(text).trim();
-        var url = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=' + self.yandexDicApiKey + '&format=html&lang=' + self.lang +'&ui=ru&text=' + text;
+        var url = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=' + self.yandexDicApiKey + '&format=html&lang=' + lang +'&ui=ru&text=' + text;
+        //var url = 'https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=' + self.yandexDicApiKey + '&format=html&ui=ru&text=' + text;
 
         console.log('translating: ', text);
         $.ajax({
@@ -114,8 +123,6 @@ var TranslateMixin = {
                     console.log(dt);
 
                     data = self.getTranslationHtml(data);
-
-
 
                     //dt - whole translation
 
@@ -138,14 +145,23 @@ var TranslateMixin = {
 
                     callback(data);
 
-                });
+                }, lang);
             }
         });
     },
 
-    translateWholeText: function(text, callback){
+    translateWholeText: function(text, callback, lang){
+        if (lang == undefined){
+            lang = this.lang;
+        }
+        if (lang.length == 2){
+            lang = lang + '-ru';
+        }
+
+
         var self = this;
-        var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + self.yandexAPIKey + '&format=html&lang=' + self.lang + "&text=" + text;
+        var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + self.yandexAPIKey + '&format=html&lang=' + lang + "&text=" + text;
+        //var url = 'https://translate.yandex.net/api/v1.5/tr.json/translate?key=' + self.yandexAPIKey + '&format=html&text=' + text;
         $.ajax({
             url: url,
             success: function(data){
@@ -165,7 +181,7 @@ var TranslateMixin = {
             return false;
         }
         text = text.replace(/[ ,\\-]/g, '');
-        var re = /[a-zA-Z'`:"\\?\\.\\!]+/;
+        var re = /[a-zA-Züßäö'`:"\\?\\.\\!]+/;
         var res = re.exec(text);
         if (res == undefined || res.length == 0){
             //console.log('no');

@@ -44,7 +44,7 @@ var MailAPI = {
         }
 
         Parse.Cloud.run('sendEmail', data, function(){
-                successCallback();
+                successCallback(toEmail);
             }
         );
     }

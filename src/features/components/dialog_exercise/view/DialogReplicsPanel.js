@@ -12,6 +12,7 @@ var DialogReplicsPanel = React.createClass({
         return {
             firstRoleImg: undefined,
             firstRoleName: undefined,
+            lang: 'en',
 
             secondRoleName: undefined,
             secondRoleImg: undefined,
@@ -54,7 +55,8 @@ var DialogReplicsPanel = React.createClass({
                     var orientation = (k % 2 == 0) ? 'left' : 'right';
                     return(
                         <div key={key} style={{marginTop: 10}} >
-                            <DialogOneReplicPanel orientation={orientation}  avatar={avatar} name={name} text={text} />
+                            <DialogOneReplicPanel lang={this.props.lang}
+                                                  orientation={orientation}  avatar={avatar} name={name} text={text} />
                         </div>
                     );
 

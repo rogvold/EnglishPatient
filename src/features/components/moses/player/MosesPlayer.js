@@ -42,7 +42,8 @@ var MosesPlayer = React.createClass({
 
         playerPlaceholder: {
             width: 600,
-            height: 350
+            //height: 350
+            height: 330
         },
 
         durationsPlaceholder: {

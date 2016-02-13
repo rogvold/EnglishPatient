@@ -9,7 +9,13 @@ var UserMixin = require('../../mixins/UserMixin');
 
 var FileUploader = require('../file/FileUploader');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var UserProfilePanel = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('UsersStore')],
+
     getDefaultProps: function () {
         return {
             defaultAvatar: 'http://www.thejasperlocal.com/uploads/1/3/4/6/13461048/5515515_orig.jpg',
@@ -24,8 +30,14 @@ var UserProfilePanel = React.createClass({
         return {
             firstName: undefined,
             lastName: undefined,
-            avatar: undefined,
-            loading: false
+            avatar: undefined
+        }
+    },
+
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('UsersStore');
+        return {
+            loading: store.loading
         }
     },
 
@@ -34,9 +46,7 @@ var UserProfilePanel = React.createClass({
     },
 
     componentDidMount: function () {
-        this.load(this.props.userId, function(user){
-            console.log('user loaded: ', user);
-        });
+        this.load();
     },
 
     componentStyle: {
@@ -90,46 +100,61 @@ var UserProfilePanel = React.createClass({
         });
     },
 
-    load: function(userId, callback){
-        if (userId == undefined){
+    load: function(userId){
+        var user = this.getFlux().store('UsersStore').getCurrentUser();
+        if (user == undefined){
             return;
         }
         this.setState({
-            loading: true
+            firstName: user.firstName,
+            lastName: user.lastName,
+            avatar: user.avatar
         });
-        UserMixin.loadUser(userId, function(user){
-            this.setState({
-                firstName: user.firstName,
-                lastName: user.lastName,
-                avatar: user.avatar,
-                loading: false
-            });
-            if (callback != undefined){
-                callback(user);
-            }
-        }.bind(this))
-
+        //if (userId == undefined){
+        //    return;
+        //}
+        //this.setState({
+        //    loading: true
+        //});
+        //UserMixin.loadUser(userId, function(user){
+        //    this.setState({
+        //        firstName: user.firstName,
+        //        lastName: user.lastName,
+        //        avatar: user.avatar,
+        //        loading: false
+        //    });
+        //    if (callback != undefined){
+        //        callback(user);
+        //    }
+        //}.bind(this));
     },
 
     update: function(callback){
         var firstName = this.state.firstName;
         var lastName = this.state.lastName;
         var avatar = this.state.avatar;
-        this.setState({
-            loading: true
+
+        this.getFlux().actions.updateUser({
+            firstName: firstName,
+            lastName: lastName,
+            avatar: avatar
         });
-        UserMixin.updateUser(this.props.userId, firstName, lastName, avatar, function(user){
-            this.setState({
-                firstName: user.firstName,
-                lastName: user.lastName,
-                avatar: user.avatar,
-                loading: false
-            });
-            this.props.userUpdated(user);
-            if (callback != undefined){
-                callback(user);
-            }
-        }.bind(this));
+
+        //this.setState({
+        //    loading: true
+        //});
+        //UserMixin.updateUser(this.props.userId, firstName, lastName, avatar, function(user){
+        //    this.setState({
+        //        firstName: user.firstName,
+        //        lastName: user.lastName,
+        //        avatar: user.avatar,
+        //        loading: false
+        //    });
+        //    this.props.userUpdated(user);
+        //    if (callback != undefined){
+        //        callback(user);
+        //    }
+        //}.bind(this));
     },
 
     getValFromEvt: function(evt){
@@ -159,9 +184,7 @@ var UserProfilePanel = React.createClass({
     },
 
     save: function(){
-        this.update(function(user){
-            console.log('updated: ', user);
-        });
+        this.update();
     },
 
     render: function () {

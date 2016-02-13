@@ -11,6 +11,8 @@ var SocialMixin = require('../../../mixins/SocialMixin');
 
 var UpdatePostButton = require('./UpdatePostButton');
 
+var CommentsBlock = require('../../comment/CommentsBlock');
+
 var SelfLoadingSocialFeedItem = React.createClass({
     getDefaultProps: function () {
         return {
@@ -61,6 +63,10 @@ var SelfLoadingSocialFeedItem = React.createClass({
             backgroundColor: 'white',
             borderTop: '1px solid #EFF0F1',
             padding: 5
+        },
+
+        commentsBlock: {
+
         }
     },
 
@@ -113,6 +119,12 @@ var SelfLoadingSocialFeedItem = React.createClass({
                                       onDeleted={this.onDeleted}
                                       onUpdated={this.onUpdated} />
                 </div>
+
+                <div style={this.componentStyle.commentsBlock}>
+                    <CommentsBlock objectId={this.props.postId} />
+                </div>
+
+
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : ' ') }>
                     <div className="ui text loader">Загрузка...</div>
