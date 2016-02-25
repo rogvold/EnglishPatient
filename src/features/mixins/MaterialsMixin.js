@@ -7,7 +7,9 @@ var $ = require('jquery');
 
 //var TopicsMixin = require('./TopicsMixin');
 var UserMixin = require('./UserMixin');
+var LoginMixin = require('./LoginMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
 
 var MaterialsMixin = {
 
@@ -39,7 +41,8 @@ var MaterialsMixin = {
             createdTimestamp: (new Date(m.createdAt)).getTime(),
             timestamp: (new Date(m.createdAt)).getTime(),
             updatedTimestamp: (new Date(m.updatedAt)).getTime(),
-            lang: (m.get('lang') == undefined) ? 'en' : m.get('lang')
+            lang: (m.get('lang') == undefined) ? 'en' : m.get('lang'),
+            access: (m.get('access') == undefined) ? 'private' : m.get('access'),
         }
     },
 
@@ -63,6 +66,20 @@ var MaterialsMixin = {
         var q = new Parse.Query('PatientMaterial');
         q.equalTo('creatorId', teacherId);
         q.addDescending('createdAt');
+        var self = this;
+        ParseMixin.loadAllDataFromParse(q, function(list){
+            var arr = list.map(function(m){
+                return self.transformMaterialFromParseObject(m);
+            });
+            callback(arr);
+        });
+    },
+
+    loadPublicCommunityMaterials: function(teacherId, callback){
+        var q = new Parse.Query('PatientMaterial');
+        q.notEqualTo('creatorId', teacherId);
+        q.addDescending('createdAt');
+        q.equalTo('access', 'public');
         var self = this;
         ParseMixin.loadAllDataFromParse(q, function(list){
             var arr = list.map(function(m){
@@ -180,9 +197,22 @@ var MaterialsMixin = {
         console.log('createMaterial occured: materialId, d = ', d);
         var PatientMaterial = Parse.Object.extend('PatientMaterial');
         var m = new PatientMaterial();
+        if (d.creatorId == undefined){
+            d.creatorId = LoginMixin.getCurrentUserId();
+        }
         if (((d.vimeoId == undefined) && (d.youtubeId == undefined)) || d.creatorId == undefined){
             console.log('vimeoId or youtubeId creatorId is undefined');
             return;
+        }
+        if (d.lang == undefined){
+            d.lang = 'en';
+        }
+        if (d.access == undefined){
+            d.access = 'private';
+        }
+        var videoType = 'vimeo';
+        if (d.youtubeId != undefined){
+            videoType = 'youtube';
         }
         m = ParseMixin.safeSet(m, [
             {name: 'vimeoId', value: d.vimeoId},
@@ -205,6 +235,7 @@ var MaterialsMixin = {
             {name: 'bbComment', value: d.bbComment},
             {name: 'duration', value: d.duration},
             {name: 'lang', value: d.lang},
+            {name: 'access', value: d.access}
         ]);
         var self = this;
         //m.save(null, {
@@ -215,7 +246,9 @@ var MaterialsMixin = {
         //});
         m.save().then(function(material){
             console.log('--->>>> CREATED NEW MATERIAL: ', material);
-            callback(self.transformMaterialFromParseObject(material));
+            var mmm = self.transformMaterialFromParseObject(material);
+            MixpanelHelper.track('materialCreated', mmm);
+            callback(mmm);
         });
     },
 
@@ -244,7 +277,8 @@ var MaterialsMixin = {
                 {name: 'start', value: d.start},
                 {name: 'end', value: d.end},
                 {name: 'duration', value: d.duration},
-                {name: 'lang', value: d.lang}
+                {name: 'lang', value: d.lang},
+                {name: 'access', value: d.access}
                 //{name: 'creatorId', value: d.creatorId},
                 //{name: 'approved', value: d.approved},
                 //{name: 'bbComment', value: d.bbComment},
@@ -404,6 +438,9 @@ var MaterialsMixin = {
         q.limit(1000);
         var self = this;
         q.find(function(results){
+            if (results == undefined){
+                results = [];
+            }
             var arr = results.map(function(t){
                 return self.transformGroup(t);
             });
@@ -427,6 +464,9 @@ var MaterialsMixin = {
     createGroup: function(teacherId, topicId, name, description, callback){
         var MaterialGroup = Parse.Object.extend('MaterialGroup');
         var g = new MaterialGroup();
+        if (teacherId == undefined){
+            teacherId = LoginMixin.getCurrentUserId();
+        }
         g.set('ownerId', teacherId);
         if (topicId != undefined){
             g.set('topicId', topicId);
@@ -498,11 +538,14 @@ var MaterialsMixin = {
     },
 
 
-    getGroupsFactoryList: function(groups, materials, makeUnsorted){
+    getGroupsFactoryList: function(groups, materials, makeUnsorted, hasEmptyGroups){
         console.log('MaterialsMixin: getGroupsFactoryList: groups, materials = ', groups, materials);
         var arr = [];
         if (makeUnsorted == undefined){
             makeUnsorted = true;
+        }
+        if (hasEmptyGroups == undefined){
+            hasEmptyGroups = false;
         }
         var hasUnsortedGroup = false;
         for (var i in groups){
@@ -538,8 +581,19 @@ var MaterialsMixin = {
             gr.materials = ms;
             arr.push(gr);
         }
-        console.log('returning ', arr);
-        return arr;
+        var arr2 = [];
+        if (hasEmptyGroups == true){
+            arr2 = arr;
+        }else {
+            for (var i in arr){
+                if (arr[i].materials == undefined || arr[i].materials.length == 0){
+                    continue;
+                }
+                arr2.push(arr[i]);
+            }
+        }
+        console.log('returning ', arr2);
+        return arr2;
     },
 
     updateGroupsFactoryListWithMaterial: function(groupsFactoryList, material){
@@ -752,9 +806,7 @@ var MaterialsMixin = {
                     alert('lang migrated!');
                 }
             });
-
         });
-
     }
 
 

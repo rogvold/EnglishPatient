@@ -15,6 +15,8 @@ var QuestionnaireTestPanel = require('./test/QuestionnaireTestPanel');
 
 var TeacherFeedbackCreationBlock =require('../../../teacher/TeacherFeedbackCreationBlock');
 
+var LoginMixin = require('../../../../mixins/LoginMixin');
+
 var SelfLoadingQuestionnairePanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -104,6 +106,10 @@ var SelfLoadingQuestionnairePanel = React.createClass({
     load: function(){
         var questionnaireId = this.props.questionnaireId;
         var userId = this.props.userId;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
+
         this.setState({
             loading: true
         });
@@ -169,6 +175,9 @@ var SelfLoadingQuestionnairePanel = React.createClass({
 
     onFinishQuestionnaire: function(){
         var userId = this.props.userId;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
         var questionnaireId = this.props.questionnaireId;
         this.setState({
             loading: true
@@ -217,6 +226,14 @@ var SelfLoadingQuestionnairePanel = React.createClass({
         var feedback = (score == undefined) ? undefined : score.feedback;
         var isFinished = (score == undefined) ? true : (score.status == 'finished');
         var canFinish = this.canFinish();
+        var userId = this.props.userId;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
+        var isLoggedIn = LoginMixin.isLoggedIn();
+        if (isLoggedIn == false ){
+            isFinished = false;
+        }
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -225,12 +242,13 @@ var SelfLoadingQuestionnairePanel = React.createClass({
                     <div style={this.componentStyle.content}>
 
                         {this.state.mode == 'initial' ?
-                            <QuestionnairePanel questionnaire={this.state.questionnaire} questions={this.state.questions}
+                            <QuestionnairePanel questionnaire={this.state.questionnaire}
+                                                questions={this.state.questions}
                                                 answersMap={this.state.answersMap}
-                                                userId={this.props.userId}
+                                                userId={userId}
                                                 onForward={this.onForward}
                                                 onAnswerSelect={this.onAnswerSelect}
-                                />
+                            />
                             : null
                         }
 
@@ -246,7 +264,7 @@ var SelfLoadingQuestionnairePanel = React.createClass({
 
                         {this.state.mode == 'test' ?
                             <div>
-                                <QuestionnaireTestPanel userId={this.props.userId} onBack={this.onBack}
+                                <QuestionnaireTestPanel userId={userId} onBack={this.onBack}
                                                         onAnswer={this.onTestAnswer}
                                     questions={this.state.questions} answersMap={this.state.answersMap} />
                             </div>
@@ -288,6 +306,13 @@ var SelfLoadingQuestionnairePanel = React.createClass({
 
                                     </div>
                                 }
+                            </div>
+                        }
+
+                        {isLoggedIn == true ? null :
+                            <div style={{marginTop: 20, marginBottom: 10, textAlign: 'center'}} >
+                                Чтобы выполнить это упражнение,
+                                <a href="https://www.englishpatient.org/app"> авторизуйтесь</a>.
                             </div>
                         }
 

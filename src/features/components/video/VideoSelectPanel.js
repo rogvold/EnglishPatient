@@ -19,6 +19,9 @@ var MosesTimePanel = require('../moses/editor/adjust/MosesTimePanel');
 
 var BackgroundImageContainer = require('../image/BackgroundImageContainer');
 
+var VimeoUploadButton = require('../video/vimeo/upload/VimeoUploadButton');
+
+
 var VideoSelectPanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -169,6 +172,19 @@ var VideoSelectPanel = React.createClass({
         return false;
     },
 
+    onVimeoVideoUpload: function(vimeoId, info){
+        this.loadVideoInfo(undefined, vimeoId);
+        var url = 'https://vimeo.com/' + vimeoId;
+        this.setState({
+            videoUrl: url,
+            youtubeId: undefined,
+            vimeoId: vimeoId,
+            start: undefined,
+            duration: undefined,
+            end: undefined
+        });
+    },
+
     componentWillReceiveProps: function (nextProps) {
 
     },
@@ -272,7 +288,6 @@ var VideoSelectPanel = React.createClass({
                 seekTo = +end - this.props.seekDelta;
             }
         }
-
         this.setState({
             start: start,
             end: end,
@@ -351,6 +366,10 @@ var VideoSelectPanel = React.createClass({
                                 style={{marginRight: 0}}
                                 disabled={this.state.youtubeId != undefined}
                                 onSubmit={this.onYoutubeSubmit} />
+                        </span>
+
+                        <span>
+                            <VimeoUploadButton buttonClassName={'ui mini basic button'} onUpload={this.onVimeoVideoUpload} />
                         </span>
                     </div>
 

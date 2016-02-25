@@ -9,6 +9,8 @@ var SpeechRecognitionArea = require('../recognition/SpeechRecognitionArea');
 
 var RightTextAnswerDiff = require('./diff/RightTextAnswerDiff');
 
+var LoginMixin = require('../../mixins/LoginMixin');
+
 var UserExerciseInput = React.createClass({
     getDefaultProps: function () {
         return {
@@ -88,34 +90,46 @@ var UserExerciseInput = React.createClass({
         var inputIsDisabled = (ans != undefined);
         console.log('rendering UserExerciseInput: ans = ', ans);
 
+        var isLoggedIn = LoginMixin.isLoggedIn();
+
         return (
             <div style={this.componentStyle.placeholder}>
-                {this.props.type == 'speaking' ?
-                    <PatientRecordComponent number={this.props.number}
-                                            userAnswer={ans} onSave={this.onRecordingSave} />
-                    : null
-                }
 
-                {this.props.type == 'typing' ?
+                {isLoggedIn == false ?
+                    <div style={{textAlign: 'center', marginTop: 10}} >
+                        Чтобы ответить, пожалуйста, <a href="https://www.englishpatient.org/app">авторизуйтесь</a>.
+                    </div>
+                    :
                     <div>
-                        <PatientExerciseInput  number={this.props.number}
-                                           disabled={inputIsDisabled}
-                                           userAnswer={ans} onSubmit={this.onInputAnswer} />
-
-                        {( ( (ans == undefined) || (this.props.correctAnswer == undefined)) || (this.props.showDiff == false) )  ? null :
-                            <div style={this.componentStyle.diffPlaceholder}>
-                                <RightTextAnswerDiff userAnswer={ans} correctAnswer={this.props.correctAnswer} />
-                            </div>
+                        {this.props.type == 'speaking' ?
+                            <PatientRecordComponent number={this.props.number}
+                                                    userAnswer={ans} onSave={this.onRecordingSave} />
+                            : null
                         }
 
+                        {this.props.type == 'typing' ?
+                            <div>
+                                <PatientExerciseInput  number={this.props.number}
+                                                       disabled={inputIsDisabled}
+                                                       userAnswer={ans} onSubmit={this.onInputAnswer} />
+
+                                {( ( (ans == undefined) || (this.props.correctAnswer == undefined)) || (this.props.showDiff == false) )  ? null :
+                                    <div style={this.componentStyle.diffPlaceholder}>
+                                        <RightTextAnswerDiff userAnswer={ans} correctAnswer={this.props.correctAnswer} />
+                                    </div>
+                                }
+
+                            </div>
+                            : null
+                        }
+
+                        {this.props.type == 'recognition' ?
+                            <SpeechRecognitionArea  number={this.props.number}  userAnswer={ans} onSubmit={this.onRecognitionAnswer} />
+                            : null
+                        }
                     </div>
-                    : null
                 }
 
-                {this.props.type == 'recognition' ?
-                    <SpeechRecognitionArea  number={this.props.number}  userAnswer={ans} onSubmit={this.onRecognitionAnswer} />
-                    : null
-                }
 
             </div>
         );

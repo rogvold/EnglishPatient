@@ -116,7 +116,7 @@ var AddNewClassWrapper = React.createClass({
 
 
         //createClass: function(teacherId, name, description, callback)
-        ClassMixin.createClass(teacherId, name, description, function(createdClass){
+        ClassMixin.createClass(teacherId, name, description, undefined, function(createdClass){
             self.setState({
                 loading: false
             });

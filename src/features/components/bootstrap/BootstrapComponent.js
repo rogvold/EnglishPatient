@@ -51,6 +51,13 @@ var BootstrapComponent = React.createClass({
             flux.actions.loadAllAvailableExercises();
             flux.actions.loadAllDialogs();
             flux.actions.loadTeacherClasses(user.id);
+
+            flux.actions.loadTeacherCourses(user.id);
+            flux.actions.loadCommunityCourses(user.id);
+
+            setTimeout(function(){
+                flux.actions.loadPublicCommunityMaterials();
+            }.bind(this), 1000);
         }
 
     },

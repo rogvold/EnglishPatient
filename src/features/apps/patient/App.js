@@ -3,6 +3,7 @@
  */
 var React = require('react');
 var ClassApp = require('./ClassApp');
+var ShareApp = require('./ShareApp');
 var IndexApp = require('./IndexApp');
 var ExercisesApp = require('./ExercisesApp');
 var NotesApp = require('./NotesApp');
@@ -66,6 +67,8 @@ var MaterialsStore = require('../../flux/stores/MaterialsStore');
 var SoundStore = require('../../flux/stores/SoundStore');
 var AlertsStore = require('../../flux/stores/AlertsStore');
 var UsersStore = require('../../flux/stores/UsersStore');
+var QuestionnaireStore = require('../../flux/stores/QuestionnaireStore');
+var CoursesStore = require('../../flux/stores/CoursesStore');
 var ClassesStore = require('../../flux/stores/ClassesStore');
 var CommentsStore = require('../../flux/stores/CommentsStore');
 var DialogsStore = require('../../flux/stores/DialogsStore');
@@ -80,13 +83,26 @@ var MailActions = require('../../flux/actions/MailActions');
 var DialogsActions = require('../../flux/actions/DialogsActions');
 var CommentsActions = require('../../flux/actions/CommentsActions');
 var AlertActions = require('../../flux/actions/AlertActions');
+var QuestionnaireActions = require('../../flux/actions/QuestionnaireActions');
+var CoursesActions = require('../../flux/actions/CoursesActions');
 var SoundActions = require('../../flux/actions/SoundActions');
 var ExercisesActions = require('../../flux/actions/ExercisesActions');
-var stores = {MaterialsStore: new MaterialsStore(), SoundStore: new SoundStore(), TopicsStore: new TopicsStore(), UsersStore: new UsersStore(), ExercisesStore: new ExercisesStore(), DialogsStore: new DialogsStore(), ClassesStore: new ClassesStore(), AlertsStore: new AlertsStore(), MailStore: new MailStore(), CommentsStore: new CommentsStore()};
-var actions = assign({}, MaterialsActions, SoundActions, TopicsActions, UsersActions, ExercisesActions, DialogsActions, ClassesActions, AlertActions, MailActions, CommentsActions);
+
+var stores = {MaterialsStore: new MaterialsStore(), SoundStore: new SoundStore(),
+    TopicsStore: new TopicsStore(), UsersStore: new UsersStore(), ExercisesStore: new ExercisesStore(),
+    DialogsStore: new DialogsStore(), ClassesStore: new ClassesStore(), AlertsStore: new AlertsStore(),
+    MailStore: new MailStore(), CommentsStore: new CommentsStore(), QuestionnaireStore: new QuestionnaireStore(),
+    CoursesStore: new CoursesStore()
+};
+
+var actions = assign({}, MaterialsActions, SoundActions, TopicsActions, UsersActions, ExercisesActions,
+    DialogsActions, ClassesActions, AlertActions, MailActions, CommentsActions, QuestionnaireActions, CoursesActions);
+
 var flux = new Fluxxor.Flux(stores, actions);
 
 var SlaaskHelper = require('../../helpers/support/SlaaskHelper');
+var MixpanelHelper = require('../../helpers/analytics/MixpanelHelper');
+
 
 flux.on("dispatch", function(type, payload) {
     if (console && console.log) {
@@ -111,6 +127,7 @@ var App = React.createClass({
     componentDidMount: function () {
         console.log('MAIN APP: componentDidMount: props = ', this.props);
         SlaaskHelper.init();
+        MixpanelHelper.identify();
     },
 
     updateAuth: function(){
@@ -144,6 +161,8 @@ var App = React.createClass({
                 </Route>
 
                 <Route path="/class/:classId" component={ClassApp}/>
+
+                <Route path="/share/:name/:id" component={ShareApp}/>
 
                 <Route path="/profile/:userId" component={ProfileApp}/>
 
@@ -228,6 +247,8 @@ var App = React.createClass({
                     <IndexRoute component={StudentIdiomsApp} />
                 </Route>
 
+                <Route path="/share/:name/:id" component={ShareApp}/>
+
 
                 <Route path="/dev" component={DevApp}>
                     <IndexRoute component={DevApp} />
@@ -250,6 +271,9 @@ var App = React.createClass({
             <Route useAutoKeys={false} path="/" component={LoginApp} >
                 <IndexRoute component={LoginApp} />
             </Route>
+
+            <Route path="/share/:name/:id" component={ShareApp}/>
+
             <Route path="/class/:classId" component={SharedClassApp}/>
             <Route path="*" component={LoginApp}/>
         </Router>

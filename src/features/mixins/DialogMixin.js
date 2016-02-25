@@ -12,6 +12,7 @@ var UserMixin = require('./UserMixin');
 var ExerciseMixin = require('./ExerciseMixin');
 var LoginMixin = require('./LoginMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
 
 var DialogMixin = {
 
@@ -237,6 +238,7 @@ var DialogMixin = {
         var dialog = new PatientDialog();
         dialog.set('creatorId', userId);
         console.log('createDialog: userId = ', userId);
+        var self = this;
         dialog.save().then(function(d){
             callback(d);
         });
@@ -271,6 +273,9 @@ var DialogMixin = {
             ]);
             dialog.save().then(function(savedDialog){
                 var transformedDialog = self.transformDialog(savedDialog);
+                if (dialogId == undefined){
+                    MixpanelHelper.track('createDialog', transformedDialog);
+                }
                 var cards = data.cards;
                 self.saveCards(cards, transformedDialog.id, function(iCards){
                     transformedDialog.cards = iCards;

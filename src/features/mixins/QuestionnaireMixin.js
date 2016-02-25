@@ -11,6 +11,8 @@ var UserMixin = require('./UserMixin');
 var ExerciseMixin = require('./ExerciseMixin');
 var LoginMixin = require('./LoginMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 
 var QuestionnaireMixin = {
 
@@ -119,7 +121,9 @@ var QuestionnaireMixin = {
             {name: 'avatar', value: avatar}
         ]);
         q.save().then(function(updatedQuestionnaire){
-            callback(self.transformQuestionnaire(updatedQuestionnaire));
+            var tu = self.transformQuestionnaire(updatedQuestionnaire);
+            MixpanelHelper.track('createQuestionnaire', tu);
+            callback(tu);
         });
     },
 

@@ -11,11 +11,15 @@ var SelfLoadingDialogPanel = require('./view/SelfLoadingDialogPanel');
 
 var moment = require('moment');
 
+var ShareButton = require('../share/buttons/ShareButton');
+
 var DialogViewPanel = React.createClass({
     getDefaultProps: function () {
         return {
             dialog: {},
-            userId: undefined
+            userId: undefined,
+
+            showLeftBlock: true
         }
     },
 
@@ -69,7 +73,7 @@ var DialogViewPanel = React.createClass({
     render: function () {
         var dialog = this.props.dialog;
         var sDate = moment(dialog.timestamp).format('LLL');
-
+        var dialogId = (dialog == undefined) ? undefined : dialog.id;
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -91,10 +95,16 @@ var DialogViewPanel = React.createClass({
                         <span style={{marginRight: 5}} >
                             <b><i className={'icon file'} ></i> описание:</b>
                         </span>
-
                         {dialog.description}
-
                     </div>
+
+                    {dialogId == undefined ? null :
+                        <div style={{textAlign: 'center', marginTop: 20}} >
+                            <ShareButton
+                                buttonName={'Поделиться диалогом'} buttonClassName={'ui button patientPrimary'}
+                                name={'dialog'} objectId={dialogId} />
+                        </div>
+                    }
 
                 </div>
 

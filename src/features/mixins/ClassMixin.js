@@ -7,6 +7,7 @@ var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
 var UserMixin = require('./UserMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
 
 var ClassMixin = {
 
@@ -22,6 +23,7 @@ var ClassMixin = {
             invitationCode: p.get('invitationCode'),
             id: p.id,
             ownerId: p.get('ownerId'),
+            avatar: p.get('avatar'),
             classId: p.classId,
             timestamp: (new Date(p.createdAt)).getTime(),
             extendedDescription: p.get('extendedDescription')
@@ -147,7 +149,7 @@ var ClassMixin = {
     },
 
 
-    createClass: function(teacherId, name, description, callback){
+    createClass: function(teacherId, name, description, avatar, callback){
         var self = this;
         var PatientClass = Parse.Object.extend('PatientClass');
         this.loadAllSystemClasses(function(classes){
@@ -159,25 +161,29 @@ var ClassMixin = {
                 {name: 'invitationCode', value: code},
                 {name: 'description', value: description},
                 {name: 'name', value: name},
+                {name: 'avatar', value: avatar},
                 {name: 'status', value: 'active'},
                 {name: 'ownerId', value: teacherId}
             ]);
             cl.save().then(function(updatedClass){
-                callback({
-                    classId: updatedClass.id,
-                    id: updatedClass.id,
-                    name: updatedClass.get('name'),
-                    status: updatedClass.get('status'),
-                    description: updatedClass.get('description'),
-                    code: updatedClass.get('invitationCode'),
-                    invitationCode: updatedClass.get('invitationCode')
-                });
+                var uCl = self.transformClass(updatedClass);
+                MixpanelHelper.track('classCreated', uCl);
+                callback(uCl);
+                //callback({
+                //    classId: updatedClass.id,
+                //    id: updatedClass.id,
+                //    name: updatedClass.get('name'),
+                //    status: updatedClass.get('status'),
+                //    description: updatedClass.get('description'),
+                //    code: updatedClass.get('invitationCode'),
+                //    invitationCode: updatedClass.get('invitationCode')
+                //});
             });
 
         });
     },
 
-    updateClass: function(classId, name, description, status, extendedDescription, callback){
+    updateClass: function(classId, name, description, status, extendedDescription, avatar, callback){
         var self = this;
         this.loadClassById(classId, function(c){
             if (c == undefined){
@@ -188,17 +194,11 @@ var ClassMixin = {
                 {name: 'name', value: name},
                 {name: 'description', value: description},
                 {name: 'status', value: status},
+                {name: 'avatar', value: avatar},
                 {name: 'extendedDescription', value: extendedDescription}
             ]);
             c.save().then(function(cl){
-                callback({
-                    id: cl.id,
-                    classId: cl.id,
-                    name: name,
-                    status: status,
-                    description: description,
-                    code: cl.get('invitationCode')
-                });
+                callback(self.transformClass(cl));
             });
         });
         //this.loadClass

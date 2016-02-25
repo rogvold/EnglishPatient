@@ -96,6 +96,18 @@ var SubtitlesExtractorPanel = require('../../components/tools/subtitles_extracto
 
 var ComposeEmailPanel = require('../../components/mail/ComposeEmailPanel');
 
+var MaterialsPanel = require('../../components/material/panels/MaterialsPanel');
+
+var ShareButton = require('../../components/share/buttons/ShareButton');
+
+var Textarea = require('react-textarea-autosize');
+
+var VimeoUploaderHelper = require('../../helpers/vimeo/VimeoUploaderHelper');
+
+var VimeoUploadButton = require('../../components/video/vimeo/upload/VimeoUploadButton');
+
+var CountdownRecordComponent = require('../../components/record/CountdownRecordComponent');
+
 var DevApp = React.createClass({
     mixins: [FluxMixin],
 
@@ -287,6 +299,10 @@ var DevApp = React.createClass({
         });
     },
 
+    onVimeoUpload: function(vimeoId, info){
+        console.log('video has been uploaded to vimeo.com:', vimeoId, info);
+    },
+
     migrateLang: function(){
         MaterialsMixin.migrateLang();
     },
@@ -311,11 +327,13 @@ var DevApp = React.createClass({
         return (
             <div>
 
-                <SubtitlesExtractorPanel />
+                <div style={{display: 'none'}} >
+                    <SubtitlesExtractorPanel />
+                </div>
 
-                <button onClick={this.migrateLang}>
-                    mograte lang
-                </button>
+
+                <CountdownRecordComponent />
+
 
             </div>
 

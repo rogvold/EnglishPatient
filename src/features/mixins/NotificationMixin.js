@@ -7,6 +7,8 @@ var Parse = require('parse').Parse;
 var ClassMixin = require('./ClassMixin');
 var UserMixin = require('./UserMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var NotificationMixin = {
 
     transformNotification: function(n){
@@ -71,7 +73,9 @@ var NotificationMixin = {
          this.loadNotificationById(notificationId, function(n){
              n.set('status', 'viewed');
              n.save().then(function(no){
-                 callback(self.transformNotification(no));
+                 var noe = self.transformNotification(no);
+                 MixpanelHelper.track('viewNotification', noe);
+                 callback(noe);
              });
          });
      },

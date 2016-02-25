@@ -39,6 +39,8 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
             youtubeId: undefined,
             start: undefined,
             end: undefined,
+            lang: undefined,
+            access: undefined,
             duration: undefined,
             name: undefined,
             transcript: undefined,
@@ -81,6 +83,8 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
                 start: m.start,
                 end: m.end,
                 duration: m.duration,
+                lang: m.lang,
+                access: m.access,
                 comment: m.comment,
                 transcript: m.transcript,
                 avatar: m.avatar,
@@ -111,6 +115,8 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
                 duration: material.duration,
                 vimeoImgSrc: material.avatar,
                 avatar: material.avatar,
+                lang: (material.lang == undefined) ? 'en' : material.lang,
+                access: (material.access == undefined) ? 'private' : material.access,
                 transcript: material.transcript,
                 tags: material.tags,
                 groups: material.tags
@@ -144,6 +150,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
 
     render: function () {
         console.log('SelfLoadingMaterialUpdatePanel: this.props.allGroupsList = ', this.props.allGroupsList);
+        console.log('SelfLoadingMaterialUpdatePanel: this.state.lang = ', this.state.lang);
 
 
         return (
@@ -152,7 +159,7 @@ var SelfLoadingMaterialUpdatePanel = React.createClass({
                                      youtubeId={this.state.youtubeId}
                                      start={this.state.start} end={this.state.end}
                                      duration={this.state.duration} avatar={this.state.avatar}
-
+                                     lang={this.state.lang} access={this.state.access}
                                      name={this.state.name}
                                      comment={this.state.comment} transcript={this.state.transcript}
                                      tags={this.state.tags} groups={this.state.groups}

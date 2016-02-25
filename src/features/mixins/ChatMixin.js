@@ -9,6 +9,8 @@ var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
 var UserMixin = require('./UserMixin');
 var ClassMixin = require('./ClassMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var ChatMixin = {
 
     // usersMap - map of transformed users, m - parse obj
@@ -149,7 +151,9 @@ var ChatMixin = {
         ]);
         var self = this;
         m.save().then(function(savedM){
-            callback(self.transformMessage(savedM, {}));
+            var tM = self.transformMessage(savedM, {});
+            MixpanelHelper.track('sendMessage', tM);
+            callback(tM);
         });
     },
 

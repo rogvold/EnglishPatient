@@ -132,14 +132,14 @@ var CheckUsersListDashboard = React.createClass({
                 <div style={this.componentStyle.exercisesPlaceholder}>
                     {this.state.selectedUserId == undefined ?
                         <div style={{marginTop: 50}}>
-                            <GifInstruction url={'http://zippy.gfycat.com/FabulousFlawedBeauceron.gif'} text={'Выберите пользователя из списка слева'} />
+                            <GifInstruction url={'http://zippy.gfycat.com/FabulousFlawedBeauceron.gif'}
+                                            text={'Выберите пользователя из списка слева'} />
                         </div>
                         :
                         <div>
-
                             <SelfLoadingClassFeed classId={this.props.classId} userId={this.state.selectedUserId}
-                                                  teacherId={this.props.teacherId} teacherMode={true} editMode={false} />
-
+                                                  teacherId={this.props.teacherId} teacherMode={true}
+                                                  editMode={false} />
                         </div>
                     }
                 </div>

@@ -9,7 +9,12 @@ var SelfLoadingUpdateMaterialGroupPanel = require('../groups/SelfLoadingUpdateMa
 
 var Dialog = require('../../dialog/Dialog');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var MaterialGroupCreateButton = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             teacherId: undefined,
@@ -90,8 +95,10 @@ var MaterialGroupCreateButton = React.createClass({
     },
 
     onGroupCreated: function(data){
+        console.log('MaterialGroupCreateButton: onGroupCreated: data = ', data);
         this.props.onGroupCreated(data);
         this.hideDialog();
+        this.getFlux().actions.refreshMaterialGroup(data.id);
     },
 
     getDialogContent: function(){

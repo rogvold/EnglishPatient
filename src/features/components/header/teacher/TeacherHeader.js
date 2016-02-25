@@ -22,15 +22,6 @@ var TeacherHeader = React.createClass({
             userId: undefined,
             items: [
                 {
-                    displayName: 'Курсы',
-                    name: 'courses',
-                    icon: '',
-                    onClick: function(){
-                    },
-                    url: '/courses'
-                },
-
-                {
                     displayName: 'Модули',
                     name: 'articles',
                     icon: '',
@@ -100,8 +91,15 @@ var TeacherHeader = React.createClass({
                     onClick: function(){
                     },
                     url: '/materials'
+                },
+                {
+                    displayName: 'Курсы',
+                    name: 'courses',
+                    icon: '',
+                    onClick: function(){
+                    },
+                    url: '/courses'
                 }
-
 
             ],
             activeTab: undefined,

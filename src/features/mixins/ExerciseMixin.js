@@ -5,6 +5,8 @@ var Parse = require('parse').Parse;
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var assign = require('object-assign');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var ExerciseMixin = {
 
     transformExercise: function(ex){
@@ -190,7 +192,9 @@ var ExerciseMixin = {
             ex = self.getUpdateParseExercise(ex, teacherId, name, description, avatar, task, access, groups);
             ex.save().then(function(uex){
                 console.log('ExerciseMixin: new exercise created: uex = ', uex);
-                callback(self.transformExercise(uex));
+                var tuex = self.transformExercise(uex);
+                MixpanelHelper.track('createExercise', tuex);
+                callback(tuex);
             });
             return;
         }

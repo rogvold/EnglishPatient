@@ -11,6 +11,8 @@ var QuestionnaireMixin = require('../../../mixins/QuestionnaireMixin');
 
 var SelfLoadingQuestionnairePanel = require('./view/SelfLoadingQuestionnairePanel');
 
+var ShareButton = require('../../share/buttons/ShareButton');
+
 var QuestionnaireViewPanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -94,6 +96,13 @@ var QuestionnaireViewPanel = React.createClass({
 
                     <div style={this.componentStyle.infoPlaceholder}>
                         {this.state.description}
+                    </div>
+
+                    <div style={{marginTop: 20, textAlign: 'center'}} >
+                        <ShareButton name={'questionnaire'}
+                                     buttonName={'Поделиться опросником'}
+                                     buttonClassName={'ui button mini patientPrimary'}
+                                     objectId={this.props.questionnaireId} />
                     </div>
 
                 </div>

@@ -7,6 +7,8 @@ var CommentsMixin = require('../../mixins/CommentsMixin');
 
 var constants = require('../constants');
 
+var MixpanelHelper = require('../../helpers/analytics/MixpanelHelper');
+
 var CommentsActions = {
 
     loadCommentsForObjects: function(objectsList){
@@ -34,6 +36,7 @@ var CommentsActions = {
         }
         this.dispatch(constants.MAKE_COMMENT, {objectId: objectId});
         CommentsMixin.makeComment(objectId, content, attachments, function(comment){
+            MixpanelHelper.track('comment', {objectId: objectId, content: content, attachments: attachments});
             this.dispatch(constants.MAKE_COMMENT_SUCCESS, {comment: comment});
         }.bind(this));
     }

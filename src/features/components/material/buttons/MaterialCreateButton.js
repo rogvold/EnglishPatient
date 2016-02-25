@@ -8,7 +8,12 @@ var Dialog = require('../../dialog/Dialog');
 
 var SelfLoadingMaterialUpdatePanel = require('../dialogs/SelfLoadingMaterialUpdatePanel');
 
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+
 var MaterialCreateButton = React.createClass({
+    mixins: [FluxMixin],
+
     getDefaultProps: function () {
         return {
             iconClassName: 'plus icon',
@@ -58,8 +63,12 @@ var MaterialCreateButton = React.createClass({
     },
 
     onMaterialCreated: function(m){
+        console.log('MaterialCreateButton: onMaterialCreated occured: m = ', m);
         this.props.onMaterialCreated(m);
         this.hideDialog();
+        setTimeout(function(){
+            this.getFlux().actions.refreshMaterial(m.id);
+        }.bind(this), 300);
     },
 
     getDialogContent: function(){

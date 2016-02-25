@@ -3,14 +3,27 @@
  */
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 var Parse = require('parse').Parse;
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
 
 var NotesMixin = {
+
+    transformNote: function(n){
+        return {
+            id: n.id,
+            noteId: n.id,
+            creatorId: n.get('creatorId'),
+            name: n.get('name'),
+            content: n.get('content'),
+            timestamp: (new Date(n.createdAt)).getTime()
+        }
+    },
 
     createNote: function(creatorId, name, content, groupId, callback){
         if (creatorId == undefined){
             alert('creator is undefined - cannot create note');
             return;
         }
+        var self = this;
         var PatientNote = Parse.Object.extend('PatientNote');
         var note = new PatientNote();
         note = ParseMixin.safeSet(note, [
@@ -20,14 +33,9 @@ var NotesMixin = {
             {name : 'groupId', value: groupId}
         ]);
         note.save().then(function(n){
-            callback({
-                id: n.id,
-                noteId: n.id,
-                creatorId: n.get('creatorId'),
-                name: n.get('name'),
-                content: n.get('content'),
-                timestamp: (new Date(n.createdAt)).getTime()
-            });
+            var tN = self.transformNote(n);
+            MixpanelHelper.track('createNote', tN);
+            callback(tN);
         });
     },
 

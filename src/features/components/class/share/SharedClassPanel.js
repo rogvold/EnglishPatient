@@ -91,7 +91,9 @@ var SharedClassPanel = React.createClass({
                     <div>
                         <SelfInitHeader />
 
-                        <TopBrandContainer mainText={patientClass.name} bottomText={patientClass.description} />
+                        <TopBrandContainer
+                            backgroundImg={patientClass.avatar}
+                            mainText={patientClass.name} bottomText={patientClass.description} />
 
                         <div style={this.componentStyle.descriptionPlaceholder}>
                             <div dangerouslySetInnerHTML={{__html: patientClass.extendedDescription}} ></div>

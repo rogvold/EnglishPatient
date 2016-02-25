@@ -4,6 +4,8 @@
 var Parse = require('parse').Parse;
 var ParseMixin = require('../../react/mixins/commonMixins/ParseMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var FeedMixin = {
 
     loadFeedByClassId: function(classId, callback){
@@ -174,7 +176,9 @@ var FeedMixin = {
             {name: 'feedId', value: feedId}
         ]);
         f.save().then(function(item){
-            callback(self.transformFeedItem(item));
+            var tItem = self.transformFeedItem(item);
+            MixpanelHelper.track('createFeedItem', tItem)
+            callback(tItem);
         });
     }
 

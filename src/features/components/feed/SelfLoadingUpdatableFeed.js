@@ -18,6 +18,7 @@ var SelfLoadingUpdatableFeed = React.createClass({
             editMode: true,
             teacherMode: true,
 
+            dateEnabled: true,
             userId: undefined,
             teacherId: undefined
         }
@@ -31,7 +32,10 @@ var SelfLoadingUpdatableFeed = React.createClass({
     },
 
     componentWillReceiveProps: function (nextProps) {
-
+        var feedId = nextProps.feedId;
+        if (feedId != this.props.feedId){
+            this.load();
+        }
     },
 
     componentDidMount: function () {
@@ -77,6 +81,7 @@ var SelfLoadingUpdatableFeed = React.createClass({
             loading: true
         });
         FeedMixin.loadAllFeed(feedId, 'asc', function(items){
+            console.log('feed loaded: items = ', items);
             this.setState({
                 feedItems: items,
                 loading: false
@@ -105,6 +110,7 @@ var SelfLoadingUpdatableFeed = React.createClass({
 
     render: function () {
         var items = this.state.feedItems;
+        console.log('SelfLoadingUpdatableFeed: render occured: feedId = ', this.props.feedId);
 
         return (
             <div style={this.componentStyle.placeholder}>
@@ -137,6 +143,7 @@ var SelfLoadingUpdatableFeed = React.createClass({
                 <div style={this.componentStyle.listPlaceholder}>
 
                     <FeedItemsList
+                        dateEnabled={this.props.dateEnabled}
                         onFeedItemDeleted={this.onFeedItemDeleted}
                         onFeedItemUpdated={this.onFeedItemUpdated}
                         teacherMode={this.props.teacherMode}

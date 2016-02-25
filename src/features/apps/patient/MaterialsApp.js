@@ -25,6 +25,8 @@ var PagedCardsList = require('../../components/material/list/PagedCardsList');
 
 var SelfLoadingMaterialsList = require('../../components/material/list/SelfLoadingMaterialsList');
 
+var MaterialsPanel = require('../../components/material/panels/MaterialsPanel');
+
 var TeacherSidebarButtons = require('../../components/sidebar/TeacherSidebarButtons');
 
 var Fluxxor = require('fluxxor');
@@ -131,9 +133,10 @@ var IndexApp = React.createClass({
         var teacherId = this.state.user.id;
         return (
             <div>
-                <SelfLoadingMaterialsList
-                    searchMode={true}
-                    teacherId={teacherId} />
+
+                <MaterialsPanel  />
+
+
             </div>
         );
     },

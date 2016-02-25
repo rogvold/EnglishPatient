@@ -68,7 +68,7 @@ var ArchiveClassButton = React.createClass({
 
                 {this.state.status == 'archived' ?
                     <div>
-                        <i className={'archive icon'} ></i> Класс нахоится в архиве.
+                        <i className={'archive icon'} ></i> Класс в архиве
                         <span onClick={this.onStatusChange} style={this.componentStyle.link} >
                             Достать из архива
                         </span>

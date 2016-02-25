@@ -15,6 +15,10 @@ var ArchiveClassButton = require('./ArchiveClassButton');
 
 var PatientEditor = require('../../editor/PatientEditor');
 
+var BackgroundImageContainer = require('../../image/BackgroundImageContainer');
+
+var FileUploadButton = require('../../file/FileUploadButton');
+
 var EditClassButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -38,6 +42,7 @@ var EditClassButton = React.createClass({
             loading: false,
             status: 'active',
             name: undefined,
+            avatar: undefined,
             description: undefined,
             code: undefined,
             extendedDescription: undefined,
@@ -76,7 +81,12 @@ var EditClassButton = React.createClass({
         },
 
         panelPlaceholder: {
-            padding: 10
+            padding: 10,
+            position: 'relative'
+        },
+
+        panel: {
+
         },
 
         buttonPlaceholder: {
@@ -100,11 +110,25 @@ var EditClassButton = React.createClass({
         },
 
         dialogPanelStyle: {
-            width: 630
+            width: 930
         },
 
         deleteButtonPlaceholder: {
 
+        },
+
+        left: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 290,
+            padding: 5,
+            paddingTop: 0
+        },
+
+        right: {
+            display: 'inline-block',
+            verticalAlign: 'top',
+            width: 620
         }
     },
 
@@ -175,6 +199,7 @@ var EditClassButton = React.createClass({
                 loading: false,
                 name: cl.name,
                 status: cl.status,
+                avatar: cl.avatar,
                 description: cl.description,
                 extendedDescription: cl.extendedDescription,
                 defaultExtendedDescription: cl.extendedDescription,
@@ -194,9 +219,10 @@ var EditClassButton = React.createClass({
         var description = this.state.description;
         var extendedDescription = this.state.extendedDescription;
         var status = this.state.status;
+        var avatar = this.state.avatar;
 
         //createClass: function(teacherId, name, description, callback)
-        ClassMixin.updateClass(classId, name, description, status, extendedDescription, function(updatedClass){
+        ClassMixin.updateClass(classId, name, description, status, extendedDescription, avatar, function(updatedClass){
             self.setState({
                 loading: false
             });
@@ -226,59 +252,96 @@ var EditClassButton = React.createClass({
         });
     },
 
+    onAvatarChange: function(url){
+        this.setState({
+            avatar: url
+        });
+    },
+
     getDialogContent: function(){
         var classId = this.props.classId;
         if (classId == undefined){
             return null;
         }
+        var ava = (this.state.avatar == undefined) ? 'http://www.bhmpics.com/wallpapers/andromeda_galaxy_space-1920x1080.jpg' : this.state.avatar;
 
         return (
             <div style={this.componentStyle.panelPlaceholder}>
 
-                <div style={{color: 'black', marginBottom: 10}} >
+                <div style={{color: 'black', marginBottom: 25, textAlign: 'center'}} >
                     <h4>
                         Редактирование класса
                     </h4>
-                    <p>
+                    <p style={{opacity: 0.8}} >
                         Отредактируйте информацию о классе и нажмите на кнопку "Сохранить"
                     </p>
                 </div>
 
-                <div className="ui form">
-                    <div className="field">
-                        <input type="text" value={this.state.name} placeholder="Название класса"
-                               onChange={this.onNameChange} />
+                <div style={this.componentStyle.panel}>
+
+                    <div style={this.componentStyle.left}>
+                        <div style={{marginBottom: 10}} >
+                            <div style={{width: '100%', height: 160}} >
+                                <BackgroundImageContainer image={ava} />
+                            </div>
+                            {this.state.avatar != undefined ?
+                                <div className={'ui red message'} style={{padding: 6, cursor: 'pointer'}}
+                                     onClick={this.onAvatarChange.bind(this, undefined)} >
+                                    <i className={'trash icon'} ></i> удалить аватар
+                                </div> :
+                                <div style={{paddingTop: 5, textAlign: 'center'}} >
+                                    <FileUploadButton icon={'icon upload '} className={'ui button basic'} buttonName={'Загрузить аватар класса'}
+                                                      onFileUploaded={this.onAvatarChange} />
+                                </div>
+                            }
+                        </div>
+
+                        <div className={'ui message'} style={{padding: 6}} >
+                            <ArchiveClassButton onStatusChange={this.onStatusChange} status={this.state.status} />
+                        </div>
+
                     </div>
 
-                    <div className="field">
+
+
+
+                    <div style={this.componentStyle.right}>
+
+                        <div className="ui form">
+                            <div className="field">
+                                <input type="text" value={this.state.name} placeholder="Название класса"
+                                       onChange={this.onNameChange} />
+                            </div>
+
+                            <div className="field">
                         <textarea type="text" value={this.state.description} placeholder="Описание класса"
                                   onChange={this.onDescriptionChange} ></textarea>
+                            </div>
+
+
+                            <div className={'field'}>
+                                <label>Расширенное описание класса</label>
+                                <PatientEditor value={this.state.defaultExtendedDescription}
+                                               onContentChange={this.onContentChange} />
+                            </div>
+
+
+                        </div>
+
+                        <div style={this.componentStyle.buttonPlaceholder}>
+                            <button className={'ui button primary'} onClick={this.onSaveClick} style={{marginRight: 0}} >
+                                <i className={'icon save'} ></i> Сохранить
+                            </button>
+                        </div>
+
+                        <div style={this.componentStyle.deleteButtonPlaceholder}>
+                            <DeleteButton onDelete={this.onDelete} />
+                        </div>
+
+
                     </div>
 
-
-                    <div className={'field'}>
-                        <label>Расширенное описание класса</label>
-                        <PatientEditor value={this.state.defaultExtendedDescription}
-                                       onContentChange={this.onContentChange} />
-                    </div>
-
-
                 </div>
-
-                <div className={'ui message'} >
-                    <ArchiveClassButton onStatusChange={this.onStatusChange} status={this.state.status} />
-                </div>
-
-                <div style={this.componentStyle.buttonPlaceholder}>
-                    <button className={'ui button primary'} onClick={this.onSaveClick} style={{marginRight: 0}} >
-                        <i className={'icon save'} ></i> Сохранить
-                    </button>
-                </div>
-
-                <div style={this.componentStyle.deleteButtonPlaceholder}>
-                    <DeleteButton onDelete={this.onDelete} />
-                </div>
-
 
                 <div className={'ui inverted dimmer ' + (this.state.loading ? ' active ' : '') }>
                     <div className="ui indeterminate text loader">{'Загрузка...'}</div>

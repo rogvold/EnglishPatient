@@ -142,7 +142,7 @@ var PatientEditor = React.createClass({
     },
 
     onAttachmentUploaded: function(url){
-        var s = '<br/><div><a target="_blank" href="' + url + '" >загруженный файл (отредактируйте название)</a></div><br/>';
+        var s = '<br/><div><a target="_blank" href="' + url + '" > загруженный файл </a></div><br/>';
         var st = this.state.value + s;
         console.log('file uploaded: url = ' + url);
         console.log('new state = ', st);

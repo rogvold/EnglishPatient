@@ -11,6 +11,10 @@ var StoreWatchMixin = Fluxxor.StoreWatchMixin;
 
 var BackgroundImageContainer = require('../image/BackgroundImageContainer');
 
+var LoginMixin = require('../../mixins/LoginMixin');
+
+var Textarea = require('react-textarea-autosize');
+
 var CreateCommentBlock = React.createClass({
     mixins: [FluxMixin, StoreWatchMixin('CommentsStore')],
     getDefaultProps: function(){
@@ -128,33 +132,46 @@ var CreateCommentBlock = React.createClass({
         var user = this.getFlux().store('UsersStore').getCurrentUser();
         var image = (user == undefined) ? undefined : user.avatar;
 
+        var isLoggedIn = LoginMixin.isLoggedIn();
+
         return (
             <div style={this.componentStyle.placeholder} >
 
-            <div style={this.componentStyle.left}>
-                <div style={this.componentStyle.avatarPlaceholder}>
-                    <BackgroundImageContainer image={image} />
-                </div>
-            </div>
 
-            <div style={rightStyle}>
-                <div style={this.componentStyle.inputPlaceholder}>
-                    <div className={'ui form'} >
-                        <textarea className={'ui transparent input'}
-                                  placeholder={'Ваш комментарий'} style={this.componentStyle.textareaStyle}
-                              onChange={this.onContentChange} value={this.state.content} ></textarea>
+                {isLoggedIn == false ?
+                    <div style={{padding: 10}}>
+                        Чтобы оставить комментарий, <a href="https://www.englishpatient.org/app">авторизуйтесь</a>
                     </div>
-                </div>
+                    :
+                    <div>
 
-                <div style={this.componentStyle.buttonPlaceholder}>
-                    <button className={'ui button mini patientPrimary'}
-                            style={{borderRadius: 0, marginLeft: 5}}
-                            onClick={this.onSubmit} >
-                        Отправить
-                    </button>
-                </div>
-            </div>
+                        <div style={this.componentStyle.left}>
+                            <div style={this.componentStyle.avatarPlaceholder}>
+                                <BackgroundImageContainer image={image} />
+                            </div>
+                        </div>
 
+                        <div style={rightStyle}>
+                            <div style={this.componentStyle.inputPlaceholder}>
+                                <div className={'ui form'} >
+
+                                <Textarea className={'ui transparent input'} minRows={2}
+                                          placeholder={'Ваш комментарий'} style={this.componentStyle.textareaStyle}
+                                          onChange={this.onContentChange} value={this.state.content} ></Textarea>
+                                </div>
+                            </div>
+
+                            <div style={this.componentStyle.buttonPlaceholder}>
+                                <button className={'ui button mini patientPrimary'}
+                                        style={{borderRadius: 0, marginLeft: 5}}
+                                        onClick={this.onSubmit} >
+                                    Отправить
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                }
 
             </div>
         );

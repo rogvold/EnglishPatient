@@ -9,6 +9,8 @@ var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
 
 var MaterialsMixin = require('./MaterialsMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var TopicsMixin = {
 
     transformTopic: function(p){
@@ -156,7 +158,9 @@ var TopicsMixin = {
         );
         var self = this;
         p.save().then(function(t){
-            callback(self.transformTopic(t));
+            var tt = self.transformTopic(t);
+            MixpanelHelper.track('topicCreated', tt);
+            callback(tt);
         });
     },
 

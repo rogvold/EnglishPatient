@@ -14,6 +14,8 @@ var moment = require('moment');
 
 var FeedMixin = require('./FeedMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var CourseMixin = {
 
     transformCourse: function(c){
@@ -73,6 +75,19 @@ var CourseMixin = {
         }.bind(this));
     },
 
+    loadCommunityCourses: function(teacherId, callback){
+        var q = new Parse.Query('PatientCourse');
+        q.limit(1000);
+        var self = this;
+        q.notEqualTo('creatorId', teacherId);
+        q.equalTo('access', 'public');
+        q.find(function(results){
+            var arr = results.map(function(c){return self.transformCourse(c)});
+            callback(arr);
+        }.bind(this));
+    },
+
+
     loadTeacherCoursesCount: function(teacherId, callback){
         var q = new Parse.Query('PatientCourse');
         var self = this;
@@ -103,6 +118,7 @@ var CourseMixin = {
         var self = this;
         p.save().then(function(savedP){
             var l = self.transformCourse(savedP);
+            MixpanelHelper.track('courseCreated', l);
             callback(l);
         });
     },
@@ -207,6 +223,7 @@ var CourseMixin = {
                 FeedMixin.loadFeedByCourseLessonId(savedLesson.id, function(feed){
                     var le = self.transformLesson(savedLesson);
                     le.feedId = feed.id;
+                    MixpanelHelper.track('lessonCreated', le);
                     callback(le);
                 });
             });

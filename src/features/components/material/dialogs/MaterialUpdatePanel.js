@@ -26,6 +26,12 @@ var PatientPlayer = require('../../player/PatientPlayer');
 
 var BackgroundImageContainer = require('../../image/BackgroundImageContainer');
 
+var AccessSwitcher = require('../../exercise/info/AccessSwitcher');
+
+var ShareButton = require('../../share/buttons/ShareButton');
+
+var Textarea = require('react-textarea-autosize');
+
 var MaterialUpdatePanel = React.createClass({
     getDefaultProps: function () {
         return {
@@ -43,6 +49,8 @@ var MaterialUpdatePanel = React.createClass({
             tags: [],
             groups: [],
             allGroupsList: [],
+            lang: undefined,
+            access: undefined,
 
             onSave: function(data){
 
@@ -63,6 +71,8 @@ var MaterialUpdatePanel = React.createClass({
 
             avatar: this.props.avatar,
             duration: this.props.duration,
+            lang: this.props.lang,
+            access: this.props.access,
 
             name: this.props.name,
             transcript: this.props.transcript,
@@ -84,6 +94,8 @@ var MaterialUpdatePanel = React.createClass({
 
         if (state.duration == undefined){st = assign({}, st, {duration: np.duration})};
         if (state.avatar == undefined){st = assign({}, st, {avatar: np.avatar})};
+        if (state.lang == undefined){st = assign({}, st, {lang: np.lang})};
+        if (state.access == undefined){st = assign({}, st, {access: np.access})};
 
         if (state.youtubeId == undefined){st = assign({}, st, {youtubeId: np.youtubeId})};
         if (state.name == undefined){st = assign({}, st, {name: np.name})};
@@ -122,6 +134,8 @@ var MaterialUpdatePanel = React.createClass({
             comment: np.comment,
             defaultComment: np.comment,
             tags: np.tags,
+            lang: np.lang,
+            access: np.access,
             groups: np.groups,
             needToSave: false
         });
@@ -261,6 +275,20 @@ var MaterialUpdatePanel = React.createClass({
         });
     },
 
+    onLangChange: function(lang){
+        this.setState({
+            lang: lang,
+            needToSave: true
+        });
+    },
+
+    onAccessChange: function(access){
+        this.setState({
+            access: access,
+            needToSave: true
+        });
+    },
+
     onSave: function(){
         var data = {
             vimeoId: this.state.vimeoId,
@@ -274,6 +302,8 @@ var MaterialUpdatePanel = React.createClass({
             groups: this.state.groups,
             vimeoImgSrc: this.state.avatar,
             avatar: this.state.avatar,
+            lang: this.state.lang,
+            access: this.state.access,
             duration: this.state.duration
         };
         console.log('MaterialUpdatePanel: onSave occured: data = ', data);
@@ -355,6 +385,8 @@ var MaterialUpdatePanel = React.createClass({
 
         console.log('rendering MaterialUpdatePanel: this.state.start, this.state.end = ', this.state.start, this.state.end);
 
+        var langItems = [{name: 'en', displayName: 'Английский'}, {name: 'de', displayName: 'Немецкий'}];
+
         return (
             <div style={this.componentStyle.placeholder}>
                 <div className={'ui form'}>
@@ -426,6 +458,15 @@ var MaterialUpdatePanel = React.createClass({
                                     </div>
 
 
+                                    {this.props.materialId == undefined ? null :
+                                        <div style={{marginTop: 43, textAlign: 'center'}} >
+                                            <ShareButton
+                                                buttonName={'Поделиться материалом'} buttonClassName={'ui button patientPrimary'}
+                                                name={'material'} objectId={this.props.materialId} />
+                                        </div>
+                                    }
+
+
                                 </div>
 
                             </div>
@@ -435,6 +476,7 @@ var MaterialUpdatePanel = React.createClass({
                         <div className={'ten wide field'}>
 
                             <div style={this.componentStyle.rightPlaceholder} className={'MaterialRightBlockBlock'}>
+
                                 <div className="field" style={this.componentStyle.field} >
                                     <label>Название</label>
                                     <input onChange={this.onNameChange} value={name} type="text"
@@ -443,11 +485,11 @@ var MaterialUpdatePanel = React.createClass({
 
                                 <div className="field" style={this.componentStyle.field} >
                                     <label>Транскрипт</label>
-                                    <textarea style={{height: '5em', minHeight: '5em'}} onChange={this.onTranscriptChange} value={transcript} type="text"
-                                            placeholder="Транксрипт" ></textarea>
+                                    <Textarea minRows={3} style={{height: '5em', minHeight: '5em'}} onChange={this.onTranscriptChange} value={transcript} type="text"
+                                            placeholder="Транксрипт" ></Textarea>
                                 </div>
 
-                                <div className="field" style={this.componentStyle.field} >
+                                <div className="field" style={assign({}, this.componentStyle.field, {display: 'none'})} >
                                     <label>Теги</label>
                                     <MaterialTags tags={this.state.tags} />
                                 </div>
@@ -455,6 +497,21 @@ var MaterialUpdatePanel = React.createClass({
                                 <label><b>Категория</b></label>
                                 <div style={{marginTop: 5}} >
                                     <GroupsSelect onSelect={this.onGroupsSelect} selectedGroups={this.state.groups} groups={this.props.allGroupsList} />
+                                </div>
+
+                                <label><b>Язык</b></label>
+                                <div style={{marginTop: 5}} >
+                                    <AccessSwitcher items={langItems} activeName={this.state.lang} onAccessChange={this.onLangChange}
+                                                    noAccessMessage={'Выберите язык материала'}
+                                        />
+                                </div>
+
+                                <label><b>Доступ</b></label>
+                                <div style={{marginTop: 5}} >
+                                    <AccessSwitcher publicAccessMessage={'Этот материал доступен всем преподавателям в системе.'}
+                                                    privateAccessMessage={'Этот материал доступен только Вам.'}
+                                                    noAccessMessage={'Выберите режим доступа к этому материалу'}
+                                        activeName={this.state.access} onAccessChange={this.onAccessChange} />
                                 </div>
 
                             </div>

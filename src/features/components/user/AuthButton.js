@@ -4,6 +4,8 @@
 var React = require('react');
 var AuthOverlay = require('./AuthOverlay');
 
+var assign = require('object-assign');
+
 var AuthButton = React.createClass({
     getDefaultProps: function () {
         return {
@@ -13,6 +15,10 @@ var AuthButton = React.createClass({
             onLogin: function(){
                 //window.location.href = window.location.href;
                 window.location.reload();
+            },
+
+            style: {
+
             }
         }
     },
@@ -54,9 +60,10 @@ var AuthButton = React.createClass({
     },
 
     render: function () {
+        var st = assign({}, this.componentStyle.placeholder, this.props.style);
 
         return (
-            <div style={this.componentStyle.placeholder} >
+            <div style={st} >
                 <div className={this.props.buttonClassName} style={this.componentStyle.buttonPlaceholder} onClick={this.onClick}>
                     <i className={this.props.iconClassName} ></i> {this.props.buttonText}
                 </div>

@@ -20,6 +20,11 @@ var PatientRecordComponent = React.createClass({
             onBeforeSave: function(){
                 console.log('beforeSave occured');
             },
+
+            onStartRecording: function(){
+
+            },
+
             onRecording: function(seconds){
 
             },
@@ -35,6 +40,11 @@ var PatientRecordComponent = React.createClass({
             onInit: function(){
 
             },
+
+            onTick: function(time){
+
+            },
+
             dt: 100,
             //serverBaseUrl: 'http://beta.englishpatient.org/audio/',
             serverBaseUrl: 'https://www.englishpatientdrive.pw/audio/',
@@ -43,6 +53,7 @@ var PatientRecordComponent = React.createClass({
             //maxRecordTime: 30,
             maxRecordTime: 300,
 
+            timerEnabled: false,
 
             userAnswer: undefined,
             number: undefined
@@ -125,6 +136,10 @@ var PatientRecordComponent = React.createClass({
         navigator.mozGetUserMedia || navigator.msGetUserMedia);
     },
 
+    onTick: function(t){
+        this.props.onTick(t);
+    },
+
     initTimer: function(){
         if (this.intervalId == undefined){
             this.intervalId = setInterval(function(){
@@ -132,6 +147,10 @@ var PatientRecordComponent = React.createClass({
                     return;
                 }
                 var t = this.state.time + this.props.dt;
+                if (this.props.timerEnabled == true){
+                    this.onTick(t);
+                }
+
                 if (t > this.props.maxRecordTime * 1000){
                     this.setState({
                         time: 0,
@@ -206,6 +225,9 @@ var PatientRecordComponent = React.createClass({
     startRecording: function(){
         console.log('startRecording occured');
         console.log('stream = ', this.mediaStream);
+
+        this.props.onStartRecording();
+
         this.setState({
             saved: false
         });

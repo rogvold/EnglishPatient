@@ -11,6 +11,8 @@ var constants = require('../constants');
 
 var LoginMixin = require('../../mixins/LoginMixin');
 
+var MixpanelHelper = require('../../helpers/analytics/MixpanelHelper');
+
 var MaterialsActions = {
 
     loadMaterialsAndGroups: function(){
@@ -176,6 +178,7 @@ var MaterialsActions = {
         }
         this.dispatch(constants.LOAD_MATERIAL_GROUPS_BY_GROUPS_IDS, {groupsIds: ids});
         MaterialsMixin.loadGroupsByIdsList(ids, function(groups){
+            console.log('materials groups loaded: groups = ', groups);
             this.dispatch(constants.LOAD_MATERIAL_GROUPS_BY_GROUPS_IDS_SUCCESS, {groups: groups});
             this.flux.actions.loadMaterialsByGroupsIds(ids);
         }.bind(this));
@@ -188,6 +191,33 @@ var MaterialsActions = {
             constants.IDIOMS_GROUP_ID //idioms
         ];
         this.flux.actions.loadGroupsByGroupsIds(groupsIds);
+    },
+
+    loadPublicCommunityMaterials: function(){
+        console.log('loadPublicCommunityMaterials occured');
+        this.dispatch(constants.LOAD_PUBLIC_MATERIALS, {});
+        var teacherId = LoginMixin.getCurrentUserId();
+        MaterialsMixin.loadPublicCommunityMaterials(teacherId, function(materials){
+            this.dispatch(constants.LOAD_PUBLIC_MATERIALS_SUCCESS, {materials: materials});
+            console.log('loadPublicCommunityMaterials: loaded: materials = ', materials);
+            var map = {};
+            for (var i in materials){
+                var m = materials[i];
+                var groups = m.groups;
+                for (var j in groups){
+                    var groupId = groups[j];
+                    map[groupId] = 1;
+                }
+            }
+            var arr = [];
+            for (var key in map){
+                arr.push(key);
+            }
+            if (arr.length > 0){
+                console.log('loading groups for public materials: arr = ', arr);
+                this.flux.actions.loadGroupsByGroupsIds(arr);
+            }
+        }.bind(this));
     }
 
 

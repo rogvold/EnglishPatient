@@ -44,6 +44,8 @@ var FeedItem = React.createClass({
             information: undefined,
 
 
+            number: undefined,
+
             userId: undefined,
             teacherId: undefined,
             feedItemId: undefined,
@@ -151,7 +153,8 @@ var FeedItem = React.createClass({
 
         editBlock: {
             position: 'absolute',
-            top: 7,
+            //top: 7,
+            top: 4,
             right: 8
         }
 
@@ -217,7 +220,11 @@ var FeedItem = React.createClass({
         return (
             <div style={this.componentStyle.placeholder}>
 
-                {this.props.dateEnabled == false ? null :
+                {this.props.dateEnabled == false ?
+                    <div style={this.componentStyle.dateBlock}>
+                        #{+this.props.number + 1}
+                    </div>
+                    :
                     <div style={this.componentStyle.dateBlock}>
                         <b>{dateString}</b>
                     </div>

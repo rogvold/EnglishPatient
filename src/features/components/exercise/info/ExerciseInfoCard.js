@@ -177,6 +177,7 @@ var ExerciseInfoCard = React.createClass({
                 </div>
 
 
+
             </div>
         );
     }

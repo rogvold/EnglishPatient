@@ -95,7 +95,7 @@ var IndexPanel = React.createClass({
 
                 <div style={this.componentStyle.preVideoPlaceholder}>
                     <div style={this.componentStyle.videoPlaceholder}>
-                        <VimeoPlayer style={{width: '100%', height: '100%'}} vimeoId={'150484936'} />
+                        <VimeoPlayer style={{width: '100%', height: '100%'}} vimeoId={'155704762'} />
                     </div>
                 </div>
 

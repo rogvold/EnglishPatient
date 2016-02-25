@@ -13,6 +13,8 @@ var BackgroundImageContainer = require('../image/BackgroundImageContainer');
 
 var CoolPreloader = require('../preloader/CoolPreloader');
 
+var CommonMixin = require('../../../react/mixins/commonMixins/CommonMixin');
+
 var UserCommunityHeaderPanel = React.createClass({
     mixins: [FluxMixin, StoreWatchMixin('UsersStore')],
 
@@ -26,6 +28,8 @@ var UserCommunityHeaderPanel = React.createClass({
 
             },
 
+            profileLinkEnabled: true,
+
             infoStyle:{
                 fontSize: 12,
                 opacity: 0.6
@@ -34,7 +38,8 @@ var UserCommunityHeaderPanel = React.createClass({
             userNameStyle: {
                 color: '#2E3C54',
                 fontSize: 14,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                cursor: 'pointer'
             }
         }
     },
@@ -82,6 +87,13 @@ var UserCommunityHeaderPanel = React.createClass({
         }
     },
 
+    onClick: function(){
+        if (this.props.profileLinkEnabled == false){
+            return;
+        }
+        CommonMixin.forceTransitionTo('/#/profile/' + this.props.userId);
+    },
+
     componentStyle: {
         placeholder: {
             //padding: 5,
@@ -99,7 +111,8 @@ var UserCommunityHeaderPanel = React.createClass({
             borderRadius: 4,
             display: 'inline-block',
             verticalAlign: 'top',
-            marginRight: 10
+            marginRight: 10,
+            cursor: 'pointer'
         },
 
         userInfoRightBlockPlaceholder: {
@@ -137,12 +150,12 @@ var UserCommunityHeaderPanel = React.createClass({
                 {user == undefined ? null :
                     <div>
 
-                        <div style={this.componentStyle.avatarPlaceholder}>
+                        <div style={this.componentStyle.avatarPlaceholder} onClick={this.onClick} >
                             <BackgroundImageContainer image={user.avatar} />
                         </div>
 
                         <div style={rightStyle}>
-                            <div style={userNameStyle}>
+                            <div style={userNameStyle} onClick={this.onClick} >
                                 {this.props.customName == undefined ?
                                     <span>{user.name}</span> : <span>{this.props.customName}</span>
                                 }

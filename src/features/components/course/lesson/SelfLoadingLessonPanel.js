@@ -98,6 +98,8 @@ var SelfLoadingLessonPanel = React.createClass({
         console.log('SelfLoadingLessonPanel: this.props.  userId,  teacherId, editMode = ',
             this.props.userId, this.props.teacherId, this.props.editMode);
 
+        var editMode = true;
+
         var updateButtonComponent = (this.props.editMode == false) ? null :
             (   <div>
                     {l == undefined ? null :
@@ -129,8 +131,10 @@ var SelfLoadingLessonPanel = React.createClass({
                         <div style={this.componentStyle.content}>
 
                             <div style={this.componentStyle.feedPlaceholder}>
-                                {this.props.editMode == false ? null :
+                                {editMode == false ? null :
                                     <SelfLoadingUpdatableFeed
+                                                                dateEnabled={false}
+                                                                teacherMode={false}
                                                                 feedId={l.feedId}
                                                                 editMode={this.props.editMode}
                                                                 userId={this.props.userId}

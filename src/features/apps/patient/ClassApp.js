@@ -390,8 +390,11 @@ var ClassApp = React.createClass({
                         {patientClass == undefined ? null :
                             <ClassHeader text={patientClass.name} />
                         }
+
                         <ClassTabsNamePanel onTabClick={this.onTabClick} selectedTabName={this.state.selectedTabName} />
+
                         {currentTab}
+
                     </div>
                 </LoadingSegment>
         );
@@ -414,7 +417,6 @@ var ClassApp = React.createClass({
                     </div> :
                     <LeftSidebarTemplate sidebar={this.getSidebar()} header={this.getHeader()} footer={this.getFooter()} content={this.getContent()} />
                 }
-
             </div>
         );
     }

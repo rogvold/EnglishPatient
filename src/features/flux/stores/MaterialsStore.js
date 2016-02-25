@@ -7,6 +7,7 @@ var Fluxxor = require('fluxxor');
 var constants = require('../constants');
 
 var MaterialsMixin = require('../../mixins/MaterialsMixin');
+var LoginMixin = require('../../mixins/LoginMixin');
 
 var VocabularyMixin = require('../../mixins/VocabularyMixin');
 var IdiomsMixin = require('../../mixins/IdiomsMixin');
@@ -44,6 +45,9 @@ var MaterialsStore = Fluxxor.createStore({
 
             constants.LOAD_MATERIALS_BY_GROUPS_IDS, this.loadMaterialsByGroupsIds,
             constants.LOAD_MATERIALS_BY_GROUPS_IDS_SUCCESS, this.loadedMaterialsByGroupsIds,
+
+            constants.LOAD_PUBLIC_MATERIALS, this.loadPublicMaterials,
+            constants.LOAD_PUBLIC_MATERIALS_SUCCESS, this.loadedPublicMaterials,
 
             constants.LOAD_MATERIAL_GROUP, this.loadGroup,
             constants.LOAD_MATERIAL_GROUP_SUCCESS, this.loadedGroup,
@@ -93,7 +97,8 @@ var MaterialsStore = Fluxxor.createStore({
         if (materials == undefined){
             materials = [];
         }
-        this.materials = materials;
+        //this.materials = materials;
+        this.consumeMaterials(materials);
         this.materialsLoading = false;
         this.materialsLoaded = true;
         this.emit('change');
@@ -132,6 +137,9 @@ var MaterialsStore = Fluxxor.createStore({
         console.log('MaterialsStore: getTopicGroups: topicId = ', topicId);
         var arr = [];
         var list = this.groups;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
         for (var i in list){
             var g = list[i];
             if ((userId != undefined) && (g.ownerId != userId)){
@@ -148,13 +156,24 @@ var MaterialsStore = Fluxxor.createStore({
         return arr;
     },
 
-    getTopicGroupsFactoryList: function(topicId, userId){
+    getTopicGroupsFactoryList: function(topicId, userId, showEmpty){
         var groups = this.getTopicGroups(topicId, userId);
         var materials = this.materials;
-        var fac = MaterialsMixin.getGroupsFactoryList(groups, materials);
+        var arr = [];
+        for (var i in materials){
+            var m = materials[i];
+            if (m.creatorId != userId){
+                continue;
+            }
+            arr.push(m);
+        }
+
+        var fac = MaterialsMixin.getGroupsFactoryList(groups, arr, true, showEmpty);
         console.log('MaterialsStore: getTopicGroupsFactoryList: fac = ', fac);
         return fac;
     },
+
+
 
     getGroupsFactoryListForSearch: function(){
         var groups = this.groups;
@@ -181,18 +200,19 @@ var MaterialsStore = Fluxxor.createStore({
         if (material == undefined){
             return;
         }
-        var list = this.materials;
-        var map = this.getMaterialsMap();
-        if (map[material.id] == undefined){
-            this.materials.push(material);
-        }else{
-            for (var i in list){
-                if (list[i].id == material.id){
-                    list[i] = material;
-                }
-            }
-            this.materials = list;
-        }
+        //var list = this.materials;
+        //var map = this.getMaterialsMap();
+        //if (map[material.id] == undefined){
+        //    this.materials.push(material);
+        //}else{
+        //    for (var i in list){
+        //        if (list[i].id == material.id){
+        //            list[i] = material;
+        //        }
+        //    }
+        //    this.materials = list;
+        //}
+        this.consumeMaterials([material]);
 
         this.materialsLoading = false;
         this.emit('change');
@@ -270,6 +290,28 @@ var MaterialsStore = Fluxxor.createStore({
         return map;
     },
 
+    getMaterial: function(materialId){
+        var map = this.getMaterialsMap();
+        var m = map[materialId];
+        return m;
+    },
+
+    consumeMaterials: function(materials){
+        if (materials == undefined || materials.length == 0){
+            return;
+        }
+        var map = this.getMaterialsMap();
+        for (var i in materials){
+            var m = materials[i];
+            map[m.id] = m;
+        }
+        var arr = [];
+        for (var key in map){
+            arr.push(map[key]);
+        }
+        this.materials = arr;
+    },
+
     loadMaterialGroupsByTopicId: function(payload){
         var topicId = payload.topicId;
         var map = this.getTopicsIdsMap();
@@ -343,19 +385,21 @@ var MaterialsStore = Fluxxor.createStore({
         this.emit('change');
     },
 
+    loadPublicMaterials: function(){
+        this.materialsLoading = true;
+        this.emit('change');
+    },
+
+    loadedPublicMaterials: function(payload){
+        this.materialsLoading = false;
+        this.consumeMaterials(payload.materials);
+        this.emit('change');
+    },
+
     loadedMaterialsByGroupsIds: function(payload){
         var materials = payload.materials;
         console.log('MaterialsStore: loadedMaterialsByGroupsIds: materials = ', materials);
-        var map = this.getMaterialsMap();
-        for (var i in materials){
-            var m = materials[i];
-            map[m.id] = m;
-        }
-        var arr = [];
-        for (var key in map){
-            arr.push(map[key]);
-        }
-        this.materials = arr;
+        this.consumeMaterials(materials);
         this.materialsLoading = false;
         this.emit('change');
     },
@@ -400,8 +444,82 @@ var MaterialsStore = Fluxxor.createStore({
         var words = VocabularyMixin.prepareWordsFromMaterials(materials);
         this.vocabularyWords = words;
         return words;
-    }
+    },
 
+    getPublicMaterials: function(){
+        var arr = [];
+        var list = this.materials;
+        var teacherId = LoginMixin.getCurrentUserId();
+        for (var i in list){
+            var m = list[i];
+            if (m.access == 'public' && teacherId != m.teacherId){
+                arr.push(m);
+            }
+        }
+        return arr;
+    },
+
+    getPublicGroupsFactoryList: function(){
+        var groups = this.groups;
+        var materials = this.getPublicMaterials();
+        var fac = MaterialsMixin.getGroupsFactoryList(groups, materials, false, false);
+        return fac;
+    },
+
+    getTeacherPublicGroupsFactoryList: function(teacherId){
+        var materials = this.materials;
+        var arr = [];
+        for (var i in materials){
+            var m = materials[i];
+            if (m.teacherId == teacherId && m.access == 'public'){
+                arr.push(m);
+            }
+        }
+        materials = arr;
+        var fac = MaterialsMixin.getGroupsFactoryList(this.groups, materials, false, false);
+        return fac;
+    },
+
+    filterGroupsFactoryListWithSearch: function(gList, searchQuery, searchLang){
+        var materials = MaterialsMixin.getMaterialsListFromGroupsFactoryList(gList);
+        var groups = MaterialsMixin.getGroupsListFromGroupsFactoryList(gList);
+        var arr = [];
+        if (searchQuery == undefined || searchQuery.trim() == ''){
+            arr = materials;
+        }else {
+            for (var i in materials){
+                var m = materials[i];
+                if (MaterialsMixin.materialIsInSearch(m, searchQuery) == true){
+                    arr.push(m);
+                }
+            }
+        }
+        var arr2 = [];
+        if (searchLang == undefined){
+            arr2 = arr;
+        }else {
+            for (var i in arr){
+                if (arr[i].lang == searchLang){
+                    arr2.push(arr[i]);
+                }
+            }
+        }
+        return MaterialsMixin.getGroupsFactoryList(groups, arr2);
+    },
+
+    getCommunityUsersIds: function(){
+        var fac = this.getPublicGroupsFactoryList();
+        var map = {};
+        for (var i in fac){
+            var g = fac[i].group;
+            map[g.creatorId] = 1;
+        }
+        var arr = [];
+        for (var key in map){
+            arr.push(key);
+        }
+        return arr;
+    }
 
 
 });

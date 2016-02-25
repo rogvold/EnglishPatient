@@ -19,22 +19,39 @@ var LoginMixin = require('../../../mixins/LoginMixin');
 
 var UserMixin = require('../../../mixins/UserMixin');
 
+var UserCommunityHeaderPanel = require('../../user_interface/UserCommunityHeaderPanel');
+
+
+var Fluxxor = require('fluxxor');
+var FluxMixin = Fluxxor.FluxMixin(React);
+var StoreWatchMixin = Fluxxor.StoreWatchMixin;
+
 var SelfLoadingCoursesList = React.createClass({
+    mixins: [FluxMixin, StoreWatchMixin('CoursesStore')],
+
     getDefaultProps: function () {
         return {
             teacherId: undefined,
-
             userId: undefined,
-
             editMode: true
         }
     },
 
     getInitialState: function () {
         return {
-            loading: false,
-            courses: [],
-            user: {}
+            //loading: false,
+            //courses: [],
+
+        }
+    },
+
+    getStateFromFlux: function(){
+        var store = this.getFlux().store('CoursesStore');
+        var courses = store.getTeacherCourses(this.props.teacherId)
+
+        return {
+            loading: store.loading,
+            courses: courses
         }
     },
 
@@ -43,7 +60,7 @@ var SelfLoadingCoursesList = React.createClass({
     },
 
     componentDidMount: function () {
-        this.load();
+        //this.load();
     },
 
     componentStyle: {
@@ -97,38 +114,31 @@ var SelfLoadingCoursesList = React.createClass({
     },
 
     onCourseCreated: function(course){
-        this.load();
+        //this.load();
     },
 
     onDeleted: function(){
-        this.load();
+        //this.load();
     },
 
     onUpdated: function(){
-        this.load();
+        //this.load();
     },
 
     render: function () {
         var currentUser = LoginMixin.getCurrentUser();
         var currentUserId = (currentUser == undefined) ? undefined : currentUser.id;
         var canCreate = (this.props.teacherId == currentUserId);
-        var user = this.state.user;
         var courses = this.state.courses;
-        var name = user.name;
-        if (canCreate == true){
-            name = 'Мои курсы';
-        }
 
         return (
             <div style={this.componentStyle.placeholder}>
 
                     <div style={this.componentStyle.headerPlaceholder}>
                         <div style={{display: 'inline-block', float: 'left'}} >
-                            <UserContentPanelHeader
+                            <UserCommunityHeaderPanel
                                 userId={this.props.teacherId}
-                                name={name}
-                                avatar={user.avatar}
-                                description={'количество курсов: ' + courses.length + ''}
+                                customInfoHtml={'количество курсов: ' + courses.length + ''}
                                 />
                         </div>
                     </div>

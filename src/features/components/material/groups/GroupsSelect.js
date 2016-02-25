@@ -68,7 +68,7 @@ var GroupsSelect = React.createClass({
 
         var list = (this.props.groups == undefined) ? [] : this.props.groups;
 
-        var options = this.props.groups.map(function(g, n){
+        var options = list.map(function(g, n){
             return {
                 value: g.id,
                 label: g.name

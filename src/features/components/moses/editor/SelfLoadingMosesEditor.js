@@ -28,6 +28,7 @@ var SelfLoadingMosesEditor = React.createClass({
             durations: [],
             needToSave: false,
             vimeoId: undefined,
+            duration: undefined,
             seconds: undefined,
             selectedNumber: undefined
         }
@@ -56,6 +57,7 @@ var SelfLoadingMosesEditor = React.createClass({
             this.setState({
                 vimeoId: m.vimeoId,
                 durations: durations,
+                duration: m.duration,
                 needToSave: false,
                 loading: false
             });
@@ -186,9 +188,13 @@ var SelfLoadingMosesEditor = React.createClass({
         if (this.canAddMoreDuration() == false){
             return;
         }
+        var lastDur = (list.length == 0) ? undefined : list[list.length - 1];
+        var start = (lastDur == undefined) ? 0 : lastDur.end;
+        var end = (this.state.duration == undefined) ? start : this.state.duration;
+
         list.push({
-            start: 0,
-            end: 0,
+            start: start,
+            end: end,
             text: undefined
         });
         this.setState({

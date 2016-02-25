@@ -23,7 +23,8 @@ var MaterialPanel = React.createClass({
             name: undefined,
             tags: [],
             transcript: undefined,
-            comment: undefined
+            comment: undefined,
+            lang: 'en'
         }
     },
 
@@ -93,7 +94,7 @@ var MaterialPanel = React.createClass({
                     var isLast = (k == list.length - 1);
                     return (
                         <div key={key} >
-                            <TranslatableText text={t}
+                            <TranslatableText text={t} lang={this.props.lang}
                                  fontSize={this.componentStyle.transcriptPlaceholder.fontSize} />
                             {isLast == false ? <br/> : null}
                         </div>

@@ -23,7 +23,9 @@ var SelfLoadingMaterialPanel = React.createClass({
             name: undefined,
             transcript: undefined,
             comment: undefined,
-            tags: undefined
+            tags: undefined,
+            lang: 'en',
+            access: 'private'
         }
     },
 
@@ -64,7 +66,9 @@ var SelfLoadingMaterialPanel = React.createClass({
                 transcript: m.transcript,
                 avatar: m.avatar,
                 tags: m.tags,
-                groups: m.groups
+                groups: m.groups,
+                lang: m.lang,
+                access: m.access
             });
             callback(m);
         }.bind(this));
@@ -86,6 +90,8 @@ var SelfLoadingMaterialPanel = React.createClass({
                                    youtubeId={this.state.youtubeId} start={this.state.start}
                                    end={this.state.end}
                                    tags={this.state.tags} comment={this.state.comment}
+                                   lang={this.state.lang}
+                                   access={this.state.access}
                                    transcript={this.state.transcript}
                         />
                 }

@@ -75,7 +75,6 @@ var AdminExercisesPageApp = React.createClass({
                 description: ex.get('description'),
                 imgSrc: ex.get('imageUrl'),
                 id: ex.id
-
             }
         });
         var self = this;
@@ -96,7 +95,9 @@ var AdminExercisesPageApp = React.createClass({
                     <h2 style={{textAlign: 'center'}}>
                         Это страница просмотра всех "аудиторных" упражнений
                     </h2>
+
                     <p>
+
                     </p>
 
                 </div>

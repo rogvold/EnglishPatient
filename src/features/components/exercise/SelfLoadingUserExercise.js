@@ -15,6 +15,8 @@ var AuthButton = require('../user/AuthButton')
 
 var TeacherExerciseBlock = require('../teacher/TeacherExerciseBlock');
 
+var LoginMixin = require('../../mixins/LoginMixin');
+
 var SelfLoadingUserExercise = React.createClass({
     getDefaultProps: function () {
         return {
@@ -47,6 +49,10 @@ var SelfLoadingUserExercise = React.createClass({
     },
 
     load: function(userId, exerciseId, callback){
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
+
         ExerciseMixin.loadExercise(exerciseId, function(loadedEx){
             this.setState({
                 exercise: loadedEx.exercise,
@@ -103,7 +109,11 @@ var SelfLoadingUserExercise = React.createClass({
         this.setState({
             saving: true
         });
-        ExerciseMixin.saveUserAnswer(cardId, this.props.userId, this.props.exerciseId, type, ans, function(answer){
+        var userId = this.props.userId;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
+        ExerciseMixin.saveUserAnswer(cardId, userId, this.props.exerciseId, type, ans, function(answer){
             var list = this.state.answers;
             var f = false;
             for (var i in list){
@@ -171,8 +181,12 @@ var SelfLoadingUserExercise = React.createClass({
     },
 
     getCustomBottomBlock: function(){
-        if (this.props.userId != undefined){
-            return undefined;
+        var userId = this.props.userId;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
+        if (userId != undefined){
+            return null;
         }
         return (
             <div style={this.componentStyle.customBottomBlock}>
@@ -247,7 +261,13 @@ var SelfLoadingUserExercise = React.createClass({
             st = assign(st, {boxShadow: 'none'});
         }
         var customBottomBlock = this.getCustomBottomBlock();
-        var showAnswerBlock = (this.props.userId != undefined);
+
+        var userId = this.props.userId;
+        if (userId == undefined){
+            userId = LoginMixin.getCurrentUserId();
+        }
+
+        var showAnswerBlock = (userId != undefined);
 
         var allAnswered = (this.state.answers != undefined && this.state.cards != undefined && this.state.answers.length == this.state.cards.length );
         var notStarted = (this.state.answers != undefined && this.state.answers.length == 0 && this.state.cards.length > 0);
@@ -273,13 +293,14 @@ var SelfLoadingUserExercise = React.createClass({
                     <div className={'ui top attached progress ' + (started == true ? ' yellow ' : '  ') + (allAnswered == true ? ' green ' : ' ') } >
                         <div className="bar" style={{width: percents + '%'}}></div>
                     </div>
-                    : null}
+                    : null
+                }
 
                 <div style={this.componentStyle.exercisePlaceholder}>
                     <PatientExercise  onAnswer={this.onAnswer} userAnswers={this.state.answers}
                                       exercise={this.state.exercise} cards={this.state.cards}
                                       customBottomBlock={customBottomBlock} showAnswerBlock={showAnswerBlock}
-                                      userId={this.props.userId} teacherMode={this.props.teacherMode}
+                                      userId={userId} teacherMode={this.props.teacherMode}
                                       autoNext={this.props.autoNext} canAnswer={!waitingForFeedback}
                                       onRatingChange={this.onRatingChange}
                                       isFinished={isFinished}

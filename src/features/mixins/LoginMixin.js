@@ -7,6 +7,8 @@ var Parse = require('parse').Parse;
 
 var CommonMixin = require('../../react/mixins/commonMixins/CommonMixin');
 
+var MixpanelHelper = require('../helpers/analytics/MixpanelHelper');
+
 var LoginMixin = {
 
     onChange: function(){
@@ -22,6 +24,7 @@ var LoginMixin = {
         email = email.toLowerCase();
         Parse.User.logIn(email, password, {
             success: function(u){
+                MixpanelHelper.identify();
                 callback(u);
             },
             error: function(u, err){
@@ -64,6 +67,7 @@ var LoginMixin = {
         user.set('avatar', avatar);
         user.signUp(null, {
             success: function(u) {
+                MixpanelHelper.identify();
                 if (callback != undefined){
                     callback(u);
                 }
@@ -93,6 +97,7 @@ var LoginMixin = {
             email: u.get('email'),
             avatar: u.get('avatar'),
             id: u.id,
+            createdAt: u.createdAt,
             lang: (u.get('lang') == undefined) ? 'en' : u.get('lang')
         }
     },
